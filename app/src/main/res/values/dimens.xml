@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="on_board_button_margin_top">16dp</dimen>
+    <dimen name="default_dot_inner_radius">0dp</dimen>
+    <dimen name="default_dot_thickness">6dp</dimen>
+    <dimen name="selected_dot_inner_radius">0dp</dimen>
+    <dimen name="selected_dot_thickness">8dp</dimen>
+    <dimen name="tab_layout_indicator_height">0dp</dimen>
+</resources>
