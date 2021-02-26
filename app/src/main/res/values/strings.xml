@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Win Trade</string>
+    <string name="on_boarding_button_text_title">Продолжить</string>
 </resources>
