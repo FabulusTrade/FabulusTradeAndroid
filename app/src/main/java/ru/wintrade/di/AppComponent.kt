@@ -29,4 +29,5 @@ interface AppComponent {
     fun inject(signUpPresenter: SignUpPresenter)
     fun inject(onBoardFragment: OnBoardFragment)
     fun inject(onBoardPresenter: OnBoardPresenter)
+    fun inject(splashPresenter: SplashPresenter)
 }
