@@ -23,7 +23,7 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
         fun newInstance() = LoadingFragment()
     }
 
-    lateinit var viewPager: ViewPager2
+    private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
     @InjectPresenter
@@ -40,13 +40,10 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_loading, container, false)
 
-    override fun init() {
-        val fragmentsList =
-            arrayListOf<Fragment>(SignUpFragment.newInstance(), OnBoardFragment.newInstance())
+    override fun init(fragmentsList: ArrayList<Fragment>) {
         viewPager = view!!.findViewById(R.id.view_pager_loading)
         tabLayout = view!!.findViewById(R.id.tab_main)
         viewPager.adapter = PagerAdapter(this, fragmentsList)
         TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
     }
-
 }
