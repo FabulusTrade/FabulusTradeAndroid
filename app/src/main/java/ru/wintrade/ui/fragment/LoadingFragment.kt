@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_loading.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -15,7 +15,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.LoadingPresenter
 import ru.wintrade.mvp.view.LoadingView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.PagerAdapter
+import ru.wintrade.ui.adapter.LoadingVPAdapter
 
 class LoadingFragment : MvpAppCompatFragment(), LoadingView {
 
@@ -23,8 +23,7 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
         fun newInstance() = LoadingFragment()
     }
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+    private var adapter: LoadingVPAdapter? = null
 
     @InjectPresenter
     lateinit var presenter: LoadingPresenter
@@ -40,10 +39,30 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_loading, container, false)
 
-    override fun init(fragmentsList: ArrayList<Fragment>) {
-        viewPager = view!!.findViewById(R.id.view_pager_loading)
-        tabLayout = view!!.findViewById(R.id.tab_main)
-        viewPager.adapter = PagerAdapter(this, fragmentsList)
-        TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
+    override fun init() {
+        adapter = LoadingVPAdapter(presenter.detailListPresenter)
+        vp_loading.adapter = adapter
+
+        vp_loading.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                presenter.pageChanged(position)
+                super.onPageSelected(position)
+            }
+        })
     }
+
+    override fun updateAdapter() {
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun setupTabs(size: Int) {
+        for (i in 1..size)
+          tab_loading.addTab(tab_loading.newTab())
+    }
+
+    override fun tabChanged(pos: Int) {
+        tab_loading.getTabAt(pos)?.select()
+    }
+
+
 }

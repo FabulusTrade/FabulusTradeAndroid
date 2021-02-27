@@ -3,6 +3,7 @@ package ru.wintrade.di
 import dagger.Component
 import ru.wintrade.di.module.AppModule
 import ru.wintrade.di.module.CiceroneModule
+import ru.wintrade.di.module.ResourceModule
 import ru.wintrade.mvp.presenter.*
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.fragment.HomeFragment
@@ -15,7 +16,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        CiceroneModule::class
+        CiceroneModule::class,
+        ResourceModule::class
     ]
 )
 interface AppComponent {

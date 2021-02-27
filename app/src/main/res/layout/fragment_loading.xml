@@ -5,16 +5,17 @@
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_loading"
+        android:id="@+id/vp_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_main"
+        android:id="@+id/tab_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:tabBackground="@drawable/main_tab_selector"
         app:tabGravity="center"
-        app:tabIndicatorHeight="@dimen/tab_layout_indicator_height" />
+        app:tabIndicatorHeight="@dimen/tab_layout_indicator_height" >
+    </com.google.android.material.tabs.TabLayout>
 </FrameLayout>
