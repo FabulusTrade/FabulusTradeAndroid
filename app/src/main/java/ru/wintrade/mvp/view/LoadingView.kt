@@ -7,5 +7,8 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface LoadingView: MvpView {
-    fun init(fragmentsList: ArrayList<Fragment>)
+    fun init()
+    fun updateAdapter()
+    fun setupTabs(size: Int)
+    fun tabChanged(pos: Int)
 }
