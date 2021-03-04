@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/traders_menu_id"
+            android:title="@string/traders_title_menu_title"
+            android:icon="@drawable/grade"/>
+        <item android:id="@+id/observation_list_menu_id"
+            android:title="@string/observation_list_menu_title"
+            android:icon="@drawable/visibility"/>
+        <item android:id="@+id/invite_a_friend_menu_id"
+            android:title="@string/invite_a_friend_menu_title"
+            android:icon="@drawable/person_add"/>
+        <item android:id="@+id/about_menu_id"
+            android:title="@string/about_service_menu_title"
+            android:icon="@drawable/wt"/>
+        <item android:id="@+id/ask_menu_id"
+            android:title="@string/ask_a_question_menu_title"
+            android:icon="@drawable/live_help"/>
+        <item android:id="@+id/settings_menu_id"
+            android:title="@string/settings_menu_title"
+            android:icon="@drawable/settings"/>
+        <item android:id="@+id/exit_menu_id"
+            android:title="@string/exit_menu_title"
+            android:icon="@drawable/close"/>
+
+    </group>
+
+</menu>

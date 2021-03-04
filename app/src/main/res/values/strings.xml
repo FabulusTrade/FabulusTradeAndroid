@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Win Trade</string>
     <string name="on_boarding_button_text_title">Продолжить</string>
+    <string name="traders_title_menu_title">Трейдеры</string>
+    <string name="observation_list_menu_title">Список наблюдений</string>
+    <string name="invite_a_friend_menu_title">Пригласить друга</string>
+    <string name="about_service_menu_title">О сервисе</string>
+    <string name="ask_a_question_menu_title">Задать вопрос</string>
+    <string name="settings_menu_title">Настройки</string>
+    <string name="exit_menu_title">Выход</string>
 </resources>

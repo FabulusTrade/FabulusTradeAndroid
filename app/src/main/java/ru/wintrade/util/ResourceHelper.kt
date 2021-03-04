@@ -4,7 +4,7 @@ import android.content.Context
 
 class ResourceHelper(val context: Context) {
     fun getLoadingImages() =
-        listOf(getImageIdFromDrawable("splash"), getImageIdFromDrawable("splash"))
+        listOf(getImageIdFromDrawable("splash"), getImageIdFromDrawable("on_boarding"))
 
 
     fun getImageIdFromDrawable(imageName: String): Int {
