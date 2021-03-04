@@ -1,9 +1,11 @@
 package ru.wintrade.mvp.presenter
 
 import moxy.MvpPresenter
+import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.presenter.adapter.ILoadingListPresenter
 import ru.wintrade.mvp.view.LoadingView
 import ru.wintrade.mvp.view.item.LoadingItemView
+import ru.wintrade.navigation.Screens
 import ru.wintrade.util.ResourceHelper
 import javax.inject.Inject
 
@@ -12,10 +14,17 @@ class LoadingPresenter : MvpPresenter<LoadingView>() {
     @Inject
     lateinit var resourceHelper: ResourceHelper
 
-    val detailListPresenter = DetailListPresenter()
+    @Inject
+    lateinit var router: Router
 
-    inner class DetailListPresenter : ILoadingListPresenter {
+    val loadingListPresenter = LoadingListPresenter()
+
+    inner class LoadingListPresenter : ILoadingListPresenter {
         val images = mutableListOf<Int>()
+
+        override fun onSkipBtnClick() {
+            skipSplash()
+        }
 
         override fun getCount() = images.size
 
@@ -30,12 +39,15 @@ class LoadingPresenter : MvpPresenter<LoadingView>() {
 
         val images = resourceHelper.getLoadingImages()
         viewState.setupTabs(images.size)
-
-        detailListPresenter.images.clear()
-        detailListPresenter.images.addAll(images)
+        loadingListPresenter.images.clear()
+        loadingListPresenter.images.addAll(images)
     }
 
     fun pageChanged(pos: Int) {
         viewState.tabChanged(pos)
+    }
+
+    private fun skipSplash() {
+        router.navigateTo(Screens.OnBoardScreen())
     }
 }
