@@ -8,4 +8,7 @@
     <string name="ask_a_question_menu_title">Задать вопрос</string>
     <string name="settings_menu_title">Настройки</string>
     <string name="exit_menu_title">Выход</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="skip_btn_title">Пропустить</string>
 </resources>

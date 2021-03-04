@@ -19,8 +19,4 @@ class Screens {
     class SignUpScreen : SupportAppScreen() {
         override fun getFragment() = SignUpFragment.newInstance()
     }
-
-    class SplashScreen : SupportAppScreen() {
-        override fun getFragment() = SplashFragment.newInstance()
-    }
 }

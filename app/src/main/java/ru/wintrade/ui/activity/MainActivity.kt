@@ -2,9 +2,12 @@ package ru.wintrade.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -36,12 +39,11 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.instance.appComponent.inject(this)
-        nav_view.setNavigationItemSelectedListener(this)
-        nav_view.bringToFront()
     }
 
     override fun init() {
-
+        nav_view.setNavigationItemSelectedListener(this)
+        nav_view.bringToFront()
     }
 
     override fun onResumeFragments() {
@@ -80,8 +82,9 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 "settings_menu is checked",
                 Toast.LENGTH_SHORT
             ).show()
-            R.id.exit_menu_id -> Toast.makeText(this, "exit_menu is checked", Toast.LENGTH_SHORT)
-                .show()
+            R.id.exit_menu_id -> {
+                finish()
+            }
         }
         return true
     }

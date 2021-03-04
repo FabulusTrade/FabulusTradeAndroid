@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_loading.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -38,7 +41,10 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
     ): View? = inflater.inflate(R.layout.fragment_loading, container, false)
 
     override fun init() {
-        adapter = LoadingVPAdapter(presenter.detailListPresenter)
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        requireActivity().toolbar.visibility = View.GONE
+
+        adapter = LoadingVPAdapter(presenter.loadingListPresenter)
         vp_loading.adapter = adapter
 
         vp_loading.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -55,7 +61,7 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
 
     override fun setupTabs(size: Int) {
         for (i in 1..size)
-          tab_loading.addTab(tab_loading.newTab())
+            tab_loading.addTab(tab_loading.newTab())
     }
 
     override fun tabChanged(pos: Int) {
