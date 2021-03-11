@@ -5,19 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_loading.view.*
+import kotlinx.android.synthetic.main.item_on_board.view.*
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.adapter.ILoadingListPresenter
-import ru.wintrade.mvp.view.item.LoadingItemView
+import ru.wintrade.mvp.presenter.adapter.IOnBoardListPresenter
+import ru.wintrade.mvp.view.item.OnBoardItemView
 import ru.wintrade.util.loadImage
 
-class LoadingVPAdapter(
-    val presenter: ILoadingListPresenter
-) : RecyclerView.Adapter<LoadingVPAdapter.ViewHolder>() {
+class OnBoardVPAdapter(
+    val presenter: IOnBoardListPresenter
+) : RecyclerView.Adapter<OnBoardVPAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.item_loading,
+            R.layout.item_on_board,
             parent,
             false
         )
@@ -26,18 +26,20 @@ class LoadingVPAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bindView(holder)
+        holder.containerView.btn_on_board_item.setOnClickListener { presenter.onNextBtnClick(holder.pos) }
     }
 
     override fun getItemCount() = presenter.getCount()
 
     inner class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
-        LayoutContainer, LoadingItemView {
+        LayoutContainer, OnBoardItemView {
 
         override var pos = -1
 
         override fun setImage(id: Int) = with(containerView) {
-            loadImage(id, splash_view)
+            loadImage(id, iv_on_board_item)
         }
     }
+
 }

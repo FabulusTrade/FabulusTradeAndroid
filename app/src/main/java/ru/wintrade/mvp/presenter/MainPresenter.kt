@@ -10,6 +10,7 @@ import javax.inject.Inject
 @InjectViewState
 class MainPresenter: MvpPresenter<MainView>() {
 
+
     @Inject
     lateinit var router: Router
 
@@ -17,5 +18,9 @@ class MainPresenter: MvpPresenter<MainView>() {
         super.onFirstViewAttach()
         viewState.init()
         router.replaceScreen(Screens.LoadingScreen())
+    }
+
+    fun codeReceived(code: String) {
+
     }
 }

@@ -1,11 +1,15 @@
 package ru.wintrade.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import moxy.MvpAppCompatActivity
@@ -17,6 +21,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView,
@@ -88,4 +93,5 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         }
         return true
     }
+
 }
