@@ -6,6 +6,8 @@ import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface SignUpView: MvpView {
+interface SmsConfirmView: MvpView {
     fun init()
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(msg: String)
 }
