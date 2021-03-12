@@ -31,5 +31,7 @@ interface AppComponent {
     fun inject(onBoardPresenter: OnBoardPresenter)
     fun inject(smsConfirmPresenter: SmsConfirmPresenter)
     fun inject(smsConfirmFragment: SmsConfirmFragment)
+    fun inject(entranceFragment: EntranceFragment)
+    fun inject(entrancePresenter: EntrancePresenter)
     fun inject(app: App)
 }
