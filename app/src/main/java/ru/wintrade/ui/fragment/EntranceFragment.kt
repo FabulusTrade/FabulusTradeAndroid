@@ -14,7 +14,7 @@ import ru.wintrade.mvp.presenter.EntrancePresenter
 import ru.wintrade.mvp.view.EntranceView
 import ru.wintrade.ui.App
 
-class EntranceFragment: MvpAppCompatFragment(), EntranceView {
+class EntranceFragment : MvpAppCompatFragment(), EntranceView {
     companion object {
         fun newInstance() = EntranceFragment()
     }
@@ -34,9 +34,8 @@ class EntranceFragment: MvpAppCompatFragment(), EntranceView {
     ): View? = inflater.inflate(R.layout.fragment_entrance, container, false)
 
     override fun init() {
-        toolbar_white_close_button.setOnClickListener {
-            requireActivity().finish()
-        }
-        entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen()}
+        toolbar_white_close_button.setOnClickListener { requireActivity().finish() }
+        entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
+        entrance_enter_button.setOnClickListener { presenter.openTradersScreen() }
     }
 }

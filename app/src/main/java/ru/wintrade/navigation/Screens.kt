@@ -27,4 +27,8 @@ class Screens {
     class EntranceScreen : SupportAppScreen() {
         override fun getFragment() = EntranceFragment.newInstance()
     }
+
+    class AllTradersScreen : SupportAppScreen() {
+        override fun getFragment() = AllTradersFragment.newInstance()
+    }
 }

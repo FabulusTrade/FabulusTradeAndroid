@@ -18,4 +18,8 @@ class EntrancePresenter : MvpPresenter<EntranceView>() {
     fun openRegistrationScreen() {
         router.navigateTo(Screens.SignUpScreen())
     }
+
+    fun openTradersScreen() {
+        router.navigateTo(Screens.AllTradersScreen())
+    }
 }
