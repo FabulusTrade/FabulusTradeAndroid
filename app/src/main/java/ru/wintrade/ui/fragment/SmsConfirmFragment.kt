@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.jakewharton.rxbinding4.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_sms_confirm.*
+import kotlinx.android.synthetic.main.toolbar_white.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -58,6 +59,9 @@ class SmsConfirmFragment: MvpAppCompatFragment(), SmsConfirmView {
                 },
                 {}
             )
+        toolbar_white_close_button.setOnClickListener {
+            requireActivity().finish()
+        }
     }
 
     override fun showToast(msg: String) {

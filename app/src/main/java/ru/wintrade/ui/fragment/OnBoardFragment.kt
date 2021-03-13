@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_on_board.*
+import kotlinx.android.synthetic.main.toolbar_white.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -14,7 +15,7 @@ import ru.wintrade.mvp.view.OnBoardView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
 
-class OnBoardFragment: MvpAppCompatFragment(), OnBoardView {
+class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
 
     companion object {
         fun newInstance() = OnBoardFragment()
@@ -39,11 +40,12 @@ class OnBoardFragment: MvpAppCompatFragment(), OnBoardView {
     override fun init() {
         adapter = OnBoardVPAdapter(presenter.listPresenter)
         vp_on_board.adapter = adapter
+        toolbar_white_close_button.setOnClickListener {
+            requireActivity().finish()
+        }
     }
 
     override fun setVPPos(pos: Int) {
         vp_on_board.setCurrentItem(pos, true)
     }
-
-
 }

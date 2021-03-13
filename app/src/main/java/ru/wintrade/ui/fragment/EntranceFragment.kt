@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_entrance.*
 import kotlinx.android.synthetic.main.toolbar_white.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -36,5 +37,6 @@ class EntranceFragment: MvpAppCompatFragment(), EntranceView {
         toolbar_white_close_button.setOnClickListener {
             requireActivity().finish()
         }
+        entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen()}
     }
 }
