@@ -9,7 +9,7 @@ import ru.wintrade.mvp.view.item.OnBoardItemView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class OnBoardPresenter: MvpPresenter<OnBoardView>() {
+class OnBoardPresenter : MvpPresenter<OnBoardView>() {
 
     @Inject
     lateinit var resourceProvider: ResourceProvider
@@ -30,7 +30,7 @@ class OnBoardPresenter: MvpPresenter<OnBoardView>() {
 
         override fun onNextBtnClick(pos: Int) {
             if (pos + 1 > images.lastIndex)
-                router.replaceScreen(Screens.SignUpScreen())
+                router.replaceScreen(Screens.EntranceScreen())
             else
                 viewState.setVPPos(pos + 1)
         }
@@ -44,6 +44,4 @@ class OnBoardPresenter: MvpPresenter<OnBoardView>() {
         listPresenter.images.clear()
         listPresenter.images.addAll(images)
     }
-
-
 }

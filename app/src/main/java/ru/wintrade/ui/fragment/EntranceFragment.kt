@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.toolbar_white.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -32,6 +33,8 @@ class EntranceFragment: MvpAppCompatFragment(), EntranceView {
     ): View? = inflater.inflate(R.layout.fragment_entrance, container, false)
 
     override fun init() {
-
+        toolbar_white_close_button.setOnClickListener {
+            requireActivity().finish()
+        }
     }
 }
