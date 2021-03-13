@@ -26,4 +26,12 @@
     <string name="confirm_btn">Подтвердить</string>
     <string name="sms_resend_btn">Отправить смс еще раз</string>
     <string name="sms_not_received">НЕ ПРИШЛО СМС?</string>
+    <string name="entrance_text_view_1_title">Войти</string>
+    <string name="entrance_text_input_edit_text_user_name_hint_title">Имя пользователя</string>
+    <string name="enter_button_title">Войти</string>
+    <string name="enter_with_google_button_title">Войти с Google</string>
+    <string name="enter_with_facebook_button_title">Войти с Facebook</string>
+    <string name="entrance_text_view_3_title">Нет учетной записи?</string>
+    <string name="registration_button_title">Зарегистрироваться</string>
+    <string name="entrance_text_view_2_title">или</string>
 </resources>

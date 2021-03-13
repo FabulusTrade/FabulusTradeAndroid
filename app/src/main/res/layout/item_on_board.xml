@@ -9,7 +9,8 @@
         android:id="@+id/iv_on_board_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/on_boarding" />
+        app:srcCompat="@drawable/on_boarding"
+         />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_on_board_item"

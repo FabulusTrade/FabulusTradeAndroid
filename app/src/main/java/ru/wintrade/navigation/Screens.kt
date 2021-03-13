@@ -1,6 +1,5 @@
 package ru.wintrade.navigation
 
-import androidx.fragment.app.Fragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.wintrade.ui.fragment.*
 
@@ -23,5 +22,9 @@ class Screens {
 
     class SmsConfirmScreen(val phone: String) : SupportAppScreen() {
         override fun getFragment() = SmsConfirmFragment.newInstance(phone)
+    }
+
+    class EntranceScreen : SupportAppScreen() {
+        override fun getFragment() = EntranceFragment.newInstance()
     }
 }

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_loading.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -42,7 +42,7 @@ class LoadingFragment : MvpAppCompatFragment(), LoadingView {
 
     override fun init() {
         requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        requireActivity().toolbar.visibility = View.GONE
+        requireActivity().toolbar_blue.visibility = View.GONE
 
         adapter = LoadingVPAdapter(presenter.loadingListPresenter)
         vp_loading.adapter = adapter

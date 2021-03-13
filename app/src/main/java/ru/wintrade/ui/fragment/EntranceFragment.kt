@@ -4,30 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_on_board.*
+import kotlinx.android.synthetic.main.fragment_entrance.*
 import kotlinx.android.synthetic.main.toolbar_white.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.OnBoardPresenter
-import ru.wintrade.mvp.view.OnBoardView
+import ru.wintrade.mvp.presenter.EntrancePresenter
+import ru.wintrade.mvp.view.EntranceView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.OnBoardVPAdapter
 
-class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
-
+class EntranceFragment: MvpAppCompatFragment(), EntranceView {
     companion object {
-        fun newInstance() = OnBoardFragment()
+        fun newInstance() = EntranceFragment()
     }
 
-    private var adapter: OnBoardVPAdapter? = null
-
     @InjectPresenter
-    lateinit var presenter: OnBoardPresenter
+    lateinit var presenter: EntrancePresenter
 
     @ProvidePresenter
-    fun providePresenter() = OnBoardPresenter().apply {
+    fun providePresenter() = EntrancePresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -35,17 +31,12 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_on_board, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_entrance, container, false)
 
     override fun init() {
-        adapter = OnBoardVPAdapter(presenter.listPresenter)
-        vp_on_board.adapter = adapter
         toolbar_white_close_button.setOnClickListener {
             requireActivity().finish()
         }
-    }
-
-    override fun setVPPos(pos: Int) {
-        vp_on_board.setCurrentItem(pos, true)
+        entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen()}
     }
 }
