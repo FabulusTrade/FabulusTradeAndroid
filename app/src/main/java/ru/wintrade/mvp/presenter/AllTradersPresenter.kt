@@ -22,7 +22,7 @@ class AllTradersPresenter(private val dataSource: DataSource<List<Traders>> = Re
     val listPresenter = AllTradersListPresenter()
 
     inner class AllTradersListPresenter : IAllTradersListPresenter {
-        var traderList = listOf<Traders>()
+        var traderList = mutableListOf<Traders>()
         override fun getCount(): Int = traderList.size
 
         override fun bind(view: AllTradersItemView) {
@@ -43,7 +43,9 @@ class AllTradersPresenter(private val dataSource: DataSource<List<Traders>> = Re
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                viewState.renderData(it)
+                listPresenter.traderList.clear()
+                listPresenter.traderList.addAll(it)
+                viewState.updateRecyclerView()
             }, {
                 it.printStackTrace()
             })
