@@ -34,4 +34,8 @@
     <string name="entrance_text_view_3_title">Нет учетной записи?</string>
     <string name="registration_button_title">Зарегистрироваться</string>
     <string name="entrance_text_view_2_title">или</string>
+    <string name="traders_text_view_1_title">С наибольшим числом\n последователей (за последний год)</string>
+    <string name="traders_text_view_2_title">Стань популярным трейдером!\n Больше последователей - больше прибыль!</string>
+    <string name="show_all">Показать всех</string>
+    <string name="filter">Фильтр</string>
 </resources>

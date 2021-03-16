@@ -1,10 +1,15 @@
 package ru.wintrade.ui.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -39,8 +44,39 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     }
 
     override fun init() {
+        val toggle =
+            ActionBarDrawerToggle(
+                this,
+                drawer_layout,
+                toolbar_blue,
+                R.string.open,
+                R.string.close
+            )
+        toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.bringToFront()
+        setSupportActionBar(toolbar_blue)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        MenuInflater(this).inflate(R.menu.toolbar_blue_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                } else {
+                    drawer_layout.openDrawer(GravityCompat.START)
+                }
+            }
+        }
+        return true
     }
 
     override fun onResumeFragments() {
@@ -56,10 +92,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.traders_menu_id -> Toast.makeText(
-                this,
-                "traders_menu is checked",
-                Toast.LENGTH_SHORT
-            ).show()
+                    this,
+                    "traders_menu is checked",
+                    Toast.LENGTH_SHORT
+                ).show()
             R.id.observation_list_menu_id -> Toast.makeText(
                 this,
                 "observation_menu is checked",
@@ -83,6 +119,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 finish()
             }
         }
+        drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
