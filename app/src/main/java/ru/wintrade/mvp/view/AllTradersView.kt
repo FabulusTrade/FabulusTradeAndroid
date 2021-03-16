@@ -8,5 +8,5 @@ import ru.wintrade.mvp.model.Traders
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface AllTradersView : MvpView {
     fun init()
-    fun renderData(trader: List<Traders>)
+    fun updateRecyclerView()
 }

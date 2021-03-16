@@ -43,11 +43,12 @@ class AllTradersFragment : MvpAppCompatFragment(), AllTradersView {
     override fun init() {
         requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         requireActivity().toolbar_blue.visibility = View.VISIBLE
-    }
-
-    override fun renderData(trader: List<Traders>) {
         adapter = AllTradersRVAdapter(presenter.listPresenter)
         traders_recycler_view.adapter = adapter
         traders_recycler_view.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun updateRecyclerView() {
+        adapter?.notifyDataSetChanged()
     }
 }
