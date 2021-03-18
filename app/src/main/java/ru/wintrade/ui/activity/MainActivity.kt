@@ -91,33 +91,13 @@ class MainActivity : MvpAppCompatActivity(), MainView,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.traders_menu_id -> Toast.makeText(
-                    this,
-                    "traders_menu is checked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            R.id.observation_list_menu_id -> Toast.makeText(
-                this,
-                "observation_menu is checked",
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.invite_a_friend_menu_id -> Toast.makeText(
-                this,
-                "invite_menu is checked",
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.about_menu_id -> Toast.makeText(this, "about_menu is checked", Toast.LENGTH_SHORT)
-                .show()
-            R.id.ask_menu_id -> Toast.makeText(this, "ask_menu is checked", Toast.LENGTH_SHORT)
-                .show()
-            R.id.settings_menu_id -> Toast.makeText(
-                this,
-                "settings_menu is checked",
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.exit_menu_id -> {
-                finish()
-            }
+            R.id.traders_menu_id -> ""
+            R.id.observation_list_menu_id -> ""
+            R.id.invite_a_friend_menu_id -> ""
+            R.id.about_menu_id -> ""
+            R.id.ask_menu_id -> ""
+            R.id.settings_menu_id -> ""
+            R.id.exit_menu_id -> ""
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

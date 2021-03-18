@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/include3"
-        layout="@layout/toolbar_white"
+        layout="@layout/layout_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

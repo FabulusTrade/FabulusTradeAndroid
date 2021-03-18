@@ -20,7 +20,4 @@ class MainPresenter: MvpPresenter<MainView>() {
         router.replaceScreen(Screens.LoadingScreen())
     }
 
-    fun codeReceived(code: String) {
-
-    }
 }

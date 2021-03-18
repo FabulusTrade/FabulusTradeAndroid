@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_on_board.*
-import kotlinx.android.synthetic.main.toolbar_white.*
+import kotlinx.android.synthetic.main.layout_title.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -40,7 +40,7 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     override fun init() {
         adapter = OnBoardVPAdapter(presenter.listPresenter)
         vp_on_board.adapter = adapter
-        toolbar_white_close_button.setOnClickListener {
+        iv_close.setOnClickListener {
             requireActivity().finish()
         }
     }
