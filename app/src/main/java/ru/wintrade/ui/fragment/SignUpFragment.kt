@@ -13,7 +13,7 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
-import kotlinx.android.synthetic.main.toolbar_white.*
+import kotlinx.android.synthetic.main.layout_title.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -48,7 +48,7 @@ class SignUpFragment: MvpAppCompatFragment(), SignUpView {
         tv_sign_privacy.movementMethod = LinkMovementMethod.getInstance()
         tv_sign_rules.movementMethod = LinkMovementMethod.getInstance()
         initListeners()
-        toolbar_white_close_button.setOnClickListener {
+        iv_close.setOnClickListener {
             requireActivity().finish()
         }
     }

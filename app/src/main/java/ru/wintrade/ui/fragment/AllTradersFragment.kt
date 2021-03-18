@@ -13,7 +13,6 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.model.Traders
 import ru.wintrade.mvp.presenter.AllTradersPresenter
 import ru.wintrade.mvp.view.AllTradersView
 import ru.wintrade.ui.App

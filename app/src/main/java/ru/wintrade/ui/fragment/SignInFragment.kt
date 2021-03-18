@@ -4,26 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_entrance.*
-import kotlinx.android.synthetic.main.toolbar_white.*
+import kotlinx.android.synthetic.main.fragment_sign_in.*
+import kotlinx.android.synthetic.main.layout_title.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.EntrancePresenter
-import ru.wintrade.mvp.view.EntranceView
+import ru.wintrade.mvp.presenter.SignInPresenter
+import ru.wintrade.mvp.view.SignInView
 import ru.wintrade.ui.App
 
-class EntranceFragment : MvpAppCompatFragment(), EntranceView {
+class SignInFragment : MvpAppCompatFragment(), SignInView {
     companion object {
-        fun newInstance() = EntranceFragment()
+        fun newInstance() = SignInFragment()
     }
 
     @InjectPresenter
-    lateinit var presenter: EntrancePresenter
+    lateinit var presenter: SignInPresenter
 
     @ProvidePresenter
-    fun providePresenter() = EntrancePresenter().apply {
+    fun providePresenter() = SignInPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -31,11 +31,11 @@ class EntranceFragment : MvpAppCompatFragment(), EntranceView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_entrance, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
     override fun init() {
-        toolbar_white_close_button.setOnClickListener { requireActivity().finish() }
+        iv_close.setOnClickListener { requireActivity().finish() }
         entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
-        entrance_enter_button.setOnClickListener { presenter.openTradersScreen() }
+        entrance_enter_button.setOnClickListener { presenter.loginBtnClicked() }
     }
 }

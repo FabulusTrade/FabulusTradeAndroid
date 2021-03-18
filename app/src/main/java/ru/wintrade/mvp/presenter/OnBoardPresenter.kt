@@ -30,7 +30,7 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
 
         override fun onNextBtnClick(pos: Int) {
             if (pos + 1 > images.lastIndex)
-                router.replaceScreen(Screens.EntranceScreen())
+                router.replaceScreen(Screens.SignInScreen())
             else
                 viewState.setVPPos(pos + 1)
         }

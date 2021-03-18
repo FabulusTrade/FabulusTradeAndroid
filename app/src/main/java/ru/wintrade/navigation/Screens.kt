@@ -24,8 +24,8 @@ class Screens {
         override fun getFragment() = SmsConfirmFragment.newInstance(phone)
     }
 
-    class EntranceScreen : SupportAppScreen() {
-        override fun getFragment() = EntranceFragment.newInstance()
+    class SignInScreen : SupportAppScreen() {
+        override fun getFragment() = SignInFragment.newInstance()
     }
 
     class AllTradersScreen : SupportAppScreen() {

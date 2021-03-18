@@ -2,11 +2,11 @@ package ru.wintrade.mvp.presenter
 
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.view.EntranceView
+import ru.wintrade.mvp.view.SignInView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class EntrancePresenter : MvpPresenter<EntranceView>() {
+class SignInPresenter : MvpPresenter<SignInView>() {
     @Inject
     lateinit var router: Router
 
@@ -16,10 +16,10 @@ class EntrancePresenter : MvpPresenter<EntranceView>() {
     }
 
     fun openRegistrationScreen() {
-        router.navigateTo(Screens.SignUpScreen())
+        //router.navigateTo(Screens.SignUpScreen())
     }
 
-    fun openTradersScreen() {
-        router.navigateTo(Screens.AllTradersScreen())
+    fun loginBtnClicked() {
+        router.newRootScreen(Screens.AllTradersScreen())
     }
 }
