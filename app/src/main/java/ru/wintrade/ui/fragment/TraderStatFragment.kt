@@ -11,8 +11,9 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.TraderStatPresenter
 import ru.wintrade.mvp.view.TraderStatView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.BackButtonListener
 
-class TraderStatFragment : MvpAppCompatFragment(), TraderStatView {
+class TraderStatFragment : MvpAppCompatFragment(), TraderStatView, BackButtonListener {
     companion object {
         fun newInstance() = TraderStatFragment()
     }
@@ -33,5 +34,10 @@ class TraderStatFragment : MvpAppCompatFragment(), TraderStatView {
 
     override fun init() {
 
+    }
+
+    override fun backClicked(): Boolean {
+        presenter.backClicked()
+        return true
     }
 }

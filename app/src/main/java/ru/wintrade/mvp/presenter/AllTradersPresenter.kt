@@ -8,6 +8,7 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.IAllTradersListPresenter
 import ru.wintrade.mvp.view.AllTradersView
 import ru.wintrade.mvp.view.item.AllTradersItemView
+import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class AllTradersPresenter : MvpPresenter<AllTradersView>() {
@@ -28,6 +29,10 @@ class AllTradersPresenter : MvpPresenter<AllTradersView>() {
             view.setTraderFio(traderList[view.pos].fio)
             view.setTraderFollowerCount(traderList[view.pos].followersCount)
         }
+
+        override fun openTraderStat(pos: Int) {
+            router.navigateTo(Screens.TraderStatScreen())
+        }
     }
 
     override fun onFirstViewAttach() {
@@ -47,5 +52,10 @@ class AllTradersPresenter : MvpPresenter<AllTradersView>() {
                 it.printStackTrace()
             }
         )
+    }
+
+    fun backClicked(): Boolean {
+        router.exit()
+        return true
     }
 }

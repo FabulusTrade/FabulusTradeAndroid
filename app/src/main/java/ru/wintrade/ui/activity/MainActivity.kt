@@ -19,6 +19,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.BackButtonListener
 import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView,
@@ -104,4 +105,11 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         return true
     }
 
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if (it is BackButtonListener && it.backClicked())
+                return
+        }
+        presenter.backClicked()
+    }
 }

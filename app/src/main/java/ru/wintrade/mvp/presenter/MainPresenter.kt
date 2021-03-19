@@ -8,8 +8,7 @@ import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 @InjectViewState
-class MainPresenter: MvpPresenter<MainView>() {
-
+class MainPresenter : MvpPresenter<MainView>() {
 
     @Inject
     lateinit var router: Router
@@ -20,4 +19,7 @@ class MainPresenter: MvpPresenter<MainView>() {
         router.replaceScreen(Screens.LoadingScreen())
     }
 
+    fun backClicked() {
+        router.exit()
+    }
 }
