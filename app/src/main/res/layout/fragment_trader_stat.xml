@@ -42,10 +42,9 @@
                     android:id="@+id/textView3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Великий Трейдер"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@+id/textView4"
                     app:layout_constraintTop_toTopOf="@+id/imageView" />
 
                 <TextView

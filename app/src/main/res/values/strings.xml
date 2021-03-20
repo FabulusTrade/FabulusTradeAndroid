@@ -40,4 +40,25 @@
     <string name="filter">Фильтр</string>
     <string name="default_notification_channel_id" translatable="false">win_trade_channel</string>
     <string name="join">Присоединиться</string>
+    <string name="followers">Последователи</string>
+    <string name="profitability">Доходность</string>
+    <string name="year_2021">2021</string>
+    <string name="year_2022">2022</string>
+    <string name="january">Январь</string>
+    <string name="july">Июль</string>
+    <string name="february">Февраль</string>
+    <string name="august">Август</string>
+    <string name="march">Март</string>
+    <string name="september">Сентябрь</string>
+    <string name="april">Апрель</string>
+    <string name="october">Октябрь</string>
+    <string name="may">Май</string>
+    <string name="november">Ноябрь</string>
+    <string name="june">Июнь</string>
+    <string name="december">Декабрь</string>
+    <string name="weekly_deals">Сделки за неделю</string>
+    <string name="average_profitability_of_the_deal">Средняя доходность сделки</string>
+    <string name="average_trade_duration">Средняя продолжительность сделки</string>
+    <string name="registration_date">Дата регистрации</string>
+    <string name="attached_post_title">создать закрепленную запись</string>
 </resources>
