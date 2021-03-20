@@ -1,6 +1,5 @@
 package ru.wintrade.navigation
 
-import androidx.fragment.app.Fragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.wintrade.ui.fragment.*
 
@@ -39,5 +38,17 @@ class Screens {
 
     class TraderProfitScreen : SupportAppScreen() {
         override fun getFragment() = TraderProfitFragment.newInstance()
+    }
+
+    class TraderNewsScreen : SupportAppScreen() {
+        override fun getFragment() = TraderNewsFragment.newInstance()
+    }
+
+    class TraderPopularInstrumentsScreen : SupportAppScreen() {
+        override fun getFragment() = TraderPopularInstrumentsFragment.newInstance()
+    }
+
+    class TraderDealScreen : SupportAppScreen() {
+        override fun getFragment() = TraderDealFragment.newInstance()
     }
 }

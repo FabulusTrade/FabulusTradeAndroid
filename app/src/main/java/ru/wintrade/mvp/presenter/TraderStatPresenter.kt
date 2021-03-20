@@ -6,6 +6,9 @@ import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.presenter.adapter.ITraderStatVPListPresenter
 import ru.wintrade.mvp.view.TraderStatView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.ui.fragment.TraderDealFragment
+import ru.wintrade.ui.fragment.TraderNewsFragment
+import ru.wintrade.ui.fragment.TraderPopularInstrumentsFragment
 import ru.wintrade.ui.fragment.TraderProfitFragment
 import javax.inject.Inject
 
@@ -23,9 +26,9 @@ class TraderStatPresenter : MvpPresenter<TraderStatView>() {
     inner class TraderVPListPresenter : ITraderStatVPListPresenter {
         private val viewPagerListOfFragment = mutableListOf<Fragment>(
             TraderProfitFragment.newInstance(),
-            TraderProfitFragment.newInstance(),
-            TraderProfitFragment.newInstance(),
-            TraderProfitFragment.newInstance()
+            TraderNewsFragment.newInstance(),
+            TraderPopularInstrumentsFragment.newInstance(),
+            TraderDealFragment.newInstance()
         )
 
         override fun getCount(): Int = viewPagerListOfFragment.size
