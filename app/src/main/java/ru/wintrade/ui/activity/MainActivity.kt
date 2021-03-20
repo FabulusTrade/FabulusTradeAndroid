@@ -99,7 +99,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.about_menu_id -> ""
             R.id.ask_menu_id -> ""
             R.id.settings_menu_id -> ""
-            R.id.exit_menu_id -> ""
+            R.id.exit_menu_id -> finish()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

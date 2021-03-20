@@ -36,4 +36,8 @@ class Screens {
     class TraderStatScreen : SupportAppScreen() {
         override fun getFragment() = TraderStatFragment.newInstance()
     }
+
+    class TraderProfitScreen : SupportAppScreen() {
+        override fun getFragment() = TraderProfitFragment.newInstance()
+    }
 }

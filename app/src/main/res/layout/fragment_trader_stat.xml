@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout2"
+                    android:id="@+id/tab_layout_trader_stat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -100,33 +100,38 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_item_trader_profit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:icon="@drawable/ic_trader_profit" />
 
                     <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_item_trader_news"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:icon="@drawable/ic_trader_news" />
 
                     <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_item_trader_instrument"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:icon="@drawable/ic_trader_instrument" />
 
                     <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_item_trader_deal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:icon="@drawable/ic_trader_deal" />
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager_trader_stat"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tabLayout2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_trader_stat" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
