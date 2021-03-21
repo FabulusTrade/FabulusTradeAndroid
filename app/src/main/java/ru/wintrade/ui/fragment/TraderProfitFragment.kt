@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_trader_profit.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -32,6 +33,17 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     ): View? = inflater.inflate(R.layout.fragment_trader_profit, container, false)
 
     override fun init() {
-
+        with(bar_chart_trader_profit) {
+            data = presenter.setupBarChart()
+            legend.isEnabled = false
+            data.setDrawValues(false)
+            animateY(3000)
+            setDescription("")
+            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawLabels(false)
+            axisLeft.setDrawZeroLine(true)
+            xAxis.isEnabled = false
+            axisRight.isEnabled = false
+        }
     }
 }

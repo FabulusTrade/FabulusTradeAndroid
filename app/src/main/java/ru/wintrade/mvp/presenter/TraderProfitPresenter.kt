@@ -1,7 +1,12 @@
 package ru.wintrade.mvp.presenter
 
+import android.graphics.Color
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.R
 import ru.wintrade.mvp.view.TraderProfitView
 import javax.inject.Inject
 
@@ -12,5 +17,24 @@ class TraderProfitPresenter : MvpPresenter<TraderProfitView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+    }
+
+    fun setupBarChart(): BarData {
+        val entries = listOf(
+            BarEntry(floatArrayOf(0f, 0f, 0f), 0),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 1),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 2),
+            BarEntry(floatArrayOf(0f, 0f, -1.4f), 3),
+            BarEntry(floatArrayOf(3.2f, 0f, 0f), 4),
+            BarEntry(floatArrayOf(5.1f, 0f, 0f), 5),
+            BarEntry(floatArrayOf(2.9f, 0f, 0f), 6)
+        )
+        val labels = listOf(
+            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
+        )
+        val barDataSet = BarDataSet(entries, "profitability")
+        barDataSet.colors =
+            listOf(Color.GREEN, Color.BLACK, Color.RED)
+        return BarData(labels, barDataSet)
     }
 }
