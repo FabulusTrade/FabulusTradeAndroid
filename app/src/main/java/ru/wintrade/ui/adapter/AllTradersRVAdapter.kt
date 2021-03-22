@@ -20,6 +20,9 @@ class AllTradersRVAdapter(val presenter: IAllTradersListPresenter) :
     override fun onBindViewHolder(holder: AllTradersViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        holder.itemView.layout_all_traders_item.setOnClickListener {
+            presenter.openTraderStat(holder.adapterPosition)
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()

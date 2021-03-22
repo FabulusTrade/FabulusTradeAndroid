@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +19,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.BackButtonListener
 import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView,
@@ -41,6 +42,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.instance.appComponent.inject(this)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     override fun init() {
@@ -97,10 +99,17 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.about_menu_id -> ""
             R.id.ask_menu_id -> ""
             R.id.settings_menu_id -> ""
-            R.id.exit_menu_id -> ""
+            R.id.exit_menu_id -> finish()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if (it is BackButtonListener && it.backClicked())
+                return
+        }
+        presenter.backClicked()
+    }
 }

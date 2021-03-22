@@ -16,9 +16,10 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.AllTradersPresenter
 import ru.wintrade.mvp.view.AllTradersView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.AllTradersRVAdapter
 
-class AllTradersFragment : MvpAppCompatFragment(), AllTradersView {
+class AllTradersFragment : MvpAppCompatFragment(), AllTradersView, BackButtonListener {
     companion object {
         fun newInstance() = AllTradersFragment()
     }
@@ -49,5 +50,10 @@ class AllTradersFragment : MvpAppCompatFragment(), AllTradersView {
 
     override fun updateRecyclerView() {
         adapter?.notifyDataSetChanged()
+    }
+
+    override fun backClicked(): Boolean {
+        presenter.backClicked()
+        return true
     }
 }

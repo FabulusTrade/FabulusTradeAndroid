@@ -30,6 +30,9 @@ android {
         }
     }
 }
+repositories {
+    maven { url "https://jitpack.io" }
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -67,6 +70,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.24'
 
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
     implementation platform('com.google.firebase:firebase-bom:26.6.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
