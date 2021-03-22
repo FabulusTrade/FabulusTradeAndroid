@@ -7,4 +7,5 @@
     <dimen name="selected_dot_thickness">8dp</dimen>
     <dimen name="tab_layout_indicator_height">0dp</dimen>
     <dimen name="toolbar_close_button_size">40dp</dimen>
+    <dimen name="header_main_height">200dp</dimen>
 </resources>
