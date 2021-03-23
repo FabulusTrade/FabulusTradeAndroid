@@ -22,12 +22,13 @@ class LoadingPresenter : MvpPresenter<LoadingView>() {
 
         getTimer().subscribe(
             {
-                router.newRootScreen(Screens.SignInScreen())
+                router.newRootScreen(Screens.OnBoardScreen())
             },
             {}
         )
     }
 
-    private fun getTimer() = Single.timer(loadingTime, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread())
+    private fun getTimer() =
+        Single.timer(loadingTime, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread())
 
 }
