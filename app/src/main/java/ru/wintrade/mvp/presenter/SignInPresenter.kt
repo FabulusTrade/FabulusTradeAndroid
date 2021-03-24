@@ -39,27 +39,28 @@ class SignInPresenter : MvpPresenter<SignInView>() {
             if (task.isSuccessful) {
                 profile.deviceToken = task.result
                 apiRepo.auth(nickname, password).subscribe(
-                    { authToken->
+                    { authToken ->
 
                         profile.token = "Token $authToken"
 
-                        apiRepo.myDevices(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                            { list ->
-                                var isTokenUploaded = false
-                                list.forEach { deviceBody ->
-                                    if (profile.deviceToken == deviceBody.registration_id)
-                                        isTokenUploaded = true
-                                }
-                                if (!isTokenUploaded) {
-                                    postDeviceToken()
-                                }
-                                roomRepo.insertProfile(profile).subscribe()
-                                router.newRootScreen(Screens.AllTradersScreen())
-                            },
-                            {
+                        apiRepo.myDevices(profile.token!!).observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { list ->
+                                    var isTokenUploaded = false
+                                    list.forEach { deviceBody ->
+                                        if (profile.deviceToken == deviceBody.registration_id)
+                                            isTokenUploaded = true
+                                    }
+                                    if (!isTokenUploaded) {
+                                        postDeviceToken()
+                                    }
+                                    roomRepo.insertProfile(profile).subscribe()
+                                    router.newRootScreen(Screens.MainTradersScreen())
+                                },
+                                {
 
-                            }
-                        )
+                                }
+                            )
                     },
                     {}
                 )
@@ -67,12 +68,13 @@ class SignInPresenter : MvpPresenter<SignInView>() {
         }
     }
 
-    private fun postDeviceToken() = apiRepo.postDeviceToken(profile.token!!, profile.deviceToken!!).subscribe(
-        {
-            Log.e("ir", "dsa")
-        },
-        {
-            Log.e("dasd", it.message.toString())
-        }
-    )
+    private fun postDeviceToken() =
+        apiRepo.postDeviceToken(profile.token!!, profile.deviceToken!!).subscribe(
+            {
+                Log.e("ir", "dsa")
+            },
+            {
+                Log.e("dasd", it.message.toString())
+            }
+        )
 }

@@ -1,6 +1,5 @@
 package ru.wintrade.mvp.presenter
 
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
@@ -14,7 +13,6 @@ import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class AllTradersPresenter : MvpPresenter<AllTradersView>() {
-
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -57,10 +55,5 @@ class AllTradersPresenter : MvpPresenter<AllTradersView>() {
                 it.printStackTrace()
             }
         )
-    }
-
-    fun backClicked(): Boolean {
-        router.exit()
-        return true
     }
 }

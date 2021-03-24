@@ -35,8 +35,8 @@ interface AppComponent {
     fun inject(smsConfirmFragment: SmsConfirmFragment)
     fun inject(signInFragment: SignInFragment)
     fun inject(signInPresenter: SignInPresenter)
-    fun inject(allTradersFragment: AllTradersFragment)
-    fun inject(allTradersPresenter: AllTradersPresenter)
+    fun inject(mainTradersFragment: MainTradersFragment)
+    fun inject(mainTradersPresenter: MainTradersPresenter)
     fun inject(messagingPresenter: MessagingPresenter)
     fun inject(traderStatFragment: TraderStatFragment)
     fun inject(traderStatPresenter: TraderStatPresenter)
@@ -50,5 +50,7 @@ interface AppComponent {
     fun inject(traderDealPresenter: TraderDealPresenter)
     fun inject(splashActivity: SplashActivity)
     fun inject(splashPresenter: SplashPresenter)
+    fun inject(allTradersFragment: AllTradersFragment)
+    fun inject(allTradersPresenter: AllTradersPresenter)
     fun inject(app: App)
 }

@@ -28,8 +28,8 @@ class Screens {
         override fun getFragment() = SignInFragment.newInstance()
     }
 
-    class AllTradersScreen : SupportAppScreen() {
-        override fun getFragment() = AllTradersFragment.newInstance()
+    class MainTradersScreen : SupportAppScreen() {
+        override fun getFragment() = MainTradersFragment.newInstance()
     }
 
     class TraderStatScreen : SupportAppScreen() {
@@ -50,5 +50,9 @@ class Screens {
 
     class TraderDealScreen : SupportAppScreen() {
         override fun getFragment() = TraderDealFragment.newInstance()
+    }
+
+    class AllTradersScreen : SupportAppScreen() {
+        override fun getFragment() = AllTradersFragment.newInstance()
     }
 }
