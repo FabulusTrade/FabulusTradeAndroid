@@ -30,6 +30,8 @@ class App: Application() {
 
         appComponent.inject(this)
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback(holder))
+
+
     }
 
 }

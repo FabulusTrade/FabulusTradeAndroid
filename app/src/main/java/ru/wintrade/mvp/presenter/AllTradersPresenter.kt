@@ -1,8 +1,10 @@
 package ru.wintrade.mvp.presenter
 
+import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.IAllTradersListPresenter
@@ -18,6 +20,9 @@ class AllTradersPresenter : MvpPresenter<AllTradersView>() {
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var profile: Profile
 
     val listPresenter = AllTradersListPresenter()
 

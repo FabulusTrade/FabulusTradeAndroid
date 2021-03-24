@@ -31,7 +31,7 @@
             app:boxBackgroundColor="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/entrance_text_input_edit_text_user_name"
+                android:id="@+id/et_sign_in_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/entrance_text_input_edit_text_user_name_hint_title"
@@ -47,7 +47,7 @@
             app:boxBackgroundColor="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/entrance_text_input_edit_text_password"
+                android:id="@+id/et_sign_in_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"

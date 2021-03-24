@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.wintrade.mvp.model.api.WinTradeDataSource
@@ -28,10 +30,16 @@ class ApiModule {
     @Singleton
     @Provides
     fun api(@Named("baseUrl") baseUrl: String, gson: Gson): WinTradeDataSource {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(logging)
+
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(httpClient.build())
             .build()
             .create(WinTradeDataSource::class.java)
     }

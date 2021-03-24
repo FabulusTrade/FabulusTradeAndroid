@@ -36,6 +36,11 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     override fun init() {
         iv_close.setOnClickListener { requireActivity().finish() }
         entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
-        entrance_enter_button.setOnClickListener { presenter.loginBtnClicked() }
+        entrance_enter_button.setOnClickListener {
+            presenter.loginBtnClicked(
+                et_sign_in_nickname.text.toString(),
+                et_sign_in_password.text.toString()
+            )
+        }
     }
 }
