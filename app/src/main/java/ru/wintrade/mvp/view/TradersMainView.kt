@@ -5,7 +5,6 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface AllTradersView : MvpView {
+interface TradersMainView : MvpView {
     fun init()
-    fun updateRecyclerView()
 }

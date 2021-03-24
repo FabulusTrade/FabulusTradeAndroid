@@ -6,29 +6,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_all_traders.view.*
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.adapter.IAllTradersListPresenter
-import ru.wintrade.mvp.view.item.AllTradersItemView
+import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
+import ru.wintrade.mvp.view.item.TradersAllItemView
 
-class AllTradersRVAdapter(val presenter: IAllTradersListPresenter) :
-    RecyclerView.Adapter<AllTradersRVAdapter.AllTradersViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AllTradersViewHolder(
+class TradersAllRVAdapter(val presenterAll: ITradersAllListPresenter) :
+    RecyclerView.Adapter<TradersAllRVAdapter.TradersAllViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TradersAllViewHolder(
         LayoutInflater
             .from(parent.context)
             .inflate(R.layout.item_all_traders, parent, false)
     )
 
-    override fun onBindViewHolder(holder: AllTradersViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TradersAllViewHolder, position: Int) {
         holder.pos = position
-        presenter.bind(holder)
+        presenterAll.bind(holder)
         holder.itemView.layout_all_traders_item.setOnClickListener {
-            presenter.openTraderStat(holder.adapterPosition)
+            presenterAll.openTraderStat(holder.adapterPosition)
         }
     }
 
-    override fun getItemCount(): Int = presenter.getCount()
+    override fun getItemCount(): Int = presenterAll.getCount()
 
-    inner class AllTradersViewHolder(view: View) : RecyclerView.ViewHolder(view),
-        AllTradersItemView {
+    inner class TradersAllViewHolder(view: View) : RecyclerView.ViewHolder(view),
+        TradersAllItemView {
         override var pos = -1
         override fun setTraderFio(fio: String) {
             itemView.item_traders_fio.text = fio

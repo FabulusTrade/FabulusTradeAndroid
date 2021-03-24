@@ -5,12 +5,13 @@ import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.IMainTradersVPListPresenter
-import ru.wintrade.mvp.view.MainTradersView
-import ru.wintrade.ui.fragment.AllTradersFragment
+import ru.wintrade.mvp.presenter.adapter.ITradersMainVPListPresenter
+import ru.wintrade.mvp.view.TradersMainView
+import ru.wintrade.ui.fragment.TradersAllFragment
+import ru.wintrade.ui.fragment.TradersFilterFragment
 import javax.inject.Inject
 
-class MainTradersPresenter : MvpPresenter<MainTradersView>() {
+class TradersMainPresenter : MvpPresenter<TradersMainView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -20,12 +21,12 @@ class MainTradersPresenter : MvpPresenter<MainTradersView>() {
     @Inject
     lateinit var profile: Profile
 
-    val listPresenter = MainTradersVPListPresenter()
+    val listPresenter = TradersMainVPListPresenter()
 
-    inner class MainTradersVPListPresenter : IMainTradersVPListPresenter {
-        private val mainTradersVPListOfFragment = listOf(
-            AllTradersFragment.newInstance(),
-            AllTradersFragment.newInstance()
+    inner class TradersMainVPListPresenter : ITradersMainVPListPresenter {
+        private val mainTradersVPListOfFragment = listOf<Fragment>(
+            TradersAllFragment.newInstance(),
+            TradersFilterFragment.newInstance()
         )
 
         override fun getCount(): Int = mainTradersVPListOfFragment.size

@@ -7,28 +7,28 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main_traders.*
+import kotlinx.android.synthetic.main.fragment_traders_main.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.MainTradersPresenter
-import ru.wintrade.mvp.view.MainTradersView
+import ru.wintrade.mvp.presenter.TradersMainPresenter
+import ru.wintrade.mvp.view.TradersMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
-import ru.wintrade.ui.adapter.MainTradersVPAdapter
+import ru.wintrade.ui.adapter.TradersMainVPAdapter
 
-class MainTradersFragment : MvpAppCompatFragment(), MainTradersView, BackButtonListener {
+class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonListener {
     companion object {
-        fun newInstance() = MainTradersFragment()
+        fun newInstance() = TradersMainFragment()
     }
 
     @InjectPresenter
-    lateinit var presenter: MainTradersPresenter
+    lateinit var mainPresenter: TradersMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = MainTradersPresenter().apply {
+    fun providePresenter() = TradersMainPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -36,12 +36,12 @@ class MainTradersFragment : MvpAppCompatFragment(), MainTradersView, BackButtonL
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_main_traders, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
         requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         requireActivity().toolbar_blue.visibility = View.VISIBLE
-        vp_main_traders.adapter = MainTradersVPAdapter(this, presenter.listPresenter)
+        vp_main_traders.adapter = TradersMainVPAdapter(this, mainPresenter.listPresenter)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
                 0 -> tab.text = resources.getString(R.string.show_all)
@@ -51,7 +51,7 @@ class MainTradersFragment : MvpAppCompatFragment(), MainTradersView, BackButtonL
     }
 
     override fun backClicked(): Boolean {
-        presenter.backClicked()
+        mainPresenter.backClicked()
         return true
     }
 }

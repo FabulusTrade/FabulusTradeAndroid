@@ -39,7 +39,7 @@ class TraderStatPresenter : MvpPresenter<TraderStatView>() {
     }
 
     fun backClicked(): Boolean {
-        router.backTo(Screens.MainTradersScreen())
+        router.backTo(Screens.TradersMainScreen())
         return true
     }
 }

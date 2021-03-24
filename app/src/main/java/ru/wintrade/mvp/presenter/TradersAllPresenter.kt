@@ -6,13 +6,13 @@ import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.IAllTradersListPresenter
-import ru.wintrade.mvp.view.AllTradersView
-import ru.wintrade.mvp.view.item.AllTradersItemView
+import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
+import ru.wintrade.mvp.view.TradersAllView
+import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class AllTradersPresenter : MvpPresenter<AllTradersView>() {
+class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -22,13 +22,13 @@ class AllTradersPresenter : MvpPresenter<AllTradersView>() {
     @Inject
     lateinit var profile: Profile
 
-    val listPresenter = AllTradersListPresenter()
+    val listPresenter = TradersAllListPresenter()
 
-    inner class AllTradersListPresenter : IAllTradersListPresenter {
+    inner class TradersAllListPresenter : ITradersAllListPresenter {
         var traderList = mutableListOf<Trader>()
         override fun getCount(): Int = traderList.size
 
-        override fun bind(view: AllTradersItemView) {
+        override fun bind(view: TradersAllItemView) {
             view.setTraderFio(traderList[view.pos].fio)
             view.setTraderFollowerCount(traderList[view.pos].followersCount)
         }
