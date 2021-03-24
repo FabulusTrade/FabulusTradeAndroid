@@ -16,7 +16,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        router.replaceScreen(Screens.LoadingScreen())
+        router.newRootScreen(Screens.OnBoardScreen())
     }
 
     fun backClicked() {

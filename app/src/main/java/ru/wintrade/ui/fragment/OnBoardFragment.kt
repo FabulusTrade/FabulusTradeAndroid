@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_on_board.*
 import kotlinx.android.synthetic.main.layout_title.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -38,6 +41,8 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     ): View? = inflater.inflate(R.layout.fragment_on_board, container, false)
 
     override fun init() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        requireActivity().toolbar_blue.visibility = View.GONE
         adapter = OnBoardVPAdapter(presenter.listPresenter)
         vp_on_board.adapter = adapter
         iv_close.setOnClickListener {

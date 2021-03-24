@@ -1,14 +1,12 @@
 package ru.wintrade.di
 
 import dagger.Component
-import ru.wintrade.di.module.ApiModule
-import ru.wintrade.di.module.AppModule
-import ru.wintrade.di.module.CiceroneModule
-import ru.wintrade.di.module.RepoModule
+import ru.wintrade.di.module.*
 import ru.wintrade.mvp.presenter.*
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
+import ru.wintrade.ui.activity.SplashActivity
 import ru.wintrade.ui.fragment.*
 import javax.inject.Singleton
 
@@ -18,7 +16,8 @@ import javax.inject.Singleton
         ApiModule::class,
         AppModule::class,
         CiceroneModule::class,
-        RepoModule::class
+        RepoModule::class,
+        ProfileModule::class
     ]
 )
 interface AppComponent {
@@ -49,5 +48,7 @@ interface AppComponent {
     fun inject(traderPopularInstrumentsPresenter: TraderPopularInstrumentsPresenter)
     fun inject(traderDealFragment: TraderDealFragment)
     fun inject(traderDealPresenter: TraderDealPresenter)
+    fun inject(splashActivity: SplashActivity)
+    fun inject(splashPresenter: SplashPresenter)
     fun inject(app: App)
 }
