@@ -5,32 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_all_traders.*
+import kotlinx.android.synthetic.main.fragment_traders_main.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.AllTradersPresenter
-import ru.wintrade.mvp.view.AllTradersView
+import ru.wintrade.mvp.presenter.TradersMainPresenter
+import ru.wintrade.mvp.view.TradersMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
-import ru.wintrade.ui.adapter.AllTradersRVAdapter
+import ru.wintrade.ui.adapter.TradersMainVPAdapter
 
-class AllTradersFragment : MvpAppCompatFragment(), AllTradersView, BackButtonListener {
+class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonListener {
     companion object {
-        fun newInstance() = AllTradersFragment()
+        fun newInstance() = TradersMainFragment()
     }
 
-    private var adapter: AllTradersRVAdapter? = null
-
     @InjectPresenter
-    lateinit var presenter: AllTradersPresenter
+    lateinit var mainPresenter: TradersMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = AllTradersPresenter().apply {
+    fun providePresenter() = TradersMainPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -38,22 +36,22 @@ class AllTradersFragment : MvpAppCompatFragment(), AllTradersView, BackButtonLis
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_all_traders, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
         requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         requireActivity().toolbar_blue.visibility = View.VISIBLE
-        adapter = AllTradersRVAdapter(presenter.listPresenter)
-        traders_recycler_view.adapter = adapter
-        traders_recycler_view.layoutManager = LinearLayoutManager(context)
-    }
-
-    override fun updateRecyclerView() {
-        adapter?.notifyDataSetChanged()
+        vp_main_traders.adapter = TradersMainVPAdapter(this, mainPresenter.listPresenter)
+        TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
+            when (pos) {
+                0 -> tab.text = resources.getString(R.string.show_all)
+                1 -> tab.text = resources.getString(R.string.filter)
+            }
+        }.attach()
     }
 
     override fun backClicked(): Boolean {
-        presenter.backClicked()
+        mainPresenter.backClicked()
         return true
     }
 }

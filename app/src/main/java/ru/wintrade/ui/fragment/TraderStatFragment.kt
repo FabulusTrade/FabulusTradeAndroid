@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_trader_stat.view.*
+import kotlinx.android.synthetic.main.fragment_trader_stat.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -37,10 +37,10 @@ class TraderStatFragment : MvpAppCompatFragment(), TraderStatView, BackButtonLis
     ): View? = inflater.inflate(R.layout.fragment_trader_stat, container, false)
 
     override fun init() {
-        view!!.view_pager_trader_stat.adapter = TraderVPAdapter(this, presenter.listPresenter)
+        vp_trader_stat.adapter = TraderVPAdapter(this, presenter.listPresenter)
         TabLayoutMediator(
-            view!!.tab_layout_trader_stat,
-            view!!.view_pager_trader_stat
+            tab_layout_trader_stat,
+            vp_trader_stat
         ) { tab, pos ->
             when (pos) {
                 0 -> tab.setIcon(R.drawable.ic_trader_profit)

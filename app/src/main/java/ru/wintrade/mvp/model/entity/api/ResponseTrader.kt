@@ -33,5 +33,7 @@ data class ResponseTrader(
     @Expose
     val fio: String,
     @Expose
-    val followers_count: Int
+    val followers_count: Int,
+    @Expose
+    val year_profit: String
 )
