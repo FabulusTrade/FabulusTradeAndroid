@@ -29,8 +29,9 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         override fun getCount(): Int = traderList.size
 
         override fun bind(view: TradersAllItemView) {
-            view.setTraderFio(traderList[view.pos].fio)
-            view.setTraderFollowerCount(traderList[view.pos].followersCount)
+            view.setTraderName(traderList[view.pos].username)
+            view.setTraderProfit(traderList[view.pos].yearProfit)
+            view.setTraderAvatar(traderList[view.pos].avatar)
         }
 
         override fun openTraderStat(pos: Int) {
@@ -48,7 +49,8 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         apiRepo.getAllTradersSingle().observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 listPresenter.traderList.clear()
-                listPresenter.traderList.addAll(it)
+                listPresenter.traderList.addAll(
+                    it)
                 viewState.updateRecyclerView()
             },
             {

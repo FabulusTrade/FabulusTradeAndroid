@@ -48,7 +48,8 @@ fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.phone,
     trader.trades_count,
     trader.fio,
-    trader.followers_count
+    trader.followers_count,
+    trader.year_profit
 )
 
 fun mapToTrade(trade: ResponseTrade) = Trade(

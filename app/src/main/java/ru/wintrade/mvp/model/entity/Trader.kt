@@ -15,5 +15,6 @@ data class Trader (
     val phone: String?,
     val tradesCount: Int,
     val fio: String,
-    val followersCount: Int
+    val followersCount: Int,
+    val yearProfit: String
 )
