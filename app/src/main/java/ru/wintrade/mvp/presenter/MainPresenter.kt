@@ -19,6 +19,14 @@ class MainPresenter : MvpPresenter<MainView>() {
         router.newRootScreen(Screens.OnBoardScreen())
     }
 
+    fun openTradersScreen(){
+        router.replaceScreen(Screens.TradersMainScreen())
+    }
+
+    fun openSubscriberObservationScreen() {
+        router.replaceScreen(Screens.SubscriberMainScreen())
+    }
+
     fun backClicked() {
         router.exit()
     }

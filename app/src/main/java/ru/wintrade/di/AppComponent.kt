@@ -4,10 +4,17 @@ import dagger.Component
 import ru.wintrade.di.module.*
 import ru.wintrade.mvp.presenter.*
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
+import ru.wintrade.mvp.presenter.trader.*
+import ru.wintrade.mvp.presenter.traders.*
+import ru.wintrade.mvp.presenter.subscriber.*
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.activity.SplashActivity
 import ru.wintrade.ui.fragment.*
+import ru.wintrade.ui.fragment.trader.*
+import ru.wintrade.ui.fragment.traders.*
+import ru.wintrade.ui.fragment.subscriber.*
+
 import javax.inject.Singleton
 
 @Singleton
@@ -21,12 +28,9 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
+    fun inject(app: App)
     fun inject(mainActivity: MainActivity)
     fun inject(mainPresenter: MainPresenter)
-    fun inject(homeFragment: HomeFragment)
-    fun inject(homePresenter: HomePresenter)
-    fun inject(loadingFragment: LoadingFragment)
-    fun inject(loadingPresenter: LoadingPresenter)
     fun inject(signUpFragment: SignUpFragment)
     fun inject(signUpPresenter: SignUpPresenter)
     fun inject(onBoardFragment: OnBoardFragment)
@@ -54,5 +58,12 @@ interface AppComponent {
     fun inject(tradersAllPresenter: TradersAllPresenter)
     fun inject(tradersFilterFragment: TradersFilterFragment)
     fun inject(tradersFilterPresenter: TradersFilterPresenter)
-    fun inject(app: App)
+    fun inject(subscriberMainFragment: SubscriberMainFragment)
+    fun inject(subscriberMainPresenter: SubscriberMainPresenter)
+    fun inject(subscriberObservationFragment: SubscriberObservationFragment)
+    fun inject(subscriberObservationPresenter: SubscriberObservationPresenter)
+    fun inject(subscriberDealFragment: SubscriberDealFragment)
+    fun inject(subscriberDealPresenter: SubscriberDealPresenter)
+    fun inject(subscriberNewsFragment: SubscriberNewsFragment)
+    fun inject(subscriberNewsPresenter: SubscriberNewsPresenter)
 }

@@ -2,16 +2,11 @@ package ru.wintrade.navigation
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.wintrade.ui.fragment.*
+import ru.wintrade.ui.fragment.trader.*
+import ru.wintrade.ui.fragment.traders.*
+import ru.wintrade.ui.fragment.subscriber.*
 
 class Screens {
-    class LoadingScreen : SupportAppScreen() {
-        override fun getFragment() = LoadingFragment.newInstance()
-    }
-
-    class HomeScreen : SupportAppScreen() {
-        override fun getFragment() = HomeFragment.newInstance()
-    }
-
     class OnBoardScreen : SupportAppScreen() {
         override fun getFragment() = OnBoardFragment.newInstance()
     }
@@ -26,10 +21,6 @@ class Screens {
 
     class SignInScreen : SupportAppScreen() {
         override fun getFragment() = SignInFragment.newInstance()
-    }
-
-    class TradersMainScreen : SupportAppScreen() {
-        override fun getFragment() = TradersMainFragment.newInstance()
     }
 
     class TraderStatScreen : SupportAppScreen() {
@@ -52,11 +43,31 @@ class Screens {
         override fun getFragment() = TraderDealFragment.newInstance()
     }
 
-    class AllTradersScreen : SupportAppScreen() {
+    class TradersMainScreen : SupportAppScreen() {
+        override fun getFragment() = TradersMainFragment.newInstance()
+    }
+
+    class TradersAllScreen : SupportAppScreen() {
         override fun getFragment() = TradersAllFragment.newInstance()
     }
 
     class TradersFilterScreen : SupportAppScreen() {
         override fun getFragment() = TradersFilterFragment.newInstance()
+    }
+
+    class SubscriberMainScreen : SupportAppScreen() {
+        override fun getFragment() = SubscriberMainFragment.newInstance()
+    }
+
+    class SubscriberObservationScreen : SupportAppScreen() {
+        override fun getFragment() = SubscriberObservationFragment.newInstance()
+    }
+
+    class SubscriberDealScreen : SupportAppScreen() {
+        override fun getFragment() = SubscriberDealFragment.newInstance()
+    }
+
+    class SubscriberNewsScreen : SupportAppScreen() {
+        override fun getFragment() = SubscriberNewsFragment.newInstance()
     }
 }

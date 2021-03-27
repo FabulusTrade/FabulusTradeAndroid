@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/iv_trader_stat_ava"
+                    android:id="@+id/iv_subscriber_main_ava"
                     android:layout_width="80dp"
                     android:layout_height="65dp"
                     android:layout_marginStart="16dp"
@@ -39,51 +39,48 @@
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/tv_trader_stat_name"
+                    android:id="@+id/tv_subscriber_main_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Великий Трейдер"
+                    android:text="Мисетр Х"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/cb_trader_stat_observe"
-                    app:layout_constraintStart_toStartOf="@+id/tv_trader_stat_profit"
-                    app:layout_constraintTop_toTopOf="@+id/iv_trader_stat_ava" />
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/iv_subscriber_main_ava"
+                    app:layout_constraintTop_toTopOf="@+id/iv_subscriber_main_ava" />
 
                 <TextView
-                    android:id="@+id/tv_trader_stat_profit"
+                    android:id="@+id/tv_subscriber_main_subscription_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="37dp"
-                    android:text="82,82%"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_trader_stat_ava"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_trader_stat_subscribe"
-                    app:layout_constraintStart_toEndOf="@+id/iv_trader_stat_ava" />
+                    android:text="Подписки"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_subscriber_main_ava"
+                    app:layout_constraintStart_toEndOf="@+id/iv_subscriber_main_ava" />
 
-                <Button
-                    android:id="@+id/btn_trader_stat_subscribe"
+                <TextView
+                    android:id="@+id/tv_subscriber_main_subscription_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:text="@string/join"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_trader_stat_profit"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_trader_stat_name" />
+                    android:layout_marginStart="8dp"
+                    android:text="2"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_subscriber_main_subscription_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_subscriber_main_subscription_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_subscriber_main_subscription_title" />
 
-                <CheckBox
-                    android:id="@+id/cb_trader_stat_observe"
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:button="@drawable/selector_watch_for_trader"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_trader_stat_name"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_trader_stat_name"
-                    app:layout_constraintTop_toTopOf="@+id/tv_trader_stat_name" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/settings" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,10 +89,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout_trader_stat"
+                    android:id="@+id/tab_layout_subscriber_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -103,38 +100,30 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab_item_trader_profit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:icon="@drawable/ic_trader_profit" />
+                        android:icon="@drawable/visibility" />
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab_item_trader_news"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:icon="@drawable/ic_trader_deal" />
+
+                    <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:icon="@drawable/ic_trader_news" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab_item_trader_instrument"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:icon="@drawable/ic_trader_instrument" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab_item_trader_deal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:icon="@drawable/ic_trader_deal" />
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_trader_stat"
+                    android:id="@+id/vp_subscriber_main"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_trader_stat" />
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_subscriber_main" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
