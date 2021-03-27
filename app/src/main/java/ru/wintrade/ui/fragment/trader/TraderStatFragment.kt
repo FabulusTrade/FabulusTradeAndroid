@@ -47,7 +47,6 @@ class TraderStatFragment : MvpAppCompatFragment(), TraderStatView, BackButtonLis
                 1 -> tab.setIcon(R.drawable.ic_trader_news)
                 2 -> tab.setIcon(R.drawable.ic_trader_instrument)
                 3 -> tab.setIcon(R.drawable.ic_trader_deal)
-                else -> throw IllegalStateException()
             }
         }.attach()
     }

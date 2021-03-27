@@ -55,7 +55,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
                                         postDeviceToken()
                                     }
                                     roomRepo.insertProfile(profile).subscribe()
-                                    router.newRootScreen(Screens.TradersMainScreen())
+                                    router.newRootScreen(Screens.SubscriberMainScreen())
                                 },
                                 {
 

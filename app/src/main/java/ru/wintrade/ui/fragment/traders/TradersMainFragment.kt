@@ -39,8 +39,6 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
         vp_main_traders.adapter = TradersMainVPAdapter(this, mainPresenter.listPresenter)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
