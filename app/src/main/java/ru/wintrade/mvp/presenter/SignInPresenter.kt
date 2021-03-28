@@ -1,6 +1,7 @@
 package ru.wintrade.mvp.presenter
 
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -10,6 +11,7 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.SignInView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.ui.App
 import javax.inject.Inject
 
 class SignInPresenter : MvpPresenter<SignInView>() {
@@ -62,7 +64,8 @@ class SignInPresenter : MvpPresenter<SignInView>() {
                                 }
                             )
                     },
-                    {}
+                    {
+                    }
                 )
             }
         }
