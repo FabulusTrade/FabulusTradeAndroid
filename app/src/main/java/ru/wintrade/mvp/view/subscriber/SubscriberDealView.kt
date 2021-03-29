@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndStrategy::class)
 interface SubscriberDealView : MvpView {
     fun init()
+    fun updateAdapter()
+    fun selectBtn(pos: Int)
 }

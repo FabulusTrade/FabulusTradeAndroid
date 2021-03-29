@@ -1,5 +1,10 @@
 package ru.wintrade.mvp.model.entity
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.util.*
+
+@Parcelize
 data class Trade(
     val id: Long,
     val trader: String,
@@ -12,7 +17,7 @@ data class Trade(
     val price: Float,
     val count: Float,
     val currency: String,
-    val date: String,
+    val date: Date,
     val subtype: String,
     val profitCount: String
-)
+): Parcelable

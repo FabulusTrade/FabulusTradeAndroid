@@ -8,7 +8,7 @@ import ru.wintrade.mvp.model.entity.room.dao.ProfileDao
     entities = [
         RoomProfile::class
     ],
-    version = 1,
+    version = 4,
     exportSchema = false
 )
 abstract class Database: RoomDatabase() {

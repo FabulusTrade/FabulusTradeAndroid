@@ -5,16 +5,16 @@ import androidx.room.PrimaryKey
 
 @Entity
 class RoomProfile(
-    val remoteId: Long?,
-    val username: String?,
-    val email: String?,
+    val remoteId: Long,
+    val username: String,
+    val email: String,
     val avatar: String?,
-    val firstName: String?,
-    val lastName: String?,
-    val patronymic: String?,
-    val dateJoined: String?,
-    val token: String?,
-    val deviceToken: String?,
+    val firstName: String,
+    val lastName: String,
+    val patronymic: String,
+    val phone: String?,
+    val token: String,
+    val deviceToken: String,
     @PrimaryKey
     val id: Long = 1
 )

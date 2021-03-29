@@ -5,6 +5,7 @@ import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.traders.TradersAllView
@@ -20,7 +21,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     lateinit var router: Router
 
     @Inject
-    lateinit var profile: Profile
+    lateinit var profileStorage: ProfileStorage
 
     val listPresenter = TradersAllListPresenter()
 
@@ -35,7 +36,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         }
 
         override fun openTraderStat(pos: Int) {
-            router.navigateTo(Screens.TraderStatScreen())
+            router.navigateTo(Screens.TraderStatScreen(traderList[pos]))
         }
     }
 
