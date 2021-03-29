@@ -10,6 +10,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderStatPresenter
 import ru.wintrade.mvp.view.trader.TraderStatView
 import ru.wintrade.ui.App
@@ -17,16 +18,16 @@ import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderVPAdapter
 import java.lang.IllegalStateException
 
-class TraderStatFragment : MvpAppCompatFragment(), TraderStatView, BackButtonListener {
+class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView, BackButtonListener {
     companion object {
-        fun newInstance() = TraderStatFragment()
+        fun newInstance(trader: Trader) = TraderStatFragment(trader)
     }
 
     @InjectPresenter
     lateinit var presenter: TraderStatPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderStatPresenter().apply {
+    fun providePresenter() = TraderStatPresenter(trader!!).apply {
         App.instance.appComponent.inject(this)
     }
 

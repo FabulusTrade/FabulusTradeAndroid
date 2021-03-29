@@ -29,10 +29,12 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
         }
 
         override fun onNextBtnClick(pos: Int) {
-            if (pos + 1 == images.lastIndex)
+//            if (pos + 1 == images.lastIndex) {
+                viewState.savePreference()
                 router.replaceScreen(Screens.SignInScreen())
-            else
-                viewState.setVPPos(pos + 1)
+//            }
+//            else
+//                viewState.setVPPos(pos + 1)
         }
     }
 

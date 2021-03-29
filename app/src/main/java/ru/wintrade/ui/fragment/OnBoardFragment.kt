@@ -16,6 +16,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.OnBoardPresenter
 import ru.wintrade.mvp.view.OnBoardView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
 
 class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
@@ -53,4 +54,9 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     override fun setVPPos(pos: Int) {
         vp_on_board.setCurrentItem(pos, true)
     }
+
+    override fun savePreference() {
+        (activity as MainActivity).savePreference()
+    }
+
 }

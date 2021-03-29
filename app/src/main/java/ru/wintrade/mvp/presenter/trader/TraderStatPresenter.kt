@@ -3,6 +3,7 @@ package ru.wintrade.mvp.presenter.trader
 import androidx.fragment.app.Fragment
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.adapter.ITraderStatVPListPresenter
 import ru.wintrade.mvp.view.trader.TraderStatView
 import ru.wintrade.navigation.Screens
@@ -12,7 +13,7 @@ import ru.wintrade.ui.fragment.trader.TraderPopularInstrumentsFragment
 import ru.wintrade.ui.fragment.trader.TraderProfitFragment
 import javax.inject.Inject
 
-class TraderStatPresenter : MvpPresenter<TraderStatView>() {
+class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     @Inject
     lateinit var router: Router
 
