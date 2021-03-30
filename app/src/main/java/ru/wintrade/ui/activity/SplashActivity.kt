@@ -5,6 +5,7 @@ import android.os.Bundle
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SplashPresenter
 import ru.wintrade.mvp.view.SplashView
 import ru.wintrade.ui.App
@@ -21,13 +22,15 @@ class SplashActivity: MvpAppCompatActivity(), SplashView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_splash)
         App.instance.appComponent.inject(this)
     }
 
     override fun init() {}
 
     override fun goToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
         finish()
     }
 

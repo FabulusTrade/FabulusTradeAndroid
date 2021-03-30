@@ -25,5 +25,8 @@ class RoomRepo(val database: Database) {
         }
     }.subscribeOn(Schedulers.io())
 
-
+    fun deleteProfile() = Completable.create { emitter->
+        database.profileDao().delete()
+        emitter.onComplete()
+    }.subscribeOn(Schedulers.io())
 }

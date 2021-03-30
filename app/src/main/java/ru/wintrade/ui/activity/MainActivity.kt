@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.header_main_menu.*
+import kotlinx.android.synthetic.main.header_main_menu.view.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -17,12 +19,14 @@ import moxy.presenter.ProvidePresenter
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.util.HAS_VISITED_TUTORIAL
 import ru.wintrade.util.PREFERENCE_NAME
+import ru.wintrade.util.loadImage
 import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView,
@@ -46,6 +50,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         setContentView(R.layout.activity_main)
         App.instance.appComponent.inject(this)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
     }
 
     override fun init() {
@@ -78,10 +83,23 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                     drawer_layout.closeDrawer(GravityCompat.START)
                 } else {
                     drawer_layout.openDrawer(GravityCompat.START)
+                    presenter.onDrawerOpened()
                 }
             }
         }
         return true
+    }
+
+    override fun setupHeader(avatar: String?, username: String) {
+        val headerView = nav_view.getHeaderView(0)
+        avatar?.let {
+            loadImage(it, headerView.iv_header_main_avatar)
+        }
+        headerView.tv_header_main_nickname.text = username
+    }
+
+    override fun exit() {
+        finish()
     }
 
     override fun onResumeFragments() {
@@ -102,7 +120,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.about_menu_id -> ""
             R.id.ask_menu_id -> ""
             R.id.settings_menu_id -> ""
-            R.id.exit_menu_id -> finish()
+            R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

@@ -14,8 +14,10 @@ import ru.wintrade.mvp.model.messaging.IMessagingService
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
+import java.util.concurrent.atomic.AtomicInteger
 
 class MessagingService : FirebaseMessagingService(), IMessagingService {
+
 
     private val presenter = MessagingPresenter(this)
 
@@ -31,9 +33,8 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
 
     }
 
-    override fun showNotification(title: String, body: String) {
+    override fun showNotification(title: String, body: String, id: Int) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,
@@ -61,6 +62,6 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(id, notificationBuilder.build())
     }
 }
