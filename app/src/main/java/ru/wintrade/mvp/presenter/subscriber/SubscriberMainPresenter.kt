@@ -28,7 +28,16 @@ class SubscriberMainPresenter : MvpPresenter<SubscriberMainView>() {
         viewState.init()
         viewState.setAvatar(profileStorage.profile?.avatar)
         profileStorage.profile?.let { viewState.setName(it.username) }
-//        profileStorage.profile?.let { viewState.setSubscriptionCount(it.) }
+        getSubscriptionCount()
+    }
+
+    fun getSubscriptionCount() {
+        apiRepo.getProfile(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.setSubscriptionCount(it.subscriptions_count)
+            }, {
+                it.printStackTrace()
+            })
     }
 
     val listPresenter = SubscriberMainVPListPresenter()

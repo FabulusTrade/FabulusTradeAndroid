@@ -19,7 +19,8 @@ fun mapToRoomProfile(profile: Profile) = RoomProfile(
     profile.patronymic,
     profile.phone,
     profile.token,
-    profile.deviceToken
+    profile.deviceToken,
+    profile.subscriptions_count
 )
 
 fun mapToProfile(profile: RoomProfile) = Profile(
@@ -32,7 +33,8 @@ fun mapToProfile(profile: RoomProfile) = Profile(
     profile.patronymic,
     profile.phone,
     profile.token,
-    profile.deviceToken
+    profile.deviceToken,
+    profile.subscriptions_count
 )
 
 fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) = Profile(
@@ -45,7 +47,8 @@ fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) =
     profile.patronymic,
     profile.phone,
     token,
-    deviceToken
+    deviceToken,
+    profile.subscriptions_count
 )
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
@@ -87,5 +90,4 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         trade.subtype,
         trade.profit_count
     )
-
 }

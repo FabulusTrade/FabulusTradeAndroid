@@ -35,7 +35,8 @@ class SplashPresenter : MvpPresenter<SplashView>() {
                     lastName = "",
                     patronymic = "",
                     token = "",
-                    deviceToken = ""
+                    deviceToken = "",
+                    subscriptions_count = -1
                 )
             },
             BiFunction<Long, Profile, Profile> { _, t2 -> t2 })
@@ -49,7 +50,6 @@ class SplashPresenter : MvpPresenter<SplashView>() {
                     viewState.goToMain()
                 }
             )
-
     }
 
     private fun getTimer() =

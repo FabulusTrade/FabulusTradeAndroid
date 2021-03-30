@@ -4,5 +4,5 @@ import com.google.gson.annotations.Expose
 
 data class RequestSubscription(
     @Expose
-    val id_trade: Long
+    val id_trader: Long
 )

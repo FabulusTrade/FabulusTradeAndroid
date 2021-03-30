@@ -51,8 +51,8 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
         tv_subscriber_main_name.text = username
     }
 
-    override fun setSubscriptionCount(count: Int) {
-
+    override fun setSubscriptionCount(count: Long) {
+        tv_subscriber_main_subscription_count.text = count.toString()
     }
 
     private fun initViewPager() {

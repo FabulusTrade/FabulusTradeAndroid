@@ -15,6 +15,7 @@ class RoomProfile(
     val phone: String?,
     val token: String,
     val deviceToken: String,
+    val subscriptions_count: Long,
     @PrimaryKey
     val id: Long = 1
 )

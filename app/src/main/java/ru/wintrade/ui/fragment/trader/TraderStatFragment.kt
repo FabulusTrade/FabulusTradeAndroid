@@ -42,6 +42,10 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     override fun init() {
         initViewPager()
         initTraderFields()
+        btn_trader_stat_subscribe.setOnClickListener { presenter.subscribeToTrader() }
+    }
+
+    override fun subscribeToTrader() {
     }
 
     private fun initTraderFields() {
