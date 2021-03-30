@@ -9,20 +9,21 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
 
-class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
+class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderProfitView {
     companion object {
-        fun newInstance() = TraderProfitFragment()
+        fun newInstance(trader: Trader) = TraderProfitFragment(trader)
     }
 
     @InjectPresenter
     lateinit var presenter: TraderProfitPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderProfitPresenter().apply {
+    fun providePresenter() = TraderProfitPresenter(trader!!).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -45,5 +46,9 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
             xAxis.isEnabled = false
             axisRight.isEnabled = false
         }
+    }
+
+    override fun setDateJoined(date: String) {
+        tv_trader_profit_registration_date_value.text = date
     }
 }

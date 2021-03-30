@@ -20,6 +20,7 @@ class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy / HH.mm")
         val date = dateFormat.format(trade.date)
 
+        viewState.setName(trade.trader)
         viewState.setType(trade.operationType)
         viewState.setCompany(trade.company)
         viewState.setTicker(trade.ticker)
@@ -29,12 +30,9 @@ class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
         viewState.setCount(trade.count.toString())
         viewState.setSum((trade.price * trade.count).toString())
         viewState.setSumTitle("Сумма, ${trade.currency}")
-
     }
 
     fun closeClicked() {
         router.exit()
     }
-
-
 }

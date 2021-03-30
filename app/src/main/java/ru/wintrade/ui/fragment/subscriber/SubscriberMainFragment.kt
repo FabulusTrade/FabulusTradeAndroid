@@ -17,6 +17,7 @@ import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberMainVPAdapter
+import ru.wintrade.util.loadImage
 
 class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     companion object {
@@ -38,8 +39,23 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     ): View? = inflater.inflate(R.layout.fragment_subscriber_main, container, false)
 
     override fun init() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+        drawerSetMode()
+        initViewPager()
+    }
+
+    override fun setAvatar(ava: String?) {
+        ava?.let { loadImage(it, iv_subscriber_main_ava ) }
+    }
+
+    override fun setName(username: String) {
+        tv_subscriber_main_name.text = username
+    }
+
+    override fun setSubscriptionCount(count: Int) {
+
+    }
+
+    private fun initViewPager() {
         vp_subscriber_main.adapter = SubscriberMainVPAdapter(this, presenter.listPresenter)
         TabLayoutMediator(tab_layout_subscriber_main, vp_subscriber_main) { tab, pos ->
             when (pos) {
@@ -48,5 +64,10 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
                 2 -> tab.setIcon(R.drawable.ic_trader_news)
             }
         }.attach()
+    }
+
+    private fun drawerSetMode() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        requireActivity().toolbar_blue.visibility = View.VISIBLE
     }
 }

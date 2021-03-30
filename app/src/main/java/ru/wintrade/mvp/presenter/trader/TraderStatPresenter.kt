@@ -26,7 +26,7 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
 
     inner class TraderVPListPresenter : ITraderStatVPListPresenter {
         private val viewPagerListOfFragment = mutableListOf<Fragment>(
-            TraderProfitFragment.newInstance(),
+            TraderProfitFragment.newInstance(trader),
             TraderNewsFragment.newInstance(),
             TraderPopularInstrumentsFragment.newInstance(),
             TraderDealFragment.newInstance()

@@ -46,6 +46,10 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
+    override fun setName(traderName: String) {
+        tv_trade_detail_trader_name.text = traderName
+    }
+
     override fun setType(type: String) {
         tv_trade_detail_type.text = type
     }

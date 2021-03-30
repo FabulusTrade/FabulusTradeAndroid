@@ -1,21 +1,33 @@
 package ru.wintrade.mvp.presenter.trader
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.view.trader.TraderProfitView
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-class TraderProfitPresenter : MvpPresenter<TraderProfitView>() {
+class TraderProfitPresenter(val trader: Trader) : MvpPresenter<TraderProfitView>() {
     @Inject
     lateinit var router: Router
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        viewState.setDateJoined(getTraderDateJoined())
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getTraderDateJoined(): String {
+        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val outputDateFormat = SimpleDateFormat("dd.MM.yyyy")
+        val date = inputDateFormat.parse(trader.dateJoined)
+        return outputDateFormat.format(date!!)
     }
 
     fun setupBarChart(): BarData {

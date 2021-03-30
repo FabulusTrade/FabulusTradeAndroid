@@ -4,7 +4,7 @@ data class Trader (
     val id: Long,
     val username: String,
     val email: String,
-    val avatar: String,
+    val avatar: String?,
     val kval: Boolean,
     val isTrader: Boolean,
     val isActive: Boolean,
