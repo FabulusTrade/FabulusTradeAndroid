@@ -32,8 +32,11 @@
                     android:layout_height="65dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
+                    android:scaleType="centerInside"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_trader_stat_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -45,7 +48,6 @@
                     android:layout_marginEnd="8dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Великий Трейдер"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/cb_trader_stat_observe"
                     app:layout_constraintStart_toStartOf="@+id/tv_trader_stat_profit"
@@ -55,9 +57,8 @@
                     android:id="@+id/tv_trader_stat_profit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginEnd="37dp"
-                    android:text="82,82%"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_trader_stat_ava"
                     app:layout_constraintEnd_toStartOf="@+id/btn_trader_stat_subscribe"
@@ -133,8 +134,10 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_trader_stat" />
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_trader_stat"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

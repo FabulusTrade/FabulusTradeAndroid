@@ -1,5 +1,6 @@
 package ru.wintrade.ui.fragment.trader
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +17,10 @@ import ru.wintrade.mvp.view.trader.TraderStatView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderVPAdapter
-import java.lang.IllegalStateException
+import ru.wintrade.util.loadImage
 
-class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView, BackButtonListener {
+class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView,
+    BackButtonListener {
     companion object {
         fun newInstance(trader: Trader) = TraderStatFragment(trader)
     }
@@ -38,6 +40,23 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     ): View? = inflater.inflate(R.layout.fragment_trader_stat, container, false)
 
     override fun init() {
+        initViewPager()
+        initTraderFields()
+    }
+
+    private fun initTraderFields() {
+        presenter.trader.avatar?.let { loadImage(it, iv_trader_stat_ava) }
+        tv_trader_stat_name.text = presenter.trader.username
+        if (presenter.trader.yearProfit.substring(0, 1) == "-") {
+            tv_trader_stat_profit.text = presenter.trader.yearProfit
+            tv_trader_stat_profit.setTextColor(Color.RED)
+        } else {
+            tv_trader_stat_profit.text = presenter.trader.yearProfit
+            tv_trader_stat_profit.setTextColor(Color.GREEN)
+        }
+    }
+
+    private fun initViewPager() {
         vp_trader_stat.adapter = TraderVPAdapter(this, presenter.listPresenter)
         TabLayoutMediator(
             tab_layout_trader_stat,

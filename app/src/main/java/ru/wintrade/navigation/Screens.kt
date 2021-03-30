@@ -30,8 +30,8 @@ class Screens {
         override fun getFragment() = TraderStatFragment.newInstance(trader)
     }
 
-    class TraderProfitScreen : SupportAppScreen() {
-        override fun getFragment() = TraderProfitFragment.newInstance()
+    class TraderProfitScreen(val trader: Trader) : SupportAppScreen() {
+        override fun getFragment() = TraderProfitFragment.newInstance(trader)
     }
 
     class TraderNewsScreen : SupportAppScreen() {

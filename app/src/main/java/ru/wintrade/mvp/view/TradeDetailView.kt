@@ -7,6 +7,7 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface TradeDetailView: MvpView {
     fun init()
+    fun setName(traderName: String)
     fun setType(type: String)
     fun setCompany(company: String)
     fun setTicker(ticker: String)

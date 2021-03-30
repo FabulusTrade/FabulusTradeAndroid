@@ -63,4 +63,13 @@
     <string name="attached_post_title">создать закрепленную запись</string>
     <string name="coming_soon">В разработке</string>
     <string name="edit_profile">Заполнить\n профиль</string>
+    <string name="subscription">Подписка</string>
+    <string name="trader">Трейдер</string>
+    <string name="type_of_transaction">Тип операции</string>
+    <string name="name">Наименование</string>
+    <string name="ticker">Тикер</string>
+    <string name="price">Цена</string>
+    <string name="quantity">Количество, шт</string>
+    <string name="sum">Сумма</string>
+    <string name="date_time">Дата/время</string>
 </resources>

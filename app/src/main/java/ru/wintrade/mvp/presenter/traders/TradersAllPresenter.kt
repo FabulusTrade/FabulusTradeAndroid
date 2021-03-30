@@ -3,7 +3,6 @@ package ru.wintrade.mvp.presenter.traders
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
@@ -32,7 +31,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         override fun bind(view: TradersAllItemView) {
             view.setTraderName(traderList[view.pos].username)
             view.setTraderProfit(traderList[view.pos].yearProfit)
-            view.setTraderAvatar(traderList[view.pos].avatar)
+            traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
         }
 
         override fun openTraderStat(pos: Int) {

@@ -34,17 +34,17 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Трейдер"
+                android:text="@string/trader"
                 android:textColor="@color/colorWhite" />
 
             <TextView
+                android:id="@+id/tv_trade_detail_trader_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Баффет"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
@@ -61,7 +61,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Тип операции"
+                android:text="@string/type_of_transaction"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -72,7 +72,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -95,7 +94,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Наименование"
+                android:text="@string/name"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -106,7 +105,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -128,7 +126,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Тикер"
+                android:text="@string/ticker"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -139,7 +137,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -163,7 +160,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Цена"
+                android:text="@string/price"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -174,7 +171,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -196,7 +192,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Количество, шт"
+                android:text="@string/quantity"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -207,7 +203,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -231,7 +226,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Сумма"
+                android:text="@string/sum"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -242,7 +237,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -264,7 +258,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Дата/время"
+                android:text="@string/date_time"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -275,7 +269,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="fdsf"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>

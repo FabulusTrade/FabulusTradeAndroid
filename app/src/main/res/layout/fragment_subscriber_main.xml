@@ -32,8 +32,10 @@
                     android:layout_height="65dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_subscriber_main_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -46,7 +48,6 @@
                     android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Мисетр Х"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/imageView"
                     app:layout_constraintStart_toEndOf="@+id/iv_subscriber_main_ava"

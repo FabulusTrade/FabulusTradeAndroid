@@ -42,7 +42,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             val sum = trade.price * trade.count
             traders.forEach {
                 if (it.username == trade.trader)
-                    view.setAvatar(it.avatar)
+                    it.avatar?.let { ava -> view.setAvatar(ava) }
             }
             view.setCompany(trade.company)
             view.setCount("Кол-во ${trade.count}")
@@ -57,7 +57,6 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             val trade = trades[pos]
             router.navigateTo(Screens.TradeDetailScreen(trade))
         }
-
     }
 
     override fun onFirstViewAttach() {
@@ -73,10 +72,8 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                             subTraders.add(trader)
                     }
                 }
-
                 traders.clear()
                 traders.addAll(subTraders)
-
                 subTraders
             }
         ).subscribe(
@@ -109,6 +106,4 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             {}
         )
     }
-
-
 }

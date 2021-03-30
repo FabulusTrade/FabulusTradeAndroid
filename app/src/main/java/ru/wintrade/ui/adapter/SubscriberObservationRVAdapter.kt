@@ -23,6 +23,9 @@ class SubscriberObservationRVAdapter(val presenter: ISubscriberObservationListPr
     override fun onBindViewHolder(holder: SubscriberObservationItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        holder.itemView.layout_traders_signed_item.setOnClickListener {
+            presenter.openTraderStat(holder.adapterPosition)
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()
