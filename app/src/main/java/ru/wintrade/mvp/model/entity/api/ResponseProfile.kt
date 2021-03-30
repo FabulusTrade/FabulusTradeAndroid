@@ -2,7 +2,7 @@ package ru.wintrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
 
-class ResponseProfile (
+class ResponseProfile(
     @Expose
     val id: Long,
     @Expose
@@ -18,5 +18,7 @@ class ResponseProfile (
     @Expose
     val patronymic: String,
     @Expose
-    val phone: String? = null
+    val phone: String? = null,
+    @Expose
+    val subscriptions_count: Long
 )

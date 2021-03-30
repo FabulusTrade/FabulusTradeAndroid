@@ -10,5 +10,6 @@ data class Profile(
     var patronymic: String,
     var phone: String? = null,
     var token: String,
-    var deviceToken: String
+    var deviceToken: String,
+    var subscriptions_count: Long
 )

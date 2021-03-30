@@ -1,5 +1,6 @@
 package ru.wintrade.ui.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,11 @@ class SubscriberObservationRVAdapter(val presenter: ISubscriberObservationListPr
     override fun onBindViewHolder(holder: SubscriberObservationItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        if (holder.itemView.tv_subscriber_observation_profit.text.substring(0, 1) == "-") {
+            holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.RED)
+        } else {
+            holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.GREEN)
+        }
         holder.itemView.layout_traders_signed_item.setOnClickListener {
             presenter.openTraderStat(holder.adapterPosition)
         }

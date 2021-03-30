@@ -67,7 +67,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="2"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_subscriber_main_subscription_title"
                     app:layout_constraintStart_toEndOf="@+id/tv_subscriber_main_subscription_title"
                     app:layout_constraintTop_toTopOf="@+id/tv_subscriber_main_subscription_title" />
