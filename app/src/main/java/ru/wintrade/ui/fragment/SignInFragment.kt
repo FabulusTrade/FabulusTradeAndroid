@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import kotlinx.android.synthetic.main.layout_title.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -34,6 +37,8 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     ): View? = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
     override fun init() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        requireActivity().toolbar_blue.visibility = View.GONE
         iv_close.setOnClickListener { requireActivity().finish() }
         entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
         entrance_enter_button.setOnClickListener {

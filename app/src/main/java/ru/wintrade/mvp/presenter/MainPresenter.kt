@@ -1,9 +1,11 @@
 package ru.wintrade.mvp.presenter
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
+import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
@@ -17,11 +19,15 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
     @Inject
     lateinit var router: Router
 
+    @Inject
+    lateinit var roomRepo: RoomRepo
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        if (profileStorage.profile != null)
+        if (profileStorage.profile != null) {
             router.newRootScreen(Screens.SubscriberMainScreen())
+        }
         else {
             if (hasVisitedTutorial)
                 router.newRootScreen(Screens.SignInScreen())
@@ -37,6 +43,21 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
 
     fun openSubscriberObservationScreen() {
         router.replaceScreen(Screens.SubscriberMainScreen())
+    }
+
+    fun exitClicked() {
+        roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                profileStorage.profile = null
+                viewState.exit()
+            },
+            {}
+        )
+    }
+
+    fun onDrawerOpened() {
+        val profile = profileStorage.profile
+        viewState.setupHeader(profile!!.avatar, profile.username)
     }
 
     fun backClicked() {
