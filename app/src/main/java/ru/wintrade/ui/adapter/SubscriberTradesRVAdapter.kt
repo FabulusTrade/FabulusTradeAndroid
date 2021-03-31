@@ -1,5 +1,6 @@
 package ru.wintrade.ui.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import ru.wintrade.util.loadImage
 
 class SubscriberTradesRVAdapter(
     val presenter: ISubscriberTradesRVListPresenter
-): RecyclerView.Adapter<SubscriberTradesRVAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SubscriberTradesRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         LayoutInflater.from(parent.context).inflate(
@@ -32,7 +33,6 @@ class SubscriberTradesRVAdapter(
             presenter.clicked(holder.pos)
         }
     }
-
 
     inner class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
@@ -72,7 +72,9 @@ class SubscriberTradesRVAdapter(
             tv_item_sub_trade_date.text = date
         }
 
-
+        override fun setProfit(profit: String, color: Int) = with(containerView) {
+            tv_item_sub_trade_profit_count.text = profit
+            tv_item_sub_trade_profit_count.setBackgroundColor(color)
+        }
     }
-
 }

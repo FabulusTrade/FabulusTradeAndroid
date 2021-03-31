@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -14,7 +15,6 @@ import ru.wintrade.mvp.model.messaging.IMessagingService
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
-import java.util.concurrent.atomic.AtomicInteger
 
 class MessagingService : FirebaseMessagingService(), IMessagingService {
 
@@ -45,6 +45,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_logo)
+            .setColor(Color.RED)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
@@ -61,7 +62,6 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             )
             notificationManager.createNotificationChannel(channel)
         }
-
         notificationManager.notify(id, notificationBuilder.build())
     }
 }

@@ -72,4 +72,7 @@
     <string name="quantity">Количество, шт</string>
     <string name="sum">Сумма</string>
     <string name="date_time">Дата/время</string>
+    <string name="detail">Подробнее…</string>
+    <string name="purchase">Покупка</string>
+    <string name="date">Дата</string>
 </resources>

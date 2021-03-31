@@ -15,12 +15,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.SplashActivity"
-            android:theme="@style/splashScreenTheme"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -47,7 +47,5 @@
             </intent-filter>
         </service>
     </application>
-
-
 
 </manifest>

@@ -1,9 +1,11 @@
 package ru.wintrade.ui.fragment
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
@@ -45,6 +47,10 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
             presenter.loginBtnClicked(
                 et_sign_in_nickname.text.toString(),
                 et_sign_in_password.text.toString()
+            )
+            (requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                requireActivity().currentFocus?.windowToken,
+                0
             )
         }
     }
