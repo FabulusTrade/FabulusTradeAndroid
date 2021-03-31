@@ -40,6 +40,13 @@ class SubscriberDealFragment : MvpAppCompatFragment(), SubscriberDealView {
         adapter = SubscriberTradesRVAdapter(presenter.listPresenter)
         rv_sub_deal.adapter = adapter
         rv_sub_deal.layoutManager = LinearLayoutManager(context)
+        layout_sub_deal_refresh.setOnRefreshListener {
+            presenter.refreshed()
+        }
+    }
+
+    override fun setRefreshing(isRefreshing: Boolean) {
+        layout_sub_deal_refresh.isRefreshing = isRefreshing
     }
 
     override fun updateAdapter() {

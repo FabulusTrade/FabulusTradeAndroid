@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,12 +16,12 @@
             android:id="@+id/btn_sub_deal_trades"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
             android:text="Сделки"
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:cornerRadius="8dp" />
 
         <com.google.android.material.button.MaterialButton
@@ -33,27 +32,34 @@
             android:backgroundTint="@color/colorWhite"
             android:text="Ордера"
             android:textColor="@color/colorGray"
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:cornerRadius="8dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sub_deal_logs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorWhite"
             android:text="Журнал"
             android:textColor="@color/colorGray"
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:cornerRadius="8dp" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_sub_deal"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/layout_sub_deal_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sub_deal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
