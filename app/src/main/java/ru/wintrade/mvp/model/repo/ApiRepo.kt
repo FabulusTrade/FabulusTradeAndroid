@@ -2,6 +2,7 @@ package ru.wintrade.mvp.model.repo
 
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import ru.wintrade.mvp.model.api.WinTradeDataSource
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
@@ -11,6 +12,8 @@ import ru.wintrade.util.mapToTrade
 import ru.wintrade.util.mapToTrader
 
 class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
+
+    val newTradeSubject = PublishSubject.create<Boolean>()
 
     fun getAllTradersSingle(): Single<List<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->

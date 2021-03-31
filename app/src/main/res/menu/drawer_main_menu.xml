@@ -10,11 +10,11 @@
             android:checked="false"/>
         <item
             android:id="@+id/observation_list_menu_id"
-            android:icon="@drawable/visibility"
+            android:icon="@drawable/ic_visibility"
             android:title="@string/observation_list_menu_title" />
         <item
             android:id="@+id/invite_a_friend_menu_id"
-            android:icon="@drawable/person_add"
+            android:icon="@drawable/ic_person_add"
             android:title="@string/invite_a_friend_menu_title" />
         <item
             android:id="@+id/about_menu_id"

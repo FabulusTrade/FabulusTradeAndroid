@@ -2,7 +2,9 @@ package ru.wintrade.mvp.presenter.subscriber
 
 import android.graphics.Color
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.functions.Function
 import moxy.MvpPresenter
@@ -30,6 +32,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
 
     val listPresenter = SubscriberTradesRVListPresenter()
     val traders = mutableListOf<Trader>()
+    var newTradeDisposable: Disposable? = null
 
     inner class SubscriberTradesRVListPresenter : ISubscriberTradesRVListPresenter {
         val trades = mutableListOf<Trade>()
@@ -46,7 +49,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                     it.avatar?.let { ava -> view.setAvatar(ava) }
             }
             view.setCompany(trade.company)
-            view.setCount("Кол-во ${trade.count}")
+            view.setCount("Кол-во: ${trade.count}")
             view.setDate("Дата: $date")
             view.setNickname(trade.trader)
             view.setType(trade.operationType)
@@ -67,9 +70,24 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
         }
     }
 
+    fun refreshed() {
+        loadData()
+    }
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        loadData()
+        apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread()).subscribe(getNewTradeObserver())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        newTradeDisposable?.dispose()
+    }
+
+    private fun loadData() {
+        viewState.setRefreshing(true)
         Single.zip(apiRepo.getAllTradersSingle(),
             apiRepo.mySubscriptions(profileStorage.profile!!.token),
             BiFunction { allTraders, subs ->
@@ -105,6 +123,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                         listPresenter.trades.clear()
                         listPresenter.trades.addAll(sorted)
                         viewState.updateAdapter()
+                        viewState.setRefreshing(false)
                     },
                     {
                         it.printStackTrace()
@@ -113,5 +132,24 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             },
             {}
         )
+    }
+
+    private fun getNewTradeObserver() = object: Observer<Boolean> {
+        override fun onSubscribe(d: Disposable) {
+            newTradeDisposable = d
+        }
+
+        override fun onNext(t: Boolean) {
+            loadData()
+        }
+
+        override fun onError(e: Throwable) {
+
+        }
+
+        override fun onComplete() {
+
+        }
+
     }
 }
