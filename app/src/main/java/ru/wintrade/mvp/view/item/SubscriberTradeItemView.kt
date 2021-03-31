@@ -11,4 +11,5 @@ interface SubscriberTradeItemView {
     fun setSum(sum: String)
     fun setCount(count: String)
     fun setDate(date: String)
+    fun setProfit(profit: String, color: Int)
 }

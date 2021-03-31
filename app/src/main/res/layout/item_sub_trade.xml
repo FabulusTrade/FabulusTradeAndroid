@@ -30,21 +30,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:text="NICKNAME"
+                android:text="@string/nickname"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_item_sub_operation_type"
+            android:id="@+id/tv_item_sub_trade_profit_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:text="Покупка"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -57,19 +54,22 @@
             android:id="@+id/tv_item_sub_trade_company"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1.4"
-            android:text="Nokia"
+            android:text="@string/name"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tv_item_sub_trade_price"
+            android:id="@+id/tv_item_sub_operation_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Цена"
-            android:textColor="@color/colorBlack"
+            android:text="@string/purchase"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -78,11 +78,12 @@
         android:layout_marginTop="6dp">
 
         <TextView
-            android:id="@+id/tv_item_sub_trade_sum"
+            android:id="@+id/tv_item_sub_trade_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1.4"
-            android:text="Сумма"
+            android:text="@string/price"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -90,8 +91,9 @@
             android:id="@+id/tv_item_sub_trade_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Колво"
+            android:text="@string/quantity"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
     </LinearLayout>
@@ -105,19 +107,43 @@
             android:id="@+id/tv_item_sub_trade_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1.4"
-            android:text="Дата"
+            android:text="@string/date"
             android:textColor="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/tv_item_sub_trade_sum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/sum"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.4" />
 
         <TextView
             android:id="@+id/tv_item_sub_trade_more"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Подробнее.."
+            android:text="@string/detail"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
     </LinearLayout>
-
 
 </LinearLayout>

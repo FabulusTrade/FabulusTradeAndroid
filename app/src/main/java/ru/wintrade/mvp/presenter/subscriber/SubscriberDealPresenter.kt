@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter.subscriber
 
+import android.graphics.Color
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.BiFunction
@@ -51,6 +52,13 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             view.setType(trade.operationType)
             view.setPrice("Цена: ${trade.price} ${trade.currency}")
             view.setSum("Сумма: $sum ${trade.currency}")
+            trade.profitCount?.let {
+                if (trade.profitCount.toFloat() >= 0) {
+                    view.setProfit("${trade.profitCount}", Color.GREEN)
+                } else {
+                    view.setProfit("${trade.profitCount}", Color.RED)
+                }
+            } ?: view.setProfit("", Color.WHITE)
         }
 
         override fun clicked(pos: Int) {
