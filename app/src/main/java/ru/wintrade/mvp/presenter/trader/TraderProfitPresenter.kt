@@ -20,6 +20,8 @@ class TraderProfitPresenter(val trader: Trader) : MvpPresenter<TraderProfitView>
         super.onFirstViewAttach()
         viewState.init()
         viewState.setDateJoined(getTraderDateJoined())
+        viewState.setFollowersCount(trader.followersCount)
+        viewState.setTradesCount(trader.tradesCount)
     }
 
     @SuppressLint("SimpleDateFormat")

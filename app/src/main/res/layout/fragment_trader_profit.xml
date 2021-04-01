@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="14dp"
-                android:text="305"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_follower_title" />
@@ -57,6 +56,7 @@
                 android:layout_marginStart="8dp"
                 android:text="+30 (10%) за 7 дней"
                 android:textColor="@color/colorGreen"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_follower_counter"
                 app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_follower_counter"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_follower_counter" />
@@ -470,7 +470,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="17"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_for_week_icon" />
@@ -573,7 +572,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="01.05.17"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_registration_date_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_registration_date_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_registration_date_icon" />
