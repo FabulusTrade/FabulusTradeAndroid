@@ -51,4 +51,12 @@ class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(),
     override fun setDateJoined(date: String) {
         tv_trader_profit_registration_date_value.text = date
     }
+
+    override fun setFollowersCount(followersCount: Int) {
+        tv_trader_profit_follower_counter.text = followersCount.toString()
+    }
+
+    override fun setTradesCount(tradesCount: Int) {
+        tv_trader_profit_deal_for_week_count.text = tradesCount.toString()
+    }
 }

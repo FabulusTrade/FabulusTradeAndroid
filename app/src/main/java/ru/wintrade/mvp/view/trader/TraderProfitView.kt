@@ -8,4 +8,7 @@ import moxy.viewstate.strategy.StateStrategyType
 interface TraderProfitView : MvpView {
     fun init()
     fun setDateJoined(date: String)
+    fun setFollowersCount(followersCount: Int)
+    fun setTradesCount(tradesCount: Int)
+//    fun setFollowersCountForWeek(countForWeek: Int)
 }
