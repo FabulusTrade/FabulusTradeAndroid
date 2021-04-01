@@ -127,6 +127,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                     },
                     {
                         it.printStackTrace()
+                        viewState.setRefreshing(false)
                     }
                 )
             },
