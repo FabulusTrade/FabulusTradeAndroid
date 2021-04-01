@@ -52,7 +52,8 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     }
 
     override fun setSubscriptionCount(count: Long) {
-        tv_subscriber_main_subscription_count.text = count.toString()
+        val text = "Подписки $count"
+        tv_subscriber_main_subscription.text = text
     }
 
     private fun initViewPager() {
