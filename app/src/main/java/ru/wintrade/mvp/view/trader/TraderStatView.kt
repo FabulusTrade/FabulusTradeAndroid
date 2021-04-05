@@ -8,4 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface TraderStatView : MvpView {
     fun init()
     fun subscribeToTrader()
+    fun setButtonVisibility(result: Boolean)
 }
