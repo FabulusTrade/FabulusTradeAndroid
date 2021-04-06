@@ -4,6 +4,7 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.api.ResponseProfile
+import ru.wintrade.mvp.model.entity.api.ResponseSubscription
 import ru.wintrade.mvp.model.entity.api.ResponseTrade
 import ru.wintrade.mvp.model.entity.api.ResponseTrader
 import ru.wintrade.mvp.model.entity.room.RoomProfile
@@ -54,24 +55,32 @@ fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) =
 fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.id,
     trader.username,
-    trader.email,
     trader.avatar,
     trader.kval,
     trader.is_trader,
     trader.is_active,
-    trader.first_name,
-    trader.last_name,
-    trader.patronymic,
     trader.date_joined,
-    trader.phone,
     trader.trades_count,
-    trader.fio,
     trader.followers_count,
-    trader.year_profit
+    trader.year_profit,
+    trader.followers_count_7day
+)
+
+fun mapToSubscription(subscription: ResponseSubscription) = Trader(
+    subscription.id_trader.id,
+    subscription.id_trader.username,
+    subscription.id_trader.avatar,
+    subscription.id_trader.kval,
+    subscription.id_trader.isActive,
+    subscription.id_trader.isTrader,
+    subscription.id_trader.dateJoined,
+    subscription.id_trader.tradesCount,
+    subscription.id_trader.followersCount,
+    subscription.id_trader.yearProfit,
+    subscription.id_trader.followersForWeekCount
 )
 
 fun mapToTrade(trade: ResponseTrade): Trade {
-
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val date = dateFormat.parse(trade.date)
     return Trade(
@@ -87,7 +96,6 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         trade.count,
         trade.currency,
         date,
-        trade.subtype,
         trade.profit_count
     )
 }

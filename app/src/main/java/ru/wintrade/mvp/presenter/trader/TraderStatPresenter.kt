@@ -70,7 +70,7 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
                         viewState.setButtonVisibility(true)
                     } else
                         listSubs.forEach {
-                            if (it.trader == trader.username) {
+                            if (it.username == trader.username) {
                                 listTrader.add(trader)
                             }
                         }

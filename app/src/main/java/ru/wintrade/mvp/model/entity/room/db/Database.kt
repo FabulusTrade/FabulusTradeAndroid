@@ -8,10 +8,10 @@ import ru.wintrade.mvp.model.entity.room.dao.ProfileDao
     entities = [
         RoomProfile::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
-abstract class Database: RoomDatabase() {
+abstract class Database : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
 

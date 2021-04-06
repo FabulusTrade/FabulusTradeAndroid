@@ -71,7 +71,7 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     private fun initTraderFields() {
         presenter.trader.avatar?.let { loadImage(it, iv_trader_stat_ava) }
         tv_trader_stat_name.text = presenter.trader.username
-        if (presenter.trader.yearProfit.substring(0, 1) == "-") {
+        if (presenter.trader.yearProfit?.substring(0, 1) == "-") {
             tv_trader_stat_profit.text = presenter.trader.yearProfit
             tv_trader_stat_profit.setTextColor(Color.RED)
         } else {
