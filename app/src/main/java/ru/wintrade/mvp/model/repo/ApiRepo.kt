@@ -8,6 +8,7 @@ import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.network.NetworkStatus
+import ru.wintrade.util.mapToSubscription
 import ru.wintrade.util.mapToTrade
 import ru.wintrade.util.mapToTrader
 
@@ -15,10 +16,10 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
 
     val newTradeSubject = PublishSubject.create<Boolean>()
 
-    fun getAllTradersSingle(): Single<List<Trader>> =
+    fun getAllTradersSingle(token: String): Single<List<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getAllTraders().flatMap { list ->
+                api.getAllTraders(token).flatMap { list ->
                     val traders = list.map { apiTrader -> mapToTrader(apiTrader) }
                     Single.just(traders)
                 }
@@ -101,19 +102,22 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
     fun subscribeToTrader(token: String, traderId: Long): Single<RequestSubscription> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val sub = RequestSubscription(traderId)
+                val sub = RequestSubscription(traderId, null)
                 api.subscribeToTrader(token, sub)
             } else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun mySubscriptions(token: String): Single<List<ResponseSubscription>> =
+    fun mySubscriptions(token: String): Single<List<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
-                api.mySubscriptions(token)
+                api.mySubscriptions(token).flatMap {
+                    val sub = it.map {
+                        mapToSubscription(it)
+                    }
+                    Single.just(sub)
+                }
             else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
-
-
 }

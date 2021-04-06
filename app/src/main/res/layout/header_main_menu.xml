@@ -6,17 +6,6 @@
     android:background="@color/colorPrimary">
 
     <ImageView
-        android:id="@+id/iv_header_main_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_24"
-        app:tint="@color/colorWhite" />
-
-    <ImageView
         android:id="@+id/iv_header_main_avatar"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -36,24 +25,24 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_header_main_avatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar" />
+        app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_header_main_nickname" />
 
     <TextView
         android:id="@+id/tv_header_main_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:text="Великий Трейдер"
+        android:text="@string/great_treader"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_header_main_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/iv_header_main_close" />
+        app:layout_constraintTop_toTopOf="@+id/iv_header_main_avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

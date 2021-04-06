@@ -78,7 +78,8 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
         super.onFirstViewAttach()
         viewState.init()
         loadData()
-        apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread()).subscribe(getNewTradeObserver())
+        apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(getNewTradeObserver())
     }
 
     override fun onDestroy() {
@@ -88,13 +89,13 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
 
     private fun loadData() {
         viewState.setRefreshing(true)
-        Single.zip(apiRepo.getAllTradersSingle(),
+        Single.zip(apiRepo.getAllTradersSingle(profileStorage.profile!!.token),
             apiRepo.mySubscriptions(profileStorage.profile!!.token),
             BiFunction { allTraders, subs ->
                 val subTraders = mutableListOf<Trader>()
                 allTraders.forEach { trader ->
                     subs.forEach { sub ->
-                        if (trader.username == sub.trader)
+                        if (trader.id == sub.id)
                             subTraders.add(trader)
                     }
                 }
@@ -135,7 +136,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
         )
     }
 
-    private fun getNewTradeObserver() = object: Observer<Boolean> {
+    private fun getNewTradeObserver() = object : Observer<Boolean> {
         override fun onSubscribe(d: Disposable) {
             newTradeDisposable = d
         }
@@ -151,6 +152,5 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
         override fun onComplete() {
 
         }
-
     }
 }
