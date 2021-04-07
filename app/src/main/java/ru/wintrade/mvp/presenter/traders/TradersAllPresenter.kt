@@ -29,8 +29,8 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         override fun getCount(): Int = traderList.size
 
         override fun bind(view: TradersAllItemView) {
-            view.setTraderName(traderList[view.pos].username)
-            view.setTraderProfit(traderList[view.pos].yearProfit)
+            traderList[view.pos].username?.let { view.setTraderName(it) }
+            traderList[view.pos].yearProfit?.let { view.setTraderProfit(it) }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
         }
 
@@ -46,17 +46,18 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     }
 
     private fun getTraderList() {
-        apiRepo.getAllTradersSingle().observeOn(AndroidSchedulers.mainThread()).subscribe(
-            {
-                listPresenter.traderList.clear()
-                listPresenter.traderList.addAll(
-                    it
+        profileStorage.profile?.let { profile ->
+            apiRepo.getAllTradersSingle(profile.token).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        listPresenter.traderList.clear()
+                        listPresenter.traderList.addAll(it)
+                        viewState.updateRecyclerView()
+                    },
+                    {
+                        it.printStackTrace()
+                    }
                 )
-                viewState.updateRecyclerView()
-            },
-            {
-                it.printStackTrace()
-            }
-        )
+        }
     }
 }

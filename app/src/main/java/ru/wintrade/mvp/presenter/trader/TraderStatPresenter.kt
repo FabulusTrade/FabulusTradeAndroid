@@ -28,6 +28,7 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        isAlreadySubscribe()
         viewState.init()
     }
 
@@ -53,7 +54,32 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
             apiRepo.subscribeToTrader(it.token, trader.id).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.subscribeToTrader()
-                },{
+                    isAlreadySubscribe()
+                }, {
+
+                })
+        }
+    }
+
+    fun isAlreadySubscribe() {
+        profileStorage.profile?.let { profile ->
+            apiRepo.mySubscriptions(profile.token).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ listSubs ->
+                    val listTrader = mutableListOf<Trader>()
+                    if (listSubs.isEmpty()) {
+                        viewState.setButtonVisibility(true)
+                    } else
+                        listSubs.forEach {
+                            if (it.username == trader.username) {
+                                listTrader.add(trader)
+                            }
+                        }
+                    if (listTrader.isEmpty()) {
+                        viewState.setButtonVisibility(true)
+                    } else {
+                        viewState.setButtonVisibility(false)
+                    }
+                }, {
 
                 })
         }

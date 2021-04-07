@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_trader_stat.*
 import moxy.MvpAppCompatFragment
@@ -42,16 +43,35 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     override fun init() {
         initViewPager()
         initTraderFields()
-        btn_trader_stat_subscribe.setOnClickListener { presenter.subscribeToTrader() }
+        btn_trader_stat_subscribe.setOnClickListener {
+            subscribeToTrader()
+        }
     }
 
     override fun subscribeToTrader() {
+        presenter.subscribeToTrader()
+    }
+
+    override fun setButtonVisibility(result: Boolean) {
+        if (result) {
+            btn_trader_stat_subscribe.visibility = View.VISIBLE
+            cb_trader_stat_observe.visibility = View.VISIBLE
+        } else {
+            cb_trader_stat_observe.visibility = View.INVISIBLE
+            with(btn_trader_stat_subscribe) {
+                isEnabled = false
+                text = resources.getText(R.string.isSubscribe)
+                backgroundTintList =
+                    context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
+                visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun initTraderFields() {
         presenter.trader.avatar?.let { loadImage(it, iv_trader_stat_ava) }
         tv_trader_stat_name.text = presenter.trader.username
-        if (presenter.trader.yearProfit.substring(0, 1) == "-") {
+        if (presenter.trader.yearProfit?.substring(0, 1) == "-") {
             tv_trader_stat_profit.text = presenter.trader.yearProfit
             tv_trader_stat_profit.setTextColor(Color.RED)
         } else {

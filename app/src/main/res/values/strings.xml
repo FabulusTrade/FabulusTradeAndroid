@@ -75,4 +75,6 @@
     <string name="detail">Подробнее…</string>
     <string name="purchase">Покупка</string>
     <string name="date">Дата</string>
+    <string name="isSubscribe">Уже подписаны</string>
+    <string name="great_treader">Великий Трейдер</string>
 </resources>
