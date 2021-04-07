@@ -4,15 +4,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.api.ResponseSubscription
-import ru.wintrade.mvp.model.entity.api.ResponseTrader
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ISubscriberObservationListPresenter
 import ru.wintrade.mvp.view.item.SubscriberObservationItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.mapToSubscription
 import javax.inject.Inject
 
 class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>() {
@@ -34,11 +31,8 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             apiRepo.mySubscriptions(profile.token)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
-
                         listPresenter.subscriberObservationList.clear()
-                        listPresenter.subscriberObservationList.addAll(
-                            it
-                        )
+                        listPresenter.subscriberObservationList.addAll(it)
                         viewState.updateAdapter()
                     }, {
                         it.printStackTrace()
@@ -57,7 +51,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             val traderList = subscriberObservationList[view.pos]
             traderList.username?.let { view.setTraderName(it) }
             traderList.avatar?.let { view.setTraderAvatar(it) }
-            traderList.username?.let { view.setTraderProfit(it) }
+            traderList.yearProfit?.let { view.setTraderProfit(it) }
         }
 
         override fun openTraderStat(pos: Int) {

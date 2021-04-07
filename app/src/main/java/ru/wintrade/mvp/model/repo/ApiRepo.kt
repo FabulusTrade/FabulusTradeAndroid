@@ -102,7 +102,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
     fun subscribeToTrader(token: String, traderId: Long): Single<RequestSubscription> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val sub = RequestSubscription(traderId)
+                val sub = RequestSubscription(traderId, null)
                 api.subscribeToTrader(token, sub)
             } else
                 Single.error(RuntimeException())

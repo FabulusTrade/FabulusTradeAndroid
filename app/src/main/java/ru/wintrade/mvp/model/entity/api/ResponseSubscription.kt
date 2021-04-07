@@ -1,11 +1,10 @@
 package ru.wintrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
-import ru.wintrade.mvp.model.entity.Trader
 
 data class ResponseSubscription(
     @Expose
-    val id_trader: Trader,
+    val id_trader: ResponseTrader,
     @Expose
     val end_date: String?,
     @Expose

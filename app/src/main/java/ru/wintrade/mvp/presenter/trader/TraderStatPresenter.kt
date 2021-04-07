@@ -57,7 +57,8 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
                     isAlreadySubscribe()
                 }, {
 
-                })
+                    }
+                )
         }
     }
 
@@ -70,7 +71,7 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
                         viewState.setButtonVisibility(true)
                     } else
                         listSubs.forEach {
-                            if (it.username == trader.username) {
+                            if (it.id == trader.id) {
                                 listTrader.add(trader)
                             }
                         }

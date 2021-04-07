@@ -95,7 +95,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                 val subTraders = mutableListOf<Trader>()
                 allTraders.forEach { trader ->
                     subs.forEach { sub ->
-                        if (trader.username == sub.username)
+                        if (trader.id == sub.id)
                             subTraders.add(trader)
                     }
                 }
