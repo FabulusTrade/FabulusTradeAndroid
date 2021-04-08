@@ -81,12 +81,13 @@ fun mapToSubscription(subscription: ResponseSubscription) = Trader(
     subscription.id_trader.followers_count_7day
 )
 
-fun mapToTrade(trade: ResponseTrade): Trade {
+fun mapToTrade(trade: ResponseTrade, trader: Trader): Trade {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val date = dateFormat.parse(trade.date)
     return Trade(
         trade.id,
         trade.trader,
+        trader,
         trade.operation_type,
         trade.company,
         trade.company_img,

@@ -38,22 +38,22 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradesByTrader(token: String, traderId: Long): Single<List<Trade>> =
+    fun getTradesByTrader(token: String, trader: Trader): Single<List<Trade>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradesByTrader(token, traderId).flatMap { response ->
-                    val trades = response.map { apiTrade -> mapToTrade(apiTrade) }
+                api.getTradesByTrader(token, trader.id).flatMap { response ->
+                    val trades = response.map { apiTrade -> mapToTrade(apiTrade, trader) }
                     Single.just(trades)
                 }
             } else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradeById(token: String, traderId: Long, tradeId: Long): Single<Trade> =
+    fun getTradeById(token: String, trader: Trader, tradeId: Long): Single<Trade> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradeById(token, traderId, tradeId).flatMap { response ->
-                    Single.just(mapToTrade(response))
+                api.getTradeById(token, trader.id, tradeId).flatMap { response ->
+                    Single.just(mapToTrade(response, trader))
                 }
             } else
                 Single.error(RuntimeException())

@@ -26,10 +26,12 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     @Inject
     lateinit var profileStorage: ProfileStorage
 
+    var isObserveActive: Boolean = false
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        isAlreadySubscribe()
         viewState.init()
+        checkSubscription()
     }
 
     val listPresenter = TraderVPListPresenter()
@@ -49,41 +51,31 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
         }
     }
 
-    fun subscribeToTrader() {
-        profileStorage.profile?.let {
-            apiRepo.subscribeToTrader(it.token, trader.id).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.subscribeToTrader()
-                    isAlreadySubscribe()
-                }, {
-
-                    }
-                )
-        }
+    fun observeBtnClicked() {
+        isObserveActive = !isObserveActive
+        viewState.setObserveActive(isObserveActive)
     }
 
-    fun isAlreadySubscribe() {
-        profileStorage.profile?.let { profile ->
-            apiRepo.mySubscriptions(profile.token).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ listSubs ->
-                    val listTrader = mutableListOf<Trader>()
-                    if (listSubs.isEmpty()) {
-                        viewState.setButtonVisibility(true)
-                    } else
-                        listSubs.forEach {
-                            if (it.id == trader.id) {
-                                listTrader.add(trader)
-                            }
-                        }
-                    if (listTrader.isEmpty()) {
-                        viewState.setButtonVisibility(true)
-                    } else {
-                        viewState.setButtonVisibility(false)
-                    }
-                }, {
+    fun subscribeToTraderBtnClicked() {
+        apiRepo.subscribeToTrader(profileStorage.profile!!.token, trader.id).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.setSubscribeBtnActive(false)
+                viewState.setObserveVisibility(false)
+            }, {
+                it.printStackTrace()
+            })
+    }
 
-                })
-        }
+    fun checkSubscription() {
+        apiRepo.mySubscriptions(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ listSubs ->
+                 listSubs.find { it.id == trader.id }?.let {
+                     viewState.setSubscribeBtnActive(false)
+                     viewState.setObserveVisibility(false)
+                 }
+            }, {
+                it.printStackTrace()
+            })
     }
 
     fun backClicked(): Boolean {

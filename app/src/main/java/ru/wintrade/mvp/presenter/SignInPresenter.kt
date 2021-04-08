@@ -41,7 +41,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val deviceToken = task.result
-                apiRepo.auth(nickname, password).subscribe(
+                apiRepo.auth(nickname, password).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     { authToken ->
                         val token = "Token $authToken"
                         apiRepo.postDeviceToken(token, task.result!!).subscribe(
@@ -72,7 +72,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
 
                     },
                     {
-                        //Неверные данные
+                        viewState.showToast("Неверные данные")
                     }
                 )
             }

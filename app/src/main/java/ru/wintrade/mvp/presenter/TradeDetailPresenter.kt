@@ -20,7 +20,7 @@ class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy / HH.mm")
         val date = dateFormat.format(trade.date)
 
-        viewState.setName(trade.trader)
+        trade.trader?.username?.let { viewState.setName(it)}
         viewState.setType(trade.operationType)
         viewState.setCompany(trade.company)
         viewState.setTicker(trade.ticker)
