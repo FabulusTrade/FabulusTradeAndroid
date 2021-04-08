@@ -44,14 +44,13 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
             val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
             val date = dateFormat.format(trade.date)
             val sum = trade.price * trade.count
-            traders.forEach {
-                if (it.username == trade.trader)
-                    it.avatar?.let { ava -> view.setAvatar(ava) }
+            trade.trader?.let { trader ->
+                trader.avatar?.let { avatar ->  view.setAvatar(avatar)}
+                trader.username?.let { username -> view.setNickname(username) }
             }
             view.setCompany(trade.company)
             view.setCount("Кол-во: ${trade.count}")
             view.setDate("Дата: $date")
-            view.setNickname(trade.trader)
             view.setType(trade.operationType)
             view.setPrice("Цена: ${trade.price} ${trade.currency}")
             view.setSum("Сумма: $sum ${trade.currency}")
@@ -89,21 +88,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
 
     private fun loadData() {
         viewState.setRefreshing(true)
-        Single.zip(apiRepo.getAllTradersSingle(profileStorage.profile!!.token),
-            apiRepo.mySubscriptions(profileStorage.profile!!.token),
-            BiFunction { allTraders, subs ->
-                val subTraders = mutableListOf<Trader>()
-                allTraders.forEach { trader ->
-                    subs.forEach { sub ->
-                        if (trader.id == sub.id)
-                            subTraders.add(trader)
-                    }
-                }
-                traders.clear()
-                traders.addAll(subTraders)
-                subTraders
-            }
-        ).subscribe(
+        apiRepo.mySubscriptions(profileStorage.profile!!.token).subscribe(
             { subTraders ->
                 val tradeSingles = mutableListOf<Single<List<Trade>>>()
 
@@ -111,7 +96,7 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
                     tradeSingles.add(
                         apiRepo.getTradesByTrader(
                             profileStorage.profile!!.token,
-                            subTrader.id
+                            subTrader
                         )
                     )
                 }
