@@ -1,6 +1,5 @@
 package ru.wintrade.ui.fragment.trader
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -53,25 +52,10 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         }
     }
 
-    override fun setButtonVisibility(result: Boolean) {
-        if (result) {
-            btn_trader_stat_subscribe.visibility = View.VISIBLE
-            cb_trader_stat_observe.visibility = View.VISIBLE
-        } else {
-            cb_trader_stat_observe.visibility = View.INVISIBLE
-            with(btn_trader_stat_subscribe) {
-                isEnabled = false
-                text = resources.getText(R.string.isSubscribe)
-                backgroundTintList =
-                    context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
-                visibility = View.VISIBLE
-            }
-        }
-    }
-
     override fun setSubscribeBtnActive(isActive: Boolean) {
         if (isActive) {
             with(btn_trader_stat_subscribe) {
+                visibility = View.VISIBLE
                 isEnabled = true
                 text = resources.getText(R.string.join)
                 backgroundTintList =
@@ -81,6 +65,7 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
             }
         } else {
             with(btn_trader_stat_subscribe) {
+                visibility = View.VISIBLE
                 isEnabled = false
                 text = resources.getText(R.string.isSubscribe)
                 backgroundTintList =

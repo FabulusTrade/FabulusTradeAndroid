@@ -18,9 +18,9 @@ data class ResponseTrader(
     @Expose
     val date_joined: String,
     @Expose
-    val trades_count: Int,
-    @Expose
     val followers_count: Int,
+    @Expose
+    val trades_count: Int,
     @Expose
     val year_profit: String,
     @Expose
