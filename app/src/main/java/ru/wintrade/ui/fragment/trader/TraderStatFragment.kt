@@ -1,11 +1,13 @@
 package ru.wintrade.ui.fragment.trader
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_trader_stat.*
 import moxy.MvpAppCompatFragment
@@ -44,12 +46,11 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         initViewPager()
         initTraderFields()
         btn_trader_stat_subscribe.setOnClickListener {
-            subscribeToTrader()
+            presenter.subscribeToTraderBtnClicked()
         }
-    }
-
-    override fun subscribeToTrader() {
-        presenter.subscribeToTrader()
+        cb_trader_stat_observe.setOnClickListener {
+            presenter.observeBtnClicked()
+        }
     }
 
     override fun setButtonVisibility(result: Boolean) {
@@ -66,6 +67,39 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
                 visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun setSubscribeBtnActive(isActive: Boolean) {
+        if (isActive) {
+            with(btn_trader_stat_subscribe) {
+                isEnabled = true
+                text = resources.getText(R.string.join)
+                backgroundTintList =
+                    context?.let { ContextCompat.getColorStateList(it, R.color.colorAccent) }
+                (this as MaterialButton).strokeColor =
+                    context?.let { ContextCompat.getColorStateList(it, R.color.colorAccent) }
+            }
+        } else {
+            with(btn_trader_stat_subscribe) {
+                isEnabled = false
+                text = resources.getText(R.string.isSubscribe)
+                backgroundTintList =
+                    context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
+                (this as MaterialButton).strokeColor =
+                    context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
+            }
+        }
+    }
+
+    override fun setObserveVisibility(isVisible: Boolean) {
+        if (isVisible)
+            cb_trader_stat_observe.visibility = View.VISIBLE
+        else
+            cb_trader_stat_observe.visibility = View.INVISIBLE
+    }
+
+    override fun setObserveActive(isActive: Boolean) {
+        cb_trader_stat_observe.isChecked = isActive
     }
 
     private fun initTraderFields() {
