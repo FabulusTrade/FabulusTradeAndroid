@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         android:paddingBottom="4dp">
 
@@ -16,13 +16,14 @@
             android:id="@+id/btn_sub_deal_trades"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
-            android:text="Сделки"
-            android:textSize="11sp"
-            app:cornerRadius="8dp" />
+            android:text="@string/deals"
+            android:textSize="10sp"
+            app:cornerRadius="8dp"
+            tools:ignore="SmallSp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sub_deal_orders"
@@ -30,23 +31,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorWhite"
-            android:text="Ордера"
+            android:text="@string/orders"
             android:textColor="@color/colorGray"
-            android:textSize="11sp"
-            app:cornerRadius="8dp" />
+            android:textSize="10sp"
+            app:cornerRadius="8dp"
+            tools:ignore="SmallSp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sub_deal_logs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorWhite"
-            android:text="Журнал"
+            android:text="@string/magazine"
             android:textColor="@color/colorGray"
-            android:textSize="11sp"
-            app:cornerRadius="8dp" />
+            android:textSize="10sp"
+            app:cornerRadius="8dp"
+            tools:ignore="SmallSp" />
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

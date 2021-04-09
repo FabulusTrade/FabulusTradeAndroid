@@ -1,7 +1,6 @@
 package ru.wintrade.util
 
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.api.ResponseProfile
@@ -61,8 +60,8 @@ fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.is_trader,
     trader.is_active,
     trader.date_joined,
-    trader.trades_count,
     trader.followers_count,
+    trader.trades_count,
     trader.year_profit,
     trader.followers_count_7day
 )
@@ -75,8 +74,8 @@ fun mapToSubscription(subscription: ResponseSubscription) = Trader(
     subscription.id_trader.is_active,
     subscription.id_trader.is_trader,
     subscription.id_trader.date_joined,
-    subscription.id_trader.trades_count,
     subscription.id_trader.followers_count,
+    subscription.id_trader.trades_count,
     subscription.id_trader.year_profit,
     subscription.id_trader.followers_count_7day
 )

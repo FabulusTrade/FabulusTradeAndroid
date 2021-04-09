@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.header_main_menu.*
 import kotlinx.android.synthetic.main.header_main_menu.view.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
@@ -19,7 +19,6 @@ import moxy.presenter.ProvidePresenter
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.wintrade.R
-import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
@@ -116,10 +115,26 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         when (item.itemId) {
             R.id.traders_menu_id -> presenter.openTradersScreen()
             R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen()
-            R.id.invite_a_friend_menu_id -> ""
-            R.id.about_menu_id -> ""
-            R.id.ask_menu_id -> ""
-            R.id.settings_menu_id -> ""
+            R.id.invite_a_friend_menu_id -> Toast.makeText(
+                applicationContext,
+                R.string.coming_soon,
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.about_menu_id -> Toast.makeText(
+                applicationContext,
+                R.string.coming_soon,
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.ask_menu_id -> Toast.makeText(
+                applicationContext,
+                R.string.coming_soon,
+                Toast.LENGTH_SHORT
+            ).show()
+            R.id.settings_menu_id -> Toast.makeText(
+                applicationContext,
+                R.string.coming_soon,
+                Toast.LENGTH_SHORT
+            ).show()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)

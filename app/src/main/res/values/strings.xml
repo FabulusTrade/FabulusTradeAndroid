@@ -77,4 +77,9 @@
     <string name="date">Дата</string>
     <string name="isSubscribe">Уже подписаны</string>
     <string name="great_treader">Великий Трейдер</string>
+    <string name="deals">Сделки</string>
+    <string name="orders">Ордера</string>
+    <string name="magazine">Журнал</string>
+    <string name="publication">Публикации</string>
+    <string name="trader_news_header_title">Поделитесь новостями, идеями или комментарием</string>
 </resources>

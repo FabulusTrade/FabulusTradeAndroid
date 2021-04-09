@@ -57,7 +57,8 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     }
 
     fun subscribeToTraderBtnClicked() {
-        apiRepo.subscribeToTrader(profileStorage.profile!!.token, trader.id).observeOn(AndroidSchedulers.mainThread())
+        apiRepo.subscribeToTrader(profileStorage.profile!!.token, trader.id)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.setSubscribeBtnActive(false)
                 viewState.setObserveVisibility(false)
@@ -66,16 +67,21 @@ class TraderStatPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
             })
     }
 
-    fun checkSubscription() {
-        apiRepo.mySubscriptions(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread())
+    private fun checkSubscription() {
+        apiRepo.mySubscriptions(profileStorage.profile!!.token)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ listSubs ->
-                 listSubs.find { it.id == trader.id }?.let {
-                     viewState.setSubscribeBtnActive(false)
-                     viewState.setObserveVisibility(false)
-                 }
+                listSubs.find { it.id == trader.id }?.let {
+                    setVisibility(false)
+                } ?: setVisibility(true)
             }, {
                 it.printStackTrace()
             })
+    }
+
+    private fun setVisibility(result: Boolean) {
+        viewState.setSubscribeBtnActive(result)
+        viewState.setObserveVisibility(result)
     }
 
     fun backClicked(): Boolean {
