@@ -14,24 +14,24 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.presenter.trader.TraderStatPresenter
+import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderStatView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
-import ru.wintrade.ui.adapter.TraderVPAdapter
+import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 
-class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView,
+class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView,
     BackButtonListener {
     companion object {
-        fun newInstance(trader: Trader) = TraderStatFragment(trader)
+        fun newInstance(trader: Trader) = TraderMainFragment(trader)
     }
 
     @InjectPresenter
-    lateinit var presenter: TraderStatPresenter
+    lateinit var presenter: TraderMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderStatPresenter(trader!!).apply {
+    fun providePresenter() = TraderMainPresenter(trader!!).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -100,7 +100,7 @@ class TraderStatFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     }
 
     private fun initViewPager() {
-        vp_trader_stat.adapter = TraderVPAdapter(this, presenter.listPresenter)
+        vp_trader_stat.adapter = TraderMainVPAdapter(this, trader!!)
         TabLayoutMediator(
             tab_layout_trader_stat,
             vp_trader_stat

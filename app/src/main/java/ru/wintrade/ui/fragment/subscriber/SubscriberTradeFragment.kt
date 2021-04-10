@@ -15,9 +15,9 @@ import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
 
-class SubscriberDealFragment : MvpAppCompatFragment(), SubscriberDealView {
+class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
     companion object {
-        fun newInstance() = SubscriberDealFragment()
+        fun newInstance() = SubscriberTradeFragment()
     }
 
     @InjectPresenter

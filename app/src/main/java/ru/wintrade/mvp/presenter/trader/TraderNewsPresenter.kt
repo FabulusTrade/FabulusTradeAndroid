@@ -9,8 +9,24 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
     @Inject
     lateinit var router: Router
 
+    private var state = State.PUBLICATIONS
+
+    enum class State {
+        PUBLICATIONS, SUBSCRIPTION
+    }
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+    }
+
+    fun publicationsBtnClicked() {
+        state = State.PUBLICATIONS
+        viewState.setBtnsState(state)
+    }
+
+    fun subscriptionBtnClicked() {
+        state = State.SUBSCRIPTION
+        viewState.setBtnsState(state)
     }
 }

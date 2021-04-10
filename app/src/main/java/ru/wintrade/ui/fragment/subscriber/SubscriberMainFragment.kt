@@ -57,7 +57,7 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     }
 
     private fun initViewPager() {
-        vp_subscriber_main.adapter = SubscriberMainVPAdapter(this, presenter.listPresenter)
+        vp_subscriber_main.adapter = SubscriberMainVPAdapter(this)
         TabLayoutMediator(tab_layout_subscriber_main, vp_subscriber_main) { tab, pos ->
             when (pos) {
                 0 -> tab.setIcon(R.drawable.visibility)
