@@ -12,9 +12,9 @@ import ru.wintrade.mvp.presenter.trader.TraderDealPresenter
 import ru.wintrade.mvp.view.trader.TraderDealView
 import ru.wintrade.ui.App
 
-class TraderDealFragment : MvpAppCompatFragment(), TraderDealView {
+class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
     companion object {
-        fun newInstance() = TraderDealFragment()
+        fun newInstance() = TraderTradeFragment()
     }
 
     @InjectPresenter

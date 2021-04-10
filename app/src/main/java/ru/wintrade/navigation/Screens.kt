@@ -1,6 +1,5 @@
 package ru.wintrade.navigation
 
-import androidx.fragment.app.Fragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
@@ -27,7 +26,7 @@ class Screens {
     }
 
     class TraderStatScreen(val trader: Trader) : SupportAppScreen() {
-        override fun getFragment() = TraderStatFragment.newInstance(trader)
+        override fun getFragment() = TraderMainFragment.newInstance(trader)
     }
 
     class TraderProfitScreen(val trader: Trader) : SupportAppScreen() {
@@ -43,7 +42,7 @@ class Screens {
     }
 
     class TraderDealScreen : SupportAppScreen() {
-        override fun getFragment() = TraderDealFragment.newInstance()
+        override fun getFragment() = TraderTradeFragment.newInstance()
     }
 
     class TradersMainScreen : SupportAppScreen() {
@@ -67,7 +66,7 @@ class Screens {
     }
 
     class SubscriberDealScreen : SupportAppScreen() {
-        override fun getFragment() = SubscriberDealFragment.newInstance()
+        override fun getFragment() = SubscriberTradeFragment.newInstance()
     }
 
     class SubscriberNewsScreen : SupportAppScreen() {

@@ -36,18 +36,24 @@ class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
 
     override fun init() {
         btn_trader_news_publication.setOnClickListener {
-            isPressed(btn_trader_news_publication, btn_trader_news_subscription)
+            presenter.publicationsBtnClicked()
         }
         btn_trader_news_subscription.setOnClickListener {
-            isPressed(btn_trader_news_subscription, btn_trader_news_publication)
+            presenter.subscriptionBtnClicked()
         }
     }
 
-    private fun isPressed(
-        btnPressed: Button,
-        btnNotPressed: Button
-    ) {
-        with(btnPressed) {
+    override fun setBtnsState(state: TraderNewsPresenter.State) {
+        val activeBtn: Button
+        val inactiveBtn: Button
+        if (state == TraderNewsPresenter.State.PUBLICATIONS) {
+            activeBtn = btn_trader_news_publication
+            inactiveBtn = btn_trader_news_subscription
+        } else {
+            activeBtn = btn_trader_news_subscription
+            inactiveBtn = btn_trader_news_publication
+        }
+        activeBtn.apply {
             backgroundTintList =
                 context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
             setTextColor(context?.let {
@@ -57,7 +63,7 @@ class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
                 )
             })
         }
-        with(btnNotPressed) {
+        inactiveBtn.apply {
             backgroundTintList =
                 context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
             setTextColor(context?.let {

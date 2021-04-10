@@ -36,7 +36,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
-        vp_main_traders.adapter = TradersMainVPAdapter(this, mainPresenter.listPresenter)
+        vp_main_traders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
                 0 -> tab.text = resources.getString(R.string.show_all)
