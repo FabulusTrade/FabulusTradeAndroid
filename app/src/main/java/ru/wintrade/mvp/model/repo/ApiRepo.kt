@@ -6,8 +6,10 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import ru.wintrade.mvp.model.api.WinTradeDataSource
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderNews
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.network.NetworkStatus
+import ru.wintrade.util.mapToNews
 import ru.wintrade.util.mapToSubscription
 import ru.wintrade.util.mapToTrade
 import ru.wintrade.util.mapToTrader
@@ -119,5 +121,18 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 }
             else
                 Single.error(RuntimeException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getAllNews(token: String): Single<List<TraderNews>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline)
+                api.getAllNews(token).flatMap {
+                    val news = it.map {
+                        mapToNews(it)
+                    }
+                    Single.just(news)
+                }
+            else
+                Single.error(java.lang.RuntimeException())
         }.subscribeOn(Schedulers.io())
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_trader_news.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -14,6 +15,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.trader.TraderNewsPresenter
 import ru.wintrade.mvp.view.trader.TraderNewsView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.adapter.TraderNewsRVAdapter
 
 class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
     companion object {
@@ -28,6 +30,8 @@ class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
         App.instance.appComponent.inject(this)
     }
 
+    private var adapter: TraderNewsRVAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,11 +39,17 @@ class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
     ): View? = inflater.inflate(R.layout.fragment_trader_news, container, false)
 
     override fun init() {
+        adapter = TraderNewsRVAdapter(presenter.listPresenter)
+        rv_trader_news_subscription.adapter = adapter
+        rv_trader_news_subscription.layoutManager = LinearLayoutManager(context)
+
         btn_trader_news_publication.setOnClickListener {
             presenter.publicationsBtnClicked()
         }
         btn_trader_news_subscription.setOnClickListener {
             presenter.subscriptionBtnClicked()
+
+
         }
     }
 
@@ -72,6 +82,20 @@ class TraderNewsFragment : MvpAppCompatFragment(), TraderNewsView {
                     R.color.colorGray
                 )
             })
+        }
+    }
+
+    override fun updateRecyclerView() {
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun setVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            rv_trader_news_subscription.visibility = View.GONE
+            rv_trader_news_publication.visibility = View.VISIBLE
+        } else {
+            rv_trader_news_publication.visibility = View.GONE
+            rv_trader_news_subscription.visibility = View.VISIBLE
         }
     }
 }

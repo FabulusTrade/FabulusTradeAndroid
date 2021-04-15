@@ -9,4 +9,6 @@ import ru.wintrade.mvp.presenter.trader.TraderNewsPresenter
 interface TraderNewsView : MvpView {
     fun init()
     fun setBtnsState(state: TraderNewsPresenter.State)
+    fun updateRecyclerView()
+    fun setVisibility(isVisible: Boolean)
 }
