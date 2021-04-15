@@ -3,10 +3,8 @@ package ru.wintrade.util
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.api.ResponseProfile
-import ru.wintrade.mvp.model.entity.api.ResponseSubscription
-import ru.wintrade.mvp.model.entity.api.ResponseTrade
-import ru.wintrade.mvp.model.entity.api.ResponseTrader
+import ru.wintrade.mvp.model.entity.TraderNews
+import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.room.RoomProfile
 import java.text.SimpleDateFormat
 
@@ -98,5 +96,19 @@ fun mapToTrade(trade: ResponseTrade, trader: Trader): Trade {
         trade.currency,
         date,
         trade.profit_count
+    )
+}
+
+fun mapToNews(traderNews: ResponseTraderNews): TraderNews {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    val dateCreate = dateFormat.parse(traderNews.date_create)
+    val dateUpd = dateFormat.parse(traderNews.date_update)
+    return TraderNews(
+        traderNews.id,
+        traderNews.text,
+        traderNews.post_status,
+        dateCreate,
+        dateUpd,
+        traderNews.pinned,
     )
 }

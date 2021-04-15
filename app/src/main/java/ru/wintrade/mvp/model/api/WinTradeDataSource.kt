@@ -60,4 +60,9 @@ interface WinTradeDataSource {
     fun mySubscriptions(
         @Header("Authorization") token: String,
     ): Single<List<ResponseSubscription>>
+
+    @GET("api/v1/trader/post/all")
+    fun getAllNews(
+        @Header("Authorization") token: String
+    ): Single<List<ResponseTraderNews>>
 }

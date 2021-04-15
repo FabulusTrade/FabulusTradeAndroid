@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menu_search"
-        android:title="Поиск"
+        android:icon="@drawable/search"
         android:showAsAction="always"
-        android:icon="@drawable/search"/>
-    <item
-        android:id="@+id/menu_edit"
-        android:title="Редактировать"
-        android:showAsAction="always"
-        android:icon="@drawable/edit"/>
+        android:title="Поиск" />
     <item
         android:id="@+id/menu_share"
-        android:title="Поделиться"
+        android:icon="@drawable/share"
         android:showAsAction="always"
-        android:icon="@drawable/share"/>
+        android:title="Поделиться" />
     <item
         android:id="@+id/menu_win"
-        android:title="@string/app_name"
+        android:icon="@drawable/wt"
         android:showAsAction="always"
-        android:icon="@drawable/wt"/>
+        android:title="@string/app_name" />
 </menu>
