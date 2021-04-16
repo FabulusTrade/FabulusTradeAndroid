@@ -103,6 +103,7 @@ fun mapToNews(traderNews: ResponseTraderNews): TraderNews {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val dateCreate = dateFormat.parse(traderNews.date_create)
     val dateUpd = dateFormat.parse(traderNews.date_update)
+    val images = traderNews.images.map { it.image }
     return TraderNews(
         traderNews.id,
         traderNews.text,
@@ -110,5 +111,6 @@ fun mapToNews(traderNews: ResponseTraderNews): TraderNews {
         dateCreate,
         dateUpd,
         traderNews.pinned,
+        images
     )
 }

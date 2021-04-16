@@ -6,4 +6,5 @@ interface TraderNewsItemView {
     var pos: Int
     fun setNewsDate(date: Date)
     fun setPost(text: String)
+    fun setImages(images: List<String>?)
 }

@@ -30,6 +30,20 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
         PUBLICATIONS, SUBSCRIPTION
     }
 
+    val listPresenter = TraderNewsRVListPresenter()
+
+    inner class TraderNewsRVListPresenter : ITraderNewsRVListPresenter {
+        val news = mutableListOf<TraderNews>()
+        override fun getCount(): Int = news.size
+
+        override fun bind(view: TraderNewsItemView) {
+            val newsList = news[view.pos]
+            view.setNewsDate(newsList.dateCreate)
+            view.setPost(newsList.text)
+            view.setImages(newsList.images)
+        }
+    }
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -47,19 +61,6 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
         viewState.setBtnsState(state)
         viewState.setVisibility(false)
         getNews()
-    }
-
-    val listPresenter = TraderNewsRVListPresenter()
-
-    inner class TraderNewsRVListPresenter : ITraderNewsRVListPresenter {
-        val news = mutableListOf<TraderNews>()
-        override fun getCount(): Int = news.size
-
-        override fun bind(view: TraderNewsItemView) {
-            val newsList = news[view.pos]
-            view.setNewsDate(newsList.dateCreate)
-            view.setPost(newsList.text)
-        }
     }
 
     private fun getNews() {

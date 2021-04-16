@@ -15,5 +15,7 @@ data class ResponseTraderNews(
     val date_update: String?,
     @Expose
     val pinned: Boolean,
+    @Expose
+    val images: List<ResponseImage>
 )
 

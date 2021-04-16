@@ -3,6 +3,8 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
@@ -39,5 +41,18 @@ class TraderNewsRVAdapter(val presenter: ITraderNewsRVListPresenter) :
         override fun setPost(text: String) {
             itemView.tv_item_trader_news_post.text = text
         }
+
+        override fun setImages(images: List<String>?) {
+            if (!images.isNullOrEmpty()) {
+                itemView.rv_item_trader_news_img.apply {
+                    this.layoutManager = GridLayoutManager(context, 2)
+                    val adapter = TraderNewsImagesRVAdapter()
+                    this.adapter = adapter
+                    adapter.setData(images)
+                }
+            }
+        }
+
+
     }
 }
