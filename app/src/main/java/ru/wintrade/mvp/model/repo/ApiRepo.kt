@@ -133,6 +133,6 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(news)
                 }
             else
-                Single.error(java.lang.RuntimeException())
+                Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 }

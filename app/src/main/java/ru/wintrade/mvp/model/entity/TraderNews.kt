@@ -9,5 +9,6 @@ data class TraderNews(
     val dateCreate: Date,
     val dateUpdate: Date?,
     val pinned: Boolean,
+    val images: List<String>
 )
 

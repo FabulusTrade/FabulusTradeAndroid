@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_trader_stat.*
+import kotlinx.android.synthetic.main.fragment_trader_main.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -39,7 +39,7 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_stat, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_trader_main, container, false)
 
     override fun init() {
         initViewPager()
