@@ -1,12 +1,9 @@
 package ru.wintrade.mvp.presenter
 
-import android.util.Log
-import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
@@ -37,47 +34,82 @@ class SignInPresenter : MvpPresenter<SignInView>() {
         //router.navigateTo(Screens.SignUpScreen())
     }
 
-    fun loginBtnClicked(nickname: String, password: String) {
+    fun post(idToken: String) {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val deviceToken = task.result
-                apiRepo.auth(nickname, password).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    { authToken ->
-                        val token = "Token $authToken"
+                apiRepo.signInWithGoogle(idToken).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val token = "Token $it"
                         apiRepo.postDeviceToken(token, task.result!!).subscribe(
-                            {},
+                            {
+                            },
                             {
                                 it.printStackTrace()
-                            }
-                        )
-
-
+                            })
                         apiRepo.getProfile(token).subscribe(
                             { response ->
                                 val profile = mapToProfile(response, token, deviceToken!!)
                                 profileStorage.profile = profile
-                                roomRepo.insertProfile(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                    {
-                                        router.newRootScreen(Screens.SubscriberMainScreen())
-                                    },
-                                    {
-                                        it.printStackTrace()
-                                    }
-                                )
+                                roomRepo.insertProfile(profile)
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                                        {
+                                            router.newRootScreen(Screens.SubscriberMainScreen())
+                                        },
+                                        {
+                                            it.printStackTrace()
+                                        }
+                                    )
                             },
                             {
                                 it.printStackTrace()
                             }
                         )
-
-                    },
-                    {
-                        viewState.showToast("Неверные данные")
+                    }, {
                     }
-                )
+                    )
             }
         }
     }
 
-
+    fun loginBtnClicked(nickname: String, password: String) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val deviceToken = task.result
+                apiRepo.auth(nickname, password).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { authToken ->
+                            val token = "Token $authToken"
+                            apiRepo.postDeviceToken(token, task.result!!).subscribe(
+                                {},
+                                {
+                                    it.printStackTrace()
+                                }
+                            )
+                            apiRepo.getProfile(token).subscribe(
+                                { response ->
+                                    val profile = mapToProfile(response, token, deviceToken!!)
+                                    profileStorage.profile = profile
+                                    roomRepo.insertProfile(profile)
+                                        .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                                            {
+                                                router.newRootScreen(Screens.SubscriberMainScreen())
+                                            },
+                                            {
+                                                it.printStackTrace()
+                                            }
+                                        )
+                                },
+                                {
+                                    it.printStackTrace()
+                                }
+                            )
+                        },
+                        {
+                            viewState.showToast("Неверные данные")
+                        }
+                    )
+            }
+        }
+    }
 }
