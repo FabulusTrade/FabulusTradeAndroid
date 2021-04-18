@@ -65,4 +65,11 @@ interface WinTradeDataSource {
     fun getAllNews(
         @Header("Authorization") token: String
     ): Single<List<ResponseTraderNews>>
+
+    @FormUrlEncoded
+    @POST("auth/complete/google-plus/")
+    fun signInWithGoogle(
+        @Field("id_token") token: String,
+//        @Body id_token: RequestAuthGoogle
+    ): Single<ResponseAuth>
 }

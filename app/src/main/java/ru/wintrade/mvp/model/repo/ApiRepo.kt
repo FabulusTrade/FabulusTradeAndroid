@@ -135,4 +135,15 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
             else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
+
+    fun signInWithGoogle(idToken: String): Single<String> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+//                val auth = RequestAuthGoogle(idToken)
+                api.signInWithGoogle(idToken).flatMap {
+                    Single.just(it.auth_token)
+                }
+            } else
+                Single.error(RuntimeException())
+        }.subscribeOn(Schedulers.io())
 }
