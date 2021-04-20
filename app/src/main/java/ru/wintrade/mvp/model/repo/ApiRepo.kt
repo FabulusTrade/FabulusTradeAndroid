@@ -6,24 +6,23 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import ru.wintrade.mvp.model.api.WinTradeDataSource
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.TraderNews
+import ru.wintrade.mvp.model.entity.Post
+import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.api.*
+import ru.wintrade.mvp.model.entity.common.Pagination
 import ru.wintrade.mvp.model.network.NetworkStatus
-import ru.wintrade.util.mapToNews
-import ru.wintrade.util.mapToSubscription
-import ru.wintrade.util.mapToTrade
-import ru.wintrade.util.mapToTrader
+import ru.wintrade.util.*
 
 class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
 
     val newTradeSubject = PublishSubject.create<Boolean>()
 
-    fun getAllTradersSingle(token: String): Single<List<Trader>> =
+    fun getAllTraders(token: String, page: Int = 1): Single<Pagination<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getAllTraders(token).flatMap { list ->
-                    val traders = list.map { apiTrader -> mapToTrader(apiTrader) }
-                    Single.just(traders)
+                api.getAllTraders(token, page).flatMap { respPag ->
+                    val traders = respPag.results.map { apiTrader -> mapToTrader(apiTrader) }
+                    Single.just(mapToPagination(respPag, traders))
                 }
             } else
                 Single.error(RuntimeException())
@@ -40,12 +39,12 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradesByTrader(token: String, trader: Trader): Single<List<Trade>> =
+    fun getTradesByTrader(token: String, trader: Trader, page: Int = 1): Single<Pagination<Trade>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradesByTrader(token, trader.id).flatMap { response ->
-                    val trades = response.map { apiTrade -> mapToTrade(apiTrade, trader) }
-                    Single.just(trades)
+                api.getTradesByTrader(token, trader.id, page).flatMap { respPag ->
+                    val trades = respPag.results.map { apiTrade -> mapToTrade(apiTrade, trader) }
+                    Single.just(mapToPagination(respPag, trades))
                 }
             } else
                 Single.error(RuntimeException())
@@ -110,27 +109,27 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun mySubscriptions(token: String): Single<List<Trader>> =
+    fun mySubscriptions(token: String, page: Int = 1): Single<Pagination<Subscription>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
-                api.mySubscriptions(token).flatMap {
-                    val sub = it.map {
-                        mapToSubscription(it)
+                api.mySubscriptions(token, page).flatMap { respPag ->
+                    val subscriptions = respPag.results.map { sub ->
+                        mapToSubscription(sub)
                     }
-                    Single.just(sub)
+                    Single.just(mapToPagination(respPag, subscriptions))
                 }
             else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getAllNews(token: String): Single<List<TraderNews>> =
+    fun getAllPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
-                api.getAllNews(token).flatMap {
-                    val news = it.map {
-                        mapToNews(it)
+                api.getAllPosts(token, page).flatMap { respPag ->
+                    val posts = respPag.results.map {
+                        mapToPost(it)!!
                     }
-                    Single.just(news)
+                    Single.just(mapToPagination(respPag, posts))
                 }
             else
                 Single.error(RuntimeException())

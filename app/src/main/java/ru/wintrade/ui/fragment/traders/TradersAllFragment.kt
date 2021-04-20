@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_traders_all.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -23,7 +24,7 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
     private var adapter: TradersAllRVAdapter? = null
 
     @InjectPresenter
-    lateinit var allPresenter: TradersAllPresenter
+    lateinit var presenter: TradersAllPresenter
 
     @ProvidePresenter
     fun providePresenter() = TradersAllPresenter().apply {
@@ -37,12 +38,28 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
     ): View? = inflater.inflate(R.layout.fragment_traders_all, container, false)
 
     override fun init() {
-        adapter = TradersAllRVAdapter(allPresenter.listPresenter)
+        adapter = TradersAllRVAdapter(presenter.listPresenter)
         rv_all_traders.adapter = adapter
-        rv_all_traders.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
+        rv_all_traders.layoutManager = layoutManager
+        rv_all_traders.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            presenter.onScrollLimit()
+                        }
+
+                    }
+                }
+            }
+        )
     }
 
-    override fun updateRecyclerView() {
+    override fun updateAdapter() {
         adapter?.notifyDataSetChanged()
     }
 }

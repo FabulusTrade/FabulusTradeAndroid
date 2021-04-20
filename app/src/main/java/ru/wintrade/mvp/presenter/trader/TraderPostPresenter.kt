@@ -1,20 +1,17 @@
 package ru.wintrade.mvp.presenter.trader
 
-import android.annotation.SuppressLint
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.model.entity.TraderNews
+import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITraderNewsRVListPresenter
 import ru.wintrade.mvp.view.item.TraderNewsItemView
-import ru.wintrade.mvp.view.trader.TraderNewsView
-import java.text.SimpleDateFormat
+import ru.wintrade.mvp.view.trader.TraderPostView
 import javax.inject.Inject
 
-class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
+class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     @Inject
     lateinit var router: Router
 
@@ -25,6 +22,8 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
     lateinit var profileStorage: ProfileStorage
 
     private var state = State.PUBLICATIONS
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -33,7 +32,7 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
     val listPresenter = TraderNewsRVListPresenter()
 
     inner class TraderNewsRVListPresenter : ITraderNewsRVListPresenter {
-        val news = mutableListOf<TraderNews>()
+        val news = mutableListOf<Post>()
         override fun getCount(): Int = news.size
 
         override fun bind(view: TraderNewsItemView) {
@@ -50,6 +49,10 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
         viewState.setVisibility(true)
     }
 
+    fun onScrollLimit() {
+        loadPosts()
+    }
+
     fun publicationsBtnClicked() {
         state = State.PUBLICATIONS
         viewState.setBtnsState(state)
@@ -60,20 +63,25 @@ class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
         state = State.SUBSCRIPTION
         viewState.setBtnsState(state)
         viewState.setVisibility(false)
-        getNews()
+        loadPosts()
     }
 
-    private fun getNews() {
-        profileStorage.profile?.let {
-            apiRepo.getAllNews(it.token)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listPresenter.news.clear()
-                    listPresenter.news.addAll(it)
-                    viewState.updateRecyclerView()
-                }, {
-                    it.printStackTrace()
-                })
+    private fun loadPosts() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            profileStorage.profile?.let {
+                apiRepo.getAllPosts(it.token, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
+                        listPresenter.news.addAll(pag.results)
+                        viewState.updateAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    }, {
+                        it.printStackTrace()
+                        isLoading = false
+                    })
+            }
         }
     }
 }

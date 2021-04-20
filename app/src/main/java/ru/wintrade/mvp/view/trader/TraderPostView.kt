@@ -3,12 +3,12 @@ package ru.wintrade.mvp.view.trader
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.wintrade.mvp.presenter.trader.TraderNewsPresenter
+import ru.wintrade.mvp.presenter.trader.TraderPostPresenter
 
 @StateStrategyType(AddToEndStrategy::class)
-interface TraderNewsView : MvpView {
+interface TraderPostView : MvpView {
     fun init()
-    fun setBtnsState(state: TraderNewsPresenter.State)
-    fun updateRecyclerView()
+    fun setBtnsState(state: TraderPostPresenter.State)
+    fun updateAdapter()
     fun setVisibility(isVisible: Boolean)
 }

@@ -2,7 +2,7 @@ package ru.wintrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
 
-data class ResponseTraderNews(
+data class ResponsePost(
     @Expose
     val id: Int,
     @Expose

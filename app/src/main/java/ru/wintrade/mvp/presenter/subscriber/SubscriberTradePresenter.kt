@@ -20,7 +20,7 @@ import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
+class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     @Inject
     lateinit var router: Router
 
@@ -89,15 +89,18 @@ class SubscriberDealPresenter : MvpPresenter<SubscriberDealView>() {
     private fun loadData() {
         viewState.setRefreshing(true)
         apiRepo.mySubscriptions(profileStorage.profile!!.token).subscribe(
-            { subTraders ->
+            { pag ->
                 val tradeSingles = mutableListOf<Single<List<Trade>>>()
+                val traders = pag.results.map { it.trader }
 
-                subTraders.forEach { subTrader ->
+                traders.forEach { subTrader ->
                     tradeSingles.add(
                         apiRepo.getTradesByTrader(
                             profileStorage.profile!!.token,
                             subTrader
-                        )
+                        ).flatMap {
+                            Single.just(it.results)
+                        }
                     )
                 }
 
