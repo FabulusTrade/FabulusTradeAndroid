@@ -8,7 +8,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.trader.TraderDealPresenter
+import ru.wintrade.mvp.presenter.trader.TraderTradePresenter
 import ru.wintrade.mvp.view.trader.TraderDealView
 import ru.wintrade.ui.App
 
@@ -18,10 +18,10 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
     }
 
     @InjectPresenter
-    lateinit var presenter: TraderDealPresenter
+    lateinit var presenter: TraderTradePresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderDealPresenter().apply {
+    fun providePresenter() = TraderTradePresenter().apply {
         App.instance.appComponent.inject(this)
     }
 

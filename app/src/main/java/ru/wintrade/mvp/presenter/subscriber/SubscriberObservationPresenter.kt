@@ -22,40 +22,55 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     @Inject
     lateinit var apiRepo: ApiRepo
 
-    var traders = mutableListOf<Trader>()
-
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        viewState.init()
-        profileStorage.profile?.let { profile ->
-            apiRepo.mySubscriptions(profile.token)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        listPresenter.subscriberObservationList.clear()
-                        listPresenter.subscriberObservationList.addAll(it)
-                        viewState.updateAdapter()
-                    }, {
-                        it.printStackTrace()
-                    }
-                )
-        }
-    }
+    var isLoading = false
+    var nextPage: Int? = 1
 
     var listPresenter = SubscriberObservationListPresenter()
 
     inner class SubscriberObservationListPresenter : ISubscriberObservationListPresenter {
-        var subscriberObservationList = mutableListOf<Trader>()
-        override fun getCount(): Int = subscriberObservationList.size
+        var traders = mutableListOf<Trader>()
+        override fun getCount(): Int = traders.size
 
         override fun bind(view: SubscriberObservationItemView) {
-            val traderList = subscriberObservationList[view.pos]
+            val traderList = traders[view.pos]
             traderList.username?.let { view.setTraderName(it) }
             traderList.avatar?.let { view.setTraderAvatar(it) }
             traderList.yearProfit?.let { view.setTraderProfit(it) }
         }
 
         override fun openTraderStat(pos: Int) {
-            router.navigateTo(Screens.TraderStatScreen(subscriberObservationList[pos]))
+            router.navigateTo(Screens.TraderStatScreen(traders[pos]))
         }
     }
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.init()
+        loadSubscriptions()
+    }
+
+    fun onScrollLimit() {
+        loadSubscriptions()
+    }
+
+    private fun loadSubscriptions() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            apiRepo.mySubscriptions(profileStorage.profile!!.token, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    { pag ->
+                        val traders = pag.results.map { it.trader }
+                        listPresenter.traders.addAll(traders)
+                        viewState.updateAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    }, {
+                        it.printStackTrace()
+                        isLoading = false
+                    }
+                )
+        }
+    }
+
+
 }

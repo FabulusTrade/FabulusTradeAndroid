@@ -10,7 +10,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.subscriber.SubscriberDealPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
@@ -21,12 +21,12 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
     }
 
     @InjectPresenter
-    lateinit var presenter: SubscriberDealPresenter
+    lateinit var presenter: SubscriberTradePresenter
 
     var adapter: SubscriberTradesRVAdapter? = null
 
     @ProvidePresenter
-    fun providePresenter() = SubscriberDealPresenter().apply {
+    fun providePresenter() = SubscriberTradePresenter().apply {
         App.instance.appComponent.inject(this)
     }
 

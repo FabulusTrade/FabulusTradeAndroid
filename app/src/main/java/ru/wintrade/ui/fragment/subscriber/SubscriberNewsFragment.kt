@@ -8,7 +8,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.subscriber.SubscriberNewsPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
 import ru.wintrade.ui.App
 
@@ -18,10 +18,10 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     @InjectPresenter
-    lateinit var presenter: SubscriberNewsPresenter
+    lateinit var presenter: SubscriberPostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SubscriberNewsPresenter().apply {
+    fun providePresenter() = SubscriberPostPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 

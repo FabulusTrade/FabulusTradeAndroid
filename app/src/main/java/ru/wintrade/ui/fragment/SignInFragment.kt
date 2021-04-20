@@ -112,10 +112,10 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun onStart() {
         super.onStart()
-        mGoogleSignInClient.silentSignIn()
-            .addOnCompleteListener(requireActivity()) { task ->
-                handleSignInResult(task)
-            }
+//        mGoogleSignInClient.silentSignIn()
+//            .addOnCompleteListener(requireActivity()) { task ->
+//                handleSignInResult(task)
+//            }
     }
 
     override fun showToast(toast: String) {

@@ -24,5 +24,7 @@ data class ResponseTrader(
     @Expose
     val year_profit: String,
     @Expose
-    val followers_count_7day: Int
+    val followers_count_7day: Int,
+    @Expose
+    val pinned_post: ResponsePost?
 )
