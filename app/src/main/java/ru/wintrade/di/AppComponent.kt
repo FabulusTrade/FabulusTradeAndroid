@@ -68,4 +68,6 @@ interface AppComponent {
     fun inject(subscriberNewsPresenter: SubscriberNewsPresenter)
     fun inject(tradeDetailFragment: TradeDetailFragment)
     fun inject(tradeDetailPresenter: TradeDetailPresenter)
+    fun inject(traderDealsDetailFragment: TraderDealsDetailFragment)
+    fun inject(traderDealsDetailPresenter: TraderDealsDetailPresenter)
 }

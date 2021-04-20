@@ -1,4 +1,10 @@
 package ru.wintrade.mvp.view.trader
 
-interface TraderDealsDetailView {
+import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndStrategy
+import moxy.viewstate.strategy.StateStrategyType
+
+@StateStrategyType(AddToEndStrategy::class)
+interface TraderDealsDetailView : MvpView {
+    fun init()
 }
