@@ -42,12 +42,12 @@
                 tools:ignore="SmallSp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_deal_magazine"
+                android:id="@+id/btn_trader_deal_journal"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="1"
-                android:text="@string/magazine"
+                android:text="@string/journal"
                 android:textColor="@color/colorGray"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
@@ -71,7 +71,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_deal_magazine"
+            android:id="@+id/rv_trader_deal_journal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>

@@ -50,6 +50,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="32dp"
                     android:text="@string/shares"
                     android:textColor="@color/colorGray" />
             </LinearLayout>

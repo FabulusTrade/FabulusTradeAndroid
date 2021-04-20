@@ -1,7 +1,5 @@
 package ru.wintrade.mvp.presenter.trader
 
-import android.annotation.SuppressLint
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
@@ -11,7 +9,6 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITraderNewsRVListPresenter
 import ru.wintrade.mvp.view.item.TraderNewsItemView
 import ru.wintrade.mvp.view.trader.TraderNewsView
-import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class TraderNewsPresenter : MvpPresenter<TraderNewsView>() {
