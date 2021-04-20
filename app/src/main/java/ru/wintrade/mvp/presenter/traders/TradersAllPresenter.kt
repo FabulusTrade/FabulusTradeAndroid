@@ -23,6 +23,8 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     lateinit var profileStorage: ProfileStorage
 
     val listPresenter = TradersAllListPresenter()
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     inner class TradersAllListPresenter : ITradersAllListPresenter {
         var traderList = mutableListOf<Trader>()
@@ -42,22 +44,31 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        getTraderList()
+        loadTraders()
     }
 
-    private fun getTraderList() {
-        profileStorage.profile?.let { profile ->
-            apiRepo.getAllTradersSingle(profile.token).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        listPresenter.traderList.clear()
-                        listPresenter.traderList.addAll(it)
-                        viewState.updateRecyclerView()
-                    },
-                    {
-                        it.printStackTrace()
-                    }
-                )
+    fun onScrollLimit() {
+        loadTraders()
+    }
+
+    private fun loadTraders() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            profileStorage.profile?.let { profile ->
+                apiRepo.getAllTraders(profile.token, nextPage!!).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { pag ->
+                            listPresenter.traderList.addAll(pag.results)
+                            viewState.updateAdapter()
+                            nextPage = pag.next
+                            isLoading = false
+                        },
+                        {
+                            it.printStackTrace()
+                            isLoading = false
+                        }
+                    )
+            }
         }
     }
 }

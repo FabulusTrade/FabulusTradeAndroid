@@ -7,8 +7,9 @@ import ru.wintrade.mvp.model.entity.api.*
 interface WinTradeDataSource {
     @GET("api/v1/trader/list/")
     fun getAllTraders(
-        @Header("Authorization") token: String
-    ): Single<List<ResponseTrader>>
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseTrader>>
 
     @GET("api/v1/trader/{trader_id}/")
     fun getTraderById(
@@ -19,8 +20,9 @@ interface WinTradeDataSource {
     @GET("api/v1/trader/{trader_id}/trade/")
     fun getTradesByTrader(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: Long
-    ): Single<List<ResponseTrade>>
+        @Path(value = "trader_id", encoded = true) traderId: Long,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseTrade>>
 
     @GET("api/v1/trader/{trader_id}/trade/{trade_id}/")
     fun getTradeById(
@@ -59,12 +61,14 @@ interface WinTradeDataSource {
     @GET("api/v1/subscription/list/")
     fun mySubscriptions(
         @Header("Authorization") token: String,
-    ): Single<List<ResponseSubscription>>
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseSubscription>>
 
-    @GET("api/v1/trader/post/all")
-    fun getAllNews(
-        @Header("Authorization") token: String
-    ): Single<List<ResponseTraderNews>>
+    @GET("api/v1/trader/posts/all")
+    fun getAllPosts(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
 
     @FormUrlEncoded
     @POST("auth/complete/google-plus/")

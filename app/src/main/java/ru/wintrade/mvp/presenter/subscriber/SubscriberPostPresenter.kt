@@ -5,7 +5,7 @@ import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
 import javax.inject.Inject
 
-class SubscriberNewsPresenter : MvpPresenter<SubscriberNewsView>() {
+class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     @Inject
     lateinit var router: Router
 

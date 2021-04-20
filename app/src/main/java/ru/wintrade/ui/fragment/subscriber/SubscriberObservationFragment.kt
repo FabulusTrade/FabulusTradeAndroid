@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_subscriber_observation.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -39,7 +40,23 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
     override fun init() {
         adapter = SubscriberObservationRVAdapter(presenter.listPresenter)
         rv_sub_obs.adapter = adapter
-        rv_sub_obs.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
+        rv_sub_obs.layoutManager = layoutManager
+        rv_sub_obs.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                              presenter.onScrollLimit()
+                        }
+
+                    }
+                }
+            }
+        )
     }
 
     override fun updateAdapter() {

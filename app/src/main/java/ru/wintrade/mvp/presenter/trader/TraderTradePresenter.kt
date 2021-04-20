@@ -7,7 +7,7 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderDealView
 import javax.inject.Inject
 
-class TraderDealPresenter : MvpPresenter<TraderDealView>() {
+class TraderTradePresenter : MvpPresenter<TraderDealView>() {
     @Inject
     lateinit var router: Router
 
