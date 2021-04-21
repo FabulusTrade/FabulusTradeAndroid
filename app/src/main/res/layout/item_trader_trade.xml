@@ -22,7 +22,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_item_trader_deal_my_deals_name"
+                    android:id="@+id/tv_item_trader_trade_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -32,7 +32,7 @@
                     android:textSize="18sp" />
 
                 <ImageView
-                    android:id="@+id/iv_item_trader_deal_my_deals_logo"
+                    android:id="@+id/iv_item_trader_trade_logo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="0"
@@ -61,7 +61,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_item_trader_deal_my_deals_counter"
+                    android:id="@+id/tv_item_trader_trade_counter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -69,7 +69,7 @@
                     android:textColor="@color/colorAccent" />
 
                 <TextView
-                    android:id="@+id/tv__item_trader_deal_my_deals_date"
+                    android:id="@+id/tv_item_trader_trade_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

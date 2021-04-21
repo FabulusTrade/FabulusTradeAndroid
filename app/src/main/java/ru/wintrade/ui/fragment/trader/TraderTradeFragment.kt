@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_trader_deal.*
+import kotlinx.android.synthetic.main.fragment_trader_trade.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -32,16 +32,16 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_deal, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_trader_trade, container, false)
 
     override fun init() {
-        btn_trader_deal_my_deals.setOnClickListener {
+        btn_trader_trade_deals.setOnClickListener {
             presenter.myDealsBtnClicked()
         }
-        btn_trader_deal_orders.setOnClickListener {
+        btn_trader_trade_orders.setOnClickListener {
             presenter.myOrdersBtnClicked()
         }
-        btn_trader_deal_journal.setOnClickListener {
+        btn_trader_trade_journal.setOnClickListener {
             presenter.myJournalBtnClicked()
         }
     }
@@ -61,32 +61,32 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
     }
 
     private fun myJournalStateInit() {
-        isActive(btn_trader_deal_journal)
-        isNotActive(btn_trader_deal_my_deals)
-        isNotActive(btn_trader_deal_orders)
-        rv_trader_deal_my_deals.visibility = View.GONE
-        rv_trader_deal_orders.visibility = View.GONE
-        rv_trader_deal_journal.visibility = View.VISIBLE
+        isActive(btn_trader_trade_journal)
+        isNotActive(btn_trader_trade_deals)
+        isNotActive(btn_trader_trade_orders)
+        rv_trader_trade_deals.visibility = View.GONE
+        rv_trader_trade_orders.visibility = View.GONE
+        rv_trader_trade_journal.visibility = View.VISIBLE
         tv_trader_deal_monthly_counter.visibility = View.GONE
     }
 
     private fun myOrdersStateInit() {
-        isActive(btn_trader_deal_orders)
-        isNotActive(btn_trader_deal_my_deals)
-        isNotActive(btn_trader_deal_journal)
-        rv_trader_deal_my_deals.visibility = View.GONE
-        rv_trader_deal_orders.visibility = View.VISIBLE
-        rv_trader_deal_journal.visibility = View.GONE
+        isActive(btn_trader_trade_orders)
+        isNotActive(btn_trader_trade_deals)
+        isNotActive(btn_trader_trade_journal)
+        rv_trader_trade_deals.visibility = View.GONE
+        rv_trader_trade_orders.visibility = View.VISIBLE
+        rv_trader_trade_journal.visibility = View.GONE
         tv_trader_deal_monthly_counter.visibility = View.GONE
     }
 
     private fun myDealsStateInit() {
-        isActive(btn_trader_deal_my_deals)
-        isNotActive(btn_trader_deal_orders)
-        isNotActive(btn_trader_deal_journal)
-        rv_trader_deal_my_deals.visibility = View.VISIBLE
-        rv_trader_deal_orders.visibility = View.GONE
-        rv_trader_deal_journal.visibility = View.GONE
+        isActive(btn_trader_trade_deals)
+        isNotActive(btn_trader_trade_orders)
+        isNotActive(btn_trader_trade_journal)
+        rv_trader_trade_deals.visibility = View.VISIBLE
+        rv_trader_trade_orders.visibility = View.GONE
+        rv_trader_trade_journal.visibility = View.GONE
         tv_trader_deal_monthly_counter.visibility = View.VISIBLE
     }
 

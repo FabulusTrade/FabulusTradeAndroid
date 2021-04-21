@@ -1,10 +1,10 @@
-package ru.wintrade.mvp.presenter.trader
+package ru.wintrade.mvp.presenter
 
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Deals
 import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
-import ru.wintrade.mvp.view.trader.CompanyTradingOperationsView
+import ru.wintrade.mvp.view.CompanyTradingOperationsView
 
 class CompanyTradingOperationsPresenter : MvpPresenter<CompanyTradingOperationsView>() {
     val listPresenter = CompanyTradingOperationsRvListPresenter()

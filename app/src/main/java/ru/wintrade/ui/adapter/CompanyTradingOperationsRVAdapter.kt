@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_deals_detail.view.*
+import kotlinx.android.synthetic.main.item_comp_trading_ops.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
@@ -14,7 +14,7 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
     RecyclerView.Adapter<CompanyTradingOperationsRVAdapter.DetailViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DetailViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_deals_detail, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_comp_trading_ops, parent, false)
         )
 
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
@@ -28,7 +28,7 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
         override var pos = -1
 
         override fun setLastOperationDate(date: Date) {
-            itemView.tv_deals_detail_date.text = date.toString()
+            itemView.tv_item_comp_trading_ops_date.text = date.toString()
         }
     }
 }

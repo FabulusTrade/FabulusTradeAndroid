@@ -8,7 +8,7 @@
     android:paddingHorizontal="15dp">
 
     <TextView
-        android:id="@+id/tv_deals_detail_date"
+        android:id="@+id/tv_item_comp_trading_ops_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="15dp"
@@ -26,7 +26,7 @@
             android:paddingHorizontal="15dp">
 
             <ImageView
-                android:id="@+id/iv_deals_detail_company_logo"
+                android:id="@+id/iv_item_comp_trading_ops_logo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="0"
@@ -41,14 +41,14 @@
                 tools:ignore="RtlSymmetry">
 
                 <TextView
-                    android:id="@+id/tv_deals_detail_operation"
+                    android:id="@+id/tv_item_comp_trading_ops_operation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sale_of_securities"
                     android:textColor="@color/colorBlack" />
 
                 <TextView
-                    android:id="@+id/tv_deals_detail_price"
+                    android:id="@+id/tv_item_comp_trading_ops_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="по 4$" />
@@ -56,7 +56,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_deals_detail_profit"
+            android:id="@+id/tv_item_comp_trading_ops_profit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -66,7 +66,7 @@
             android:textColor="@color/colorRed" />
 
         <View
-            android:id="@+id/view_deals_detail_list_divider"
+            android:id="@+id/view_item_comp_trading_ops_list_divider"
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_gravity="center"

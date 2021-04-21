@@ -16,7 +16,7 @@
         tools:ignore="RtlHardcoded">
 
         <ImageButton
-            android:id="@+id/btn_trader_deals_detail_close"
+            android:id="@+id/btn_comp_trading_ops_close"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_weight="0"
@@ -31,7 +31,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_trader_deals_detail_name"
+            android:id="@+id/tv_comp_trading_ops_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -41,7 +41,7 @@
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_deals_detail"
+            android:id="@+id/rv_comp_trading_ops"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

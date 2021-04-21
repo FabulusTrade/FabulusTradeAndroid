@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_deal_my_deals"
+                android:id="@+id/btn_trader_trade_deals"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
@@ -29,7 +29,7 @@
                 tools:ignore="SmallSp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_deal_orders"
+                android:id="@+id/btn_trader_trade_orders"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
@@ -42,7 +42,7 @@
                 tools:ignore="SmallSp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_deal_journal"
+                android:id="@+id/btn_trader_trade_journal"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
@@ -65,7 +65,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_trader_deal_with_rv"
+        android:id="@+id/layout_trader_trade_with_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -73,25 +73,25 @@
         android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_deal_journal"
+            android:id="@+id/rv_trader_trade_journal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_deal_orders"
+            android:id="@+id/rv_trader_trade_orders"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_deal_my_deals"
+            android:id="@+id/rv_trader_trade_deals"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_trader_deal_coming_soon"
+        android:id="@+id/tv_trader_trade_coming_soon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

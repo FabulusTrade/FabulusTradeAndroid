@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.view.trader
+package ru.wintrade.mvp.view
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
