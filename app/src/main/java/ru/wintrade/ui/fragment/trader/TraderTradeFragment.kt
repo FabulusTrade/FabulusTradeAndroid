@@ -46,15 +46,15 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         }
     }
 
-    override fun setBtnState(state: TraderDealPresenter.State) {
+    override fun setBtnState(state: TraderTradePresenter.State) {
         when (state) {
-            TraderDealPresenter.State.MY_DEALS -> {
+            TraderTradePresenter.State.MY_DEALS -> {
                 myDealsStateInit()
             }
-            TraderDealPresenter.State.MY_ORDERS -> {
+            TraderTradePresenter.State.MY_ORDERS -> {
                 myOrdersStateInit()
             }
-            TraderDealPresenter.State.MY_JOURNAL -> {
+            TraderTradePresenter.State.MY_JOURNAL -> {
                 myJournalStateInit()
             }
         }
@@ -67,7 +67,7 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         rv_trader_deal_my_deals.visibility = View.GONE
         rv_trader_deal_orders.visibility = View.GONE
         rv_trader_deal_journal.visibility = View.VISIBLE
-        tv_trader_deal_monthly_counter.visibility = View.VISIBLE
+        tv_trader_deal_monthly_counter.visibility = View.GONE
     }
 
     private fun myOrdersStateInit() {
@@ -87,7 +87,7 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         rv_trader_deal_my_deals.visibility = View.VISIBLE
         rv_trader_deal_orders.visibility = View.GONE
         rv_trader_deal_journal.visibility = View.GONE
-        tv_trader_deal_monthly_counter.visibility = View.GONE
+        tv_trader_deal_monthly_counter.visibility = View.VISIBLE
     }
 
     private fun isActive(activeBtn: MaterialButton) {

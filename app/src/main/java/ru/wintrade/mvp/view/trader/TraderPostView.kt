@@ -10,5 +10,4 @@ interface TraderPostView : MvpView {
     fun init()
     fun setBtnsState(state: TraderPostPresenter.State)
     fun updateAdapter()
-    fun setVisibility(isVisible: Boolean)
 }

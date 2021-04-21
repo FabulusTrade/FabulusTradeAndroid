@@ -46,7 +46,6 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setVisibility(true)
     }
 
     fun onScrollLimit() {
@@ -56,13 +55,11 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     fun publicationsBtnClicked() {
         state = State.PUBLICATIONS
         viewState.setBtnsState(state)
-        viewState.setVisibility(true)
     }
 
     fun subscriptionBtnClicked() {
         state = State.SUBSCRIPTION
         viewState.setBtnsState(state)
-        viewState.setVisibility(false)
         loadPosts()
     }
 
