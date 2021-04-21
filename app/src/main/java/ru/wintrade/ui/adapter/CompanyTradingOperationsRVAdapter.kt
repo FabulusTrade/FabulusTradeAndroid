@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_deals_detail.view.*
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.adapter.IDealsDetailListPresenter
-import ru.wintrade.mvp.view.item.DealsDetailItemView
+import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
+import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import java.util.*
 
-class DealsDetailRVAdapter(val presenter: IDealsDetailListPresenter) :
-    RecyclerView.Adapter<DealsDetailRVAdapter.DetailViewHolder>() {
+class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperationsListPresenter) :
+    RecyclerView.Adapter<CompanyTradingOperationsRVAdapter.DetailViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DetailViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_deals_detail, parent, false)
@@ -24,10 +24,10 @@ class DealsDetailRVAdapter(val presenter: IDealsDetailListPresenter) :
 
     override fun getItemCount(): Int = presenter.getCount()
 
-    inner class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view), DealsDetailItemView {
+    inner class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view), CompanyTradingOperationsItemView {
         override var pos = -1
 
-        override fun setLastDealDate(date: Date) {
+        override fun setLastOperationDate(date: Date) {
             itemView.tv_deals_detail_date.text = date.toString()
         }
     }

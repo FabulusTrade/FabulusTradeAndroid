@@ -5,6 +5,6 @@ import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndStrategy::class)
-interface TraderDealsDetailView : MvpView {
+interface CompanyTradingOperationsView : MvpView {
     fun init()
 }

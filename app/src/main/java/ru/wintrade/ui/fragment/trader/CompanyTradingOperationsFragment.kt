@@ -10,25 +10,25 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.trader.TraderDealsDetailPresenter
-import ru.wintrade.mvp.view.trader.TraderDealsDetailView
+import ru.wintrade.mvp.presenter.trader.CompanyTradingOperationsPresenter
+import ru.wintrade.mvp.view.trader.CompanyTradingOperationsView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.DealsDetailRVAdapter
+import ru.wintrade.ui.adapter.CompanyTradingOperationsRVAdapter
 
-class TraderDealsDetailFragment : MvpAppCompatFragment(), TraderDealsDetailView {
+class CompanyTradingOperationsFragment : MvpAppCompatFragment(), CompanyTradingOperationsView {
     companion object {
-        fun newInstance() = TraderDealsDetailFragment()
+        fun newInstance() = CompanyTradingOperationsFragment()
     }
 
     @InjectPresenter
-    lateinit var presenter: TraderDealsDetailPresenter
+    lateinit var presenter: CompanyTradingOperationsPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderDealsDetailPresenter().apply {
+    fun providePresenter() = CompanyTradingOperationsPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: DealsDetailRVAdapter? = null
+    private var adapter: CompanyTradingOperationsRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +37,7 @@ class TraderDealsDetailFragment : MvpAppCompatFragment(), TraderDealsDetailView 
     ): View? = inflater.inflate(R.layout.fragment_trader_deals_detail, container, false)
 
     override fun init() {
-        adapter = DealsDetailRVAdapter(presenter.listPresenter)
+        adapter = CompanyTradingOperationsRVAdapter(presenter.listPresenter)
         rv_trader_deals_detail.adapter = adapter
         rv_trader_deals_detail.layoutManager = LinearLayoutManager(context)
     }

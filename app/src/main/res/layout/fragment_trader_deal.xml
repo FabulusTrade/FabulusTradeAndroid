@@ -24,7 +24,7 @@
                 android:layout_height="36dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorLightGreen"
-                android:text="@string/my_deals"
+                android:text="@string/deals"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
 
@@ -65,27 +65,38 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_trader_deal_with_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingHorizontal="15dp"
-        android:orientation="vertical">
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trader_deal_journal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trader_deal_orders"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trader_deal_my_deals"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_trader_deal_coming_soon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/coming_soon"
+        android:textSize="28sp"
+        android:visibility="visible" />
 
 </LinearLayout>

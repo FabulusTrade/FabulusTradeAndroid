@@ -82,17 +82,17 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     private fun subscriptionStateInit() {
         isActive(btn_trader_news_subscription)
         isNotActive(btn_trader_news_publication)
-//        rv_trader_news_publication.visibility = View.GONE
         rv_trader_news_subscription.visibility = View.VISIBLE
         layout_trader_news_title.visibility = View.GONE
+        tv_trader_news_coming_soon.visibility = View.GONE
     }
 
     private fun publicationsStateInit() {
         isActive(btn_trader_news_publication)
         isNotActive(btn_trader_news_subscription)
         rv_trader_news_subscription.visibility = View.GONE
-//        rv_trader_news_publication.visibility = View.VISIBLE
         layout_trader_news_title.visibility = View.VISIBLE
+        tv_trader_news_coming_soon.visibility = View.VISIBLE
     }
 
     private fun isNotActive(inactiveBtn: MaterialButton) {
