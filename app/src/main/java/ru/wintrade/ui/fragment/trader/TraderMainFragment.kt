@@ -110,6 +110,7 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
                 1 -> tab.setIcon(R.drawable.ic_trader_news)
                 2 -> tab.setIcon(R.drawable.ic_trader_instrument)
                 3 -> tab.setIcon(R.drawable.ic_trader_deal)
+                4 -> tab.setIcon(R.drawable.ic_visibility)
             }
         }.attach()
     }

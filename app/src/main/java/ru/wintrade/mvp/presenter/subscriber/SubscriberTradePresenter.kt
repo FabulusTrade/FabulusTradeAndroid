@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.functions.Function
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
@@ -30,6 +29,12 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
+    enum class State {
+        DEALS, ORDERS, JOURNAL
+    }
+
+    private var state = State.DEALS
+
     val listPresenter = SubscriberTradesRVListPresenter()
     val traders = mutableListOf<Trader>()
     var newTradeDisposable: Disposable? = null
@@ -45,7 +50,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
             val date = dateFormat.format(trade.date)
             val sum = trade.price * trade.count
             trade.trader?.let { trader ->
-                trader.avatar?.let { avatar ->  view.setAvatar(avatar)}
+                trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
             }
             view.setCompany(trade.company)
@@ -140,5 +145,20 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         override fun onComplete() {
 
         }
+    }
+
+    fun dealsBtnClicked() {
+        state = State.DEALS
+        viewState.setBtnState(state)
+    }
+
+    fun ordersBtnClicked() {
+        state = State.ORDERS
+        viewState.setBtnState(state)
+    }
+
+    fun journalBtnClicked() {
+        state = State.JOURNAL
+        viewState.setBtnState(state)
     }
 }

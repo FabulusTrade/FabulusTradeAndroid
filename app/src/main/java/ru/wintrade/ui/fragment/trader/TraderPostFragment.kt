@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_trader_posts.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -69,25 +69,33 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     }
 
     override fun setBtnsState(state: TraderPostPresenter.State) {
-        val activeBtn: Button
-        val inactiveBtn: Button
-        if (state == TraderPostPresenter.State.PUBLICATIONS) {
-            activeBtn = btn_trader_news_publication
-            inactiveBtn = btn_trader_news_subscription
-        } else {
-            activeBtn = btn_trader_news_subscription
-            inactiveBtn = btn_trader_news_publication
+        when (state) {
+            TraderPostPresenter.State.PUBLICATIONS -> {
+                publicationsStateInit()
+            }
+            TraderPostPresenter.State.SUBSCRIPTION -> {
+                subscriptionStateInit()
+            }
         }
-        activeBtn.apply {
-            backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorPrimary
-                )
-            })
-        }
+    }
+
+    private fun subscriptionStateInit() {
+        isActive(btn_trader_news_subscription)
+        isNotActive(btn_trader_news_publication)
+        rv_trader_news_subscription.visibility = View.VISIBLE
+        layout_trader_news_title.visibility = View.GONE
+        tv_trader_news_coming_soon.visibility = View.GONE
+    }
+
+    private fun publicationsStateInit() {
+        isActive(btn_trader_news_publication)
+        isNotActive(btn_trader_news_subscription)
+        rv_trader_news_subscription.visibility = View.GONE
+        layout_trader_news_title.visibility = View.VISIBLE
+        tv_trader_news_coming_soon.visibility = View.VISIBLE
+    }
+
+    private fun isNotActive(inactiveBtn: MaterialButton) {
         inactiveBtn.apply {
             backgroundTintList =
                 context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
@@ -100,17 +108,20 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         }
     }
 
-    override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+    private fun isActive(activeBtn: MaterialButton) {
+        activeBtn.apply {
+            backgroundTintList =
+                context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
+            setTextColor(context?.let {
+                ContextCompat.getColorStateList(
+                    it,
+                    R.color.colorPrimary
+                )
+            })
+        }
     }
 
-    override fun setVisibility(isVisible: Boolean) {
-        if (isVisible) {
-            rv_trader_news_subscription.visibility = View.GONE
-//            rv_trader_news_publication.visibility = View.VISIBLE
-        } else {
-//            rv_trader_news_publication.visibility = View.GONE
-            rv_trader_news_subscription.visibility = View.VISIBLE
-        }
+    override fun updateAdapter() {
+        adapter?.notifyDataSetChanged()
     }
 }
