@@ -31,12 +31,18 @@ class SplashPresenter : MvpPresenter<SplashView>() {
                     -1,
                     "",
                     "",
+                    kval = false,
+                    isTrader = false,
                     firstName = "",
                     lastName = "",
                     patronymic = "",
                     token = "",
                     deviceToken = "",
-                    subscriptions_count = -1
+                    avatar = null,
+                    dateJoined = "",
+                    phone = null,
+                    followersCount = -1,
+                    subscriptionsCount = -1
                 )
             },
             BiFunction<Long, Profile, Profile> { _, t2 -> t2 })

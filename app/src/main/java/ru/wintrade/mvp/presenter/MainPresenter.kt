@@ -5,6 +5,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
+import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.navigation.Screens
@@ -22,22 +23,30 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
     @Inject
     lateinit var roomRepo: RoomRepo
 
+    @Inject
+    lateinit var apiRepo: ApiRepo
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        if (profileStorage.profile != null) {
-            router.newRootScreen(Screens.SubscriberMainScreen())
-        }
-        else {
-            if (hasVisitedTutorial)
-                router.newRootScreen(Screens.SignInScreen())
-            else
-                router.newRootScreen(Screens.OnBoardScreen())
-        }
-
+        profileStorage.profile?.let { profile ->
+            if (profile.isTrader) {
+                apiRepo.getTraderById(profile.token, profile.id)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                        router.newRootScreen(Screens.TraderStatScreen(it))
+                    }, {})
+            } else router.newRootScreen(Screens.SubscriberMainScreen())
+        } ?: hasVisited()
     }
 
-    fun openTradersScreen(){
+    private fun hasVisited() {
+        if (hasVisitedTutorial)
+            router.newRootScreen(Screens.SignInScreen())
+        else
+            router.newRootScreen(Screens.OnBoardScreen())
+    }
+
+    fun openTradersScreen() {
         router.replaceScreen(Screens.TradersMainScreen())
     }
 
@@ -46,13 +55,10 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
     }
 
     fun exitClicked() {
-        roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe(
-            {
-                profileStorage.profile = null
-                viewState.exit()
-            },
-            {}
-        )
+        roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe({
+            profileStorage.profile = null
+            viewState.exit()
+        }, {})
     }
 
     fun onDrawerOpened() {

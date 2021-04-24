@@ -51,7 +51,7 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
         tv_subscriber_main_name.text = username
     }
 
-    override fun setSubscriptionCount(count: Long) {
+    override fun setSubscriptionCount(count: Int) {
         val text = "Подписки $count"
         tv_subscriber_main_subscription.text = text
     }

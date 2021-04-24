@@ -11,13 +11,17 @@ fun mapToRoomProfile(profile: Profile) = RoomProfile(
     profile.username,
     profile.email,
     profile.avatar,
+    profile.kval,
+    profile.isTrader,
     profile.firstName,
     profile.lastName,
     profile.patronymic,
+    profile.dateJoined,
     profile.phone,
+    profile.followersCount,
+    profile.subscriptionsCount,
     profile.token,
     profile.deviceToken,
-    profile.subscriptions_count
 )
 
 fun mapToProfile(profile: RoomProfile) = Profile(
@@ -25,13 +29,17 @@ fun mapToProfile(profile: RoomProfile) = Profile(
     profile.username,
     profile.email,
     profile.avatar,
+    profile.kval,
+    profile.isTrader,
     profile.firstName,
     profile.lastName,
     profile.patronymic,
+    profile.dateJoined,
     profile.phone,
+    profile.followersCount,
+    profile.subscriptionsCount,
     profile.token,
     profile.deviceToken,
-    profile.subscriptions_count
 )
 
 fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) = Profile(
@@ -39,13 +47,17 @@ fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) =
     profile.username,
     profile.email,
     profile.avatar,
-    profile.firstName,
-    profile.lastName,
+    profile.kval,
+    profile.is_trader,
+    profile.first_name,
+    profile.last_name,
     profile.patronymic,
+    profile.date_joined,
     profile.phone,
+    profile.followers_count,
+    profile.subscriptions_count,
     token,
     deviceToken,
-    profile.subscriptions_count
 )
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
@@ -94,7 +106,12 @@ fun <T, V> mapToPagination(
     responsePagination: ResponsePagination<V>,
     results: List<T>
 ): Pagination<T> =
-    Pagination(responsePagination.count, responsePagination.next, responsePagination.previous, results)
+    Pagination(
+        responsePagination.count,
+        responsePagination.next,
+        responsePagination.previous,
+        results
+    )
 
 fun mapToPost(post: ResponsePost?): Post? {
     post?.let {

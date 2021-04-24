@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_trader_main.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -42,6 +45,7 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     ): View? = inflater.inflate(R.layout.fragment_trader_main, container, false)
 
     override fun init() {
+        drawerSetMode()
         initViewPager()
         initTraderFields()
         btn_trader_stat_subscribe.setOnClickListener {
@@ -50,6 +54,11 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         cb_trader_stat_observe.setOnClickListener {
             presenter.observeBtnClicked()
         }
+    }
+
+    private fun drawerSetMode() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        requireActivity().toolbar_blue.visibility = View.VISIBLE
     }
 
     override fun setSubscribeBtnActive(isActive: Boolean) {

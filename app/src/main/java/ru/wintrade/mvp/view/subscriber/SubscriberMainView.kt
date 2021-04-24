@@ -9,5 +9,5 @@ interface SubscriberMainView : MvpView {
     fun init()
     fun setAvatar(ava: String?)
     fun setName(username: String)
-    fun setSubscriptionCount(count: Long)
+    fun setSubscriptionCount(count: Int)
 }
