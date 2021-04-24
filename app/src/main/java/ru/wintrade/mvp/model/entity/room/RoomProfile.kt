@@ -9,13 +9,17 @@ class RoomProfile(
     val username: String,
     val email: String,
     val avatar: String?,
+    val kval: Boolean,
+    val isTrader: Boolean,
     val firstName: String,
     val lastName: String,
     val patronymic: String,
+    val dateJoined: String,
     val phone: String?,
+    val followersCount: Int,
+    val subscriptionsCount: Int,
     val token: String,
     val deviceToken: String,
-    val subscriptions_count: Long,
     @PrimaryKey
     val id: Long = 1
 )

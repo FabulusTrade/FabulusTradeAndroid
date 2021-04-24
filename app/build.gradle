@@ -24,14 +24,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes.each {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def tokenId = properties.getProperty("token_id", "")
-        it.buildConfigField "String", "TOKEN_ID", tokenId
-        it.resValue 'string', "token_id", tokenId
-    }
-
     buildTypes {
         release {
             minifyEnabled false

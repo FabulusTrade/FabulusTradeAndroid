@@ -12,13 +12,21 @@ class ResponseProfile(
     @Expose
     val avatar: String? = null,
     @Expose
-    val firstName: String,
+    val kval: Boolean,
     @Expose
-    val lastName: String,
+    val is_trader: Boolean,
+    @Expose
+    val first_name: String,
+    @Expose
+    val last_name: String,
     @Expose
     val patronymic: String,
     @Expose
+    val date_joined: String,
+    @Expose
     val phone: String? = null,
     @Expose
-    val subscriptions_count: Long
+    val followers_count: Int,
+    @Expose
+    val subscriptions_count: Int
 )
