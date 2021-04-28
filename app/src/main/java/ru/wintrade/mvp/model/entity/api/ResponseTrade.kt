@@ -6,7 +6,7 @@ data class ResponseTrade(
     @Expose
     val id: Long,
     @Expose
-    val trader: String,
+    val trader: Long,
     @Expose
     val operation_type: String,
     @Expose

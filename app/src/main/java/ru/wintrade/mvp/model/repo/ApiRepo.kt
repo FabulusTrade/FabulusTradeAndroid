@@ -39,22 +39,22 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradesByTrader(token: String, trader: Trader, page: Int = 1): Single<Pagination<Trade>> =
+    fun getTradesByTrader(token: String, traderId: Long, page: Int = 1): Single<Pagination<Trade>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradesByTrader(token, trader.id, page).flatMap { respPag ->
-                    val trades = respPag.results.map { apiTrade -> mapToTrade(apiTrade, trader) }
+                api.getTradesByTrader(token, traderId, page).flatMap { respPag ->
+                    val trades = respPag.results.map { apiTrade -> mapToTrade(apiTrade) }
                     Single.just(mapToPagination(respPag, trades))
                 }
             } else
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradeById(token: String, trader: Trader, tradeId: Long): Single<Trade> =
+    fun getTradeById(token: String, traderId: Long, tradeId: Long): Single<Trade> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradeById(token, trader.id, tradeId).flatMap { response ->
-                    Single.just(mapToTrade(response, trader))
+                api.getTradeById(token, traderId, tradeId).flatMap { response ->
+                    Single.just(mapToTrade(response))
                 }
             } else
                 Single.error(RuntimeException())
@@ -109,14 +109,27 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(RuntimeException())
         }.subscribeOn(Schedulers.io())
 
-    fun mySubscriptions(token: String, page: Int = 1): Single<Pagination<Subscription>> =
+    fun mySubscriptions(token: String): Single<List<Subscription>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
-                api.mySubscriptions(token, page).flatMap { respPag ->
-                    val subscriptions = respPag.results.map { sub ->
+                api.mySubscriptions(token).flatMap { respSubscriptions ->
+                    val subscriptions = respSubscriptions.map { sub ->
                         mapToSubscription(sub)
                     }
-                    Single.just(mapToPagination(respPag, subscriptions))
+                    Single.just(subscriptions)
+                }
+            else
+                Single.error(RuntimeException())
+        }.subscribeOn(Schedulers.io())
+
+    fun subscriptionTrades(token: String, page: Int = 1): Single<Pagination<Trade>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline)
+                api.subscriptionTrades(token, page).flatMap { respPagination ->
+                    val trades = respPagination.results.map { respTrade ->
+                        mapToTrade(respTrade)
+                    }
+                    Single.just(mapToPagination(respPagination, trades))
                 }
             else
                 Single.error(RuntimeException())
