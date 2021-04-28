@@ -22,9 +22,6 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     @Inject
     lateinit var apiRepo: ApiRepo
 
-    var isLoading = false
-    var nextPage: Int? = 1
-
     var listPresenter = SubscriberObservationListPresenter()
 
     inner class SubscriberObservationListPresenter : ISubscriberObservationListPresenter {
@@ -49,27 +46,17 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
         loadSubscriptions()
     }
 
-    fun onScrollLimit() {
-        loadSubscriptions()
-    }
-
     private fun loadSubscriptions() {
-        if (nextPage != null && !isLoading) {
-            isLoading = true
-            apiRepo.mySubscriptions(profileStorage.profile!!.token, nextPage!!)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    { pag ->
-                        val traders = pag.results.map { it.trader }
-                        listPresenter.traders.addAll(traders)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    }
-                )
-        }
+        apiRepo.mySubscriptions(profileStorage.profile!!.token)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                { subscriptions ->
+                    val traders = subscriptions.map { it.trader }
+                    listPresenter.traders.addAll(traders)
+                    viewState.updateAdapter()
+                }, {
+                    it.printStackTrace()
+                }
+            )
     }
 
 

@@ -40,23 +40,7 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
     override fun init() {
         adapter = SubscriberObservationRVAdapter(presenter.listPresenter)
         rv_sub_obs.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_sub_obs.layoutManager = layoutManager
-        rv_sub_obs.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                              presenter.onScrollLimit()
-                        }
-
-                    }
-                }
-            }
-        )
+        rv_sub_obs.layoutManager = LinearLayoutManager(context)
     }
 
     override fun updateAdapter() {

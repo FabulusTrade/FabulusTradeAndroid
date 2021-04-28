@@ -47,8 +47,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     private fun checkSubscription() {
         apiRepo.mySubscriptions(profileStorage.profile!!.token)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ pag ->
-                pag.results.find { it.trader.id == trader.id }?.let {
+            .subscribe({ subscriptions ->
+                subscriptions.find { it.trader.id == trader.id }?.let {
                     setVisibility(false)
                 } ?: setVisibility(true)
             }, {
