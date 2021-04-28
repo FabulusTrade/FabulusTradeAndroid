@@ -60,11 +60,16 @@ interface WinTradeDataSource {
 
     @GET("api/v1/subscription/list/")
     fun mySubscriptions(
+        @Header("Authorization") token: String
+    ): Single<List<ResponseSubscription>>
+
+    @GET("api/v1/subscription/trades/")
+    fun subscriptionTrades(
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1
-    ): Single<ResponsePagination<ResponseSubscription>>
+    ): Single<ResponsePagination<ResponseTrade>>
 
-    @GET("api/v1/trader/posts/all")
+    @GET("api/v1/trader/posts/all/")
     fun getAllPosts(
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1

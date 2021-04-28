@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_subscriber_deal.*
 import moxy.MvpAppCompatFragment
@@ -41,7 +42,23 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
     override fun init() {
         adapter = SubscriberTradesRVAdapter(presenter.listPresenter)
         rv_sub_deal.adapter = adapter
-        rv_sub_deal.layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
+        rv_sub_deal.layoutManager = layoutManager
+        rv_sub_deal.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            presenter.onScrollLimit()
+                        }
+
+                    }
+                }
+            }
+        )
         layout_sub_deal_refresh.setOnRefreshListener {
             presenter.refreshed()
         }

@@ -34,6 +34,8 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     }
 
     private var state = State.DEALS
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     val listPresenter = SubscriberTradesRVListPresenter()
     val traders = mutableListOf<Trader>()
@@ -75,15 +77,25 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     }
 
     fun refreshed() {
-        loadData()
+        refreshTrades()
+    }
+
+    fun onScrollLimit() {
+        loadNextPage()
     }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadData()
-        apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(getNewTradeObserver())
+        apiRepo.mySubscriptions(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            { subsciptions ->
+                traders.addAll(subsciptions.map { it.trader })
+                refreshTrades()
+                apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getNewTradeObserver())
+            },
+            {}
+        )
     }
 
     override fun onDestroy() {
@@ -91,59 +103,48 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         newTradeDisposable?.dispose()
     }
 
-    private fun loadData() {
+    private fun refreshTrades() {
         viewState.setRefreshing(true)
-        apiRepo.mySubscriptions(profileStorage.profile!!.token).subscribe(
-            { pag ->
-                val tradeSingles = mutableListOf<Single<List<Trade>>>()
-                val traders = pag.results.map { it.trader }
-
-                traders.forEach { subTrader ->
-                    tradeSingles.add(
-                        apiRepo.getTradesByTrader(
-                            profileStorage.profile!!.token,
-                            subTrader
-                        ).flatMap {
-                            Single.just(it.results)
-                        }
-                    )
+        nextPage = 1
+        isLoading = true
+        apiRepo.subscriptionTrades(profileStorage.profile!!.token, nextPage!!)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                { pagination ->
+                    listPresenter.trades.clear()
+                    listPresenter.trades.addAll(pagination.results)
+                    resolveTraderInTrade()
+                    viewState.updateAdapter()
+                    nextPage = pagination.next
+                    isLoading = false
+                    viewState.setRefreshing(false)
+                },
+                {
+                    it.printStackTrace()
+                    isLoading = false
+                    viewState.setRefreshing(false)
                 }
+            )
 
-                Single.zip(tradeSingles, Function<Array<Any>, List<Trade>> {
-                    it.flatMap { it as List<Trade> }
-                }).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        val sorted = it.sortedBy { trade -> trade.date }.reversed()
-                        listPresenter.trades.clear()
-                        listPresenter.trades.addAll(sorted)
+    }
+
+    private fun loadNextPage() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            apiRepo.subscriptionTrades(profileStorage.profile!!.token, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { pagination ->
+                        listPresenter.trades.addAll(pagination.results)
+                        resolveTraderInTrade()
                         viewState.updateAdapter()
-                        viewState.setRefreshing(false)
+                        nextPage = pagination.next
+                        isLoading = false
                     },
                     {
                         it.printStackTrace()
-                        viewState.setRefreshing(false)
+                        isLoading = false
                     }
                 )
-            },
-            {}
-        )
-    }
-
-    private fun getNewTradeObserver() = object : Observer<Boolean> {
-        override fun onSubscribe(d: Disposable) {
-            newTradeDisposable = d
-        }
-
-        override fun onNext(t: Boolean) {
-            loadData()
-        }
-
-        override fun onError(e: Throwable) {
-
-        }
-
-        override fun onComplete() {
-
         }
     }
 
@@ -161,4 +162,30 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         state = State.JOURNAL
         viewState.setBtnState(state)
     }
+
+    private fun getNewTradeObserver() = object : Observer<Boolean> {
+        override fun onSubscribe(d: Disposable) {
+            newTradeDisposable = d
+        }
+
+        override fun onNext(t: Boolean) {
+            refreshTrades()
+        }
+
+        override fun onError(e: Throwable) {
+
+        }
+
+        override fun onComplete() {
+
+        }
+    }
+
+    private fun resolveTraderInTrade() {
+        listPresenter.trades.forEach { trade ->
+            if (trade.trader == null)
+                trade.trader = traders.find { it.id == trade.traderId }
+        }
+    }
+
 }
