@@ -64,16 +64,14 @@ interface WinTradeDataSource {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseSubscription>>
 
-    @GET("api/v1/trader/posts/all")
+    @GET("api/v1/trader/posts/all/")
     fun getAllPosts(
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 
-    @FormUrlEncoded
-    @POST("auth/complete/google-plus/")
-    fun signInWithGoogle(
-        @Field("id_token") token: String,
-//        @Body id_token: RequestAuthGoogle
-    ): Single<ResponseAuth>
+    @POST("auth/users/")
+    fun signUp(
+        @Body signUpData: RequestSignUp
+    ): Single<ResponseSignUp>
 }
