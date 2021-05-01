@@ -31,7 +31,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
     }
 
     fun openRegistrationScreen() {
-        //router.navigateTo(Screens.SignUpScreen())
+        router.navigateTo(Screens.SignUpScreen())
     }
 
     fun loginBtnClicked(nickname: String, password: String) {

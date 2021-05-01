@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -24,7 +25,7 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import java.util.concurrent.TimeUnit
 
-class SignUpFragment: MvpAppCompatFragment(), SignUpView {
+class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
     companion object {
         fun newInstance() = SignUpFragment()
@@ -51,6 +52,10 @@ class SignUpFragment: MvpAppCompatFragment(), SignUpView {
         iv_close.setOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    override fun showToast(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     private fun initListeners() {

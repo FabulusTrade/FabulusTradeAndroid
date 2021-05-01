@@ -1,15 +1,24 @@
 package ru.wintrade.mvp.presenter
 
+import com.google.gson.GsonBuilder
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.api.MyError
+import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.SignUpView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class SignUpPresenter: MvpPresenter<SignUpView>() {
+
+class SignUpPresenter : MvpPresenter<SignUpView>() {
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var apiRepo: ApiRepo
 
     private var privacyState = false
     private var rulesState = false
@@ -53,6 +62,15 @@ class SignUpPresenter: MvpPresenter<SignUpView>() {
     }
 
     fun createProfileClicked() {
-        router.navigateTo(Screens.SmsConfirmScreen(phone))
+        apiRepo.signUp(nickname, password, email, phone).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showToast("yes")
+                router.navigateTo(Screens.SignInScreen())
+            }, {
+                it as HttpException
+                val resp = it.response()?.errorBody()?.string()
+                val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+                val msg = gson.fromJson(resp, MyError::class.java)
+            })
     }
 }

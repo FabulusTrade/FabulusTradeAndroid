@@ -8,4 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SignUpView: MvpView {
     fun init()
+    fun showToast(msg: String)
 }
