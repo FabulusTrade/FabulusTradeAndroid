@@ -7,6 +7,7 @@ import ru.wintrade.mvp.presenter.service.MessagingPresenter
 import ru.wintrade.mvp.presenter.trader.*
 import ru.wintrade.mvp.presenter.traders.*
 import ru.wintrade.mvp.presenter.subscriber.*
+import ru.wintrade.mvp.presenter.traderforsubscriber.*
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.activity.SplashActivity
@@ -14,6 +15,7 @@ import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.trader.*
 import ru.wintrade.ui.fragment.traders.*
 import ru.wintrade.ui.fragment.subscriber.*
+import ru.wintrade.ui.fragment.traderforsubscriber.*
 
 import javax.inject.Singleton
 
@@ -72,4 +74,6 @@ interface AppComponent {
     fun inject(companyTradingOperationsPresenter: CompanyTradingOperationsPresenter)
     fun inject(traderObservationFragment: TraderObservationFragment)
     fun inject(traderObservationPresenter: TraderObservationPresenter)
+    fun inject(traderForSubscriberMainFragment: TraderForSubscriberMainFragment)
+    fun inject(traderForSubscriberMainPresenter: TraderForSubscriberMainPresenter)
 }

@@ -37,7 +37,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         }
 
         override fun openTraderStat(pos: Int) {
-            router.navigateTo(Screens.TraderStatScreen(traderList[pos]))
+            router.navigateTo(Screens.TraderForSubscriberMainScreen(traderList[pos]))
         }
     }
 
@@ -54,21 +54,19 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     private fun loadTraders() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            profileStorage.profile?.let { profile ->
-                apiRepo.getAllTraders(profile.token, nextPage!!).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { pag ->
-                            listPresenter.traderList.addAll(pag.results)
-                            viewState.updateAdapter()
-                            nextPage = pag.next
-                            isLoading = false
-                        },
-                        {
-                            it.printStackTrace()
-                            isLoading = false
-                        }
-                    )
-            }
+            apiRepo.getAllTraders(nextPage!!).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { pag ->
+                        listPresenter.traderList.addAll(pag.results)
+                        viewState.updateAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    },
+                    {
+                        it.printStackTrace()
+                        isLoading = false
+                    }
+                )
         }
     }
 }

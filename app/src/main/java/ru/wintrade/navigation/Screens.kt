@@ -7,6 +7,7 @@ import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.trader.*
 import ru.wintrade.ui.fragment.traders.*
 import ru.wintrade.ui.fragment.subscriber.*
+import ru.wintrade.ui.fragment.traderforsubscriber.TraderForSubscriberMainFragment
 
 class Screens {
     class OnBoardScreen : SupportAppScreen() {
@@ -83,5 +84,9 @@ class Screens {
 
     class TraderObservationScreen() : SupportAppScreen() {
         override fun getFragment() = TraderObservationFragment.newInstance()
+    }
+
+    class TraderForSubscriberMainScreen(val trader: Trader) : SupportAppScreen() {
+        override fun getFragment() = TraderForSubscriberMainFragment.newInstance(trader)
     }
 }

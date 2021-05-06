@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_traders_main.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -36,6 +39,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
+        drawerSetMode()
         vp_main_traders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
@@ -43,6 +47,11 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
                 1 -> tab.text = resources.getString(R.string.filter)
             }
         }.attach()
+    }
+
+    private fun drawerSetMode() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        requireActivity().toolbar_blue.visibility = View.VISIBLE
     }
 
     override fun backClicked(): Boolean {

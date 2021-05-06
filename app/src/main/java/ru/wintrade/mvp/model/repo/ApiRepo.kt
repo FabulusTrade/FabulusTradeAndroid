@@ -17,10 +17,10 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
 
     val newTradeSubject = PublishSubject.create<Boolean>()
 
-    fun getAllTraders(token: String, page: Int = 1): Single<Pagination<Trader>> =
+    fun getAllTraders(page: Int = 1): Single<Pagination<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getAllTraders(token, page).flatMap { respPag ->
+                api.getAllTraders(page).flatMap { respPag ->
                     val traders = respPag.results.map { apiTrader -> mapToTrader(apiTrader) }
                     Single.just(mapToPagination(respPag, traders))
                 }

@@ -8,6 +8,8 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SignInView : MvpView {
     fun init()
+    fun setAccess(isAuthorized: Boolean)
+
     @StateStrategyType(SkipStrategy::class)
     fun showToast(toast: String)
 }

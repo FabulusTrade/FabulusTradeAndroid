@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @InjectViewState
 class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() {
-
     @Inject
     lateinit var profileStorage: ProfileStorage
 
@@ -40,8 +39,9 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
     }
 
     private fun hasVisited() {
+        viewState.setAccess(false)
         if (hasVisitedTutorial)
-            router.newRootScreen(Screens.SignInScreen())
+            router.newRootScreen(Screens.TradersMainScreen())
         else
             router.newRootScreen(Screens.OnBoardScreen())
     }
@@ -50,20 +50,28 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
         router.replaceScreen(Screens.TradersMainScreen())
     }
 
-    fun openSubscriberObservationScreen() {
-        router.replaceScreen(Screens.SubscriberMainScreen())
+    fun openSubscriberObservationScreen(isAuthorized: Boolean) {
+        if (isAuthorized)
+            router.replaceScreen(Screens.SubscriberMainScreen())
+        else
+            router.replaceScreen(Screens.SignUpScreen())
     }
 
     fun exitClicked() {
         roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe({
             profileStorage.profile = null
+            viewState.setAccess(false)
             viewState.exit()
         }, {})
     }
 
+    fun openRegScreen() {
+        router.navigateTo(Screens.SignUpScreen())
+    }
+
     fun onDrawerOpened() {
         val profile = profileStorage.profile
-        viewState.setupHeader(profile!!.avatar, profile.username)
+        viewState.setupHeader(profile?.avatar, profile?.username)
     }
 
     fun backClicked() {

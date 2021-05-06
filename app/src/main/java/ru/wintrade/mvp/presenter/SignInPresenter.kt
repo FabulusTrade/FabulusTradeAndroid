@@ -50,6 +50,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
                             profileStorage.profile = profile
                             roomRepo.insertProfile(profile)
                                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                                    viewState.setAccess(true)
                                     if (profile.isTrader) {
                                         apiRepo.getTraderById(token, profile.id)
                                             .observeOn(AndroidSchedulers.mainThread()).subscribe({

@@ -17,14 +17,12 @@ import ru.wintrade.ui.network.AndroidNetworkStatus
 import javax.inject.Named
 import javax.inject.Singleton
 
-
 @Module
 class ApiModule {
-
     @Named("baseUrl")
     @Provides
     fun baseUrl(): String {
-        return "http://185.46.17.66:8000"
+        return "http://wintrade.fun/"
     }
 
     @Singleton
@@ -52,11 +50,8 @@ class ApiModule {
             .create()
     }
 
-
     @Provides
     fun networkStatus(app: App): NetworkStatus {
         return AndroidNetworkStatus(app)
     }
-
-
 }

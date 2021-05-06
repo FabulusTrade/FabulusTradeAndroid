@@ -6,9 +6,13 @@ import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface MainView: MvpView {
+interface MainView : MvpView {
     fun init()
-    fun setupHeader(avatar: String?, username: String)
+    fun setupHeader(avatar: String?, username: String?)
+
     @StateStrategyType(SkipStrategy::class)
     fun exit()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun setAccess(isAuthorized: Boolean)
 }
