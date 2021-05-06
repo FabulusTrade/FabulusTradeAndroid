@@ -57,6 +57,25 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
             router.replaceScreen(Screens.SignUpScreen())
     }
 
+    fun openAboutWTScreen() {
+        router.navigateTo(Screens.AboutWinTradeScreen())
+    }
+
+    fun openQuestionScreen() {
+        router.navigateTo(Screens.QuestionScreen())
+    }
+
+    fun openSettingsScreen() {
+        router.navigateTo(Screens.SettingsScreen())
+    }
+
+    fun openFriendInviteScreen(isAuthorized: Boolean) {
+        if (!isAuthorized)
+            router.navigateTo(Screens.SignUpScreen())
+        else
+            router.navigateTo(Screens.FriendInviteScreen())
+    }
+
     fun exitClicked() {
         roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe({
             profileStorage.profile = null

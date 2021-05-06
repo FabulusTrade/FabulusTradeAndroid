@@ -89,4 +89,20 @@ class Screens {
     class TraderForSubscriberMainScreen(val trader: Trader) : SupportAppScreen() {
         override fun getFragment() = TraderForSubscriberMainFragment.newInstance(trader)
     }
+
+    class AboutWinTradeScreen : SupportAppScreen() {
+        override fun getFragment() = AboutWinTradeFragment.newInstance()
+    }
+
+    class QuestionScreen : SupportAppScreen() {
+        override fun getFragment() = QuestionFragment.newInstance()
+    }
+
+    class SettingsScreen : SupportAppScreen() {
+        override fun getFragment() = SettingsFragment.newInstance()
+    }
+
+    class FriendInviteScreen : SupportAppScreen() {
+        override fun getFragment() = FriendInviteFragment.newInstance()
+    }
 }

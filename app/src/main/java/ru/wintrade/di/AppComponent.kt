@@ -76,4 +76,12 @@ interface AppComponent {
     fun inject(traderObservationPresenter: TraderObservationPresenter)
     fun inject(traderForSubscriberMainFragment: TraderForSubscriberMainFragment)
     fun inject(traderForSubscriberMainPresenter: TraderForSubscriberMainPresenter)
+    fun inject(aboutWinTradeFragment: AboutWinTradeFragment)
+    fun inject(aboutWinTradePresenter: AboutWinTradePresenter)
+    fun inject(questionFragment: QuestionFragment)
+    fun inject(questionPresenter: QuestionPresenter)
+    fun inject(friendInviteFragment: FriendInviteFragment)
+    fun inject(friendInvitePresenter: FriendInvitePresenter)
+    fun inject(settingsFragment: SettingsFragment)
+    fun inject(settingsPresenter: SettingsPresenter)
 }

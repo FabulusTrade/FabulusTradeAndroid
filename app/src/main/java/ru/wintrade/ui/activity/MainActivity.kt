@@ -139,26 +139,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         when (item.itemId) {
             R.id.traders_menu_id -> presenter.openTradersScreen()
             R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen(isAccessed())
-            R.id.invite_a_friend_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.about_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.ask_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.settings_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
+            R.id.invite_a_friend_menu_id -> presenter.openFriendInviteScreen(isAccessed())
+            R.id.about_menu_id -> presenter.openAboutWTScreen()
+            R.id.ask_menu_id -> presenter.openQuestionScreen()
+            R.id.settings_menu_id -> presenter.openSettingsScreen()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
