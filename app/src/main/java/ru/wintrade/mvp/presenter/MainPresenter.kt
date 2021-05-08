@@ -54,15 +54,18 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
         if (isAuthorized)
             router.replaceScreen(Screens.SubscriberMainScreen())
         else
-            router.replaceScreen(Screens.SignUpScreen())
+            router.replaceScreen(Screens.SignInScreen())
     }
 
     fun openAboutWTScreen() {
         router.navigateTo(Screens.AboutWinTradeScreen())
     }
 
-    fun openQuestionScreen() {
-        router.navigateTo(Screens.QuestionScreen())
+    fun openQuestionScreen(isAuthorized: Boolean) {
+        if (!isAuthorized)
+            router.navigateTo(Screens.SignInScreen())
+        else
+            router.navigateTo(Screens.QuestionScreen())
     }
 
     fun openSettingsScreen() {
@@ -71,7 +74,7 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
 
     fun openFriendInviteScreen(isAuthorized: Boolean) {
         if (!isAuthorized)
-            router.navigateTo(Screens.SignUpScreen())
+            router.navigateTo(Screens.SignInScreen())
         else
             router.navigateTo(Screens.FriendInviteScreen())
     }
@@ -84,8 +87,8 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
         }, {})
     }
 
-    fun openRegScreen() {
-        router.navigateTo(Screens.SignUpScreen())
+    fun openSignInScreen() {
+        router.navigateTo(Screens.SignInScreen())
     }
 
     fun onDrawerOpened() {

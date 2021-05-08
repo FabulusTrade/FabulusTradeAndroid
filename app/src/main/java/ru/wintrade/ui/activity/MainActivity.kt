@@ -86,7 +86,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 }
             }
             R.id.menu_search -> {
-                if (!isAccessed()) presenter.openRegScreen()
+                if (!isAccessed()) presenter.openSignInScreen()
                 else Toast.makeText(
                     applicationContext,
                     R.string.coming_soon,
@@ -94,7 +94,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 ).show()
             }
             R.id.menu_share -> {
-                if (!isAccessed()) presenter.openRegScreen()
+                if (!isAccessed()) presenter.openSignInScreen()
                 else Toast.makeText(
                     applicationContext,
                     R.string.coming_soon,
@@ -102,7 +102,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 ).show()
             }
             R.id.menu_win -> {
-                if (!isAccessed()) presenter.openRegScreen()
+                if (!isAccessed()) presenter.openSignInScreen()
                 else Toast.makeText(
                     applicationContext,
                     R.string.coming_soon,
@@ -141,7 +141,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen(isAccessed())
             R.id.invite_a_friend_menu_id -> presenter.openFriendInviteScreen(isAccessed())
             R.id.about_menu_id -> presenter.openAboutWTScreen()
-            R.id.ask_menu_id -> presenter.openQuestionScreen()
+            R.id.ask_menu_id -> presenter.openQuestionScreen(isAccessed())
             R.id.settings_menu_id -> presenter.openSettingsScreen()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
