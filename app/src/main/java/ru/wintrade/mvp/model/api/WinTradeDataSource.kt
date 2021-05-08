@@ -7,7 +7,6 @@ import ru.wintrade.mvp.model.entity.api.*
 interface WinTradeDataSource {
     @GET("api/v1/trader/list/")
     fun getAllTraders(
-        @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrader>>
 

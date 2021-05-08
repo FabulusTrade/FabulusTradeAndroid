@@ -5,16 +5,13 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
 import com.jakewharton.rxbinding4.widget.textChanges
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.layout_title.*
+import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -22,7 +19,6 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SignUpPresenter
 import ru.wintrade.mvp.view.SignUpView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.activity.MainActivity
 import java.util.concurrent.TimeUnit
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {
@@ -46,12 +42,18 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     ): View? = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
     override fun init() {
+        setDrawerLockMode()
         tv_sign_privacy.movementMethod = LinkMovementMethod.getInstance()
         tv_sign_rules.movementMethod = LinkMovementMethod.getInstance()
         initListeners()
         iv_close.setOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    private fun setDrawerLockMode() {
+        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        requireActivity().toolbar_blue.visibility = View.GONE
     }
 
     override fun showToast(msg: String) {
@@ -117,5 +119,4 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
         }
     }
-
 }

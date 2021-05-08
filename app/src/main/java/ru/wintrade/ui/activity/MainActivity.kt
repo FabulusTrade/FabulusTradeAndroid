@@ -24,6 +24,7 @@ import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.util.HAS_VISITED_TUTORIAL
+import ru.wintrade.util.IS_AUTHORIZED
 import ru.wintrade.util.PREFERENCE_NAME
 import ru.wintrade.util.loadImage
 import javax.inject.Inject
@@ -49,7 +50,6 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         setContentView(R.layout.activity_main)
         App.instance.appComponent.inject(this)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
     }
 
     override fun init() {
@@ -85,11 +85,35 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                     presenter.onDrawerOpened()
                 }
             }
+            R.id.menu_search -> {
+                if (!isAccessed()) presenter.openSignInScreen()
+                else Toast.makeText(
+                    applicationContext,
+                    R.string.coming_soon,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            R.id.menu_share -> {
+                if (!isAccessed()) presenter.openSignInScreen()
+                else Toast.makeText(
+                    applicationContext,
+                    R.string.coming_soon,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            R.id.menu_win -> {
+                if (!isAccessed()) presenter.openSignInScreen()
+                else Toast.makeText(
+                    applicationContext,
+                    R.string.coming_soon,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
         return true
     }
 
-    override fun setupHeader(avatar: String?, username: String) {
+    override fun setupHeader(avatar: String?, username: String?) {
         val headerView = nav_view.getHeaderView(0)
         avatar?.let {
             loadImage(it, headerView.iv_header_main_avatar)
@@ -114,32 +138,17 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.traders_menu_id -> presenter.openTradersScreen()
-            R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen()
-            R.id.invite_a_friend_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.about_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.ask_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
-            R.id.settings_menu_id -> Toast.makeText(
-                applicationContext,
-                R.string.coming_soon,
-                Toast.LENGTH_SHORT
-            ).show()
+            R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen(isAccessed())
+            R.id.invite_a_friend_menu_id -> presenter.openFriendInviteScreen(isAccessed())
+            R.id.about_menu_id -> presenter.openAboutWTScreen()
+            R.id.ask_menu_id -> presenter.openQuestionScreen(isAccessed())
+            R.id.settings_menu_id -> presenter.openSettingsScreen()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
@@ -147,6 +156,20 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 return
         }
         presenter.backClicked()
+    }
+
+    override fun setAccess(isAuthorized: Boolean) {
+        val pref = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        with(pref.edit()) {
+            putBoolean(IS_AUTHORIZED, isAuthorized)
+            apply()
+        }
+    }
+
+    fun isAccessed(): Boolean {
+        return getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).getBoolean(
+            IS_AUTHORIZED, false
+        )
     }
 
     fun savePreference() {

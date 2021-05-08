@@ -1,5 +1,6 @@
 package ru.wintrade.ui.fragment
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SignInPresenter
 import ru.wintrade.mvp.view.SignInView
 import ru.wintrade.ui.App
+import ru.wintrade.util.PREFERENCE_NAME
 
 class SignInFragment : MvpAppCompatFragment(), SignInView {
     companion object {
@@ -63,6 +65,14 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     private fun setDrawerLockMode() {
         requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         requireActivity().toolbar_blue.visibility = View.GONE
+    }
+
+    override fun setAccess(isAuthorized: Boolean) {
+        val pref = requireActivity().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        with(pref.edit()) {
+            putBoolean(ru.wintrade.util.IS_AUTHORIZED, isAuthorized)
+            apply()
+        }
     }
 
     override fun showToast(toast: String) {

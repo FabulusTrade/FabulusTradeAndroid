@@ -45,15 +45,17 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     }
 
     private fun checkSubscription() {
-        apiRepo.mySubscriptions(profileStorage.profile!!.token)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ subscriptions ->
-                subscriptions.find { it.trader.id == trader.id }?.let {
-                    setVisibility(false)
-                } ?: setVisibility(true)
-            }, {
-                it.printStackTrace()
-            })
+        profileStorage.profile?.let { profile ->
+            apiRepo.mySubscriptions(profile.token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ subscriptions ->
+                    subscriptions.find { it.trader.id == trader.id }?.let {
+                        setVisibility(false)
+                    } ?: setVisibility(true)
+                }, {
+                    it.printStackTrace()
+                })
+        }
     }
 
     private fun setVisibility(result: Boolean) {
