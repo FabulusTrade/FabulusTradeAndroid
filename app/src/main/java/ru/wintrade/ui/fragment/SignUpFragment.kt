@@ -19,6 +19,10 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SignUpPresenter
 import ru.wintrade.mvp.view.SignUpView
 import ru.wintrade.ui.App
+import ru.wintrade.util.EmailValidation
+import ru.wintrade.util.NicknameValidation
+import ru.wintrade.util.PasswordValidation
+import ru.wintrade.util.PhoneValidation
 import java.util.concurrent.TimeUnit
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {
@@ -46,9 +50,6 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         tv_sign_privacy.movementMethod = LinkMovementMethod.getInstance()
         tv_sign_rules.movementMethod = LinkMovementMethod.getInstance()
         initListeners()
-        iv_close.setOnClickListener {
-            requireActivity().finish()
-        }
     }
 
     private fun setDrawerLockMode() {
@@ -56,67 +57,90 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         requireActivity().toolbar_blue.visibility = View.GONE
     }
 
-    override fun showToast(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    override fun showRegulationsAcceptToast() {
+        Toast.makeText(context, R.string.regulations_accept, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setNicknameError(validation: NicknameValidation) {
+        et_sign_nickname_layout.error =
+            when (validation) {
+                NicknameValidation.TOO_SHORT -> getString(R.string.nickname_too_short)
+                NicknameValidation.TOO_LONG -> getString(R.string.nickname_too_long)
+                NicknameValidation.ONLY_ENG_AND_DIGIT -> getString(R.string.nickname_only_eng_and_digits)
+                NicknameValidation.ALREADY_EXISTS -> getString(R.string.nickname_already_exists)
+                NicknameValidation.OK -> null
+            }
+    }
+
+    override fun setPasswordError(validation: PasswordValidation) {
+        et_sign_password_layout.error =
+            when (validation) {
+                PasswordValidation.TOO_SHORT -> getString(R.string.password_too_short)
+                PasswordValidation.NO_UPPERCASE_OR_LOWERCASE_OR_DIGIT -> getString(R.string.password_no_up_low_case_digits)
+                PasswordValidation.OK -> null
+            }
+
+    }
+
+    override fun setPasswordConfirmError(isCorrect: Boolean) {
+        if (isCorrect)
+            et_sign_confirm_password_layout.error = null
+        else
+            et_sign_confirm_password_layout.error = getString(R.string.password_mismatch)
+    }
+
+    override fun setEmailError(validation: EmailValidation) {
+        et_sign_email_layout.error = when(validation) {
+            EmailValidation.INCORRECT -> getString(R.string.email_incorrect)
+            EmailValidation.ALREADY_EXISTS -> getString(R.string.email_already_exists)
+            EmailValidation.OK -> null
+        }
+    }
+
+    override fun setPhoneError(validation: PhoneValidation) {
+        et_sign_phone_layout.error = when(validation) {
+            PhoneValidation.INCORRECT -> getString(R.string.phone_incorrect)
+            PhoneValidation.ALREADY_EXISTS -> getString(R.string.phone_already_exists)
+            PhoneValidation.OK -> null
+        }
     }
 
     private fun initListeners() {
-        cb_sign_privacy.setOnCheckedChangeListener { compoundButton, b ->
-            presenter.privacyCheckChanged(b)
+        et_sign_nickname.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus)
+                presenter.onNicknameInputFocusLost(et_sign_nickname.text.toString())
         }
 
-        cb_sign_rules.setOnCheckedChangeListener { compoundButton, b ->
-            presenter.rulesCheckChanged(b)
+        et_sign_password.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus)
+                presenter.onPasswordInputFocusLost(et_sign_password.text.toString())
         }
 
-        et_sign_nickname.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.nicknameChanged(it.toString())
-                },
-                {}
-            )
+        et_sign_confirm_password.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus)
+                presenter.onConfirmPasswordInputFocusLost(et_sign_confirm_password.text.toString())
+        }
 
-        et_sign_email.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.emailChanged(it.toString())
-                },
-                {}
-            )
+        et_sign_phone.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus)
+                presenter.onPhoneInputFocusLost(et_sign_phone.text.toString())
+        }
 
-        et_sign_password.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.passwordChanged(it.toString())
-                },
-                {}
-            )
-
-        et_sign_confirm_password.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.confirmPasswordChanged(it.toString())
-                },
-                {}
-            )
-
-        et_sign_phone.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.phoneChanged(it.toString())
-                },
-                {}
-            )
+        et_sign_email.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus)
+                presenter.onEmailInputFocusLost(et_sign_email.text.toString())
+        }
 
         btn_sign_create.setOnClickListener {
-            presenter.createProfileClicked()
-
+            presenter.createProfileClicked(
+                et_sign_nickname.text.toString(),
+                et_sign_password.text.toString(),
+                et_sign_confirm_password.text.toString(),
+                et_sign_email.text.toString(),
+                et_sign_phone.text.toString(),
+                cb_sign_rules.isChecked,
+                cb_sign_privacy.isChecked
+            )
         }
     }
 }
