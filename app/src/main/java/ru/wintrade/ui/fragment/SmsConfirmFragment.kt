@@ -59,9 +59,6 @@ class SmsConfirmFragment: MvpAppCompatFragment(), SmsConfirmView {
                 },
                 {}
             )
-        iv_close.setOnClickListener {
-            requireActivity().finish()
-        }
     }
 
     override fun showToast(msg: String) {

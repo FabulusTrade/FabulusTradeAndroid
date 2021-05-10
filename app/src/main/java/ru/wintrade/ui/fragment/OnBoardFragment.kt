@@ -46,9 +46,6 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
         requireActivity().toolbar_blue.visibility = View.GONE
         adapter = OnBoardVPAdapter(presenter.listPresenter)
         vp_on_board.adapter = adapter
-        iv_close.setOnClickListener {
-            requireActivity().finish()
-        }
     }
 
     override fun setVPPos(pos: Int) {

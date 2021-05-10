@@ -46,7 +46,6 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun init() {
         setDrawerLockMode()
-        iv_close.setOnClickListener { requireActivity().finish() }
         entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
         entrance_enter_button.setOnClickListener { enterBtnClicked() }
     }

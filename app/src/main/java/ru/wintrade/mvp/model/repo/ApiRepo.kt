@@ -10,6 +10,7 @@ import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
+import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.network.NetworkStatus
 import ru.wintrade.util.*
 
@@ -25,7 +26,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(mapToPagination(respPag, traders))
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getTraderById(token: String, traderId: Long): Single<Trader> =
@@ -36,7 +37,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(trader)
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getTradesByTrader(token: String, traderId: Long, page: Int = 1): Single<Pagination<Trade>> =
@@ -47,7 +48,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(mapToPagination(respPag, trades))
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getTradeById(token: String, traderId: Long, tradeId: Long): Single<Trade> =
@@ -57,7 +58,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(mapToTrade(response))
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun postDeviceToken(token: String, deviceToken: String): Single<RequestDevice> =
@@ -68,7 +69,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(it)
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun myDevices(token: String): Single<List<RequestDevice>> =
@@ -78,7 +79,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(deviceBody)
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun auth(nickname: String, password: String): Single<String> =
@@ -89,7 +90,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(response.auth_token)
                 }
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getProfile(token: String): Single<ResponseProfile> =
@@ -97,7 +98,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
             if (isOnline) {
                 api.getProfile(token)
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun subscribeToTrader(token: String, traderId: Long): Single<RequestSubscription> =
@@ -106,7 +107,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 val sub = RequestSubscription(traderId, null)
                 api.subscribeToTrader(token, sub)
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun mySubscriptions(token: String): Single<List<Subscription>> =
@@ -119,7 +120,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(subscriptions)
                 }
             else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun subscriptionTrades(token: String, page: Int = 1): Single<Pagination<Trade>> =
@@ -132,7 +133,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(mapToPagination(respPagination, trades))
                 }
             else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getAllPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
@@ -145,7 +146,7 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     Single.just(mapToPagination(respPag, posts))
                 }
             else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun signUp(
@@ -160,6 +161,6 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     RequestSignUp(username, password, email, phone)
                 api.signUp(requestBody)
             } else
-                Single.error(RuntimeException())
+                Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 }

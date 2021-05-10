@@ -88,4 +88,16 @@
     <string name="my_deals">Мои сделки</string>
     <string name="shares">Акции</string>
     <string name="sale_of_securities">Продажа акций</string>
+    <string name="nickname_too_short">Ник слишком короткий</string>
+    <string name="nickname_too_long">Ник слишком длинный</string>
+    <string name="nickname_only_eng_and_digits">Разрешены только латинские буквы и цифры</string>
+    <string name="nickname_already_exists">Пользователь с таким ником уже существует</string>
+    <string name="password_too_short">Пароль слишком короткий</string>
+    <string name="password_no_up_low_case_digits">Пароль должен содержать цифру, заглавную и строчную буквы</string>
+    <string name="password_mismatch">Пароли не совпадают</string>
+    <string name="email_incorrect">Некорректный email</string>
+    <string name="email_already_exists">Пользователь с такой почтой уже зарегистрирован</string>
+    <string name="phone_incorrect">Некорректный номер</string>
+    <string name="phone_already_exists">Пользователь с таким номером уже зарегистрирован</string>
+    <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
 </resources>
