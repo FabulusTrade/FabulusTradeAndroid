@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import kotlinx.android.synthetic.main.layout_title.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -27,8 +25,6 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     companion object {
         fun newInstance() = SignInFragment()
     }
-
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     @InjectPresenter
     lateinit var presenter: SignInPresenter

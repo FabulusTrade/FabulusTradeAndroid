@@ -8,7 +8,7 @@ import ru.wintrade.ui.activity.ActivityHolder
 import ru.wintrade.ui.activity.ActivityLifecycleCallback
 import javax.inject.Inject
 
-class App: Application() {
+class App : Application() {
     companion object {
         lateinit var instance: App
     }
@@ -30,8 +30,5 @@ class App: Application() {
 
         appComponent.inject(this)
         registerActivityLifecycleCallbacks(ActivityLifecycleCallback(holder))
-
-
     }
-
 }

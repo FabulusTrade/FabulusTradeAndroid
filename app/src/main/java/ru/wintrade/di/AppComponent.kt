@@ -84,4 +84,6 @@ interface AppComponent {
     fun inject(friendInvitePresenter: FriendInvitePresenter)
     fun inject(settingsFragment: SettingsFragment)
     fun inject(settingsPresenter: SettingsPresenter)
+    fun inject(publicationFragment: PublicationFragment)
+    fun inject(publicationPresenter: PublicationPresenter)
 }

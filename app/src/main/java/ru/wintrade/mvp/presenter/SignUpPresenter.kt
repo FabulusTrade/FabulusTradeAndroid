@@ -13,7 +13,6 @@ import ru.wintrade.navigation.Screens
 import ru.wintrade.util.*
 import javax.inject.Inject
 
-
 class SignUpPresenter : MvpPresenter<SignUpView>() {
 
     @Inject
@@ -55,8 +54,15 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             viewState.setEmailError(isValidEmail(email))
     }
 
-
-    fun createProfileClicked(nickname: String, password: String, confirmPassword: String, email: String, phone: String, isRulesAccepted: Boolean, isPrivacyAccepted: Boolean) {
+    fun createProfileClicked(
+        nickname: String,
+        password: String,
+        confirmPassword: String,
+        email: String,
+        phone: String,
+        isRulesAccepted: Boolean,
+        isPrivacyAccepted: Boolean
+    ) {
         val nicknameValidation = isValidNickname(nickname)
         val passwordValidation = isValidPassword(password)
         val isValidConfirmPassword = password == confirmPassword
@@ -78,7 +84,8 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             passwordValidation == PasswordValidation.OK &&
             isValidConfirmPassword &&
             emailValidation == EmailValidation.OK &&
-            phoneValidation == PhoneValidation.OK ) {
+            phoneValidation == PhoneValidation.OK
+        ) {
             apiRepo.signUp(nickname, password, email, phone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -101,6 +108,4 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
                 })
         }
     }
-
-
 }
