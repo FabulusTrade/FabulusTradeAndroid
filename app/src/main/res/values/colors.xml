@@ -13,4 +13,5 @@
     <color name="colorGrayLight">#D8D4D4</color>
     <color name="colorRed">#B52C2C</color>
     <color name="colorWhiteSmoke">#F4F4F4</color>
+    <color name="colorDarkGray">#858585</color>
 </resources>
