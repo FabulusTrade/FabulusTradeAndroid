@@ -30,7 +30,7 @@ class TraderForSubscriberMainPresenter(val trader: Trader, val isAuthorized: Boo
     }
 
     fun observeBtnClicked(isAuthorized: Boolean) {
-        if (!isAuthorized) router.navigateTo(Screens.SignUpScreen())
+        if (!isAuthorized) router.navigateTo(Screens.SignInScreen())
         else {
             isObserveActive = !isObserveActive
             viewState.setObserveActive(isObserveActive)
@@ -38,7 +38,7 @@ class TraderForSubscriberMainPresenter(val trader: Trader, val isAuthorized: Boo
     }
 
     fun subscribeToTraderBtnClicked(isAuthorized: Boolean) {
-        if (!isAuthorized) router.navigateTo(Screens.SignUpScreen())
+        if (!isAuthorized) router.navigateTo(Screens.SignInScreen())
         else {
             profileStorage.profile?.let { profile ->
                 apiRepo.subscribeToTrader(profile.token, trader.id)

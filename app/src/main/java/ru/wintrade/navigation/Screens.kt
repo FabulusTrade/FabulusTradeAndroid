@@ -105,4 +105,8 @@ class Screens {
     class FriendInviteScreen : SupportAppScreen() {
         override fun getFragment() = FriendInviteFragment.newInstance()
     }
+
+    class PublicationScreen : SupportAppScreen() {
+        override fun getFragment() = PublicationFragment.newInstance()
+    }
 }
