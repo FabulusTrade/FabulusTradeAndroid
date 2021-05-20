@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
 
-interface WinTradeDataSource {
+interface WinTradeApi {
     @GET("api/v1/trader/list/")
     fun getAllTraders(
         @Query("page") page: Int = 1
@@ -36,9 +36,9 @@ interface WinTradeDataSource {
     ): Single<ResponseAuth>
 
     @GET("auth/users/me/")
-    fun getProfile(
+    fun getUserProfile(
         @Header("Authorization") token: String
-    ): Single<ResponseProfile>
+    ): Single<ResponseUserProfile>
 
     @POST("devices/")
     fun postDeviceToken(
@@ -78,4 +78,28 @@ interface WinTradeDataSource {
     fun signUp(
         @Body signUpData: RequestSignUp
     ): Single<ResponseSignUp>
+
+    @POST("api/v1/trader/post/create/")
+    fun createPost(
+        @Header("Authorization") token: String,
+        @Body requestCreatePost: RequestCreatePost
+    ): Single<ResponsePost>
+
+    @PUT("api/v1/trader/post/pinned/")
+    fun updatePinnedPost(
+        @Header("Authorization") token: String,
+        @Body requestCreatePost: RequestCreatePost
+    ): Single<ResponsePost>
+
+    @GET("api/v1/trader/post/pinned/")
+    fun readPinnedPost(
+        @Header("Authorization") token: String,
+    ): Single<ResponsePost>
+
+    @GET("api/v1/trader/posts/my/")
+    fun getMyPosts(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
 }

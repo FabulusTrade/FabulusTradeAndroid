@@ -1,11 +1,9 @@
 package ru.wintrade.ui.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
@@ -23,9 +21,6 @@ import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
-import ru.wintrade.util.HAS_VISITED_TUTORIAL
-import ru.wintrade.util.IS_AUTHORIZED
-import ru.wintrade.util.PREFERENCE_NAME
 import ru.wintrade.util.loadImage
 import javax.inject.Inject
 
@@ -41,7 +36,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     val navigator = SupportAppNavigator(this, R.id.container)
 
     @ProvidePresenter
-    fun providePresenter() = MainPresenter(hasVisited()).apply {
+    fun providePresenter() = MainPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -86,28 +81,13 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 }
             }
             R.id.menu_search -> {
-                if (!isAccessed()) presenter.openSignInScreen()
-                else Toast.makeText(
-                    applicationContext,
-                    R.string.coming_soon,
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             R.id.menu_share -> {
-                if (!isAccessed()) presenter.openSignInScreen()
-                else Toast.makeText(
-                    applicationContext,
-                    R.string.coming_soon,
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             R.id.menu_win -> {
-                if (!isAccessed()) presenter.openSignInScreen()
-                else Toast.makeText(
-                    applicationContext,
-                    R.string.coming_soon,
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
         }
         return true
@@ -119,10 +99,6 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             loadImage(it, headerView.iv_header_main_avatar)
         }
         headerView.tv_header_main_nickname.text = username
-    }
-
-    override fun exit() {
-        finish()
     }
 
     override fun onResumeFragments() {
@@ -137,12 +113,12 @@ class MainActivity : MvpAppCompatActivity(), MainView,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.traders_menu_id -> presenter.openTradersScreen()
-            R.id.observation_list_menu_id -> presenter.openSubscriberObservationScreen(isAccessed())
-            R.id.invite_a_friend_menu_id -> presenter.openFriendInviteScreen(isAccessed())
-            R.id.about_menu_id -> presenter.openAboutWTScreen()
-            R.id.ask_menu_id -> presenter.openQuestionScreen(isAccessed())
-            R.id.settings_menu_id -> presenter.openSettingsScreen()
+            R.id.traders_menu_id -> presenter.tradersMenuClicked()
+            R.id.observation_list_menu_id -> presenter.observationMenuClicked()
+            R.id.invite_a_friend_menu_id -> presenter.friendInviteMenuClicked()
+            R.id.about_menu_id -> presenter.aboutWTMenuClicked()
+            R.id.ask_menu_id -> presenter.questionMenuClicked()
+            R.id.settings_menu_id -> presenter.settingsMenuClicked()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -156,33 +132,5 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 return
         }
         presenter.backClicked()
-    }
-
-    override fun setAccess(isAuthorized: Boolean) {
-        val pref = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
-        with(pref.edit()) {
-            putBoolean(IS_AUTHORIZED, isAuthorized)
-            apply()
-        }
-    }
-
-    fun isAccessed(): Boolean {
-        return getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).getBoolean(
-            IS_AUTHORIZED, false
-        )
-    }
-
-    fun savePreference() {
-        val pref = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
-        with(pref.edit()) {
-            putBoolean(HAS_VISITED_TUTORIAL, true)
-            apply()
-        }
-    }
-
-    fun hasVisited(): Boolean {
-        return getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).getBoolean(
-            HAS_VISITED_TUTORIAL, false
-        )
     }
 }

@@ -15,7 +15,7 @@
     <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_title">Создать учетную запись</string>
-    <string name="nickname">Ник</string>
+    <string name="nickname">Никнейм</string>
     <string name="email">Электронная почта</string>
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
@@ -104,4 +104,6 @@
     <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
     <string name="load_file">загрузить файл</string>
     <string name="do_publication">Опубликовать</string>
+    <string name="only_eng_digits">(только латинские буквы и цифры)</string>
+    <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
 </resources>

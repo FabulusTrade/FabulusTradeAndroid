@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,13 +19,13 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
-import ru.wintrade.mvp.view.trader.TraderStatView
+import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 
-class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderStatView,
+class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView,
     BackButtonListener {
     companion object {
         fun newInstance(trader: Trader) = TraderMainFragment(trader)
@@ -47,7 +48,6 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     override fun init() {
         drawerSetMode()
         initViewPager()
-        initTraderFields()
         btn_trader_stat_subscribe.setOnClickListener {
             presenter.subscribeToTraderBtnClicked()
         }
@@ -96,16 +96,22 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         cb_trader_stat_observe.isChecked = isActive
     }
 
-    private fun initTraderFields() {
-        presenter.trader.avatar?.let { loadImage(it, iv_trader_stat_ava) }
-        tv_trader_stat_name.text = presenter.trader.username
-        if (presenter.trader.yearProfit?.substring(0, 1) == "-") {
-            tv_trader_stat_profit.text = presenter.trader.yearProfit
-            tv_trader_stat_profit.setTextColor(Color.RED)
-        } else {
-            tv_trader_stat_profit.text = presenter.trader.yearProfit
+    override fun setUsername(username: String) {
+        tv_trader_stat_name.text = username
+    }
+
+    override fun setProfit(profit: String, isPositive: Boolean) {
+        if (isPositive) {
+            tv_trader_stat_profit.text = profit
             tv_trader_stat_profit.setTextColor(Color.GREEN)
+        } else {
+            tv_trader_stat_profit.text = profit
+            tv_trader_stat_profit.setTextColor(Color.RED)
         }
+    }
+
+    override fun setAvatar(avatar: String) {
+        loadImage(avatar, iv_trader_stat_ava)
     }
 
     private fun initViewPager() {
@@ -119,13 +125,11 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
                 1 -> tab.setIcon(R.drawable.ic_trader_news)
                 2 -> tab.setIcon(R.drawable.ic_trader_instrument)
                 3 -> tab.setIcon(R.drawable.ic_trader_deal)
-                4 -> tab.setIcon(R.drawable.ic_visibility)
             }
         }.attach()
     }
 
     override fun backClicked(): Boolean {
-        presenter.backClicked()
-        return true
+        return presenter.backClicked()
     }
 }

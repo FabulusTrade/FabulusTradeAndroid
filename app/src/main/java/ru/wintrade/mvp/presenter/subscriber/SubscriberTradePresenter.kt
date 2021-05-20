@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Function
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
@@ -24,7 +25,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     lateinit var router: Router
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     @Inject
     lateinit var apiRepo: ApiRepo
@@ -87,7 +88,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        apiRepo.mySubscriptions(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        apiRepo.mySubscriptions(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe(
             { subsciptions ->
                 traders.addAll(subsciptions.map { it.trader })
                 refreshTrades()
@@ -107,7 +108,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         viewState.setRefreshing(true)
         nextPage = 1
         isLoading = true
-        apiRepo.subscriptionTrades(profileStorage.profile!!.token, nextPage!!)
+        apiRepo.subscriptionTrades(profile.token!!, nextPage!!)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { pagination ->
                     listPresenter.trades.clear()
@@ -130,7 +131,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     private fun loadNextPage() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.subscriptionTrades(profileStorage.profile!!.token, nextPage!!)
+            apiRepo.subscriptionTrades(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { pagination ->

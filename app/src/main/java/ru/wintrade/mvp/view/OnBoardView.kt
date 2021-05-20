@@ -9,6 +9,4 @@ import moxy.viewstate.strategy.StateStrategyType
 interface OnBoardView: MvpView {
     fun init()
     fun setVPPos(pos: Int)
-    @StateStrategyType(SkipStrategy::class)
-    fun savePreference()
 }

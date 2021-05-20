@@ -66,17 +66,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_trader_news_subscription"
+        android:id="@+id/rv_trader_me_post"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_trader_news_coming_soon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/coming_soon"
-        android:textSize="28sp"
-        android:visibility="visible" />
+        android:layout_height="match_parent" />
 </LinearLayout>

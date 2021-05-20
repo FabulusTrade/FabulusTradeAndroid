@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class ProfileModule {
     @Singleton
     @Provides
-    fun profileStorage(): ProfileStorage {
-        return ProfileStorage()
+    fun profile(): Profile {
+        return Profile(null, null, null, false)
     }
 }

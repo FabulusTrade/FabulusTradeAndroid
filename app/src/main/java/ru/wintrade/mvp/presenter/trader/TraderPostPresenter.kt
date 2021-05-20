@@ -4,30 +4,27 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Post
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITraderNewsRVListPresenter
 import ru.wintrade.mvp.view.item.TraderNewsItemView
 import ru.wintrade.mvp.view.trader.TraderPostView
+import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class TraderPostPresenter : MvpPresenter<TraderPostView>() {
-    @Inject
-    lateinit var router: Router
+
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     @Inject
     lateinit var apiRepo: ApiRepo
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
-    private var state = State.PUBLICATIONS
-    private var isLoading = false
-    private var nextPage: Int? = 1
-
-    enum class State {
-        PUBLICATIONS, SUBSCRIPTION
-    }
+    @Inject
+    lateinit var router: Router
 
     val listPresenter = TraderNewsRVListPresenter()
 
@@ -46,39 +43,34 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        if (profile.user == null)
+            router.newRootScreen(Screens.SignInScreen())
+        else
+            apiRepo.getAllPosts(profile.token!!, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
+                    listPresenter.news.addAll(pag.results)
+                    viewState.updateAdapter()
+                    nextPage = pag.next
+                }, {
+                    it.printStackTrace()
+                })
     }
 
     fun onScrollLimit() {
-        loadPosts()
-    }
-
-    fun publicationsBtnClicked() {
-        state = State.PUBLICATIONS
-        viewState.setBtnsState(state)
-    }
-
-    fun subscriptionBtnClicked() {
-        state = State.SUBSCRIPTION
-        viewState.setBtnsState(state)
-        loadPosts()
-    }
-
-    private fun loadPosts() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            profileStorage.profile?.let {
-                apiRepo.getAllPosts(it.token, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pag ->
-                        listPresenter.news.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    })
-            }
+            apiRepo.getAllPosts(profile.token!!, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
+                    listPresenter.news.addAll(pag.results)
+                    viewState.updateAdapter()
+                    nextPage = pag.next
+                    isLoading = false
+                }, {
+                    it.printStackTrace()
+                    isLoading = false
+                })
         }
     }
 }

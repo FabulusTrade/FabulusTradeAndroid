@@ -4,10 +4,12 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.ui.fragment.*
-import ru.wintrade.ui.fragment.trader.*
+import ru.wintrade.ui.fragment.traderme.*
 import ru.wintrade.ui.fragment.traders.*
 import ru.wintrade.ui.fragment.subscriber.*
-import ru.wintrade.ui.fragment.traderforsubscriber.TraderForSubscriberMainFragment
+import ru.wintrade.ui.fragment.trader.TraderMainFragment
+import ru.wintrade.ui.fragment.trader.TraderPopularInstrumentsFragment
+import ru.wintrade.ui.fragment.trader.TraderTradeFragment
 
 class Screens {
     class OnBoardScreen : SupportAppScreen() {
@@ -26,16 +28,20 @@ class Screens {
         override fun getFragment() = SignInFragment.newInstance()
     }
 
-    class TraderStatScreen(val trader: Trader) : SupportAppScreen() {
-        override fun getFragment() = TraderMainFragment.newInstance(trader)
+    class TraderMainScreen(val trader: Trader?) : SupportAppScreen() {
+        override fun getFragment() = TraderMainFragment.newInstance(trader!!)
     }
 
-    class TraderProfitScreen(val trader: Trader) : SupportAppScreen() {
-        override fun getFragment() = TraderProfitFragment.newInstance(trader)
+    class TraderMeMainScreen : SupportAppScreen() {
+        override fun getFragment() = TraderMeMainFragment.newInstance()
+    }
+
+    class TraderProfitScreen() : SupportAppScreen() {
+        override fun getFragment() = TraderMeProfitFragment.newInstance()
     }
 
     class TraderNewsScreen : SupportAppScreen() {
-        override fun getFragment() = TraderPostFragment.newInstance()
+        override fun getFragment() = TraderMePostFragment.newInstance()
     }
 
     class TraderPopularInstrumentsScreen : SupportAppScreen() {
@@ -83,11 +89,7 @@ class Screens {
     }
 
     class TraderObservationScreen() : SupportAppScreen() {
-        override fun getFragment() = TraderObservationFragment.newInstance()
-    }
-
-    class TraderForSubscriberMainScreen(val trader: Trader) : SupportAppScreen() {
-        override fun getFragment() = TraderForSubscriberMainFragment.newInstance(trader)
+        override fun getFragment() = TraderMeObservationFragment.newInstance()
     }
 
     class AboutWinTradeScreen : SupportAppScreen() {
@@ -106,7 +108,7 @@ class Screens {
         override fun getFragment() = FriendInviteFragment.newInstance()
     }
 
-    class PublicationScreen : SupportAppScreen() {
-        override fun getFragment() = PublicationFragment.newInstance()
+    class CreatePostScreen(val isPinnedEdit: Boolean) : SupportAppScreen() {
+        override fun getFragment() = CreatePostFragment.newInstance(isPinnedEdit)
     }
 }

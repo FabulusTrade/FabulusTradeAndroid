@@ -3,14 +3,14 @@ package ru.wintrade.mvp.presenter.trader
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.view.trader.TraderStatView
+import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
+class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     @Inject
     lateinit var router: Router
 
@@ -18,13 +18,17 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     lateinit var apiRepo: ApiRepo
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     var isObserveActive: Boolean = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        viewState.setUsername(trader.username!!)
+        val isPositiveProfit = trader.yearProfit?.substring(0, 1) != "-"
+        viewState.setProfit(trader.yearProfit!!, isPositiveProfit)
+        trader.avatar?.let { viewState.setAvatar(it) }
         checkSubscription()
     }
 
@@ -34,19 +38,22 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
     }
 
     fun subscribeToTraderBtnClicked() {
-        apiRepo.subscribeToTrader(profileStorage.profile!!.token, trader.id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.setSubscribeBtnActive(false)
-                viewState.setObserveVisibility(false)
-            }, {
-                it.printStackTrace()
-            })
+        if (profile.user == null)
+            router.newRootScreen(Screens.SignInScreen())
+        else
+            apiRepo.subscribeToTrader(profile.token!!, trader.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.setSubscribeBtnActive(false)
+                    viewState.setObserveVisibility(false)
+                }, {
+                    it.printStackTrace()
+                })
     }
 
     private fun checkSubscription() {
-        profileStorage.profile?.let { profile ->
-            apiRepo.mySubscriptions(profile.token)
+        if (profile.user != null) {
+            apiRepo.mySubscriptions(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ subscriptions ->
                     subscriptions.find { it.trader.id == trader.id }?.let {
@@ -56,6 +63,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderStatView>() {
                     it.printStackTrace()
                 })
         }
+
     }
 
     private fun setVisibility(result: Boolean) {

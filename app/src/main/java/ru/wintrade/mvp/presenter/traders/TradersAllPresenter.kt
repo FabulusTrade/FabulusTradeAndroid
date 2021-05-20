@@ -3,6 +3,7 @@ package ru.wintrade.mvp.presenter.traders
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
@@ -20,7 +21,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     lateinit var router: Router
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     val listPresenter = TradersAllListPresenter()
     private var isLoading = false
@@ -37,7 +38,11 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         }
 
         override fun openTraderStat(pos: Int) {
-            router.navigateTo(Screens.TraderForSubscriberMainScreen(traderList[pos]))
+            val trader = traderList[pos]
+            if (profile.user != null && trader.id == profile.user!!.id)
+                router.navigateTo(Screens.TraderMeMainScreen())
+            else
+                router.navigateTo(Screens.TraderMainScreen(traderList[pos]))
         }
     }
 

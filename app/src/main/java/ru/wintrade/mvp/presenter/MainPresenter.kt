@@ -4,20 +4,24 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 @InjectViewState
-class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() {
+class MainPresenter : MvpPresenter<MainView>() {
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var profileRepo: ProfileRepo
 
     @Inject
     lateinit var roomRepo: RoomRepo
@@ -28,72 +32,75 @@ class MainPresenter(val hasVisitedTutorial: Boolean) : MvpPresenter<MainView>() 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        profileStorage.profile?.let { profile ->
-            if (profile.isTrader) {
-                apiRepo.getTraderById(profile.token, profile.id)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        router.newRootScreen(Screens.TraderStatScreen(it))
-                    }, {})
-            } else router.newRootScreen(Screens.SubscriberMainScreen())
-        } ?: hasVisited()
-    }
 
-    private fun hasVisited() {
-        viewState.setAccess(false)
-        if (hasVisitedTutorial)
-            router.newRootScreen(Screens.TradersMainScreen())
-        else
+        if (profile.hasVisitedTutorial) {
+            if (profile.user != null) {
+                if (profile.user!!.isTrader)
+                    router.newRootScreen(Screens.TraderMeMainScreen())
+                else
+                    router.newRootScreen(Screens.SubscriberMainScreen())
+            } else
+                router.newRootScreen(Screens.TradersMainScreen())
+        } else
             router.newRootScreen(Screens.OnBoardScreen())
     }
 
-    fun openTradersScreen() {
+
+    fun tradersMenuClicked() {
         router.replaceScreen(Screens.TradersMainScreen())
     }
 
-    fun openSubscriberObservationScreen(isAuthorized: Boolean) {
-        if (isAuthorized)
-            router.replaceScreen(Screens.SubscriberMainScreen())
-        else
-            router.replaceScreen(Screens.SignInScreen())
-    }
+    fun observationMenuClicked() {
+        if (profile.user != null) {
+            if (profile.user!!.isTrader)
+                router.replaceScreen(Screens.TraderMeMainScreen())
+            else
+                router.replaceScreen(Screens.SubscriberMainScreen())
 
-    fun openAboutWTScreen() {
-        router.navigateTo(Screens.AboutWinTradeScreen())
-    }
-
-    fun openQuestionScreen(isAuthorized: Boolean) {
-        if (!isAuthorized)
+        } else
             router.navigateTo(Screens.SignInScreen())
-        else
-            router.navigateTo(Screens.QuestionScreen())
     }
 
-    fun openSettingsScreen() {
+    fun aboutWTMenuClicked() {
+        if (profile.user != null)
+            router.replaceScreen(Screens.AboutWinTradeScreen())
+        else
+            router.navigateTo(Screens.SignInScreen())
+    }
+
+    fun questionMenuClicked() {
+        if (profile.user != null)
+            router.replaceScreen(Screens.QuestionScreen())
+        else
+            router.navigateTo(Screens.SignInScreen())
+    }
+
+    fun settingsMenuClicked() {
         router.navigateTo(Screens.SettingsScreen())
     }
 
-    fun openFriendInviteScreen(isAuthorized: Boolean) {
-        if (!isAuthorized)
-            router.navigateTo(Screens.SignInScreen())
+    fun friendInviteMenuClicked() {
+        if (profile.user != null)
+            router.replaceScreen(Screens.FriendInviteScreen())
         else
-            router.navigateTo(Screens.FriendInviteScreen())
+            router.navigateTo(Screens.SignInScreen())
     }
 
     fun exitClicked() {
-        roomRepo.deleteProfile().observeOn(AndroidSchedulers.mainThread()).subscribe({
-            profileStorage.profile = null
-            viewState.setAccess(false)
-            viewState.exit()
-        }, {})
+        profile.deviceToken = null
+        profile.token = null
+        profile.user = null
+        profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                router.newRootScreen(Screens.SignInScreen())
+            }, {}
+        )
     }
 
-    fun openSignInScreen() {
-        router.navigateTo(Screens.SignInScreen())
-    }
+
 
     fun onDrawerOpened() {
-        val profile = profileStorage.profile
-        viewState.setupHeader(profile?.avatar, profile?.username)
+        viewState.setupHeader(profile.user?.avatar, profile.user?.username)
     }
 
     fun backClicked() {

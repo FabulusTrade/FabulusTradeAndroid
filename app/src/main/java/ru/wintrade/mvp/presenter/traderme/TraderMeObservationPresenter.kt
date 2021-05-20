@@ -1,11 +1,11 @@
-package ru.wintrade.mvp.presenter.trader
+package ru.wintrade.mvp.presenter.traderme
 
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.mvp.view.trader.TraderObservationView
+import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import javax.inject.Inject
 
-class TraderObservationPresenter : MvpPresenter<TraderObservationView>() {
+class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
     @Inject
     lateinit var router: Router
 
