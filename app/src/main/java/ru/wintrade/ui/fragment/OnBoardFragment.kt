@@ -52,8 +52,4 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
         vp_on_board.setCurrentItem(pos, true)
     }
 
-    override fun savePreference() {
-        (activity as MainActivity).savePreference()
-    }
-
 }

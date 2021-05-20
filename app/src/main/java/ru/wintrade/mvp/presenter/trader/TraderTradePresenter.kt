@@ -2,6 +2,7 @@ package ru.wintrade.mvp.presenter.trader
 
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderDealView
@@ -15,7 +16,7 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
     lateinit var apiRepo: ApiRepo
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     enum class State {
         MY_DEALS, MY_ORDERS, MY_JOURNAL

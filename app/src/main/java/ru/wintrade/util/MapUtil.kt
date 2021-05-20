@@ -6,60 +6,6 @@ import ru.wintrade.mvp.model.entity.common.Pagination
 import ru.wintrade.mvp.model.entity.room.RoomProfile
 import java.text.SimpleDateFormat
 
-fun mapToRoomProfile(profile: Profile) = RoomProfile(
-    profile.id,
-    profile.username,
-    profile.email,
-    profile.avatar,
-    profile.kval,
-    profile.isTrader,
-    profile.firstName,
-    profile.lastName,
-    profile.patronymic,
-    profile.dateJoined,
-    profile.phone,
-    profile.followersCount,
-    profile.subscriptionsCount,
-    profile.token,
-    profile.deviceToken,
-)
-
-fun mapToProfile(profile: RoomProfile) = Profile(
-    profile.remoteId,
-    profile.username,
-    profile.email,
-    profile.avatar,
-    profile.kval,
-    profile.isTrader,
-    profile.firstName,
-    profile.lastName,
-    profile.patronymic,
-    profile.dateJoined,
-    profile.phone,
-    profile.followersCount,
-    profile.subscriptionsCount,
-    profile.token,
-    profile.deviceToken,
-)
-
-fun mapToProfile(profile: ResponseProfile, token: String, deviceToken: String) = Profile(
-    profile.id,
-    profile.username,
-    profile.email,
-    profile.avatar,
-    profile.kval,
-    profile.is_trader,
-    profile.first_name,
-    profile.last_name,
-    profile.patronymic,
-    profile.date_joined,
-    profile.phone,
-    profile.followers_count,
-    profile.subscriptions_count,
-    token,
-    deviceToken,
-)
-
 fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.id,
     trader.username,

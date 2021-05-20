@@ -3,8 +3,8 @@ package ru.wintrade.mvp.presenter.subscriber
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ISubscriberObservationListPresenter
 import ru.wintrade.mvp.view.item.SubscriberObservationItemView
@@ -17,7 +17,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     lateinit var router: Router
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     @Inject
     lateinit var apiRepo: ApiRepo
@@ -35,8 +35,12 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             traderList.yearProfit?.let { view.setTraderProfit(it) }
         }
 
-        override fun openTraderStat(pos: Int) {
-            router.navigateTo(Screens.TraderStatScreen(traders[pos]))
+        override fun onItemClick(pos: Int) {
+            val trader = traders[pos]
+            if (trader.id == profile.user!!.id)
+                router.navigateTo(Screens.TraderMeMainScreen())
+            else
+                router.navigateTo(Screens.TraderMainScreen(trader))
         }
     }
 
@@ -47,7 +51,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     }
 
     private fun loadSubscriptions() {
-        apiRepo.mySubscriptions(profileStorage.profile!!.token)
+        apiRepo.mySubscriptions(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { subscriptions ->
                     val traders = subscriptions.map { it.trader }

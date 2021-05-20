@@ -8,6 +8,7 @@ import ru.wintrade.mvp.model.entity.room.RoomProfile
 
 @Dao
 interface ProfileDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(profile: RoomProfile)
 

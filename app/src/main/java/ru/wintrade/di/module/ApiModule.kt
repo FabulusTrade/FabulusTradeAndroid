@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.wintrade.mvp.model.api.WinTradeDataSource
+import ru.wintrade.mvp.model.api.WinTradeApi
 import ru.wintrade.mvp.model.network.NetworkStatus
 import ru.wintrade.ui.App
 import ru.wintrade.ui.network.AndroidNetworkStatus
@@ -27,7 +27,7 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun api(@Named("baseUrl") baseUrl: String, gson: Gson): WinTradeDataSource {
+    fun api(@Named("baseUrl") baseUrl: String, gson: Gson): WinTradeApi {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         val httpClient = OkHttpClient.Builder()
@@ -39,7 +39,7 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient.build())
             .build()
-            .create(WinTradeDataSource::class.java)
+            .create(WinTradeApi::class.java)
     }
 
     @Provides

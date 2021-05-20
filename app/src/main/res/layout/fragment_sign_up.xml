@@ -26,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/nickname"
+            app:helperTextEnabled="true"
+            app:helperText="@string/only_eng_digits"
             app:boxBackgroundColor="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -62,7 +64,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/password"
-            app:boxBackgroundColor="@color/colorWhite">
+            app:helperTextEnabled="true"
+            app:helperText="@string/create_password_helper_text"
+            app:boxBackgroundColor="@color/colorWhite"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sign_password"
@@ -80,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/confirm_password"
-            app:boxBackgroundColor="@color/colorWhite">
+            app:boxBackgroundColor="@color/colorWhite"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sign_confirm_password"

@@ -4,19 +4,34 @@ import dagger.Component
 import ru.wintrade.di.module.*
 import ru.wintrade.mvp.presenter.*
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberObservationPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.wintrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.wintrade.mvp.presenter.trader.*
-import ru.wintrade.mvp.presenter.traders.*
-import ru.wintrade.mvp.presenter.subscriber.*
-import ru.wintrade.mvp.presenter.traderforsubscriber.*
+import ru.wintrade.mvp.presenter.traderme.TraderMeMainPresenter
+import ru.wintrade.mvp.presenter.traderme.TraderMeObservationPresenter
+import ru.wintrade.mvp.presenter.traderme.TraderMePostPresenter
+import ru.wintrade.mvp.presenter.traderme.TraderMeProfitPresenter
+import ru.wintrade.mvp.presenter.traders.TradersAllPresenter
+import ru.wintrade.mvp.presenter.traders.TradersFilterPresenter
+import ru.wintrade.mvp.presenter.traders.TradersMainPresenter
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.activity.SplashActivity
 import ru.wintrade.ui.fragment.*
+import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.wintrade.ui.fragment.trader.*
-import ru.wintrade.ui.fragment.traders.*
-import ru.wintrade.ui.fragment.subscriber.*
-import ru.wintrade.ui.fragment.traderforsubscriber.*
-
+import ru.wintrade.ui.fragment.traderme.TraderMeMainFragment
+import ru.wintrade.ui.fragment.traderme.TraderMeObservationFragment
+import ru.wintrade.ui.fragment.traderme.TraderMePostFragment
+import ru.wintrade.ui.fragment.traderme.TraderMeProfitFragment
+import ru.wintrade.ui.fragment.traders.TradersAllFragment
+import ru.wintrade.ui.fragment.traders.TradersFilterFragment
+import ru.wintrade.ui.fragment.traders.TradersMainFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -46,10 +61,16 @@ interface AppComponent {
     fun inject(messagingPresenter: MessagingPresenter)
     fun inject(traderMainFragment: TraderMainFragment)
     fun inject(traderMainPresenter: TraderMainPresenter)
-    fun inject(traderProfitFragment: TraderProfitFragment)
+    fun inject(traderMeMainFragment: TraderMeMainFragment)
+    fun inject(traderMeMainPresenter: TraderMeMainPresenter)
+    fun inject(traderMeProfitFragment: TraderMeProfitFragment)
+    fun inject(traderMeProfitPresenter: TraderMeProfitPresenter)
     fun inject(traderProfitPresenter: TraderProfitPresenter)
+    fun inject(traderProfitFragment: TraderProfitFragment)
     fun inject(traderPostFragment: TraderPostFragment)
     fun inject(traderPostPresenter: TraderPostPresenter)
+    fun inject(traderMePostFragment: TraderMePostFragment)
+    fun inject(traderMePostPresenter: TraderMePostPresenter)
     fun inject(traderPopularInstrumentsFragment: TraderPopularInstrumentsFragment)
     fun inject(traderPopularInstrumentsPresenter: TraderPopularInstrumentsPresenter)
     fun inject(traderTradeFragment: TraderTradeFragment)
@@ -72,10 +93,8 @@ interface AppComponent {
     fun inject(tradeDetailPresenter: TradeDetailPresenter)
     fun inject(companyTradingOperationsFragment: CompanyTradingOperationsFragment)
     fun inject(companyTradingOperationsPresenter: CompanyTradingOperationsPresenter)
-    fun inject(traderObservationFragment: TraderObservationFragment)
-    fun inject(traderObservationPresenter: TraderObservationPresenter)
-    fun inject(traderForSubscriberMainFragment: TraderForSubscriberMainFragment)
-    fun inject(traderForSubscriberMainPresenter: TraderForSubscriberMainPresenter)
+    fun inject(traderMeObservationFragment: TraderMeObservationFragment)
+    fun inject(traderMeObservationPresenter: TraderMeObservationPresenter)
     fun inject(aboutWinTradeFragment: AboutWinTradeFragment)
     fun inject(aboutWinTradePresenter: AboutWinTradePresenter)
     fun inject(questionFragment: QuestionFragment)
@@ -84,6 +103,6 @@ interface AppComponent {
     fun inject(friendInvitePresenter: FriendInvitePresenter)
     fun inject(settingsFragment: SettingsFragment)
     fun inject(settingsPresenter: SettingsPresenter)
-    fun inject(publicationFragment: PublicationFragment)
-    fun inject(publicationPresenter: PublicationPresenter)
+    fun inject(createPostFragment: CreatePostFragment)
+    fun inject(createPostPresenter: CreatePostPresenter)
 }

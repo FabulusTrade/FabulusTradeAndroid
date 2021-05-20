@@ -30,7 +30,7 @@ class SubscriberObservationRVAdapter(val presenter: ISubscriberObservationListPr
             holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.GREEN)
         }
         holder.itemView.layout_traders_signed_item.setOnClickListener {
-            presenter.openTraderStat(holder.adapterPosition)
+            presenter.onItemClick(holder.adapterPosition)
         }
     }
 

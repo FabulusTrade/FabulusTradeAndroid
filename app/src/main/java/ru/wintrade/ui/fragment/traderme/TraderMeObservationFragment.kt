@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment
+package ru.wintrade.ui.fragment.traderme
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,20 +8,21 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.PublicationPresenter
-import ru.wintrade.mvp.view.PublicationView
+import ru.wintrade.mvp.presenter.traderme.TraderMeObservationPresenter
+import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.ui.App
 
-class PublicationFragment : MvpAppCompatFragment(), PublicationView {
+
+class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationView {
     companion object {
-        fun newInstance() = QuestionFragment()
+        fun newInstance() = TraderMeObservationFragment()
     }
 
     @InjectPresenter
-    lateinit var presenter: PublicationPresenter
+    lateinit var presenter: TraderMeObservationPresenter
 
     @ProvidePresenter
-    fun providePresenter() = PublicationPresenter().apply {
+    fun providePresenter() = TraderMeObservationPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -29,7 +30,7 @@ class PublicationFragment : MvpAppCompatFragment(), PublicationView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_publication, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_trader_me_observation, container, false)
 
     override fun init() {
 

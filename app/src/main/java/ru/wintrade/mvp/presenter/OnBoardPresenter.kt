@@ -2,6 +2,8 @@ package ru.wintrade.mvp.presenter
 
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IOnBoardListPresenter
 import ru.wintrade.mvp.view.OnBoardView
@@ -17,6 +19,12 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
     @Inject
     lateinit var router: Router
 
+    @Inject
+    lateinit var profile: Profile
+
+    @Inject
+    lateinit var profileRepo: ProfileRepo
+
     val listPresenter = OnBoardListPresenter()
 
     inner class OnBoardListPresenter : IOnBoardListPresenter {
@@ -29,7 +37,8 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
         }
 
         override fun onNextBtnClick(pos: Int) {
-            viewState.savePreference()
+            profile.hasVisitedTutorial = true
+            profileRepo.save(profile).subscribe()
             router.replaceScreen(Screens.TradersMainScreen())
         }
     }

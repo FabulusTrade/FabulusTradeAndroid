@@ -3,6 +3,7 @@ package ru.wintrade.mvp.presenter.subscriber
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
@@ -16,18 +17,18 @@ class SubscriberMainPresenter : MvpPresenter<SubscriberMainView>() {
     lateinit var apiRepo: ApiRepo
 
     @Inject
-    lateinit var profileStorage: ProfileStorage
+    lateinit var profile: Profile
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setAvatar(profileStorage.profile?.avatar)
-        profileStorage.profile?.let { viewState.setName(it.username) }
+        viewState.setAvatar(profile.user!!.avatar)
+        viewState.setName(profile.user!!.username)
         getSubscriptionCount()
     }
 
     fun getSubscriptionCount() {
-        apiRepo.getProfile(profileStorage.profile!!.token).observeOn(AndroidSchedulers.mainThread())
+        apiRepo.getProfile(profile.token!!).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.setSubscriptionCount(it.subscriptions_count)
             }, {

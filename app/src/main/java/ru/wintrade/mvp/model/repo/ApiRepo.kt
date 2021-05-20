@@ -3,7 +3,7 @@ package ru.wintrade.mvp.model.repo
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import ru.wintrade.mvp.model.api.WinTradeDataSource
+import ru.wintrade.mvp.model.api.WinTradeApi
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.Post
@@ -14,7 +14,7 @@ import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.network.NetworkStatus
 import ru.wintrade.util.*
 
-class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
+class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     val newTradeSubject = PublishSubject.create<Boolean>()
 
@@ -93,10 +93,10 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun getProfile(token: String): Single<ResponseProfile> =
+    fun getProfile(token: String): Single<ResponseUserProfile> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getProfile(token)
+                api.getUserProfile(token)
             } else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
@@ -161,6 +161,51 @@ class ApiRepo(val api: WinTradeDataSource, val networkStatus: NetworkStatus) {
                     RequestSignUp(username, password, email, phone)
                 api.signUp(requestBody)
             } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun createPost(token: String, id: Long, text: String): Single<Post> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                val requestCreatePost = RequestCreatePost(id, text, pinned = false)
+                api.createPost(token, requestCreatePost).flatMap { response ->
+                    Single.just(mapToPost(response)!!)
+                }
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun updatePinnedPost(token: String, id: Long, text: String): Single<Post> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                val requestCreatePost = RequestCreatePost(id, text, pinned = true)
+                api.updatePinnedPost(token, requestCreatePost).flatMap { response ->
+                    Single.just(mapToPost(response)!!)
+                }
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun readPinnedPost(token: String): Single<Post> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.readPinnedPost(token).flatMap { response ->
+                    Single.just(mapToPost(response)!!)
+                }
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline)
+                api.getMyPosts(token, page).flatMap { respPag ->
+                    val posts = respPag.results.map {
+                        mapToPost(it)!!
+                    }
+                    Single.just(mapToPagination(respPag, posts))
+                }
+            else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 }

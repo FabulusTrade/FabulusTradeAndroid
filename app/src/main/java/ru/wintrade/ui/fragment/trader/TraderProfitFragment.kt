@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_trader_profit.*
+import kotlinx.android.synthetic.main.layout_attached_post.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -14,7 +15,8 @@ import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
 
-class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderProfitView {
+class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), TraderProfitView {
+
     companion object {
         fun newInstance(trader: Trader) = TraderProfitFragment(trader)
     }
@@ -58,5 +60,14 @@ class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(),
 
     override fun setTradesCount(tradesCount: Int) {
         tv_trader_profit_deal_for_week_count.text = tradesCount.toString()
+    }
+
+    override fun setPinnedPostText(text: String?) {
+        if (text == null) {
+            layout_trader_profit_attached_post.visibility = View.GONE
+        } else {
+            layout_trader_profit_attached_post.visibility = View.VISIBLE
+            tv_attachet_post.text = text
+        }
     }
 }
