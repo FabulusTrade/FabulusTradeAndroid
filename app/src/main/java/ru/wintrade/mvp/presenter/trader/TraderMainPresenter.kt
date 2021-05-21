@@ -24,6 +24,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        setVisibility(true)
+        viewState.setObserveActive(false)
         viewState.init()
         viewState.setUsername(trader.username!!)
         val isPositiveProfit = trader.yearProfit?.substring(0, 1) != "-"
@@ -35,6 +37,9 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     fun observeBtnClicked() {
         isObserveActive = !isObserveActive
         viewState.setObserveActive(isObserveActive)
+        if (profile.user == null) {
+            router.navigateTo(Screens.SignInScreen())
+        }
     }
 
     fun subscribeToTraderBtnClicked() {

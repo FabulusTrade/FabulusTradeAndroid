@@ -17,7 +17,7 @@ class TraderMeMainPresenter: MvpPresenter<TraderMeMainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setProfit("96%", true)
+        viewState.setProfit("146%", true)
         viewState.setSubscriberCount(profile.user!!.subscriptionsCount)
         viewState.setUsername(profile.user!!.username)
         profile.user!!.avatar?.let {viewState.setAvatar(it)}
