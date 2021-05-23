@@ -10,6 +10,6 @@ interface TraderMeProfitView : MvpView {
     fun setDateJoined(date: String)
     fun setFollowersCount(followersCount: Int)
     fun setTradesCount(tradesCount: Int)
-    fun setPinnedPostText(text: String)
+    fun setPinnedPostText(text: String?)
 //    fun setFollowersCountForWeek(countForWeek: Int)
 }

@@ -40,6 +40,12 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     }
 
     override fun init() {
+        initBarChart()
+        initListeners()
+        initPopupMenu()
+    }
+
+    private fun initBarChart() {
         with(bar_chart_trader_me_profit) {
             data = presenter.setupBarChart()
             legend.isEnabled = false
@@ -52,9 +58,40 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
             xAxis.isEnabled = false
             axisRight.isEnabled = false
         }
+    }
 
-        layout_trader_me_profit_attached_post.setOnClickListener {
-            presenter.pinnedPostClicked()
+    private fun initListeners() {
+        tv_attached_post_header.setOnClickListener {
+            presenter.openCreatePostScreen(true, null)
+        }
+
+        btn_attached_post_show.setOnClickListener {
+            tv_attached_post_text.maxLines = 0
+        }
+    }
+
+    private fun initPopupMenu() {
+        val popupMenu =
+            context?.let { androidx.appcompat.widget.PopupMenu(it, iv_attached_post_kebab) }
+        popupMenu?.inflate(R.menu.pinned_text_menu)
+        popupMenu?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.pinned_text_edit -> {
+                    presenter.openCreatePostScreen(null, tv_attached_post_text.text.toString())
+                    true
+                }
+                R.id.pinned_text_delete -> {
+//                    tv_attached_post_text.text = ""
+                    presenter.deletePinnedText()
+                    layout_attached_post_body.visibility = View.GONE
+                    tv_attached_post_header.visibility = View.VISIBLE
+                    true
+                }
+                else -> false
+            }
+        }
+        iv_attached_post_kebab.setOnClickListener {
+            popupMenu?.show()
         }
     }
 
@@ -70,7 +107,11 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
         tv_trader_me_profit_deal_for_week_count.text = tradesCount.toString()
     }
 
-    override fun setPinnedPostText(text: String) {
-        tv_attachet_post.text = text
+    override fun setPinnedPostText(text: String?) {
+        text?.let {
+            layout_attached_post_body.visibility = View.VISIBLE
+            tv_attached_post_text.text = text
+            tv_attached_post_header.visibility = View.GONE
+        }
     }
 }

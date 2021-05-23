@@ -36,6 +36,11 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
     ): View? = inflater.inflate(R.layout.fragment_trader_profit, container, false)
 
     override fun init() {
+        initBarChart()
+        initListeners()
+    }
+
+    fun initBarChart() {
         with(bar_chart_trader_profit) {
             data = presenter.setupBarChart()
             legend.isEnabled = false
@@ -47,6 +52,12 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
             axisLeft.setDrawZeroLine(true)
             xAxis.isEnabled = false
             axisRight.isEnabled = false
+        }
+    }
+
+    fun initListeners() {
+        btn_attached_post_show.setOnClickListener {
+            tv_attached_post_text.maxLines = 0
         }
     }
 
@@ -67,7 +78,10 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
             layout_trader_profit_attached_post.visibility = View.GONE
         } else {
             layout_trader_profit_attached_post.visibility = View.VISIBLE
-            tv_attachet_post.text = text
+            tv_attached_post_header.visibility = View.GONE
+            iv_attached_post_kebab.visibility = View.GONE
+            layout_attached_post_body.visibility = View.VISIBLE
+            tv_attached_post_text.text = text
         }
     }
 }

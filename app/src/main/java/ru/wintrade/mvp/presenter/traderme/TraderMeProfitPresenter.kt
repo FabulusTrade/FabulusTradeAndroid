@@ -44,8 +44,13 @@ class TraderMeProfitPresenter() :
         )
     }
 
-    fun pinnedPostClicked() {
-        router.navigateTo(Screens.CreatePostScreen(true))
+    fun deletePinnedText() {
+        apiRepo.updatePinnedPost(profile.token!!, profile.user!!.id, "")
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                viewState.setPinnedPostText(it.text)
+            },
+                {}
+            )
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -73,5 +78,9 @@ class TraderMeProfitPresenter() :
         barDataSet.colors =
             listOf(Color.GREEN, Color.BLACK, Color.RED)
         return BarData(labels, barDataSet)
+    }
+
+    fun openCreatePostScreen(isPinned: Boolean?, pinnedText: String?) {
+        router.navigateTo(Screens.CreatePostScreen(isPinned, pinnedText))
     }
 }

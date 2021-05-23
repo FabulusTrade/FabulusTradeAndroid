@@ -106,4 +106,8 @@
     <string name="do_publication">Опубликовать</string>
     <string name="only_eng_digits">(только латинские буквы и цифры)</string>
     <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
+    <string name="share">Поделиться</string>
+    <string name="create">Созать</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
 </resources>
