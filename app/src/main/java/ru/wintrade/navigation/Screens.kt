@@ -108,7 +108,7 @@ class Screens {
         override fun getFragment() = FriendInviteFragment.newInstance()
     }
 
-    class CreatePostScreen(val isPinnedEdit: Boolean) : SupportAppScreen() {
-        override fun getFragment() = CreatePostFragment.newInstance(isPinnedEdit)
+    class CreatePostScreen(val isPinnedEdit: Boolean?, val pinnedText: String?) : SupportAppScreen() {
+        override fun getFragment() = CreatePostFragment.newInstance(isPinnedEdit, pinnedText)
     }
 }

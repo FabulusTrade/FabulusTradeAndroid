@@ -8,7 +8,7 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
 import javax.inject.Inject
 
-class CreatePostPresenter(val isPinnedEdit: Boolean) : MvpPresenter<CreatePostView>() {
+class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostView>() {
     @Inject
     lateinit var profile: Profile
 
@@ -27,18 +27,25 @@ class CreatePostPresenter(val isPinnedEdit: Boolean) : MvpPresenter<CreatePostVi
     fun onPublishClicked(text: String) {
         if (text.isEmpty())
             return
+        when {
+            isPinnedEdit == null || isPinnedEdit -> updatePost(text)
+            else -> createPost(text)
+        }
+    }
 
-        if (isPinnedEdit) {
-            apiRepo.updatePinnedPost(profile.token!!, profile.user!!.id, text)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+    private fun updatePost(text: String) {
+        apiRepo.updatePinnedPost(profile.token!!, profile.user!!.id, text)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()
                 },
                 {}
             )
-        } else {
-            apiRepo.createPost(profile.token!!, profile.user!!.id, text)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+    }
+
+    private fun createPost(text: String) {
+        apiRepo.createPost(profile.token!!, profile.user!!.id, text)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()
                 },
@@ -46,6 +53,5 @@ class CreatePostPresenter(val isPinnedEdit: Boolean) : MvpPresenter<CreatePostVi
                     it.printStackTrace()
                 }
             )
-        }
     }
 }

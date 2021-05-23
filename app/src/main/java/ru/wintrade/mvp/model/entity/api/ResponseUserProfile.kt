@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 
 class ResponseUserProfile(
     @Expose
-    val id: Long,
+    val id: String,
     @Expose
     val username: String,
     @Expose

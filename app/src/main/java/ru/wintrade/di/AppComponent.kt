@@ -9,10 +9,7 @@ import ru.wintrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.wintrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.wintrade.mvp.presenter.trader.*
-import ru.wintrade.mvp.presenter.traderme.TraderMeMainPresenter
-import ru.wintrade.mvp.presenter.traderme.TraderMeObservationPresenter
-import ru.wintrade.mvp.presenter.traderme.TraderMePostPresenter
-import ru.wintrade.mvp.presenter.traderme.TraderMeProfitPresenter
+import ru.wintrade.mvp.presenter.traderme.*
 import ru.wintrade.mvp.presenter.traders.TradersAllPresenter
 import ru.wintrade.mvp.presenter.traders.TradersFilterPresenter
 import ru.wintrade.mvp.presenter.traders.TradersMainPresenter
@@ -25,10 +22,7 @@ import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.wintrade.ui.fragment.trader.*
-import ru.wintrade.ui.fragment.traderme.TraderMeMainFragment
-import ru.wintrade.ui.fragment.traderme.TraderMeObservationFragment
-import ru.wintrade.ui.fragment.traderme.TraderMePostFragment
-import ru.wintrade.ui.fragment.traderme.TraderMeProfitFragment
+import ru.wintrade.ui.fragment.traderme.*
 import ru.wintrade.ui.fragment.traders.TradersAllFragment
 import ru.wintrade.ui.fragment.traders.TradersFilterFragment
 import ru.wintrade.ui.fragment.traders.TradersMainFragment
@@ -95,6 +89,8 @@ interface AppComponent {
     fun inject(companyTradingOperationsPresenter: CompanyTradingOperationsPresenter)
     fun inject(traderMeObservationFragment: TraderMeObservationFragment)
     fun inject(traderMeObservationPresenter: TraderMeObservationPresenter)
+    fun inject(traderMeTradeFragment: TraderMeTradeFragment)
+    fun inject(traderMeTradePresenter: TraderMeTradePresenter)
     fun inject(aboutWinTradeFragment: AboutWinTradeFragment)
     fun inject(aboutWinTradePresenter: AboutWinTradePresenter)
     fun inject(questionFragment: QuestionFragment)

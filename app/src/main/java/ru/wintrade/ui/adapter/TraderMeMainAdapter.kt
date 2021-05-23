@@ -3,7 +3,6 @@ package ru.wintrade.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import ru.wintrade.ui.fragment.trader.TraderPopularInstrumentsFragment
-import ru.wintrade.ui.fragment.trader.TraderTradeFragment
 import ru.wintrade.ui.fragment.traderme.*
 
 class TraderMeMainAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
@@ -12,7 +11,7 @@ class TraderMeMainAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
         TraderMeProfitFragment.newInstance(),
         TraderMePostFragment.newInstance(),
         TraderPopularInstrumentsFragment.newInstance(),
-        TraderTradeFragment.newInstance(),
+        TraderMeTradeFragment.newInstance(),
         TraderMeObservationFragment.newInstance()
     )
 

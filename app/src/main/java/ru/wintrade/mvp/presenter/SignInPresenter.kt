@@ -69,7 +69,9 @@ class SignInPresenter : MvpPresenter<SignInView>() {
                     profile.user = userProfile
                     userProfileGranted()
                 },
-                {}
+                {
+                    it.message
+                }
             )
     }
 

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 
 data class RequestCreatePost(
     @Expose
-    val trader_id: Long,
+    val trader_id: String,
     @Expose
     val text: String,
     @Expose

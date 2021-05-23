@@ -11,7 +11,7 @@ import ru.wintrade.mvp.model.entity.room.dao.UserProfileDao
         RoomProfile::class,
         RoomUserProfile::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {

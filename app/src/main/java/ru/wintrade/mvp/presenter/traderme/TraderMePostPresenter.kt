@@ -61,7 +61,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onCreatePostBtnClicked() {
-        router.navigateTo(Screens.CreatePostScreen(false))
+        router.navigateTo(Screens.CreatePostScreen(false, null))
     }
 
     fun publicationsBtnClicked() {

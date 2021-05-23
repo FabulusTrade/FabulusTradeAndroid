@@ -7,5 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndStrategy::class)
 interface CreatePostView : MvpView {
     fun init()
-    fun setHintText(isPinnedEdit: Boolean)
+    fun setHintText(isPinnedEdit: Boolean?)
 }
