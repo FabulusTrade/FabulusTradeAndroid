@@ -12,7 +12,7 @@ interface UserProfileDao {
     fun insert(userProfile: RoomUserProfile)
 
     @Query("SELECT * FROM RoomUserProfile WHERE id = :id")
-    fun get(id: Long): RoomUserProfile?
+    fun get(id: String): RoomUserProfile?
 
     @Query("DELETE FROM RoomUserProfile WHERE id = :id")
     fun delete(id: Long)

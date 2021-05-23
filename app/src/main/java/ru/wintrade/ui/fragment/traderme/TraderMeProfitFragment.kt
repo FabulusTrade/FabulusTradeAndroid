@@ -108,7 +108,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     }
 
     override fun setPinnedPostText(text: String?) {
-        text?.let {
+        if (text != null && text != "") {
             layout_attached_post_body.visibility = View.VISIBLE
             tv_attached_post_text.text = text
             tv_attached_post_header.visibility = View.GONE

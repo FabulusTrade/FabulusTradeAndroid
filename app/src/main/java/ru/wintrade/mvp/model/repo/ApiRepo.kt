@@ -101,7 +101,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun subscribeToTrader(token: String, traderId: Long): Single<RequestSubscription> =
+    fun subscribeToTrader(token: String, traderId: String): Single<RequestSubscription> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val sub = RequestSubscription(traderId, null)
@@ -164,7 +164,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun createPost(token: String, id: Long, text: String): Single<Post> =
+    fun createPost(token: String, id: String, text: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val requestCreatePost = RequestCreatePost(id, text, pinned = false)
@@ -175,7 +175,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun updatePinnedPost(token: String, id: Long, text: String): Single<Post> =
+    fun updatePinnedPost(token: String, id: String, text: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val requestCreatePost = RequestCreatePost(id, text, pinned = true)

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class RoomUserProfile(
     @PrimaryKey
-    var id: Long,
+    var id: String,
     var username: String,
     var email: String,
     var avatar: String? = null,

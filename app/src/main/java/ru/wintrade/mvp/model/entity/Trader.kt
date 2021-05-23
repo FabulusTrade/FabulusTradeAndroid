@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Trader(
-    val id: Long,
+    val id: String,
     val username: String?,
     val avatar: String?,
     val kval: Boolean,

@@ -1,7 +1,7 @@
 package ru.wintrade.mvp.model.entity
 
 data class UserProfile(
-    val id: Long,
+    val id: String,
     var username: String,
     var email: String,
     var avatar: String? = null,

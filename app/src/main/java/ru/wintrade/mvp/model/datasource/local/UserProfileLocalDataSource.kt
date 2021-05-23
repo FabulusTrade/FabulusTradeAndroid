@@ -8,7 +8,7 @@ import ru.wintrade.mvp.model.entity.room.RoomUserProfile
 import ru.wintrade.mvp.model.entity.room.dao.UserProfileDao
 
 class UserProfileLocalDataSource(val dao: UserProfileDao) {
-    fun get(id: Long): Single<UserProfile> = Single.create<UserProfile> { emitter ->
+    fun get(id: String): Single<UserProfile> = Single.create<UserProfile> { emitter ->
         val roomUserProfile = dao.get(id)
         roomUserProfile?.let { profile ->
             val userProfile = UserProfile(

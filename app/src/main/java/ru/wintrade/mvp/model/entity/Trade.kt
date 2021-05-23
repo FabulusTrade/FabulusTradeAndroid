@@ -7,7 +7,7 @@ import java.util.*
 @Parcelize
 data class Trade(
     val id: Long,
-    val traderId: Long,
+    val traderId: String,
     var trader: Trader?,
     val operationType: String,
     val company: String,

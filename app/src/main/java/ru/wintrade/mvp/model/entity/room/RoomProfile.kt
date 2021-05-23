@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class RoomProfile(
     @PrimaryKey
     val id: Long = 1,
-    val userId: Long?,
+    val userId: String?,
     val token: String?,
     val deviceToken: String?,
     val hasVisitedTutorial: Boolean
