@@ -35,6 +35,10 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
     ): View? = inflater.inflate(R.layout.fragment_trader_trade, container, false)
 
     override fun init() {
+        initListeners()
+    }
+
+    fun initListeners() {
         btn_trader_trade_deals.setOnClickListener {
             presenter.myDealsBtnClicked()
         }
@@ -43,6 +47,12 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         }
         btn_trader_trade_journal.setOnClickListener {
             presenter.myJournalBtnClicked()
+        }
+        btn_trader_trade_entry.setOnClickListener {
+            presenter.openSignInScreen()
+        }
+        btn_trader_trade_registration.setOnClickListener {
+            presenter.openSignUpScreen()
         }
     }
 
@@ -118,5 +128,15 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
 
     override fun updateRecyclerView() {
 
+    }
+
+    override fun isAuthorized(isAuth: Boolean) {
+        if (isAuth) {
+            layout_trader_trade_is_auth.visibility = View.VISIBLE
+            layout_trader_trade_not_auth.visibility = View.GONE
+        } else {
+            layout_trader_trade_is_auth.visibility = View.GONE
+            layout_trader_trade_not_auth.visibility = View.VISIBLE
+        }
     }
 }

@@ -2,101 +2,164 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout_trader_trade_is_auth"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="15dp"
-        android:paddingBottom="15dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="15dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_trade_deals"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorLightGreen"
-                android:text="@string/deals"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_trade_orders"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="@string/orders"
-                android:textColor="@color/colorGray"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_trader_trade_deals"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorLightGreen"
+                    android:text="@string/deals"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trader_trade_journal"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:text="@string/journal"
-                android:textColor="@color/colorGray"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_trader_trade_orders"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/orders"
+                    android:textColor="@color/colorGray"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_trader_trade_journal"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="@string/journal"
+                    android:textColor="@color/colorGray"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_trader_deal_monthly_counter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlueGray"
+                android:paddingStart="16dp"
+                android:text="72 сделки за месяц"
+                android:textColor="@color/colorPrimary"
+                tools:ignore="RtlSymmetry" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_trader_trade_with_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trader_trade_journal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trader_trade_orders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trader_trade_deals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_trader_deal_monthly_counter"
+            android:id="@+id/tv_trader_trade_coming_soon"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlueGray"
-            android:paddingStart="16dp"
-            android:text="72 сделки за месяц"
-            android:textColor="@color/colorPrimary"
-            tools:ignore="RtlSymmetry" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/coming_soon"
+            android:textSize="28sp"
+            android:visibility="visible" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_trader_trade_with_rv"
+        android:id="@+id/layout_trader_trade_not_auth"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="15dp"
-        android:visibility="gone">
+        android:padding="16dp"
+        android:visibility="visible"
+        tools:visibility="visible">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_trade_journal"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:text="@string/trader_trade_not_auth_text" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_trade_orders"
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/trader_trade_not_auth_text_2" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_trade_deals"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_trader_trade_entry"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:text="@string/enter_button_title"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/or" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_trader_trade_registration"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/registration_button_title"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_trader_trade_coming_soon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/coming_soon"
-        android:textSize="28sp"
-        android:visibility="visible" />
 
 </LinearLayout>

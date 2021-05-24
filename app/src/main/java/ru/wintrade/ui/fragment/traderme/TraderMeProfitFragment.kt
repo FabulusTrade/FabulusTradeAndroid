@@ -81,7 +81,6 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
                     true
                 }
                 R.id.pinned_text_delete -> {
-//                    tv_attached_post_text.text = ""
                     presenter.deletePinnedText()
                     layout_attached_post_body.visibility = View.GONE
                     tv_attached_post_header.visibility = View.VISIBLE
@@ -108,7 +107,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     }
 
     override fun setPinnedPostText(text: String?) {
-        if (text != null && text != "") {
+        if (!text.isNullOrEmpty()) {
             layout_attached_post_body.visibility = View.VISIBLE
             tv_attached_post_text.text = text
             tv_attached_post_header.visibility = View.GONE

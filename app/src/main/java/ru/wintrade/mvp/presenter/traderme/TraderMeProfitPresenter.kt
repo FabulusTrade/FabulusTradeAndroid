@@ -45,7 +45,7 @@ class TraderMeProfitPresenter() :
     }
 
     fun deletePinnedText() {
-        apiRepo.updatePinnedPost(profile.token!!, profile.user!!.id, "")
+        apiRepo.deletePinnedPost(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                 viewState.setPinnedPostText(it.text)
             },

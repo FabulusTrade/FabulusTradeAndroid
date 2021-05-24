@@ -74,7 +74,7 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
     }
 
     override fun setPinnedPostText(text: String?) {
-        if (text == null) {
+        if (text.isNullOrEmpty()) {
             layout_trader_profit_attached_post.visibility = View.GONE
         } else {
             layout_trader_profit_attached_post.visibility = View.VISIBLE
