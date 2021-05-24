@@ -44,7 +44,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     fun subscribeToTraderBtnClicked() {
         if (profile.user == null)
-            router.newRootScreen(Screens.SignInScreen())
+            router.navigateTo(Screens.SignInScreen())
         else
             apiRepo.subscribeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,10 +74,5 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     private fun setVisibility(result: Boolean) {
         viewState.setSubscribeBtnActive(result)
         viewState.setObserveVisibility(result)
-    }
-
-    fun backClicked(): Boolean {
-        router.backTo(Screens.TradersMainScreen())
-        return true
     }
 }

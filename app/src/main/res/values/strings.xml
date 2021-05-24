@@ -110,4 +110,11 @@
     <string name="create">Созать</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
+    <string name="trader_post_not_auth_text">НОВОСТИ и ИДЕИ от профессионального трейдера.</string>
+    <string name="trader_post_not_auth_text_2">Для просмотра и комментирования необходимо</string>
+    <string name="or">или</string>
+    <string name="trader_pop_instr_not_auth_text">ЧАСТО ТОРГУЕМЫЕ БУМАГИ - доля сделок с прибылью и средний размер прибыли и убытка для 3 наиболее популярных бумаг (по количеству проведенных сделок)</string>
+    <string name="trader_pop_instr_not_auth_text_2">Для просмотра необходимо</string>
+    <string name="trader_trade_not_auth_text">СДЕЛКИ И ОРДЕРА онлайн с установленными тейк-профит и стоп-лосс. Комментарии по сделкам.</string>
+    <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
 </resources>

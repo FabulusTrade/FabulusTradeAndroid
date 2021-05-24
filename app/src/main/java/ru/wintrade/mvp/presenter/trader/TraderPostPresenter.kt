@@ -43,9 +43,10 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        if (profile.user == null)
-            router.newRootScreen(Screens.SignInScreen())
-        else
+        if (profile.user == null) {
+            viewState.isAuthorized(false)
+        } else {
+            viewState.isAuthorized(true)
             apiRepo.getAllPosts(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
@@ -55,6 +56,7 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
                 }, {
                     it.printStackTrace()
                 })
+        }
     }
 
     fun onScrollLimit() {
@@ -72,5 +74,13 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
                     isLoading = false
                 })
         }
+    }
+
+    fun openSignInScreen() {
+        router.navigateTo(Screens.SignInScreen())
+    }
+
+    fun openSignUpScreen() {
+        router.navigateTo(Screens.SignUpScreen())
     }
 }

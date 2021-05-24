@@ -8,4 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface TraderPostView: MvpView {
     fun init()
     fun updateAdapter()
+    fun isAuthorized(isAuth: Boolean)
 }

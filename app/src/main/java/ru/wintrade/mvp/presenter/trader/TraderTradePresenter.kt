@@ -6,6 +6,7 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderDealView
+import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class TraderTradePresenter : MvpPresenter<TraderDealView>() {
@@ -27,6 +28,11 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        if (profile.user == null) {
+            viewState.isAuthorized(false)
+        } else {
+            viewState.isAuthorized(true)
+        }
     }
 
     fun myDealsBtnClicked() {
@@ -42,5 +48,13 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
     fun myJournalBtnClicked() {
         state = State.MY_JOURNAL
         viewState.setBtnState(state)
+    }
+
+    fun openSignInScreen() {
+        router.navigateTo(Screens.SignInScreen())
+    }
+
+    fun openSignUpScreen() {
+        router.navigateTo(Screens.SignUpScreen())
     }
 }

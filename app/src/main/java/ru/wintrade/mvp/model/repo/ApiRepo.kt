@@ -186,6 +186,16 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun deletePinnedPost(token: String): Single<Post> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.deletePinnedPost(token).flatMap { response ->
+                    Single.just(mapToPost(response)!!)
+                }
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun readPinnedPost(token: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {

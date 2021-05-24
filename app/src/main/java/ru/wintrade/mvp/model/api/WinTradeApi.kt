@@ -96,6 +96,11 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
     ): Single<ResponsePost>
 
+    @DELETE ("api/v1/trader/post/pinned/")
+    fun deletePinnedPost(
+        @Header("Authorization") token: String
+    ): Single<ResponsePost>
+
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,

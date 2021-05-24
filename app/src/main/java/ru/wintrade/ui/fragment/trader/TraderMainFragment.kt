@@ -25,8 +25,7 @@ import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 
-class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView,
-    BackButtonListener {
+class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView {
     companion object {
         fun newInstance(trader: Trader) = TraderMainFragment(trader)
     }
@@ -127,9 +126,5 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
                 3 -> tab.setIcon(R.drawable.ic_trader_deal)
             }
         }.attach()
-    }
-
-    override fun backClicked(): Boolean {
-        return presenter.backClicked()
     }
 }

@@ -10,4 +10,5 @@ interface TraderDealView : MvpView {
     fun init()
     fun setBtnState(state: TraderTradePresenter.State)
     fun updateRecyclerView()
+    fun isAuthorized(isAuth: Boolean)
 }

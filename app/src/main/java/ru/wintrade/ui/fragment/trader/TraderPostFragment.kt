@@ -39,6 +39,11 @@ class TraderPostFragment(val trader: Trader): MvpAppCompatFragment(), TraderPost
     ): View? = inflater.inflate(R.layout.fragment_trader_post, container, false)
 
     override fun init() {
+        initRV()
+        initListeners()
+    }
+
+    fun initRV() {
         adapter = TraderNewsRVAdapter(presenter.listPresenter)
         rv_trader_post.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
@@ -60,7 +65,26 @@ class TraderPostFragment(val trader: Trader): MvpAppCompatFragment(), TraderPost
         )
     }
 
+    fun initListeners() {
+        btn_trader_post_entry.setOnClickListener {
+            presenter.openSignInScreen()
+        }
+        btn_trader_post_registration.setOnClickListener {
+            presenter.openSignUpScreen()
+        }
+    }
+
     override fun updateAdapter() {
         adapter?.notifyDataSetChanged()
+    }
+
+    override fun isAuthorized(isAuth: Boolean) {
+        if (!isAuth) {
+            layout_trader_post_is_auth.visibility = View.GONE
+            layout_trader_post_not_auth.visibility = View.VISIBLE
+        } else {
+            layout_trader_post_is_auth.visibility = View.VISIBLE
+            layout_trader_post_not_auth.visibility = View.GONE
+        }
     }
 }
