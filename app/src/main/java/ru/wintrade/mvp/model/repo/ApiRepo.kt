@@ -187,6 +187,14 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun updatePinnedPostPatch(token: String, traderId: String, text: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.updatePinnedPostPatch(token, traderId, text)
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun deletePinnedPost(token: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
@@ -207,23 +215,25 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun likePost(token: String, postId: Int): Completable = networkStatus.isOnlineSingle().flatMapCompletable{ isOnline ->
-        if (isOnline)
-            api.likePost(token, postId).flatMapCompletable {
-                Completable.complete()
-            }
-        else
-            Completable.error(NoInternetException())
-    }.subscribeOn(Schedulers.io())
+    fun likePost(token: String, postId: Int): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.likePost(token, postId).flatMapCompletable {
+                    Completable.complete()
+                }
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
 
-    fun dislikePost(token: String, postId: Int): Completable = networkStatus.isOnlineSingle().flatMapCompletable{ isOnline ->
-        if (isOnline)
-            api.dislikePost(token, postId).flatMapCompletable {
-                Completable.complete()
-            }
-        else
-            Completable.error(NoInternetException())
-    }.subscribeOn(Schedulers.io())
+    fun dislikePost(token: String, postId: Int): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.dislikePost(token, postId).flatMapCompletable {
+                    Completable.complete()
+                }
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
 
     fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->

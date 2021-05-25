@@ -34,12 +34,14 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
     }
 
     private fun updatePost(text: String) {
-        apiRepo.updatePinnedPost(profile.token!!, profile.user!!.id, text)
+        apiRepo.updatePinnedPostPatch(profile.token!!, profile.user!!.id, text)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()
                 },
-                {}
+                {
+                    it.printStackTrace()
+                }
             )
     }
 

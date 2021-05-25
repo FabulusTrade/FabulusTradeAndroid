@@ -43,14 +43,14 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
 
         override fun postLiked(view: PostItemView) {
             val post = posts[view.pos]
-            post.likeCount++
+            post.like()
             view.setLikesCount(post.likeCount)
             apiRepo.likePost(profile.token!!, post.id).subscribe()
         }
 
         override fun postDisliked(view: PostItemView) {
             val post = posts[view.pos]
-            post.dislikeCount++
+            post.dislike()
             view.setDislikesCount(post.dislikeCount)
             apiRepo.dislikePost(profile.token!!, post.id).subscribe()
         }

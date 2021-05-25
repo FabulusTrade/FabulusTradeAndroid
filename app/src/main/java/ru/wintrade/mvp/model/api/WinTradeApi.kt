@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.model.api
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -90,6 +91,14 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Body requestCreatePost: RequestCreatePost
     ): Single<ResponsePost>
+
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/post/pinned/")
+    fun updatePinnedPostPatch(
+        @Header("Authorization") token: String,
+        @Field("trader_id") id: String,
+        @Field("text") text: String
+    ): Completable
 
     @GET("api/v1/trader/post/pinned/")
     fun readPinnedPost(
