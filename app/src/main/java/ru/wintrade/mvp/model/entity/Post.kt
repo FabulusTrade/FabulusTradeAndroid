@@ -12,6 +12,8 @@ data class Post(
     val dateCreate: Date,
     val dateUpdate: Date?,
     val pinned: Boolean,
-    val images: List<String>
+    val images: List<String>,
+    var likeCount: Int,
+    var dislikeCount: Int
 ): Parcelable
 

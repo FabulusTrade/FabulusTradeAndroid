@@ -6,8 +6,8 @@ import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.ITraderNewsRVListPresenter
-import ru.wintrade.mvp.view.item.TraderNewsItemView
+import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.wintrade.mvp.view.item.PostItemView
 import ru.wintrade.mvp.view.trader.TraderPostView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
@@ -26,17 +26,33 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
     @Inject
     lateinit var router: Router
 
-    val listPresenter = TraderNewsRVListPresenter()
+    val listPresenter = TraderRVListPresenter()
 
-    inner class TraderNewsRVListPresenter : ITraderNewsRVListPresenter {
-        val news = mutableListOf<Post>()
-        override fun getCount(): Int = news.size
+    inner class TraderRVListPresenter : PostRVListPresenter {
+        val posts = mutableListOf<Post>()
+        override fun getCount(): Int = posts.size
 
-        override fun bind(view: TraderNewsItemView) {
-            val newsList = news[view.pos]
-            view.setNewsDate(newsList.dateCreate)
-            view.setPost(newsList.text)
-            view.setImages(newsList.images)
+        override fun bind(view: PostItemView) {
+            val post = posts[view.pos]
+            view.setNewsDate(post.dateCreate)
+            view.setPost(post.text)
+            view.setImages(post.images)
+            view.setLikesCount(post.likeCount)
+            view.setDislikesCount(post.dislikeCount)
+        }
+
+        override fun postLiked(view: PostItemView) {
+            val post = posts[view.pos]
+            post.likeCount++
+            view.setLikesCount(post.likeCount)
+            apiRepo.likePost(profile.token!!, post.id).subscribe()
+        }
+
+        override fun postDisliked(view: PostItemView) {
+            val post = posts[view.pos]
+            post.dislikeCount++
+            view.setDislikesCount(post.dislikeCount)
+            apiRepo.dislikePost(profile.token!!, post.id).subscribe()
         }
     }
 
@@ -50,7 +66,7 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
             apiRepo.getAllPosts(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
-                    listPresenter.news.addAll(pag.results)
+                    listPresenter.posts.addAll(pag.results)
                     viewState.updateAdapter()
                     nextPage = pag.next
                 }, {
@@ -65,7 +81,7 @@ class TraderPostPresenter : MvpPresenter<TraderPostView>() {
             apiRepo.getAllPosts(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
-                    listPresenter.news.addAll(pag.results)
+                    listPresenter.posts.addAll(pag.results)
                     viewState.updateAdapter()
                     nextPage = pag.next
                     isLoading = false

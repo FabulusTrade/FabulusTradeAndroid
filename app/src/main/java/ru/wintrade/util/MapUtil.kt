@@ -72,7 +72,9 @@ fun mapToPost(post: ResponsePost?): Post? {
             dateCreate,
             dateUpd,
             post.pinned,
-            images
+            images,
+            post.like_count,
+            post.dislike_count
         )
     } ?: return null
 }

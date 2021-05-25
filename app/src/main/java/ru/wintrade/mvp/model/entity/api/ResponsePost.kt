@@ -16,6 +16,10 @@ data class ResponsePost(
     @Expose
     val pinned: Boolean,
     @Expose
-    val images: List<ResponseImage>
+    val images: List<ResponseImage>,
+    @Expose
+    val like_count: Int,
+    @Expose
+    val dislike_count: Int
 )
 
