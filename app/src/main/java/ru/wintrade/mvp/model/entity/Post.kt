@@ -14,6 +14,24 @@ data class Post(
     val pinned: Boolean,
     val images: List<String>,
     var likeCount: Int,
-    var dislikeCount: Int
-): Parcelable
+    var dislikeCount: Int,
+    var isLiked: Boolean = false,
+    var isDisliked: Boolean = false
+): Parcelable {
+    fun like() {
+        if (isLiked)
+            likeCount--
+        else
+            likeCount++
+        isLiked = !isLiked
+    }
+
+    fun dislike() {
+        if (isDisliked)
+            dislikeCount--
+        else
+            dislikeCount++
+        isDisliked = !isDisliked
+    }
+}
 

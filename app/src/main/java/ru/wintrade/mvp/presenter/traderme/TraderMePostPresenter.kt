@@ -33,27 +33,29 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
-        val news = mutableListOf<Post>()
+        val post = mutableListOf<Post>()
 
-        override fun getCount(): Int = news.size
+        override fun getCount(): Int = post.size
 
         override fun bind(view: PostItemView) {
-            val newsList = news[view.pos]
-            view.setNewsDate(newsList.dateCreate)
-            view.setPost(newsList.text)
-            view.setImages(newsList.images)
+            val post = post[view.pos]
+            view.setNewsDate(post.dateCreate)
+            view.setPost(post.text)
+            view.setImages(post.images)
+            view.setLikesCount(post.likeCount)
+            view.setDislikesCount(post.dislikeCount)
         }
 
         override fun postLiked(view: PostItemView) {
-            val post = news[view.pos]
-            post.likeCount++
+            val post = post[view.pos]
+            post.like()
             view.setLikesCount(post.likeCount)
             apiRepo.likePost(profile.token!!, post.id).subscribe()
         }
 
         override fun postDisliked(view: PostItemView) {
-            val post = news[view.pos]
-            post.dislikeCount++
+            val post = post[view.pos]
+            post.dislike()
             view.setDislikesCount(post.dislikeCount)
             apiRepo.dislikePost(profile.token!!, post.id).subscribe()
         }
@@ -65,7 +67,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onViewResumed() {
-        listPresenter.news.clear()
+        listPresenter.post.clear()
         nextPage = 1
         loadPosts()
     }
@@ -82,7 +84,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         state = State.PUBLICATIONS
         viewState.setBtnsState(state)
         nextPage = 1
-        listPresenter.news.clear()
+        listPresenter.post.clear()
         loadPosts()
     }
 
@@ -90,7 +92,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         state = State.SUBSCRIPTION
         viewState.setBtnsState(state)
         nextPage = 1
-        listPresenter.news.clear()
+        listPresenter.post.clear()
         loadPosts()
     }
 
@@ -101,7 +103,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 apiRepo.getAllPosts(profile.token!!, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
-                        listPresenter.news.addAll(pag.results)
+                        listPresenter.post.addAll(pag.results)
                         viewState.updateAdapter()
                         nextPage = pag.next
                         isLoading = false
@@ -113,7 +115,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 apiRepo.getMyPosts(profile.token!!, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
-                        listPresenter.news.addAll(pag.results)
+                        listPresenter.post.addAll(pag.results)
                         viewState.updateAdapter()
                         nextPage = pag.next
                         isLoading = false
