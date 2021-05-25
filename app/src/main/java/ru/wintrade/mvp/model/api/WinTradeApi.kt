@@ -101,6 +101,18 @@ interface WinTradeApi {
         @Header("Authorization") token: String
     ): Single<ResponsePost>
 
+    @POST("api/v1/trader/like/post/{post_id}/")
+    fun likePost(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id", encoded = true) postId: Int
+    ): Single<ResponseLikes>
+
+    @POST("api/v1/trader/like/post/{post_id}/")
+    fun dislikePost(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id", encoded = true) postId: Int
+    ): Single<ResponseLikes>
+
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,

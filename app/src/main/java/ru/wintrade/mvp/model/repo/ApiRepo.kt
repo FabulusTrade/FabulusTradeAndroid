@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.model.repo
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -205,6 +206,24 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             } else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
+
+    fun likePost(token: String, postId: Int): Completable = networkStatus.isOnlineSingle().flatMapCompletable{ isOnline ->
+        if (isOnline)
+            api.likePost(token, postId).flatMapCompletable {
+                Completable.complete()
+            }
+        else
+            Completable.error(NoInternetException())
+    }.subscribeOn(Schedulers.io())
+
+    fun dislikePost(token: String, postId: Int): Completable = networkStatus.isOnlineSingle().flatMapCompletable{ isOnline ->
+        if (isOnline)
+            api.dislikePost(token, postId).flatMapCompletable {
+                Completable.complete()
+            }
+        else
+            Completable.error(NoInternetException())
+    }.subscribeOn(Schedulers.io())
 
     fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->

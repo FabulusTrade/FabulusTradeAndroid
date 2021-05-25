@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 
 data class ResponseSignUp(
     @Expose
-    val id: Long,
+    val id: String,
     @Expose
     val username: String,
     @Expose

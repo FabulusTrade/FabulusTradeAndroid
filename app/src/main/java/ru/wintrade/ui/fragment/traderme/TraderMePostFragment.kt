@@ -16,7 +16,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.wintrade.mvp.view.trader.TraderMePostView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.TraderNewsRVAdapter
+import ru.wintrade.ui.adapter.PostRVAdapter
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     companion object {
@@ -31,7 +31,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: TraderNewsRVAdapter? = null
+    private var adapter: PostRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +45,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     override fun init() {
-        adapter = TraderNewsRVAdapter(presenter.listPresenter)
+        adapter = PostRVAdapter(presenter.listPresenter)
         rv_trader_me_post.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         rv_trader_me_post.layoutManager = layoutManager
