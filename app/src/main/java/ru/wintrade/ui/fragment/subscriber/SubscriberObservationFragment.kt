@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_subscriber_observation.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -14,7 +13,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.SubscriberObservationRVAdapter
+import ru.wintrade.ui.adapter.ObservationRVAdapter
 
 class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservationView {
     companion object {
@@ -29,7 +28,7 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: SubscriberObservationRVAdapter? = null
+    private var adapter: ObservationRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +37,7 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
     ): View? = inflater.inflate(R.layout.fragment_subscriber_observation, container, false)
 
     override fun init() {
-        adapter = SubscriberObservationRVAdapter(presenter.listPresenter)
+        adapter = ObservationRVAdapter(presenter.listPresenter)
         rv_sub_obs.adapter = adapter
         rv_sub_obs.layoutManager = LinearLayoutManager(context)
     }

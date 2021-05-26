@@ -6,8 +6,8 @@ import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.ISubscriberObservationListPresenter
-import ru.wintrade.mvp.view.item.SubscriberObservationItemView
+import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
+import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
@@ -24,11 +24,11 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
 
     var listPresenter = SubscriberObservationListPresenter()
 
-    inner class SubscriberObservationListPresenter : ISubscriberObservationListPresenter {
+    inner class SubscriberObservationListPresenter : IObservationListPresenter {
         var traders = mutableListOf<Trader>()
         override fun getCount(): Int = traders.size
 
-        override fun bind(view: SubscriberObservationItemView) {
+        override fun bind(view: ObservationItemView) {
             val traderList = traders[view.pos]
             traderList.username?.let { view.setTraderName(it) }
             traderList.avatar?.let { view.setTraderAvatar(it) }
@@ -62,6 +62,4 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
                 }
             )
     }
-
-
 }
