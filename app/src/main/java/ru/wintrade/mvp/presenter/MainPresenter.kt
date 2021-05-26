@@ -84,6 +84,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun exitClicked() {
+        apiRepo.logout(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe()
         profile.deviceToken = null
         profile.token = null
         profile.user = null
