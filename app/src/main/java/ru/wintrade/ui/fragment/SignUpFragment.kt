@@ -61,6 +61,10 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         Toast.makeText(context, R.string.regulations_accept, Toast.LENGTH_SHORT).show()
     }
 
+    override fun showSuccessToast() {
+        Toast.makeText(context, R.string.is_success_registration, Toast.LENGTH_SHORT).show()
+    }
+
     override fun setNicknameError(validation: NicknameValidation) {
         et_sign_nickname_layout.error =
             when (validation) {

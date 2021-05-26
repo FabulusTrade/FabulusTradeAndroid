@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fillViewport="true">
 
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/et_sign_in_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/entrance_text_input_edit_text_user_name_hint_title"
+                android:hint="@string/nickname"
                 android:imeOptions="actionDone"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -97,30 +97,6 @@
                 android:background="?android:attr/listDivider" />
 
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/entrance_enter_with_google_button"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="31dp"
-            android:layout_marginEnd="25dp"
-            android:text="@string/enter_with_google_button_title"
-            app:icon="@drawable/google"
-            app:iconTint="@null" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/entrance_enter_with_facebook_button"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="25dp"
-            android:text="@string/enter_with_facebook_button_title"
-            app:icon="@drawable/facebook"
-            app:iconTint="@null" />
 
         <TextView
             android:id="@+id/entrance_text_view_3"
