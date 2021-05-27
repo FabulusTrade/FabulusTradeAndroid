@@ -81,13 +81,13 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 }
             }
             R.id.menu_search -> {
-
+                presenter.openSearchScreen()
             }
             R.id.menu_share -> {
-
+                presenter.openShareScreen()
             }
             R.id.menu_win -> {
-
+                presenter.openWinScreen()
             }
         }
         return true
@@ -124,7 +124,6 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {

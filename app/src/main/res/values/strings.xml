@@ -100,6 +100,7 @@
     <string name="phone_incorrect">Некорректный номер</string>
     <string name="phone_already_exists">Пользователь с таким номером уже зарегистрирован</string>
     <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
+    <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
     <string name="new_publication">Новая публикация</string>
     <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
     <string name="load_file">загрузить файл</string>

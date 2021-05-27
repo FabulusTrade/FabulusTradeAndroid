@@ -36,6 +36,11 @@ interface WinTradeApi {
         @Body requestAuth: RequestAuth
     ): Single<ResponseAuth>
 
+    @POST("auth/token/logout/")
+    fun logout(
+        @Header("Authorization") token: String
+    ): Completable
+
     @GET("auth/users/me/")
     fun getUserProfile(
         @Header("Authorization") token: String
@@ -105,7 +110,7 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
     ): Single<ResponsePost>
 
-    @DELETE ("api/v1/trader/post/pinned/")
+    @DELETE("api/v1/trader/post/pinned/")
     fun deletePinnedPost(
         @Header("Authorization") token: String
     ): Single<ResponsePost>

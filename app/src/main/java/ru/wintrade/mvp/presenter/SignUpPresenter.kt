@@ -89,6 +89,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             apiRepo.signUp(nickname, password, email, phone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    viewState.showSuccessToast()
                     router.navigateTo(Screens.SignInScreen())
                 }, { exception ->
                     if (exception is HttpException) {

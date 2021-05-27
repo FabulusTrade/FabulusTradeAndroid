@@ -7,4 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderMeObservationView: MvpView {
     fun init()
+    fun updateAdapter()
 }

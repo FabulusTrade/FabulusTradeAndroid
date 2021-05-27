@@ -247,4 +247,12 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
+
+    fun logout(token: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.logout(token)
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
 }

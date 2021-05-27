@@ -62,10 +62,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun aboutWTMenuClicked() {
-        if (profile.user != null)
-            router.replaceScreen(Screens.AboutWinTradeScreen())
-        else
-            router.navigateTo(Screens.SignInScreen())
+        router.replaceScreen(Screens.AboutWinTradeScreen())
     }
 
     fun questionMenuClicked() {
@@ -76,7 +73,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun settingsMenuClicked() {
-        router.navigateTo(Screens.SettingsScreen())
+        router.replaceScreen(Screens.SettingsScreen())
     }
 
     fun friendInviteMenuClicked() {
@@ -87,6 +84,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun exitClicked() {
+        apiRepo.logout(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe()
         profile.deviceToken = null
         profile.token = null
         profile.user = null
@@ -97,10 +95,32 @@ class MainPresenter : MvpPresenter<MainView>() {
         )
     }
 
-
-
     fun onDrawerOpened() {
         viewState.setupHeader(profile.user?.avatar, profile.user?.username)
+    }
+
+    fun openSearchScreen() {
+        if (profile.user == null) {
+            router.navigateTo(Screens.SignInScreen())
+        } else {
+//navigateTo SearchScreen must be here
+        }
+    }
+
+    fun openShareScreen() {
+        if (profile.user == null) {
+            router.navigateTo(Screens.SignInScreen())
+        } else {
+//navigateTo ShareScreen must be here
+        }
+    }
+
+    fun openWinScreen() {
+        if (profile.user == null) {
+            router.navigateTo(Screens.SignInScreen())
+        } else {
+//navigateTo WinScreen must be here
+        }
     }
 
     fun backClicked() {
