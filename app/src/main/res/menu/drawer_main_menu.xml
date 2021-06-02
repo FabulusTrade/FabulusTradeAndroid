@@ -25,9 +25,9 @@
             android:icon="@drawable/live_help"
             android:title="@string/ask_a_question_menu_title" />
         <item
-            android:id="@+id/settings_menu_id"
-            android:icon="@drawable/settings"
-            android:title="@string/settings_menu_title" />
+            android:id="@+id/community_menu_id"
+            android:icon="@drawable/ic_community"
+            android:title="@string/community" />
         <item
             android:id="@+id/exit_menu_id"
             android:icon="@drawable/close"

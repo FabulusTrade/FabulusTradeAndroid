@@ -57,6 +57,18 @@ interface WinTradeApi {
         @Header("Authorization") token: String
     ): Single<List<RequestDevice>>
 
+    @POST("api/v1/subscription/create_observation/")
+    fun observeToTrader(
+        @Header("Authorization") token: String,
+        @Body subscription: RequestSubscription
+    ): Single<RequestSubscription>
+
+    @DELETE("api/v1/subscription/delete/{id}/")
+    fun deleteObservation(
+        @Header("Authorization") token: String,
+        @Path(value = "id", encoded = true) id: String
+    ): Completable
+
     @POST("api/v1/subscription/create_subscription/")
     fun subscribeToTrader(
         @Header("Authorization") token: String,

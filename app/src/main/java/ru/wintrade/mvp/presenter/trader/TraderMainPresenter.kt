@@ -39,6 +39,14 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         viewState.setObserveActive(isObserveActive)
         if (profile.user == null) {
             router.navigateTo(Screens.SignInScreen())
+        } else if (isObserveActive) {
+            apiRepo.observeToTrader(profile.token!!, trader.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        } else {
+            apiRepo.deleteObservation(profile.token!!, trader.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
         }
     }
 
@@ -62,13 +70,17 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ subscriptions ->
                     subscriptions.find { it.trader.id == trader.id }?.let {
-                        setVisibility(false)
+                        if (it.status?.toInt() == 1) {
+                            setVisibility(true)
+                            isObserveActive = true
+                            viewState.setObserveActive(isObserveActive)
+                        } else
+                            setVisibility(false)
                     } ?: setVisibility(true)
                 }, {
                     it.printStackTrace()
                 })
         }
-
     }
 
     private fun setVisibility(result: Boolean) {

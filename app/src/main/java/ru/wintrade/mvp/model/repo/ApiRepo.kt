@@ -102,6 +102,23 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun observeToTrader(token: String, traderId: String): Single<RequestSubscription> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                val sub = RequestSubscription(traderId, null)
+                api.observeToTrader(token, sub)
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun deleteObservation(token: String, id: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.deleteObservation(token, id)
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun subscribeToTrader(token: String, traderId: String): Single<RequestSubscription> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {

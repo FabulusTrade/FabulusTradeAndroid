@@ -9,5 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface MainView : MvpView {
     fun init()
     fun setupHeader(avatar: String?, username: String?)
-
+    fun exit()
 }

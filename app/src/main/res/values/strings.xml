@@ -118,4 +118,6 @@
     <string name="trader_pop_instr_not_auth_text_2">Для просмотра необходимо</string>
     <string name="trader_trade_not_auth_text">СДЕЛКИ И ОРДЕРА онлайн с установленными тейк-профит и стоп-лосс. Комментарии по сделкам.</string>
     <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
+    <string name="community">Сообщество</string>
+    <string name="observation">Наблюдение</string>
 </resources>
