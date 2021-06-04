@@ -63,10 +63,10 @@ interface WinTradeApi {
         @Body subscription: RequestSubscription
     ): Single<RequestSubscription>
 
-    @DELETE("api/v1/subscription/delete/{id}/")
+    @DELETE("api/v1/subscription/{id_trader}/delete/")
     fun deleteObservation(
         @Header("Authorization") token: String,
-        @Path(value = "id", encoded = true) id: String
+        @Path(value = "id_trader", encoded = true) id: String
     ): Completable
 
     @POST("api/v1/subscription/create_subscription/")
