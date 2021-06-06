@@ -18,7 +18,7 @@ interface SignUpView: MvpView {
     fun setEmailError(validation: EmailValidation)
     fun setPhoneError(validation: PhoneValidation)
     @StateStrategyType(SkipStrategy::class)
-    fun showRegulationsAcceptToast()
+    fun showRegulationsAcceptDialog()
     @StateStrategyType(SkipStrategy::class)
-    fun showSuccessToast()
+    fun showSuccessDialog()
 }

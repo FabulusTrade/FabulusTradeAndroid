@@ -84,7 +84,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
         viewState.setPhoneError(phoneValidation)
 
         if (!(isPrivacyAccepted && isRulesAccepted)) {
-            viewState.showRegulationsAcceptToast()
+            viewState.showRegulationsAcceptDialog()
             return
         }
 
@@ -99,7 +99,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             apiRepo.signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    viewState.showSuccessToast()
+                    viewState.showSuccessDialog()
                     router.navigateTo(Screens.SignInScreen())
                 }, { exception ->
                     if (exception is HttpException) {

@@ -1,11 +1,11 @@
 package ru.wintrade.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
@@ -59,12 +59,22 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         requireActivity().toolbar_blue.visibility = View.GONE
     }
 
-    override fun showRegulationsAcceptToast() {
-        Toast.makeText(context, R.string.regulations_accept, Toast.LENGTH_LONG).show()
+    override fun showRegulationsAcceptDialog() {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.error))
+            .setMessage(R.string.regulations_accept)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok) { _, _ ->
+            }.show()
     }
 
-    override fun showSuccessToast() {
-        Toast.makeText(context, R.string.is_success_registration, Toast.LENGTH_LONG).show()
+    override fun showSuccessDialog() {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.is_success_reg))
+            .setMessage(R.string.is_success_registration)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok) { _, _ ->
+            }.show()
     }
 
     override fun setNicknameError(validation: NicknameValidation) {
@@ -169,7 +179,6 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
                 }
             }
         )
-
         et_sign_phone.hint = listener.placeholder()
     }
 }

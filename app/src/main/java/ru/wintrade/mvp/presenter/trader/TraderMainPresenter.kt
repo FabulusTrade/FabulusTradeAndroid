@@ -46,7 +46,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         } else {
             apiRepo.deleteObservation(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe({}, {})
         }
     }
 
