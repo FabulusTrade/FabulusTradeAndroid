@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
-import com.jakewharton.rxbinding4.widget.textChanges
+import com.redmadrobot.inputmask.MaskedTextChangedListener
+import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
+import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.layout_title.*
@@ -23,7 +25,7 @@ import ru.wintrade.util.EmailValidation
 import ru.wintrade.util.NicknameValidation
 import ru.wintrade.util.PasswordValidation
 import ru.wintrade.util.PhoneValidation
-import java.util.concurrent.TimeUnit
+
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
@@ -94,7 +96,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setEmailError(validation: EmailValidation) {
-        et_sign_email_layout.error = when(validation) {
+        et_sign_email_layout.error = when (validation) {
             EmailValidation.INCORRECT -> getString(R.string.email_incorrect)
             EmailValidation.ALREADY_EXISTS -> getString(R.string.email_already_exists)
             EmailValidation.OK -> null
@@ -102,7 +104,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setPhoneError(validation: PhoneValidation) {
-        et_sign_phone_layout.error = when(validation) {
+        et_sign_phone_layout.error = when (validation) {
             PhoneValidation.INCORRECT -> getString(R.string.phone_incorrect)
             PhoneValidation.ALREADY_EXISTS -> getString(R.string.phone_already_exists)
             PhoneValidation.OK -> null
@@ -110,6 +112,8 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     private fun initListeners() {
+        initPhoneEditText()
+
         et_sign_nickname.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus)
                 presenter.onNicknameInputFocusLost(et_sign_nickname.text.toString())
@@ -127,7 +131,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
         et_sign_phone.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus)
-                presenter.onPhoneInputFocusLost(et_sign_phone.text.toString())
+                presenter.onPhoneInputFocusLost()
         }
 
         et_sign_email.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -141,10 +145,31 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
                 et_sign_password.text.toString(),
                 et_sign_confirm_password.text.toString(),
                 et_sign_email.text.toString(),
-                et_sign_phone.text.toString(),
                 cb_sign_rules.isChecked,
                 cb_sign_privacy.isChecked
             )
         }
+    }
+
+    private fun initPhoneEditText() {
+        val affineFormats: MutableList<String> = ArrayList()
+        affineFormats.add("8 ([000]) [000]-[00]-[00]")
+
+        val listener: MaskedTextChangedListener = installOn(
+            et_sign_phone,
+            "+7 ([000]) [000]-[00]-[00]",
+            affineFormats, AffinityCalculationStrategy.PREFIX,
+            object : MaskedTextChangedListener.ValueListener {
+                override fun onTextChanged(
+                    maskFilled: Boolean,
+                    extractedValue: String,
+                    formattedText: String
+                ) {
+                    presenter.onPhoneChanged(extractedValue, maskFilled)
+                }
+            }
+        )
+
+        et_sign_phone.hint = listener.placeholder()
     }
 }
