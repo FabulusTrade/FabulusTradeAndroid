@@ -101,6 +101,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         headerView.tv_header_main_nickname.text = username
     }
 
+    override fun exit() {
+        finish()
+    }
+
     override fun onResumeFragments() {
         super.onResumeFragments()
         navigatorHolder.setNavigator(navigator)
@@ -118,7 +122,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.invite_a_friend_menu_id -> presenter.friendInviteMenuClicked()
             R.id.about_menu_id -> presenter.aboutWTMenuClicked()
             R.id.ask_menu_id -> presenter.questionMenuClicked()
-            R.id.settings_menu_id -> presenter.settingsMenuClicked()
+            R.id.community_menu_id -> presenter.settingsMenuClicked()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawer_layout.closeDrawer(GravityCompat.START)

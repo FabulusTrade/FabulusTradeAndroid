@@ -24,13 +24,17 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
     override fun onBindViewHolder(holder: ObservationItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        setProfitColor(holder)
+        holder.itemView.layout_traders_signed_item.setOnClickListener {
+            presenter.onItemClick(holder.adapterPosition)
+        }
+    }
+
+    private fun setProfitColor(holder: ObservationItemViewHolder) {
         if (holder.itemView.tv_subscriber_observation_profit.text.substring(0, 1) == "-") {
             holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.RED)
         } else {
             holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.GREEN)
-        }
-        holder.itemView.layout_traders_signed_item.setOnClickListener {
-            presenter.onItemClick(holder.adapterPosition)
         }
     }
 
@@ -50,6 +54,10 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
 
         override fun setTraderAvatar(avatar: String?) {
             avatar?.let { loadImage(it, itemView.iv_subscriber_observation_ava) }
+        }
+
+        override fun subscribeStatus(text: String) {
+            itemView.tv_subscriber_observation_is_subscribe.text = text
         }
     }
 }

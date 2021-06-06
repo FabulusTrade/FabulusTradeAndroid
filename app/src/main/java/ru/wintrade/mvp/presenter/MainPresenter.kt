@@ -90,7 +90,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         profile.user = null
         profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
-                router.newRootScreen(Screens.SignInScreen())
+                viewState.exit()
             }, {}
         )
     }

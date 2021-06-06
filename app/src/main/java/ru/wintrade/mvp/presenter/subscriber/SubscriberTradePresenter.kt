@@ -1,17 +1,15 @@
 package ru.wintrade.mvp.presenter.subscriber
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.functions.Function
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
@@ -47,6 +45,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
 
         override fun getCount() = trades.size
 
+        @SuppressLint("SimpleDateFormat")
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
             val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
@@ -64,9 +63,9 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
             view.setSum("Сумма: $sum ${trade.currency}")
             trade.profitCount?.let {
                 if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit("${trade.profitCount}", Color.GREEN)
+                    view.setProfit("${trade.profitCount} %", Color.GREEN)
                 } else {
-                    view.setProfit("${trade.profitCount}", Color.RED)
+                    view.setProfit("${trade.profitCount} %", Color.RED)
                 }
             } ?: view.setProfit("", Color.WHITE)
         }
@@ -88,15 +87,16 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        apiRepo.mySubscriptions(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            { subsciptions ->
-                traders.addAll(subsciptions.map { it.trader })
-                refreshTrades()
-                apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(getNewTradeObserver())
-            },
-            {}
-        )
+        apiRepo.mySubscriptions(profile.token!!).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { subscriptions ->
+                    traders.addAll(subscriptions.map { it.trader })
+                    refreshTrades()
+                    apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(getNewTradeObserver())
+                },
+                {}
+            )
     }
 
     override fun onDestroy() {
@@ -125,7 +125,6 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                     viewState.setRefreshing(false)
                 }
             )
-
     }
 
     private fun loadNextPage() {
@@ -188,5 +187,4 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                 trade.trader = traders.find { it.id == trade.traderId }
         }
     }
-
 }

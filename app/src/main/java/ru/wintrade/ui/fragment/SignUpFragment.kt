@@ -58,11 +58,11 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun showRegulationsAcceptToast() {
-        Toast.makeText(context, R.string.regulations_accept, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.regulations_accept, Toast.LENGTH_LONG).show()
     }
 
     override fun showSuccessToast() {
-        Toast.makeText(context, R.string.is_success_registration, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.is_success_registration, Toast.LENGTH_LONG).show()
     }
 
     override fun setNicknameError(validation: NicknameValidation) {
