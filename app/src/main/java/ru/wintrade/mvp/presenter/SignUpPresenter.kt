@@ -22,6 +22,8 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
     lateinit var apiRepo: ApiRepo
 
     private var password = ""
+    private var isCorrectPhone = false
+    private var phone = ""
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -44,9 +46,11 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             viewState.setPasswordConfirmError(confirmPassword == password)
     }
 
-    fun onPhoneInputFocusLost(phone: String) {
-        if (phone.isNotEmpty())
-            viewState.setPhoneError(isValidPhone(phone))
+    fun onPhoneInputFocusLost() {
+        if (phone.isNotEmpty() && !isCorrectPhone)
+            viewState.setPhoneError(PhoneValidation.INCORRECT)
+        else
+            viewState.setPhoneError(PhoneValidation.OK)
     }
 
     fun onEmailInputFocusLost(email: String) {
@@ -54,12 +58,16 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             viewState.setEmailError(isValidEmail(email))
     }
 
+    fun onPhoneChanged(phone: String, isCorrect: Boolean) {
+        this.phone = phone
+        isCorrectPhone = isCorrect
+    }
+
     fun createProfileClicked(
         nickname: String,
         password: String,
         confirmPassword: String,
         email: String,
-        phone: String,
         isRulesAccepted: Boolean,
         isPrivacyAccepted: Boolean
     ) {
@@ -67,7 +75,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
         val passwordValidation = isValidPassword(password)
         val isValidConfirmPassword = password == confirmPassword
         val emailValidation = isValidEmail(email)
-        val phoneValidation = isValidPhone(phone)
+        val phoneValidation = if (isCorrectPhone) PhoneValidation.OK else PhoneValidation.INCORRECT
 
         viewState.setNicknameError(nicknameValidation)
         viewState.setPasswordError(passwordValidation)
@@ -80,13 +88,15 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             return
         }
 
+        val formattedPhone = "8$phone"
+
         if (nicknameValidation == NicknameValidation.OK &&
             passwordValidation == PasswordValidation.OK &&
             isValidConfirmPassword &&
             emailValidation == EmailValidation.OK &&
             phoneValidation == PhoneValidation.OK
         ) {
-            apiRepo.signUp(nickname, password, email, phone)
+            apiRepo.signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.showSuccessToast()
