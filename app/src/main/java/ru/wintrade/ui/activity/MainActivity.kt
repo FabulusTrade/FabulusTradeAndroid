@@ -7,6 +7,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main_menu.view.*
@@ -14,8 +16,6 @@ import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
@@ -33,7 +33,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     @InjectPresenter
     lateinit var presenter: MainPresenter
 
-    val navigator = SupportAppNavigator(this, R.id.container)
+    val navigator = AppNavigator(this, R.id.container)
 
     @ProvidePresenter
     fun providePresenter() = MainPresenter().apply {

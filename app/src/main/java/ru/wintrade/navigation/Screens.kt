@@ -1,114 +1,81 @@
 package ru.wintrade.navigation
 
-import ru.terrakok.cicerone.android.support.SupportAppScreen
+import android.content.Intent
+import androidx.core.app.ActivityCompat.startActivityForResult
+import com.github.terrakok.cicerone.androidx.ActivityScreen
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.ui.fragment.*
-import ru.wintrade.ui.fragment.traderme.*
-import ru.wintrade.ui.fragment.traders.*
-import ru.wintrade.ui.fragment.subscriber.*
+import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
+import ru.wintrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.wintrade.ui.fragment.trader.TraderMainFragment
 import ru.wintrade.ui.fragment.trader.TraderPopularInstrumentsFragment
 import ru.wintrade.ui.fragment.trader.TraderTradeFragment
+import ru.wintrade.ui.fragment.traderme.TraderMeMainFragment
+import ru.wintrade.ui.fragment.traderme.TraderMeObservationFragment
+import ru.wintrade.ui.fragment.traderme.TraderMePostFragment
+import ru.wintrade.ui.fragment.traderme.TraderMeProfitFragment
+import ru.wintrade.ui.fragment.traders.TradersAllFragment
+import ru.wintrade.ui.fragment.traders.TradersFilterFragment
+import ru.wintrade.ui.fragment.traders.TradersMainFragment
 
-class Screens {
-    class OnBoardScreen : SupportAppScreen() {
-        override fun getFragment() = OnBoardFragment.newInstance()
+
+object Screens {
+
+    fun OnBoardScreen() = FragmentScreen {OnBoardFragment.newInstance()}
+
+    fun SignUpScreen() = FragmentScreen {SignUpFragment.newInstance()}
+
+    fun SignInScreen() = FragmentScreen {SignInFragment.newInstance()}
+
+    fun SmsConfirmScreen(phone: String) = FragmentScreen {SmsConfirmFragment.newInstance(phone)}
+
+    fun TraderMainScreen(trader: Trader) = FragmentScreen {TraderMainFragment.newInstance(trader)}
+
+    fun TraderProfitScreen() = FragmentScreen {TraderMeProfitFragment.newInstance()}
+
+    fun TraderMeMainScreen() = FragmentScreen {TraderMeMainFragment.newInstance()}
+
+    fun TraderNewsScreen() = FragmentScreen {TraderMePostFragment.newInstance()}
+
+    fun TraderPopularInstrumentsScreen() = FragmentScreen {TraderPopularInstrumentsFragment.newInstance()}
+
+    fun TraderDealScreen() = FragmentScreen { TraderTradeFragment.newInstance() }
+
+    fun TradersMainScreen() = FragmentScreen { TradersMainFragment.newInstance() }
+
+    fun TradersAllScreen() = FragmentScreen { TradersAllFragment.newInstance() }
+
+    fun TradersFilterScreen() = FragmentScreen { TradersFilterFragment.newInstance() }
+
+    fun SubscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
+
+    fun SubscriberObservationScreen() = FragmentScreen { SubscriberObservationFragment.newInstance() }
+
+    fun SubscriberDealScreen() = FragmentScreen { SubscriberTradeFragment.newInstance() }
+
+    fun SubscriberNewsScreen() = FragmentScreen { SubscriberNewsFragment.newInstance() }
+
+    fun TradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
+
+    fun CompanyTradingOperationsScreen() = FragmentScreen { CompanyTradingOperationsFragment.newInstance() }
+
+    fun TraderObservationScreen() = FragmentScreen { TraderMeObservationFragment.newInstance() }
+
+    fun AboutWinTradeScreen() = FragmentScreen { AboutWinTradeFragment.newInstance() }
+
+    fun QuestionScreen() = FragmentScreen { QuestionFragment.newInstance() }
+
+    fun SettingsScreen() = FragmentScreen { SettingsFragment.newInstance() }
+
+    fun FriendInviteScreen() = FragmentScreen { FriendInviteFragment.newInstance() }
+
+    fun CreatePostScreen(isPinnedEdit: Boolean?, pinnedText: String?) = FragmentScreen {
+        CreatePostFragment.newInstance(isPinnedEdit, pinnedText)
     }
 
-    class SignUpScreen : SupportAppScreen() {
-        override fun getFragment() = SignUpFragment.newInstance()
-    }
 
-    class SmsConfirmScreen(val phone: String) : SupportAppScreen() {
-        override fun getFragment() = SmsConfirmFragment.newInstance(phone)
-    }
-
-    class SignInScreen : SupportAppScreen() {
-        override fun getFragment() = SignInFragment.newInstance()
-    }
-
-    class TraderMainScreen(val trader: Trader?) : SupportAppScreen() {
-        override fun getFragment() = TraderMainFragment.newInstance(trader!!)
-    }
-
-    class TraderMeMainScreen : SupportAppScreen() {
-        override fun getFragment() = TraderMeMainFragment.newInstance()
-    }
-
-    class TraderProfitScreen() : SupportAppScreen() {
-        override fun getFragment() = TraderMeProfitFragment.newInstance()
-    }
-
-    class TraderNewsScreen : SupportAppScreen() {
-        override fun getFragment() = TraderMePostFragment.newInstance()
-    }
-
-    class TraderPopularInstrumentsScreen : SupportAppScreen() {
-        override fun getFragment() = TraderPopularInstrumentsFragment.newInstance()
-    }
-
-    class TraderDealScreen : SupportAppScreen() {
-        override fun getFragment() = TraderTradeFragment.newInstance()
-    }
-
-    class TradersMainScreen : SupportAppScreen() {
-        override fun getFragment() = TradersMainFragment.newInstance()
-    }
-
-    class TradersAllScreen : SupportAppScreen() {
-        override fun getFragment() = TradersAllFragment.newInstance()
-    }
-
-    class TradersFilterScreen : SupportAppScreen() {
-        override fun getFragment() = TradersFilterFragment.newInstance()
-    }
-
-    class SubscriberMainScreen : SupportAppScreen() {
-        override fun getFragment() = SubscriberMainFragment.newInstance()
-    }
-
-    class SubscriberObservationScreen : SupportAppScreen() {
-        override fun getFragment() = SubscriberObservationFragment.newInstance()
-    }
-
-    class SubscriberDealScreen : SupportAppScreen() {
-        override fun getFragment() = SubscriberTradeFragment.newInstance()
-    }
-
-    class SubscriberNewsScreen : SupportAppScreen() {
-        override fun getFragment() = SubscriberNewsFragment.newInstance()
-    }
-
-    class TradeDetailScreen(val trade: Trade) : SupportAppScreen() {
-        override fun getFragment() = TradeDetailFragment.newInstance(trade)
-    }
-
-    class CompanyTradingOperationsScreen() : SupportAppScreen() {
-        override fun getFragment() = CompanyTradingOperationsFragment.newInstance()
-    }
-
-    class TraderObservationScreen() : SupportAppScreen() {
-        override fun getFragment() = TraderMeObservationFragment.newInstance()
-    }
-
-    class AboutWinTradeScreen : SupportAppScreen() {
-        override fun getFragment() = AboutWinTradeFragment.newInstance()
-    }
-
-    class QuestionScreen : SupportAppScreen() {
-        override fun getFragment() = QuestionFragment.newInstance()
-    }
-
-    class SettingsScreen : SupportAppScreen() {
-        override fun getFragment() = SettingsFragment.newInstance()
-    }
-
-    class FriendInviteScreen : SupportAppScreen() {
-        override fun getFragment() = FriendInviteFragment.newInstance()
-    }
-
-    class CreatePostScreen(val isPinnedEdit: Boolean?, val pinnedText: String?) : SupportAppScreen() {
-        override fun getFragment() = CreatePostFragment.newInstance(isPinnedEdit, pinnedText)
-    }
 }
