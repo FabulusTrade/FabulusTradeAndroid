@@ -10,6 +10,7 @@ import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.RouterResultConstants
 import javax.inject.Inject
 
 @InjectViewState
@@ -93,6 +94,10 @@ class MainPresenter : MvpPresenter<MainView>() {
                 viewState.exit()
             }, {}
         )
+    }
+
+    fun imagesPicked(images: MutableList<String>) {
+        router.sendResult(RouterResultConstants.PICKED_IMAGES, images)
     }
 
     fun onDrawerOpened() {

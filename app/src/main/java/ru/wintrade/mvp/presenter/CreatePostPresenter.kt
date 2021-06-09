@@ -1,11 +1,15 @@
 package ru.wintrade.mvp.presenter
 
+import com.github.terrakok.cicerone.ResultListenerHandler
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
+import ru.wintrade.util.RouterResultConstants
 import javax.inject.Inject
 
 class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostView>() {
@@ -17,6 +21,8 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
 
     @Inject
     lateinit var router: Router
+
+    var images = listOf<String>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -31,6 +37,13 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
             isPinnedEdit == null || isPinnedEdit -> updatePost(text)
             else -> createPost(text)
         }
+    }
+
+    fun onUploadFileClicked() {
+        router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
+            images = (data as MutableList<String>).take(4)
+        }
+        viewState.pickImages()
     }
 
     private fun updatePost(text: String) {
