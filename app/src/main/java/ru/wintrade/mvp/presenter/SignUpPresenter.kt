@@ -1,10 +1,10 @@
 package ru.wintrade.mvp.presenter
 
+import com.github.terrakok.cicerone.Router
 import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import retrofit2.HttpException
-import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.entity.exception.SignUpException
 import ru.wintrade.mvp.model.repo.ApiRepo

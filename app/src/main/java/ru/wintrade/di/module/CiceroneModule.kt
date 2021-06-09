@@ -1,10 +1,10 @@
 package ru.wintrade.di.module
 
+import com.github.terrakok.cicerone.Cicerone
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import dagger.Module
 import dagger.Provides
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +18,7 @@ class CiceroneModule {
 
     @Provides
     fun navigationHolder(cicerone: Cicerone<Router>): NavigatorHolder {
-        return cicerone.navigatorHolder
+        return cicerone.getNavigatorHolder()
     }
 
     @Provides

@@ -1,7 +1,7 @@
 package ru.wintrade.mvp.presenter.traders
 
 import moxy.MvpPresenter
-import ru.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.view.traders.TradersFilterView
 import javax.inject.Inject
 

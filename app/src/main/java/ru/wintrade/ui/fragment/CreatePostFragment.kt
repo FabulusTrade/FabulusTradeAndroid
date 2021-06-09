@@ -13,6 +13,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.CreatePostPresenter
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.activity.MainActivity
 
 class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: String?) :
     MvpAppCompatFragment(),
@@ -40,6 +41,14 @@ class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: Stri
         btn_create_post_publish.setOnClickListener {
             presenter.onPublishClicked(et_create_post.text.toString())
         }
+
+        btn_create_post_load_file.setOnClickListener {
+            presenter.onUploadFileClicked()
+        }
+    }
+
+    override fun pickImages() {
+        (activity as MainActivity).startActivityPickImages()
     }
 
     override fun setHintText(isPinnedEdit: Boolean?) {

@@ -73,7 +73,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.28.3'
     kapt 'com.google.dagger:dagger-compiler:2.24'
 
-    implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
+    implementation 'com.github.terrakok:cicerone:7.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 

@@ -1,5 +1,6 @@
 package ru.wintrade.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -7,6 +8,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main_menu.view.*
@@ -14,15 +17,17 @@ import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
+import ru.wintrade.util.IntentConstants
 import ru.wintrade.util.loadImage
 import javax.inject.Inject
+
 
 class MainActivity : MvpAppCompatActivity(), MainView,
     NavigationView.OnNavigationItemSelectedListener {
@@ -33,7 +38,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     @InjectPresenter
     lateinit var presenter: MainPresenter
 
-    val navigator = SupportAppNavigator(this, R.id.container)
+    val navigator = AppNavigator(this, R.id.container)
 
     @ProvidePresenter
     fun providePresenter() = MainPresenter().apply {
@@ -129,11 +134,47 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         return true
     }
 
+    fun startActivityPickImages() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IntentConstants.PICK_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            IntentConstants.PICK_IMAGE -> handlePickImage(resultCode, data)
+        }
+    }
+
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
             if (it is BackButtonListener && it.backClicked())
                 return
         }
         presenter.backClicked()
+    }
+
+    private fun handlePickImage(resultCode: Int, data: Intent?) {
+        if (resultCode != RESULT_OK)
+            return
+
+        if (data?.data != null) {
+            presenter.imagesPicked(mutableListOf(data.data.toString()))
+        }
+
+        if (data?.clipData != null) {
+            val images = mutableListOf<String>()
+            val clipData = data.clipData
+            for (i in 0 until clipData!!.itemCount) {
+                val uri = clipData.getItemAt(i).uri
+                images.add(uri.toString())
+            }
+            presenter.imagesPicked(images)
+        }
+
     }
 }
