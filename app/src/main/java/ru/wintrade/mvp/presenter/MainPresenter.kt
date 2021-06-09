@@ -1,15 +1,16 @@
 package ru.wintrade.mvp.presenter
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.RouterResultConstants
 import javax.inject.Inject
 
 @InjectViewState
@@ -93,6 +94,10 @@ class MainPresenter : MvpPresenter<MainView>() {
                 viewState.exit()
             }, {}
         )
+    }
+
+    fun imagesPicked(images: MutableList<String>) {
+        router.sendResult(RouterResultConstants.PICKED_IMAGES, images)
     }
 
     fun onDrawerOpened() {

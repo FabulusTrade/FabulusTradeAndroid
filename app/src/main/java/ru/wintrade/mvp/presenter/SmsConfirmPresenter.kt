@@ -3,7 +3,7 @@ package ru.wintrade.mvp.presenter
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
-import ru.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.firebase.FirebaseAuth
 import ru.wintrade.mvp.view.SmsConfirmView
 import javax.inject.Inject

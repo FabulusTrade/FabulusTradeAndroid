@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import ru.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.repo.ApiRepo
