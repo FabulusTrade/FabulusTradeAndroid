@@ -26,7 +26,7 @@ class TraderPostFragment(val trader: Trader): MvpAppCompatFragment(), TraderPost
     lateinit var presenter: TraderPostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderPostPresenter().apply {
+    fun providePresenter() = TraderPostPresenter(trader).apply {
         App.instance.appComponent.inject(this)
     }
 

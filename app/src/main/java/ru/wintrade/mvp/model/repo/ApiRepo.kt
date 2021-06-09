@@ -167,6 +167,32 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun getPublisherPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline)
+                api.getPublisherPosts(token, page).flatMap { respPag ->
+                    val posts = respPag.results.map {
+                        mapToPost(it)!!
+                    }
+                    Single.just(mapToPagination(respPag, posts))
+                }
+            else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getTraderPosts(token: String, traderId: String, page: Int = 1): Single<Pagination<Post>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline)
+                api.getTraderPosts(token, traderId, page).flatMap { respPag ->
+                    val posts = respPag.results.map {
+                        mapToPost(it)!!
+                    }
+                    Single.just(mapToPagination(respPag, posts))
+                }
+            else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun signUp(
         username: String,
         password: String,

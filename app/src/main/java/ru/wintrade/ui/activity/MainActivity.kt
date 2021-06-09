@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import okhttp3.MediaType
-import okhttp3.RequestBody
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView

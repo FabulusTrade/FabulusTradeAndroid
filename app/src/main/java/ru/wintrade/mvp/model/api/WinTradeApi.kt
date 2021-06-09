@@ -92,6 +92,19 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 
+    @GET("api/v1/trader/posts/subscribed/")
+    fun getPublisherPosts(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
+    @GET("api/v1/trader/posts/trader/{trader_id}/")
+    fun getTraderPosts(
+        @Header("Authorization") token: String,
+        @Path("trader_id") id: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
     @POST("auth/users/")
     fun signUp(
         @Body signUpData: RequestSignUp
