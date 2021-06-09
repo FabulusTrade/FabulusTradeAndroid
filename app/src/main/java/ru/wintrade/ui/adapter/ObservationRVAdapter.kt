@@ -28,6 +28,9 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         holder.itemView.layout_traders_signed_item.setOnClickListener {
             presenter.onItemClick(holder.adapterPosition)
         }
+        holder.itemView.cb_subscriber_observation.setOnClickListener {
+            presenter.deleteObservation(holder.adapterPosition)
+        }
     }
 
     private fun setProfitColor(holder: ObservationItemViewHolder) {
@@ -56,8 +59,17 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
             avatar?.let { loadImage(it, itemView.iv_subscriber_observation_ava) }
         }
 
-        override fun subscribeStatus(text: String) {
-            itemView.tv_subscriber_observation_is_subscribe.text = text
+        override fun subscribeStatus(isSubscribe: Boolean) {
+            if (isSubscribe) {
+                itemView.cb_subscriber_observation.visibility = View.GONE
+                itemView.tv_subscriber_observation_is_subscribe.visibility = View.VISIBLE
+            } else {
+                with(itemView.cb_subscriber_observation) {
+                    visibility = View.VISIBLE
+                    isChecked = true
+                }
+                itemView.tv_subscriber_observation_is_subscribe.visibility = View.GONE
+            }
         }
     }
 }

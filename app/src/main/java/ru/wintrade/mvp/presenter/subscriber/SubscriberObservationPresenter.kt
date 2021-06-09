@@ -1,9 +1,10 @@
 package ru.wintrade.mvp.presenter.subscriber
 
+import android.os.Handler
+import android.os.Looper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.repo.ApiRepo
@@ -36,9 +37,9 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             traderList.trader.yearProfit?.let { view.setTraderProfit(it) }
             traderList.status?.let {
                 if (it.toInt() == 1)
-                    view.subscribeStatus("Наблюдение")
+                    view.subscribeStatus(false)
                 else
-                    view.subscribeStatus("Подписка")
+                    view.subscribeStatus(true)
             }
         }
 
@@ -48,6 +49,21 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
                 router.navigateTo(Screens.TraderMeMainScreen())
             else
                 router.navigateTo(Screens.TraderMainScreen(trader.trader))
+        }
+
+        override fun deleteObservation(pos: Int) {
+            if (profile.user == null) {
+                router.navigateTo(Screens.SignInScreen())
+            } else {
+                apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({}, {})
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        loadSubscriptions()
+                    }, 200
+                )
+            }
         }
     }
 
@@ -62,6 +78,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { subscriptions ->
                     val traders = subscriptions.sortedBy { it.status }.reversed()
+                    listPresenter.traders.clear()
                     listPresenter.traders.addAll(traders)
                     viewState.updateAdapter()
                 }, {

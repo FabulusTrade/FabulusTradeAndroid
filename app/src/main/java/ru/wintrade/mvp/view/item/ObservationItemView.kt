@@ -5,5 +5,5 @@ interface ObservationItemView {
     fun setTraderName(name: String)
     fun setTraderProfit(profit: String)
     fun setTraderAvatar(avatar: String?)
-    fun subscribeStatus(text: String)
+    fun subscribeStatus(isSubscribe: Boolean)
 }

@@ -6,4 +6,5 @@ interface IObservationListPresenter {
     fun getCount(): Int
     fun bind(view: ObservationItemView)
     fun onItemClick(pos: Int)
+    fun deleteObservation(pos: Int)
 }

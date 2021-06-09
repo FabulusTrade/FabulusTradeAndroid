@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
@@ -23,6 +24,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
     lateinit var profile: Profile
 
     val listPresenter = TradersAllListPresenter()
+    var subscriptionList = mutableListOf<Subscription>()
     private var isLoading = false
     private var nextPage: Int? = 1
 
@@ -34,6 +36,12 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
             traderList[view.pos].username?.let { view.setTraderName(it) }
             traderList[view.pos].yearProfit?.let { view.setTraderProfit(it) }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
+            subscriptionList.forEach {
+                if (it.trader.id == traderList[view.pos].id && it.status?.toInt() == 2)
+                    view.setTraderObserveBtn(null)
+                else if (it.trader.id == traderList[view.pos].id && it.status?.toInt() != 2)
+                    view.setTraderObserveBtn(true)
+            }
         }
 
         override fun openTraderStat(pos: Int) {
@@ -43,16 +51,44 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
             else
                 router.navigateTo(Screens.TraderMainScreen(traderList[pos]))
         }
+
+        override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
+            if (profile.user == null) {
+                router.navigateTo(Screens.SignInScreen())
+            } else if (isChecked) {
+                apiRepo.observeToTrader(profile.token!!, traderList[pos].id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
+            } else {
+                apiRepo.deleteObservation(profile.token!!, traderList[pos].id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({}, {})
+            }
+        }
     }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        loadMySubscription()
         loadTraders()
     }
 
     fun onScrollLimit() {
         loadTraders()
+        loadMySubscription()
+    }
+
+    private fun loadMySubscription() {
+        profile.token?.let {
+            apiRepo.mySubscriptions(it).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    subscriptionList.clear()
+                    subscriptionList.addAll(it)
+                }, {
+
+                })
+        }
     }
 
     private fun loadTraders() {
