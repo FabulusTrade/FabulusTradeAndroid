@@ -146,7 +146,7 @@ interface WinTradeApi {
         @Path(value = "post_id", encoded = true) postId: Int
     ): Single<ResponseLikes>
 
-    @POST("api/v1/trader/like/post/{post_id}/")
+    @POST("api/v1/trader/dislike/post/{post_id}/")
     fun dislikePost(
         @Header("Authorization") token: String,
         @Path(value = "post_id", encoded = true) postId: Int

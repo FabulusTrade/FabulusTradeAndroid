@@ -9,7 +9,6 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
-import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
@@ -69,10 +68,6 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
     fun onScrollLimit() {
         loadPosts()
-    }
-
-    fun onCreatePostBtnClicked() {
-        router.navigateTo(Screens.CreatePostScreen(false, null))
     }
 
     private fun loadPosts() {
