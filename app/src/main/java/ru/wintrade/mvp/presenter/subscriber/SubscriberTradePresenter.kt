@@ -50,7 +50,6 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
             val trade = trades[view.pos]
             val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
             val date = dateFormat.format(trade.date)
-            val sum = trade.price * trade.count
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
@@ -60,7 +59,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
             view.setDate("Дата: $date")
             view.setType(trade.operationType)
             view.setPrice("Цена: ${trade.price} ${trade.currency}")
-            view.setSum("Сумма: $sum ${trade.currency}")
+            view.setSum("Сумма: ${trade.value} ${trade.currency}")
             trade.profitCount?.let {
                 if (trade.profitCount.toFloat() >= 0) {
                     view.setProfit("${trade.profitCount} %", Color.GREEN)

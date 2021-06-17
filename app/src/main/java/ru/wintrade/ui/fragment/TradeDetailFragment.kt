@@ -30,7 +30,7 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
     lateinit var presenter: TradeDetailPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradeDetailPresenter(arguments!![TRADE_KEY] as Trade).apply {
+    fun providePresenter() = TradeDetailPresenter(requireArguments()[TRADE_KEY] as Trade).apply {
         App.instance.appComponent.inject(this)
     }
 
