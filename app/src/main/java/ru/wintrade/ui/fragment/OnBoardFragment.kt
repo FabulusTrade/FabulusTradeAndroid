@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_on_board.*
-import kotlinx.android.synthetic.main.layout_title.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -16,7 +15,6 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.OnBoardPresenter
 import ru.wintrade.mvp.view.OnBoardView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
 
 class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
@@ -51,5 +49,4 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     override fun setVPPos(pos: Int) {
         vp_on_board.setCurrentItem(pos, true)
     }
-
 }

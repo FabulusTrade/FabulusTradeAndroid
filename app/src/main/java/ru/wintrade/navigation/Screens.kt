@@ -1,8 +1,5 @@
 package ru.wintrade.navigation
 
-import android.content.Intent
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.github.terrakok.cicerone.androidx.ActivityScreen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
@@ -22,26 +19,25 @@ import ru.wintrade.ui.fragment.traders.TradersAllFragment
 import ru.wintrade.ui.fragment.traders.TradersFilterFragment
 import ru.wintrade.ui.fragment.traders.TradersMainFragment
 
-
 object Screens {
+    fun OnBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
 
-    fun OnBoardScreen() = FragmentScreen {OnBoardFragment.newInstance()}
+    fun SignUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
 
-    fun SignUpScreen() = FragmentScreen {SignUpFragment.newInstance()}
+    fun SignInScreen() = FragmentScreen { SignInFragment.newInstance() }
 
-    fun SignInScreen() = FragmentScreen {SignInFragment.newInstance()}
+    fun SmsConfirmScreen(phone: String) = FragmentScreen { SmsConfirmFragment.newInstance(phone) }
 
-    fun SmsConfirmScreen(phone: String) = FragmentScreen {SmsConfirmFragment.newInstance(phone)}
+    fun TraderMainScreen(trader: Trader) = FragmentScreen { TraderMainFragment.newInstance(trader) }
 
-    fun TraderMainScreen(trader: Trader) = FragmentScreen {TraderMainFragment.newInstance(trader)}
+    fun TraderProfitScreen() = FragmentScreen { TraderMeProfitFragment.newInstance() }
 
-    fun TraderProfitScreen() = FragmentScreen {TraderMeProfitFragment.newInstance()}
+    fun TraderMeMainScreen() = FragmentScreen { TraderMeMainFragment.newInstance() }
 
-    fun TraderMeMainScreen() = FragmentScreen {TraderMeMainFragment.newInstance()}
+    fun TraderNewsScreen() = FragmentScreen { TraderMePostFragment.newInstance() }
 
-    fun TraderNewsScreen() = FragmentScreen {TraderMePostFragment.newInstance()}
-
-    fun TraderPopularInstrumentsScreen() = FragmentScreen {TraderPopularInstrumentsFragment.newInstance()}
+    fun TraderPopularInstrumentsScreen() =
+        FragmentScreen { TraderPopularInstrumentsFragment.newInstance() }
 
     fun TraderDealScreen() = FragmentScreen { TraderTradeFragment.newInstance() }
 
@@ -53,7 +49,8 @@ object Screens {
 
     fun SubscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
 
-    fun SubscriberObservationScreen() = FragmentScreen { SubscriberObservationFragment.newInstance() }
+    fun SubscriberObservationScreen() =
+        FragmentScreen { SubscriberObservationFragment.newInstance() }
 
     fun SubscriberDealScreen() = FragmentScreen { SubscriberTradeFragment.newInstance() }
 
@@ -61,7 +58,8 @@ object Screens {
 
     fun TradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
 
-    fun CompanyTradingOperationsScreen() = FragmentScreen { CompanyTradingOperationsFragment.newInstance() }
+    fun CompanyTradingOperationsScreen() =
+        FragmentScreen { CompanyTradingOperationsFragment.newInstance() }
 
     fun TraderObservationScreen() = FragmentScreen { TraderMeObservationFragment.newInstance() }
 
@@ -76,6 +74,4 @@ object Screens {
     fun CreatePostScreen(isPinnedEdit: Boolean?, pinnedText: String?) = FragmentScreen {
         CreatePostFragment.newInstance(isPinnedEdit, pinnedText)
     }
-
-
 }

@@ -1,11 +1,8 @@
 package ru.wintrade.mvp.presenter
 
-import com.github.terrakok.cicerone.ResultListenerHandler
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
