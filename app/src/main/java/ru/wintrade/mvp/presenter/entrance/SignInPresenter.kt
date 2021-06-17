@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.presenter
+package ru.wintrade.mvp.presenter.entrance
 
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -8,7 +8,7 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
-import ru.wintrade.mvp.view.SignInView
+import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
@@ -35,6 +35,10 @@ class SignInPresenter : MvpPresenter<SignInView>() {
 
     fun openRegistrationScreen() {
         router.navigateTo(Screens.SignUpScreen())
+    }
+
+    fun openResetPassScreen() {
+        router.navigateTo(Screens.ResetPasswordScreen())
     }
 
     fun loginBtnClicked(nickname: String, password: String) {

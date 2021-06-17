@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment
+package ru.wintrade.ui.fragment.entrance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,8 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.OnBoardPresenter
-import ru.wintrade.mvp.view.OnBoardView
+import ru.wintrade.mvp.presenter.entrance.OnBoardPresenter
+import ru.wintrade.mvp.view.entrance.OnBoardView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
 

@@ -219,6 +219,14 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun resetPassword(email: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline) {
+                val request = RequestResetPass(email)
+                api.resetPassword(request)
+            } else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun updatePinnedPost(token: String, id: String, text: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {

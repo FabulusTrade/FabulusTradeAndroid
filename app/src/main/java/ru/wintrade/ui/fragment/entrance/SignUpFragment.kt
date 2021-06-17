@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment
+package ru.wintrade.ui.fragment.entrance
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,14 +12,13 @@ import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
-import kotlinx.android.synthetic.main.layout_title.*
 import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.SignUpPresenter
-import ru.wintrade.mvp.view.SignUpView
+import ru.wintrade.mvp.presenter.entrance.SignUpPresenter
+import ru.wintrade.mvp.view.entrance.SignUpView
 import ru.wintrade.ui.App
 import ru.wintrade.util.EmailValidation
 import ru.wintrade.util.NicknameValidation

@@ -123,4 +123,8 @@
     <string name="ok">OK</string>
     <string name="is_success_reg">Успешная регистрация</string>
     <string name="error">Ошибка</string>
+    <string name="reset_pass">Восстановить пароль</string>
+    <string name="reset_pass_btn_title">Забыли пароль?</string>
+    <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
+    <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
 </resources>

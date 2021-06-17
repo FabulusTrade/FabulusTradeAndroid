@@ -110,6 +110,11 @@ interface WinTradeApi {
         @Body signUpData: RequestSignUp
     ): Single<ResponseSignUp>
 
+    @POST("auth/users/reset_password/")
+    fun resetPassword(
+        @Body email: RequestResetPass
+    ): Completable
+
     @POST("api/v1/trader/post/create/")
     fun createPost(
         @Header("Authorization") token: String,

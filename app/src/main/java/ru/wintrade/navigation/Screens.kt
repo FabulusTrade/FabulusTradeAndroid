@@ -4,6 +4,10 @@ import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.ui.fragment.*
+import ru.wintrade.ui.fragment.entrance.OnBoardFragment
+import ru.wintrade.ui.fragment.entrance.ResetPasswordFragment
+import ru.wintrade.ui.fragment.entrance.SignInFragment
+import ru.wintrade.ui.fragment.entrance.SignUpFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
@@ -25,6 +29,8 @@ object Screens {
     fun SignUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
 
     fun SignInScreen() = FragmentScreen { SignInFragment.newInstance() }
+
+    fun ResetPasswordScreen() = FragmentScreen { ResetPasswordFragment.newInstance() }
 
     fun SmsConfirmScreen(phone: String) = FragmentScreen { SmsConfirmFragment.newInstance(phone) }
 
