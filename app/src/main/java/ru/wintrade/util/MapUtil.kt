@@ -3,7 +3,6 @@ package ru.wintrade.util
 import ru.wintrade.mvp.model.entity.*
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
-import ru.wintrade.mvp.model.entity.room.RoomProfile
 import java.text.SimpleDateFormat
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
@@ -44,7 +43,8 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         trade.count,
         trade.currency,
         date,
-        trade.profit_count
+        trade.profit_count,
+        trade.value
     )
 }
 

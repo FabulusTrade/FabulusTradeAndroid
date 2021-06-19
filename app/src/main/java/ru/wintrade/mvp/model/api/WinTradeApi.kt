@@ -92,10 +92,28 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 
+    @GET("api/v1/trader/posts/subscribed/")
+    fun getPublisherPosts(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
+    @GET("api/v1/trader/posts/trader/{trader_id}/")
+    fun getTraderPosts(
+        @Header("Authorization") token: String,
+        @Path("trader_id") id: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
     @POST("auth/users/")
     fun signUp(
         @Body signUpData: RequestSignUp
     ): Single<ResponseSignUp>
+
+    @POST("auth/users/reset_password/")
+    fun resetPassword(
+        @Body email: RequestResetPass
+    ): Completable
 
     @POST("api/v1/trader/post/create/")
     fun createPost(
@@ -133,7 +151,7 @@ interface WinTradeApi {
         @Path(value = "post_id", encoded = true) postId: Int
     ): Single<ResponseLikes>
 
-    @POST("api/v1/trader/like/post/{post_id}/")
+    @POST("api/v1/trader/dislike/post/{post_id}/")
     fun dislikePost(
         @Header("Authorization") token: String,
         @Path(value = "post_id", encoded = true) postId: Int

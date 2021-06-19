@@ -5,4 +5,5 @@ interface TradersAllItemView {
     fun setTraderName(name: String)
     fun setTraderProfit(profit: String)
     fun setTraderAvatar(avatar: String)
+    fun setTraderObserveBtn(isObserve: Boolean?)
 }

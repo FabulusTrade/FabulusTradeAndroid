@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.view
+package ru.wintrade.mvp.view.entrance
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
@@ -18,7 +18,7 @@ interface SignUpView: MvpView {
     fun setEmailError(validation: EmailValidation)
     fun setPhoneError(validation: PhoneValidation)
     @StateStrategyType(SkipStrategy::class)
-    fun showRegulationsAcceptToast()
+    fun showRegulationsAcceptDialog()
     @StateStrategyType(SkipStrategy::class)
-    fun showSuccessToast()
+    fun showSuccessDialog()
 }

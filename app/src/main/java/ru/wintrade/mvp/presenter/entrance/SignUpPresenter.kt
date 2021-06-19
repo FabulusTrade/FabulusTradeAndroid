@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.presenter
+package ru.wintrade.mvp.presenter.entrance
 
 import com.github.terrakok.cicerone.Router
 import com.google.gson.GsonBuilder
@@ -8,7 +8,7 @@ import retrofit2.HttpException
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.entity.exception.SignUpException
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.view.SignUpView
+import ru.wintrade.mvp.view.entrance.SignUpView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.*
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
         viewState.setPhoneError(phoneValidation)
 
         if (!(isPrivacyAccepted && isRulesAccepted)) {
-            viewState.showRegulationsAcceptToast()
+            viewState.showRegulationsAcceptDialog()
             return
         }
 
@@ -99,7 +99,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             apiRepo.signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    viewState.showSuccessToast()
+                    viewState.showSuccessDialog()
                     router.navigateTo(Screens.SignInScreen())
                 }, { exception ->
                     if (exception is HttpException) {

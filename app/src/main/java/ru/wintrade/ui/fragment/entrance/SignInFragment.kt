@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment
+package ru.wintrade.ui.fragment.entrance
 
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -16,8 +16,8 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.SignInPresenter
-import ru.wintrade.mvp.view.SignInView
+import ru.wintrade.mvp.presenter.entrance.SignInPresenter
+import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
 import ru.wintrade.util.PREFERENCE_NAME
 
@@ -42,6 +42,11 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun init() {
         setDrawerLockMode()
+        initListeners()
+    }
+
+    fun initListeners() {
+        btn_sign_in_reset_pass.setOnClickListener { presenter.openResetPassScreen() }
         entrance_registration_button.setOnClickListener { presenter.openRegistrationScreen() }
         entrance_enter_button.setOnClickListener { enterBtnClicked() }
     }

@@ -14,7 +14,7 @@
         <include layout="@layout/layout_title" />
 
         <TextView
-            android:id="@+id/entrance_text_view_1"
+            android:id="@+id/tv_sign_in_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -56,7 +56,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/entrance_enter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/entrance_text_view_2"
+                android:id="@+id/tv_sign_in_header_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -99,7 +99,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/entrance_text_view_3"
+            android:id="@+id/tv_sign_in_header_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -121,6 +121,16 @@
             android:textAllCaps="false"
             android:textColor="?attr/colorAccent"
             android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/btn_sign_in_reset_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="72dp"
+            android:backgroundTint="@color/colorGrayLight"
+            android:text="@string/reset_pass_btn_title"
+            android:textColor="@color/colorDarkGray" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 

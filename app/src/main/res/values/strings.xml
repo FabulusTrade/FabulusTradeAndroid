@@ -2,7 +2,7 @@
     <string name="app_name">Win Trade</string>
     <string name="on_boarding_button_text_title">Продолжить</string>
     <string name="traders_title_menu_title">Трейдеры</string>
-    <string name="observation_list_menu_title">Список наблюдений</string>
+    <string name="my_profile_title">Мой профиль</string>
     <string name="invite_a_friend_menu_title">Пригласить друга</string>
     <string name="about_service_menu_title">О сервисе</string>
     <string name="ask_a_question_menu_title">Задать вопрос</string>
@@ -120,4 +120,11 @@
     <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
     <string name="community">Сообщество</string>
     <string name="observation">Наблюдение</string>
+    <string name="ok">OK</string>
+    <string name="is_success_reg">Успешная регистрация</string>
+    <string name="error">Ошибка</string>
+    <string name="reset_pass">Восстановить пароль</string>
+    <string name="reset_pass_btn_title">Забыли пароль?</string>
+    <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
+    <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
 </resources>

@@ -1,14 +1,12 @@
-package ru.wintrade.mvp.presenter
+package ru.wintrade.mvp.presenter.entrance
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.BiFunction
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ProfileRepo
-import ru.wintrade.mvp.model.repo.RoomRepo
-import ru.wintrade.mvp.view.SplashView
+import ru.wintrade.mvp.view.entrance.SplashView
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

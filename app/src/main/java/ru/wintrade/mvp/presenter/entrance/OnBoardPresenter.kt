@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.presenter
+package ru.wintrade.mvp.presenter.entrance
 
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
@@ -6,7 +6,7 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IOnBoardListPresenter
-import ru.wintrade.mvp.view.OnBoardView
+import ru.wintrade.mvp.view.entrance.OnBoardView
 import ru.wintrade.mvp.view.item.OnBoardItemView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject

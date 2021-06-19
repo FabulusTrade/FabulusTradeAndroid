@@ -11,7 +11,7 @@
         <item
             android:id="@+id/observation_list_menu_id"
             android:icon="@drawable/visibility"
-            android:title="@string/observation_list_menu_title" />
+            android:title="@string/my_profile_title" />
         <item
             android:id="@+id/invite_a_friend_menu_id"
             android:icon="@drawable/person_add"

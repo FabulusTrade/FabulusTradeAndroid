@@ -1,5 +1,7 @@
 package ru.wintrade.mvp.presenter.traderme
 
+import android.os.Handler
+import android.os.Looper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
@@ -35,9 +37,9 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
             traderList.trader.yearProfit?.let { view.setTraderProfit(it) }
             traderList.status?.let {
                 if (it.toInt() == 1)
-                    view.subscribeStatus("Наблюдение")
+                    view.subscribeStatus(false)
                 else
-                    view.subscribeStatus("Подписка")
+                    view.subscribeStatus(true)
             }
         }
 
@@ -47,6 +49,21 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
                 router.navigateTo(Screens.TraderMeMainScreen())
             else
                 router.navigateTo(Screens.TraderMainScreen(trader.trader))
+        }
+
+        override fun deleteObservation(pos: Int) {
+            if (profile.user == null) {
+                router.navigateTo(Screens.SignInScreen())
+            } else {
+                apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({}, {})
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        loadSubscriptions()
+                    }, 200
+                )
+            }
         }
     }
 
@@ -61,6 +78,7 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { subscriptions ->
                     val traders = subscriptions.sortedBy { it.status }.reversed()
+                    listPresenter.traders.clear()
                     listPresenter.traders.addAll(traders)
                     viewState.updateAdapter()
                 }, {

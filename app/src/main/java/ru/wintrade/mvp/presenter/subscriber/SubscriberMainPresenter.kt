@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.common.ProfileStorage
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import javax.inject.Inject

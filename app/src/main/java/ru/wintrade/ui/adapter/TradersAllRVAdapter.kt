@@ -22,13 +22,26 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
     override fun onBindViewHolder(holder: TradersAllViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        initListeners(holder)
+        setProfitColor(holder)
+    }
+
+    private fun setProfitColor(holder: TradersAllViewHolder) {
+        if (holder.itemView.tv_traders_all_item_year_profit.text.substring(0, 1) == "-")
+            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.RED)
+        else
+            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.GREEN)
+    }
+
+    fun initListeners(holder: TradersAllViewHolder) {
         holder.itemView.layout_all_traders_item.setOnClickListener {
             presenter.openTraderStat(holder.adapterPosition)
         }
-        if (holder.itemView.tv_traders_all_item_year_profit.text.substring(0, 1) == "-") {
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.RED)
-        } else {
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.GREEN)
+        holder.itemView.cb_traders_all_item_observe.setOnClickListener {
+            if (holder.itemView.cb_traders_all_item_observe.isChecked)
+                presenter.observeBtnClicked(holder.adapterPosition, true)
+            else
+                presenter.observeBtnClicked(holder.adapterPosition, false)
         }
     }
 
@@ -47,6 +60,19 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
 
         override fun setTraderAvatar(avatar: String) {
             loadImage(avatar, itemView.iv_traders_all_item_ava)
+        }
+
+        override fun setTraderObserveBtn(isObserve: Boolean?) {
+            isObserve?.let {
+                itemView.tv_traders_all_item_subscription.visibility = View.GONE
+                itemView.cb_traders_all_item_observe.visibility = View.VISIBLE
+                itemView.cb_traders_all_item_observe.isChecked = isObserve
+            } ?: setVisibleSubscription()
+        }
+
+        private fun setVisibleSubscription() {
+            itemView.tv_traders_all_item_subscription.visibility = View.VISIBLE
+            itemView.cb_traders_all_item_observe.visibility = View.GONE
         }
     }
 }
