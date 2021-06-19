@@ -127,4 +127,5 @@
     <string name="reset_pass_btn_title">Забыли пароль?</string>
     <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
     <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
+    <string name="hide">скрыть</string>
 </resources>

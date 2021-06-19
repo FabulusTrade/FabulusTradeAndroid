@@ -27,12 +27,25 @@ class TraderMeProfitPresenter() :
     @Inject
     lateinit var apiRepo: ApiRepo
 
+    var isOpen = false
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         viewState.setDateJoined(getTraderDateJoined())
         viewState.setFollowersCount(profile.user!!.followersCount)
         viewState.setTradesCount(10)
+        viewState.setPinnedTextVisible(isOpen)
+    }
+
+    fun setPinnedTextMode() {
+        if (isOpen) {
+            isOpen = false
+            viewState.setPinnedTextVisible(isOpen)
+        } else {
+            isOpen = true
+            viewState.setPinnedTextVisible(isOpen)
+        }
     }
 
     fun onViewResumed() {
