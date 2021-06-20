@@ -14,7 +14,6 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.fragment.traderme.TraderMeProfitFragment
 
 class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderProfitView {
 

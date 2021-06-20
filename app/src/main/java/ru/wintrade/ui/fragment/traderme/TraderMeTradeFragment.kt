@@ -39,6 +39,10 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     ): View? = inflater.inflate(R.layout.fragment_trader_me_trade, container, false)
 
     override fun init() {
+        initListeners()
+    }
+
+    fun initListeners() {
         btn_trader_me_trade_deals.setOnClickListener {
             presenter.myDealsBtnClicked()
         }
