@@ -1,6 +1,7 @@
 package ru.wintrade.ui.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -160,19 +161,20 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         if (resultCode != RESULT_OK)
             return
 
+        val imagesUri = mutableListOf<String>()
+
         if (data?.data != null) {
-            presenter.imagesPicked(mutableListOf(data.data.toString()))
+            imagesUri.add(data.data!!.toString())
         }
 
         if (data?.clipData != null) {
-            val images = mutableListOf<String>()
             val clipData = data.clipData
             for (i in 0 until clipData!!.itemCount) {
                 val uri = clipData.getItemAt(i).uri
-                images.add(uri.toString())
+                imagesUri.add(uri.toString())
             }
-            presenter.imagesPicked(images)
         }
 
+        presenter.imagesPicked(imagesUri)
     }
 }

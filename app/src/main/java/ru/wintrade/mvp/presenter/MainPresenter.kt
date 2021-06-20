@@ -96,7 +96,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         )
     }
 
-    fun imagesPicked(images: MutableList<String>) {
+    fun imagesPicked(images: List<String>) {
         router.sendResult(RouterResultConstants.PICKED_IMAGES, images)
     }
 

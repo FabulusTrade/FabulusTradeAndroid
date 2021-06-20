@@ -3,9 +3,13 @@ package ru.wintrade.mvp.presenter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
+import ru.wintrade.util.ImageHelper
 import ru.wintrade.util.RouterResultConstants
 import javax.inject.Inject
 
@@ -15,6 +19,9 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
 
     @Inject
     lateinit var apiRepo: ApiRepo
+
+    @Inject
+    lateinit var imageHelper: ImageHelper
 
     @Inject
     lateinit var router: Router
@@ -38,7 +45,7 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
 
     fun onUploadFileClicked() {
         router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
-            images = (data as MutableList<String>).take(4)
+            images = (data as List<String>)
         }
         viewState.pickImages()
     }
@@ -56,7 +63,7 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
     }
 
     private fun createPost(text: String) {
-        apiRepo.createPost(profile.token!!, profile.user!!.id, text)
+        apiRepo.createPost(profile.token!!, profile.user!!.id, text, getImagesPairs())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()
@@ -65,5 +72,13 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
                     it.printStackTrace()
                 }
             )
+    }
+
+    private fun getImagesPairs(): List<Pair<String?, ByteArray>> {
+        val imagesParts = mutableListOf<Pair<String?, ByteArray>>()
+        images.forEach {
+            imagesParts.add(imageHelper.getBytesAndFileNameByUri(it))
+        }
+        return imagesParts
     }
 }
