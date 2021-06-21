@@ -5,10 +5,11 @@ import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndStrategy::class)
-interface TraderProfitView: MvpView {
+interface TraderProfitView : MvpView {
     fun init()
     fun setDateJoined(date: String)
     fun setFollowersCount(followersCount: Int)
     fun setTradesCount(tradesCount: Int)
     fun setPinnedPostText(text: String?)
+    fun setPinnedTextVisible(isOpen: Boolean)
 }

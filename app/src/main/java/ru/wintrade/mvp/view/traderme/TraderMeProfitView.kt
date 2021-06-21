@@ -11,5 +11,5 @@ interface TraderMeProfitView : MvpView {
     fun setFollowersCount(followersCount: Int)
     fun setTradesCount(tradesCount: Int)
     fun setPinnedPostText(text: String?)
-//    fun setFollowersCountForWeek(countForWeek: Int)
+    fun setPinnedTextVisible(isOpen: Boolean)
 }

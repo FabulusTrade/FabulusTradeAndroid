@@ -18,6 +18,8 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     TraderMeProfitView {
     companion object {
         fun newInstance() = TraderMeProfitFragment()
+        const val MAX_LINES = 5000
+        const val MIN_LINES = 3
     }
 
     @InjectPresenter
@@ -66,7 +68,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
         }
 
         btn_attached_post_show.setOnClickListener {
-            tv_attached_post_text.maxLines = 0
+            presenter.setPinnedTextMode()
         }
     }
 
@@ -111,6 +113,16 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
             layout_attached_post_body.visibility = View.VISIBLE
             tv_attached_post_text.text = text
             tv_attached_post_header.visibility = View.GONE
+        }
+    }
+
+    override fun setPinnedTextVisible(isOpen: Boolean) {
+        if (isOpen) {
+            btn_attached_post_show.text = resources.getString(R.string.hide)
+            tv_attached_post_text.maxLines = MAX_LINES
+        } else {
+            btn_attached_post_show.text = resources.getString(R.string.show)
+            tv_attached_post_text.maxLines = MIN_LINES
         }
     }
 }

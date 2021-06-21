@@ -40,6 +40,11 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
     ): View? = inflater.inflate(R.layout.fragment_subscriber_deal, container, false)
 
     override fun init() {
+        initRecyclerView()
+        initListeners()
+    }
+
+    fun initRecyclerView() {
         adapter = SubscriberTradesRVAdapter(presenter.listPresenter)
         rv_sub_deal.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
@@ -59,6 +64,9 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
                 }
             }
         )
+    }
+
+    fun initListeners() {
         layout_sub_deal_refresh.setOnRefreshListener {
             presenter.refreshed()
         }

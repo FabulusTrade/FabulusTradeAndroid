@@ -15,10 +15,12 @@ import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
 
-class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), TraderProfitView {
+class TraderProfitFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderProfitView {
 
     companion object {
         fun newInstance(trader: Trader) = TraderProfitFragment(trader)
+        const val MAX_LINES = 5000
+        const val MIN_LINES = 3
     }
 
     @InjectPresenter
@@ -57,7 +59,7 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
 
     fun initListeners() {
         btn_attached_post_show.setOnClickListener {
-            tv_attached_post_text.maxLines = 0
+            presenter.setPinnedTextMode()
         }
     }
 
@@ -82,6 +84,16 @@ class TraderProfitFragment(val trader: Trader? = null): MvpAppCompatFragment(), 
             iv_attached_post_kebab.visibility = View.GONE
             layout_attached_post_body.visibility = View.VISIBLE
             tv_attached_post_text.text = text
+        }
+    }
+
+    override fun setPinnedTextVisible(isOpen: Boolean) {
+        if (isOpen) {
+            btn_attached_post_show.text = resources.getString(R.string.hide)
+            tv_attached_post_text.maxLines = MAX_LINES
+        } else {
+            btn_attached_post_show.text = resources.getString(R.string.show)
+            tv_attached_post_text.maxLines = MIN_LINES
         }
     }
 }

@@ -10,14 +10,19 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import java.text.SimpleDateFormat
 
-class TraderProfitPresenter(val trader: Trader): MvpPresenter<TraderProfitView>() {
+class TraderProfitPresenter(val trader: Trader) : MvpPresenter<TraderProfitView>() {
+
+    var isOpen = false
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         viewState.setDateJoined(getTraderDateJoined())
         viewState.setFollowersCount(trader.followersCount)
         viewState.setTradesCount(trader.tradesCount)
-        trader.pinnedPost?.let { viewState.setPinnedPostText(it.text) } ?: viewState.setPinnedPostText(null)
+        viewState.setPinnedTextVisible(isOpen)
+        trader.pinnedPost?.let { viewState.setPinnedPostText(it.text) }
+            ?: viewState.setPinnedPostText(null)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -45,5 +50,15 @@ class TraderProfitPresenter(val trader: Trader): MvpPresenter<TraderProfitView>(
         barDataSet.colors =
             listOf(Color.GREEN, Color.BLACK, Color.RED)
         return BarData(labels, barDataSet)
+    }
+
+    fun setPinnedTextMode() {
+        if (isOpen) {
+            isOpen = false
+            viewState.setPinnedTextVisible(isOpen)
+        } else {
+            isOpen = true
+            viewState.setPinnedTextVisible(isOpen)
+        }
     }
 }
