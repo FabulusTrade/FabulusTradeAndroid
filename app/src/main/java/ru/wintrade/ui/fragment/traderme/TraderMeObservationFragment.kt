@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_subscriber_observation.*
+import kotlinx.android.synthetic.main.fragment_trader_me_observation.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -35,12 +35,29 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_subscriber_observation, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_trader_me_observation, container, false)
 
     override fun init() {
+        initAdapter()
+        initListeners()
+    }
+
+    fun initAdapter() {
         adapter = ObservationRVAdapter(presenter.listPresenter)
-        rv_sub_obs.adapter = adapter
-        rv_sub_obs.layoutManager = LinearLayoutManager(context)
+        rv_trader_me_sub.adapter = adapter
+        rv_trader_me_sub.layoutManager = LinearLayoutManager(context)
+    }
+
+    fun initListeners() {
+        btn_trader_me_sub_deal_trades.setOnClickListener {
+
+        }
+        btn_trader_me_sub_deal_orders.setOnClickListener {
+
+        }
+        btn_trader_me_sub_deal_logs.setOnClickListener {
+
+        }
     }
 
     override fun updateAdapter() {
