@@ -67,6 +67,8 @@ interface AppComponent {
     fun inject(traderMeMainPresenter: TraderMeMainPresenter)
     fun inject(traderMeProfitFragment: TraderMeProfitFragment)
     fun inject(traderMeProfitPresenter: TraderMeProfitPresenter)
+    fun inject(traderMeSubTradeFragment: TraderMeSubTradeFragment)
+    fun inject(traderMeSubTradePresenter: TraderMeSubTradePresenter)
     fun inject(traderProfitPresenter: TraderProfitPresenter)
     fun inject(traderProfitFragment: TraderProfitFragment)
     fun inject(traderPostFragment: TraderPostFragment)

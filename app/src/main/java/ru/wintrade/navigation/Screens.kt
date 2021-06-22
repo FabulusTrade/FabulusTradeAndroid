@@ -15,10 +15,7 @@ import ru.wintrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.wintrade.ui.fragment.trader.TraderMainFragment
 import ru.wintrade.ui.fragment.trader.TraderPopularInstrumentsFragment
 import ru.wintrade.ui.fragment.trader.TraderTradeFragment
-import ru.wintrade.ui.fragment.traderme.TraderMeMainFragment
-import ru.wintrade.ui.fragment.traderme.TraderMeObservationFragment
-import ru.wintrade.ui.fragment.traderme.TraderMePostFragment
-import ru.wintrade.ui.fragment.traderme.TraderMeProfitFragment
+import ru.wintrade.ui.fragment.traderme.*
 import ru.wintrade.ui.fragment.traders.TradersAllFragment
 import ru.wintrade.ui.fragment.traders.TradersFilterFragment
 import ru.wintrade.ui.fragment.traders.TradersMainFragment
@@ -35,6 +32,8 @@ object Screens {
     fun SmsConfirmScreen(phone: String) = FragmentScreen { SmsConfirmFragment.newInstance(phone) }
 
     fun TraderMainScreen(trader: Trader) = FragmentScreen { TraderMainFragment.newInstance(trader) }
+
+    fun TraderMeSubTradeScreen() = FragmentScreen { TraderMeSubTradeFragment.newInstance() }
 
     fun TraderProfitScreen() = FragmentScreen { TraderMeProfitFragment.newInstance() }
 
