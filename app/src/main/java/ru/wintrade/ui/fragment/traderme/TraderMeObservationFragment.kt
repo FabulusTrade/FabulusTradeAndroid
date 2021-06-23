@@ -19,6 +19,9 @@ import ru.wintrade.ui.adapter.ObservationRVAdapter
 class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationView {
     companion object {
         fun newInstance() = TraderMeObservationFragment()
+        const val DEALS = 1
+        const val ORDERS = 2
+        const val JOURNALS = 3
     }
 
     @InjectPresenter
@@ -50,13 +53,13 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
 
     fun initListeners() {
         btn_trader_me_sub_deal_trades.setOnClickListener {
-
+            presenter.openTraderMeSubScreen(DEALS)
         }
         btn_trader_me_sub_deal_orders.setOnClickListener {
-
+            presenter.openTraderMeSubScreen(ORDERS)
         }
         btn_trader_me_sub_deal_logs.setOnClickListener {
-
+            presenter.openTraderMeSubScreen(JOURNALS)
         }
     }
 

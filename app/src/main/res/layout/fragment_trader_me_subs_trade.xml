@@ -48,26 +48,33 @@
             tools:ignore="SmallSp" />
     </LinearLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layout_trader_me_sub_trade_refresh"
+    <LinearLayout
+        android:id="@+id/layout_trader_me_sub_trade"
         android:layout_width="match_parent"
+        android:visibility="visible"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_me_sub_trade_deal"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_trader_me_sub_trade_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="16dp" />
+            android:layout_height="match_parent">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trader_me_sub_trade_deal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_sub_deal_coming_soon"
+        android:id="@+id/tv_trader_me_sub_trade_coming_soon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/coming_soon"
         android:textSize="28sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </LinearLayout>
