@@ -15,8 +15,8 @@ data class Post(
     val images: List<String>,
     var likeCount: Int,
     var dislikeCount: Int,
-    var isLiked: Boolean = false,
-    var isDisliked: Boolean = false
+    var isLiked: Boolean ,
+    var isDisliked: Boolean 
 ): Parcelable {
     fun like() {
         if (isLiked)

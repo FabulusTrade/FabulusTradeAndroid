@@ -74,7 +74,9 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.pinned,
             images,
             post.like_count,
-            post.dislike_count
+            post.dislike_count,
+            post.is_liked,
+            post.is_disliked
         )
     } ?: return null
 }

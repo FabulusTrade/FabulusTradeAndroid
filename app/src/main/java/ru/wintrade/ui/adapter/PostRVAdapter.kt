@@ -64,6 +64,16 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             }
         }
 
+        override fun setLikeImage(isLiked: Boolean) {
+            if (isLiked)
+                itemView.btn_item_trader_news_like.setImageResource(R.drawable.ic_like)
+            else itemView.btn_item_trader_news_like.setImageResource(R.drawable.ic_like_inactive)
+        }
 
+        override fun setDislikeImage(isDisliked: Boolean) {
+            if (isDisliked)
+                itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike)
+            else itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike_inactive)
+        }
     }
 }

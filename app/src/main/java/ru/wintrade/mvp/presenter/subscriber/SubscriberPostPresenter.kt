@@ -42,16 +42,30 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
         override fun postLiked(view: PostItemView) {
             val post = post[view.pos]
-            post.like()
-            view.setLikesCount(post.likeCount)
-            apiRepo.likePost(profile.token!!, post.id).subscribe()
+            apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    post.like()
+                    if (post.isDisliked) {
+                        view.setDislikeImage(!post.isDisliked)
+                        view.setDislikesCount(post.dislikeCount - 1)
+                    }
+                    view.setLikesCount(post.likeCount)
+                    view.setLikeImage(post.isLiked)
+                }, {})
         }
 
         override fun postDisliked(view: PostItemView) {
             val post = post[view.pos]
-            post.dislike()
-            view.setDislikesCount(post.dislikeCount)
-            apiRepo.dislikePost(profile.token!!, post.id).subscribe()
+            apiRepo.dislikePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    post.dislike()
+                    if (post.isLiked) {
+                        view.setLikeImage(!post.isLiked)
+                        view.setLikesCount(post.likeCount - 1)
+                    }
+                    view.setDislikesCount(post.dislikeCount)
+                    view.setDislikeImage(post.isDisliked)
+                }, {})
         }
     }
 

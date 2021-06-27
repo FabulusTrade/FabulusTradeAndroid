@@ -20,6 +20,10 @@ data class ResponsePost(
     @Expose
     val like_count: Int,
     @Expose
-    val dislike_count: Int
+    val dislike_count: Int,
+    @Expose
+    val is_liked: Boolean,
+    @Expose
+    val is_disliked: Boolean
 )
 

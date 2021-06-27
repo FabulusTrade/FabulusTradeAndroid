@@ -9,4 +9,6 @@ interface PostItemView {
     fun setLikesCount(likes: Int)
     fun setDislikesCount(dislikesCount: Int)
     fun setImages(images: List<String>?)
+    fun setLikeImage(isLiked: Boolean)
+    fun setDislikeImage(isDisliked: Boolean)
 }

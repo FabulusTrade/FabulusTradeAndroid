@@ -39,21 +39,37 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             view.setPost(post.text)
             view.setImages(post.images)
             view.setLikesCount(post.likeCount)
+            view.setLikeImage(post.isLiked)
             view.setDislikesCount(post.dislikeCount)
+            view.setDislikeImage(post.isDisliked)
         }
 
         override fun postLiked(view: PostItemView) {
             val post = posts[view.pos]
-            post.like()
-            view.setLikesCount(post.likeCount)
-            apiRepo.likePost(profile.token!!, post.id).subscribe()
+            apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    post.like()
+                    if (post.isDisliked) {
+                        view.setDislikeImage(!post.isDisliked)
+                        view.setDislikesCount(post.dislikeCount - 1)
+                    }
+                    view.setLikesCount(post.likeCount)
+                    view.setLikeImage(post.isLiked)
+                }, {})
         }
 
         override fun postDisliked(view: PostItemView) {
             val post = posts[view.pos]
-            post.dislike()
-            view.setDislikesCount(post.dislikeCount)
-            apiRepo.dislikePost(profile.token!!, post.id).subscribe()
+            apiRepo.dislikePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    post.dislike()
+                    if (post.isLiked) {
+                        view.setLikeImage(!post.isLiked)
+                        view.setLikesCount(post.likeCount - 1)
+                    }
+                    view.setDislikesCount(post.dislikeCount)
+                    view.setDislikeImage(post.isDisliked)
+                }, {})
         }
     }
 
