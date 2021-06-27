@@ -1,8 +1,8 @@
 package ru.wintrade.mvp.presenter.trader
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
@@ -35,13 +35,24 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
         override fun bind(view: PostItemView) {
             val post = posts[view.pos]
-            view.setNewsDate(post.dateCreate)
-            view.setPost(post.text)
-            view.setImages(post.images)
-            view.setLikesCount(post.likeCount)
-            view.setLikeImage(post.isLiked)
-            view.setDislikesCount(post.dislikeCount)
-            view.setDislikeImage(post.isDisliked)
+            initView(view, post)
+        }
+
+        private fun initView(view: PostItemView, post: Post) {
+            with(view) {
+                setNewsDate(post.dateCreate)
+                setPost(post.text)
+                setImages(post.images)
+                setLikeImage(post.isLiked)
+                setDislikeImage(post.isDisliked)
+                setLikesCount(post.likeCount)
+                setDislikesCount(post.dislikeCount)
+                setKebabMenuVisibility(yoursPublication(post))
+            }
+        }
+
+        private fun yoursPublication(post: Post): Boolean {
+            return post.traderId == profile.user?.id
         }
 
         override fun postLiked(view: PostItemView) {

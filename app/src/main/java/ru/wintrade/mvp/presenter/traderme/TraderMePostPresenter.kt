@@ -39,13 +39,24 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun bind(view: PostItemView) {
             val post = post[view.pos]
-            view.setNewsDate(post.dateCreate)
-            view.setPost(post.text)
-            view.setImages(post.images)
-            view.setLikeImage(post.isLiked)
-            view.setDislikeImage(post.isDisliked)
-            view.setLikesCount(post.likeCount)
-            view.setDislikesCount(post.dislikeCount)
+            initView(view, post)
+        }
+
+        private fun initView(view: PostItemView, post: Post) {
+            with(view) {
+                setNewsDate(post.dateCreate)
+                setPost(post.text)
+                setImages(post.images)
+                setLikeImage(post.isLiked)
+                setDislikeImage(post.isDisliked)
+                setLikesCount(post.likeCount)
+                setDislikesCount(post.dislikeCount)
+                setKebabMenuVisibility(yoursPublication(post))
+            }
+        }
+
+        private fun yoursPublication(post: Post): Boolean {
+            return post.traderId == profile.user?.id
         }
 
         override fun postLiked(view: PostItemView) {

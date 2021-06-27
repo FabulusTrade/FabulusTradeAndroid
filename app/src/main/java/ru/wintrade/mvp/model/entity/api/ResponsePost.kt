@@ -6,6 +6,8 @@ data class ResponsePost(
     @Expose
     val id: Int,
     @Expose
+    val trader_id: String,
+    @Expose
     val text: String,
     @Expose
     val post_status: String,

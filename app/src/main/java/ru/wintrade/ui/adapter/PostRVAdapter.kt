@@ -3,6 +3,8 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
@@ -25,9 +27,33 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.itemView.btn_item_trader_news_like.setOnClickListener {
             presenter.postLiked(holder)
         }
-
         holder.itemView.btn_item_trader_news_dislike.setOnClickListener {
             presenter.postDisliked(holder)
+        }
+        holder.itemView.btn_item_trader_news_menu.setOnClickListener {
+            val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
+            menu.inflate(R.menu.publication_menu)
+            menu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.publication_share -> {
+                        Toast.makeText(holder.itemView.context, "Поделиться", Toast.LENGTH_SHORT)
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.publication_text_edit -> {
+                        Toast.makeText(holder.itemView.context, "Редактировать", Toast.LENGTH_SHORT)
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.publication_text_delete -> {
+                        Toast.makeText(holder.itemView.context, "Удалить", Toast.LENGTH_SHORT)
+                            .show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else -> return@setOnMenuItemClickListener false
+                }
+            }
+            menu.show()
         }
     }
 
@@ -74,6 +100,12 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             if (isDisliked)
                 itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike)
             else itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike_inactive)
+        }
+
+        override fun setKebabMenuVisibility(isVisible: Boolean) {
+            if (isVisible)
+                itemView.btn_item_trader_news_menu.visibility = View.VISIBLE
+            else itemView.btn_item_trader_news_menu.visibility = View.GONE
         }
     }
 }

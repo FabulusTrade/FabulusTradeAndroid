@@ -11,4 +11,5 @@ interface PostItemView {
     fun setImages(images: List<String>?)
     fun setLikeImage(isLiked: Boolean)
     fun setDislikeImage(isDisliked: Boolean)
+    fun setKebabMenuVisibility(isVisible: Boolean)
 }

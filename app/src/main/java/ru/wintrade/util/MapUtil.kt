@@ -67,6 +67,7 @@ fun mapToPost(post: ResponsePost?): Post? {
         val images = post.images.map { it.image }
         return Post(
             post.id,
+            post.trader_id,
             post.text,
             post.post_status,
             dateCreate,

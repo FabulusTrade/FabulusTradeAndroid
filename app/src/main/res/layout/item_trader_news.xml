@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:backgroundTint="@color/colorWhite"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_kebab" />
     </LinearLayout>
 
