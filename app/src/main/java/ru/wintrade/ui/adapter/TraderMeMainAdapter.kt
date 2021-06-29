@@ -7,15 +7,18 @@ import ru.wintrade.ui.fragment.traderme.*
 
 class TraderMeMainAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
-    private var fragmentList: MutableList<Fragment> = mutableListOf(
-        TraderMeProfitFragment.newInstance(),
-        TraderMePostFragment.newInstance(),
-        TraderPopularInstrumentsFragment.newInstance(),
-        TraderMeTradeFragment.newInstance(),
-        TraderMeObservationFragment.newInstance()
-    )
+    private val SIZE = 5
 
-    override fun getItemCount(): Int = fragmentList.size
+    override fun getItemCount(): Int = SIZE
 
-    override fun createFragment(position: Int): Fragment = fragmentList[position]
+    override fun createFragment(position: Int): Fragment {
+        return when(position) {
+            0 -> TraderMeProfitFragment.newInstance()
+            1 -> TraderMePostFragment.newInstance()
+            2 -> TraderPopularInstrumentsFragment.newInstance()
+            3 -> TraderMeTradeFragment.newInstance()
+            4 -> TraderMeObservationFragment.newInstance()
+            else -> throw IllegalStateException("Invalid position")
+        }
+    }
 }
