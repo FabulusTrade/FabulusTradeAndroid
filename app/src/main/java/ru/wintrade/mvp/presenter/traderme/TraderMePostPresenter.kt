@@ -1,8 +1,8 @@
 package ru.wintrade.mvp.presenter.traderme
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
@@ -39,25 +39,52 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun bind(view: PostItemView) {
             val post = post[view.pos]
-            view.setNewsDate(post.dateCreate)
-            view.setPost(post.text)
-            view.setImages(post.images)
-            view.setLikesCount(post.likeCount)
-            view.setDislikesCount(post.dislikeCount)
+            initView(view, post)
+        }
+
+        private fun initView(view: PostItemView, post: Post) {
+            with(view) {
+                setNewsDate(post.dateCreate)
+                setPost(post.text)
+                setImages(post.images)
+                setLikeImage(post.isLiked)
+                setDislikeImage(post.isDisliked)
+                setLikesCount(post.likeCount)
+                setDislikesCount(post.dislikeCount)
+                setKebabMenuVisibility(yoursPublication(post))
+            }
+        }
+
+        private fun yoursPublication(post: Post): Boolean {
+            return post.traderId == profile.user?.id
         }
 
         override fun postLiked(view: PostItemView) {
             val post = post[view.pos]
-            post.like()
-            view.setLikesCount(post.likeCount)
-            apiRepo.likePost(profile.token!!, post.id).subscribe()
+            apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    post.like()
+                    if (post.isDisliked) {
+                        view.setDislikeImage(!post.isDisliked)
+                        view.setDislikesCount(post.dislikeCount - 1)
+                    }
+                    view.setLikesCount(post.likeCount)
+                    view.setLikeImage(post.isLiked)
+                }, {})
         }
 
         override fun postDisliked(view: PostItemView) {
             val post = post[view.pos]
-            post.dislike()
-            view.setDislikesCount(post.dislikeCount)
-            apiRepo.dislikePost(profile.token!!, post.id).subscribe()
+            apiRepo.dislikePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    post.dislike()
+                    if (post.isLiked) {
+                        view.setLikeImage(!post.isLiked)
+                        view.setLikesCount(post.likeCount - 1)
+                    }
+                    view.setDislikesCount(post.dislikeCount)
+                    view.setDislikeImage(post.isDisliked)
+                }, {})
         }
     }
 

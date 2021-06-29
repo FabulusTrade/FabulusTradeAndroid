@@ -1,7 +1,6 @@
 package ru.wintrade.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +37,13 @@ class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: Stri
     ): View? = inflater.inflate(R.layout.fragment_create_post, container, false)
 
     override fun init() {
+        initListeners()
+    }
+
+    fun initListeners() {
         btn_create_post_publish.setOnClickListener {
             presenter.onPublishClicked(et_create_post.text.toString())
         }
-
         btn_create_post_load_file.setOnClickListener {
             presenter.onUploadFileClicked()
         }
@@ -53,7 +55,10 @@ class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: Stri
 
     override fun setHintText(isPinnedEdit: Boolean?) {
         when {
-            isPinnedEdit == null -> et_create_post.text?.insert(et_create_post.selectionEnd, pinnedText)
+            isPinnedEdit == null -> et_create_post.text?.insert(
+                et_create_post.selectionEnd,
+                pinnedText
+            )
             isPinnedEdit -> et_create_post.hint = "Расскажите о себе и своей успешной стратегии"
             !isPinnedEdit -> et_create_post.hint =
                 "Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"

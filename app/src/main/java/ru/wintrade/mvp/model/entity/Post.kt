@@ -7,6 +7,7 @@ import java.util.*
 @Parcelize
 data class Post(
     val id: Int,
+    val traderId: String,
     val text: String,
     val postStatus: String,
     val dateCreate: Date,
@@ -15,9 +16,9 @@ data class Post(
     val images: List<String>,
     var likeCount: Int,
     var dislikeCount: Int,
-    var isLiked: Boolean = false,
-    var isDisliked: Boolean = false
-): Parcelable {
+    var isLiked: Boolean,
+    var isDisliked: Boolean
+) : Parcelable {
     fun like() {
         if (isLiked)
             likeCount--
