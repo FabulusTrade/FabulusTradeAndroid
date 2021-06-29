@@ -9,4 +9,6 @@ import ru.wintrade.mvp.presenter.traderme.TraderMeTradePresenter
 interface TraderMeTradeView : MvpView {
     fun init()
     fun setBtnState(state: TraderMeTradePresenter.State)
+    fun updateTradesAdapter()
+    fun updateOrdersAdapter()
 }
