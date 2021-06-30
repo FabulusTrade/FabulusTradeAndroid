@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_trader_me_trade.*
 import kotlinx.android.synthetic.main.fragment_trader_trade.*
@@ -18,6 +19,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.traderme.TraderMeTradePresenter
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.adapter.TradesByCompanyRVAdapter
 
 class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     companion object {
@@ -32,6 +34,9 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
         App.instance.appComponent.inject(this)
     }
 
+    private var tradesAdapter: TradesByCompanyRVAdapter? = null
+    private var ordersAdapter: TradesByCompanyRVAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +45,7 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
 
     override fun init() {
         initListeners()
+        initRV()
     }
 
     fun initListeners() {
@@ -54,6 +60,15 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
         }
     }
 
+    fun initRV() {
+        tradesAdapter = TradesByCompanyRVAdapter(presenter.tradesListPresenter)
+        ordersAdapter = TradesByCompanyRVAdapter(presenter.ordersListPresenter)
+        rv_trader_me_trade_deals.adapter = tradesAdapter
+        rv_trader_me_trade_deals.layoutManager = LinearLayoutManager(context)
+        rv_trader_me_trade_orders.adapter = ordersAdapter
+        rv_trader_me_trade_orders.layoutManager = LinearLayoutManager(context)
+    }
+
     override fun setBtnState(state: TraderMeTradePresenter.State) {
         when (state) {
             TraderMeTradePresenter.State.MY_DEALS -> {
@@ -66,6 +81,14 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
                 myJournalStateInit()
             }
         }
+    }
+
+    override fun updateTradesAdapter() {
+        tradesAdapter?.notifyDataSetChanged()
+    }
+
+    override fun updateOrdersAdapter() {
+        ordersAdapter?.notifyDataSetChanged()
     }
 
     private fun myJournalStateInit() {
