@@ -17,4 +17,5 @@ interface TradeDetailView: MvpView {
     fun setSum(sum: String)
     fun setSumTitle(sumTitle: String)
     fun setDate(date: String)
+    fun setSubtype(type: String)
 }

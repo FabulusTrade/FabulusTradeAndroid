@@ -1,7 +1,6 @@
 package ru.wintrade.ui.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -138,13 +137,16 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IntentConstants.PICK_IMAGE)
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            IntentConstants.PICK_IMAGE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when(requestCode) {
+        when (requestCode) {
             IntentConstants.PICK_IMAGE -> handlePickImage(resultCode, data)
         }
     }

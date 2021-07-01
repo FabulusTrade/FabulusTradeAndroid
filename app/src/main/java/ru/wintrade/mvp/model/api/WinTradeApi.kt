@@ -88,6 +88,12 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrade>>
 
+    @GET("api/v1/trader/my_trade/")
+    fun getMyTrades(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseTrade>>
+
     @GET("api/v1/trader/posts/all/")
     fun getAllPosts(
         @Header("Authorization") token: String,

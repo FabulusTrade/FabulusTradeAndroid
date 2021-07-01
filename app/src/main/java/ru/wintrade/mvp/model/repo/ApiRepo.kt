@@ -8,10 +8,10 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
-import ru.wintrade.mvp.model.entity.Trade
-import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Subscription
+import ru.wintrade.mvp.model.entity.Trade
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
@@ -157,6 +157,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun getMyTrades(token: String, page: Int = 1): Single<Pagination<Trade>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.getMyTrades(token, page).flatMap {
+                    val trades = it.results.map { responseTrade ->
+                        mapToTrade(responseTrade)
+                    }
+                    Single.just(mapToPagination(it, trades))
+                }
+            } else Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun getAllPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
@@ -183,7 +195,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTraderPosts(token: String, traderId: String, page: Int = 1): Single<Pagination<Post>> =
+    fun getTraderPosts(
+        token: String,
+        traderId: String,
+        page: Int = 1
+    ): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
                 api.getTraderPosts(token, traderId, page).flatMap { respPag ->
@@ -211,7 +227,12 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun createPost(token: String, id: String, text: String, images: List<Pair<String?, ByteArray>>): Single<Post> =
+    fun createPost(
+        token: String,
+        id: String,
+        text: String,
+        images: List<Pair<String?, ByteArray>>
+    ): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val builder = MultipartBody.Builder()
@@ -221,7 +242,8 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     .addFormDataPart("pinned", "false")
 
                 images.forEachIndexed { index, pair ->
-                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), pair.second)
+                    val body =
+                        RequestBody.create(MediaType.parse("multipart/form-data"), pair.second)
                     builder.addFormDataPart("images[$index]", pair.first, body)
                 }
 
