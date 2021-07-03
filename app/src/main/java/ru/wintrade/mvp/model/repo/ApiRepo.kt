@@ -342,5 +342,4 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             else
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
-
 }

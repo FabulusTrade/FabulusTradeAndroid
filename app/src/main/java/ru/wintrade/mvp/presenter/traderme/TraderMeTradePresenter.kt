@@ -112,6 +112,7 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        viewState.setBtnState(State.MY_DEALS)
         apiRepo.getMyTrades(profile.token!!, nextPage!!).observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

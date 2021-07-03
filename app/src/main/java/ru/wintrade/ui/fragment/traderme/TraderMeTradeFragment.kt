@@ -33,8 +33,7 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
 
     private var tradesAdapter: TradesByCompanyRVAdapter? = null
     private var ordersAdapter: TradesByCompanyRVAdapter? = null
-    private var adapter: SubscriberTradesRVAdapter? = null
-
+    lateinit var adapter: SubscriberTradesRVAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
