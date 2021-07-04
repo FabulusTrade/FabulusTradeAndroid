@@ -51,7 +51,7 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
     }
 
     override fun setType(type: String) {
-        tv_trade_detail_type.text = type
+        tv_trade_detail_operation.text = type
     }
 
     override fun setCompany(company: String) {
@@ -86,4 +86,7 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
         tv_trade_detail_date.text = date
     }
 
+    override fun setSubtype(type: String) {
+        tv_trade_detail_type.text = type
+    }
 }

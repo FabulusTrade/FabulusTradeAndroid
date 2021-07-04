@@ -8,10 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_trader_me_trade.*
-import kotlinx.android.synthetic.main.fragment_trader_trade.*
-import kotlinx.android.synthetic.main.fragment_trader_trade.btn_trader_trade_deals
-import kotlinx.android.synthetic.main.fragment_trader_trade.btn_trader_trade_journal
-import kotlinx.android.synthetic.main.fragment_trader_trade.btn_trader_trade_orders
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -19,6 +15,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.traderme.TraderMeTradePresenter
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
 import ru.wintrade.ui.adapter.TradesByCompanyRVAdapter
 
 class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
@@ -36,7 +33,7 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
 
     private var tradesAdapter: TradesByCompanyRVAdapter? = null
     private var ordersAdapter: TradesByCompanyRVAdapter? = null
-
+    lateinit var adapter: SubscriberTradesRVAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,12 +58,15 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     }
 
     fun initRV() {
-        tradesAdapter = TradesByCompanyRVAdapter(presenter.tradesListPresenter)
-        ordersAdapter = TradesByCompanyRVAdapter(presenter.ordersListPresenter)
-        rv_trader_me_trade_deals.adapter = tradesAdapter
+//        tradesAdapter = TradesByCompanyRVAdapter(presenter.tradesListPresenter)
+//        ordersAdapter = TradesByCompanyRVAdapter(presenter.ordersListPresenter)
+//        rv_trader_me_trade_deals.adapter = tradesAdapter
+//        rv_trader_me_trade_deals.layoutManager = LinearLayoutManager(context)
+//        rv_trader_me_trade_orders.adapter = ordersAdapter
+//        rv_trader_me_trade_orders.layoutManager = LinearLayoutManager(context)
+        adapter = SubscriberTradesRVAdapter(presenter.listPresenter)
+        rv_trader_me_trade_deals.adapter = adapter
         rv_trader_me_trade_deals.layoutManager = LinearLayoutManager(context)
-        rv_trader_me_trade_orders.adapter = ordersAdapter
-        rv_trader_me_trade_orders.layoutManager = LinearLayoutManager(context)
     }
 
     override fun setBtnState(state: TraderMeTradePresenter.State) {
@@ -84,7 +84,8 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     }
 
     override fun updateTradesAdapter() {
-        tradesAdapter?.notifyDataSetChanged()
+//        tradesAdapter?.notifyDataSetChanged()
+        adapter?.notifyDataSetChanged()
     }
 
     override fun updateOrdersAdapter() {

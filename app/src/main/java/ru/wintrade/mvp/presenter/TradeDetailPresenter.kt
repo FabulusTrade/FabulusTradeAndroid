@@ -29,6 +29,7 @@ class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
         viewState.setCount(trade.count.toString())
         viewState.setSum((trade.value).toString())
         viewState.setSumTitle("Сумма, ${trade.currency}")
+        viewState.setSubtype(trade.subtype)
     }
 
     fun closeClicked() {

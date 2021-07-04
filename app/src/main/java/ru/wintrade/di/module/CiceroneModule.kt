@@ -16,11 +16,13 @@ class CiceroneModule {
         return Cicerone.create()
     }
 
+    @Singleton
     @Provides
     fun navigationHolder(cicerone: Cicerone<Router>): NavigatorHolder {
         return cicerone.getNavigatorHolder()
     }
 
+    @Singleton
     @Provides
     fun router(cicerone: Cicerone<Router>): Router {
         return cicerone.router

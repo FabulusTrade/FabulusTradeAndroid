@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter
 
+import android.os.Looper
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
@@ -33,17 +34,18 @@ class MainPresenter : MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-
-        if (profile.hasVisitedTutorial) {
-            if (profile.user != null) {
-                if (profile.user!!.isTrader)
-                    router.newRootScreen(Screens.TraderMeMainScreen())
-                else
-                    router.newRootScreen(Screens.SubscriberMainScreen())
+        android.os.Handler(Looper.myLooper()!!).postDelayed({
+            if (profile.hasVisitedTutorial) {
+                if (profile.user != null) {
+                    if (profile.user!!.isTrader)
+                        router.newRootScreen(Screens.TraderMeMainScreen())
+                    else
+                        router.newRootScreen(Screens.SubscriberMainScreen())
+                } else
+                    router.newRootScreen(Screens.TradersMainScreen())
             } else
-                router.newRootScreen(Screens.TradersMainScreen())
-        } else
-            router.newRootScreen(Screens.OnBoardScreen())
+                router.newRootScreen(Screens.OnBoardScreen())
+        }, 1)
     }
 
 
@@ -85,7 +87,9 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun exitClicked() {
-        profile.token?.let { apiRepo.logout(it).observeOn(AndroidSchedulers.mainThread()).subscribe() }
+        profile.token?.let {
+            apiRepo.logout(it).observeOn(AndroidSchedulers.mainThread()).subscribe()
+        }
         profile.deviceToken = null
         profile.token = null
         profile.user = null

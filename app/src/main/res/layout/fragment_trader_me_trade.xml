@@ -76,7 +76,8 @@
         android:id="@+id/rv_trader_me_trade_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="15dp"/>
+        android:paddingHorizontal="15dp"
+        tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_trader_me_trade_deals"
