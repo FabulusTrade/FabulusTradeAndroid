@@ -130,4 +130,5 @@
     <string name="hide">скрыть</string>
     <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в WinTrade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
     <string name="operation">Операция</string>
+    <string name="e_mail_quastion">E-mail для связи</string>
 </resources>
