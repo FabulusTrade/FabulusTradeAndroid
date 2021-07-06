@@ -2,7 +2,6 @@ package ru.wintrade.mvp.model.api
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -181,4 +180,9 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 
+    @POST("api/v1/feedback/send/")
+    fun sendQuestion(
+        @Header("Authorization") token: String,
+        @Body message: RequestQuestion
+    ): Completable
 }

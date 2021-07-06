@@ -18,7 +18,7 @@ data class ResponseTrade(
     @Expose
     val order_status: String,
     @Expose
-    val order_num: Long,
+    val order_num: String,
     @Expose
     val price: Float,
     @Expose

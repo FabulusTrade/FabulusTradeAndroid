@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
@@ -20,6 +19,7 @@ import ru.wintrade.mvp.presenter.entrance.SignInPresenter
 import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
 import ru.wintrade.util.PREFERENCE_NAME
+import ru.wintrade.util.showLongToast
 
 class SignInFragment : MvpAppCompatFragment(), SignInView {
     companion object {
@@ -76,6 +76,6 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     }
 
     override fun showToast(toast: String) {
-        Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
+        context?.showLongToast(toast)
     }
 }
