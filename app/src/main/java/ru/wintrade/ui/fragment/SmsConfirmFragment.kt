@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.jakewharton.rxbinding4.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_sms_confirm.*
-import kotlinx.android.synthetic.main.layout_title.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -15,9 +13,10 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SmsConfirmPresenter
 import ru.wintrade.mvp.view.SmsConfirmView
 import ru.wintrade.ui.App
+import ru.wintrade.util.showLongToast
 import java.util.concurrent.TimeUnit
 
-class SmsConfirmFragment: MvpAppCompatFragment(), SmsConfirmView {
+class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
 
     companion object {
         const val PHONE_KEY = "phone"
@@ -32,7 +31,7 @@ class SmsConfirmFragment: MvpAppCompatFragment(), SmsConfirmView {
     lateinit var presenter: SmsConfirmPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SmsConfirmPresenter(arguments!![PHONE_KEY] as String).apply {
+    fun providePresenter() = SmsConfirmPresenter(requireArguments()[PHONE_KEY] as String).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -62,6 +61,6 @@ class SmsConfirmFragment: MvpAppCompatFragment(), SmsConfirmView {
     }
 
     override fun showToast(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        context?.showLongToast(msg)
     }
 }

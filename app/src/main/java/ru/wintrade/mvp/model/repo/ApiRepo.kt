@@ -342,4 +342,12 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             else
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
+
+    fun sendQuestion(token: String, question: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline) {
+                val requestQuestion = RequestQuestion(question)
+                api.sendQuestion(token, requestQuestion)
+            } else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
 }
