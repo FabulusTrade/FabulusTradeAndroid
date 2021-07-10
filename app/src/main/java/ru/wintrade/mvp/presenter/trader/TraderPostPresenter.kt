@@ -82,6 +82,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                     view.setDislikeImage(post.isDisliked)
                 }, {})
         }
+
+        override fun postDelete(view: PostItemView) {
+            //nothing
+        }
     }
 
     override fun onFirstViewAttach() {

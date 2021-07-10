@@ -80,6 +80,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                     view.setDislikeImage(post.isDisliked)
                 }, {})
         }
+
+        override fun postDelete(view: PostItemView) {
+            //nothing
+        }
     }
 
     override fun onFirstViewAttach() {

@@ -322,6 +322,13 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun deletePost(token: String, postId: Int): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.deletePost(token, postId)
+            else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)

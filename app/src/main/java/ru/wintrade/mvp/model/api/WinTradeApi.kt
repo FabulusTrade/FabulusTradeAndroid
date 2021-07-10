@@ -174,6 +174,12 @@ interface WinTradeApi {
         @Path(value = "post_id", encoded = true) postId: Int
     ): Single<ResponseLikes>
 
+    @DELETE("api/v1/trader/post/{id}/")
+    fun deletePost(
+        @Header("Authorization") token: String,
+        @Path(value = "id", encoded = true) postId: Int
+    ): Completable
+
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,

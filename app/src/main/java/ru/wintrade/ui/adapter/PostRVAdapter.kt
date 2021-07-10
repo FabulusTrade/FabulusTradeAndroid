@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.util.showLongToast
 import java.util.*
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
@@ -36,18 +37,15 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             menu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.publication_share -> {
-                        Toast.makeText(holder.itemView.context, "Поделиться", Toast.LENGTH_SHORT)
-                            .show()
+                        holder.itemView.context?.showLongToast("Поделиться")
                         return@setOnMenuItemClickListener true
                     }
                     R.id.publication_text_edit -> {
-                        Toast.makeText(holder.itemView.context, "Редактировать", Toast.LENGTH_SHORT)
-                            .show()
+                        holder.itemView.context?.showLongToast("Редактировать")
                         return@setOnMenuItemClickListener true
                     }
                     R.id.publication_text_delete -> {
-                        Toast.makeText(holder.itemView.context, "Удалить", Toast.LENGTH_SHORT)
-                            .show()
+                        presenter.postDelete(holder)
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false

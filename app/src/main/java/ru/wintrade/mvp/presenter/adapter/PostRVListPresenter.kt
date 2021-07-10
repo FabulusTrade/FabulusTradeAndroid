@@ -7,4 +7,5 @@ interface PostRVListPresenter {
     fun bind(view: PostItemView)
     fun postLiked(view: PostItemView)
     fun postDisliked(view: PostItemView)
+    fun postDelete(view: PostItemView)
 }

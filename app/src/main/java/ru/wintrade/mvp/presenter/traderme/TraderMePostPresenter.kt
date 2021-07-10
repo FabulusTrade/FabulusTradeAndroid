@@ -86,6 +86,16 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     view.setDislikeImage(post.isDisliked)
                 }, {})
         }
+
+        override fun postDelete(view: PostItemView) {
+            val post = post[view.pos]
+            apiRepo.deletePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    listPresenter.post.clear()
+                    nextPage = 1
+                    loadPosts()
+                }, {})
+        }
     }
 
     override fun onFirstViewAttach() {
