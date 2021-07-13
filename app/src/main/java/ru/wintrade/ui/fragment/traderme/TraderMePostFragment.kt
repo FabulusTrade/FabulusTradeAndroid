@@ -45,6 +45,23 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     override fun init() {
+        initRecyclerView()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        layout_trader_news_title.setOnClickListener {
+            presenter.onCreatePostBtnClicked()
+        }
+        btn_trader_news_publication.setOnClickListener {
+            presenter.publicationsBtnClicked()
+        }
+        btn_trader_news_subscription.setOnClickListener {
+            presenter.subscriptionBtnClicked()
+        }
+    }
+
+    private fun initRecyclerView() {
         adapter = PostRVAdapter(presenter.listPresenter)
         rv_trader_me_post.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
@@ -59,22 +76,10 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             presenter.onScrollLimit()
                         }
-
                     }
                 }
             }
         )
-
-        layout_trader_news_title.setOnClickListener {
-            presenter.onCreatePostBtnClicked()
-        }
-
-        btn_trader_news_publication.setOnClickListener {
-            presenter.publicationsBtnClicked()
-        }
-        btn_trader_news_subscription.setOnClickListener {
-            presenter.subscriptionBtnClicked()
-        }
     }
 
     override fun setBtnsState(state: TraderMePostPresenter.State) {

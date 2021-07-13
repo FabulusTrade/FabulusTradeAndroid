@@ -14,19 +14,29 @@ import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 
-class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: String?) :
+class CreatePostFragment(
+    val postId: String? = null,
+    val isPublication: Boolean,
+    val isPinnedEdit: Boolean? = null,
+    val pinnedText: String?
+) :
     MvpAppCompatFragment(),
     CreatePostView {
     companion object {
-        fun newInstance(isPinnedEdit: Boolean?, pinnedText: String?) =
-            CreatePostFragment(isPinnedEdit, pinnedText)
+        fun newInstance(
+            postId: String?,
+            isPublication: Boolean,
+            isPinnedEdit: Boolean?,
+            pinnedText: String?
+        ) =
+            CreatePostFragment(postId, isPublication, isPinnedEdit, pinnedText)
     }
 
     @InjectPresenter
     lateinit var presenter: CreatePostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = CreatePostPresenter(isPinnedEdit).apply {
+    fun providePresenter() = CreatePostPresenter(isPublication, isPinnedEdit).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -42,7 +52,7 @@ class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: Stri
 
     fun initListeners() {
         btn_create_post_publish.setOnClickListener {
-            presenter.onPublishClicked(et_create_post.text.toString())
+            presenter.onPublishClicked(postId, et_create_post.text.toString())
         }
         btn_create_post_load_file.setOnClickListener {
             presenter.onUploadFileClicked()
@@ -55,7 +65,7 @@ class CreatePostFragment(val isPinnedEdit: Boolean? = null, val pinnedText: Stri
 
     override fun setHintText(isPinnedEdit: Boolean?) {
         when {
-            isPinnedEdit == null -> et_create_post.text?.insert(
+            isPublication || isPinnedEdit == null -> et_create_post.text?.insert(
                 et_create_post.selectionEnd,
                 pinnedText
             )

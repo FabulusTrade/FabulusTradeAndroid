@@ -25,6 +25,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        initListeners(holder)
+    }
+
+    private fun initListeners(holder: PostViewHolder) {
         holder.itemView.btn_item_trader_news_like.setOnClickListener {
             presenter.postLiked(holder)
         }
@@ -32,27 +36,31 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             presenter.postDisliked(holder)
         }
         holder.itemView.btn_item_trader_news_menu.setOnClickListener {
-            val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
-            menu.inflate(R.menu.publication_menu)
-            menu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.publication_share -> {
-                        holder.itemView.context?.showLongToast("Поделиться")
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.publication_text_edit -> {
-                        holder.itemView.context?.showLongToast("Редактировать")
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.publication_text_delete -> {
-                        presenter.postDelete(holder)
-                        return@setOnMenuItemClickListener true
-                    }
-                    else -> return@setOnMenuItemClickListener false
-                }
-            }
-            menu.show()
+            initMenu(holder)
         }
+    }
+
+    private fun initMenu(holder: PostViewHolder) {
+        val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
+        menu.inflate(R.menu.publication_menu)
+        menu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.publication_share -> {
+                    holder.itemView.context?.showLongToast("Поделиться")
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.publication_text_edit -> {
+                    presenter.postUpdate(holder)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.publication_text_delete -> {
+                    presenter.postDelete(holder)
+                    return@setOnMenuItemClickListener true
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
+        }
+        menu.show()
     }
 
     override fun getItemCount(): Int = presenter.getCount()

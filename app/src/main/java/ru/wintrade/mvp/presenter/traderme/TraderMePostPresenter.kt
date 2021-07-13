@@ -96,6 +96,11 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     loadPosts()
                 }, {})
         }
+
+        override fun postUpdate(view: PostItemView) {
+            val post = post[view.pos]
+            router.navigateTo(Screens.CreatePostScreen(post.id.toString(), true, false, post.text))
+        }
     }
 
     override fun onFirstViewAttach() {
@@ -114,7 +119,14 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onCreatePostBtnClicked() {
-        router.navigateTo(Screens.CreatePostScreen(false, null))
+        router.navigateTo(
+            Screens.CreatePostScreen(
+                postId = null,
+                isPublication = true,
+                isPinnedEdit = false,
+                pinnedText = null
+            )
+        )
     }
 
     fun publicationsBtnClicked() {

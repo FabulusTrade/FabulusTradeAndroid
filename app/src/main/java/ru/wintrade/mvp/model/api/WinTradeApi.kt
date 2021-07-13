@@ -152,6 +152,16 @@ interface WinTradeApi {
         @Field("text") text: String
     ): Completable
 
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/post/{id}/")
+    fun updatePublication(
+        @Header("Authorization") token: String,
+        @Path("id") postId: String,
+        @Field("trader_id") id: String,
+        @Field("text") text: String
+    ): Completable
+
+
     @GET("api/v1/trader/post/pinned/")
     fun readPinnedPost(
         @Header("Authorization") token: String,

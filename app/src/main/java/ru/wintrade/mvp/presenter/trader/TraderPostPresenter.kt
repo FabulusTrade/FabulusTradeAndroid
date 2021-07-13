@@ -86,6 +86,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         override fun postDelete(view: PostItemView) {
             //nothing
         }
+
+        override fun postUpdate(view: PostItemView) {
+            //nothing
+        }
     }
 
     override fun onFirstViewAttach() {
