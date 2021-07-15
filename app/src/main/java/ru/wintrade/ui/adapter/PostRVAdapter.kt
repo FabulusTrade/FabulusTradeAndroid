@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
@@ -16,6 +15,11 @@ import java.util.*
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
+    companion object {
+        const val MAX_LINES = 5000
+        const val MIN_LINES = 3
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostViewHolder(
         LayoutInflater.from(parent.context).inflate(
             R.layout.item_trader_news, parent, false
@@ -37,6 +41,9 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
         holder.itemView.btn_item_trader_news_menu.setOnClickListener {
             initMenu(holder)
+        }
+        holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
+            presenter.setPublicationTextMaxLines(holder)
         }
     }
 
@@ -68,6 +75,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view),
         PostItemView {
         override var pos: Int = -1
+        override var isOpen: Boolean = false
 
         override fun setNewsDate(date: Date) {
             itemView.tv_item_trader_news_date.text = date.toString()
@@ -112,6 +120,18 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             if (isVisible)
                 itemView.btn_item_trader_news_menu.visibility = View.VISIBLE
             else itemView.btn_item_trader_news_menu.visibility = View.GONE
+        }
+
+        override fun setPublicationItemTextMaxLines(isOpen: Boolean) {
+            if (isOpen) {
+                itemView.tv_item_trader_news_post.maxLines = MAX_LINES
+                itemView.btn_item_trader_news_show_text.text =
+                    itemView.context.resources.getText(R.string.hide)
+            } else {
+                itemView.tv_item_trader_news_post.maxLines = MIN_LINES
+                itemView.btn_item_trader_news_show_text.text =
+                    itemView.context.resources.getText(R.string.show)
+            }
         }
     }
 }

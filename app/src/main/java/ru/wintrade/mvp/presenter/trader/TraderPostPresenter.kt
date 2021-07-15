@@ -90,6 +90,11 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         override fun postUpdate(view: PostItemView) {
             //nothing
         }
+
+        override fun setPublicationTextMaxLines(view: PostItemView) {
+            view.isOpen = !view.isOpen
+            view.setPublicationItemTextMaxLines(view.isOpen)
+        }
     }
 
     override fun onFirstViewAttach() {

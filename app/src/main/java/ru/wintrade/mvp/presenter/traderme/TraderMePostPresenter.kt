@@ -101,6 +101,11 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             val post = post[view.pos]
             router.navigateTo(Screens.CreatePostScreen(post.id.toString(), true, false, post.text))
         }
+
+        override fun setPublicationTextMaxLines(view: PostItemView) {
+            view.isOpen = !view.isOpen
+            view.setPublicationItemTextMaxLines(view.isOpen)
+        }
     }
 
     override fun onFirstViewAttach() {

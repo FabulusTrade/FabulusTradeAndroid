@@ -4,6 +4,7 @@ import java.util.*
 
 interface PostItemView {
     var pos: Int
+    var isOpen: Boolean
     fun setNewsDate(date: Date)
     fun setPost(text: String)
     fun setLikesCount(likes: Int)
@@ -12,4 +13,5 @@ interface PostItemView {
     fun setLikeImage(isLiked: Boolean)
     fun setDislikeImage(isDisliked: Boolean)
     fun setKebabMenuVisibility(isVisible: Boolean)
+    fun setPublicationItemTextMaxLines(isOpen: Boolean)
 }
