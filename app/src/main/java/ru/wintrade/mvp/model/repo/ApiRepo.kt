@@ -282,6 +282,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun updatePublication(
+        token: String,
+        postId: String,
+        traderId: String,
+        text: String
+    ): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.updatePublication(token, postId, traderId, text)
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun deletePinnedPost(token: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
@@ -320,6 +333,13 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 }
             else
                 Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun deletePost(token: String, postId: Int): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.deletePost(token, postId)
+            else Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =

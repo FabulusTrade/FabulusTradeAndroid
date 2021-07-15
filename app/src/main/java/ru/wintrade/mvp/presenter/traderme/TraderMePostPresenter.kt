@@ -86,6 +86,26 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     view.setDislikeImage(post.isDisliked)
                 }, {})
         }
+
+        override fun postDelete(view: PostItemView) {
+            val post = post[view.pos]
+            apiRepo.deletePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    listPresenter.post.clear()
+                    nextPage = 1
+                    loadPosts()
+                }, {})
+        }
+
+        override fun postUpdate(view: PostItemView) {
+            val post = post[view.pos]
+            router.navigateTo(Screens.CreatePostScreen(post.id.toString(), true, null, post.text))
+        }
+
+        override fun setPublicationTextMaxLines(view: PostItemView) {
+            view.isOpen = !view.isOpen
+            view.setPublicationItemTextMaxLines(view.isOpen)
+        }
     }
 
     override fun onFirstViewAttach() {
@@ -104,7 +124,14 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onCreatePostBtnClicked() {
-        router.navigateTo(Screens.CreatePostScreen(false, null))
+        router.navigateTo(
+            Screens.CreatePostScreen(
+                postId = null,
+                isPublication = true,
+                isPinnedEdit = false,
+                pinnedText = null
+            )
+        )
     }
 
     fun publicationsBtnClicked() {

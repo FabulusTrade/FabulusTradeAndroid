@@ -77,7 +77,12 @@ object Screens {
 
     fun FriendInviteScreen() = FragmentScreen { FriendInviteFragment.newInstance() }
 
-    fun CreatePostScreen(isPinnedEdit: Boolean?, pinnedText: String?) = FragmentScreen {
-        CreatePostFragment.newInstance(isPinnedEdit, pinnedText)
+    fun CreatePostScreen(
+        postId: String?,
+        isPublication: Boolean,
+        isPinnedEdit: Boolean?,
+        pinnedText: String?
+    ) = FragmentScreen {
+        CreatePostFragment.newInstance(postId, isPublication, isPinnedEdit, pinnedText)
     }
 }

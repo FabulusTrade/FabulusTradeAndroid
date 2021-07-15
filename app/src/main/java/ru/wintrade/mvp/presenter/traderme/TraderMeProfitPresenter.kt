@@ -94,6 +94,6 @@ class TraderMeProfitPresenter() :
     }
 
     fun openCreatePostScreen(isPinned: Boolean?, pinnedText: String?) {
-        router.navigateTo(Screens.CreatePostScreen(isPinned, pinnedText))
+        router.navigateTo(Screens.CreatePostScreen(null, false, isPinned, pinnedText))
     }
 }
