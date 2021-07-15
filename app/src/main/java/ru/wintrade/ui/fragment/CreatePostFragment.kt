@@ -63,15 +63,16 @@ class CreatePostFragment(
         (activity as MainActivity).startActivityPickImages()
     }
 
-    override fun setHintText(isPinnedEdit: Boolean?) {
+    override fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?) {
         when {
-            isPublication || isPinnedEdit == null -> et_create_post.text?.insert(
+            isPinnedEdit == null -> et_create_post.text?.insert(
                 et_create_post.selectionEnd,
                 pinnedText
             )
-            isPinnedEdit -> et_create_post.hint = "Расскажите о себе и своей успешной стратегии"
-            !isPinnedEdit -> et_create_post.hint =
-                "Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"
+            isPinnedEdit -> et_create_post.hint =
+                resources.getString(R.string.publication_header_text)
+            isPublication || !isPinnedEdit -> et_create_post.hint =
+                resources.getString(R.string.create_post_hint)
         }
     }
 }

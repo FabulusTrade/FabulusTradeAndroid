@@ -6,6 +6,7 @@ import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
+import ru.wintrade.navigation.Screens
 import ru.wintrade.util.ImageHelper
 import ru.wintrade.util.RouterResultConstants
 import javax.inject.Inject
@@ -29,7 +30,7 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setHintText(isPinnedEdit)
+        viewState.setHintText(isPublication, isPinnedEdit)
     }
 
     fun onPublishClicked(postId: String?, text: String) {
