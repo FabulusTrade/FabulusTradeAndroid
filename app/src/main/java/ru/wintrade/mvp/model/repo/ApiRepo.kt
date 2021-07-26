@@ -1,11 +1,11 @@
 package ru.wintrade.mvp.model.repo
 
-import android.graphics.Bitmap
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Subscription
@@ -234,7 +234,22 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     ): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val body = RequestCreatePost(id, text, "Pub", false, image)
+                val builder = MultipartBody.Builder()
+                if (image == null) {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                } else {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                        .addPart(image)
+                }
+                val body: RequestBody = builder.build()
                 api.createPost(token, body).flatMap { response ->
                     Single.just(mapToPost(response)!!)
                 }
@@ -253,7 +268,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun updatePinnedPost(token: String, id: String, text: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val requestCreatePost = RequestCreatePost(id, text, pinned = true, image = null)
+                val requestCreatePost = RequestCreatePost(id, text, pinned = true)
                 api.updatePinnedPost(token, requestCreatePost).flatMap { response ->
                     Single.just(mapToPost(response)!!)
                 }

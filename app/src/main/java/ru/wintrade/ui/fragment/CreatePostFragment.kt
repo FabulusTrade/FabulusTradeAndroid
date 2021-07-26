@@ -16,6 +16,7 @@ import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
 import ru.wintrade.util.IntentConstants
 import ru.wintrade.util.createBitmapFromResult
+import ru.wintrade.util.showLongToast
 
 class CreatePostFragment(
     val postId: String? = null,
@@ -55,20 +56,15 @@ class CreatePostFragment(
 
     fun initListeners() {
         btn_create_post_publish.setOnClickListener {
-            presenter.onPublishClicked(postId, et_create_post.text.toString(),)
+            presenter.onPublishClicked(postId, et_create_post.text.toString())
         }
         btn_create_post_load_file.setOnClickListener {
             loadFileFromDevice()
         }
     }
 
-    override fun pickImages() {
-//        (activity as MainActivity).startActivityPickImages()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
             val imageBitmap = data.createBitmapFromResult(requireActivity())
             presenter.setImage(imageBitmap!!)
@@ -84,7 +80,6 @@ class CreatePostFragment(
         startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
     }
 
-
     override fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?) {
         when {
             isPinnedEdit == null -> et_create_post.text?.insert(
@@ -96,5 +91,9 @@ class CreatePostFragment(
             isPublication || !isPinnedEdit -> et_create_post.hint =
                 resources.getString(R.string.create_post_hint)
         }
+    }
+
+    override fun showToast(msg: String) {
+        context?.showLongToast(msg)
     }
 }

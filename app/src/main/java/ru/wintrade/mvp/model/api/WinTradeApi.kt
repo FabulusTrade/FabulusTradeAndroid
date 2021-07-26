@@ -2,7 +2,6 @@ package ru.wintrade.mvp.model.api
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -123,20 +122,10 @@ interface WinTradeApi {
         @Body email: RequestResetPass
     ): Completable
 
-//    @Multipart
-//    @POST("api/v1/trader/post/create/")
-//    fun createPost(
-//        @Header("Authorization") token: String,
-//        @Part("trader_id") trader_id: String,
-//        @Part("text") text: String,
-//        @Part("pinned") pinned: Boolean,
-//        @Part images: List<MultipartBody.Part>?
-//    ): Single<ResponsePost>
-
     @POST("api/v1/trader/post/create/")
     fun createPost(
         @Header("Authorization") token: String,
-        @Part body: RequestCreatePost
+        @Body body: RequestBody
     ): Single<ResponsePost>
 
     @PUT("api/v1/trader/post/pinned/")

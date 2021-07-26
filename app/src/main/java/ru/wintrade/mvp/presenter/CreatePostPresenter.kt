@@ -12,6 +12,8 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.util.ImageHelper
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?) :
@@ -28,9 +30,8 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
     @Inject
     lateinit var router: Router
 
-    var images = listOf<String>()
-
     var imageBitmap: MultipartBody.Part? = null
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -53,20 +54,13 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
         val stream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         val byteArray = stream.toByteArray()
-        val body = MultipartBody.Part.createFormData(
-            "photo",
-            "photo",
+        this.imageBitmap = MultipartBody.Part.createFormData(
+            "image[content]",
+            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date())}",
             byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
         )
-        this.imageBitmap = body
+        viewState.showToast("Изображение прикреплено")
     }
-
-//    fun onUploadFileClicked() {
-//        router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
-//            imageBitmap = (data as Bitmap)
-//        }
-//        viewState.pickImages()
-//    }
 
     private fun updatePublication(postId: String, text: String) {
         apiRepo.updatePublication(profile.token!!, postId, profile.user!!.id, text)
@@ -97,13 +91,5 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
                     it.printStackTrace()
                 }
             )
-    }
-
-    private fun getImagesPairs(): List<Pair<String?, ByteArray>> {
-        val imagesParts = mutableListOf<Pair<String?, ByteArray>>()
-        images.forEach {
-            imagesParts.add(imageHelper.getBytesAndFileNameByUri(it))
-        }
-        return imagesParts
     }
 }

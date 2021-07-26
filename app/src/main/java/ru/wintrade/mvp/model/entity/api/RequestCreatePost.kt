@@ -1,8 +1,6 @@
 package ru.wintrade.mvp.model.entity.api
 
-import android.graphics.Bitmap
 import com.google.gson.annotations.Expose
-import okhttp3.MultipartBody
 
 data class RequestCreatePost(
     @Expose
@@ -13,6 +11,4 @@ data class RequestCreatePost(
     val post_status: String = "Pub",
     @Expose
     val pinned: Boolean,
-    @Expose
-    val image: MultipartBody.Part?
 )
