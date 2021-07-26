@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
@@ -231,22 +230,25 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         id: String,
         text: String,
-        images: List<Pair<String?, ByteArray>>
+        image: MultipartBody.Part?
     ): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val builder = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("trader_id", id)
-                    .addFormDataPart("text", text)
-                    .addFormDataPart("pinned", "false")
-
-                images.forEachIndexed { index, pair ->
-                    val body =
-                        RequestBody.create(MediaType.parse("multipart/form-data"), pair.second)
-                    builder.addFormDataPart("images[$index]", pair.first, body)
+                if (image == null) {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                } else {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                        .addPart(image)
                 }
-
                 val body: RequestBody = builder.build()
                 api.createPost(token, body).flatMap { response ->
                     Single.just(mapToPost(response)!!)

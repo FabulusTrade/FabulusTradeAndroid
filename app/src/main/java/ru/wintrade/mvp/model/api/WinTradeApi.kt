@@ -122,16 +122,6 @@ interface WinTradeApi {
         @Body email: RequestResetPass
     ): Completable
 
-//    @Multipart
-//    @POST("api/v1/trader/post/create/")
-//    fun createPost(
-//        @Header("Authorization") token: String,
-//        @Part("trader_id") trader_id: String,
-//        @Part("text") text: String,
-//        @Part("pinned") pinned: Boolean,
-//        @Part images: List<MultipartBody.Part>?
-//    ): Single<ResponsePost>
-
     @POST("api/v1/trader/post/create/")
     fun createPost(
         @Header("Authorization") token: String,

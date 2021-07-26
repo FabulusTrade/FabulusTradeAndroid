@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
@@ -96,7 +96,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override fun setImages(images: List<String>?) {
             if (!images.isNullOrEmpty()) {
                 itemView.rv_item_trader_news_img.apply {
-                    this.layoutManager = GridLayoutManager(context, 2)
+                    this.layoutManager = LinearLayoutManager(context)
                     val adapter = TraderNewsImagesRVAdapter()
                     this.adapter = adapter
                     adapter.setData(images)

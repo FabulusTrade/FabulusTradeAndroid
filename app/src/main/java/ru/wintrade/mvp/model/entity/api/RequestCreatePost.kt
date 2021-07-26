@@ -10,5 +10,5 @@ data class RequestCreatePost(
     @Expose
     val post_status: String = "Pub",
     @Expose
-    val pinned: Boolean
+    val pinned: Boolean,
 )
