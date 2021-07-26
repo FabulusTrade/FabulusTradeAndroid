@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter
 
+import android.graphics.Bitmap
 import android.os.Looper
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -100,7 +101,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         )
     }
 
-    fun imagesPicked(images: List<String>) {
+    fun imagesPicked(images: Bitmap) {
         router.sendResult(RouterResultConstants.PICKED_IMAGES, images)
     }
 

@@ -1,12 +1,11 @@
 package ru.wintrade.mvp.model.repo
 
+import android.graphics.Bitmap
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Subscription
@@ -231,23 +230,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         id: String,
         text: String,
-        images: List<Pair<String?, ByteArray>>
+        image: MultipartBody.Part?
     ): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val builder = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("trader_id", id)
-                    .addFormDataPart("text", text)
-                    .addFormDataPart("pinned", "false")
-
-                images.forEachIndexed { index, pair ->
-                    val body =
-                        RequestBody.create(MediaType.parse("multipart/form-data"), pair.second)
-                    builder.addFormDataPart("images[$index]", pair.first, body)
-                }
-
-                val body: RequestBody = builder.build()
+                val body = RequestCreatePost(id, text, "Pub", false, image)
                 api.createPost(token, body).flatMap { response ->
                     Single.just(mapToPost(response)!!)
                 }
@@ -266,7 +253,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun updatePinnedPost(token: String, id: String, text: String): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                val requestCreatePost = RequestCreatePost(id, text, pinned = true)
+                val requestCreatePost = RequestCreatePost(id, text, pinned = true, image = null)
                 api.updatePinnedPost(token, requestCreatePost).flatMap { response ->
                     Single.just(mapToPost(response)!!)
                 }

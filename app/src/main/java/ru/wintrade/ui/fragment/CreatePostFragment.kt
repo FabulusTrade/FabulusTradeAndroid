@@ -1,5 +1,7 @@
 package ru.wintrade.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +14,8 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.CreatePostPresenter
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.activity.MainActivity
+import ru.wintrade.util.IntentConstants
+import ru.wintrade.util.createBitmapFromResult
 
 class CreatePostFragment(
     val postId: String? = null,
@@ -52,16 +55,35 @@ class CreatePostFragment(
 
     fun initListeners() {
         btn_create_post_publish.setOnClickListener {
-            presenter.onPublishClicked(postId, et_create_post.text.toString())
+            presenter.onPublishClicked(postId, et_create_post.text.toString(),)
         }
         btn_create_post_load_file.setOnClickListener {
-            presenter.onUploadFileClicked()
+            loadFileFromDevice()
         }
     }
 
     override fun pickImages() {
-        (activity as MainActivity).startActivityPickImages()
+//        (activity as MainActivity).startActivityPickImages()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            val imageBitmap = data.createBitmapFromResult(requireActivity())
+            presenter.setImage(imageBitmap!!)
+        }
+    }
+
+    fun loadFileFromDevice() {
+        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
+            this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
+            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
+        }
+        startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
+    }
+
 
     override fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?) {
         when {

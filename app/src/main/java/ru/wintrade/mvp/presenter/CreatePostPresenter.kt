@@ -1,14 +1,17 @@
 package ru.wintrade.mvp.presenter
 
+import android.graphics.Bitmap
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
-import ru.wintrade.navigation.Screens
 import ru.wintrade.util.ImageHelper
-import ru.wintrade.util.RouterResultConstants
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?) :
@@ -27,6 +30,7 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
 
     var images = listOf<String>()
 
+    var imageBitmap: MultipartBody.Part? = null
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -38,17 +42,31 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
             return
         when {
             isPublication && !postId.isNullOrEmpty() -> updatePublication(postId, text)
-            !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(text)
-            else -> createPost(text)
+            !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(
+                text
+            )
+            else -> createPost(text, imageBitmap)
         }
     }
 
-    fun onUploadFileClicked() {
-        router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
-            images = (data as List<String>)
-        }
-        viewState.pickImages()
+    fun setImage(imageBitmap: Bitmap) {
+        val stream = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+        val byteArray = stream.toByteArray()
+        val body = MultipartBody.Part.createFormData(
+            "photo",
+            "photo",
+            byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
+        )
+        this.imageBitmap = body
     }
+
+//    fun onUploadFileClicked() {
+//        router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
+//            imageBitmap = (data as Bitmap)
+//        }
+//        viewState.pickImages()
+//    }
 
     private fun updatePublication(postId: String, text: String) {
         apiRepo.updatePublication(profile.token!!, postId, profile.user!!.id, text)
@@ -69,8 +87,8 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
             )
     }
 
-    private fun createPost(text: String) {
-        apiRepo.createPost(profile.token!!, profile.user!!.id, text, getImagesPairs())
+    private fun createPost(text: String, imageBitmap: MultipartBody.Part?) {
+        apiRepo.createPost(profile.token!!, profile.user!!.id, text, imageBitmap)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()

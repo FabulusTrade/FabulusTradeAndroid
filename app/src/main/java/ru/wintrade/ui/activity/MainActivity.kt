@@ -1,6 +1,5 @@
 package ru.wintrade.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,7 +21,6 @@ import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
-import ru.wintrade.util.IntentConstants
 import ru.wintrade.util.loadImage
 import javax.inject.Inject
 
@@ -131,25 +129,29 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
-    fun startActivityPickImages() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Picture"),
-            IntentConstants.PICK_IMAGE
-        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            IntentConstants.PICK_IMAGE -> handlePickImage(resultCode, data)
-        }
-    }
+//
+//    fun startActivityPickImages() {
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+//        startActivityForResult(
+//            Intent.createChooser(intent, "Select Picture"),
+//            IntentConstants.PICK_IMAGE
+//        )
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        when (requestCode) {
+//            IntentConstants.PICK_IMAGE -> {
+//                val imageBitmap = data?.createBitmapFromResult(this)
+////                handlePickImage(resultCode, data)
+//                presenter.imagesPicked(imageBitmap)
+//            }
+//        }
+//    }
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
@@ -158,25 +160,25 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         }
         presenter.backClicked()
     }
-
-    private fun handlePickImage(resultCode: Int, data: Intent?) {
-        if (resultCode != RESULT_OK)
-            return
-
-        val imagesUri = mutableListOf<String>()
-
-        if (data?.data != null) {
-            imagesUri.add(data.data!!.toString())
-        }
-
-        if (data?.clipData != null) {
-            val clipData = data.clipData
-            for (i in 0 until clipData!!.itemCount) {
-                val uri = clipData.getItemAt(i).uri
-                imagesUri.add(uri.toString())
-            }
-        }
-
-        presenter.imagesPicked(imagesUri)
-    }
+//
+//    private fun handlePickImage(resultCode: Int, data: Intent?) {
+//        if (resultCode != RESULT_OK)
+//            return
+//
+//        val imagesUri = mutableListOf<String>()
+//
+//        if (data?.data != null) {
+//            imagesUri.add(data.data!!.toString())
+//        }
+//
+//        if (data?.clipData != null) {
+//            val clipData = data.clipData
+//            for (i in 0 until clipData!!.itemCount) {
+//                val uri = clipData.getItemAt(i).uri
+//                imagesUri.add(uri.toString())
+//            }
+//        }
+//
+//        presenter.imagesPicked(imagesUri)
+//    }
 }
