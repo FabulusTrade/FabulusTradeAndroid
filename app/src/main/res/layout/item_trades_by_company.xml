@@ -6,6 +6,7 @@
     android:padding="15dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_trades_by_company"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="4dp">
