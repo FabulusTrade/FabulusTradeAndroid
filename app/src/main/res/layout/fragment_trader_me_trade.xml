@@ -64,31 +64,27 @@
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_trader_me_trade_with_rv"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_trader_me_trade_journal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:paddingHorizontal="15dp"
-        android:visibility="gone">
+        android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_me_trade_journal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_trader_me_trade_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        tools:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_me_trade_orders"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_trader_me_trade_deals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trader_me_trade_deals"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_trader_me_trade_coming_soon"

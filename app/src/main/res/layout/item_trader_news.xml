@@ -36,15 +36,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:maxLines="3"
         android:paddingTop="8dp"
         android:text="@string/text" />
 
+
+    <Button
+        android:id="@+id/btn_item_trader_news_show_text"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="1dp"
+        android:text="@string/show"
+        android:textColor="@color/colorAccent"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_trader_news_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:foregroundGravity="center_horizontal"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

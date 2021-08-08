@@ -4,17 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.util.showLongToast
 import java.util.*
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
+    companion object {
+        const val MAX_LINES = 5000
+        const val MIN_LINES = 3
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostViewHolder(
         LayoutInflater.from(parent.context).inflate(
             R.layout.item_trader_news, parent, false
@@ -24,6 +29,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        initListeners(holder)
+    }
+
+    private fun initListeners(holder: PostViewHolder) {
         holder.itemView.btn_item_trader_news_like.setOnClickListener {
             presenter.postLiked(holder)
         }
@@ -31,30 +40,34 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             presenter.postDisliked(holder)
         }
         holder.itemView.btn_item_trader_news_menu.setOnClickListener {
-            val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
-            menu.inflate(R.menu.publication_menu)
-            menu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.publication_share -> {
-                        Toast.makeText(holder.itemView.context, "Поделиться", Toast.LENGTH_SHORT)
-                            .show()
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.publication_text_edit -> {
-                        Toast.makeText(holder.itemView.context, "Редактировать", Toast.LENGTH_SHORT)
-                            .show()
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.publication_text_delete -> {
-                        Toast.makeText(holder.itemView.context, "Удалить", Toast.LENGTH_SHORT)
-                            .show()
-                        return@setOnMenuItemClickListener true
-                    }
-                    else -> return@setOnMenuItemClickListener false
-                }
-            }
-            menu.show()
+            initMenu(holder)
         }
+        holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
+            presenter.setPublicationTextMaxLines(holder)
+        }
+    }
+
+    private fun initMenu(holder: PostViewHolder) {
+        val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
+        menu.inflate(R.menu.publication_menu)
+        menu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.publication_share -> {
+                    holder.itemView.context?.showLongToast("Поделиться")
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.publication_text_edit -> {
+                    presenter.postUpdate(holder)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.publication_text_delete -> {
+                    presenter.postDelete(holder)
+                    return@setOnMenuItemClickListener true
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
+        }
+        menu.show()
     }
 
     override fun getItemCount(): Int = presenter.getCount()
@@ -62,6 +75,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view),
         PostItemView {
         override var pos: Int = -1
+        override var isOpen: Boolean = false
 
         override fun setNewsDate(date: Date) {
             itemView.tv_item_trader_news_date.text = date.toString()
@@ -82,7 +96,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override fun setImages(images: List<String>?) {
             if (!images.isNullOrEmpty()) {
                 itemView.rv_item_trader_news_img.apply {
-                    this.layoutManager = GridLayoutManager(context, 2)
+                    this.layoutManager = LinearLayoutManager(context)
                     val adapter = TraderNewsImagesRVAdapter()
                     this.adapter = adapter
                     adapter.setData(images)
@@ -106,6 +120,18 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             if (isVisible)
                 itemView.btn_item_trader_news_menu.visibility = View.VISIBLE
             else itemView.btn_item_trader_news_menu.visibility = View.GONE
+        }
+
+        override fun setPublicationItemTextMaxLines(isOpen: Boolean) {
+            if (isOpen) {
+                itemView.tv_item_trader_news_post.maxLines = MAX_LINES
+                itemView.btn_item_trader_news_show_text.text =
+                    itemView.context.resources.getText(R.string.hide)
+            } else {
+                itemView.tv_item_trader_news_post.maxLines = MIN_LINES
+                itemView.btn_item_trader_news_show_text.text =
+                    itemView.context.resources.getText(R.string.show)
+            }
         }
     }
 }

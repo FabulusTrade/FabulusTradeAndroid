@@ -1,19 +1,23 @@
 package ru.wintrade.mvp.presenter
 
+import android.graphics.Bitmap
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.util.ImageHelper
-import ru.wintrade.util.RouterResultConstants
+import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
-class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostView>() {
+class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?) :
+    MvpPresenter<CreatePostView>() {
     @Inject
     lateinit var profile: Profile
 
@@ -26,28 +30,43 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
     @Inject
     lateinit var router: Router
 
-    var images = listOf<String>()
+    var imageBitmap: MultipartBody.Part? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setHintText(isPinnedEdit)
+        viewState.setHintText(isPublication, isPinnedEdit)
     }
 
-    fun onPublishClicked(text: String) {
+    fun onPublishClicked(postId: String?, text: String) {
         if (text.isEmpty())
             return
         when {
-            isPinnedEdit == null || isPinnedEdit -> updatePost(text)
-            else -> createPost(text)
+            isPublication && !postId.isNullOrEmpty() -> updatePublication(postId, text)
+            !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(
+                text
+            )
+            else -> createPost(text, imageBitmap)
         }
     }
 
-    fun onUploadFileClicked() {
-        router.setResultListener(RouterResultConstants.PICKED_IMAGES) { data ->
-            images = (data as List<String>)
-        }
-        viewState.pickImages()
+    fun setImage(imageBitmap: Bitmap) {
+        val stream = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+        val byteArray = stream.toByteArray()
+        this.imageBitmap = MultipartBody.Part.createFormData(
+            "image[content]",
+            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date())}",
+            byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
+        )
+        viewState.showToast("Изображение прикреплено")
+    }
+
+    private fun updatePublication(postId: String, text: String) {
+        apiRepo.updatePublication(profile.token!!, postId, profile.user!!.id, text)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                router.exit()
+            }, {})
     }
 
     private fun updatePost(text: String) {
@@ -62,8 +81,8 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
             )
     }
 
-    private fun createPost(text: String) {
-        apiRepo.createPost(profile.token!!, profile.user!!.id, text, getImagesPairs())
+    private fun createPost(text: String, imageBitmap: MultipartBody.Part?) {
+        apiRepo.createPost(profile.token!!, profile.user!!.id, text, imageBitmap)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     router.exit()
@@ -72,13 +91,5 @@ class CreatePostPresenter(val isPinnedEdit: Boolean?) : MvpPresenter<CreatePostV
                     it.printStackTrace()
                 }
             )
-    }
-
-    private fun getImagesPairs(): List<Pair<String?, ByteArray>> {
-        val imagesParts = mutableListOf<Pair<String?, ByteArray>>()
-        images.forEach {
-            imagesParts.add(imageHelper.getBytesAndFileNameByUri(it))
-        }
-        return imagesParts
     }
 }

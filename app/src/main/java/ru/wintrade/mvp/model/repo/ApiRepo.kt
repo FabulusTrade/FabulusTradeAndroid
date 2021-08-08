@@ -4,14 +4,13 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
-import ru.wintrade.mvp.model.entity.Trade
-import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Subscription
+import ru.wintrade.mvp.model.entity.Trade
+import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
@@ -157,6 +156,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun getMyTrades(token: String, page: Int = 1): Single<Pagination<Trade>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.getMyTrades(token, page).flatMap {
+                    val trades = it.results.map { responseTrade ->
+                        mapToTrade(responseTrade)
+                    }
+                    Single.just(mapToPagination(it, trades))
+                }
+            } else Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun getAllPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
@@ -183,7 +194,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTraderPosts(token: String, traderId: String, page: Int = 1): Single<Pagination<Post>> =
+    fun getTraderPosts(
+        token: String,
+        traderId: String,
+        page: Int = 1
+    ): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
                 api.getTraderPosts(token, traderId, page).flatMap { respPag ->
@@ -211,20 +226,29 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun createPost(token: String, id: String, text: String, images: List<Pair<String?, ByteArray>>): Single<Post> =
+    fun createPost(
+        token: String,
+        id: String,
+        text: String,
+        image: MultipartBody.Part?
+    ): Single<Post> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 val builder = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("trader_id", id)
-                    .addFormDataPart("text", text)
-                    .addFormDataPart("pinned", "false")
-
-                images.forEachIndexed { index, pair ->
-                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), pair.second)
-                    builder.addFormDataPart("images[$index]", pair.first, body)
+                if (image == null) {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                } else {
+                    builder
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("trader_id", id)
+                        .addFormDataPart("text", text)
+                        .addFormDataPart("pinned", "false")
+                        .addPart(image)
                 }
-
                 val body: RequestBody = builder.build()
                 api.createPost(token, body).flatMap { response ->
                     Single.just(mapToPost(response)!!)
@@ -256,6 +280,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
             if (isOnline)
                 api.updatePinnedPostPatch(token, traderId, text)
+            else
+                Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun updatePublication(
+        token: String,
+        postId: String,
+        traderId: String,
+        text: String
+    ): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.updatePublication(token, postId, traderId, text)
             else
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
@@ -300,6 +337,13 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun deletePost(token: String, postId: Int): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline)
+                api.deletePost(token, postId)
+            else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline)
@@ -321,4 +365,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun sendQuestion(token: String, question: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline) {
+                val requestQuestion = RequestQuestion(question)
+                api.sendQuestion(token, requestQuestion)
+            } else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
 }

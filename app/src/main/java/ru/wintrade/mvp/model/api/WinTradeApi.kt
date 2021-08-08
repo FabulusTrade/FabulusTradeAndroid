@@ -2,7 +2,6 @@ package ru.wintrade.mvp.model.api
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -88,6 +87,12 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrade>>
 
+    @GET("api/v1/trader/my_trade/")
+    fun getMyTrades(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseTrade>>
+
     @GET("api/v1/trader/posts/all/")
     fun getAllPosts(
         @Header("Authorization") token: String,
@@ -117,16 +122,6 @@ interface WinTradeApi {
         @Body email: RequestResetPass
     ): Completable
 
-//    @Multipart
-//    @POST("api/v1/trader/post/create/")
-//    fun createPost(
-//        @Header("Authorization") token: String,
-//        @Part("trader_id") trader_id: String,
-//        @Part("text") text: String,
-//        @Part("pinned") pinned: Boolean,
-//        @Part images: List<MultipartBody.Part>?
-//    ): Single<ResponsePost>
-
     @POST("api/v1/trader/post/create/")
     fun createPost(
         @Header("Authorization") token: String,
@@ -146,6 +141,16 @@ interface WinTradeApi {
         @Field("trader_id") id: String,
         @Field("text") text: String
     ): Completable
+
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/post/{id}/")
+    fun updatePublication(
+        @Header("Authorization") token: String,
+        @Path("id") postId: String,
+        @Field("trader_id") id: String,
+        @Field("text") text: String
+    ): Completable
+
 
     @GET("api/v1/trader/post/pinned/")
     fun readPinnedPost(
@@ -169,10 +174,21 @@ interface WinTradeApi {
         @Path(value = "post_id", encoded = true) postId: Int
     ): Single<ResponseLikes>
 
+    @DELETE("api/v1/trader/post/{id}/")
+    fun deletePost(
+        @Header("Authorization") token: String,
+        @Path(value = "id", encoded = true) postId: Int
+    ): Completable
+
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 
+    @POST("api/v1/feedback/send/")
+    fun sendQuestion(
+        @Header("Authorization") token: String,
+        @Body message: RequestQuestion
+    ): Completable
 }

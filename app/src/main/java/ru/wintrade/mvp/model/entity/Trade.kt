@@ -14,11 +14,12 @@ data class Trade(
     val companyImg: String,
     val ticker: String,
     val orderStatus: String,
-    val orderNum: Long?,
+    val orderNum: String,
     val price: Float,
     val count: Float,
     val currency: String,
     val date: Date,
     val profitCount: String?,
-    val value: String?
+    val value: String?,
+    val subtype: String
 ) : Parcelable
