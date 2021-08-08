@@ -45,7 +45,7 @@ object Screens {
     fun TraderPopularInstrumentsScreen() =
         FragmentScreen { TraderPopularInstrumentsFragment.newInstance() }
 
-    fun TraderDealScreen() = FragmentScreen { TraderTradeFragment.newInstance() }
+    fun TraderDealScreen(trader: Trader) = FragmentScreen { TraderTradeFragment.newInstance(trader) }
 
     fun TradersMainScreen() = FragmentScreen { TradersMainFragment.newInstance() }
 

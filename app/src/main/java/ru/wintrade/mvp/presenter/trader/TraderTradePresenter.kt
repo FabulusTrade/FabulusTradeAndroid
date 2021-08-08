@@ -1,18 +1,21 @@
 package ru.wintrade.mvp.presenter.trader
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.Trade
+import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TradesByCompany
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.ITraderTradesRVListPresenter
-import ru.wintrade.mvp.view.item.TraderTradeItemView
+import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
+import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.trader.TraderDealView
 import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
-class TraderTradePresenter : MvpPresenter<TraderDealView>() {
+class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() {
     @Inject
     lateinit var router: Router
 
@@ -21,6 +24,9 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
 
     @Inject
     lateinit var profile: Profile
+
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     enum class State {
         MY_DEALS, MY_ORDERS, MY_JOURNAL
@@ -36,6 +42,18 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
             viewState.isAuthorized(false)
         } else {
             viewState.isAuthorized(true)
+            loadTrades()
+        }
+    }
+
+    private fun loadTrades() {
+        profile.token?.let {
+            apiRepo.getTraderTradesAggregate(it, trader.id, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                    listPresenter.trades.addAll(pag.results)
+                    viewState.updateRecyclerView()
+                    nextPage = pag.next
+                }, {})
         }
     }
 
@@ -62,22 +80,37 @@ class TraderTradePresenter : MvpPresenter<TraderDealView>() {
         router.navigateTo(Screens.SignUpScreen())
     }
 
-    inner class TraderTradesRVListPresenter() : ITraderTradesRVListPresenter {
-        val trades = mutableListOf<Trade>()
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
+    inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
+        val trades = mutableListOf<TradesByCompany>()
+        private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         override fun getCount() = trades.size
 
-        override fun bind(view: TraderTradeItemView) {
+        override fun bind(view: TradesByCompanyItemView) {
             val trade = trades[view.pos]
 
-            view.setCompanyLastTradeDate("Последняя сделка: ${dateFormat.format(trade.date)}")
-            view.setCompanyName(trade.company)
-            view.setCompanyLogo(trade.companyImg)
+            view.setLastTradeTime("Последняя сделка: ${dateFormat.format(trade.lastTrade)}")
+            view.setCompanyName(trade.companyName)
+            view.setCompanyLogo(trade.companyLogo)
+            view.setTradesCount("Количество: ${trade.tradesCount}")
         }
+    }
 
-        override fun clicked(pos: Int) {
+    fun onScrollLimit() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            profile.token?.let {
+                apiRepo.getTraderTradesAggregate(it, trader.id, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                        listPresenter.trades.addAll(pag.results)
+                        viewState.updateRecyclerView()
+                        nextPage = pag.next
+                        isLoading = false
+                    }, {
+                        it.printStackTrace()
+                        isLoading = false
+                    })
+            }
         }
-
     }
 }

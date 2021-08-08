@@ -13,5 +13,5 @@ data class ResponseAggregatedTrade(
     @Expose
     val company_img: String,
     @Expose
-    val date_last: Date
+    val date_last: String
 )

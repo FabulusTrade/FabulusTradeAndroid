@@ -4,6 +4,7 @@ import ru.wintrade.mvp.model.entity.*
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
 import java.text.SimpleDateFormat
+import java.util.*
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.id,
@@ -27,7 +28,7 @@ fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
 )
 
 fun mapToTrade(trade: ResponseTrade): Trade {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val date = dateFormat.parse(trade.date)
     return Trade(
         trade.id,
@@ -62,7 +63,7 @@ fun <T, V> mapToPagination(
 
 fun mapToPost(post: ResponsePost?): Post? {
     post?.let {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val dateCreate = dateFormat.parse(post.date_create)
         val dateUpd = dateFormat.parse(post.date_update)
         val images = post.images.map { it.image }
@@ -81,4 +82,18 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.is_disliked
         )
     } ?: return null
+}
+
+fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompany? {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val lastTradeDate = dateFormat.parse(trade?.date_last)
+    return if (trade != null) {
+        TradesByCompany(
+            trade.id_company,
+            trade.company,
+            trade.company_img,
+            trade.count,
+            lastTradeDate
+        )
+    } else null
 }

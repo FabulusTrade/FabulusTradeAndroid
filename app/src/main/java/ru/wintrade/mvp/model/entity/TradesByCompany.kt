@@ -1,8 +1,11 @@
 package ru.wintrade.mvp.model.entity
 
+import java.util.*
+
 class TradesByCompany(
-    var name: String,
-    var logo: String,
-    var count: Int,
-    var lastTime: String
+    var companyId: Int,
+    var companyName: String,
+    var companyLogo: String,
+    var tradesCount: Int,
+    var lastTrade: Date?
 )

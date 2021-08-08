@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trades_by_company.view.*
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.TradesByCompany
 import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.util.loadImage
@@ -33,8 +34,8 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
             loadImage(image, iv_item_trades_by_company_logo)
         }
 
-        override fun setTradesCount(count: Int) = with(itemView) {
-            tv_item_trades_by_company_counter.text = count.toString()
+        override fun setTradesCount(count: String) = with(itemView) {
+            tv_item_trades_by_company_counter.text = count
         }
 
         override fun setCompanyName(name: String) = with(itemView) {
