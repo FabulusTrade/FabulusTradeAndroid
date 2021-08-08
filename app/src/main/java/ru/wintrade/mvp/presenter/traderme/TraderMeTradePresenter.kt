@@ -1,19 +1,16 @@
 package ru.wintrade.mvp.presenter.traderme
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.Trade
-import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TradesByCompany
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
-import ru.wintrade.mvp.view.item.SubscriberTradeItemView
+import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
+import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
-import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
@@ -26,33 +23,14 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     @Inject
     lateinit var profile: Profile
 
+    private var isLoading = false
+    private var nextPage: Int? = 1
+
     enum class State {
         MY_DEALS, MY_ORDERS, MY_JOURNAL
     }
 
     private var state = State.MY_DEALS
-
-//    val tradesListPresenter = TradesByCompanyRVListPresenter()
-//    val ordersListPresenter = TradesByCompanyRVListPresenter()
-//
-//    inner class TradesByCompanyRVListPresenter: ITradesByCompanyListPresenter {
-//        val tradesByCompany = mutableListOf<TradesByCompany>()
-//
-//        override fun getCount() = tradesByCompany.size
-//
-//        override fun bind(view: TradesByCompanyItemView) {
-//            val company = tradesByCompany[view.pos]
-//            view.setCompanyLogo(company.logo)
-//            view.setCompanyName(company.name)
-//            view.setLastTradeTime(company.lastTime)
-//            view.setTradesCount(company.count)
-//        }
-//    }
-//
-//    override fun onFirstViewAttach() {
-//        super.onFirstViewAttach()
-//        viewState.init()
-//    }
 
     fun myDealsBtnClicked() {
         state = State.MY_DEALS
@@ -69,43 +47,21 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
         viewState.setBtnState(state)
     }
 
+    val listPresenter = TraderTradesRVListPresenter()
 
-    private var nextPage: Int? = 1
-    val listPresenter = SubscriberTradesRVListPresenter()
-    val traders = mutableListOf<Trader>()
-
-    inner class SubscriberTradesRVListPresenter : ISubscriberTradesRVListPresenter {
-        val trades = mutableListOf<Trade>()
+    inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
+        val trades = mutableListOf<TradesByCompany>()
+        private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         override fun getCount() = trades.size
 
-        @SuppressLint("SimpleDateFormat")
-        override fun bind(view: SubscriberTradeItemView) {
+        override fun bind(view: TradesByCompanyItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
-            val date = dateFormat.format(trade.date)
-            trade.trader?.let { trader ->
-                trader.avatar?.let { avatar -> view.setAvatar(avatar) }
-                trader.username?.let { username -> view.setNickname(username) }
-            }
-            view.setCompany(trade.company)
-            view.setCount("Кол-во: ${trade.count}")
-            view.setDate("Дата: $date")
-            view.setType(trade.operationType)
-            view.setPrice("Цена: ${trade.price} ${trade.currency}")
-            view.setSum("Сумма: ${trade.value} ${trade.currency}")
-            trade.profitCount?.let {
-                if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit("${trade.profitCount} %", Color.GREEN)
-                } else {
-                    view.setProfit("${trade.profitCount} %", Color.RED)
-                }
-            } ?: view.setProfit("", Color.WHITE)
-        }
 
-        override fun clicked(pos: Int) {
-            val trade = trades[pos]
-            router.navigateTo(Screens.TradeDetailScreen(trade))
+            view.setLastTradeTime("Последняя сделка: ${dateFormat.format(trade.lastTrade)}")
+            view.setCompanyName(trade.companyName)
+            view.setCompanyLogo(trade.companyLogo)
+            view.setTradesCount("Количество: ${trade.tradesCount}")
         }
     }
 
@@ -113,14 +69,35 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
         super.onFirstViewAttach()
         viewState.init()
         viewState.setBtnState(State.MY_DEALS)
-        apiRepo.getMyTrades(profile.token!!, nextPage!!).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    listPresenter.trades.clear()
-                    listPresenter.trades.addAll(it.results)
+        loadTrades()
+    }
+
+    private fun loadTrades() {
+        profile.token?.let {
+            apiRepo.getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                    listPresenter.trades.addAll(pag.results)
                     viewState.updateTradesAdapter()
-                },
-                {}
-            )
+                    nextPage = pag.next
+                }, {})
+        }
+    }
+
+    fun onScrollLimit() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            profile.token?.let {
+                apiRepo.getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                        listPresenter.trades.addAll(pag.results)
+                        viewState.updateTradesAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    }, {
+                        it.printStackTrace()
+                        isLoading = false
+                    })
+            }
+        }
     }
 }
