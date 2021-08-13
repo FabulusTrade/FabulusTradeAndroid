@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trades_by_company.view.*
 import ru.wintrade.R
-import ru.wintrade.mvp.model.entity.TradesByCompany
 import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.util.loadImage
@@ -23,6 +22,9 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        holder.itemView.cv_item_trades_by_company.setOnClickListener {
+            presenter.onItemClick(holder)
+        }
     }
 
     override fun getItemCount() = presenter.getCount()
@@ -46,5 +48,4 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
             tv_item_trades_by_company_date.text = time
         }
     }
-
 }

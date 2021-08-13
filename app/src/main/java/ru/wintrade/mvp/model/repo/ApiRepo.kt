@@ -212,7 +212,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         traderId: String,
         page: Int = 1
-    ): Single<Pagination<TradesByCompany>> =
+    ): Single<Pagination<TradesByCompanyAggregated>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) api.getAggregatedTrades(token, traderId, page).flatMap { respPag ->
                 val trades = respPag.results.map {
@@ -220,6 +220,23 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 }
                 Single.just(mapToPagination(respPag, trades))
             } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getTraderTradesByCompany(
+        token: String,
+        traderId: String,
+        companyId: Int,
+        page: Int = 1
+    ): Single<Pagination<TradesSortedByCompany>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) api.getDealsByCompany(token, traderId, companyId, page)
+                .flatMap { respPag ->
+                    val trades = respPag.results.map {
+                        mapToTradeByCompany(it)!!
+                    }
+                    Single.just(mapToPagination(respPag, trades))
+                } else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 

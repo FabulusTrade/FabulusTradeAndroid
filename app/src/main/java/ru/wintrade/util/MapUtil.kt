@@ -84,11 +84,11 @@ fun mapToPost(post: ResponsePost?): Post? {
     } ?: return null
 }
 
-fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompany? {
+fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompanyAggregated? {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val lastTradeDate = dateFormat.parse(trade?.date_last)
     return if (trade != null) {
-        TradesByCompany(
+        TradesByCompanyAggregated(
             trade.id_company,
             trade.company,
             trade.company_img,
@@ -96,4 +96,19 @@ fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompany? {
             lastTradeDate
         )
     } else null
+}
+
+fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesSortedByCompany {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val tradeDate = dateFormat.parse(companyTrade.date)
+    return TradesSortedByCompany(
+        companyTrade.id,
+        companyTrade.operation_type,
+        companyTrade.company,
+        companyTrade.company_img,
+        tradeDate,
+        companyTrade.profit_count,
+        companyTrade.price,
+        companyTrade.currency
+    )
 }

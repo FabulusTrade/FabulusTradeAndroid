@@ -119,6 +119,14 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseAggregatedTrade>>
 
+    @GET("api/v1/trader/{trader_id}/by_company/{company_id}/")
+    fun getDealsByCompany(
+        @Header("Authorization") token: String,
+        @Path("trader_id") id: String,
+        @Path("company_id") companyId: Int,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseCompanyTradingOperations>>
+
     @POST("auth/users/")
     fun signUp(
         @Body signUpData: RequestSignUp

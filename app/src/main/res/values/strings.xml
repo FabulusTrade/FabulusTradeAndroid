@@ -139,4 +139,5 @@
     <string name="trades_count">Количество: 1</string>
     <string name="deals_date">Последняя сделка: 24.08.21 11:52</string>
     <string name="deals_fo_month">Количество сделок за месяц: 999</string>
+    <string name="label_base_profit">-0,33%</string>
 </resources>

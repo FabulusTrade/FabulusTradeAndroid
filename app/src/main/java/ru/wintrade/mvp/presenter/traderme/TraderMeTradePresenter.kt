@@ -4,11 +4,12 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.TradesByCompany
+import ru.wintrade.mvp.model.entity.TradesByCompanyAggregated
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
+import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -50,7 +51,7 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     val listPresenter = TraderTradesRVListPresenter()
 
     inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
-        val trades = mutableListOf<TradesByCompany>()
+        val trades = mutableListOf<TradesByCompanyAggregated>()
         private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         override fun getCount() = trades.size
@@ -61,7 +62,16 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
             view.setLastTradeTime("Последняя сделка: ${dateFormat.format(trade.lastTrade)}")
             view.setCompanyName(trade.companyName)
             view.setCompanyLogo(trade.companyLogo)
-            view.setTradesCount("Количество: ${trade.tradesCount}")
+            view.setTradesCount("Количество сделок: ${trade.tradesCount}")
+        }
+
+        override fun onItemClick(view: TradesByCompanyItemView) {
+            router.navigateTo(
+                Screens.CompanyTradingOperationsScreen(
+                    profile.user!!.id,
+                    trades[view.pos].companyId
+                )
+            )
         }
     }
 

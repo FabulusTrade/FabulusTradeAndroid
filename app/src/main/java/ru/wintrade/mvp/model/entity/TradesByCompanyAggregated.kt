@@ -2,7 +2,7 @@ package ru.wintrade.mvp.model.entity
 
 import java.util.*
 
-class TradesByCompany(
+class TradesByCompanyAggregated(
     var companyId: Int,
     var companyName: String,
     var companyLogo: String,

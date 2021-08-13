@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.TradesByCompany
+import ru.wintrade.mvp.model.entity.TradesByCompanyAggregated
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
@@ -81,7 +81,7 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
     }
 
     inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
-        val trades = mutableListOf<TradesByCompany>()
+        val trades = mutableListOf<TradesByCompanyAggregated>()
         private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         override fun getCount() = trades.size
@@ -92,7 +92,11 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
             view.setLastTradeTime("Последняя сделка: ${dateFormat.format(trade.lastTrade)}")
             view.setCompanyName(trade.companyName)
             view.setCompanyLogo(trade.companyLogo)
-            view.setTradesCount("Количество: ${trade.tradesCount}")
+            view.setTradesCount("Количество сделок: ${trade.tradesCount}")
+        }
+
+        override fun onItemClick(view: TradesByCompanyItemView) {
+            router.navigateTo(Screens.CompanyTradingOperationsScreen(trader.id, trades[view.pos].companyId))
         }
     }
 
