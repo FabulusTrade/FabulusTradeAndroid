@@ -51,10 +51,10 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradeById(token: String, traderId: Long, tradeId: Long): Single<Trade> =
+    fun getTradeById(token: String, tradeId: Long): Single<Trade> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradeById(token, traderId, tradeId).flatMap { response ->
+                api.getTradeById(token, tradeId).flatMap { response ->
                     Single.just(mapToTrade(response))
                 }
             } else

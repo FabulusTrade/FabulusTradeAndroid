@@ -9,6 +9,7 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
+import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -44,6 +45,15 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
                 view.setProfitCount(null)
             } else {
                 view.setProfitCount("${deals.profitCount}%")
+            }
+        }
+
+        override fun itemClicked(view: CompanyTradingOperationsItemView) {
+            profile.token?.let { token ->
+                apiRepo.getTradeById(token, dealsList[view.pos].id)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ trade ->
+                        router.navigateTo(Screens.TradeDetailScreen(trade))
+                    }, {})
             }
         }
     }

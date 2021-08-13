@@ -25,10 +25,9 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrade>>
 
-    @GET("api/v1/trader/{trader_id}/trade/{trade_id}/")
+    @GET("api/v1/trader/trade/{trade_id}/")
     fun getTradeById(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: Long,
         @Path(value = "trade_id", encoded = true) tradeId: Long
     ): Single<ResponseTrade>
 

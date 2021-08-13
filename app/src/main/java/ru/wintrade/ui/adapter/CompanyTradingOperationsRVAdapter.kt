@@ -23,6 +23,9 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        holder.itemView.layout_comp_trading_ops.setOnClickListener {
+            presenter.itemClicked(holder)
+        }
         when {
             holder.itemView.tv_item_comp_trading_ops_profit.text.isNullOrEmpty() -> {
                 holder.itemView.tv_item_comp_trading_ops_profit.background =
