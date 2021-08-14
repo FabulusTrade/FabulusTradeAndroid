@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:padding="5dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_trades_by_company"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="4dp">
+        android:layout_margin="10dp"
+        app:elevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,18 +64,25 @@
 
                 <TextView
                     android:id="@+id/tv_item_trades_by_company_counter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="1 сделка, "
+                    android:layout_weight="1"
+                    android:text="@string/trades_count"
                     android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_item_trades_by_company_date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="последняя сегодня в 11:52"
+                    android:text="@string/deals_date"
                     android:textColor="@color/colorGray" />
             </LinearLayout>
         </LinearLayout>

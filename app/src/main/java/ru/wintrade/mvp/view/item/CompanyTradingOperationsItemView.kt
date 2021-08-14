@@ -1,8 +1,10 @@
 package ru.wintrade.mvp.view.item
 
-import java.util.*
-
 interface CompanyTradingOperationsItemView {
     var pos: Int
-    fun setLastOperationDate(date: Date)
+    fun setOperationType(type: String)
+    fun setCompanyLogo(url: String)
+    fun setOperationDate(date: String)
+    fun setProfitCount(profit: String?)
+    fun setTradePrice(price: String)
 }

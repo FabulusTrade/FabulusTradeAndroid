@@ -7,10 +7,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
-import ru.wintrade.mvp.model.entity.Post
-import ru.wintrade.mvp.model.entity.Subscription
-import ru.wintrade.mvp.model.entity.Trade
-import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.*
 import ru.wintrade.mvp.model.entity.api.*
 import ru.wintrade.mvp.model.entity.common.Pagination
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
@@ -54,10 +51,10 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
-    fun getTradeById(token: String, traderId: Long, tradeId: Long): Single<Trade> =
+    fun getTradeById(token: String, tradeId: Long): Single<Trade> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTradeById(token, traderId, tradeId).flatMap { response ->
+                api.getTradeById(token, tradeId).flatMap { response ->
                     Single.just(mapToTrade(response))
                 }
             } else
@@ -208,6 +205,38 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Single.just(mapToPagination(respPag, posts))
                 }
             else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getTraderTradesAggregate(
+        token: String,
+        traderId: String,
+        page: Int = 1
+    ): Single<Pagination<TradesByCompanyAggregated>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) api.getAggregatedTrades(token, traderId, page).flatMap { respPag ->
+                val trades = respPag.results.map {
+                    mapToAggregatedTrade(it)!!
+                }
+                Single.just(mapToPagination(respPag, trades))
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getTraderTradesByCompany(
+        token: String,
+        traderId: String,
+        companyId: Int,
+        page: Int = 1
+    ): Single<Pagination<TradesSortedByCompany>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) api.getDealsByCompany(token, traderId, companyId, page)
+                .flatMap { respPag ->
+                    val trades = respPag.results.map {
+                        mapToTradeByCompany(it)!!
+                    }
+                    Single.just(mapToPagination(respPag, trades))
+                } else
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 

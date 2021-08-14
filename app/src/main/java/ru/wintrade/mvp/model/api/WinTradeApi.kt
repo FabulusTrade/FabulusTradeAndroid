@@ -25,10 +25,9 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrade>>
 
-    @GET("api/v1/trader/{trader_id}/trade/{trade_id}/")
+    @GET("api/v1/trader/trade/{trade_id}/")
     fun getTradeById(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: Long,
         @Path(value = "trade_id", encoded = true) tradeId: Long
     ): Single<ResponseTrade>
 
@@ -111,6 +110,21 @@ interface WinTradeApi {
         @Path("trader_id") id: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
+
+    @GET("api/v1/trader/{trader_id}/aggregated/")
+    fun getAggregatedTrades(
+        @Header("Authorization") token: String,
+        @Path("trader_id") id: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseAggregatedTrade>>
+
+    @GET("api/v1/trader/{trader_id}/by_company/{company_id}/")
+    fun getDealsByCompany(
+        @Header("Authorization") token: String,
+        @Path("trader_id") id: String,
+        @Path("company_id") companyId: Int,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseCompanyTradingOperations>>
 
     @POST("auth/users/")
     fun signUp(

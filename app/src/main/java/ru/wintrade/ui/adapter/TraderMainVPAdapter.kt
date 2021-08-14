@@ -16,7 +16,7 @@ class TraderMainVPAdapter(fragment: Fragment, trader: Trader) :
         TraderProfitFragment.newInstance(trader),
         TraderPostFragment.newInstance(trader),
         TraderPopularInstrumentsFragment.newInstance(),
-        TraderTradeFragment.newInstance()
+        TraderTradeFragment.newInstance(trader)
     )
 
     override fun getItemCount(): Int = fragmentList.size

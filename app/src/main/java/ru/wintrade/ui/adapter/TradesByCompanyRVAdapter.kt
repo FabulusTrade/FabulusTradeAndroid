@@ -22,6 +22,9 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        holder.itemView.cv_item_trades_by_company.setOnClickListener {
+            presenter.onItemClick(holder)
+        }
     }
 
     override fun getItemCount() = presenter.getCount()
@@ -33,8 +36,8 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
             loadImage(image, iv_item_trades_by_company_logo)
         }
 
-        override fun setTradesCount(count: Int) = with(itemView) {
-            tv_item_trades_by_company_counter.text = count.toString()
+        override fun setTradesCount(count: String) = with(itemView) {
+            tv_item_trades_by_company_counter.text = count
         }
 
         override fun setCompanyName(name: String) = with(itemView) {
@@ -45,5 +48,4 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
             tv_item_trades_by_company_date.text = time
         }
     }
-
 }

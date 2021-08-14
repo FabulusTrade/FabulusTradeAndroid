@@ -44,7 +44,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_logo)
+            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(Color.RED)
             .setContentTitle(title)
             .setContentText(body)

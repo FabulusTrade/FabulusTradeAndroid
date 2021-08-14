@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_comp_trading_ops"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="5dp"
     android:orientation="vertical"
-    android:paddingHorizontal="15dp">
+    android:paddingTop="5dp">
 
     <TextView
         android:id="@+id/tv_item_comp_trading_ops_date"
@@ -51,7 +54,7 @@
                     android:id="@+id/tv_item_comp_trading_ops_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="по 4$" />
+                    android:text="@string/price" />
             </LinearLayout>
         </LinearLayout>
 
@@ -62,7 +65,7 @@
             android:layout_gravity="end"
             android:background="@color/colorWhiteSmoke"
             android:paddingHorizontal="15dp"
-            android:text="-0,33%"
+            android:text="@string/label_base_profit"
             android:textColor="@color/colorRed" />
 
         <View
@@ -72,6 +75,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:background="?android:attr/listDivider" />
+            android:background="?android:attr/listDivider"
+            tools:ignore="InefficientWeight" />
     </LinearLayout>
 </LinearLayout>

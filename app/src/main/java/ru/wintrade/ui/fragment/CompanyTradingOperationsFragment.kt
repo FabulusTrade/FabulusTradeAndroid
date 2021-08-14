@@ -15,16 +15,18 @@ import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.CompanyTradingOperationsRVAdapter
 
-class CompanyTradingOperationsFragment : MvpAppCompatFragment(), CompanyTradingOperationsView {
+class CompanyTradingOperationsFragment(private val traderId: String, private val companyId: Int) :
+    MvpAppCompatFragment(), CompanyTradingOperationsView {
     companion object {
-        fun newInstance() = CompanyTradingOperationsFragment()
+        fun newInstance(traderId: String, companyId: Int) =
+            CompanyTradingOperationsFragment(traderId, companyId)
     }
 
     @InjectPresenter
     lateinit var presenter: CompanyTradingOperationsPresenter
 
     @ProvidePresenter
-    fun providePresenter() = CompanyTradingOperationsPresenter().apply {
+    fun providePresenter() = CompanyTradingOperationsPresenter(traderId, companyId).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -40,5 +42,13 @@ class CompanyTradingOperationsFragment : MvpAppCompatFragment(), CompanyTradingO
         adapter = CompanyTradingOperationsRVAdapter(presenter.listPresenter)
         rv_comp_trading_ops.adapter = adapter
         rv_comp_trading_ops.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun updateRecyclerView() {
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun setCompanyName(name: String?) {
+        tv_comp_trading_ops_name.text = name
     }
 }
