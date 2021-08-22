@@ -100,7 +100,13 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun onDrawerOpened() {
-        viewState.setupHeader(profile.user?.avatar, profile.user?.username)
+        profile.token?.let { token ->
+            apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                {
+                    viewState.setupHeader(it.avatar, it.username)
+                }, {}
+            )
+        }
     }
 
     fun openSearchScreen() {

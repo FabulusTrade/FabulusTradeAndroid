@@ -2,6 +2,7 @@ package ru.wintrade.mvp.model.api
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -165,6 +166,17 @@ interface WinTradeApi {
         @Field("text") text: String
     ): Completable
 
+    @POST("auth/avatar/")
+    @Multipart
+    fun changeAvatar(
+        @Header("Authorization") token: String,
+        @Part avatar: MultipartBody.Part
+    ): Completable
+
+    @DELETE("auth/avatar/")
+    fun deleteAvatar(
+        @Header("Authorization") token: String,
+    ): Completable
 
     @GET("api/v1/trader/post/pinned/")
     fun readPinnedPost(

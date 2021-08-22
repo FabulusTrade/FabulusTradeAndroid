@@ -71,7 +71,7 @@ class CreatePostFragment(
         }
     }
 
-    fun loadFileFromDevice() {
+    private fun loadFileFromDevice() {
         val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
         val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
             this.putExtra(Intent.EXTRA_INTENT, galleryIntent)

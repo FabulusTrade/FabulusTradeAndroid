@@ -67,7 +67,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        MenuInflater(this).inflate(R.menu.toolbar_blue_menu, menu)
+        MenuInflater(this).inflate(R.menu.menu_toolbar_blue, menu)
         return true
     }
 

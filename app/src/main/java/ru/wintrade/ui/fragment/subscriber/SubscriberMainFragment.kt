@@ -1,5 +1,7 @@
 package ru.wintrade.ui.fragment.subscriber
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,8 @@ import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberMainVPAdapter
+import ru.wintrade.util.IntentConstants
+import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.loadImage
 
 class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
@@ -41,10 +45,50 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     override fun init() {
         drawerSetMode()
         initViewPager()
+        initPopupMenu()
+    }
+
+    private fun initPopupMenu() {
+        val popupMenu =
+            context?.let { androidx.appcompat.widget.PopupMenu(it, iv_subscriber_main_ava) }
+        popupMenu?.inflate(R.menu.menu_avatar)
+        popupMenu?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.change_avatar -> {
+                    loadFileFromDevice()
+                    true
+                }
+                R.id.delete_avatar -> {
+                    presenter.deleteAvatar()
+                    true
+                }
+                else -> false
+            }
+        }
+        iv_subscriber_main_ava.setOnClickListener {
+            popupMenu?.show()
+        }
+    }
+
+    private fun loadFileFromDevice() {
+        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
+            this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
+            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
+        }
+        startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            val imageBitmap = data.createBitmapFromResult(requireActivity())
+            presenter.setImage(imageBitmap!!)
+        }
     }
 
     override fun setAvatar(ava: String?) {
-        ava?.let { loadImage(it, iv_subscriber_main_ava ) }
+        ava?.let { loadImage(it, iv_subscriber_main_ava) }
     }
 
     override fun setName(username: String) {

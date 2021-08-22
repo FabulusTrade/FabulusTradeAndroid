@@ -75,7 +75,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     private fun initPopupMenu() {
         val popupMenu =
             context?.let { androidx.appcompat.widget.PopupMenu(it, iv_attached_post_kebab) }
-        popupMenu?.inflate(R.menu.pinned_text_menu)
+        popupMenu?.inflate(R.menu.menu_pinned_text)
         popupMenu?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.pinned_text_edit -> {

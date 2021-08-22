@@ -20,7 +20,7 @@
         app:headerLayout="@layout/header_main_menu"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
-        app:menu="@menu/drawer_main_menu" />
+        app:menu="@menu/menu_drawer_main" />
 
     <include
         layout="@layout/app_bar_main"
