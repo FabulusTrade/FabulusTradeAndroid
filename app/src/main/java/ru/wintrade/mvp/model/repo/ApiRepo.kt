@@ -233,7 +233,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             if (isOnline) api.getDealsByCompany(token, traderId, companyId, page)
                 .flatMap { respPag ->
                     val trades = respPag.results.map {
-                        mapToTradeByCompany(it)!!
+                        mapToTradeByCompany(it)
                     }
                     Single.just(mapToPagination(respPag, trades))
                 } else
@@ -284,6 +284,20 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 }
             } else
                 Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun changeAvatar(token: String, body: MultipartBody.Part): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline) {
+                api.changeAvatar(token, body)
+            } else Completable.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun deleteAvatar(token: String): Completable =
+        networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
+            if (isOnline) {
+                api.deleteAvatar(token)
+            } else Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
     fun resetPassword(email: String): Completable =

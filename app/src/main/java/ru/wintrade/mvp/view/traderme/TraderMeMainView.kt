@@ -10,5 +10,5 @@ interface TraderMeMainView: MvpView {
     fun setProfit(profit: String, isPositive: Boolean)
     fun setUsername(username: String)
     fun setSubscriberCount(count: Int)
-    fun setAvatar(url: String)
+    fun setAvatar(url: String?)
 }

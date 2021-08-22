@@ -1,5 +1,7 @@
 package ru.wintrade.ui.fragment.traderme
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,9 +21,11 @@ import ru.wintrade.mvp.view.traderme.TraderMeMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMeMainAdapter
+import ru.wintrade.util.IntentConstants
+import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.loadImage
 
-class TraderMeMainFragment: MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
+class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
 
     companion object {
         fun newInstance() = TraderMeMainFragment()
@@ -44,6 +48,46 @@ class TraderMeMainFragment: MvpAppCompatFragment(), TraderMeMainView, BackButton
     override fun init() {
         drawerSetMode()
         initViewPager()
+        initPopupMenu()
+    }
+
+    private fun initPopupMenu() {
+        val popupMenu =
+            context?.let { androidx.appcompat.widget.PopupMenu(it, iv_trader_me_main_ava) }
+        popupMenu?.inflate(R.menu.menu_avatar)
+        popupMenu?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.change_avatar -> {
+                    loadFileFromDevice()
+                    true
+                }
+                R.id.delete_avatar -> {
+                    presenter.deleteAvatar()
+                    true
+                }
+                else -> false
+            }
+        }
+        iv_trader_me_main_ava.setOnClickListener {
+            popupMenu?.show()
+        }
+    }
+
+    private fun loadFileFromDevice() {
+        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
+            this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
+            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
+        }
+        startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            val imageBitmap = data.createBitmapFromResult(requireActivity())
+            presenter.setImage(imageBitmap!!)
+        }
     }
 
     private fun drawerSetMode() {
@@ -67,8 +111,8 @@ class TraderMeMainFragment: MvpAppCompatFragment(), TraderMeMainView, BackButton
         }.attach()
     }
 
-    override fun setAvatar(url: String) {
-        loadImage(url, iv_trader_me_main_ava)
+    override fun setAvatar(url: String?) {
+        url?.let { loadImage(it, iv_trader_me_main_ava) }
     }
 
     override fun setProfit(profit: String, isPositive: Boolean) {

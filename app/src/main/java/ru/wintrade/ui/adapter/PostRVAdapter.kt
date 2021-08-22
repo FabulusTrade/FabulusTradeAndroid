@@ -49,7 +49,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
     private fun initMenu(holder: PostViewHolder) {
         val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
-        menu.inflate(R.menu.publication_menu)
+        menu.inflate(R.menu.menu_publication)
         menu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.publication_share -> {
