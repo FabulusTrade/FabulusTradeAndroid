@@ -11,6 +11,7 @@
         android:layout_height="110dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
+        android:foreground="@drawable/bg_header_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:mipmap/sym_def_app_icon" />
