@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,23 +17,28 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 
-class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView {
+class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     companion object {
-        fun newInstance(trader: Trader) = TraderMainFragment(trader)
+        const val TRADER = "trader"
+        fun newInstance(trader: Trader) = TraderMainFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(TRADER, trader)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: TraderMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderMainPresenter(trader!!).apply {
+    fun providePresenter() = TraderMainPresenter(requireArguments().getParcelable(TRADER)!!).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -46,13 +50,27 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
 
     override fun init() {
         drawerSetMode()
-        initViewPager()
         btn_trader_stat_subscribe.setOnClickListener {
             presenter.subscribeToTraderBtnClicked()
         }
         cb_trader_stat_observe.setOnClickListener {
             presenter.observeBtnClicked()
         }
+    }
+
+    override fun initVP(traderStatistic: TraderStatistic, trader: Trader) {
+        vp_trader_stat.adapter = TraderMainVPAdapter(this, traderStatistic, trader)
+        TabLayoutMediator(
+            tab_layout_trader_stat,
+            vp_trader_stat
+        ) { tab, pos ->
+            when (pos) {
+                0 -> tab.setIcon(R.drawable.ic_trader_profit)
+                1 -> tab.setIcon(R.drawable.ic_trader_news)
+                2 -> tab.setIcon(R.drawable.ic_trader_instrument)
+                3 -> tab.setIcon(R.drawable.ic_trader_deal)
+            }
+        }.attach()
     }
 
     private fun drawerSetMode() {
@@ -111,20 +129,5 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
 
     override fun setAvatar(avatar: String) {
         loadImage(avatar, iv_trader_stat_ava)
-    }
-
-    private fun initViewPager() {
-        vp_trader_stat.adapter = TraderMainVPAdapter(this, trader!!)
-        TabLayoutMediator(
-            tab_layout_trader_stat,
-            vp_trader_stat
-        ) { tab, pos ->
-            when (pos) {
-                0 -> tab.setIcon(R.drawable.ic_trader_profit)
-                1 -> tab.setIcon(R.drawable.ic_trader_news)
-                2 -> tab.setIcon(R.drawable.ic_trader_instrument)
-                3 -> tab.setIcon(R.drawable.ic_trader_deal)
-            }
-        }.attach()
     }
 }

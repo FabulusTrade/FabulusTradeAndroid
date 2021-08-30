@@ -1,10 +1,12 @@
 package ru.wintrade.mvp.model.entity
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-interface AudienceData : Serializable {
-    val dateJoined: Date
-    val followersCount: Int
-    val observerCount: Int
-}
+@Parcelize
+data class AudienceData(
+    val dateJoined: Date,
+    val followersCount: Int?,
+    val observerCount: Int?,
+) : Parcelable

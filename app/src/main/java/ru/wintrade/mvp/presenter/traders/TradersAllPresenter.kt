@@ -1,15 +1,15 @@
 package ru.wintrade.mvp.presenter.traders
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
-import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.mvp.view.item.TradersAllItemView
+import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 

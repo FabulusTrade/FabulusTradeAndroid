@@ -6,11 +6,19 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.entity.MonthIndicator
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.view.trader.TraderProfitView
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
-class TraderProfitPresenter(val trader: Trader) : MvpPresenter<TraderProfitView>() {
+class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Trader) :
+    MvpPresenter<TraderProfitView>() {
+
+    companion object {
+        const val PROFITABILITY = "profitability"
+    }
 
     var isOpen = false
 
@@ -18,38 +26,154 @@ class TraderProfitPresenter(val trader: Trader) : MvpPresenter<TraderProfitView>
         super.onFirstViewAttach()
         viewState.init()
         viewState.setDateJoined(getTraderDateJoined())
-        viewState.setFollowersCount(trader.followersCount)
-        viewState.setTradesCount(trader.tradesCount)
+        traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
+        traderStatistic.amountDeals30?.let { viewState.setTradesCount(it) }
+            ?: viewState.setTradesCount(0)
         viewState.setPinnedTextVisible(isOpen)
         trader.pinnedPost?.let { viewState.setPinnedPostText(it.text) }
             ?: viewState.setPinnedPostText(null)
+        traderStatistic.termOfTransaction30?.let {
+            viewState.setAverageDealsTime(
+                DecimalFormat("0.0").format(
+                    traderStatistic.profitTrades30
+                )
+            )
+        }
+        setAverageDealsCountAndProfit()
+        clearProfitTable()
+        setProfitTable()
+    }
+
+    private fun setAverageDealsCountAndProfit() {
+        traderStatistic.profitTrades30?.let {
+            viewState.setAverageDealsPositiveCountAndProfit(
+                "${DecimalFormat("0.0").format(traderStatistic.profitTrades30)}(${
+                    DecimalFormat("0.0").format(
+                        traderStatistic.averageProfitTrades30
+                    )
+                }%)"
+            )
+        } ?: viewState.setAverageDealsNegativeCountAndProfit("0.0 ( 0.0%)")
+        traderStatistic.losingTrades30?.let {
+            viewState.setAverageDealsNegativeCountAndProfit(
+                "${DecimalFormat("0.0").format(traderStatistic.losingTrades30)}(${
+                    DecimalFormat("0.0").format(
+                        traderStatistic.averageLosingTrades30
+                    )
+                }%)"
+            )
+        } ?: viewState.setAverageDealsNegativeCountAndProfit("0.0 ( 0.0%)")
+    }
+
+    private fun clearProfitTable() {
+        viewState.setJanProfit("0.00%")
+        viewState.setFebProfit("0.00%")
+        viewState.setMarProfit("0.00%")
+        viewState.setAprProfit("0.00%")
+        viewState.setMayProfit("0.00%")
+        viewState.setJunProfit("0.00%")
+        viewState.setJulProfit("0.00%")
+        viewState.setAugProfit("0.00%")
+        viewState.setSepProfit("0.00%")
+        viewState.setOctProfit("0.00%")
+        viewState.setNovProfit("0.00%")
+        viewState.setDecProfit("0.00%")
+    }
+
+    private fun setProfitTable() {
+        traderStatistic.monthIndicators.forEach {
+            when (it.month) {
+                1 -> viewState.setJanProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                2 -> viewState.setFebProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                3 -> viewState.setMarProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                4 -> viewState.setAprProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                5 -> viewState.setMayProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                6 -> viewState.setJunProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                7 -> viewState.setJulProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                8 -> viewState.setAugProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                9 -> viewState.setSepProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                10 -> viewState.setOctProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                11 -> viewState.setNovProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                12 -> viewState.setDecProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+            }
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun getTraderDateJoined(): String {
         val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val outputDateFormat = SimpleDateFormat("dd.MM.yyyy")
-        val date = inputDateFormat.parse(trader.dateJoined)
-        return outputDateFormat.format(date!!)
+        return outputDateFormat.format(traderStatistic.audienceData[0].dateJoined)
     }
 
-    fun setupBarChart(): BarData {
-        val entries = listOf(
-            BarEntry(floatArrayOf(0f, 0f, 0f), 0),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 1),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 2),
-            BarEntry(floatArrayOf(0f, 0f, -1.4f), 3),
-            BarEntry(floatArrayOf(3.2f, 0f, 0f), 4),
-            BarEntry(floatArrayOf(5.1f, 0f, 0f), 5),
-            BarEntry(floatArrayOf(2.9f, 0f, 0f), 6)
-        )
-        val labels = listOf(
-            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
-        )
-        val barDataSet = BarDataSet(entries, "profitability")
+    fun setupBarChart(checkedYear: String): BarData {
+        val (entries, checkedYearList, labels) = createCollections()
+        setBarchartData(checkedYear, checkedYearList, entries)
+        val barDataSet = BarDataSet(entries, PROFITABILITY)
         barDataSet.colors =
             listOf(Color.GREEN, Color.BLACK, Color.RED)
         return BarData(labels, barDataSet)
+    }
+
+    private fun setBarchartData(
+        checkedYear: String,
+        checkedYearList: MutableList<MonthIndicator>,
+        entries: MutableList<BarEntry>
+    ) {
+        traderStatistic.monthIndicators.forEach {
+            if (it.year.toString() == checkedYear) {
+                checkedYearList.add(it)
+            }
+        }
+        checkedYearList.sortBy { it.month }
+        for (i in 0 until checkedYearList.size) {
+            if (checkedYearList[i].actualProfitMonth!! >= 0) {
+                entries.set(
+                    checkedYearList[i].month!!.minus(1),
+                    BarEntry(
+                        floatArrayOf(
+                            checkedYearList[i].actualProfitMonth!!.toFloat(),
+                            0f,
+                            0f
+                        ), checkedYearList[i].month!!.minus(1)
+                    )
+                )
+            } else {
+                entries.set(
+                    checkedYearList[i].month!!.minus(1),
+                    BarEntry(
+                        floatArrayOf(
+                            0f,
+                            0f,
+                            (DecimalFormat("0.00").format(checkedYearList[i].actualProfitMonth)
+                                .toFloat())
+                        ), checkedYearList[i].month!!.minus(1)
+                    )
+                )
+            }
+        }
+    }
+
+    private fun createCollections(): Triple<MutableList<BarEntry>, MutableList<MonthIndicator>, List<String>> {
+        val entries = mutableListOf(
+            BarEntry(floatArrayOf(0f, 0f, 0f), 0),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 1),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 2),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 3),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 4),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 5),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 6),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 7),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 8),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 9),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 10),
+            BarEntry(floatArrayOf(0f, 0f, 0f), 11)
+        )
+        val checkedYearList = mutableListOf<MonthIndicator>()
+        val labels = listOf(
+            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
+        )
+        return Triple(entries, checkedYearList, labels)
     }
 
     fun setPinnedTextMode() {

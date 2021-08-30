@@ -1,9 +1,11 @@
 package ru.wintrade.mvp.model.entity
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-interface MonthIndicator : Serializable {
-    val year: Int
-    val month: Int
-    val actualProfitMonth: Double
-}
+@Parcelize
+data class MonthIndicator(
+    val year: Int?,
+    val month: Int?,
+    val actualProfitMonth: Double?
+) : Parcelable

@@ -76,13 +76,13 @@
                 android:id="@+id/btn_trader_profit_year_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/colorLightGreen"
                 android:text="@string/year_2021"
                 android:textColor="@color/colorBlack"
                 app:cornerRadius="20dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_trader_profit_year_2"
+                app:layout_constraintStart_toStartOf="@+id/bar_chart_trader_profit"
                 app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_profitability_title" />
 
             <Button
@@ -90,12 +90,12 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:clickable="false"
                 android:text="@string/year_2022"
                 android:textColor="@color/colorGray"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_trader_profit_year_1"
+                app:layout_constraintEnd_toEndOf="@+id/bar_chart_trader_profit"
                 app:layout_constraintStart_toEndOf="@+id/btn_trader_profit_year_1"
                 app:layout_constraintTop_toTopOf="@+id/btn_trader_profit_year_1" />
 
@@ -450,7 +450,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="38dp"
-                android:text="@string/weekly_deals"
+                android:text="@string/deals_30"
                 app:layout_constraintBottom_toTopOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -470,6 +470,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:text="0"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_for_week_icon" />
@@ -495,11 +496,12 @@
                 app:srcCompat="@drawable/ic_profit" />
 
             <TextView
-                android:id="@+id/tv_trader_profit_deal_profit_value"
+                android:id="@+id/tv_trader_profit_deal_profit_positive_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="15 (4%) / 5 (-1%)"
+                android:text="0.0 (0.0%)"
+                android:textColor="@color/colorGreen"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_profit_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_profit_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_profit_icon" />
@@ -509,10 +511,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_deal_profit_value"
-                app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_deal_profit_value"
-                app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_deal_profit_value"
-                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_deal_profit_positive_value"
+                app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_deal_profit_negative_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_deal_profit_positive_value"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/ic_profit_info" />
 
             <TextView
@@ -523,7 +525,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/average_trade_duration"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_deal_profit_value" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_deal_profit_positive_value" />
 
             <ImageView
                 android:id="@+id/iv_trader_profit_deal_time_icon"
@@ -540,7 +542,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="4 дня"
+                android:text="0.0"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_time_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_time_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_time_icon" />
@@ -575,6 +577,25 @@
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_registration_date_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_registration_date_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_registration_date_icon" />
+
+            <TextView
+                android:id="@+id/tv_trader_profit_slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" / "
+                app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_deal_profit_positive_value"
+                app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_deal_profit_positive_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_deal_profit_positive_value" />
+
+            <TextView
+                android:id="@+id/tv_trader_profit_deal_profit_negative_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0 (0.0%)"
+                android:textColor="@color/colorRed"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_slash"
+                app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_slash"
+                app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_slash" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
