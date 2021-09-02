@@ -6,6 +6,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.data.BarChartData
 import ru.wintrade.mvp.model.entity.MonthIndicator
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
@@ -21,17 +22,20 @@ class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Tr
     }
 
     var isOpen = false
+    val entries = BarChartData.getBarChartEntries()
+    val labels = BarChartData.getBarChartLabels()
+    val checkedYearList = mutableListOf<MonthIndicator>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         viewState.setDateJoined(getTraderDateJoined())
-        traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
-        traderStatistic.amountDeals30?.let { viewState.setTradesCount(it) }
-            ?: viewState.setTradesCount(0)
         viewState.setPinnedTextVisible(isOpen)
         trader.pinnedPost?.let { viewState.setPinnedPostText(it.text) }
             ?: viewState.setPinnedPostText(null)
+        traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
+        traderStatistic.amountDeals30?.let { viewState.setTradesCount(it) }
+            ?: viewState.setTradesCount(0)
         traderStatistic.termOfTransaction30?.let {
             viewState.setAverageDealsTime(
                 DecimalFormat("0.0").format(
@@ -101,13 +105,11 @@ class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Tr
 
     @SuppressLint("SimpleDateFormat")
     private fun getTraderDateJoined(): String {
-        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val outputDateFormat = SimpleDateFormat("dd.MM.yyyy")
         return outputDateFormat.format(traderStatistic.audienceData[0].dateJoined)
     }
 
     fun setupBarChart(checkedYear: String): BarData {
-        val (entries, checkedYearList, labels) = createCollections()
         setBarchartData(checkedYear, checkedYearList, entries)
         val barDataSet = BarDataSet(entries, PROFITABILITY)
         barDataSet.colors =
@@ -145,35 +147,12 @@ class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Tr
                         floatArrayOf(
                             0f,
                             0f,
-                            (DecimalFormat("0.00").format(checkedYearList[i].actualProfitMonth)
-                                .toFloat())
+                            checkedYearList[i].actualProfitMonth!!.toFloat(),
                         ), checkedYearList[i].month!!.minus(1)
                     )
                 )
             }
         }
-    }
-
-    private fun createCollections(): Triple<MutableList<BarEntry>, MutableList<MonthIndicator>, List<String>> {
-        val entries = mutableListOf(
-            BarEntry(floatArrayOf(0f, 0f, 0f), 0),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 1),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 2),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 3),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 4),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 5),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 6),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 7),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 8),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 9),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 10),
-            BarEntry(floatArrayOf(0f, 0f, 0f), 11)
-        )
-        val checkedYearList = mutableListOf<MonthIndicator>()
-        val labels = listOf(
-            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
-        )
-        return Triple(entries, checkedYearList, labels)
     }
 
     fun setPinnedTextMode() {

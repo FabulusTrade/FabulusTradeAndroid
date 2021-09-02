@@ -38,7 +38,9 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     lateinit var presenter: TraderMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderMainPresenter(requireArguments().getParcelable(TRADER)!!).apply {
+    fun providePresenter() = TraderMainPresenter(
+        arguments?.get(TRADER) as Trader
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 

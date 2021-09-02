@@ -18,16 +18,23 @@ import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
 
-class TraderMeSubTradeFragment(val position: Int) : MvpAppCompatFragment(), TraderMeSubTradeView {
+class TraderMeSubTradeFragment : MvpAppCompatFragment(), TraderMeSubTradeView {
     companion object {
-        fun newInstance(position: Int) = TraderMeSubTradeFragment(position)
+        private const val POSITION = "position"
+        fun newInstance(position: Int) = TraderMeSubTradeFragment().apply {
+            arguments = Bundle().apply {
+                putInt(POSITION, position)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: TraderMeSubTradePresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderMeSubTradePresenter().apply {
+    fun providePresenter() = TraderMeSubTradePresenter(
+        arguments?.get(POSITION) as Int
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -39,7 +46,7 @@ class TraderMeSubTradeFragment(val position: Int) : MvpAppCompatFragment(), Trad
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_trader_me_subs_trade, container, false)
 
-    override fun init() {
+    override fun init(position: Int) {
         when (position) {
             1 -> presenter.dealsBtnClicked()
             2 -> presenter.ordersBtnClicked()

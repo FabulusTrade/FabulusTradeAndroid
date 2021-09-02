@@ -19,10 +19,10 @@ import ru.wintrade.ui.App
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     companion object {
-        const val MAX_LINES = 5000
-        const val MIN_LINES = 3
-        const val STATISTIC = "statistic"
-        const val TRADER = "trader"
+        private const val MAX_LINES = 5000
+        private const val MIN_LINES = 3
+        private const val STATISTIC = "statistic"
+        private const val TRADER = "trader"
         fun newInstance(traderStatistic: TraderStatistic, trader: Trader) =
             TraderProfitFragment().apply {
                 arguments = Bundle().apply {
@@ -38,8 +38,8 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     @ProvidePresenter
     fun providePresenter() =
         TraderProfitPresenter(
-            requireArguments()[STATISTIC] as TraderStatistic,
-            requireArguments()[TRADER] as Trader
+            arguments?.get(STATISTIC) as TraderStatistic,
+            arguments?.get(TRADER) as Trader
         ).apply {
             App.instance.appComponent.inject(this)
         }
@@ -111,12 +111,12 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         tv_trader_profit_deal_time_value.text = dealsTime
     }
 
-    override fun setAverageDealsPositiveCountAndProfit(profit: String) {
-        tv_trader_profit_deal_profit_positive_value.text = profit
+    override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
+        tv_trader_profit_deal_profit_positive_value.text = averageProfit
     }
 
-    override fun setAverageDealsNegativeCountAndProfit(profit: String) {
-        tv_trader_profit_deal_profit_negative_value.text = profit
+    override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
+        tv_trader_profit_deal_profit_negative_value.text = averageProfit
     }
 
     override fun setJanProfit(profit: String) {

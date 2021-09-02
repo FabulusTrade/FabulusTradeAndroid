@@ -12,7 +12,7 @@ import ru.wintrade.ui.fragment.trader.TraderTradeFragment
 class TraderMainVPAdapter(fragment: Fragment, traderStatistic: TraderStatistic, trader: Trader) :
     FragmentStateAdapter(fragment) {
 
-    private var fragmentList: MutableList<Fragment> = mutableListOf(
+    private val fragmentList: MutableList<Fragment> = mutableListOf(
         TraderProfitFragment.newInstance(traderStatistic, trader),
         TraderPostFragment.newInstance(trader),
         TraderPopularInstrumentsFragment.newInstance(),

@@ -10,6 +10,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.traderme.TraderMeProfitPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeProfitView
 import ru.wintrade.ui.App
@@ -17,16 +18,24 @@ import ru.wintrade.ui.App
 class TraderMeProfitFragment : MvpAppCompatFragment(),
     TraderMeProfitView {
     companion object {
-        fun newInstance() = TraderMeProfitFragment()
-        const val MAX_LINES = 5000
-        const val MIN_LINES = 3
+        private const val MAX_LINES = 5000
+        private const val MIN_LINES = 3
+        private const val STATISTIC = "statistic"
+        fun newInstance(traderStatistic: TraderStatistic) =
+            TraderMeProfitFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(STATISTIC, traderStatistic)
+                }
+            }
     }
 
     @InjectPresenter
     lateinit var presenter: TraderMeProfitPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderMeProfitPresenter().apply {
+    fun providePresenter() = TraderMeProfitPresenter(
+        arguments?.get(STATISTIC) as TraderStatistic
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -49,16 +58,13 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
 
     private fun initBarChart() {
         with(bar_chart_trader_me_profit) {
-            data = presenter.setupBarChart()
+            data = presenter.setupBarChart("2021")          //   <-btn text
             legend.isEnabled = false
             data.setDrawValues(false)
             animateY(3000)
             setDescription("")
             axisLeft.setDrawGridLines(false)
-            axisLeft.setDrawLabels(false)
             axisLeft.setDrawZeroLine(true)
-            xAxis.isEnabled = false
-            axisRight.isEnabled = false
         }
     }
 
@@ -105,7 +111,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
     }
 
     override fun setTradesCount(tradesCount: Int) {
-        tv_trader_me_profit_deal_for_week_count.text = tradesCount.toString()
+        tv_trader_me_profit_deal_for_month_count.text = tradesCount.toString()
     }
 
     override fun setPinnedPostText(text: String?) {
@@ -124,5 +130,65 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
             btn_attached_post_show.text = resources.getString(R.string.show)
             tv_attached_post_text.maxLines = MIN_LINES
         }
+    }
+
+    override fun setAverageDealsTime(dealsTime: String) {
+        tv_trader_me_profit_deal_time_value.text = dealsTime
+    }
+
+    override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
+        tv_trader_me_profit_deal_profit_positive_value.text = averageProfit
+    }
+
+    override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
+        tv_trader_me_profit_deal_profit_negative_value.text = averageProfit
+    }
+
+    override fun setJanProfit(profit: String) {
+        tv_trader_me_profit_jan_value.text = profit
+    }
+
+    override fun setFebProfit(profit: String) {
+        tv_trader_me_profit_feb_value.text = profit
+    }
+
+    override fun setMarProfit(profit: String) {
+        tv_trader_me_profit_mar_value.text = profit
+    }
+
+    override fun setAprProfit(profit: String) {
+        tv_trader_me_profit_apr_value.text = profit
+    }
+
+    override fun setMayProfit(profit: String) {
+        tv_trader_me_profit_may_value.text = profit
+    }
+
+    override fun setJunProfit(profit: String) {
+        tv_trader_me_profit_jun_value.text = profit
+    }
+
+    override fun setJulProfit(profit: String) {
+        tv_trader_me_profit_jul_value.text = profit
+    }
+
+    override fun setAugProfit(profit: String) {
+        tv_trader_me_profit_aug_value.text = profit
+    }
+
+    override fun setSepProfit(profit: String) {
+        tv_trader_me_profit_sep_value.text = profit
+    }
+
+    override fun setOctProfit(profit: String) {
+        tv_trader_me_profit_oct_value.text = profit
+    }
+
+    override fun setNovProfit(profit: String) {
+        tv_trader_me_profit_nov_value.text = profit
+    }
+
+    override fun setDecProfit(profit: String) {
+        tv_trader_me_profit_dec_value.text = profit
     }
 }

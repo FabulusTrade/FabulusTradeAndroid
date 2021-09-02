@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter.traderme
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -11,6 +12,7 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.traderme.TraderMeMainView
 import java.io.ByteArrayOutputStream
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -29,10 +31,32 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.setProfit("146%", true)
-        viewState.setSubscriberCount(profile.user!!.subscriptionsCount)
-        viewState.setUsername(profile.user!!.username)
-        profile.user!!.avatar?.let { viewState.setAvatar(it) }
+        loadTraderStatistic()
+        profile.user?.let {
+            viewState.setSubscriberCount(it.subscriptionsCount)
+            viewState.setUsername(it.username)
+            it.avatar?.let { viewState.setAvatar(it) }
+        }
+    }
+
+    private fun loadTraderStatistic() {
+        profile.token?.let { token ->
+            profile.user?.id?.let {
+                apiRepo.getTraderStatistic(token, it)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+                        val isPositiveProfit =
+                            traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
+                        traderStatistic.actualProfit365?.let {
+                            viewState.setProfit(
+                                "${DecimalFormat("#0.0").format(it)}%",
+                                isPositiveProfit
+                            )
+                        } ?: viewState.setProfit("0.0%", true)
+                        viewState.initVP(traderStatistic)
+                    }, {
+                    })
+            }
+        }
     }
 
     fun backClicked(): Boolean {
@@ -40,6 +64,7 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
         return true
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun setImage(image: Bitmap) {
         val stream = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 80, stream)
