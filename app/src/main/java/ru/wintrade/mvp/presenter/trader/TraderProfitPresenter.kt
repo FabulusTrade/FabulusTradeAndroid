@@ -39,7 +39,7 @@ class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Tr
         traderStatistic.termOfTransaction30?.let {
             viewState.setAverageDealsTime(
                 DecimalFormat("0.0").format(
-                    traderStatistic.profitTrades30
+                    traderStatistic.termOfTransaction30
                 )
             )
         }
