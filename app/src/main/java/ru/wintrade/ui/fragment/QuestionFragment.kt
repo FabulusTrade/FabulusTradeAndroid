@@ -15,6 +15,8 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.QuestionPresenter
 import ru.wintrade.mvp.view.QuestionView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 import ru.wintrade.util.showLongToast
 
 class QuestionFragment : MvpAppCompatFragment(), QuestionView {
@@ -37,7 +39,7 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     ): View? = inflater.inflate(R.layout.fragment_question, container, false)
 
     override fun init() {
-        drawerSetUnlockMode()
+        initView()
         initListeners()
     }
 
@@ -71,8 +73,8 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         }
     }
 
-    private fun drawerSetUnlockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 }

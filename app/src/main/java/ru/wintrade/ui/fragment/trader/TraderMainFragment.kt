@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_trader_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -21,8 +18,9 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 import ru.wintrade.util.loadImage
 
 class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView {
@@ -45,7 +43,7 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
     ): View? = inflater.inflate(R.layout.fragment_trader_main, container, false)
 
     override fun init() {
-        drawerSetMode()
+        initView()
         initViewPager()
         btn_trader_stat_subscribe.setOnClickListener {
             presenter.subscribeToTraderBtnClicked()
@@ -55,9 +53,9 @@ class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), T
         }
     }
 
-    private fun drawerSetMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 
     override fun setSubscribeBtnActive(isActive: Boolean) {

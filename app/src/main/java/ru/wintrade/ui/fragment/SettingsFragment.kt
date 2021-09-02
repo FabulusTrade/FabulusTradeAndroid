@@ -14,6 +14,8 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.SettingsPresenter
 import ru.wintrade.mvp.view.SettingsView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 
 class SettingsFragment : MvpAppCompatFragment(), SettingsView {
     companion object {
@@ -35,11 +37,11 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsView {
     ): View? = inflater.inflate(R.layout.fragment_settings, container, false)
 
     override fun init() {
-        drawerSetUnlockMode()
+        initView()
     }
 
-    private fun drawerSetUnlockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 }

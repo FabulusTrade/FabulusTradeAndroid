@@ -12,9 +12,10 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.FriendInvitePresenter
-import ru.wintrade.mvp.presenter.SettingsPresenter
 import ru.wintrade.mvp.view.FriendInviteView
 import ru.wintrade.ui.App
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 
 class FriendInviteFragment : MvpAppCompatFragment(), FriendInviteView {
     companion object {
@@ -36,11 +37,11 @@ class FriendInviteFragment : MvpAppCompatFragment(), FriendInviteView {
     ): View? = inflater.inflate(R.layout.fragment_friend_invite, container, false)
 
     override fun init() {
-        drawerSetUnlockMode()
+        initView()
     }
 
-    private fun drawerSetUnlockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 }

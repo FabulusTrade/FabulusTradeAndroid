@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_trader_me_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -21,6 +19,8 @@ import ru.wintrade.mvp.view.traderme.TraderMeMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMeMainAdapter
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 import ru.wintrade.util.IntentConstants
 import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.loadImage
@@ -46,7 +46,7 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     ): View? = inflater.inflate(R.layout.fragment_trader_me_main, container, false)
 
     override fun init() {
-        drawerSetMode()
+        initView()
         initViewPager()
         initPopupMenu()
     }
@@ -90,9 +90,9 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         }
     }
 
-    private fun drawerSetMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 
     private fun initViewPager() {

@@ -8,7 +8,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_traders_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -18,6 +17,8 @@ import ru.wintrade.mvp.view.traders.TradersMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TradersMainVPAdapter
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 
 class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonListener {
     companion object {
@@ -39,7 +40,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
 
     override fun init() {
-        drawerSetMode()
+        initView()
         vp_main_traders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
@@ -49,9 +50,9 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         }.attach()
     }
 
-    private fun drawerSetMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 
     override fun backClicked(): Boolean {

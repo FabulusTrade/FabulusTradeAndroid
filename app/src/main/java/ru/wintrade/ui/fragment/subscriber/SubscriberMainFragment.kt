@@ -18,6 +18,8 @@ import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberMainVPAdapter
+import ru.wintrade.ui.setDrawerLockMode
+import ru.wintrade.ui.setToolbarVisible
 import ru.wintrade.util.IntentConstants
 import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.loadImage
@@ -122,11 +124,8 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     }
 
     private fun drawerSetMode() {
-        val navElementsControl = requireActivity() as? NavElementsControl
-        navElementsControl?.let {
-            it.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            it.toolbarVisible()
-        }
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 
     override fun onDestroyView() {
