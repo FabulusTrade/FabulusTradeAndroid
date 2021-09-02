@@ -13,6 +13,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.entrance.OnBoardPresenter
+import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.mvp.view.entrance.OnBoardView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
@@ -40,8 +41,11 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     ): View? = inflater.inflate(R.layout.fragment_on_board, container, false)
 
     override fun init() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        requireActivity().toolbar_blue.visibility = View.GONE
+        val navElementsControl = requireActivity() as? NavElementsControl
+        navElementsControl?.let {
+            it.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            it.toolbarVisible(false)
+        }
         adapter = OnBoardVPAdapter(presenter.listPresenter)
         vp_on_board.adapter = adapter
     }

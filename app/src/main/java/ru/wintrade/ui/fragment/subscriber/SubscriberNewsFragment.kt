@@ -6,17 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_subscriber_news.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentSubscriberNewsBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
+    private var _binding: FragmentSubscriberNewsBinding? = null
+    private val binding: FragmentSubscriberNewsBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = SubscriberNewsFragment()
     }
@@ -29,13 +33,16 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: PostRVAdapter? = null
+    private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_subscriber_news, container, false)
+    ): View? {
+        _binding = FragmentSubscriberNewsBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun onResume() {
         super.onResume()
@@ -43,27 +50,35 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     override fun init() {
-        adapter = PostRVAdapter(presenter.listPresenter)
-        rv_subscriber_news.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_subscriber_news.layoutManager = layoutManager
-        rv_subscriber_news.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            presenter.onScrollLimit()
+        binding.rvSubscriberNews.run {
+            adapter = postRVAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val linearLayoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = linearLayoutManager.childCount
+                            val totalItemCount = linearLayoutManager.itemCount
+                            val pastVisiblesItems =
+                                linearLayoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+
+        }
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

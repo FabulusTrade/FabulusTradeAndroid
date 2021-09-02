@@ -8,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_subscriber_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentSubscriberMainBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
+import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberMainVPAdapter
@@ -24,6 +23,10 @@ import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.loadImage
 
 class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
+    private var _binding: FragmentSubscriberMainBinding? = null
+    private val binding: FragmentSubscriberMainBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = SubscriberMainFragment()
     }
@@ -40,7 +43,10 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_subscriber_main, container, false)
+    ): View? {
+        _binding = FragmentSubscriberMainBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         drawerSetMode()
@@ -50,9 +56,9 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
 
     private fun initPopupMenu() {
         val popupMenu =
-            context?.let { androidx.appcompat.widget.PopupMenu(it, iv_subscriber_main_ava) }
-        popupMenu?.inflate(R.menu.menu_avatar)
-        popupMenu?.setOnMenuItemClickListener {
+            androidx.appcompat.widget.PopupMenu(requireContext(), binding.ivSubscriberMainAva)
+        popupMenu.inflate(R.menu.menu_avatar)
+        popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.change_avatar -> {
                     loadFileFromDevice()
@@ -65,13 +71,14 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
                 else -> false
             }
         }
-        iv_subscriber_main_ava.setOnClickListener {
-            popupMenu?.show()
+        binding.ivSubscriberMainAva.setOnClickListener {
+            popupMenu.show()
         }
     }
 
     private fun loadFileFromDevice() {
-        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val galleryIntent =
+            Intent(Intent.ACTION_PICK).apply { this.type = getString(R.string.gallery_mask) }
         val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
             this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
             this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
@@ -88,31 +95,42 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     }
 
     override fun setAvatar(ava: String?) {
-        ava?.let { loadImage(it, iv_subscriber_main_ava) }
+        ava?.let { loadImage(it, binding.ivSubscriberMainAva) }
     }
 
     override fun setName(username: String) {
-        tv_subscriber_main_name.text = username
+        binding.tvSubscriberMainName.text = username
     }
 
     override fun setSubscriptionCount(count: Int) {
-        val text = "Подписки $count"
-        tv_subscriber_main_subscription.text = text
+        binding.tvSubscriberMainSubscription.text =
+            getString(R.string.subscription_count, count)
+
     }
 
     private fun initViewPager() {
-        vp_subscriber_main.adapter = SubscriberMainVPAdapter(this)
-        TabLayoutMediator(tab_layout_subscriber_main, vp_subscriber_main) { tab, pos ->
-            when (pos) {
-                0 -> tab.setIcon(R.drawable.visibility)
-                1 -> tab.setIcon(R.drawable.ic_trader_deal)
-                2 -> tab.setIcon(R.drawable.ic_trader_news)
-            }
-        }.attach()
+        with(binding) {
+            vpSubscriberMain.adapter = SubscriberMainVPAdapter(this@SubscriberMainFragment)
+            TabLayoutMediator(tabLayoutSubscriberMain, vpSubscriberMain) { tab, pos ->
+                when (pos) {
+                    0 -> tab.setIcon(R.drawable.visibility)
+                    1 -> tab.setIcon(R.drawable.ic_trader_deal)
+                    2 -> tab.setIcon(R.drawable.ic_trader_news)
+                }
+            }.attach()
+        }
     }
 
     private fun drawerSetMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+        val navElementsControl = requireActivity() as? NavElementsControl
+        navElementsControl?.let {
+            it.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            it.toolbarVisible()
+        }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

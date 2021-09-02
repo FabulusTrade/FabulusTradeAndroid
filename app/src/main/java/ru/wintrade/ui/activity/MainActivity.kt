@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.navigation.NavigationView
@@ -17,8 +20,10 @@ import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.ActivityMainBinding
 import ru.wintrade.mvp.presenter.MainPresenter
 import ru.wintrade.mvp.view.MainView
+import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.util.loadImage
@@ -26,7 +31,9 @@ import javax.inject.Inject
 
 
 class MainActivity : MvpAppCompatActivity(), MainView,
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, NavElementsControl {
+
+    private lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
@@ -41,9 +48,13 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         App.instance.appComponent.inject(this)
     }
 
+    private val toolbar: Toolbar by lazy { binding.appBarMain.mainToolbar.toolbarBlue }
+    private val drawerLayout: DrawerLayout by lazy { binding.drawerLayout }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         App.instance.appComponent.inject(this)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
@@ -136,5 +147,17 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 return
         }
         presenter.backClicked()
+    }
+
+    override fun setDrawerLockMode(driverLockMode: Int) {
+        drawerLayout.setDrawerLockMode(driverLockMode)
+    }
+
+    override fun toolbarVisible(visible: Boolean) {
+        if (visible) {
+            toolbar.visibility = View.VISIBLE
+        } else {
+            toolbar.visibility = View.GONE
+        }
     }
 }

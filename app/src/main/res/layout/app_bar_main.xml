@@ -15,7 +15,9 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <include layout="@layout/toolbar_blue" />
+            <include
+                android:id="@+id/main_toolbar"
+                layout="@layout/toolbar_blue" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
