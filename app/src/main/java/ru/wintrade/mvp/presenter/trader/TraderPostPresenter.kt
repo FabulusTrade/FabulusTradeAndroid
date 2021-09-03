@@ -13,7 +13,8 @@ import ru.wintrade.mvp.view.trader.TraderPostView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
+class TraderPostPresenter(val trader: Trader) :
+    MvpPresenter<TraderPostView>() {
 
     private var isLoading = false
     private var nextPage: Int? = 1

@@ -3,6 +3,7 @@ package ru.wintrade.navigation
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.OnBoardFragment
 import ru.wintrade.ui.fragment.entrance.ResetPasswordFragment
@@ -36,7 +37,8 @@ object Screens {
     fun TraderMeSubTradeScreen(position: Int) =
         FragmentScreen { TraderMeSubTradeFragment.newInstance(position) }
 
-    fun TraderProfitScreen() = FragmentScreen { TraderMeProfitFragment.newInstance() }
+    fun TraderProfitScreen(traderStatistic: TraderStatistic) =
+        FragmentScreen { TraderMeProfitFragment.newInstance(traderStatistic) }
 
     fun TraderMeMainScreen() = FragmentScreen { TraderMeMainFragment.newInstance() }
 

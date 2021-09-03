@@ -56,9 +56,9 @@
     <string name="november">Ноябрь</string>
     <string name="june">Июнь</string>
     <string name="december">Декабрь</string>
-    <string name="weekly_deals">Сделки за неделю</string>
-    <string name="average_profitability_of_the_deal">Средняя доходность сделки</string>
-    <string name="average_trade_duration">Средняя продолжительность сделки</string>
+    <string name="deals_30">Количество сделок за 30 дней:</string>
+    <string name="average_profitability_of_the_deal">Средняя доходность сделок за 30 дней:</string>
+    <string name="average_trade_duration">Средний срок сделки за 30 дней:</string>
     <string name="registration_date">Дата регистрации</string>
     <string name="attached_post_title">создать закрепленную запись</string>
     <string name="coming_soon">В разработке</string>
@@ -142,4 +142,23 @@
     <string name="label_base_profit">-0,33%</string>
     <string name="change_ava_title">Сменить аватар</string>
     <string name="delete_ava_title">Удалить аватар</string>
+    <string name="jan_profit">Янв</string>
+    <string name="feb_profit">Фев</string>
+    <string name="mar_profit">Мар</string>
+    <string name="apr_profit">Апр</string>
+    <string name="may_profit">Май</string>
+    <string name="jun_profit">Июн</string>
+    <string name="jul_profit">Июл</string>
+    <string name="aug_profit">Авг</string>
+    <string name="sep_profit">Сен</string>
+    <string name="oct_profit">Окт</string>
+    <string name="nov_profit">Ноя</string>
+    <string name="dec_profit">Дек</string>
+    <string name="zero_percent">0.0%</string>
+    <string name="zero">0</string>
+    <string name="slash">/</string>
+    <string name="zero_deals_profit">0.0(0.0%)</string>
+    <string name="followers_joining_statistic_sample">+30 (10%) за 7 дней</string>
+    <string name="dialog_info_text">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
+
 </resources>

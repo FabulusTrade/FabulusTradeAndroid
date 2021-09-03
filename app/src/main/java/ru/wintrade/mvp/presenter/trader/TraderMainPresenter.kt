@@ -1,13 +1,14 @@
 package ru.wintrade.mvp.presenter.trader
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.navigation.Screens
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
@@ -24,14 +25,31 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        loadTraderStatistic()
         setVisibility(true)
         viewState.setObserveActive(false)
         viewState.init()
         viewState.setUsername(trader.username!!)
-        val isPositiveProfit = trader.yearProfit?.substring(0, 1) != "-"
-        viewState.setProfit(trader.yearProfit!!, isPositiveProfit)
         trader.avatar?.let { viewState.setAvatar(it) }
         checkSubscription()
+    }
+
+    private fun loadTraderStatistic() {
+        profile.token?.let { token ->
+            apiRepo.getTraderStatistic(token, trader.id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+                    val isPositiveProfit =
+                        traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
+                    traderStatistic.actualProfit365?.let {
+                        viewState.setProfit(
+                            "${DecimalFormat("#0.0").format(it)}%",
+                            isPositiveProfit
+                        )
+                    } ?: viewState.setProfit("0.0%", true)
+                    viewState.initVP(traderStatistic, trader)
+                }, {
+                })
+        }
     }
 
     fun observeBtnClicked() {

@@ -16,6 +16,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.traderme.TraderMeMainPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeMainView
 import ru.wintrade.ui.App
@@ -47,7 +48,6 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
 
     override fun init() {
         drawerSetMode()
-        initViewPager()
         initPopupMenu()
     }
 
@@ -95,8 +95,12 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         requireActivity().toolbar_blue.visibility = View.VISIBLE
     }
 
-    private fun initViewPager() {
-        vp_trader_me_main.adapter = TraderMeMainAdapter(this)
+    override fun setAvatar(url: String?) {
+        url?.let { loadImage(it, iv_trader_me_main_ava) }
+    }
+
+    override fun initVP(traderStatistic: TraderStatistic) {
+        vp_trader_me_main.adapter = TraderMeMainAdapter(this, traderStatistic)
         TabLayoutMediator(
             tab_layout_trader_main_me,
             vp_trader_me_main
@@ -109,10 +113,6 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
                 4 -> tab.setIcon(R.drawable.ic_visibility)
             }
         }.attach()
-    }
-
-    override fun setAvatar(url: String?) {
-        url?.let { loadImage(it, iv_trader_me_main_ava) }
     }
 
     override fun setProfit(profit: String, isPositive: Boolean) {

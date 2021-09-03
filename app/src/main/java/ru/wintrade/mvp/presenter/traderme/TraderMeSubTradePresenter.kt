@@ -18,7 +18,7 @@ import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-class TraderMeSubTradePresenter : MvpPresenter<TraderMeSubTradeView>() {
+class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTradeView>() {
 
     @Inject
     lateinit var router: Router
@@ -86,7 +86,7 @@ class TraderMeSubTradePresenter : MvpPresenter<TraderMeSubTradeView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
+        viewState.init(position)
         apiRepo.mySubscriptions(profile.token!!).observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { subscriptions ->

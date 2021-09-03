@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_trader_me_trade.*
-import kotlinx.android.synthetic.main.fragment_trader_trade.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -17,7 +16,6 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.traderme.TraderMeTradePresenter
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
 import ru.wintrade.ui.adapter.TradesByCompanyRVAdapter
 
 class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {

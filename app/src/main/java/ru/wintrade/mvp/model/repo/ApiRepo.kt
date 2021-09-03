@@ -29,6 +29,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 Single.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 
+    fun getTraderStatistic(
+        token: String,
+        traderId: String
+    ): Single<TraderStatistic> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.getTraderStatistic(token, traderId).flatMap {
+                    val statistic = it.results[0]
+                    Single.just(mapToTraderStatistic(statistic))
+                }
+            } else Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
     fun getTraderById(token: String, traderId: Long): Single<Trader> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
