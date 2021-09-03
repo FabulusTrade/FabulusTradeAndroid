@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.drawerlayout.widget.DrawerLayout
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -18,6 +16,8 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.entrance.SignInPresenter
 import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 import ru.wintrade.util.PREFERENCE_NAME
 import ru.wintrade.util.showLongToast
 
@@ -41,7 +41,7 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
     ): View? = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
     override fun init() {
-        setDrawerLockMode()
+        initView()
         initListeners()
     }
 
@@ -62,9 +62,9 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         )
     }
 
-    private fun setDrawerLockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        requireActivity().toolbar_blue.visibility = View.GONE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        setToolbarVisible(false)
     }
 
     override fun setAccess(isAuthorized: Boolean) {

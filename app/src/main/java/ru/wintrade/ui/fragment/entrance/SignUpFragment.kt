@@ -10,9 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -20,10 +18,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.entrance.SignUpPresenter
 import ru.wintrade.mvp.view.entrance.SignUpView
 import ru.wintrade.ui.App
-import ru.wintrade.util.EmailValidation
-import ru.wintrade.util.NicknameValidation
-import ru.wintrade.util.PasswordValidation
-import ru.wintrade.util.PhoneValidation
+import ru.wintrade.util.*
 
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {
@@ -47,15 +42,15 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     ): View? = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
     override fun init() {
-        setDrawerLockMode()
+        initView()
         tv_sign_privacy.movementMethod = LinkMovementMethod.getInstance()
         tv_sign_rules.movementMethod = LinkMovementMethod.getInstance()
         initListeners()
     }
 
-    private fun setDrawerLockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        requireActivity().toolbar_blue.visibility = View.GONE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        setToolbarVisible(false)
     }
 
     override fun showRegulationsAcceptDialog() {

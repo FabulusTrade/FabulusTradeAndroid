@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.Toast
+import moxy.MvpAppCompatFragment
+import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
 
 fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) {
@@ -24,4 +26,14 @@ fun Intent.createBitmapFromResult(activity: Activity): Bitmap? {
         intentUri.let { bitmap = BitmapUtils.decodeBitmap(intentUri, activity) }
     }
     return bitmap
+}
+
+fun MvpAppCompatFragment.setDrawerLockMode(lockMode: Int) {
+    val navElementsControl = this.requireActivity() as? NavElementsControl
+    navElementsControl?.setDrawerLockMode(lockMode)
+}
+
+fun MvpAppCompatFragment.setToolbarVisible(visible: Boolean = true) {
+    val navElementsControl = this.requireActivity() as? NavElementsControl
+    navElementsControl?.toolbarVisible(visible)
 }

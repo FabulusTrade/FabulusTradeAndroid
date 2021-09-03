@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.FriendInvitePresenter
-import ru.wintrade.mvp.presenter.SettingsPresenter
 import ru.wintrade.mvp.view.FriendInviteView
 import ru.wintrade.ui.App
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 
 class FriendInviteFragment : MvpAppCompatFragment(), FriendInviteView {
     companion object {
@@ -36,11 +35,11 @@ class FriendInviteFragment : MvpAppCompatFragment(), FriendInviteView {
     ): View? = inflater.inflate(R.layout.fragment_friend_invite, container, false)
 
     override fun init() {
-        drawerSetUnlockMode()
+        initView()
     }
 
-    private fun drawerSetUnlockMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
     }
 }

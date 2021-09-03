@@ -9,9 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_trader_main.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -23,6 +21,8 @@ import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     companion object {
@@ -51,7 +51,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     ): View? = inflater.inflate(R.layout.fragment_trader_main, container, false)
 
     override fun init() {
-        drawerSetMode()
+        initView()
+        initViewPager()
         btn_trader_stat_subscribe.setOnClickListener {
             presenter.subscribeToTraderBtnClicked()
         }
@@ -59,6 +60,10 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
             presenter.observeBtnClicked()
         }
     }
+
+
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
     override fun initVP(traderStatistic: TraderStatistic, trader: Trader) {
         vp_trader_stat.adapter = TraderMainVPAdapter(this, traderStatistic, trader)
@@ -73,11 +78,6 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
                 3 -> tab.setIcon(R.drawable.ic_trader_deal)
             }
         }.attach()
-    }
-
-    private fun drawerSetMode() {
-        requireActivity().drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        requireActivity().toolbar_blue.visibility = View.VISIBLE
     }
 
     override fun setSubscribeBtnActive(isActive: Boolean) {

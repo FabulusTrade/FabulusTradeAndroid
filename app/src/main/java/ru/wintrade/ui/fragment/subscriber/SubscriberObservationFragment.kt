@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_subscriber_observation.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentSubscriberObservationBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.ObservationRVAdapter
 
 class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservationView {
+    private var _binding: FragmentSubscriberObservationBinding? = null
+    private val binding: FragmentSubscriberObservationBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = SubscriberObservationFragment()
     }
@@ -28,21 +32,32 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: ObservationRVAdapter? = null
+    private val observationRVAdapter: ObservationRVAdapter? by lazy {
+        ObservationRVAdapter(presenter.listPresenter)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_subscriber_observation, container, false)
+    ): View? {
+        _binding = FragmentSubscriberObservationBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
-        adapter = ObservationRVAdapter(presenter.listPresenter)
-        rv_sub_obs.adapter = adapter
-        rv_sub_obs.layoutManager = LinearLayoutManager(context)
+        binding.rvSubObs.run {
+            adapter = observationRVAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        observationRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

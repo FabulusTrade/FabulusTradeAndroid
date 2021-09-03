@@ -142,6 +142,9 @@
     <string name="label_base_profit">-0,33%</string>
     <string name="change_ava_title">Сменить аватар</string>
     <string name="delete_ava_title">Удалить аватар</string>
+    <string name="binding_error">Ошибка инициализации биндинга</string>
+    <string name="subscription_count">Подписки %d</string>
+    <string name="gallery_mask">image/*</string>
     <string name="jan_profit">Янв</string>
     <string name="feb_profit">Фев</string>
     <string name="mar_profit">Мар</string>
