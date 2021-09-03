@@ -63,15 +63,15 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         val toggle =
             ActionBarDrawerToggle(
                 this,
-                drawer_layout,
-                toolbar_blue,
+                drawerLayout,
+                toolbar,
                 R.string.open,
                 R.string.close
             )
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.bringToFront()
-        setSupportActionBar(toolbar_blue)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
