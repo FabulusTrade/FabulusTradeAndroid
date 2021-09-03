@@ -44,7 +44,6 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
 
     override fun init() {
         initView()
-        initViewPager()
         initPopupMenu()
     }
 
