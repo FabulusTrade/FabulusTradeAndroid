@@ -22,7 +22,6 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.setDrawerLockMode
-import ru.wintrade.util.setToolbarVisible
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     companion object {
@@ -52,7 +51,6 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     override fun init() {
         initView()
-        initViewPager()
         btn_trader_stat_subscribe.setOnClickListener {
             presenter.subscribeToTraderBtnClicked()
         }
@@ -64,6 +62,7 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
 
     override fun initVP(traderStatistic: TraderStatistic, trader: Trader) {
         vp_trader_stat.adapter = TraderMainVPAdapter(this, traderStatistic, trader)
