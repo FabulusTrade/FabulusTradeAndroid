@@ -16,8 +16,8 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.entrance.SignInPresenter
 import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 import ru.wintrade.util.PREFERENCE_NAME
 import ru.wintrade.util.showLongToast
 

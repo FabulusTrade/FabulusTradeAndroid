@@ -19,9 +19,9 @@ import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 
 class TraderMainFragment(val trader: Trader? = null) : MvpAppCompatFragment(), TraderMainView {
     companion object {

@@ -19,11 +19,7 @@ import ru.wintrade.mvp.view.traderme.TraderMeMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TraderMeMainAdapter
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
-import ru.wintrade.util.IntentConstants
-import ru.wintrade.util.createBitmapFromResult
-import ru.wintrade.util.loadImage
+import ru.wintrade.util.*
 
 class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
 

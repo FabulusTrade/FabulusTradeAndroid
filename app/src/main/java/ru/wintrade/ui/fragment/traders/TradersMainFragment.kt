@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_traders_main.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -17,8 +16,8 @@ import ru.wintrade.mvp.view.traders.TradersMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.BackButtonListener
 import ru.wintrade.ui.adapter.TradersMainVPAdapter
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
+import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setToolbarVisible
 
 class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonListener {
     companion object {

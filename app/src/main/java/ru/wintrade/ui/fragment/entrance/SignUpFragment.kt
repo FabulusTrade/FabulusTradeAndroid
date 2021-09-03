@@ -10,9 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -20,12 +18,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.entrance.SignUpPresenter
 import ru.wintrade.mvp.view.entrance.SignUpView
 import ru.wintrade.ui.App
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
-import ru.wintrade.util.EmailValidation
-import ru.wintrade.util.NicknameValidation
-import ru.wintrade.util.PasswordValidation
-import ru.wintrade.util.PhoneValidation
+import ru.wintrade.util.*
 
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {

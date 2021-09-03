@@ -14,15 +14,10 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSubscriberMainBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
-import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.mvp.view.subscriber.SubscriberMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberMainVPAdapter
-import ru.wintrade.ui.setDrawerLockMode
-import ru.wintrade.ui.setToolbarVisible
-import ru.wintrade.util.IntentConstants
-import ru.wintrade.util.createBitmapFromResult
-import ru.wintrade.util.loadImage
+import ru.wintrade.util.*
 
 class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     private var _binding: FragmentSubscriberMainBinding? = null
