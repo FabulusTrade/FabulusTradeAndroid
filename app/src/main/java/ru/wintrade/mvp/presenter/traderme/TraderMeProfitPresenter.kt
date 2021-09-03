@@ -194,4 +194,8 @@ class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
     fun openCreatePostScreen(isPinned: Boolean?, pinnedText: String?) {
         router.navigateTo(Screens.CreatePostScreen(null, false, isPinned, pinnedText))
     }
+
+    fun showDialog() {
+        viewState.showInfoDialog()
+    }
 }

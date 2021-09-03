@@ -1,5 +1,6 @@
 package ru.wintrade.ui.fragment.traderme
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -75,6 +76,10 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
 
         btn_attached_post_show.setOnClickListener {
             presenter.setPinnedTextMode()
+        }
+
+        iv_trader_me_profit_deal_profit_info_icon.setOnClickListener {
+            presenter.showDialog()
         }
     }
 
@@ -190,5 +195,13 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
 
     override fun setDecProfit(profit: String) {
         tv_trader_me_profit_dec_value.text = profit
+    }
+
+    override fun showInfoDialog() {
+        AlertDialog.Builder(context)
+            .setMessage(getString(R.string.dialog_info_text))
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok) { _, _ ->
+            }.show()
     }
 }

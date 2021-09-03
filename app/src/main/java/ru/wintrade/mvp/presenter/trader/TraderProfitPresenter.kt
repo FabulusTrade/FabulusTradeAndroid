@@ -164,4 +164,8 @@ class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Tr
             viewState.setPinnedTextVisible(isOpen)
         }
     }
+
+    fun showDialog() {
+        viewState.showInfoDialog()
+    }
 }

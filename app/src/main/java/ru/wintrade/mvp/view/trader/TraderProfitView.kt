@@ -27,4 +27,5 @@ interface TraderProfitView : MvpView {
     fun setOctProfit(profit: String)
     fun setNovProfit(profit: String)
     fun setDecProfit(profit: String)
+    fun showInfoDialog()
 }
