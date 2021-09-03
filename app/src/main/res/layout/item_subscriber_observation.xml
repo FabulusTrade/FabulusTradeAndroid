@@ -21,15 +21,15 @@
             android:layout_height="match_parent">
 
             <ImageView
-
                 android:id="@+id/iv_subscriber_observation_ava"
-                android:layout_width="75dp"
-                android:layout_height="55dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:scaleType="fitXY"
+                android:foreground="@drawable/bg_avatar"
+                android:scaleType="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_subscriber_observation_name"
                 app:layout_constraintStart_toStartOf="parent"

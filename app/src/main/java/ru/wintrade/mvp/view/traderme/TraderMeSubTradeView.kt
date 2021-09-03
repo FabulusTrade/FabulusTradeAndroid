@@ -7,7 +7,7 @@ import ru.wintrade.mvp.presenter.traderme.TraderMeSubTradePresenter
 
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderMeSubTradeView : MvpView {
-    fun init()
+    fun init(position: Int)
     fun setBtnState(state: TraderMeSubTradePresenter.State)
     fun updateAdapter()
     fun setRefreshing(isRefreshing: Boolean)

@@ -17,16 +17,24 @@ import ru.wintrade.mvp.view.trader.TraderPostView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
 
-class TraderPostFragment(val trader: Trader): MvpAppCompatFragment(), TraderPostView {
+class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     companion object {
-        fun newInstance(trader: Trader) = TraderPostFragment(trader)
+        const val TRADER = "trader"
+        fun newInstance(trader: Trader) =
+            TraderPostFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(TRADER, trader)
+                }
+            }
     }
 
     @InjectPresenter
     lateinit var presenter: TraderPostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TraderPostPresenter(trader).apply {
+    fun providePresenter() = TraderPostPresenter(
+        arguments?.get(TRADER) as Trader
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 

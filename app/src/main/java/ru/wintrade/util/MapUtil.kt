@@ -21,6 +21,37 @@ fun mapToTrader(trader: ResponseTrader) = Trader(
     mapToPost(trader.pinned_post)
 )
 
+fun mapToTraderStatistic(response: ResponseTraderStatistic): TraderStatistic {
+    val monitorIndicators = response.monthIndicators.map { mapToMonthIndicator(it) }
+    val audienceData = response.audienceData.map { mapToAudienceData(it) }
+    return TraderStatistic(
+        response.idTrader,
+        response.termOfTransaction30,
+        response.amountDeals30,
+        response.profitOfPercent30,
+        response.profitTrades30,
+        response.losingTrades30,
+        response.averageProfitTrades30,
+        response.averageLosingTrades30,
+        response.actualProfit180,
+        response.actualProfit365,
+        monitorIndicators,
+        audienceData
+    )
+}
+
+fun mapToMonthIndicator(response: ResponseMonthIndicators) = MonthIndicator(
+    response.year,
+    response.month,
+    response.actualProfitMonth
+)
+
+fun mapToAudienceData(response: ResponseAudienceData) = AudienceData(
+    response.dateJoined,
+    response.followersCount,
+    response.observerCount
+)
+
 fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
     mapToTrader(subscription.id_trader),
     subscription.end_date,
