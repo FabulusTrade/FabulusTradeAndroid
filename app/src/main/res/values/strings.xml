@@ -190,4 +190,8 @@
     <string name="text_country_live">Это страна моего гражданства</string>
     <string name="text_passport_number">Номер паспорта</string>
     <string name="remark_about_passport">Этот номер должен относится к стране вашего гражданства</string>
+    <string name="trader_reg_title1">Выберите тарифный план для своих последователей</string>
+    <string name="text_free_plan">Бесплатный</string>
+    <string name="text_pay_plan">Платный 1300 руб/мес</string>
+    <string name="trader_reg_4_text1">За исключением аккаунтов (через запятую, начиная с @_____)</string>
 </resources>

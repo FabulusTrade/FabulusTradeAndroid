@@ -15,4 +15,6 @@
     <color name="colorRed">#B52C2C</color>
     <color name="colorWhiteSmoke">#F4F4F4</color>
     <color name="colorDarkGray">#858585</color>
+    <color name="colorTitleRegistration">#757BB9</color>
+    <color name="colorDivider">#C0C0C0</color>
 </resources>

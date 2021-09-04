@@ -48,4 +48,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="LinkText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?colorAccent</item>
+    </style>
+
 </resources>
