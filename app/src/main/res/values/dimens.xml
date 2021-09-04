@@ -8,4 +8,6 @@
     <dimen name="tab_layout_indicator_height">0dp</dimen>
     <dimen name="toolbar_close_button_size">40dp</dimen>
     <dimen name="header_main_height">200dp</dimen>
+    <dimen name="up_card_trader_reg_height">52dp</dimen>
+    <dimen name="cardview_add_elevation">4dp</dimen>
 </resources>
