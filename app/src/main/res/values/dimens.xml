@@ -10,4 +10,6 @@
     <dimen name="header_main_height">200dp</dimen>
     <dimen name="up_card_trader_reg_height">52dp</dimen>
     <dimen name="cardview_add_elevation">4dp</dimen>
+    <dimen name="default_button_width">277dp</dimen>
+    <dimen name="default_button_height">46dp</dimen>
 </resources>

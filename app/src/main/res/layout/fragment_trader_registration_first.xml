@@ -21,7 +21,7 @@
             android:layout_gravity="end|center"
             android:layout_marginEnd="12dp"
             android:backgroundTint="@color/design_default_color_background"
-            android:contentDescription="@null"
+            android:contentDescription="@string/continue_btn"
             android:src="@drawable/close"
             app:tint="@color/colorGray" />
 
@@ -60,8 +60,8 @@
 
     <Button
         android:id="@+id/btn_continue_trader_reg_fragment_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/default_button_width"
+        android:layout_height="@dimen/default_button_height"
         android:text="@string/continue_btn"
         android:backgroundTint="?colorAccent"
         android:layout_marginBottom="48dp"
