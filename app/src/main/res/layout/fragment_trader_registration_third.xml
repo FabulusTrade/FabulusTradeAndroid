@@ -1,0 +1,212 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.trader.registration.TraderRegistrationFragmentFirst">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/top_card_trader_reg_3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/up_card_trader_reg_height"
+        android:elevation="@dimen/cardview_add_elevation"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_close_reg_fragment_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/design_default_color_background"
+            android:contentDescription="@string/continue_btn"
+            android:src="@drawable/close"
+            app:tint="@color/colorGray" />
+
+        <TextView
+            style="@style/RegTraderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="16dp"
+            android:text="@string/your_profile" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_trader_reg_3_your_address"
+        style="@style/RegTraderHeaderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_your_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_3" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_3_address"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="12dp"
+        android:text="@string/text_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_your_address" />
+
+    <EditText
+        android:id="@+id/et_trader_reg_3_address_street"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:hint="@string/text_street"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@id/et_trader_reg_3_address_home"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_address" />
+
+    <EditText
+        android:id="@+id/et_trader_reg_3_address_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/default_margin_trader_reg"
+        android:hint="@string/text_home"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/et_trader_reg_3_address_street"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_address" />
+
+    <EditText
+        android:id="@+id/et_trader_reg_3_address_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:hint="@string/text_city"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_trader_reg_3_address_street" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_3_address_country"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_country"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_trader_reg_3_address_city" />
+
+    <Spinner
+        android:id="@+id/spinner_trader_reg_3_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_address_country"
+        tools:listitem="@layout/item_country" />
+
+    <CheckBox
+        android:id="@+id/checkbox_trader_reg_3_is_country_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+        android:checked="true"
+        android:text="@string/text_country_live"
+        app:layout_constraintTop_toBottomOf="@id/spinner_trader_reg_3_country" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_3_passport_num"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_passport_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_trader_reg_3_is_country_live" />
+
+    <EditText
+        android:id="@+id/et_trader_reg_3_passport_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_passport_num" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_3_text1"
+        style="@style/RegTraderMainText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/remark_about_passport"
+        app:layout_constraintTop_toBottomOf="@id/et_trader_reg_3_passport_num" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottom_card_trader_reg_3"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back_trader_reg_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_arrow_back_24" />
+
+        <ImageButton
+            android:id="@+id/btn_forward_trader_reg_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_arrow_forward_24" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_trader_reg_3_percent_complete"
+                style="@style/RegTraderMainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:textStyle="bold"
+                tools:text="60%" />
+
+            <TextView
+                style="@style/RegTraderMainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_complete" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

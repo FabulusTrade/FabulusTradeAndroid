@@ -167,7 +167,7 @@
     <string name="trader_reg_view1_text1"><p>\tВаши персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</p><br><br></br></br><p>Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</p></string>
     <string name="trader_reg_view1_text2"><p>После завершения верификации профиля будет предоставлена возможность:</p><br></br><ul><li>в один клик загружать сделки из своего торгового терминала</li><br></br><li>писать комментарии к своим сделкам</li><br></br><li>размещать новости и/или оставлять комментарии к новостям</li><br></br><li>формировать сообщество последователей для монетизации</li></ul></string>
     <string name="continue_btn">Продолжить</string>
-    <string name="trader_reg_2_title">Ваш профиль</string>
+    <string name="your_profile">Ваш профиль</string>
     <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
     <string name="text_name">Имя</string>
     <string name="first_name">Имя</string>
@@ -180,4 +180,14 @@
     <string name="month_2digit">ММ</string>
     <string name="year_4digit">ГГГГ</string>
     <string name="profile_complete">готовый профиль</string>
+    <string name="text_your_address">Ваш адрес</string>
+    <string name="text_address">Адрес</string>
+    <string name="text_street">Улица</string>
+    <string name="text_home">№</string>
+    <string name="text_city">Город</string>
+    <string name="text_country">Страна проживания</string>
+    <string name="russia">Россия</string>
+    <string name="text_country_live">Это страна моего гражданства</string>
+    <string name="text_passport_number">Номер паспорта</string>
+    <string name="remark_about_passport">Этот номер должен относится к стране вашего гражданства</string>
 </resources>

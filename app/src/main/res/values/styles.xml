@@ -40,6 +40,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="RegTraderHeaderText">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="RegTraderMainText.PrimaryColor">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
