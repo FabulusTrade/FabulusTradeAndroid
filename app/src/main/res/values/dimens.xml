@@ -12,4 +12,5 @@
     <dimen name="cardview_add_elevation">4dp</dimen>
     <dimen name="default_button_width">277dp</dimen>
     <dimen name="default_button_height">46dp</dimen>
+    <dimen name="default_margin_trader_reg">32dp</dimen>
 </resources>

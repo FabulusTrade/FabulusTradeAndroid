@@ -167,4 +167,17 @@
     <string name="trader_reg_view1_text1"><p>\tВаши персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</p><br><br></br></br><p>Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</p></string>
     <string name="trader_reg_view1_text2"><p>После завершения верификации профиля будет предоставлена возможность:</p><br></br><ul><li>в один клик загружать сделки из своего торгового терминала</li><br></br><li>писать комментарии к своим сделкам</li><br></br><li>размещать новости и/или оставлять комментарии к новостям</li><br></br><li>формировать сообщество последователей для монетизации</li></ul></string>
     <string name="continue_btn">Продолжить</string>
+    <string name="trader_reg_2_title">Ваш профиль</string>
+    <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
+    <string name="text_name">Имя</string>
+    <string name="first_name">Имя</string>
+    <string name="middle_name">Отчество</string>
+    <string name="text_gender">Пол</string>
+    <string name="text_gender_man">Муж</string>
+    <string name="text_gender_woman">Жен</string>
+    <string name="text_birthday">Дата рождения</string>
+    <string name="day_2digit">ДД</string>
+    <string name="month_2digit">ММ</string>
+    <string name="year_4digit">ГГГГ</string>
+    <string name="profile_complete">готовый профиль</string>
 </resources>
