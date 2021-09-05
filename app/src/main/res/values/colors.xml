@@ -17,4 +17,5 @@
     <color name="colorDarkGray">#858585</color>
     <color name="colorTitleRegistration">#757BB9</color>
     <color name="colorDivider">#C0C0C0</color>
+    <color name="colorTraderRegBackground">#F4FBFF</color>
 </resources>

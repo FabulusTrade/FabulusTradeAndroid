@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorTraderRegBackground"
     tools:context=".ui.fragment.trader.registration.TraderRegistrationFragmentFour">
 
     <androidx.cardview.widget.CardView
@@ -40,86 +41,202 @@
                 style="@style/RegTraderLabelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
-                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
                 android:text="@string/trader_reg_title1"
                 android:textColor="@color/colorTitleRegistration"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_trader_reg_free_plan"
+                android:id="@+id/switch_trader_reg_4_free_plan"
                 style="@style/RegTraderLabelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
-                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
                 android:checked="true"
                 android:text="@string/text_free_plan"
-                app:layout_constraintBottom_toTopOf="@id/divider1_trader_reg_4"
                 app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_title1" />
 
-            <TextView
+            <View
                 android:id="@+id/divider1_trader_reg_4"
                 android:layout_width="196dp"
                 android:layout_height="1dp"
+                android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
                 android:background="@color/colorDivider"
-                android:layout_marginStart="@dimen/default_margin_trader_reg"
-                android:layout_marginVertical="4dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_free_plan"
-                app:layout_constraintBottom_toTopOf="@id/switch_trader_reg_pay_plan"/>
+                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_4_free_plan" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_trader_reg_pay_plan"
+                android:id="@+id/switch_trader_reg_4_pay_plan"
                 style="@style/RegTraderLabelText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
-                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
                 android:text="@string/text_pay_plan"
                 app:layout_constraintTop_toBottomOf="@id/divider1_trader_reg_4" />
 
             <TextView
-                android:id="@+id/tv_trader_reg_pay_plan_detail"
+                android:id="@+id/tv_trader_reg_4_pay_plan_detail"
                 style="@style/LinkText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
-                android:layout_marginVertical="4dp"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
                 android:text="@string/detail"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_pay_plan" />
+                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_4_pay_plan" />
 
             <TextView
                 android:id="@+id/tv_trader_reg_4_text1"
                 style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
                 android:layout_marginTop="4dp"
                 android:text="@string/trader_reg_4_text1"
-                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_pay_plan_detail" />
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_pay_plan_detail" />
 
             <EditText
                 android:id="@+id/et_trader_reg_4_except_accounts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_trader_reg"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
                 android:layout_marginTop="4dp"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_text1"
-                app:layout_constraintBottom_toTopOf="@id/divider2_trader_reg_4"
                 tools:ignore="LabelFor" />
 
-            <TextView
+            <View
                 android:id="@+id/divider2_trader_reg_4"
                 android:layout_width="196dp"
                 android:layout_height="1dp"
+                android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
                 android:background="@color/colorDivider"
-                android:layout_marginStart="@dimen/default_margin_trader_reg"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_trader_reg_4_except_accounts"/>
+                app:layout_constraintTop_toBottomOf="@id/et_trader_reg_4_except_accounts" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_trader_reg_4_individual_plan"
+                style="@style/RegTraderLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
+                android:text="@string/text_individual_plan"
+                app:layout_constraintTop_toBottomOf="@id/divider2_trader_reg_4" />
+
+            <EditText
+                android:id="@+id/et_trader_reg_4_individual_plan"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="64dp"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="@id/switch_trader_reg_4_individual_plan"
+                app:layout_constraintTop_toTopOf="@id/switch_trader_reg_4_individual_plan"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/tv_trader_reg_4_text2"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
+                android:text="@string/trader_reg_4_text2"
+                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_4_individual_plan" />
+
+            <View
+                android:id="@+id/divider3_trader_reg_4"
+                android:layout_width="196dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_text2" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_trader_reg_4_invisible_plan"
+                style="@style/RegTraderLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
+                android:text="@string/text_invisible_plan"
+                android:textColor="@color/colorTitleRegistration"
+                app:layout_constraintTop_toBottomOf="@id/divider3_trader_reg_4" />
+
+            <TextView
+                android:id="@+id/tv_trader_reg_4_text3"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
+                android:text="@string/trader_reg_4_text3"
+                app:layout_constraintTop_toBottomOf="@id/switch_trader_reg_4_invisible_plan" />
+
+            <View
+                android:id="@+id/divider4_trader_reg_4"
+                android:layout_width="196dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_text3" />
+
+            <TextView
+                android:id="@+id/tv_trader_reg_4_download_script"
+                style="@style/RegTraderLabelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
+                android:text="@string/trader_reg_title1"
+                android:textColor="@color/colorTitleRegistration"
+                app:layout_constraintTop_toBottomOf="@id/divider4_trader_reg_4" />
+
+            <EditText
+                android:id="@+id/et_trader_reg_4_download_script"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="8dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_download_script"
+                tools:ignore="LabelFor" />
+
+            <View
+                android:id="@+id/divider5_trader_reg_4"
+                android:layout_width="196dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_trader_reg_4_download_script" />
+
+            <Button
+                android:id="@+id/btn_send_trader_reg_4"
+                android:layout_width="@dimen/default_button_width"
+                android:layout_height="@dimen/default_button_height"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="?colorAccent"
+                android:text="@string/send"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider5_trader_reg_4" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -194,4 +194,8 @@
     <string name="text_free_plan">Бесплатный</string>
     <string name="text_pay_plan">Платный 1300 руб/мес</string>
     <string name="trader_reg_4_text1">За исключением аккаунтов (через запятую, начиная с @_____)</string>
+    <string name="text_individual_plan">Индивидуальный</string>
+    <string name="trader_reg_4_text2">Напишите стоимость в месяц, например 2000 руб</string>
+    <string name="text_invisible_plan">Сделать профиль невидимым</string>
+    <string name="trader_reg_4_text3">Пользователи, которые не являются Вашими наблюдателями и подписчиками, не будут Вас видеть</string>
 </resources>
