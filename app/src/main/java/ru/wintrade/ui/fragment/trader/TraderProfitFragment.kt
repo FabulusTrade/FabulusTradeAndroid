@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_trader_profit.*
-import kotlinx.android.synthetic.main.layout_attached_post.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderProfitBinding
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
 
+private const val ANIMATE_DURATION = 3000
+
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
+    private var _binding: FragmentTraderProfitBinding? = null
+    private val binding: FragmentTraderProfitBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
         private const val MAX_LINES = 5000
@@ -49,7 +53,10 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_profit, container, false)
+    ): View? {
+        _binding = FragmentTraderProfitBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initBarChart()
@@ -57,11 +64,11 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     fun initBarChart() {
-        with(bar_chart_trader_profit) {
-            data = presenter.setupBarChart("2021")          //   <-btn text
+        with(binding.barChartTraderProfit) {
+            data = presenter.setupBarChart(getString(R.string.year_2021))          //   <-btn text
             legend.isEnabled = false
             data.setDrawValues(false)
-            animateY(3000)
+            animateY(ANIMATE_DURATION)
             setDescription("")
             axisLeft.setDrawGridLines(false)
             axisLeft.setDrawZeroLine(true)
@@ -69,107 +76,114 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     fun initListeners() {
-        btn_attached_post_show.setOnClickListener {
-            presenter.setPinnedTextMode()
-        }
-
-        iv_trader_profit_deal_profit_info_icon.setOnClickListener {
-            presenter.showDialog()
+        binding.run {
+            layoutTraderProfitAttachedPost.btnAttachedPostShow.setOnClickListener {
+                presenter.setPinnedTextMode()
+            }
+            ivTraderProfitDealProfitInfoIcon.setOnClickListener {
+                presenter.showDialog()
+            }
         }
     }
 
     override fun setDateJoined(date: String) {
-        tv_trader_profit_registration_date_value.text = date
+        binding.tvTraderProfitRegistrationDateValue.text = date
     }
 
     override fun setFollowersCount(followersCount: Int) {
-        tv_trader_profit_follower_counter.text = followersCount.toString()
+        binding.tvTraderProfitFollowerCounter.text = followersCount.toString()
     }
 
     override fun setTradesCount(tradesCount: Int) {
-        tv_trader_profit_deal_for_week_count.text = tradesCount.toString()
+        binding.tvTraderProfitDealForWeekCount.text = tradesCount.toString()
     }
 
     override fun setPinnedPostText(text: String?) {
-        if (text.isNullOrEmpty()) {
-            layout_trader_profit_attached_post.visibility = View.GONE
-        } else {
-            layout_trader_profit_attached_post.visibility = View.VISIBLE
-            tv_attached_post_header.visibility = View.GONE
-            iv_attached_post_kebab.visibility = View.GONE
-            layout_attached_post_body.visibility = View.VISIBLE
-            tv_attached_post_text.text = text
+        binding.run {
+            if (text.isNullOrEmpty()) {
+                layoutTraderProfitAttachedPost.root.visibility = View.GONE
+            } else {
+                with(layoutTraderProfitAttachedPost) {
+                    root.visibility = View.VISIBLE
+                    tvAttachedPostHeader.visibility = View.GONE
+                    ivAttachedPostKebab.visibility = View.GONE
+                    layoutAttachedPost.visibility = View.VISIBLE
+                    tvAttachedPostText.text = text
+                }
+            }
         }
     }
 
     override fun setPinnedTextVisible(isOpen: Boolean) {
-        if (isOpen) {
-            btn_attached_post_show.text = resources.getString(R.string.hide)
-            tv_attached_post_text.maxLines = MAX_LINES
-        } else {
-            btn_attached_post_show.text = resources.getString(R.string.show)
-            tv_attached_post_text.maxLines = MIN_LINES
+        binding.layoutTraderProfitAttachedPost.run {
+            if (isOpen) {
+                btnAttachedPostShow.text = resources.getString(R.string.hide)
+                tvAttachedPostText.maxLines = MAX_LINES
+            } else {
+                btnAttachedPostShow.text = resources.getString(R.string.show)
+                tvAttachedPostText.maxLines = MIN_LINES
+            }
         }
     }
 
     override fun setAverageDealsTime(dealsTime: String) {
-        tv_trader_profit_deal_time_value.text = dealsTime
+        binding.tvTraderProfitDealTimeValue.text = dealsTime
     }
 
     override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
-        tv_trader_profit_deal_profit_positive_value.text = averageProfit
+        binding.tvTraderProfitDealProfitPositiveValue.text = averageProfit
     }
 
     override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
-        tv_trader_profit_deal_profit_negative_value.text = averageProfit
+        binding.tvTraderProfitDealProfitNegativeValue.text = averageProfit
     }
 
     override fun setJanProfit(profit: String) {
-        tv_trader_profit_jan_value.text = profit
+        binding.tvTraderProfitJanValue.text = profit
     }
 
     override fun setFebProfit(profit: String) {
-        tv_trader_profit_feb_value.text = profit
+        binding.tvTraderProfitFebValue.text = profit
     }
 
     override fun setMarProfit(profit: String) {
-        tv_trader_profit_mar_value.text = profit
+        binding.tvTraderProfitMarValue.text = profit
     }
 
     override fun setAprProfit(profit: String) {
-        tv_trader_profit_apr_value.text = profit
+        binding.tvTraderProfitAprValue.text = profit
     }
 
     override fun setMayProfit(profit: String) {
-        tv_trader_profit_may_value.text = profit
+        binding.tvTraderProfitMayValue.text = profit
     }
 
     override fun setJunProfit(profit: String) {
-        tv_trader_profit_jun_value.text = profit
+        binding.tvTraderProfitJunValue.text = profit
     }
 
     override fun setJulProfit(profit: String) {
-        tv_trader_profit__jul_value.text = profit
+        binding.tvTraderProfitJulValue.text = profit
     }
 
     override fun setAugProfit(profit: String) {
-        tv_trader_profit_aug_value.text = profit
+        binding.tvTraderProfitAugValue.text = profit
     }
 
     override fun setSepProfit(profit: String) {
-        tv_trader_profit_sep_value.text = profit
+        binding.tvTraderProfitSepValue.text = profit
     }
 
     override fun setOctProfit(profit: String) {
-        tv_trader_profit_oct_value.text = profit
+        binding.tvTraderProfitOctValue.text = profit
     }
 
     override fun setNovProfit(profit: String) {
-        tv_trader_profit_nov_value.text = profit
+        binding.tvTraderProfitNovValue.text = profit
     }
 
     override fun setDecProfit(profit: String) {
-        tv_trader_profit_dec_value.text = profit
+        binding.tvTraderProfitDecValue.text = profit
     }
 
     override fun showInfoDialog() {
@@ -178,5 +192,10 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
             }.show()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
