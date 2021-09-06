@@ -1,11 +1,10 @@
-package ru.wintrade.mvp.view.traders
+package ru.wintrade.mvp.view.registration.trader
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface TradersMainView : MvpView {
+interface RegAsTraderSecondView : MvpView {
     fun init()
-    fun setRegistrationBtnVisible(isVisible: Boolean)
 }

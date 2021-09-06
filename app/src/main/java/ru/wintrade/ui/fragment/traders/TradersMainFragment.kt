@@ -40,6 +40,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
 
     override fun init() {
         initView()
+        initListeners()
         vp_main_traders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
             when (pos) {
@@ -47,6 +48,20 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
                 1 -> tab.text = resources.getString(R.string.filter)
             }
         }.attach()
+    }
+
+    fun initListeners() {
+        tv_traders_main_registration_start.setOnClickListener {
+            mainPresenter.openRegistrationScreen()
+        }
+    }
+
+    override fun setRegistrationBtnVisible(isVisible: Boolean) {
+        if (isVisible) {
+            tv_traders_main_registration_start.visibility = View.VISIBLE
+        } else {
+            tv_traders_main_registration_start.visibility = View.GONE
+        }
     }
 
     private fun initView() {

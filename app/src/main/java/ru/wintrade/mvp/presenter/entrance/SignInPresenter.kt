@@ -34,11 +34,11 @@ class SignInPresenter : MvpPresenter<SignInView>() {
     }
 
     fun openRegistrationScreen() {
-        router.navigateTo(Screens.SignUpScreen())
+        router.navigateTo(Screens.signUpScreen())
     }
 
     fun openResetPassScreen() {
-        router.navigateTo(Screens.ResetPasswordScreen())
+        router.navigateTo(Screens.resetPasswordScreen())
     }
 
     fun loginBtnClicked(nickname: String, password: String) {
@@ -83,9 +83,9 @@ class SignInPresenter : MvpPresenter<SignInView>() {
         profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 if (profile.user!!.isTrader)
-                    router.newRootScreen(Screens.TraderMeMainScreen())
+                    router.newRootScreen(Screens.traderMeMainScreen())
                 else
-                    router.newRootScreen(Screens.SubscriberMainScreen())
+                    router.newRootScreen(Screens.subscriberMainScreen())
             },
             {
                 it.printStackTrace()

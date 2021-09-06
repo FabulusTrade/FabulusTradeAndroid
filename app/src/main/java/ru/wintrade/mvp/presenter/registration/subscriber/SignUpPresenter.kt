@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.presenter.entrance
+package ru.wintrade.mvp.presenter.registration.subscriber
 
 import com.github.terrakok.cicerone.Router
 import com.google.gson.GsonBuilder
@@ -8,7 +8,7 @@ import retrofit2.HttpException
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.entity.exception.SignUpException
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.view.entrance.SignUpView
+import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.*
 import javax.inject.Inject
@@ -100,7 +100,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.showSuccessDialog()
-                    router.navigateTo(Screens.SignInScreen())
+                    router.navigateTo(Screens.signInScreen())
                 }, { exception ->
                     if (exception is HttpException) {
                         val resp = exception.response()?.errorBody()?.string()

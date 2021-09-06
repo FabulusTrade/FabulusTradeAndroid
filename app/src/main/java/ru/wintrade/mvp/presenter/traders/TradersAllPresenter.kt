@@ -47,14 +47,14 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         override fun openTraderStat(pos: Int) {
             val trader = traderList[pos]
             if (profile.user != null && trader.id == profile.user!!.id)
-                router.navigateTo(Screens.TraderMeMainScreen())
+                router.navigateTo(Screens.traderMeMainScreen())
             else
-                router.navigateTo(Screens.TraderMainScreen(traderList[pos]))
+                router.navigateTo(Screens.traderMainScreen(traderList[pos]))
         }
 
         override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
             if (profile.user == null) {
-                router.navigateTo(Screens.SignInScreen())
+                router.navigateTo(Screens.signInScreen())
             } else if (isChecked) {
                 apiRepo.observeToTrader(profile.token!!, traderList[pos].id)
                     .observeOn(AndroidSchedulers.mainThread())

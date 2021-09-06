@@ -3,7 +3,15 @@ package ru.wintrade.di
 import dagger.Component
 import ru.wintrade.di.module.*
 import ru.wintrade.mvp.presenter.*
-import ru.wintrade.mvp.presenter.entrance.*
+import ru.wintrade.mvp.presenter.entrance.OnBoardPresenter
+import ru.wintrade.mvp.presenter.entrance.SignInPresenter
+import ru.wintrade.mvp.presenter.entrance.SplashPresenter
+import ru.wintrade.mvp.presenter.registration.subscriber.ResetPasswordPresenter
+import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
+import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderFirstPresenter
+import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderFourPresenter
+import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
+import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.presenter.service.MessagingPresenter
 import ru.wintrade.mvp.presenter.subscriber.SubscriberMainPresenter
 import ru.wintrade.mvp.presenter.subscriber.SubscriberObservationPresenter
@@ -18,10 +26,7 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.activity.SplashActivity
 import ru.wintrade.ui.fragment.*
-import ru.wintrade.ui.fragment.entrance.OnBoardFragment
-import ru.wintrade.ui.fragment.entrance.ResetPasswordFragment
-import ru.wintrade.ui.fragment.entrance.SignInFragment
-import ru.wintrade.ui.fragment.entrance.SignUpFragment
+import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
@@ -111,4 +116,12 @@ interface AppComponent {
     fun inject(settingsPresenter: SettingsPresenter)
     fun inject(createPostFragment: CreatePostFragment)
     fun inject(createPostPresenter: CreatePostPresenter)
+    fun inject(regAsTraderFirstPresenter: RegAsTraderFirstPresenter)
+    fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentFirst)
+    fun inject(regAsTraderSecondPresenter: RegAsTraderSecondPresenter)
+    fun inject(registrationAsTraderSecondFragment: RegistrationAsTraderFragmentSecond)
+    fun inject(regAsTraderThirdPresenter: RegAsTraderThirdPresenter)
+    fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentThird)
+    fun inject(regAsTraderFourPresenter: RegAsTraderFourPresenter)
+    fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentFour)
 }

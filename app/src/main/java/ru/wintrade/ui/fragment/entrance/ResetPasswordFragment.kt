@@ -10,8 +10,8 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.entrance.ResetPasswordPresenter
-import ru.wintrade.mvp.view.entrance.ResetPasswordView
+import ru.wintrade.mvp.presenter.registration.subscriber.ResetPasswordPresenter
+import ru.wintrade.mvp.view.registration.subscriber.ResetPasswordView
 import ru.wintrade.ui.App
 import ru.wintrade.util.EmailValidation
 

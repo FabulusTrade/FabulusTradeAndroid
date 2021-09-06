@@ -52,7 +52,6 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             presenter.onScrollLimit()
                         }
-
                     }
                 }
             }

@@ -12,6 +12,8 @@
         android:layout_height="@dimen/up_card_trader_reg_height"
         android:elevation="@dimen/cardview_add_elevation"
         app:layout_constraintBottom_toTopOf="@id/tv1_trader_reg_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
@@ -40,11 +42,13 @@
         style="@style/RegTraderMainText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/trader_reg_view1_text1"
         app:layout_constraintBottom_toTopOf="@id/tv2_trader_reg_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_1" />
 
     <TextView
@@ -52,10 +56,12 @@
         style="@style/RegTraderMainText.PrimaryColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/trader_reg_view1_text2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1_trader_reg_1" />
 
     <Button

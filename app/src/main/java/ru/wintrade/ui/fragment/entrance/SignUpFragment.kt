@@ -15,8 +15,8 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.entrance.SignUpPresenter
-import ru.wintrade.mvp.view.entrance.SignUpView
+import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
+import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.ui.App
 import ru.wintrade.util.*
 

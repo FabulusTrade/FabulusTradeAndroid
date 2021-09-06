@@ -46,14 +46,14 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
         override fun onItemClick(pos: Int) {
             val trader = traders[pos]
             if (trader.trader.id == profile.user!!.id)
-                router.navigateTo(Screens.TraderMeMainScreen())
+                router.navigateTo(Screens.traderMeMainScreen())
             else
-                router.navigateTo(Screens.TraderMainScreen(trader.trader))
+                router.navigateTo(Screens.traderMainScreen(trader.trader))
         }
 
         override fun deleteObservation(pos: Int) {
             if (profile.user == null) {
-                router.navigateTo(Screens.SignInScreen())
+                router.navigateTo(Screens.signInScreen())
             } else {
                 apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
                     .observeOn(AndroidSchedulers.mainThread())
