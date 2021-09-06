@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.trader.registration.TraderRegistrationFragmentFirst">
+    tools:context=".ui.fragment.entrance.RegistrationAsTraderFragmentFirst">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/top_card_trader_reg_1"

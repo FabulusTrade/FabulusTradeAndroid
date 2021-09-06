@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment.trader.registration
+package ru.wintrade.ui.fragment.entrance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,24 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import moxy.MvpAppCompatFragment
 import ru.wintrade.R
-import ru.wintrade.databinding.FragmentTraderRegistrationFirstBinding
+import ru.wintrade.databinding.FragmentRegistrationAsTraderSecondBinding
 
-class TraderRegistrationFragmentFirst : MvpAppCompatFragment() {
+class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment() {
     companion object {
-        fun newInstance(): TraderRegistrationFragmentFirst =
-            TraderRegistrationFragmentFirst()
+        fun newInstance(): RegistrationAsTraderFragmentSecond =
+            RegistrationAsTraderFragmentSecond()
     }
 
-
-    private var _binding: FragmentTraderRegistrationFirstBinding? = null
-    private val binding: FragmentTraderRegistrationFirstBinding
+    private var _binding: FragmentRegistrationAsTraderSecondBinding? = null
+    private val binding: FragmentRegistrationAsTraderSecondBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTraderRegistrationFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentRegistrationAsTraderSecondBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
@@ -31,4 +30,5 @@ class TraderRegistrationFragmentFirst : MvpAppCompatFragment() {
         _binding = null
         super.onDestroyView()
     }
+
 }
