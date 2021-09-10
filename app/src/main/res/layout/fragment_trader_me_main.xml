@@ -92,31 +92,26 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item_trader_me_profit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_trader_profit" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item_me_trader_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_trader_news" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item_trader_me_instrument"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_trader_instrument" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item_trader_me_deal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_trader_deal" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item_trader_me_observation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_visibility" />
