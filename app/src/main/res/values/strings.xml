@@ -163,5 +163,7 @@
     <string name="zero_deals_profit">0.0(0.0%)</string>
     <string name="followers_joining_statistic_sample">+30 (10%) за 7 дней</string>
     <string name="dialog_info_text">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
+    <string name="phone_format_1">8 ([000]) [000]-[00]-[00]</string>
+    <string name="phone_format_2">+7 ([000]) [000]-[00]-[00]</string>
 
 </resources>
