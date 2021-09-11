@@ -5,18 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding4.widget.textChanges
-import kotlinx.android.synthetic.main.fragment_sms_confirm.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentSmsConfirmBinding
 import ru.wintrade.mvp.presenter.SmsConfirmPresenter
 import ru.wintrade.mvp.view.SmsConfirmView
 import ru.wintrade.ui.App
 import ru.wintrade.util.showLongToast
 import java.util.concurrent.TimeUnit
 
+
+private const val SMS_TIMEOUT = 1000L
+
 class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
+    private var _binding: FragmentSmsConfirmBinding? = null
+    private val binding: FragmentSmsConfirmBinding
+        get() = checkNotNull(_binding) { getString(R.string.error) }
 
     companion object {
         const val PHONE_KEY = "phone"
@@ -39,28 +45,38 @@ class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_sms_confirm, container, false)
+    ): View? {
+        _binding = FragmentSmsConfirmBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
-        btn_sms_confirm_confirm.setOnClickListener {
-            presenter.confirmClicked()
+        binding.run {
+            btnSmsConfirmConfirm.setOnClickListener {
+                presenter.confirmClicked()
+            }
+            btnSmsConfirmResend.setOnClickListener {
+                presenter.resendClicked()
+            }
+            etSmsConfirmSms.textChanges()
+                .debounce(SMS_TIMEOUT, TimeUnit.MILLISECONDS)
+                .subscribe(
+                    {
+                        presenter.codeChanged(it.toString())
+                    },
+                    {}
+                )
         }
 
-        btn_sms_confirm_resend.setOnClickListener {
-            presenter.resendClicked()
-        }
 
-        et_sms_confirm_sms.textChanges()
-            .debounce(1000, TimeUnit.MILLISECONDS)
-            .subscribe(
-                {
-                    presenter.codeChanged(it.toString())
-                },
-                {}
-            )
     }
 
     override fun showToast(msg: String) {
-        context?.showLongToast(msg)
+        requireContext().showLongToast(msg)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

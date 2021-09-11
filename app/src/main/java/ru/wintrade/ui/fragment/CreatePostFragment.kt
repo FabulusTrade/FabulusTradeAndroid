@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_create_post.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentCreatePostBinding
 import ru.wintrade.mvp.presenter.CreatePostPresenter
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
@@ -19,13 +19,17 @@ import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.showLongToast
 
 class CreatePostFragment(
-    val postId: String? = null,
-    val isPublication: Boolean,
-    val isPinnedEdit: Boolean? = null,
-    val pinnedText: String?
+    private val postId: String? = null,
+    private val isPublication: Boolean,
+    private val isPinnedEdit: Boolean? = null,
+    private val pinnedText: String?
 ) :
     MvpAppCompatFragment(),
     CreatePostView {
+    private var _binding: FragmentCreatePostBinding? = null
+    private val binding: FragmentCreatePostBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance(
             postId: String?,
@@ -48,18 +52,23 @@ class CreatePostFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_create_post, container, false)
+    ): View? {
+        _binding = FragmentCreatePostBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initListeners()
     }
 
     fun initListeners() {
-        btn_create_post_publish.setOnClickListener {
-            presenter.onPublishClicked(postId, et_create_post.text.toString())
-        }
-        btn_create_post_load_file.setOnClickListener {
-            loadFileFromDevice()
+        binding.run {
+            btnCreatePostPublish.setOnClickListener {
+                presenter.onPublishClicked(postId, etCreatePost.text.toString())
+            }
+            btnCreatePostLoadFile.setOnClickListener {
+                loadFileFromDevice()
+            }
         }
     }
 
@@ -72,7 +81,8 @@ class CreatePostFragment(
     }
 
     private fun loadFileFromDevice() {
-        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val galleryIntent =
+            Intent(Intent.ACTION_PICK).apply { this.type = getString(R.string.gallery_mask) }
         val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
             this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
             this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
@@ -82,18 +92,23 @@ class CreatePostFragment(
 
     override fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?) {
         when {
-            isPinnedEdit == null -> et_create_post.text?.insert(
-                et_create_post.selectionEnd,
+            isPinnedEdit == null -> binding.etCreatePost.text?.insert(
+                binding.etCreatePost.selectionEnd,
                 pinnedText
             )
-            isPinnedEdit -> et_create_post.hint =
+            isPinnedEdit -> binding.etCreatePost.hint =
                 resources.getString(R.string.publication_header_text)
-            isPublication || !isPinnedEdit -> et_create_post.hint =
+            isPublication || !isPinnedEdit -> binding.etCreatePost.hint =
                 resources.getString(R.string.create_post_hint)
         }
     }
 
     override fun showToast(msg: String) {
-        context?.showLongToast(msg)
+        requireContext().showLongToast(msg)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
