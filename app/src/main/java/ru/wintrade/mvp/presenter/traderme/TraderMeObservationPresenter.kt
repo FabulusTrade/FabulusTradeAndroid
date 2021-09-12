@@ -12,9 +12,15 @@ import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
+
+    companion object {
+        private const val PROFIT_FORMAT = "0.00"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -34,7 +40,13 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
             val traderList = traders[view.pos]
             traderList.trader.username?.let { view.setTraderName(it) }
             traderList.trader.avatar?.let { view.setTraderAvatar(it) }
-            traderList.trader.yearProfit?.let { view.setTraderProfit(it) }
+            traderList.trader.yearProfit?.let {
+                view.setTraderProfit(
+                    it.doubleToStringWithFormat(
+                        PROFIT_FORMAT
+                    )
+                )
+            }
             traderList.status?.let {
                 if (it.toInt() == 1)
                     view.subscribeStatus(false)

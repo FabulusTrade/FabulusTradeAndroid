@@ -11,9 +11,15 @@ import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TradersAllPresenter : MvpPresenter<TradersAllView>() {
+
+    companion object {
+        private const val FORMAT = "0.00"
+    }
+
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -34,7 +40,13 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
 
         override fun bind(view: TradersAllItemView) {
             traderList[view.pos].username?.let { view.setTraderName(it) }
-            traderList[view.pos].yearProfit?.let { view.setTraderProfit(it) }
+            traderList[view.pos].yearProfit?.let {
+                view.setTraderProfit(
+                    it.doubleToStringWithFormat(
+                        FORMAT
+                    )
+                )
+            }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
             subscriptionList.forEach {
                 if (it.trader.id == traderList[view.pos].id && it.status?.toInt() == 2)
