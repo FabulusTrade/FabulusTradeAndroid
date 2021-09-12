@@ -8,17 +8,21 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_trader_me_trade.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderMeTradeBinding
 import ru.wintrade.mvp.presenter.traderme.TraderMeTradePresenter
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TradesByCompanyRVAdapter
 
 class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
+    private var _binding: FragmentTraderMeTradeBinding? = null
+    private val binding: FragmentTraderMeTradeBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = TraderMeTradeFragment()
     }
@@ -31,13 +35,16 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: TradesByCompanyRVAdapter? = null
+    private var tradesByCompanyRVAdapter: TradesByCompanyRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_me_trade, container, false)
+    ): View? {
+        _binding = FragmentTraderMeTradeBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initListeners()
@@ -45,35 +52,39 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     }
 
     fun initListeners() {
-        btn_trader_me_trade_deals.setOnClickListener {
-            presenter.myDealsBtnClicked()
-        }
-        btn_trader_me_trade_orders.setOnClickListener {
-            presenter.myOrdersBtnClicked()
-        }
-        btn_trader_me_trade_journal.setOnClickListener {
-            presenter.myJournalBtnClicked()
+        binding.run {
+            btnTraderMeTradeDeals.setOnClickListener {
+                presenter.myDealsBtnClicked()
+            }
+            btnTraderMeTradeOrders.setOnClickListener {
+                presenter.myOrdersBtnClicked()
+            }
+            btnTraderMeTradeJournal.setOnClickListener {
+                presenter.myJournalBtnClicked()
+            }
         }
     }
 
     private fun initRV() {
-        adapter = TradesByCompanyRVAdapter(presenter.listPresenter)
-        rv_trader_me_trade_deals.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_trader_me_trade_deals.layoutManager = layoutManager
-        rv_trader_me_trade_deals.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            presenter.onScrollLimit()
+        tradesByCompanyRVAdapter = TradesByCompanyRVAdapter(presenter.listPresenter)
+        binding.rvTraderMeTradeDeals.run {
+            adapter = tradesByCompanyRVAdapter
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val layoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = layoutManager.childCount
+                            val totalItemCount = layoutManager.itemCount
+                            val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
                         }
                     }
-                }
-            })
+                })
+        }
     }
 
     override fun setBtnState(state: TraderMeTradePresenter.State) {
@@ -91,62 +102,63 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
     }
 
     override fun updateTradesAdapter() {
-        adapter?.notifyDataSetChanged()
+        tradesByCompanyRVAdapter?.notifyDataSetChanged()
     }
 
     private fun myJournalStateInit() {
-        isActive(btn_trader_me_trade_journal)
-        isNotActive(btn_trader_me_trade_deals)
-        isNotActive(btn_trader_me_trade_orders)
-        rv_trader_me_trade_deals.visibility = View.GONE
-        rv_trader_me_trade_orders.visibility = View.GONE
-        rv_trader_me_trade_journal.visibility = View.VISIBLE
-        tv_trader_me_deal_monthly_counter.visibility = View.GONE
+        binding.run {
+            isActive(btnTraderMeTradeJournal)
+            isNotActive(btnTraderMeTradeDeals)
+            isNotActive(btnTraderMeTradeOrders)
+            rvTraderMeTradeDeals.visibility = View.GONE
+            rvTraderMeTradeOrders.visibility = View.GONE
+            rvTraderMeTradeJournal.visibility = View.VISIBLE
+            tvTraderMeDealMonthlyCounter.visibility = View.GONE
+        }
     }
 
     private fun myOrdersStateInit() {
-        isActive(btn_trader_me_trade_orders)
-        isNotActive(btn_trader_me_trade_deals)
-        isNotActive(btn_trader_me_trade_journal)
-        rv_trader_me_trade_deals.visibility = View.GONE
-        rv_trader_me_trade_orders.visibility = View.VISIBLE
-        rv_trader_me_trade_journal.visibility = View.GONE
-        tv_trader_me_deal_monthly_counter.visibility = View.GONE
+        binding.run {
+            isActive(btnTraderMeTradeOrders)
+            isNotActive(btnTraderMeTradeDeals)
+            isNotActive(btnTraderMeTradeJournal)
+            rvTraderMeTradeDeals.visibility = View.GONE
+            rvTraderMeTradeOrders.visibility = View.VISIBLE
+            rvTraderMeTradeJournal.visibility = View.GONE
+            tvTraderMeDealMonthlyCounter.visibility = View.GONE
+        }
     }
 
     private fun myDealsStateInit() {
-        isActive(btn_trader_me_trade_deals)
-        isNotActive(btn_trader_me_trade_orders)
-        isNotActive(btn_trader_me_trade_journal)
-        rv_trader_me_trade_deals.visibility = View.VISIBLE
-        rv_trader_me_trade_orders.visibility = View.GONE
-        rv_trader_me_trade_journal.visibility = View.GONE
-        tv_trader_me_deal_monthly_counter.visibility = View.VISIBLE
+        binding.run {
+            isActive(btnTraderMeTradeDeals)
+            isNotActive(btnTraderMeTradeOrders)
+            isNotActive(btnTraderMeTradeJournal)
+            rvTraderMeTradeDeals.visibility = View.VISIBLE
+            rvTraderMeTradeOrders.visibility = View.GONE
+            rvTraderMeTradeJournal.visibility = View.GONE
+            tvTraderMeDealMonthlyCounter.visibility = View.VISIBLE
+        }
     }
 
     private fun isActive(activeBtn: MaterialButton) {
         activeBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorPrimary
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorLightGreen)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary))
         }
     }
 
     private fun isNotActive(inactiveBtn: MaterialButton) {
         inactiveBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorGray
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorGray))
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
