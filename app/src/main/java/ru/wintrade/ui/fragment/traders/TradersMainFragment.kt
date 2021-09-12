@@ -57,16 +57,20 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     }
 
     fun initListeners() {
-        tv_traders_main_registration_start.setOnClickListener {
-            mainPresenter.openRegistrationScreen()
+        binding.run {
+            tvTradersMainRegistrationStart.setOnClickListener {
+                mainPresenter.openRegistrationScreen()
+            }
         }
     }
 
     override fun setRegistrationBtnVisible(isVisible: Boolean) {
-        if (isVisible) {
-            tv_traders_main_registration_start.visibility = View.VISIBLE
-        } else {
-            tv_traders_main_registration_start.visibility = View.GONE
+        binding.run {
+            if (isVisible) {
+                tvTradersMainRegistrationStart.visibility = View.VISIBLE
+            } else {
+                tvTradersMainRegistrationStart.visibility = View.GONE
+            }
         }
     }
 
