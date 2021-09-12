@@ -35,4 +35,3 @@ data class Post(
         isDisliked = !isDisliked
     }
 }
-

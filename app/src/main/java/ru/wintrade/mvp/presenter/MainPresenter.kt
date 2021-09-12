@@ -113,7 +113,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         if (profile.user == null) {
             router.navigateTo(Screens.SignInScreen())
         } else {
-//navigateTo SearchScreen must be here
+            //navigateTo SearchScreen must be here
         }
     }
 
@@ -121,7 +121,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         if (profile.user == null) {
             router.navigateTo(Screens.SignInScreen())
         } else {
-//navigateTo ShareScreen must be here
+            //navigateTo ShareScreen must be here
         }
     }
 
@@ -129,7 +129,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         if (profile.user == null) {
             router.navigateTo(Screens.SignInScreen())
         } else {
-//navigateTo WinScreen must be here
+            //navigateTo WinScreen must be here
         }
     }
 

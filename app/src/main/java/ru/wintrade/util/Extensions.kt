@@ -39,6 +39,9 @@ fun MvpAppCompatFragment.setToolbarVisible(visible: Boolean = true) {
     navElementsControl?.toolbarVisible(visible)
 }
 
-fun Double.doubleToStringWithFormat(format: String): String {
-    return "${DecimalFormat(format).format(this)} %"
+fun Double.doubleToStringWithFormat(format: String, withPercent: Boolean? = null): String {
+    return when (withPercent) {
+        true -> "${DecimalFormat(format).format(this)} %"
+        else -> DecimalFormat(format).format(this)
+    }
 }

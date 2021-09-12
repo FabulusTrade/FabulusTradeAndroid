@@ -15,7 +15,6 @@ import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TradersAllPresenter : MvpPresenter<TradersAllView>() {
-
     companion object {
         private const val FORMAT = "0.00"
     }
@@ -42,9 +41,7 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
             traderList[view.pos].username?.let { view.setTraderName(it) }
             traderList[view.pos].yearProfit?.let {
                 view.setTraderProfit(
-                    it.doubleToStringWithFormat(
-                        FORMAT
-                    )
+                    it.doubleToStringWithFormat(FORMAT, true)
                 )
             }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }

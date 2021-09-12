@@ -27,7 +27,7 @@ class ProfileLocalDataSource(
         }
     }.subscribeOn(Schedulers.io())
 
-    fun save(profile: Profile): Completable = Completable.create { emitter->
+    fun save(profile: Profile): Completable = Completable.create { emitter ->
         profileDao.insert(mapToRoom(profile))
         if (profile.user == null)
             emitter.onComplete()
@@ -50,7 +50,14 @@ class ProfileLocalDataSource(
     private fun mapFromRoom(roomProfile: RoomProfile): Single<Profile> {
         return roomProfile.userId?.let { id ->
             userProfileLocalDataSource.get(id).flatMap { userProfile ->
-                Single.just(Profile(userProfile, roomProfile.token, roomProfile.deviceToken, roomProfile.hasVisitedTutorial))
+                Single.just(
+                    Profile(
+                        userProfile,
+                        roomProfile.token,
+                        roomProfile.deviceToken,
+                        roomProfile.hasVisitedTutorial
+                    )
+                )
             }
         } ?: Single.just(Profile(null, null, null, roomProfile.hasVisitedTutorial))
     }

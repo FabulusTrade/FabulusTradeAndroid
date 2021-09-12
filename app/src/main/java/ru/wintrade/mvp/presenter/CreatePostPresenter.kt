@@ -56,7 +56,7 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
         val byteArray = stream.toByteArray()
         this.imageBitmap = MultipartBody.Part.createFormData(
             "image[content]",
-            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date())}",
+            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault()).format(Date())}",
             byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
         )
         viewState.showToast("Изображение прикреплено")

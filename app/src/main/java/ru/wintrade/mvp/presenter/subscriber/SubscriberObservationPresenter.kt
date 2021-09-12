@@ -16,7 +16,6 @@ import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>() {
-
     companion object {
         private const val PROFIT_FORMAT = "0.00"
     }
@@ -42,9 +41,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             traderList.trader.avatar?.let { view.setTraderAvatar(it) }
             traderList.trader.yearProfit?.let {
                 view.setTraderProfit(
-                    it.doubleToStringWithFormat(
-                        PROFIT_FORMAT
-                    )
+                    it.doubleToStringWithFormat(PROFIT_FORMAT, true)
                 )
             }
             traderList.status?.let {

@@ -21,7 +21,6 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
     private val binding: FragmentOnBoardBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
-
     companion object {
         fun newInstance() = OnBoardFragment()
     }

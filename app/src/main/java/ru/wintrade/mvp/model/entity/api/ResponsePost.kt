@@ -28,4 +28,3 @@ data class ResponsePost(
     @Expose
     val is_disliked: Boolean
 )
-

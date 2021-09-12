@@ -41,5 +41,4 @@ class OnBoardVPAdapter(
             loadImage(id, iv_on_board_item)
         }
     }
-
 }

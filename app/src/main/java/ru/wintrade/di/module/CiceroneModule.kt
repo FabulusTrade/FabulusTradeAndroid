@@ -9,7 +9,6 @@ import javax.inject.Singleton
 
 @Module
 class CiceroneModule {
-
     @Singleton
     @Provides
     fun cicerone(): Cicerone<Router> {

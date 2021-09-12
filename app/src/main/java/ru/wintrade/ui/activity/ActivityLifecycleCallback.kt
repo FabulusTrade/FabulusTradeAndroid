@@ -4,7 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
-class ActivityLifecycleCallback(val holder: ActivityHolder): Application.ActivityLifecycleCallbacks {
+class ActivityLifecycleCallback(val holder: ActivityHolder) :
+    Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
         if (p0 is MainActivity)
             holder.activity = p0

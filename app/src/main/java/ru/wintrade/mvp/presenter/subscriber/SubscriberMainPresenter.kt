@@ -48,7 +48,12 @@ class SubscriberMainPresenter : MvpPresenter<SubscriberMainView>() {
         val byteArray = stream.toByteArray()
         val body = MultipartBody.Part.createFormData(
             "avatar",
-            "avatar${SimpleDateFormat("dd_MM_yyyy_hh_mm_ss").format(Date())}.jpeg",
+            "avatar${
+                SimpleDateFormat(
+                    "dd_MM_yyyy_hh_mm_ss",
+                    Locale.getDefault()
+                ).format(Date())
+            }.jpeg",
             byteArray.toRequestBody("avatar/*".toMediaTypeOrNull(), 0, byteArray.size)
         )
         changeAvatar(body)

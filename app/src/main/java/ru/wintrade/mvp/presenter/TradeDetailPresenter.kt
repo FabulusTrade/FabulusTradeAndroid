@@ -5,10 +5,10 @@ import com.github.terrakok.cicerone.Router
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.view.TradeDetailView
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
-class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
-
+class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
     @Inject
     lateinit var router: Router
 
@@ -16,10 +16,10 @@ class TradeDetailPresenter(val trade: Trade): MvpPresenter<TradeDetailView>() {
         super.onFirstViewAttach()
         viewState.init()
 
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy / HH.mm")
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy / HH.mm", Locale.getDefault())
         val date = dateFormat.format(trade.date)
 
-        trade.trader?.username?.let { viewState.setName(it)}
+        trade.trader?.username?.let { viewState.setName(it) }
         viewState.setType(trade.operationType)
         viewState.setCompany(trade.company)
         viewState.setTicker(trade.ticker)
