@@ -47,6 +47,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
 
     override fun init() {
         initView()
+        initListeners()
         binding.vpMainTraders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(binding.tabLayoutMainTraders, binding.vpMainTraders) { tab, pos ->
             when (pos) {
@@ -65,12 +66,10 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     }
 
     override fun setRegistrationBtnVisible(isVisible: Boolean) {
-        binding.run {
-            if (isVisible) {
-                tvTradersMainRegistrationStart.visibility = View.VISIBLE
-            } else {
-                tvTradersMainRegistrationStart.visibility = View.GONE
-            }
+        if (isVisible) {
+            binding.tvTradersMainRegistrationStart.visibility = View.VISIBLE
+        } else {
+            binding.tvTradersMainRegistrationStart.visibility = View.GONE
         }
     }
 
