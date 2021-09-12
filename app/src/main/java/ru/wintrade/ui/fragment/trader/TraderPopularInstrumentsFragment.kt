@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_trader_popular_instruments.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderPopularInstrumentsBinding
 import ru.wintrade.mvp.presenter.trader.TraderPopularInstrumentsPresenter
 import ru.wintrade.mvp.view.trader.TraderPopularInstrumentsView
 import ru.wintrade.ui.App
 
 class TraderPopularInstrumentsFragment : MvpAppCompatFragment(), TraderPopularInstrumentsView {
+    private var _binding: FragmentTraderPopularInstrumentsBinding? = null
+    private val binding: FragmentTraderPopularInstrumentsBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = TraderPopularInstrumentsFragment()
     }
@@ -30,28 +34,40 @@ class TraderPopularInstrumentsFragment : MvpAppCompatFragment(), TraderPopularIn
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_popular_instruments, container, false)
+    ): View? {
+        _binding = FragmentTraderPopularInstrumentsBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initListeners()
     }
 
     fun initListeners() {
-        btn_trader_pop_instr_entry.setOnClickListener {
-            presenter.openSignInScreen()
-        }
-        btn_trader_pop_instr_registration.setOnClickListener {
-            presenter.openSignUpScreen()
+        binding.run {
+            btnTraderPopInstrEntry.setOnClickListener {
+                presenter.openSignInScreen()
+            }
+            btnTraderPopInstrRegistration.setOnClickListener {
+                presenter.openSignUpScreen()
+            }
         }
     }
 
     override fun isAuthorized(isAuth: Boolean) {
-        if (isAuth) {
-            layout_trader_pop_instr_is_auth.visibility = View.VISIBLE
-            layout_trader_pop_instr_not_auth.visibility = View.GONE
-        } else {
-            layout_trader_pop_instr_is_auth.visibility = View.GONE
-            layout_trader_pop_instr_not_auth.visibility = View.VISIBLE
+        binding.run {
+            if (isAuth) {
+                layoutTraderPopInstrIsAuth.visibility = View.VISIBLE
+                layoutTraderPopInstrNotAuth.visibility = View.GONE
+            } else {
+                layoutTraderPopInstrIsAuth.visibility = View.GONE
+                layoutTraderPopInstrNotAuth.visibility = View.VISIBLE
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

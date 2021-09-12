@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_traders_main.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTradersMainBinding
 import ru.wintrade.mvp.presenter.traders.TradersMainPresenter
 import ru.wintrade.mvp.view.traders.TradersMainView
 import ru.wintrade.ui.App
@@ -20,6 +20,10 @@ import ru.wintrade.util.setDrawerLockMode
 import ru.wintrade.util.setToolbarVisible
 
 class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonListener {
+    private var _binding: FragmentTradersMainBinding? = null
+    private val binding: FragmentTradersMainBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = TradersMainFragment()
     }
@@ -36,13 +40,15 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_traders_main, container, false)
+    ): View? {
+        _binding = FragmentTradersMainBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
-        initListeners()
-        vp_main_traders.adapter = TradersMainVPAdapter(this)
-        TabLayoutMediator(tab_layout_main_traders, vp_main_traders) { tab, pos ->
+        binding.vpMainTraders.adapter = TradersMainVPAdapter(this)
+        TabLayoutMediator(binding.tabLayoutMainTraders, binding.vpMainTraders) { tab, pos ->
             when (pos) {
                 0 -> tab.text = resources.getString(R.string.show_all)
                 1 -> tab.text = resources.getString(R.string.filter)
@@ -72,5 +78,10 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     override fun backClicked(): Boolean {
         mainPresenter.backClicked()
         return true
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

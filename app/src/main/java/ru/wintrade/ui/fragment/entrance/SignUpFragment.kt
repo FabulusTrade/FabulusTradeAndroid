@@ -10,18 +10,21 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
-import kotlinx.android.synthetic.main.fragment_sign_up.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
-import ru.wintrade.mvp.view.registration.subscriber.SignUpView
+import ru.wintrade.databinding.FragmentSignUpBinding
+import ru.wintrade.mvp.presenter.entrance.SignUpPresenter
+import ru.wintrade.mvp.view.entrance.SignUpView
 import ru.wintrade.ui.App
 import ru.wintrade.util.*
 
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding: FragmentSignUpBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
         fun newInstance() = SignUpFragment()
@@ -39,12 +42,15 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_sign_up, container, false)
+    ): View? {
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
-        tv_sign_privacy.movementMethod = LinkMovementMethod.getInstance()
-        tv_sign_rules.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvSignPrivacy.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvSignRules.movementMethod = LinkMovementMethod.getInstance()
         initListeners()
     }
 
@@ -72,7 +78,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setNicknameError(validation: NicknameValidation) {
-        et_sign_nickname_layout.error =
+        binding.etSignNicknameLayout.error =
             when (validation) {
                 NicknameValidation.TOO_SHORT -> getString(R.string.nickname_too_short)
                 NicknameValidation.TOO_LONG -> getString(R.string.nickname_too_long)
@@ -83,7 +89,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setPasswordError(validation: PasswordValidation) {
-        et_sign_password_layout.error =
+        binding.etSignPasswordLayout.error =
             when (validation) {
                 PasswordValidation.TOO_SHORT -> getString(R.string.password_too_short)
                 PasswordValidation.NO_UPPERCASE_OR_LOWERCASE_OR_DIGIT -> getString(R.string.password_no_up_low_case_digits)
@@ -93,14 +99,16 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setPasswordConfirmError(isCorrect: Boolean) {
-        if (isCorrect)
-            et_sign_confirm_password_layout.error = null
+        binding.etSignConfirmPasswordLayout
+            .error = if (isCorrect)
+            null
         else
-            et_sign_confirm_password_layout.error = getString(R.string.password_mismatch)
+            getString(R.string.password_mismatch)
+
     }
 
     override fun setEmailError(validation: EmailValidation) {
-        et_sign_email_layout.error = when (validation) {
+        binding.etSignEmailLayout.error = when (validation) {
             EmailValidation.INCORRECT -> getString(R.string.email_incorrect)
             EmailValidation.ALREADY_EXISTS -> getString(R.string.email_already_exists)
             EmailValidation.OK -> null
@@ -108,7 +116,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     }
 
     override fun setPhoneError(validation: PhoneValidation) {
-        et_sign_phone_layout.error = when (validation) {
+        binding.etSignPhoneLayout.error = when (validation) {
             PhoneValidation.INCORRECT -> getString(R.string.phone_incorrect)
             PhoneValidation.ALREADY_EXISTS -> getString(R.string.phone_already_exists)
             PhoneValidation.OK -> null
@@ -118,50 +126,62 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     private fun initListeners() {
         initPhoneEditText()
 
-        et_sign_nickname.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus)
-                presenter.onNicknameInputFocusLost(et_sign_nickname.text.toString())
+        binding.etSignNickname.run {
+            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus)
+                    presenter.onNicknameInputFocusLost(text.toString())
+            }
         }
 
-        et_sign_password.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus)
-                presenter.onPasswordInputFocusLost(et_sign_password.text.toString())
+        binding.etSignPassword.run {
+            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus)
+                    presenter.onPasswordInputFocusLost(text.toString())
+            }
         }
 
-        et_sign_confirm_password.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus)
-                presenter.onConfirmPasswordInputFocusLost(et_sign_confirm_password.text.toString())
+        binding.etSignConfirmPassword.run {
+            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus)
+                    presenter.onConfirmPasswordInputFocusLost(text.toString())
+            }
         }
 
-        et_sign_phone.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus)
-                presenter.onPhoneInputFocusLost()
+        binding.etSignPhone.run {
+            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus)
+                    presenter.onPhoneInputFocusLost()
+            }
         }
 
-        et_sign_email.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus)
-                presenter.onEmailInputFocusLost(et_sign_email.text.toString())
+        binding.etSignEmail.run {
+            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus)
+                    presenter.onEmailInputFocusLost(text.toString())
+            }
         }
 
-        btn_sign_create.setOnClickListener {
-            presenter.createProfileClicked(
-                et_sign_nickname.text.toString(),
-                et_sign_password.text.toString(),
-                et_sign_confirm_password.text.toString(),
-                et_sign_email.text.toString(),
-                cb_sign_rules.isChecked,
-                cb_sign_privacy.isChecked
-            )
+        binding.btnSignCreate.setOnClickListener {
+            with(binding) {
+                presenter.createProfileClicked(
+                    etSignNickname.text.toString(),
+                    etSignPassword.text.toString(),
+                    etSignConfirmPassword.text.toString(),
+                    etSignEmail.text.toString(),
+                    cbSignRules.isChecked,
+                    cbSignPrivacy.isChecked
+                )
+            }
         }
     }
 
     private fun initPhoneEditText() {
         val affineFormats: MutableList<String> = ArrayList()
-        affineFormats.add("8 ([000]) [000]-[00]-[00]")
+        affineFormats.add(getString(R.string.phone_format_1))
 
         val listener: MaskedTextChangedListener = installOn(
-            et_sign_phone,
-            "+7 ([000]) [000]-[00]-[00]",
+            binding.etSignPhone,
+            getString(R.string.phone_format_2),
             affineFormats, AffinityCalculationStrategy.PREFIX,
             object : MaskedTextChangedListener.ValueListener {
                 override fun onTextChanged(
@@ -173,6 +193,11 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
                 }
             }
         )
-        et_sign_phone.hint = listener.placeholder()
+        binding.etSignPhone.hint = listener.placeholder()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

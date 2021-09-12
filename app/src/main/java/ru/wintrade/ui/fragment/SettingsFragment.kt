@@ -9,6 +9,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentSettingsBinding
 import ru.wintrade.mvp.presenter.SettingsPresenter
 import ru.wintrade.mvp.view.SettingsView
 import ru.wintrade.ui.App
@@ -16,6 +17,10 @@ import ru.wintrade.util.setDrawerLockMode
 import ru.wintrade.util.setToolbarVisible
 
 class SettingsFragment : MvpAppCompatFragment(), SettingsView {
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding: FragmentSettingsBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = SettingsFragment()
     }
@@ -32,7 +37,10 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View? {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
@@ -41,5 +49,10 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsView {
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         setToolbarVisible(true)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
