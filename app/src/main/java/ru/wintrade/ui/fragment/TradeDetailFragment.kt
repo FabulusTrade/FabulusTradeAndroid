@@ -28,7 +28,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
-
     @InjectPresenter
     lateinit var presenter: TradeDetailPresenter
 

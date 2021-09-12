@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SplashPresenter : MvpPresenter<SplashView>() {
-
     @Inject
     lateinit var profile: Profile
 

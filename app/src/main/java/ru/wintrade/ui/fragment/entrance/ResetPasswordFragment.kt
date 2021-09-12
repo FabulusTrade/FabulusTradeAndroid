@@ -20,7 +20,6 @@ class ResetPasswordFragment : MvpAppCompatFragment(), ResetPasswordView {
     private val binding: FragmentResetPasswordBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
-
     companion object {
         fun newInstance() = ResetPasswordFragment()
     }

@@ -35,7 +35,5 @@ class TraderNewsImagesRVAdapter :
         fun setImage(pos: Int) {
             loadImage(images[pos], itemView.iv_item_trader_news_item_image)
         }
-
     }
-
 }

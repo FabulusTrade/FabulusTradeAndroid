@@ -8,7 +8,6 @@ import javax.inject.Singleton
 
 @Module
 class HelperModule {
-
     @Singleton
     @Provides
     fun imageHelper(app: App): ImageHelper {

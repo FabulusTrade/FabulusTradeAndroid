@@ -59,10 +59,9 @@
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_subscriber_observation_name"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
-                app:layout_constraintHorizontal_weight="0.15"
+                app:layout_constraintHorizontal_weight="0.2"
                 app:layout_constraintStart_toEndOf="@+id/tv_subscriber_observation_name"
-                app:layout_constraintTop_toTopOf="@+id/tv_subscriber_observation_name"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="@+id/tv_subscriber_observation_name" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout6"

@@ -17,14 +17,13 @@ import ru.wintrade.util.setDrawerLockMode
 import ru.wintrade.util.setToolbarVisible
 import ru.wintrade.util.showLongToast
 
-private const val MAX_QUESTION_LENGTH = 500
-
 class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     private var _binding: FragmentQuestionBinding? = null
     private val binding: FragmentQuestionBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
+        private const val MAX_QUESTION_LENGTH = 500
         fun newInstance() = QuestionFragment()
     }
 
