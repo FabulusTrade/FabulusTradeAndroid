@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_trader_me_observation.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderMeObservationBinding
 import ru.wintrade.mvp.presenter.traderme.TraderMeObservationPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.ui.App
@@ -17,6 +17,10 @@ import ru.wintrade.ui.adapter.ObservationRVAdapter
 
 
 class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationView {
+    private var _binding: FragmentTraderMeObservationBinding? = null
+    private val binding: FragmentTraderMeObservationBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = TraderMeObservationFragment()
         const val DEALS = 1
@@ -32,13 +36,16 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: ObservationRVAdapter? = null
+    private var observationRVAdapter: ObservationRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_me_observation, container, false)
+    ): View? {
+        _binding = FragmentTraderMeObservationBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initAdapter()
@@ -46,24 +53,33 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
     }
 
     fun initAdapter() {
-        adapter = ObservationRVAdapter(presenter.listPresenter)
-        rv_trader_me_sub.adapter = adapter
-        rv_trader_me_sub.layoutManager = LinearLayoutManager(context)
+        observationRVAdapter = ObservationRVAdapter(presenter.listPresenter)
+        binding.rvTraderMeSub.run {
+            adapter = observationRVAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     fun initListeners() {
-        btn_trader_me_sub_deal_trades.setOnClickListener {
-            presenter.openTraderMeSubScreen(DEALS)
-        }
-        btn_trader_me_sub_deal_orders.setOnClickListener {
-            presenter.openTraderMeSubScreen(ORDERS)
-        }
-        btn_trader_me_sub_deal_logs.setOnClickListener {
-            presenter.openTraderMeSubScreen(JOURNALS)
+        binding.run {
+            btnTraderMeSubDealTrades.setOnClickListener {
+                presenter.openTraderMeSubScreen(DEALS)
+            }
+            btnTraderMeSubDealOrders.setOnClickListener {
+                presenter.openTraderMeSubScreen(ORDERS)
+            }
+            btnTraderMeSubDealLogs.setOnClickListener {
+                presenter.openTraderMeSubScreen(JOURNALS)
+            }
         }
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        observationRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

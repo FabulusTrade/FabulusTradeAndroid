@@ -8,17 +8,21 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_trader_me_subs_trade.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderMeSubsTradeBinding
 import ru.wintrade.mvp.presenter.traderme.TraderMeSubTradePresenter
 import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
 
 class TraderMeSubTradeFragment : MvpAppCompatFragment(), TraderMeSubTradeView {
+    private var _binding: FragmentTraderMeSubsTradeBinding? = null
+    private val binding: FragmentTraderMeSubsTradeBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         private const val POSITION = "position"
         fun newInstance(position: Int) = TraderMeSubTradeFragment().apply {
@@ -38,13 +42,16 @@ class TraderMeSubTradeFragment : MvpAppCompatFragment(), TraderMeSubTradeView {
         App.instance.appComponent.inject(this)
     }
 
-    var adapter: SubscriberTradesRVAdapter? = null
+    var subscriberTradesRVAdapter: SubscriberTradesRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_me_subs_trade, container, false)
+    ): View? {
+        _binding = FragmentTraderMeSubsTradeBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init(position: Int) {
         when (position) {
@@ -56,25 +63,27 @@ class TraderMeSubTradeFragment : MvpAppCompatFragment(), TraderMeSubTradeView {
         initListeners()
     }
 
-    fun initRecyclerView() {
-        adapter = SubscriberTradesRVAdapter(presenter.listPresenter)
-        rv_trader_me_sub_trade_deal.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_trader_me_sub_trade_deal.layoutManager = layoutManager
-        rv_trader_me_sub_trade_deal.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            presenter.onScrollLimit()
+    private fun initRecyclerView() {
+        subscriberTradesRVAdapter = SubscriberTradesRVAdapter(presenter.listPresenter)
+        binding.rvTraderMeSubTradeDeal.run {
+            adapter = subscriberTradesRVAdapter
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val layoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = layoutManager.childCount
+                            val totalItemCount = layoutManager.itemCount
+                            val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     override fun setBtnState(state: TraderMeSubTradePresenter.State) {
@@ -86,75 +95,81 @@ class TraderMeSubTradeFragment : MvpAppCompatFragment(), TraderMeSubTradeView {
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        subscriberTradesRVAdapter?.notifyDataSetChanged()
     }
 
     override fun setRefreshing(isRefreshing: Boolean) {
-        layout_trader_me_sub_trade_refresh.isRefreshing = isRefreshing
+        binding.layoutTraderMeSubTradeRefresh.isRefreshing = isRefreshing
     }
 
     fun initListeners() {
-        layout_trader_me_sub_trade.setOnClickListener {
-            presenter.refreshed()
-        }
-        btn_trader_me_sub_trade_deal.setOnClickListener {
-            presenter.dealsBtnClicked()
-        }
-        btn_trader_me_sub_trade_orders.setOnClickListener {
-            presenter.ordersBtnClicked()
-        }
-        btn_trader_me_sub_trade_logs.setOnClickListener {
-            presenter.journalBtnClicked()
+        binding.run {
+            layoutTraderMeSubTrade.setOnClickListener {
+                presenter.refreshed()
+            }
+            btnTraderMeSubTradeDeal.setOnClickListener {
+                presenter.dealsBtnClicked()
+            }
+            btnTraderMeSubTradeOrders.setOnClickListener {
+                presenter.ordersBtnClicked()
+            }
+            btnTraderMeSubTradeLogs.setOnClickListener {
+                presenter.journalBtnClicked()
+            }
         }
     }
 
     private fun journalStateInit() {
-        isActive(btn_trader_me_sub_trade_logs)
-        isNotActive(btn_trader_me_sub_trade_deal)
-        isNotActive(btn_trader_me_sub_trade_orders)
-        layout_trader_me_sub_trade.visibility = View.GONE
-        tv_trader_me_sub_trade_coming_soon.visibility = View.VISIBLE
+        binding.run {
+            isActive(btnTraderMeSubTradeLogs)
+            isNotActive(btnTraderMeSubTradeDeal)
+            isNotActive(btnTraderMeSubTradeOrders)
+            layoutTraderMeSubTrade.visibility = View.GONE
+            tvTraderMeSubTradeComingSoon.visibility = View.VISIBLE
+
+        }
     }
 
     private fun ordersStateInit() {
-        isActive(btn_trader_me_sub_trade_orders)
-        isNotActive(btn_trader_me_sub_trade_deal)
-        isNotActive(btn_trader_me_sub_trade_logs)
-        layout_trader_me_sub_trade.visibility = View.GONE
-        tv_trader_me_sub_trade_coming_soon.visibility = View.VISIBLE
+        binding.run {
+            isActive(btnTraderMeSubTradeOrders)
+            isNotActive(btnTraderMeSubTradeDeal)
+            isNotActive(btnTraderMeSubTradeLogs)
+            layoutTraderMeSubTrade.visibility = View.GONE
+            tvTraderMeSubTradeComingSoon.visibility = View.VISIBLE
+
+        }
     }
 
     private fun dealsStateInit() {
-        isActive(btn_trader_me_sub_trade_deal)
-        isNotActive(btn_trader_me_sub_trade_orders)
-        isNotActive(btn_trader_me_sub_trade_logs)
-        layout_trader_me_sub_trade.visibility = View.VISIBLE
-        tv_trader_me_sub_trade_coming_soon.visibility = View.GONE
+        binding.run {
+            isActive(btnTraderMeSubTradeDeal)
+            isNotActive(btnTraderMeSubTradeOrders)
+            isNotActive(btnTraderMeSubTradeLogs)
+            layoutTraderMeSubTrade.visibility = View.VISIBLE
+            tvTraderMeSubTradeComingSoon.visibility = View.GONE
+
+        }
     }
 
     private fun isActive(activeBtn: MaterialButton) {
         activeBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorPrimary
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorLightGreen)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary))
         }
     }
 
     private fun isNotActive(inactiveBtn: MaterialButton) {
         inactiveBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorGray
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorGray))
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

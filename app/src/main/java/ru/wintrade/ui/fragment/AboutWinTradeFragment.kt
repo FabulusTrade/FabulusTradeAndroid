@@ -9,6 +9,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentAboutWtBinding
 import ru.wintrade.mvp.presenter.AboutWinTradePresenter
 import ru.wintrade.mvp.view.AboutWinTradeView
 import ru.wintrade.ui.App
@@ -17,6 +18,10 @@ import ru.wintrade.util.setToolbarVisible
 
 
 class AboutWinTradeFragment : MvpAppCompatFragment(), AboutWinTradeView {
+    private var _binding: FragmentAboutWtBinding? = null
+    private val binding: FragmentAboutWtBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = AboutWinTradeFragment()
     }
@@ -33,7 +38,10 @@ class AboutWinTradeFragment : MvpAppCompatFragment(), AboutWinTradeView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_about_wt, container, false)
+    ): View? {
+        _binding = FragmentAboutWtBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
@@ -42,5 +50,10 @@ class AboutWinTradeFragment : MvpAppCompatFragment(), AboutWinTradeView {
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         setToolbarVisible(true)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

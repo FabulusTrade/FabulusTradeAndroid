@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
-import kotlinx.android.synthetic.main.fragment_question.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentQuestionBinding
 import ru.wintrade.mvp.presenter.QuestionPresenter
 import ru.wintrade.mvp.view.QuestionView
 import ru.wintrade.ui.App
@@ -17,7 +17,13 @@ import ru.wintrade.util.setDrawerLockMode
 import ru.wintrade.util.setToolbarVisible
 import ru.wintrade.util.showLongToast
 
+private const val MAX_QUESTION_LENGTH = 500
+
 class QuestionFragment : MvpAppCompatFragment(), QuestionView {
+    private var _binding: FragmentQuestionBinding? = null
+    private val binding: FragmentQuestionBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = QuestionFragment()
     }
@@ -34,7 +40,10 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_question, container, false)
+    ): View? {
+        _binding = FragmentQuestionBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
@@ -42,31 +51,31 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     }
 
     override fun setEmail(email: String) {
-        et_question_mail.text?.insert(et_question_mail.selectionStart, email)
+        binding.etQuestionMail.text?.insert(binding.etQuestionMail.selectionStart, email)
     }
 
     override fun showToast() {
-        context?.showLongToast(resources.getString(R.string.question_success))
+        requireContext().showLongToast(resources.getString(R.string.question_success))
     }
 
     override fun clearField() {
-        et_question_body.text?.clear()
+        binding.etQuestionBody.text?.clear()
     }
 
     fun initListeners() {
-        btn_question_send.setOnClickListener {
+        binding.btnQuestionSend.setOnClickListener {
             when {
-                et_question_body.text?.length!! > 500 -> context?.showLongToast(
+                binding.etQuestionBody.text?.length!! > MAX_QUESTION_LENGTH -> requireContext().showLongToast(
                     resources.getString(
                         R.string.question_too_long
                     )
                 )
-                et_question_body.text.isNullOrEmpty() -> context?.showLongToast(
+                binding.etQuestionBody.text.isNullOrEmpty() -> requireContext().showLongToast(
                     resources.getString(
                         R.string.question_too_short
                     )
                 )
-                else -> presenter.sendMessage(et_question_body.text.toString())
+                else -> presenter.sendMessage(binding.etQuestionBody.text.toString())
             }
         }
     }
@@ -74,5 +83,10 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         setToolbarVisible(true)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
