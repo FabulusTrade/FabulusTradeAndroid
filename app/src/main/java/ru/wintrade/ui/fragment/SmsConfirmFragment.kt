@@ -17,14 +17,13 @@ import ru.wintrade.util.showLongToast
 import java.util.concurrent.TimeUnit
 
 
-private const val SMS_TIMEOUT = 1000L
-
 class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
     private var _binding: FragmentSmsConfirmBinding? = null
     private val binding: FragmentSmsConfirmBinding
         get() = checkNotNull(_binding) { getString(R.string.error) }
 
     companion object {
+        private const val SMS_TIMEOUT = 1000L
         const val PHONE_KEY = "phone"
         fun newInstance(phone: String) = SmsConfirmFragment().apply {
             arguments = Bundle().apply {
@@ -67,8 +66,6 @@ class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
                     {}
                 )
         }
-
-
     }
 
     override fun showToast(msg: String) {

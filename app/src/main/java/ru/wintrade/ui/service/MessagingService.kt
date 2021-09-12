@@ -17,8 +17,6 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 
 class MessagingService : FirebaseMessagingService(), IMessagingService {
-
-
     private val presenter = MessagingPresenter(this)
 
     override fun onCreate() {

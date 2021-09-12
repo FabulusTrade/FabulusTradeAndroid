@@ -1,6 +1,5 @@
 package ru.wintrade.mvp.presenter.traderme
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -16,12 +15,23 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeProfitView
 import ru.wintrade.navigation.Screens
-import java.text.DecimalFormat
+import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
     MvpPresenter<TraderMeProfitView>() {
+    companion object {
+        private const val TERM_OF_TRANSACTION_FORMAT = "0"
+        private const val DEALS_AVERAGE_PROFIT_FORMAT = "0.0"
+        private const val PROFIT_MONTH_FORMAT = "0.00"
+        private const val ZERO_PERCENT = "0.00%"
+        private const val ZERO = 0
+        private const val AVERAGE_PERCENT_DEFAULT = "0.0(0.0%)"
+        const val PROFITABILITY = "profitability"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -42,15 +52,13 @@ class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
         viewState.setDateJoined(getTraderDateJoined())
         traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
         traderStatistic.amountDeals30?.let { viewState.setTradesCount(it) }
-            ?: viewState.setTradesCount(0)
+            ?: viewState.setTradesCount(ZERO)
         viewState.setPinnedTextVisible(isOpen)
         traderStatistic.termOfTransaction30?.let {
             viewState.setAverageDealsTime(
-                DecimalFormat("0.0").format(
-                    traderStatistic.termOfTransaction30
-                )
+                it.doubleToStringWithFormat(TERM_OF_TRANSACTION_FORMAT)
             )
-        } ?: viewState.setAverageDealsTime("0.0")
+        } ?: viewState.setAverageDealsTime(TERM_OF_TRANSACTION_FORMAT)
         setAverageDealsCountAndProfit()
         clearProfitTable()
         setProfitTable()
@@ -59,54 +67,104 @@ class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
     private fun setAverageDealsCountAndProfit() {
         traderStatistic.profitTrades30?.let {
             viewState.setAverageDealsPositiveCountAndProfit(
-                "${DecimalFormat("0.0").format(traderStatistic.profitTrades30)}(${
-                    DecimalFormat("0.0").format(
-                        traderStatistic.averageProfitTrades30
+                "${it.doubleToStringWithFormat(DEALS_AVERAGE_PROFIT_FORMAT)}(${
+                    traderStatistic.averageProfitTrades30?.doubleToStringWithFormat(
+                        DEALS_AVERAGE_PROFIT_FORMAT, true
                     )
-                }%)"
+                })"
             )
-        } ?: viewState.setAverageDealsNegativeCountAndProfit("0.0 ( 0.0%)")
+        } ?: viewState.setAverageDealsNegativeCountAndProfit(AVERAGE_PERCENT_DEFAULT)
         traderStatistic.losingTrades30?.let {
             viewState.setAverageDealsNegativeCountAndProfit(
-                "${DecimalFormat("0.0").format(traderStatistic.losingTrades30)}(${
-                    DecimalFormat("0.0").format(
-                        traderStatistic.averageLosingTrades30
+                "${it.doubleToStringWithFormat(DEALS_AVERAGE_PROFIT_FORMAT)}(${
+                    traderStatistic.averageLosingTrades30?.doubleToStringWithFormat(
+                        DEALS_AVERAGE_PROFIT_FORMAT, true
                     )
-                }%)"
+                })"
             )
-        } ?: viewState.setAverageDealsNegativeCountAndProfit("0.0 ( 0.0%)")
+        } ?: viewState.setAverageDealsNegativeCountAndProfit(AVERAGE_PERCENT_DEFAULT)
     }
 
     private fun clearProfitTable() {
-        viewState.setJanProfit("0.00%")
-        viewState.setFebProfit("0.00%")
-        viewState.setMarProfit("0.00%")
-        viewState.setAprProfit("0.00%")
-        viewState.setMayProfit("0.00%")
-        viewState.setJunProfit("0.00%")
-        viewState.setJulProfit("0.00%")
-        viewState.setAugProfit("0.00%")
-        viewState.setSepProfit("0.00%")
-        viewState.setOctProfit("0.00%")
-        viewState.setNovProfit("0.00%")
-        viewState.setDecProfit("0.00%")
+        viewState.setJanProfit(ZERO_PERCENT)
+        viewState.setFebProfit(ZERO_PERCENT)
+        viewState.setMarProfit(ZERO_PERCENT)
+        viewState.setAprProfit(ZERO_PERCENT)
+        viewState.setMayProfit(ZERO_PERCENT)
+        viewState.setJunProfit(ZERO_PERCENT)
+        viewState.setJulProfit(ZERO_PERCENT)
+        viewState.setAugProfit(ZERO_PERCENT)
+        viewState.setSepProfit(ZERO_PERCENT)
+        viewState.setOctProfit(ZERO_PERCENT)
+        viewState.setNovProfit(ZERO_PERCENT)
+        viewState.setDecProfit(ZERO_PERCENT)
     }
 
     private fun setProfitTable() {
         traderStatistic.monthIndicators.forEach {
             when (it.month) {
-                1 -> viewState.setJanProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                2 -> viewState.setFebProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                3 -> viewState.setMarProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                4 -> viewState.setAprProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                5 -> viewState.setMayProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                6 -> viewState.setJunProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                7 -> viewState.setJulProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                8 -> viewState.setAugProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                9 -> viewState.setSepProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                10 -> viewState.setOctProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                11 -> viewState.setNovProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
-                12 -> viewState.setDecProfit("${DecimalFormat("0.00").format(it.actualProfitMonth)}%")
+                1 -> viewState.setJanProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                2 -> viewState.setFebProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                3
+                -> viewState.setMarProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                4
+                -> viewState.setAprProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                5 -> viewState.setMayProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                6 -> viewState.setJunProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                7 -> viewState.setJulProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                8 -> viewState.setAugProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                9 -> viewState.setSepProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                10 -> viewState.setOctProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                11 -> viewState.setNovProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
+                12 -> viewState.setDecProfit(
+                    it.actualProfitMonth!!.doubleToStringWithFormat(
+                        PROFIT_MONTH_FORMAT, true
+                    )
+                )
             }
         }
     }
@@ -139,9 +197,8 @@ class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
             )
     }
 
-    @SuppressLint("SimpleDateFormat")
     fun getTraderDateJoined(): String {
-        val outputDateFormat = SimpleDateFormat("dd.MM.yyyy")
+        val outputDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         return outputDateFormat.format(traderStatistic.audienceData[0].dateJoined)
     }
 

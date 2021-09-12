@@ -56,7 +56,6 @@ class AndroidFirebaseAuth(val holder: ActivityHolder) :
         }
     }
 
-
     private fun getSmsCodeCallback() =
         object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 

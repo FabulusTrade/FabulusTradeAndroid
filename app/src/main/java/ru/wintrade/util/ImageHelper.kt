@@ -6,7 +6,6 @@ import android.provider.OpenableColumns
 
 class ImageHelper(val context: Context) {
     fun getBytesAndFileNameByUri(uri: String): Pair<String?, ByteArray> {
-
         val bytes = context.contentResolver.openInputStream(Uri.parse(uri))!!.readBytes()
         var name: String? = null
         val proj = arrayOf(OpenableColumns.DISPLAY_NAME)
@@ -16,7 +15,6 @@ class ImageHelper(val context: Context) {
                 name = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             }
         }
-
         return Pair(name, bytes)
     }
 }

@@ -14,7 +14,6 @@ import ru.wintrade.util.*
 import javax.inject.Inject
 
 class SignUpPresenter : MvpPresenter<SignUpView>() {
-
     @Inject
     lateinit var router: Router
 

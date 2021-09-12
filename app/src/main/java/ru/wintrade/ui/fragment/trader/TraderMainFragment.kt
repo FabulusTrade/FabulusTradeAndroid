@@ -72,7 +72,6 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         }
     }
 
-
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }

@@ -35,7 +35,10 @@ fun isValidPhone(phone: String): PhoneValidation {
 fun isValidPassword(password: String): PasswordValidation {
     if (password.length < passwordMinLength)
         return PasswordValidation.TOO_SHORT
-    if (!(containsUppercaseLetter(password) && containsLowercaseLetter(password) && containsDigit(password)))
+    if (!(containsUppercaseLetter(password) && containsLowercaseLetter(password) && containsDigit(
+            password
+        ))
+    )
         return PasswordValidation.NO_UPPERCASE_OR_LOWERCASE_OR_DIGIT
     return PasswordValidation.OK
 }
@@ -61,4 +64,3 @@ private fun containsLowercaseLetter(line: String): Boolean {
 private fun containsDigit(line: String): Boolean {
     return line.matches(".*[0-9].*".toRegex())
 }
-

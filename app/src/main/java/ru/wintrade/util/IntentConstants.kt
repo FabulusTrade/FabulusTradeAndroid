@@ -1,5 +1,5 @@
 package ru.wintrade.util
 
 object IntentConstants {
-    val PICK_IMAGE = 1
+    const val PICK_IMAGE = 1
 }

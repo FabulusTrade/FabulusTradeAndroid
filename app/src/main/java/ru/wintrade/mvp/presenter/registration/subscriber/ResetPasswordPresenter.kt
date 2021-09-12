@@ -32,7 +32,7 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
         if (emailValidation == EmailValidation.OK) {
             apiRepo.resetPassword(email).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 viewState.showSuccessDialog()
-            },{
+            }, {
                 viewState.showAlertDialog()
             })
         }

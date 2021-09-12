@@ -16,7 +16,6 @@ import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
 
-private const val ANIMATE_DURATION = 3000
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     private var _binding: FragmentTraderProfitBinding? = null
@@ -24,6 +23,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
+        private const val ANIMATE_DURATION = 3000
         private const val MAX_LINES = 5000
         private const val MIN_LINES = 3
         private const val STATISTIC = "statistic"

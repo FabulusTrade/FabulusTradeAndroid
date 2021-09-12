@@ -16,8 +16,6 @@ import ru.wintrade.mvp.view.traderme.TraderMeProfitView
 import ru.wintrade.ui.App
 
 
-private const val ANIMATE_DURATION = 3000
-
 class TraderMeProfitFragment : MvpAppCompatFragment(),
     TraderMeProfitView {
     private var _binding: FragmentTraderMeProfitBinding? = null
@@ -25,6 +23,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
+        private const val ANIMATE_DURATION = 3000
         private const val MAX_LINES = 5000
         private const val MIN_LINES = 3
         private const val STATISTIC = "statistic"
