@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_on_board.*
-import kotlinx.android.synthetic.main.toolbar_blue.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentOnBoardBinding
 import ru.wintrade.mvp.presenter.entrance.OnBoardPresenter
 import ru.wintrade.mvp.view.NavElementsControl
 import ru.wintrade.mvp.view.entrance.OnBoardView
@@ -19,12 +17,16 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.OnBoardVPAdapter
 
 class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
+    private var _binding: FragmentOnBoardBinding? = null
+    private val binding: FragmentOnBoardBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
 
     companion object {
         fun newInstance() = OnBoardFragment()
     }
 
-    private var adapter: OnBoardVPAdapter? = null
+    private var onBoardVPAdapter: OnBoardVPAdapter? = null
 
     @InjectPresenter
     lateinit var presenter: OnBoardPresenter
@@ -38,7 +40,10 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_on_board, container, false)
+    ): View? {
+        _binding = FragmentOnBoardBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         val navElementsControl = requireActivity() as? NavElementsControl
@@ -46,11 +51,16 @@ class OnBoardFragment : MvpAppCompatFragment(), OnBoardView {
             it.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             it.toolbarVisible(false)
         }
-        adapter = OnBoardVPAdapter(presenter.listPresenter)
-        vp_on_board.adapter = adapter
+        onBoardVPAdapter = OnBoardVPAdapter(presenter.listPresenter)
+        binding.vpOnBoard.adapter = onBoardVPAdapter
     }
 
     override fun setVPPos(pos: Int) {
-        vp_on_board.setCurrentItem(pos, true)
+        binding.vpOnBoard.setCurrentItem(pos, true)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
