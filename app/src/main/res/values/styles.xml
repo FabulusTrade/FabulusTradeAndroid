@@ -40,6 +40,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="RegTraderLabelText.PrimaryColor">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="RegTraderHeaderText">
         <item name="android:textSize">20sp</item>
     </style>
@@ -51,6 +55,12 @@
     <style name="LinkText">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">?colorAccent</item>
+    </style>
+
+    <style name="LongButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?colorAccent</item>
+        <item name="android:layout_height">@dimen/default_button_height</item>
+        <item name="android:layout_width">@dimen/default_button_width</item>
     </style>
 
 </resources>

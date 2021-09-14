@@ -164,8 +164,8 @@
     <string name="followers_joining_statistic_sample">+30 (10%) за 7 дней</string>
     <string name="dialog_info_text">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
     <string name="trader_reg_view1_title">Заполнить профиль</string>
-    <string name="trader_reg_view1_text1"><p>\tВаши персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</p><br><br></br></br><p>Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</p></string>
-    <string name="trader_reg_view1_text2"><p>После завершения верификации профиля будет предоставлена возможность:</p><br></br><ul><li>в один клик загружать сделки из своего торгового терминала</li><br></br><li>писать комментарии к своим сделкам</li><br></br><li>размещать новости и/или оставлять комментарии к новостям</li><br></br><li>формировать сообщество последователей для монетизации</li></ul></string>
+    <string name="trader_reg_1_text1">Ваши  персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</string>
+    <string name="trader_reg_1_text2">Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</string>
     <string name="continue_btn">Продолжить</string>
     <string name="your_profile">Ваш профиль</string>
     <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
@@ -179,6 +179,7 @@
     <string name="day_2digit">ДД</string>
     <string name="month_2digit">ММ</string>
     <string name="year_4digit">ГГГГ</string>
+    <string name="birthday_hint_string">ДД.ММ.ГГГГ</string>
     <string name="profile_complete">готовый профиль</string>
     <string name="text_your_address">Ваш адрес</string>
     <string name="text_address">Адрес</string>
@@ -198,4 +199,15 @@
     <string name="trader_reg_4_text2">Напишите стоимость в месяц, например 2000 руб</string>
     <string name="text_invisible_plan">Сделать профиль невидимым</string>
     <string name="trader_reg_4_text3">Пользователи, которые не являются Вашими наблюдателями и подписчиками, не будут Вас видеть</string>
+    <string name="trader_reg_1_text3">После завершения верификации профиля будет предоставлена возможность:</string>
+    <string name="trader_reg_1_text4">формировать сообщество последователей для монетизации</string>
+    <string name="trader_reg_1_text5">в один клик загружать сделки из своего торгового терминала</string>
+    <string name="trader_reg_1_text6">"вести статистику и аналитику своих сделок"</string>
+    <string name="trader_reg_1_text7">писать комментарии к своим сделкам</string>
+    <string name="trader_reg_1_text8">размещать новости и/или оставлять комментарии к новостям</string>
+    <string name="second_name">Фамилия</string>
+    <string name="choice_trade_terminal">Выберите Ваш торговый терминал</string>
+    <string name="specify_trade_terminal">Укажите Ваш торговый терминал</string>
+    <string name="trader_reg_3_text1">После нажатия на кнопку “Готово” к Вам на почту, указанную при регистрации, поступит ПО (скрипт) и инструкция по его установке для трансляции сделок на платформу WinTrade.</string>
+    <string name="ready">Готово</string>
 </resources>
