@@ -47,9 +47,6 @@ class RegistrationAsTraderFragmentFirst : MvpAppCompatFragment(), RegAsTraderFir
         binding.btnContinueTraderReg1.setOnClickListener {
             presenter.openRegistrationSecondScreen()
         }
-        binding.btnCloseTraderReg1.setOnClickListener {
-            presenter.closeRegistrationScreen()
-        }
     }
 
     override fun onDestroyView() {

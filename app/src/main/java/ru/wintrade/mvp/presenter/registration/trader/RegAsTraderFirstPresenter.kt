@@ -18,8 +18,4 @@ class RegAsTraderFirstPresenter : MvpPresenter<RegAsTraderFirstView>() {
     fun openRegistrationSecondScreen() {
         router.navigateTo(Screens.registrationAsTraderSecondScreen())
     }
-
-    fun closeRegistrationScreen() {
-        router.backTo(Screens.tradersMainScreen())
-    }
 }
