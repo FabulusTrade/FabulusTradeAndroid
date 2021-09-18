@@ -73,11 +73,11 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.SignInScreen())
+        router.navigateTo(Screens.signInScreen())
     }
 
     fun openSignUpScreen() {
-        router.navigateTo(Screens.SignUpScreen())
+        router.navigateTo(Screens.signUpScreen())
     }
 
     inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
@@ -96,7 +96,7 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
         }
 
         override fun onItemClick(view: TradesByCompanyItemView) {
-            router.navigateTo(Screens.CompanyTradingOperationsScreen(trader.id, trades[view.pos].companyId))
+            router.navigateTo(Screens.companyTradingOperationsScreen(trader.id, trades[view.pos].companyId))
         }
     }
 

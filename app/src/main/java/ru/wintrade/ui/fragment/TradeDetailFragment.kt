@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_trade_detail.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTradeDetailBinding
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.presenter.TradeDetailPresenter
 import ru.wintrade.mvp.view.TradeDetailView
 import ru.wintrade.ui.App
 
-class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
+class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
+    private var _binding: FragmentTradeDetailBinding? = null
+    private val binding: FragmentTradeDetailBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
         const val TRADE_KEY = "trade"
@@ -24,7 +27,6 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
             }
         }
     }
-
 
     @InjectPresenter
     lateinit var presenter: TradeDetailPresenter
@@ -38,55 +40,63 @@ class TradeDetailFragment: MvpAppCompatFragment(), TradeDetailView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trade_detail, container, false)
+    ): View? {
+        _binding = FragmentTradeDetailBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
-        iv_trade_detail_close.setOnClickListener {
+        binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
     }
 
     override fun setName(traderName: String) {
-        tv_trade_detail_trader_name.text = traderName
+        binding.tvTradeDetailTraderName.text = traderName
     }
 
     override fun setType(type: String) {
-        tv_trade_detail_operation.text = type
+        binding.tvTradeDetailOperation.text = type
     }
 
     override fun setCompany(company: String) {
-        tv_trade_detail_company.text = company
+        binding.tvTradeDetailCompany.text = company
     }
 
     override fun setTicker(ticker: String) {
-        tv_trade_detail_ticker.text = ticker
+        binding.tvTradeDetailTicker.text = ticker
     }
 
     override fun setPrice(price: String) {
-        tv_trade_detail_price.text = price
+        binding.tvTradeDetailPrice.text = price
     }
 
     override fun setPriceTitle(priceTitle: String) {
-        tv_trade_detail_price_title.text = priceTitle
+        binding.tvTradeDetailPriceTitle.text = priceTitle
     }
 
     override fun setCount(count: String) {
-        tv_trade_detail_count.text = count
+        binding.tvTradeDetailCount.text = count
     }
 
     override fun setSum(sum: String) {
-        tv_trade_detail_sum.text = sum
+        binding.tvTradeDetailSum.text = sum
     }
 
     override fun setSumTitle(sumTitle: String) {
-        tv_trade_detail_sum_title.text = sumTitle
+        binding.tvTradeDetailSumTitle.text = sumTitle
     }
 
     override fun setDate(date: String) {
-        tv_trade_detail_date.text = date
+        binding.tvTradeDetailDate.text = date
     }
 
     override fun setSubtype(type: String) {
-        tv_trade_detail_type.text = type
+        binding.tvTradeDetailType.text = type
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

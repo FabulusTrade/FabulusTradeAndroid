@@ -52,7 +52,7 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
             profile.token?.let { token ->
                 apiRepo.getTradeById(token, dealsList[view.pos].id)
                     .observeOn(AndroidSchedulers.mainThread()).subscribe({ trade ->
-                        router.navigateTo(Screens.TradeDetailScreen(trade))
+                        router.navigateTo(Screens.tradeDetailScreen(trade))
                     }, {})
             }
         }

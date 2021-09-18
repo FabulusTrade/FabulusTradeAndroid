@@ -1,10 +1,10 @@
-package ru.wintrade.mvp.presenter.entrance
+package ru.wintrade.mvp.presenter.registration.subscriber
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.view.entrance.ResetPasswordView
+import ru.wintrade.mvp.view.registration.subscriber.ResetPasswordView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.EmailValidation
 import ru.wintrade.util.isValidEmail
@@ -23,7 +23,7 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
     }
 
     fun openSignInScreen() {
-        router.replaceScreen(Screens.SignInScreen())
+        router.replaceScreen(Screens.signInScreen())
     }
 
     fun resetPassBtnClicked(email: String) {
@@ -32,7 +32,7 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
         if (emailValidation == EmailValidation.OK) {
             apiRepo.resetPassword(email).observeOn(AndroidSchedulers.mainThread()).subscribe({
                 viewState.showSuccessDialog()
-            },{
+            }, {
                 viewState.showAlertDialog()
             })
         }

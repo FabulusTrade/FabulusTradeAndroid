@@ -11,9 +11,14 @@ import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TradersAllPresenter : MvpPresenter<TradersAllView>() {
+    companion object {
+        private const val FORMAT = "0.00"
+    }
+
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -34,7 +39,11 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
 
         override fun bind(view: TradersAllItemView) {
             traderList[view.pos].username?.let { view.setTraderName(it) }
-            traderList[view.pos].yearProfit?.let { view.setTraderProfit(it) }
+            traderList[view.pos].yearProfit?.let {
+                view.setTraderProfit(
+                    it.doubleToStringWithFormat(FORMAT, true)
+                )
+            }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
             subscriptionList.forEach {
                 if (it.trader.id == traderList[view.pos].id && it.status?.toInt() == 2)
@@ -47,14 +56,14 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         override fun openTraderStat(pos: Int) {
             val trader = traderList[pos]
             if (profile.user != null && trader.id == profile.user!!.id)
-                router.navigateTo(Screens.TraderMeMainScreen())
+                router.navigateTo(Screens.traderMeMainScreen())
             else
-                router.navigateTo(Screens.TraderMainScreen(traderList[pos]))
+                router.navigateTo(Screens.traderMainScreen(traderList[pos]))
         }
 
         override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
             if (profile.user == null) {
-                router.navigateTo(Screens.SignInScreen())
+                router.navigateTo(Screens.signInScreen())
             } else if (isChecked) {
                 apiRepo.observeToTrader(profile.token!!, traderList[pos].id)
                     .observeOn(AndroidSchedulers.mainThread())

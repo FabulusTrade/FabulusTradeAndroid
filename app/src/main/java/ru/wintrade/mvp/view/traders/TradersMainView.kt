@@ -7,4 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface TradersMainView : MvpView {
     fun init()
+    fun setRegistrationBtnVisible(isVisible: Boolean)
 }

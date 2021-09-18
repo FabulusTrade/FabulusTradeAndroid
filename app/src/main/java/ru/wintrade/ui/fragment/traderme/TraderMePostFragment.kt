@@ -8,17 +8,21 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_trader_me_posts.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderMePostsBinding
 import ru.wintrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.wintrade.mvp.view.trader.TraderMePostView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
+    private var _binding: FragmentTraderMePostsBinding? = null
+    private val binding: FragmentTraderMePostsBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = TraderMePostFragment()
     }
@@ -31,13 +35,16 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: PostRVAdapter? = null
+    private var postRVAdapter: PostRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_me_posts, container, false)
+    ): View? {
+        _binding = FragmentTraderMePostsBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun onResume() {
         super.onResume()
@@ -50,36 +57,40 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     private fun initListeners() {
-        layout_trader_news_title.setOnClickListener {
-            presenter.onCreatePostBtnClicked()
-        }
-        btn_trader_news_publication.setOnClickListener {
-            presenter.publicationsBtnClicked()
-        }
-        btn_trader_news_subscription.setOnClickListener {
-            presenter.subscriptionBtnClicked()
+        binding.run {
+            layoutTraderNewsTitle.setOnClickListener {
+                presenter.onCreatePostBtnClicked()
+            }
+            btnTraderNewsPublication.setOnClickListener {
+                presenter.publicationsBtnClicked()
+            }
+            btnTraderNewsSubscription.setOnClickListener {
+                presenter.subscriptionBtnClicked()
+            }
         }
     }
 
     private fun initRecyclerView() {
-        adapter = PostRVAdapter(presenter.listPresenter)
-        rv_trader_me_post.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_trader_me_post.layoutManager = layoutManager
-        rv_trader_me_post.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            presenter.onScrollLimit()
+        binding.rvTraderMePost.run {
+            postRVAdapter = PostRVAdapter(presenter.listPresenter)
+            adapter = postRVAdapter
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val layoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = layoutManager.childCount
+                            val totalItemCount = layoutManager.itemCount
+                            val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     override fun setBtnsState(state: TraderMePostPresenter.State) {
@@ -94,44 +105,44 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     private fun subscriptionStateInit() {
-        isActive(btn_trader_news_subscription)
-        isNotActive(btn_trader_news_publication)
-        layout_trader_news_title.visibility = View.GONE
+        binding.run {
+            isActive(btnTraderNewsSubscription)
+            isNotActive(btnTraderNewsPublication)
+            layoutTraderNewsTitle.visibility = View.GONE
+
+        }
     }
 
     private fun publicationsStateInit() {
-        isActive(btn_trader_news_publication)
-        isNotActive(btn_trader_news_subscription)
-        layout_trader_news_title.visibility = View.VISIBLE
+        binding.run {
+            isActive(btnTraderNewsPublication)
+            isNotActive(btnTraderNewsSubscription)
+            layoutTraderNewsTitle.visibility = View.VISIBLE
+        }
     }
 
     private fun isNotActive(inactiveBtn: MaterialButton) {
         inactiveBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorWhite) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorGray
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorGray))
         }
     }
 
     private fun isActive(activeBtn: MaterialButton) {
         activeBtn.apply {
             backgroundTintList =
-                context?.let { ContextCompat.getColorStateList(it, R.color.colorLightGreen) }
-            setTextColor(context?.let {
-                ContextCompat.getColorStateList(
-                    it,
-                    R.color.colorPrimary
-                )
-            })
+                ContextCompat.getColorStateList(requireContext(), R.color.colorLightGreen)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary))
         }
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

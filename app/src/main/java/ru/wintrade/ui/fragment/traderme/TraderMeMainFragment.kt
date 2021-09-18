@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_trader_me_main.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderMeMainBinding
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.traderme.TraderMeMainPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeMainView
@@ -23,6 +23,9 @@ import ru.wintrade.ui.adapter.TraderMeMainAdapter
 import ru.wintrade.util.*
 
 class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
+    private var _binding: FragmentTraderMeMainBinding? = null
+    private val binding: FragmentTraderMeMainBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
         fun newInstance() = TraderMeMainFragment()
@@ -40,7 +43,10 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_me_main, container, false)
+    ): View? {
+        _binding = FragmentTraderMeMainBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initView()
@@ -49,9 +55,9 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
 
     private fun initPopupMenu() {
         val popupMenu =
-            context?.let { androidx.appcompat.widget.PopupMenu(it, iv_trader_me_main_ava) }
-        popupMenu?.inflate(R.menu.menu_avatar)
-        popupMenu?.setOnMenuItemClickListener {
+            androidx.appcompat.widget.PopupMenu(requireContext(), binding.ivTraderMeMainAva)
+        popupMenu.inflate(R.menu.menu_avatar)
+        popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.change_avatar -> {
                     loadFileFromDevice()
@@ -64,13 +70,14 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
                 else -> false
             }
         }
-        iv_trader_me_main_ava.setOnClickListener {
-            popupMenu?.show()
+        binding.ivTraderMeMainAva.setOnClickListener {
+            popupMenu.show()
         }
     }
 
     private fun loadFileFromDevice() {
-        val galleryIntent = Intent(Intent.ACTION_PICK).apply { this.type = "image/*" }
+        val galleryIntent =
+            Intent(Intent.ACTION_PICK).apply { this.type = getString(R.string.gallery_mask) }
         val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
             this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
             this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
@@ -92,14 +99,14 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     }
 
     override fun setAvatar(url: String?) {
-        url?.let { loadImage(it, iv_trader_me_main_ava) }
+        url?.let { loadImage(it, binding.ivTraderMeMainAva) }
     }
 
     override fun initVP(traderStatistic: TraderStatistic) {
-        vp_trader_me_main.adapter = TraderMeMainAdapter(this, traderStatistic)
+        binding.vpTraderMeMain.adapter = TraderMeMainAdapter(this, traderStatistic)
         TabLayoutMediator(
-            tab_layout_trader_main_me,
-            vp_trader_me_main
+            binding.tabLayoutTraderMainMe,
+            binding.vpTraderMeMain
         ) { tab, pos ->
             when (pos) {
                 0 -> tab.setIcon(R.drawable.ic_trader_profit)
@@ -112,24 +119,33 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     }
 
     override fun setProfit(profit: String, isPositive: Boolean) {
-        tv_trader_me_main_profit.text = profit
-        if (isPositive)
-            tv_trader_me_main_profit.setTextColor(Color.GREEN)
-        else
-            tv_trader_me_main_profit.setTextColor(Color.RED)
+        binding.tvTraderMeMainProfit.apply {
+            text = profit
+            setTextColor(
+                if (isPositive)
+                    Color.GREEN
+                else
+                    Color.RED
+            )
+        }
     }
 
     override fun setUsername(username: String) {
-        tv_trader_me_main_name.text = username
+        binding.tvTraderMeMainName.text = username
     }
 
     override fun setSubscriberCount(count: Int) {
         val subscriberCountText = "Подписки $count"
-        tv_trader_me_main_subscriber_count.text = subscriberCountText
+        binding.tvTraderMeMainSubscriberCount.text = subscriberCountText
     }
 
     override fun backClicked(): Boolean {
         presenter.backClicked()
         return true
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

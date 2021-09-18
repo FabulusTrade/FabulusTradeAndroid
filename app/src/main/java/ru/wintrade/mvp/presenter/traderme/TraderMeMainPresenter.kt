@@ -1,6 +1,5 @@
 package ru.wintrade.mvp.presenter.traderme
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -11,13 +10,17 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.traderme.TraderMeMainView
+import ru.wintrade.util.doubleToStringWithFormat
 import java.io.ByteArrayOutputStream
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
+    companion object {
+        private const val PROFIT_FORMAT = "0.00"
+        private const val ZERO_PERCENT = "0.00%"
+    }
 
     @Inject
     lateinit var router: Router
@@ -48,10 +51,10 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
                             traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
                         traderStatistic.actualProfit365?.let {
                             viewState.setProfit(
-                                "${DecimalFormat("#0.0").format(it)}%",
+                                it.doubleToStringWithFormat(PROFIT_FORMAT, true),
                                 isPositiveProfit
                             )
-                        } ?: viewState.setProfit("0.0%", true)
+                        } ?: viewState.setProfit(ZERO_PERCENT, true)
                         viewState.initVP(traderStatistic)
                     }, {
                     })
@@ -64,14 +67,18 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
         return true
     }
 
-    @SuppressLint("SimpleDateFormat")
     fun setImage(image: Bitmap) {
         val stream = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         val byteArray = stream.toByteArray()
         val body = MultipartBody.Part.createFormData(
             "avatar",
-            "avatar${SimpleDateFormat("dd_MM_yyyy_hh_mm_ss").format(Date())}.jpeg",
+            "avatar${
+                SimpleDateFormat(
+                    "dd_MM_yyyy_hh_mm_ss",
+                    Locale.getDefault()
+                ).format(Date())
+            }.jpeg",
             byteArray.toRequestBody("avatar/*".toMediaTypeOrNull(), 0, byteArray.size)
         )
         changeAvatar(body)

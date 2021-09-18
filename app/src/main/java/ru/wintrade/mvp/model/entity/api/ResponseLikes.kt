@@ -11,5 +11,4 @@ class ResponseLikes(
     val like_count: Int,
     @Expose
     val dislike_count: Int
-
 )

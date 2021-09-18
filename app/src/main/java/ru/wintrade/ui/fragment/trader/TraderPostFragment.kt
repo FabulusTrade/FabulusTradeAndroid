@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_trader_post.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
+import ru.wintrade.databinding.FragmentTraderPostBinding
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.presenter.trader.TraderPostPresenter
 import ru.wintrade.mvp.view.trader.TraderPostView
@@ -18,6 +18,10 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
+    private var _binding: FragmentTraderPostBinding? = null
+    private val binding: FragmentTraderPostBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         const val TRADER = "trader"
         fun newInstance(trader: Trader) =
@@ -38,61 +42,75 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         App.instance.appComponent.inject(this)
     }
 
-    private var adapter: PostRVAdapter? = null
+    private var postRVAdapter: PostRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_trader_post, container, false)
+    ): View? {
+        _binding = FragmentTraderPostBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
         initRV()
         initListeners()
     }
 
-    fun initRV() {
-        adapter = PostRVAdapter(presenter.listPresenter)
-        rv_trader_post.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        rv_trader_post.layoutManager = layoutManager
-        rv_trader_post.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        val visibleItemCount = layoutManager.childCount
-                        val totalItemCount = layoutManager.itemCount
-                        val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            presenter.onScrollLimit()
+    private fun initRV() {
+        postRVAdapter = PostRVAdapter(presenter.listPresenter)
+        binding.rvTraderPost.run {
+            adapter = postRVAdapter
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val layoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = layoutManager.childCount
+                            val totalItemCount = layoutManager.itemCount
+                            val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
                         }
-
                     }
                 }
-            }
-        )
+            )
+
+        }
     }
 
     fun initListeners() {
-        btn_trader_post_entry.setOnClickListener {
-            presenter.openSignInScreen()
-        }
-        btn_trader_post_registration.setOnClickListener {
-            presenter.openSignUpScreen()
+        binding.run {
+            btnTraderPostEntry.setOnClickListener {
+                presenter.openSignInScreen()
+            }
+            btnTraderPostRegistration.setOnClickListener {
+                presenter.openSignUpScreen()
+            }
         }
     }
 
     override fun updateAdapter() {
-        adapter?.notifyDataSetChanged()
+        postRVAdapter?.notifyDataSetChanged()
     }
 
     override fun isAuthorized(isAuth: Boolean) {
-        if (!isAuth) {
-            layout_trader_post_is_auth.visibility = View.GONE
-            layout_trader_post_not_auth.visibility = View.VISIBLE
-        } else {
-            layout_trader_post_is_auth.visibility = View.VISIBLE
-            layout_trader_post_not_auth.visibility = View.GONE
+        binding.run {
+            if (!isAuth) {
+                layoutTraderPostIsAuth.visibility = View.GONE
+                layoutTraderPostNotAuth.visibility = View.VISIBLE
+            } else {
+                layoutTraderPostIsAuth.visibility = View.VISIBLE
+                layoutTraderPostNotAuth.visibility = View.GONE
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

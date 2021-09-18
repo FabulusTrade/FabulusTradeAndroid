@@ -16,10 +16,10 @@ import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.navigation.Screens
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTradeView>() {
-
     @Inject
     lateinit var router: Router
 
@@ -46,10 +46,9 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
         override fun getCount() = trades.size
 
-        @SuppressLint("SimpleDateFormat")
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
             val date = dateFormat.format(trade.date)
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
@@ -72,7 +71,7 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
         override fun clicked(pos: Int) {
             val trade = trades[pos]
-            router.navigateTo(Screens.TradeDetailScreen(trade))
+            router.navigateTo(Screens.tradeDetailScreen(trade))
         }
     }
 

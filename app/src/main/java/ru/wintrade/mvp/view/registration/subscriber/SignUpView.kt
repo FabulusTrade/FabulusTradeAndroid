@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.view.entrance
+package ru.wintrade.mvp.view.registration.subscriber
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy

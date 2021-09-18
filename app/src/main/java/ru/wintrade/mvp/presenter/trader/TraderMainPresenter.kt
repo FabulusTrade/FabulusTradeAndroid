@@ -8,10 +8,15 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.navigation.Screens
-import java.text.DecimalFormat
+import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
+    companion object {
+        private const val PROFIT_FORMAT = "0.00"
+        private const val ZERO_PERCENT = "0.00%"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -42,10 +47,10 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                         traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
                     traderStatistic.actualProfit365?.let {
                         viewState.setProfit(
-                            "${DecimalFormat("#0.0").format(it)}%",
+                            it.doubleToStringWithFormat(PROFIT_FORMAT, true),
                             isPositiveProfit
                         )
-                    } ?: viewState.setProfit("0.0%", true)
+                    } ?: viewState.setProfit(ZERO_PERCENT, true)
                     viewState.initVP(traderStatistic, trader)
                 }, {
                 })
@@ -56,7 +61,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         isObserveActive = !isObserveActive
         viewState.setObserveActive(isObserveActive)
         if (profile.user == null) {
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
         } else if (isObserveActive) {
             apiRepo.observeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,7 +75,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     fun subscribeToTraderBtnClicked() {
         if (profile.user == null)
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
         else
             apiRepo.subscribeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())

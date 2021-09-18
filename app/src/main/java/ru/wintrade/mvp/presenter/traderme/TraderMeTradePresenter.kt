@@ -67,7 +67,7 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
 
         override fun onItemClick(view: TradesByCompanyItemView) {
             router.navigateTo(
-                Screens.CompanyTradingOperationsScreen(
+                Screens.companyTradingOperationsScreen(
                     profile.user!!.id,
                     trades[view.pos].companyId
                 )

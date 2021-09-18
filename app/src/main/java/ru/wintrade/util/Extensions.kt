@@ -8,6 +8,7 @@ import android.widget.Toast
 import moxy.MvpAppCompatFragment
 import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
+import java.text.DecimalFormat
 
 fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(applicationContext, msg, duration).show()
@@ -36,4 +37,11 @@ fun MvpAppCompatFragment.setDrawerLockMode(lockMode: Int) {
 fun MvpAppCompatFragment.setToolbarVisible(visible: Boolean = true) {
     val navElementsControl = this.requireActivity() as? NavElementsControl
     navElementsControl?.toolbarVisible(visible)
+}
+
+fun Double.doubleToStringWithFormat(format: String, withPercent: Boolean? = null): String {
+    return when (withPercent) {
+        true -> "${DecimalFormat(format).format(this)} %"
+        else -> DecimalFormat(format).format(this)
+    }
 }

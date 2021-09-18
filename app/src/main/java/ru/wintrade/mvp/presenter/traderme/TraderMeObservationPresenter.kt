@@ -12,9 +12,14 @@ import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
+    companion object {
+        private const val PROFIT_FORMAT = "0.00"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -34,7 +39,11 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
             val traderList = traders[view.pos]
             traderList.trader.username?.let { view.setTraderName(it) }
             traderList.trader.avatar?.let { view.setTraderAvatar(it) }
-            traderList.trader.yearProfit?.let { view.setTraderProfit(it) }
+            traderList.trader.yearProfit?.let {
+                view.setTraderProfit(
+                    it.doubleToStringWithFormat(PROFIT_FORMAT, true)
+                )
+            }
             traderList.status?.let {
                 if (it.toInt() == 1)
                     view.subscribeStatus(false)
@@ -46,14 +55,14 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
         override fun onItemClick(pos: Int) {
             val trader = traders[pos]
             if (trader.trader.id == profile.user!!.id)
-                router.navigateTo(Screens.TraderMeMainScreen())
+                router.navigateTo(Screens.traderMeMainScreen())
             else
-                router.navigateTo(Screens.TraderMainScreen(trader.trader))
+                router.navigateTo(Screens.traderMainScreen(trader.trader))
         }
 
         override fun deleteObservation(pos: Int) {
             if (profile.user == null) {
-                router.navigateTo(Screens.SignInScreen())
+                router.navigateTo(Screens.signInScreen())
             } else {
                 apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +97,6 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
     }
 
     fun openTraderMeSubScreen(position: Int) {
-        router.navigateTo(Screens.TraderMeSubTradeScreen(position))
+        router.navigateTo(Screens.traderMeSubTradeScreen(position))
     }
 }

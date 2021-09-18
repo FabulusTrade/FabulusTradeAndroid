@@ -25,10 +25,10 @@ class TraderPopularInstrumentsPresenter : MvpPresenter<TraderPopularInstrumentsV
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.SignInScreen())
+        router.navigateTo(Screens.signInScreen())
     }
 
     fun openSignUpScreen() {
-        router.navigateTo(Screens.SignUpScreen())
+        router.navigateTo(Screens.signUpScreen())
     }
 }

@@ -71,7 +71,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
 
         override fun clicked(pos: Int) {
             val trade = trades[pos]
-            router.navigateTo(Screens.TradeDetailScreen(trade))
+            router.navigateTo(Screens.tradeDetailScreen(trade))
         }
     }
 

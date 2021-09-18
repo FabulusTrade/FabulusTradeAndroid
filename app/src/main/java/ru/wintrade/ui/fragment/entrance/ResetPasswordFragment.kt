@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_reset_password.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.mvp.presenter.entrance.ResetPasswordPresenter
-import ru.wintrade.mvp.view.entrance.ResetPasswordView
+import ru.wintrade.databinding.FragmentResetPasswordBinding
+import ru.wintrade.mvp.presenter.registration.subscriber.ResetPasswordPresenter
+import ru.wintrade.mvp.view.registration.subscriber.ResetPasswordView
 import ru.wintrade.ui.App
 import ru.wintrade.util.EmailValidation
 
 class ResetPasswordFragment : MvpAppCompatFragment(), ResetPasswordView {
+    private var _binding: FragmentResetPasswordBinding? = null
+    private val binding: FragmentResetPasswordBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     companion object {
         fun newInstance() = ResetPasswordFragment()
     }
@@ -32,16 +36,21 @@ class ResetPasswordFragment : MvpAppCompatFragment(), ResetPasswordView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_reset_password, container, false)
+    ): View? {
+        _binding = FragmentResetPasswordBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
 
     override fun init() {
-        btn_reset_pass.setOnClickListener {
-            presenter.resetPassBtnClicked(et_reset_pass_email.text.toString())
+        binding.run {
+            btnResetPass.setOnClickListener {
+                presenter.resetPassBtnClicked(etResetPassEmail.text.toString())
+            }
         }
     }
 
     override fun setEmailError(validation: EmailValidation) {
-        et_reset_pass_layout.error = when (validation) {
+        binding.etResetPassLayout.error = when (validation) {
             EmailValidation.INCORRECT -> getString(R.string.email_incorrect)
             else -> null
         }
@@ -63,5 +72,10 @@ class ResetPasswordFragment : MvpAppCompatFragment(), ResetPasswordView {
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
             }.show()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

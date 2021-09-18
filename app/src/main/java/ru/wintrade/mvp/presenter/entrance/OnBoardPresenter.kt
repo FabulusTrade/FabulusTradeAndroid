@@ -1,7 +1,7 @@
 package ru.wintrade.mvp.presenter.entrance
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.resource.ResourceProvider
@@ -12,7 +12,6 @@ import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class OnBoardPresenter : MvpPresenter<OnBoardView>() {
-
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
@@ -39,7 +38,7 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
         override fun onNextBtnClick(pos: Int) {
             profile.hasVisitedTutorial = true
             profileRepo.save(profile).subscribe()
-            router.replaceScreen(Screens.TradersMainScreen())
+            router.replaceScreen(Screens.tradersMainScreen())
         }
     }
 

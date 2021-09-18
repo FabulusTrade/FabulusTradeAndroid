@@ -99,7 +99,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun postUpdate(view: PostItemView) {
             val post = post[view.pos]
-            router.navigateTo(Screens.CreatePostScreen(post.id.toString(), true, null, post.text))
+            router.navigateTo(Screens.createPostScreen(post.id.toString(), true, null, post.text))
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {
@@ -125,7 +125,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     fun onCreatePostBtnClicked() {
         router.navigateTo(
-            Screens.CreatePostScreen(
+            Screens.createPostScreen(
                 postId = null,
                 isPublication = true,
                 isPinnedEdit = false,

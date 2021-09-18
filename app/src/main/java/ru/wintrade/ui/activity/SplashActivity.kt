@@ -10,7 +10,6 @@ import ru.wintrade.mvp.view.entrance.SplashView
 import ru.wintrade.ui.App
 
 class SplashActivity : MvpAppCompatActivity(), SplashView {
-
     @InjectPresenter
     lateinit var presenter: SplashPresenter
 

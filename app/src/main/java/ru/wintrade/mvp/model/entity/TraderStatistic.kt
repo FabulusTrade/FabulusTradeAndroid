@@ -18,4 +18,3 @@ data class TraderStatistic(
     val monthIndicators: List<MonthIndicator>,
     val audienceData: List<AudienceData>
 ) : Parcelable
-
