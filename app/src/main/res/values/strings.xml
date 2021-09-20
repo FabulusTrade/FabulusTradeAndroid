@@ -213,4 +213,5 @@
     <string name="specify_trade_terminal">Укажите Ваш торговый терминал</string>
     <string name="trader_reg_3_text1">После нажатия на кнопку “Готово” к Вам на почту, указанную при регистрации, поступит ПО (скрипт) и инструкция по его установке для трансляции сделок на платформу WinTrade.</string>
     <string name="ready">Готово</string>
+    <string name="enter_date_in_field">Введите дату в поле ввода.</string>
 </resources>

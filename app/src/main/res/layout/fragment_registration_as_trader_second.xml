@@ -120,15 +120,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_trader_reg_2_second_name" />
 
-    <Spinner
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spinner_trader_reg_2_gender"
         android:layout_width="@dimen/date_field_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/design_default_color_background"
-        android:text="@string/text_gender_man"
         android:textAlignment="viewStart"
+        android:background="?colorOnPrimary"
+        android:entries="@array/genders"
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_2_user_gender" />
@@ -163,6 +163,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ti_trader_reg_2_birthday"
             android:layout_width="match_parent"
+            android:singleLine="true"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
