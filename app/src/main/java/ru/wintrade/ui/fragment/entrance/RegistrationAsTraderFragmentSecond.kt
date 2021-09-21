@@ -19,6 +19,8 @@ import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
 import ru.wintrade.util.TRADER_REG_INFO_TAG
 
+private const val DATE_FORMAT_STRING = "%02d.%02d.%04d"
+
 class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSecondView {
     companion object {
         fun newInstance(): RegistrationAsTraderFragmentSecond =
@@ -62,7 +64,9 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     private fun initView() {
         arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
             with(binding) {
-                tiTraderReg2Birthday.setText(traderInfo.dateOdBirth)
+                tiTraderReg2Birthday.setText(
+                    traderInfo.dateOdBirth.split("-").reversed().joinToString(".")
+                )
                 tiTraderFirstName.setText(traderInfo.firstName)
                 tiTraderMiddleName.setText(traderInfo.patronymic)
                 tiTraderSecondName.setText(traderInfo.lastName)
@@ -94,11 +98,11 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     val datePicker = DatePickerDialog(requireContext())
                     datePicker.setOnDateSetListener { view, year, month, dayOfMonth ->
-                        val dateText = String.format("%02d.%02d.%04d", dayOfMonth, month, year)
+                        val dateText =
+                            String.format(DATE_FORMAT_STRING, dayOfMonth, month.plus(1), year)
                         binding.tiTraderReg2Birthday.setText(dateText)
                     }
                     datePicker.show()
-
                 } else {
                     Snackbar.make(
                         requireView(),
@@ -136,7 +140,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             }
         }
         return TraderRegistrationInfo(
-            binding.tiTraderReg2Birthday.text.toString(),
+            binding.tiTraderReg2Birthday.text.toString().split(".").reversed().joinToString("-"),
             binding.tiTraderFirstName.text.toString(),
             binding.tiTraderSecondName.text.toString(),
             binding.tiTraderMiddleName.text.toString(),

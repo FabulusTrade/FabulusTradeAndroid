@@ -54,7 +54,17 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
                 presenter.openNextStageScreen()
-            }
+            }.show()
+    }
+
+    override fun showErrorPatchData(e: Throwable) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error)
+            .setMessage(getString(R.string.trader_reg_error_dialog_message, e.message))
+            .setIcon(R.drawable.ic_profit_info)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
     private fun initListeners() {

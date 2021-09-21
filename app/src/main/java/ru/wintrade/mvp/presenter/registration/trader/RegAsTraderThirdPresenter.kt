@@ -48,7 +48,9 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         viewState.showSuccessfulPatchData()
-                    }, {})
+                    }, {
+                        viewState.showErrorPatchData(it)
+                    })
             }
         }
     }
