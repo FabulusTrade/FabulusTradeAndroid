@@ -214,4 +214,6 @@
     <string name="trader_reg_3_text1">После нажатия на кнопку “Готово” к Вам на почту, указанную при регистрации, поступит ПО (скрипт) и инструкция по его установке для трансляции сделок на платформу WinTrade.</string>
     <string name="ready">Готово</string>
     <string name="enter_date_in_field">Введите дату в поле ввода.</string>
+    <string name="trader_reg_patch_dialog_title">Данные записаны!</string>
+    <string name="trader_reg_patch_dialog_message">Вы успешно зарегистрированы в системе</string>
 </resources>

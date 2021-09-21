@@ -1,5 +1,6 @@
 package ru.wintrade.ui.fragment.entrance
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,9 +47,22 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
         }
     }
 
+    override fun showSuccessfulPatchData() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.trader_reg_patch_dialog_title)
+            .setMessage(R.string.trader_reg_patch_dialog_message)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+                presenter.openNextStageScreen()
+            }
+    }
+
     private fun initListeners() {
         binding.btnBackTraderReg3.setOnClickListener {
             traderInfo?.let { traderInfo -> presenter.openRegistrationSecondScreen(traderInfo) }
+        }
+        binding.btnReadyTraderReg3.setOnClickListener {
+            traderInfo?.let { presenter.saveTraderRegistrationInfo(it) }
         }
     }
 
