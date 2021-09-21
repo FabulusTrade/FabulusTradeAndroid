@@ -39,7 +39,7 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
                 apiRepo.updateTraderRegistrationInfo(
                     token,
                     userProfile.id,
-                    traderInfo.dateOdBirth,
+                    traderInfo.dateOfBirth,
                     traderInfo.firstName,
                     traderInfo.lastName,
                     traderInfo.patronymic,

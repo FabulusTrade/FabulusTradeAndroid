@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TraderRegistrationInfo(
-    val dateOdBirth: String = "",
+    val dateOfBirth: String = "",
     val firstName: String = "",
     val lastName: String = "",
     val patronymic: String = "",

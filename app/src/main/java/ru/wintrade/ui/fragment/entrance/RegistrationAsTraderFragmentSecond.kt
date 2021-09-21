@@ -65,7 +65,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
             with(binding) {
                 tiTraderReg2Birthday.setText(
-                    traderInfo.dateOdBirth.split("-").reversed().joinToString(".")
+                    traderInfo.dateOfBirth.split("-").reversed().joinToString(".")
                 )
                 tiTraderFirstName.setText(traderInfo.firstName)
                 tiTraderMiddleName.setText(traderInfo.patronymic)
