@@ -225,6 +225,7 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTraderStatistic>>
 
+    @FormUrlEncoded
     @PATCH("api/v1/trader/{trader_id}/ ")
     fun updateTraderRegistration(
         @Header("Authorization") token: String,
