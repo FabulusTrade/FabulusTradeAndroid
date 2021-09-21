@@ -229,7 +229,7 @@ interface WinTradeApi {
     @PATCH("api/v1/trader/{trader_id}/ ")
     fun updateTraderRegistration(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: String,
+        @Path("trader_id") traderId: String,
         @Field("date_of_birth") dateOfBirth: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
