@@ -432,24 +432,12 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun updateTraderRegistrationInfo(
         token: String,
         traderId: String,
-        dateOfBirth: String,
-        firstName: String,
-        lastName: String,
-        patronymic: String,
-        gender: String
+        requestTraderInfo: RequestTraderRegistrationInfo
     ): Completable =
         networkStatus.isOnlineSingle().flatMapCompletable { isOnline ->
-            if (isOnline)
-                api.updateTraderRegistration(
-                    token,
-                    traderId,
-                    dateOfBirth,
-                    firstName,
-                    lastName,
-                    patronymic,
-                    gender
-                )
-            else
+            if (isOnline) {
+                api.updateTraderRegistration(token, traderId, requestTraderInfo)
+            } else
                 Completable.error(NoInternetException())
         }.subscribeOn(Schedulers.io())
 }

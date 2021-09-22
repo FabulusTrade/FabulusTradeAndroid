@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -62,26 +63,23 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
 
 
     private fun initView() {
-        arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
-            with(binding) {
-                tiTraderReg2Birthday.setText(
-                    traderInfo.dateOfBirth.split("-").reversed().joinToString(".")
-                )
-                tiTraderFirstName.setText(traderInfo.firstName)
-                tiTraderMiddleName.setText(traderInfo.patronymic)
-                tiTraderSecondName.setText(traderInfo.lastName)
-                if (traderInfo.gender == "M")
-                    spinnerTraderReg2Gender.setSelection(0)
-                else
-                    spinnerTraderReg2Gender.setSelection(1)
-            }
-        }
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.genders,
             R.layout.support_simple_spinner_dropdown_item
         )
-        binding.spinnerTraderReg2Gender.adapter = genderAdapter
+        arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
+            with(binding) {
+                tiTraderBirthday.setText(
+                    traderInfo.dateOfBirth?.split("-")?.reversed()?.joinToString(".")
+                )
+                tiTraderFirstName.setText(traderInfo.firstName)
+                tiTraderPatronymic.setText(traderInfo.patronymic)
+                tiTraderLastName.setText(traderInfo.lastName)
+                tiTraderGender.setText(traderInfo.gender)
+            }
+        }
+        binding.tiTraderGender.setAdapter(genderAdapter)
     }
 
     private fun initListeners() {
@@ -100,7 +98,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                     datePicker.setOnDateSetListener { view, year, month, dayOfMonth ->
                         val dateText =
                             String.format(DATE_FORMAT_STRING, dayOfMonth, month.plus(1), year)
-                        binding.tiTraderReg2Birthday.setText(dateText)
+                        binding.tiTraderBirthday.setText(dateText)
                     }
                     datePicker.show()
                 } else {
@@ -115,40 +113,50 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     }
 
     private fun saveTraderInfo(): TraderRegistrationInfo? {
-        binding.tiTraderFirstName.apply {
-            if (text.isNullOrBlank()) {
-                error = getString(R.string.error)
-                return null
+        return binding.run {
+            tiTraderFirstName.getTextOrError()?.let { fistName ->
+                tiTraderPatronymic.getTextOrError()?.let { patronymic ->
+                    tiTraderLastName.getTextOrError()?.let { lastName ->
+                        tiTraderGender.getTextOrError()?.let { gender ->
+                            tiTraderBirthday.getTextOrError()?.let { birthDay ->
+                                TraderRegistrationInfo(
+                                    birthDay.split(".").reversed().joinToString("-"),
+                                    fistName,
+                                    lastName,
+                                    patronymic,
+                                    gender
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
-        binding.tiTraderMiddleName.apply {
-            if (text.isNullOrBlank()) {
-                error = getString(R.string.error)
-                return null
-            }
-        }
-        binding.tiTraderSecondName.apply {
-            if (text.isNullOrBlank()) {
-                error = getString(R.string.error)
-                return null
-            }
-        }
-        binding.tiTraderReg2Birthday.apply {
-            if (text.isNullOrBlank()) {
-                error = getString(R.string.error)
-                return null
-            }
-        }
-        return TraderRegistrationInfo(
-            binding.tiTraderReg2Birthday.text.toString().split(".").reversed().joinToString("-"),
-            binding.tiTraderFirstName.text.toString(),
-            binding.tiTraderSecondName.text.toString(),
-            binding.tiTraderMiddleName.text.toString(),
-            if (binding.spinnerTraderReg2Gender.selectedItemId == 0L)
-                "M"
-            else
-                "W"
-        )
+//        binding.tiTraderMiddleName.apply {
+//            if (text.isNullOrBlank()) {
+//                error = getString(R.string.requere_field)
+//                return null
+//            }
+//        }
+//        binding.tiTraderSecondName.apply {
+//            if (text.isNullOrBlank()) {
+//                error = getString(R.string.requere_field)
+//                return null
+//            }
+//        }
+//        binding.tiTraderReg2Birthday.apply {
+//            if (text.isNullOrBlank()) {
+//                error = getString(R.string.requere_field)
+//                return null
+//            }
+//        }
+//        binding.tiTraderGender.apply {
+//            if (text.isNullOrBlank()) {
+//                error = getString(R.string.requere_field)
+//                return null
+//            }
+//        }
+//        return
     }
 
     override fun onDestroyView() {
@@ -156,5 +164,12 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         super.onDestroyView()
     }
 
-
+    fun TextView.getTextOrError(): String? =
+        if (text.isNullOrBlank()) {
+            error = getString(R.string.require_field)
+            null
+        } else {
+            error = null
+            this.text.toString()
+        }
 }

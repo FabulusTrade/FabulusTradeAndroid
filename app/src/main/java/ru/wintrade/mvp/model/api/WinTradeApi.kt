@@ -225,15 +225,10 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTraderStatistic>>
 
-    @FormUrlEncoded
     @PATCH("api/v1/trader/{trader_id}/ ")
     fun updateTraderRegistration(
         @Header("Authorization") token: String,
-        @Path("trader_id") traderId: String,
-        @Field("date_of_birth") dateOfBirth: String,
-        @Field("first_name") firstName: String,
-        @Field("last_name") lastName: String,
-        @Field("patronymic") patronymic: String,
-        @Field("gender") gender: String
+        @Path("trader_id", encoded = true) traderId: String,
+        @Body registrationInfo: RequestTraderRegistrationInfo
     ): Completable
 }

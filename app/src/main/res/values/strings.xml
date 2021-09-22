@@ -217,4 +217,7 @@
     <string name="trader_reg_patch_dialog_title">Данные записаны!</string>
     <string name="trader_reg_patch_dialog_message">Вы успешно зарегистрированы в системе</string>
     <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
+    <string name="require_field">Обязательно поле</string>
+    <string name="name_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>
+    <string name="date_digits">0123456789.</string>
 </resources>

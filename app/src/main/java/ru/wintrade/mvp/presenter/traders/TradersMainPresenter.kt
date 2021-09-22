@@ -36,6 +36,10 @@ class TradersMainPresenter : MvpPresenter<TradersMainView>() {
     }
 
     fun openRegistrationScreen() {
-        profile.user?.let { router.navigateTo(Screens.registrationAsTraderFirstScreen()) }
+        if (profile.user == null) {
+            router.navigateTo((Screens.signInScreen()))
+        } else {
+            router.navigateTo(Screens.registrationAsTraderFirstScreen())
+        }
     }
 }

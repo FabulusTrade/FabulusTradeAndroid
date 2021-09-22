@@ -64,8 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
                 android:layout_marginTop="8dp"
+                android:background="@null"
                 android:hint="@string/first_name"
                 app:boxBackgroundColor="@color/design_default_color_background"
+                app:endIconMode="clear_text"
                 app:hintAnimationEnabled="true"
                 app:layout_constraintEnd_toStartOf="@id/til_trader_reg_2_middle_name"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -75,7 +77,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ti_trader_first_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:digits="@string/name_digits"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -88,15 +93,19 @@
                 android:layout_marginEnd="@dimen/default_horizon_margin_trader_reg"
                 android:hint="@string/middle_name"
                 app:boxBackgroundColor="@color/design_default_color_background"
+                app:endIconMode="clear_text"
                 app:hintAnimationEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/til_trader_reg_2_first_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_2_user_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ti_trader_middle_name"
+                    android:id="@+id/ti_trader_patronymic"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:digits="@string/name_digits"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -109,15 +118,19 @@
                 android:layout_marginEnd="@dimen/default_horizon_margin_trader_reg"
                 android:hint="@string/second_name"
                 app:boxBackgroundColor="@color/design_default_color_background"
+                app:endIconMode="clear_text"
                 app:hintAnimationEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_trader_reg_2_first_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ti_trader_second_name"
+                    android:id="@+id/ti_trader_last_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:digits="@string/name_digits"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -131,18 +144,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_trader_reg_2_second_name" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_trader_reg_2_gender"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_trader_reg_2_gender"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="@dimen/date_field_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
                 android:layout_marginTop="8dp"
-                android:background="?colorOnPrimary"
-                android:entries="@array/genders"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimary"
+                app:boxBackgroundColor="@color/design_default_color_background"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_2_user_gender" />
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_2_user_gender">
+
+                <AutoCompleteTextView
+                    android:id="@+id/ti_trader_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <TextView
@@ -154,7 +174,7 @@
                 android:layout_marginTop="@dimen/default_vertical_margin_trader_reg"
                 android:text="@string/text_birthday"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinner_trader_reg_2_gender" />
+                app:layout_constraintTop_toBottomOf="@id/til_trader_reg_2_gender" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trader_reg_2_birthday"
@@ -172,9 +192,12 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_2_birthday">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ti_trader_reg_2_birthday"
+                    android:id="@+id/ti_trader_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:digits="@string/date_digits"
+                    android:inputType="date"
+                    android:maxLines="1"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -30,7 +30,7 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
     }
 
     fun openNextStageScreen() {
-        router.navigateTo(Screens.tradersMainScreen())
+        router.navigateTo(Screens.traderMeMainScreen())
     }
 
     fun saveTraderRegistrationInfo(traderInfo: TraderRegistrationInfo) {
@@ -39,11 +39,7 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
                 apiRepo.updateTraderRegistrationInfo(
                     token,
                     userProfile.id,
-                    traderInfo.dateOfBirth,
-                    traderInfo.firstName,
-                    traderInfo.lastName,
-                    traderInfo.patronymic,
-                    traderInfo.gender
+                    traderInfo.toRequest()
                 )
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
