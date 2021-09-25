@@ -30,7 +30,7 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
     }
 
     fun openNextStageScreen() {
-        router.navigateTo(Screens.traderMeMainScreen())
+        router.newRootChain(Screens.traderMeMainScreen())
     }
 
     fun saveTraderRegistrationInfo(traderInfo: TraderRegistrationInfo) {

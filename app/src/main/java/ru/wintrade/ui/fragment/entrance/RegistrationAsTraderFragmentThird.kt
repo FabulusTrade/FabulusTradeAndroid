@@ -15,6 +15,7 @@ import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.ui.App
 import ru.wintrade.util.TRADER_REG_INFO_TAG
+import ru.wintrade.util.setToolbarVisible
 
 class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThirdView {
     companion object {
@@ -53,6 +54,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
             .setMessage(R.string.trader_reg_patch_dialog_message)
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
+                setToolbarVisible(true)
                 presenter.openNextStageScreen()
             }.show()
     }
