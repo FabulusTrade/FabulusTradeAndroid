@@ -1,6 +1,5 @@
 package ru.wintrade.ui.fragment.entrance
 
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -20,6 +20,7 @@ import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
 import ru.wintrade.util.TRADER_REG_INFO_TAG
+import java.util.*
 
 private const val DATE_FORMAT_STRING = "%02d.%02d.%04d"
 
@@ -72,7 +73,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
             with(binding) {
                 tiTraderBirthday.setText(
-                    traderInfo.dateOfBirth?.split("-")?.reversed()?.joinToString(".")
+                    traderInfo.dateOfBirth?.toUiDate()
                 )
                 tiTraderFirstName.setText(traderInfo.firstName)
                 tiTraderPatronymic.setText(traderInfo.patronymic)
@@ -95,13 +96,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             }
             btnDatePickerTraderReg2.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    val datePicker = DatePickerDialog(requireContext())
-                    datePicker.setOnDateSetListener { view, year, month, dayOfMonth ->
-                        val dateText =
-                            String.format(DATE_FORMAT_STRING, dayOfMonth, month.plus(1), year)
-                        binding.tiTraderBirthday.setText(dateText)
-                    }
-                    datePicker.show()
+                    showBirthDayDialog()
                 } else {
                     Snackbar.make(
                         requireView(),
@@ -113,6 +108,34 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         }
     }
 
+    private fun showBirthDayDialog() {
+        val selectDate = if (binding.tiTraderBirthday.text.isNullOrBlank()) {
+            Date().time
+        } else {
+            binding.tiTraderBirthday.tag.toString().toLong()
+        }
+        val birthDayDialog = MaterialDatePicker.Builder
+            .datePicker()
+            .setSelection(selectDate)
+            .setTitleText(getString(R.string.text_birthday))
+            .build()
+        birthDayDialog.addOnPositiveButtonClickListener { newDate ->
+            Calendar.getInstance().apply {
+                time = Date(newDate)
+                binding.tiTraderBirthday.tag = time.time.toString()
+                binding.tiTraderBirthday.setText(
+                    String.format(
+                        DATE_FORMAT_STRING,
+                        this[Calendar.DAY_OF_MONTH],
+                        this[Calendar.MONTH].plus(1),
+                        this[Calendar.YEAR]
+                    )
+                )
+            }
+        }
+        birthDayDialog.show(parentFragmentManager, TRADER_REG_INFO_TAG)
+    }
+
     private fun saveTraderInfo(): TraderRegistrationInfo? {
         return binding.run {
             tiTraderFirstName.getTextOrError()?.let { fistName ->
@@ -121,7 +144,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                         tiTraderGender.getTextOrError()?.let { gender ->
                             tiTraderBirthday.getTextOrError()?.let { birthDay ->
                                 TraderRegistrationInfo(
-                                    birthDay.split(".").reversed().joinToString("-"),
+                                    birthDay.toApiDate(),
                                     fistName,
                                     lastName,
                                     patronymic,
@@ -140,7 +163,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         super.onDestroyView()
     }
 
-    fun TextView.getTextOrError(): String? =
+    private fun TextView.getTextOrError(): String? =
         if (text.isNullOrBlank()) {
             error = getString(R.string.require_field)
             null
@@ -148,4 +171,10 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             error = null
             text.toString()
         }
+
+    private fun String.toApiDate(): String =
+        split(".").reversed().joinToString("-")
+
+    private fun String.toUiDate(): String =
+        split("-").reversed().joinToString(".")
 }
