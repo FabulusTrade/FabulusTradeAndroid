@@ -35,12 +35,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4" />
 
-    <Spinner
-        android:id="@+id/spinner_trader_reg_3_trade_terminal"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_trader_reg_3_trade_terminal"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
-        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_trade_terminal" />
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@color/design_default_color_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_trade_terminal">
+
+        <AutoCompleteTextView
+            android:id="@+id/ti_trade_terminal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:maxLines="1"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@id/tv_trader_reg_4_text1"

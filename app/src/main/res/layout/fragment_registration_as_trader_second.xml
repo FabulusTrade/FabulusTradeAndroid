@@ -78,7 +78,7 @@
                     android:id="@+id/ti_trader_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="@string/name_digits"
+                    android:digits="@string/name_symbols"
                     android:inputType="textPersonName|textCapWords"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +103,7 @@
                     android:id="@+id/ti_trader_patronymic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="@string/name_digits"
+                    android:digits="@string/name_symbols"
                     android:inputType="textPersonName|textCapWords"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -128,7 +128,7 @@
                     android:id="@+id/ti_trader_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="@string/name_digits"
+                    android:digits="@string/name_symbols"
                     android:inputType="textPersonName|textCapWords"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -195,7 +195,7 @@
                     android:id="@+id/ti_trader_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="@string/date_digits"
+                    android:digits="@string/date_symbols"
                     android:inputType="date"
                     android:maxLines="1"
                     android:singleLine="true" />

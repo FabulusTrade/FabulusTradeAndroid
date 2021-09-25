@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -42,15 +43,27 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
     private var traderInfo: TraderRegistrationInfo? = null
 
     override fun init() {
+        initView()
         initListeners()
         arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let {
             traderInfo = it
         }
     }
 
+    private fun initView() {
+        val terminalAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.terminals,
+            R.layout.support_simple_spinner_dropdown_item
+        )
+        binding.tiTradeTerminal.run {
+            setText(terminalAdapter.getItem(0))
+            setAdapter(terminalAdapter)
+        }
+    }
+
     override fun showSuccessfulPatchData() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.trader_reg_patch_dialog_title)
             .setMessage(R.string.trader_reg_patch_dialog_message)
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
@@ -61,9 +74,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
 
     override fun showErrorPatchData(e: Throwable) {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.error)
             .setMessage(getString(R.string.trader_reg_error_dialog_message, e.message))
-            .setIcon(R.drawable.ic_profit_info)
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
             }.show()

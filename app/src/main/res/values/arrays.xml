@@ -4,4 +4,8 @@
         <item>Мужчина</item>
         <item>Женщина</item>
     </string-array>
+
+    <string-array name="terminals">
+        <item>Тинькофф</item>
+    </string-array>
 </resources>

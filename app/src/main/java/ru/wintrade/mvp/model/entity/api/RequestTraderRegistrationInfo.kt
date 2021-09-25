@@ -13,4 +13,6 @@ data class RequestTraderRegistrationInfo(
     val patronymic: String?,
     @Expose
     val gender: String?,
+    @Expose
+    val is_trader: Boolean = true,
 )
