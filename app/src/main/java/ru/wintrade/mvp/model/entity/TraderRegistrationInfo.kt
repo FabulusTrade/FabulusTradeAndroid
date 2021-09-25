@@ -2,6 +2,7 @@ package ru.wintrade.mvp.model.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 import ru.wintrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 
 @Parcelize
@@ -10,7 +11,7 @@ data class TraderRegistrationInfo(
     val firstName: String?,
     val lastName: String?,
     val patronymic: String?,
-    val gender: String?,
+    val gender: @RawValue Gender,
 ) : Parcelable {
 
     fun toRequest(): RequestTraderRegistrationInfo =
@@ -19,10 +20,6 @@ data class TraderRegistrationInfo(
             first_name = firstName,
             last_name = lastName,
             patronymic = patronymic,
-            gender =
-            if (gender == "Мужчина")
-                "M"
-            else
-                "W"
+            gender = gender.char
         )
 }

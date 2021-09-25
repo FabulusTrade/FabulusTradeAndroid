@@ -14,6 +14,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderSecondBinding
+import ru.wintrade.mvp.model.entity.Gender
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
@@ -76,7 +77,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                 tiTraderFirstName.setText(traderInfo.firstName)
                 tiTraderPatronymic.setText(traderInfo.patronymic)
                 tiTraderLastName.setText(traderInfo.lastName)
-                tiTraderGender.setText(traderInfo.gender)
+                tiTraderGender.setText(traderInfo.gender.text)
             }
         }
         binding.tiTraderGender.setAdapter(genderAdapter)
@@ -124,7 +125,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                                     fistName,
                                     lastName,
                                     patronymic,
-                                    gender
+                                    Gender.getGender(gender)
                                 )
                             }
                         }
@@ -132,31 +133,6 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                 }
             }
         }
-//        binding.tiTraderMiddleName.apply {
-//            if (text.isNullOrBlank()) {
-//                error = getString(R.string.requere_field)
-//                return null
-//            }
-//        }
-//        binding.tiTraderSecondName.apply {
-//            if (text.isNullOrBlank()) {
-//                error = getString(R.string.requere_field)
-//                return null
-//            }
-//        }
-//        binding.tiTraderReg2Birthday.apply {
-//            if (text.isNullOrBlank()) {
-//                error = getString(R.string.requere_field)
-//                return null
-//            }
-//        }
-//        binding.tiTraderGender.apply {
-//            if (text.isNullOrBlank()) {
-//                error = getString(R.string.requere_field)
-//                return null
-//            }
-//        }
-//        return
     }
 
     override fun onDestroyView() {
@@ -170,6 +146,6 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             null
         } else {
             error = null
-            this.text.toString()
+            text.toString()
         }
 }
