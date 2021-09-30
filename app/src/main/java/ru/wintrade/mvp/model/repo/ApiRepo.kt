@@ -30,12 +30,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         }.subscribeOn(Schedulers.io())
 
     fun getTraderStatistic(
-        token: String,
         traderId: String
     ): Single<TraderStatistic> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTraderStatistic(token, traderId).flatMap {
+                api.getTraderStatistic(traderId).flatMap {
                     val statistic = it.results[0]
                     Single.just(mapToTraderStatistic(statistic))
                 }

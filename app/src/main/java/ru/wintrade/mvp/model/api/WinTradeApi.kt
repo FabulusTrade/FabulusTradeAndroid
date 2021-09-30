@@ -220,7 +220,6 @@ interface WinTradeApi {
 
     @GET("api/v1/trader/statistics/{trader_id}/")
     fun getTraderStatistic(
-        @Header("Authorization") token: String,
         @Path(value = "trader_id", encoded = true) traderId: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTraderStatistic>>

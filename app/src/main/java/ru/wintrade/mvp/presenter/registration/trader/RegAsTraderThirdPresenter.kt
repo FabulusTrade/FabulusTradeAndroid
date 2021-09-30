@@ -6,6 +6,7 @@ import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
@@ -20,6 +21,9 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
     @Inject
     lateinit var profile: Profile
 
+    @Inject
+    lateinit var profileRepo: ProfileRepo
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -30,7 +34,16 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
     }
 
     fun openNextStageScreen() {
-        router.newRootChain(Screens.traderMeMainScreen())
+        profile.token?.let {
+            profileRepo.userProfileRemoteDataSource.get(it)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    { newProfile ->
+                        profile.user = newProfile
+                        profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { router.newRootChain(Screens.traderMeMainScreen()) }, {})
+                    }, {})
+        }
     }
 
     fun saveTraderRegistrationInfo(traderInfo: TraderRegistrationInfo) {
