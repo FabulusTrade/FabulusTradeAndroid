@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -20,9 +21,7 @@ import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
 import ru.wintrade.util.TRADER_REG_INFO_TAG
-import java.util.*
 
-private const val DATE_FORMAT_STRING = "%02d.%02d.%04d"
 
 class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSecondView {
     companion object {
@@ -55,6 +54,29 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         initListeners()
     }
 
+    override fun setBirthdayError() {
+        binding.tiTraderBirthday.run {
+            text = null
+            error = getString(R.string.error)
+        }
+    }
+
+    override fun showBirthdayDataPicker(date: Long) {
+        val birthDayDialog = MaterialDatePicker.Builder
+            .datePicker()
+            .setSelection(date)
+            .setTitleText(getString(R.string.text_birthday))
+            .build()
+        birthDayDialog.addOnPositiveButtonClickListener { newDate ->
+            presenter.setNewBirthday(newDate)
+        }
+        birthDayDialog.show(parentFragmentManager, TRADER_REG_INFO_TAG)
+    }
+
+    override fun setTraderBirthday(date: String) {
+        binding.tiTraderBirthday.setText(date)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,6 +107,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     }
 
     private fun initListeners() {
+        initDateEditText()
         binding.run {
             btnBackTraderReg2.setOnClickListener {
                 presenter.openRegistrationFirstScreen()
@@ -96,7 +119,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             }
             btnDatePickerTraderReg2.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    showBirthDayDialog()
+                    presenter.launchBirthdayDataPicker()
                 } else {
                     Snackbar.make(
                         requireView(),
@@ -105,35 +128,13 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                     ).show()
                 }
             }
-        }
-    }
-
-    private fun showBirthDayDialog() {
-        val selectDate = if (binding.tiTraderBirthday.text.isNullOrBlank()) {
-            Date().time
-        } else {
-            binding.tiTraderBirthday.tag.toString().toLong()
-        }
-        val birthDayDialog = MaterialDatePicker.Builder
-            .datePicker()
-            .setSelection(selectDate)
-            .setTitleText(getString(R.string.text_birthday))
-            .build()
-        birthDayDialog.addOnPositiveButtonClickListener { newDate ->
-            Calendar.getInstance().apply {
-                time = Date(newDate)
-                binding.tiTraderBirthday.tag = time.time.toString()
-                binding.tiTraderBirthday.setText(
-                    String.format(
-                        DATE_FORMAT_STRING,
-                        this[Calendar.DAY_OF_MONTH],
-                        this[Calendar.MONTH].plus(1),
-                        this[Calendar.YEAR]
-                    )
-                )
+            tiTraderBirthday.run {
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus)
+                        presenter.checkBirthday(text.toString())
+                }
             }
         }
-        birthDayDialog.show(parentFragmentManager, TRADER_REG_INFO_TAG)
     }
 
     private fun saveTraderInfo(): TraderRegistrationInfo? {
@@ -161,6 +162,14 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initDateEditText() {
+        MaskedTextChangedListener.installOn(
+            editText = binding.tiTraderBirthday,
+            primaryFormat = getString(R.string.text_date_format)
+        )
+//        binding.tiTraderBirthday.hint = listener.placeholder()
     }
 
     private fun TextView.getTextOrError(): String? =

@@ -183,8 +183,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
                 android:layout_marginTop="8dp"
-                android:hint="@string/birthday_hint_string"
-                android:inputType="date"
                 app:boxBackgroundColor="@color/design_default_color_background"
                 app:hintAnimationEnabled="false"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -195,7 +193,7 @@
                     android:id="@+id/ti_trader_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="@string/date_symbols"
+                    android:hint="@string/birthday_hint_string"
                     android:inputType="date"
                     android:maxLines="1"
                     android:singleLine="true" />

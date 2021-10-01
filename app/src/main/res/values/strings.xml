@@ -219,5 +219,5 @@
     <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
     <string name="require_field">Обязательно поле</string>
     <string name="name_symbols">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>
-    <string name="date_symbols">0123456789.</string>
+    <string name="text_date_format">[00]{.}[00]{.}[9900]</string>
 </resources>
