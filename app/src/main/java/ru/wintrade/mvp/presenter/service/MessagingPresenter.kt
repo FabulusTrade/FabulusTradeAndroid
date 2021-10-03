@@ -8,18 +8,18 @@ import javax.inject.Inject
 class MessagingPresenter(private val service: MessagingService) {
     companion object {
         private const val ID_KEY = "id"
-        private const val TRADER_KEY = "id"
-        private const val OPERATION_TYPE_KEY = "id"
-        private const val COMPANY_KEY = "id"
-        private const val COMPANY_IMG_KEY = "id"
-        private const val TICKER_KEY = "id"
-        private const val ORDER_STATUS_KEY = "id"
-        private const val PRICE_KEY = "id"
-        private const val COUNT_KEY = "id"
-        private const val CURRENCY_KEY = "id"
-        private const val DATE_KEY = "id"
-        private const val PROFIT_COUNT_KEY = "id"
-        private const val OPERATION_TYPE_NAME_KEY = "id"
+        private const val TRADER_KEY = "trader"
+        private const val OPERATION_TYPE_KEY = "operation_type"
+        private const val COMPANY_KEY = "company"
+        private const val COMPANY_IMG_KEY = "company_img"
+        private const val TICKER_KEY = "ticker"
+        private const val ORDER_STATUS_KEY = "order_status"
+        private const val PRICE_KEY = "price"
+        private const val COUNT_KEY = "count"
+        private const val CURRENCY_KEY = "currency"
+        private const val DATE_KEY = "date"
+        private const val PROFIT_COUNT_KEY = "profit_count"
+        private const val OPERATION_TYPE_NAME_KEY = "operation_type_name"
     }
 
     @Inject

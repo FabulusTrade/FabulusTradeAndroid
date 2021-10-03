@@ -38,7 +38,7 @@ class OnBoardPresenter : MvpPresenter<OnBoardView>() {
         override fun onNextBtnClick(pos: Int) {
             profile.hasVisitedTutorial = true
             profileRepo.save(profile).subscribe()
-            router.replaceScreen(Screens.TradersMainScreen())
+            router.replaceScreen(Screens.tradersMainScreen())
         }
     }
 

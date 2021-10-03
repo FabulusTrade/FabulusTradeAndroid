@@ -43,24 +43,24 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
     }
 
     private fun loadTraderStatistic() {
-        profile.token?.let { token ->
-            profile.user?.id?.let {
-                apiRepo.getTraderStatistic(token, it)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
-                        val isPositiveProfit =
-                            traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
-                        traderStatistic.actualProfit365?.let {
-                            viewState.setProfit(
-                                it.doubleToStringWithFormat(PROFIT_FORMAT, true),
-                                isPositiveProfit
-                            )
-                        } ?: viewState.setProfit(ZERO_PERCENT, true)
-                        viewState.initVP(traderStatistic)
-                    }, {
-                    })
-            }
+        profile.user?.id?.let {
+            apiRepo.getTraderStatistic(it)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+                    val isPositiveProfit =
+                        traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
+                    traderStatistic.actualProfit365?.let {
+                        viewState.setProfit(
+                            it.doubleToStringWithFormat(PROFIT_FORMAT, true),
+                            isPositiveProfit
+                        )
+                    } ?: viewState.setProfit(ZERO_PERCENT, true)
+                    viewState.initVP(traderStatistic)
+                }, {
+                    it.message
+                })
         }
     }
+
 
     fun backClicked(): Boolean {
         router.exit()

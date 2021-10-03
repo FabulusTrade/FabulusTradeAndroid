@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTraderRegBackground"
+    tools:context=".ui.fragment.entrance.RegistrationAsTraderFragmentFirst">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/top_card_trader_reg_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/up_card_trader_reg_height"
+        android:elevation="@dimen/cardview_add_elevation"
+        app:layout_constraintBottom_toTopOf="@id/sv_trade_reg_1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/RegTraderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="16dp"
+            android:text="@string/trader_reg_view1_title" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_trade_reg_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv1_trader_reg_1"
+                style="@style/RegTraderMainText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/trader_reg_1_text1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv2_trader_reg_1"
+                style="@style/RegTraderMainText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/trader_reg_1_text2"
+                app:layout_constraintTop_toBottomOf="@id/tv1_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv3_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/trader_reg_1_text3"
+                app:layout_constraintTop_toBottomOf="@id/tv2_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv4_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="4dp"
+                android:text="@string/trader_reg_1_text4"
+                app:drawableStartCompat="@drawable/ic_dot_8"
+                app:drawableTint="@color/design_default_color_primary"
+                app:layout_constraintTop_toBottomOf="@id/tv3_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv5_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="4dp"
+                android:text="@string/trader_reg_1_text5"
+                app:drawableStartCompat="@drawable/ic_dot_8"
+                app:drawableTint="@color/design_default_color_primary"
+                app:layout_constraintTop_toBottomOf="@id/tv4_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv6_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="4dp"
+                android:text="@string/trader_reg_1_text6"
+                app:drawableStartCompat="@drawable/ic_dot_8"
+                app:drawableTint="@color/design_default_color_primary"
+                app:layout_constraintTop_toBottomOf="@id/tv5_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv7_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="4dp"
+                android:text="@string/trader_reg_1_text7"
+                app:drawableStartCompat="@drawable/ic_dot_8"
+                app:drawableTint="@color/design_default_color_primary"
+                app:layout_constraintTop_toBottomOf="@id/tv6_trader_reg_1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv8_trader_reg_1"
+                style="@style/RegTraderMainText.PrimaryColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="4dp"
+                android:text="@string/trader_reg_1_text8"
+                app:drawableStartCompat="@drawable/ic_dot_8"
+                app:drawableTint="@color/design_default_color_primary"
+                app:layout_constraintTop_toBottomOf="@id/tv7_trader_reg_1" />
+
+            <Button
+                android:id="@+id/btn_continue_trader_reg_1"
+                style="@style/LongButton"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="48dp"
+                android:text="@string/continue_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv8_trader_reg_1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

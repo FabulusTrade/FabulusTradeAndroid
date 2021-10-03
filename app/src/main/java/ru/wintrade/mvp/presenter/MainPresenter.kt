@@ -37,52 +37,52 @@ class MainPresenter : MvpPresenter<MainView>() {
             if (profile.hasVisitedTutorial) {
                 if (profile.user != null) {
                     if (profile.user!!.isTrader)
-                        router.newRootScreen(Screens.TraderMeMainScreen())
+                        router.newRootScreen(Screens.traderMeMainScreen())
                     else
-                        router.newRootScreen(Screens.SubscriberMainScreen())
+                        router.newRootScreen(Screens.subscriberMainScreen())
                 } else
-                    router.newRootScreen(Screens.TradersMainScreen())
+                    router.newRootScreen(Screens.tradersMainScreen())
             } else
-                router.newRootScreen(Screens.OnBoardScreen())
+                router.newRootScreen(Screens.onBoardScreen())
         }, 1)
     }
 
 
     fun tradersMenuClicked() {
-        router.replaceScreen(Screens.TradersMainScreen())
+        router.replaceScreen(Screens.tradersMainScreen())
     }
 
     fun observationMenuClicked() {
         if (profile.user != null) {
             if (profile.user!!.isTrader)
-                router.replaceScreen(Screens.TraderMeMainScreen())
+                router.replaceScreen(Screens.traderMeMainScreen())
             else
-                router.replaceScreen(Screens.SubscriberMainScreen())
+                router.replaceScreen(Screens.subscriberMainScreen())
 
         } else
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
     }
 
     fun aboutWTMenuClicked() {
-        router.replaceScreen(Screens.AboutWinTradeScreen())
+        router.replaceScreen(Screens.aboutWinTradeScreen())
     }
 
     fun questionMenuClicked() {
         if (profile.user != null)
-            router.replaceScreen(Screens.QuestionScreen())
+            router.replaceScreen(Screens.questionScreen())
         else
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
     }
 
     fun settingsMenuClicked() {
-        router.replaceScreen(Screens.SettingsScreen())
+        router.replaceScreen(Screens.settingsScreen())
     }
 
     fun friendInviteMenuClicked() {
         if (profile.user != null)
-            router.replaceScreen(Screens.FriendInviteScreen())
+            router.replaceScreen(Screens.friendInviteScreen())
         else
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
     }
 
     fun exitClicked() {
@@ -111,7 +111,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openSearchScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
         } else {
             //navigateTo SearchScreen must be here
         }
@@ -119,7 +119,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openShareScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
         } else {
             //navigateTo ShareScreen must be here
         }
@@ -127,7 +127,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openWinScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.SignInScreen())
+            router.navigateTo(Screens.signInScreen())
         } else {
             //navigateTo WinScreen must be here
         }

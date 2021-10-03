@@ -3,12 +3,10 @@ package ru.wintrade.navigation
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.ui.fragment.*
-import ru.wintrade.ui.fragment.entrance.OnBoardFragment
-import ru.wintrade.ui.fragment.entrance.ResetPasswordFragment
-import ru.wintrade.ui.fragment.entrance.SignInFragment
-import ru.wintrade.ui.fragment.entrance.SignUpFragment
+import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.wintrade.ui.fragment.subscriber.SubscriberObservationFragment
@@ -22,65 +20,65 @@ import ru.wintrade.ui.fragment.traders.TradersFilterFragment
 import ru.wintrade.ui.fragment.traders.TradersMainFragment
 
 object Screens {
-    fun OnBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
+    fun onBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
 
-    fun SignUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
+    fun signUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
 
-    fun SignInScreen() = FragmentScreen { SignInFragment.newInstance() }
+    fun signInScreen() = FragmentScreen { SignInFragment.newInstance() }
 
-    fun ResetPasswordScreen() = FragmentScreen { ResetPasswordFragment.newInstance() }
+    fun resetPasswordScreen() = FragmentScreen { ResetPasswordFragment.newInstance() }
 
-    fun SmsConfirmScreen(phone: String) = FragmentScreen { SmsConfirmFragment.newInstance(phone) }
+    fun smsConfirmScreen(phone: String) = FragmentScreen { SmsConfirmFragment.newInstance(phone) }
 
-    fun TraderMainScreen(trader: Trader) = FragmentScreen { TraderMainFragment.newInstance(trader) }
+    fun traderMainScreen(trader: Trader) = FragmentScreen { TraderMainFragment.newInstance(trader) }
 
-    fun TraderMeSubTradeScreen(position: Int) =
+    fun traderMeSubTradeScreen(position: Int) =
         FragmentScreen { TraderMeSubTradeFragment.newInstance(position) }
 
-    fun TraderProfitScreen(traderStatistic: TraderStatistic) =
+    fun traderProfitScreen(traderStatistic: TraderStatistic) =
         FragmentScreen { TraderMeProfitFragment.newInstance(traderStatistic) }
 
-    fun TraderMeMainScreen() = FragmentScreen { TraderMeMainFragment.newInstance() }
+    fun traderMeMainScreen() = FragmentScreen { TraderMeMainFragment.newInstance() }
 
-    fun TraderNewsScreen() = FragmentScreen { TraderMePostFragment.newInstance() }
+    fun traderNewsScreen() = FragmentScreen { TraderMePostFragment.newInstance() }
 
-    fun TraderPopularInstrumentsScreen() =
+    fun traderPopularInstrumentsScreen() =
         FragmentScreen { TraderPopularInstrumentsFragment.newInstance() }
 
-    fun TraderDealScreen(trader: Trader) =
+    fun traderDealScreen(trader: Trader) =
         FragmentScreen { TraderTradeFragment.newInstance(trader) }
 
-    fun TradersMainScreen() = FragmentScreen { TradersMainFragment.newInstance() }
+    fun tradersMainScreen() = FragmentScreen { TradersMainFragment.newInstance() }
 
-    fun TradersAllScreen() = FragmentScreen { TradersAllFragment.newInstance() }
+    fun tradersAllScreen() = FragmentScreen { TradersAllFragment.newInstance() }
 
-    fun TradersFilterScreen() = FragmentScreen { TradersFilterFragment.newInstance() }
+    fun tradersFilterScreen() = FragmentScreen { TradersFilterFragment.newInstance() }
 
-    fun SubscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
+    fun subscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
 
-    fun SubscriberObservationScreen() =
+    fun subscriberObservationScreen() =
         FragmentScreen { SubscriberObservationFragment.newInstance() }
 
-    fun SubscriberDealScreen() = FragmentScreen { SubscriberTradeFragment.newInstance() }
+    fun subscriberDealScreen() = FragmentScreen { SubscriberTradeFragment.newInstance() }
 
-    fun SubscriberNewsScreen() = FragmentScreen { SubscriberNewsFragment.newInstance() }
+    fun subscriberNewsScreen() = FragmentScreen { SubscriberNewsFragment.newInstance() }
 
-    fun TradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
+    fun tradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
 
-    fun CompanyTradingOperationsScreen(traderId: String, companyId: Int) =
+    fun companyTradingOperationsScreen(traderId: String, companyId: Int) =
         FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId) }
 
-    fun TraderObservationScreen() = FragmentScreen { TraderMeObservationFragment.newInstance() }
+    fun traderObservationScreen() = FragmentScreen { TraderMeObservationFragment.newInstance() }
 
-    fun AboutWinTradeScreen() = FragmentScreen { AboutWinTradeFragment.newInstance() }
+    fun aboutWinTradeScreen() = FragmentScreen { AboutWinTradeFragment.newInstance() }
 
-    fun QuestionScreen() = FragmentScreen { QuestionFragment.newInstance() }
+    fun questionScreen() = FragmentScreen { QuestionFragment.newInstance() }
 
-    fun SettingsScreen() = FragmentScreen { SettingsFragment.newInstance() }
+    fun settingsScreen() = FragmentScreen { SettingsFragment.newInstance() }
 
-    fun FriendInviteScreen() = FragmentScreen { FriendInviteFragment.newInstance() }
+    fun friendInviteScreen() = FragmentScreen { FriendInviteFragment.newInstance() }
 
-    fun CreatePostScreen(
+    fun createPostScreen(
         postId: String?,
         isPublication: Boolean,
         isPinnedEdit: Boolean?,
@@ -88,4 +86,19 @@ object Screens {
     ) = FragmentScreen {
         CreatePostFragment.newInstance(postId, isPublication, isPinnedEdit, pinnedText)
     }
+
+    fun registrationAsTraderFirstScreen() =
+        FragmentScreen { RegistrationAsTraderFragmentFirst.newInstance() }
+
+    fun registrationAsTraderSecondScreen() =
+        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance() }
+
+    fun registrationAsTraderSecondScreen(traderInfo: TraderRegistrationInfo) =
+        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(traderInfo) }
+
+    fun registrationAsTraderThirdScreen(traderInfo: TraderRegistrationInfo) =
+        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(traderInfo) }
+
+    fun registrationAsTraderFourScreen() =
+        FragmentScreen { RegistrationAsTraderFragmentFour.newInstance() }
 }

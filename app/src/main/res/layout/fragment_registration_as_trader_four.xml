@@ -1,0 +1,209 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTraderRegBackground"
+    tools:context=".ui.fragment.entrance.RegistrationAsTraderFragmentThird">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/top_card_trader_reg_4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/up_card_trader_reg_height"
+        android:elevation="@dimen/cardview_add_elevation"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/RegTraderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="16dp"
+            android:text="@string/your_profile" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_trader_reg_4_your_address"
+        style="@style/RegTraderHeaderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_your_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_4_address"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="12dp"
+        android:text="@string/text_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_your_address" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_trader_reg_4_address_street"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:hint="@string/text_street"
+        android:inputType="text"
+        app:boxBackgroundColor="@color/design_default_color_background"
+        app:hintAnimationEnabled="true"
+        app:layout_constraintEnd_toStartOf="@id/til_trader_reg_4_address_home"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_address">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_trader_reg_4_address_street"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_trader_reg_4_address_home"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/default_horizon_margin_trader_reg"
+        android:hint="@string/text_home"
+        android:inputType="text"
+        app:boxBackgroundColor="@color/design_default_color_background"
+        app:hintAnimationEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/til_trader_reg_4_address_street"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_address">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_trader_reg_4_address_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_trader_reg_4_address_city"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:hint="@string/text_city"
+        android:inputType="text"
+        app:boxBackgroundColor="@color/design_default_color_background"
+        app:hintAnimationEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_trader_reg_4_address_street">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_trader_reg_4_address_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_trader_reg_4_address_country"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_country"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_trader_reg_4_address_city" />
+
+    <Spinner
+        android:id="@+id/spinner_trader_reg_4_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_address_country"
+        tools:listitem="@layout/item_country" />
+
+    <CheckBox
+        android:id="@+id/checkbox_trader_reg_4_is_country_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+        android:checked="true"
+        android:text="@string/text_country_live"
+        app:layout_constraintTop_toBottomOf="@id/spinner_trader_reg_4_country" />
+
+    <TextView
+        android:id="@+id/tv_trader_reg_4_passport_num"
+        style="@style/RegTraderLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_passport_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_trader_reg_4_is_country_live" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_trader_reg_4_passport_num"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="8dp"
+        android:inputType="text"
+        app:boxBackgroundColor="@color/design_default_color_background"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_4_passport_num">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ti_trader_reg_4_passport_num"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_trader_reg_4_text1"
+        style="@style/RegTraderMainText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+        android:layout_marginTop="16dp"
+        android:text="@string/remark_about_passport"
+        app:layout_constraintTop_toBottomOf="@id/til_trader_reg_4_passport_num" />
+
+    <ImageButton
+        android:id="@+id/btn_back_trader_reg_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:backgroundTint="@color/colorTraderRegBackground"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_arrow_back_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/design_default_color_primary" />
+
+    <ImageButton
+        android:id="@+id/btn_forward_trader_reg_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:backgroundTint="@color/colorTraderRegBackground"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_arrow_forward_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/design_default_color_primary" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

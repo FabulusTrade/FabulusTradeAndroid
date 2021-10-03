@@ -1,10 +1,11 @@
 package ru.wintrade.mvp.presenter.traders
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.traders.TradersMainView
+import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class TradersMainPresenter : MvpPresenter<TradersMainView>() {
@@ -20,10 +21,25 @@ class TradersMainPresenter : MvpPresenter<TradersMainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        profile.user?.let {
+            if (it.isTrader) {
+                viewState.setRegistrationBtnVisible(isVisible = false)
+            } else {
+                viewState.setRegistrationBtnVisible(isVisible = true)
+            }
+        }
     }
 
     fun backClicked(): Boolean {
         router.exit()
         return true
+    }
+
+    fun openRegistrationScreen() {
+        if (profile.user == null) {
+            router.navigateTo((Screens.signInScreen()))
+        } else {
+            router.navigateTo(Screens.registrationAsTraderFirstScreen())
+        }
     }
 }
