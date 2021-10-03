@@ -169,7 +169,6 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             editText = binding.tiTraderBirthday,
             primaryFormat = getString(R.string.text_date_format)
         )
-//        binding.tiTraderBirthday.hint = listener.placeholder()
     }
 
     private fun TextView.getTextOrError(): String? =
