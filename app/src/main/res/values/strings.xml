@@ -220,4 +220,9 @@
     <string name="require_field">Обязательно поле</string>
     <string name="name_symbols">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>
     <string name="text_date_format">[00]{.}[00]{.}[9900]</string>
+
+    <!-- Traders filter screen -->
+    <string name="cb_filter_profit_label">По доходности (% годовых)</string>
+    <string name="cb_filter_followers_label">С наибольшим числом последователей</string>
+    <string name="btn_filter_apply">Применить</string>
 </resources>

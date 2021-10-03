@@ -51,7 +51,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         binding.vpMainTraders.adapter = TradersMainVPAdapter(this)
         TabLayoutMediator(binding.tabLayoutMainTraders, binding.vpMainTraders) { tab, pos ->
             when (pos) {
-                0 -> tab.text = resources.getString(R.string.show_all)
+                0 -> tab.text = resources.getString(R.string.show)
                 1 -> tab.text = resources.getString(R.string.filter)
             }
         }.attach()
