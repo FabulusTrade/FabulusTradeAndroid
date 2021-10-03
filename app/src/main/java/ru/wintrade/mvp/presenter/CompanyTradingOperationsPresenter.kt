@@ -10,6 +10,7 @@ import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -18,7 +19,8 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
     MvpPresenter<CompanyTradingOperationsView>() {
 
     companion object {
-        private const val ZERO_PERCENT = "0.00%"
+        private const val PROFIT_FORMAT = "0.00"
+        private const val ZERO = 0.0
     }
 
     @Inject
@@ -46,10 +48,15 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
             view.setOperationDate("Дата ${dateFormat.format(deals.date)}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
-            if (deals.profitCount.isNullOrEmpty()) {
+            if (deals.profitCount == null || deals.profitCount == ZERO) {
                 view.setProfitCount(null)
             } else {
-                view.setProfitCount("${deals.profitCount}%")
+                view.setProfitCount(
+                    deals.profitCount.doubleToStringWithFormat(
+                        PROFIT_FORMAT,
+                        true
+                    )
+                )
             }
         }
 
