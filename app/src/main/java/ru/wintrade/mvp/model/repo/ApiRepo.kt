@@ -34,8 +34,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     ): Single<TraderStatistic> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getTraderStatistic(traderId).flatMap {
-                    val statistic = it.results[0]
+                api.getTraderStatistic(traderId).flatMap { statistic ->
                     Single.just(mapToTraderStatistic(statistic))
                 }
             } else Single.error(NoInternetException())
