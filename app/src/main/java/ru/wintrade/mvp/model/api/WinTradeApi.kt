@@ -222,7 +222,7 @@ interface WinTradeApi {
     fun getTraderStatistic(
         @Path(value = "trader_id", encoded = true) traderId: String,
         @Query("page") page: Int = 1
-    ): Single<ResponsePagination<ResponseTraderStatistic>>
+    ): Single<ResponseTraderStatistic>
 
     @PATCH("api/v1/trader/{trader_id}/ ")
     fun updateTraderRegistration(

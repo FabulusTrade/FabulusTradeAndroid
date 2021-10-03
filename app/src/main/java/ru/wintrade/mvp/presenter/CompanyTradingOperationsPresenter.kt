@@ -16,6 +16,11 @@ import javax.inject.Inject
 
 class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int) :
     MvpPresenter<CompanyTradingOperationsView>() {
+
+    companion object {
+        private const val ZERO_PERCENT = "0.00%"
+    }
+
     @Inject
     lateinit var router: Router
 
