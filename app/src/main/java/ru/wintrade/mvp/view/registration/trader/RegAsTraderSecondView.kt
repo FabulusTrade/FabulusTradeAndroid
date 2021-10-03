@@ -7,4 +7,7 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface RegAsTraderSecondView : MvpView {
     fun init()
+    fun setBirthdayError()
+    fun showBirthdayDataPicker(date: Long)
+    fun setTraderBirthday(date: String)
 }

@@ -12,6 +12,7 @@ import ru.wintrade.databinding.FragmentRegistrationAsTraderFirstBinding
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderFirstPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderFirstView
 import ru.wintrade.ui.App
+import ru.wintrade.util.setToolbarVisible
 
 class RegistrationAsTraderFragmentFirst : MvpAppCompatFragment(), RegAsTraderFirstView {
     companion object {
@@ -41,6 +42,7 @@ class RegistrationAsTraderFragmentFirst : MvpAppCompatFragment(), RegAsTraderFir
 
     override fun init() {
         initListeners()
+        setToolbarVisible(false)
     }
 
     private fun initListeners() {

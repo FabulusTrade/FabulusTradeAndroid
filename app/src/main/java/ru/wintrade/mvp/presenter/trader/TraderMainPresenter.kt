@@ -40,21 +40,20 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun loadTraderStatistic() {
-        profile.token?.let { token ->
-            apiRepo.getTraderStatistic(token, trader.id)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
-                    val isPositiveProfit =
-                        traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
-                    traderStatistic.actualProfit365?.let {
-                        viewState.setProfit(
-                            it.doubleToStringWithFormat(PROFIT_FORMAT, true),
-                            isPositiveProfit
-                        )
-                    } ?: viewState.setProfit(ZERO_PERCENT, true)
-                    viewState.initVP(traderStatistic, trader)
-                }, {
-                })
-        }
+        apiRepo.getTraderStatistic(trader.id)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+                val isPositiveProfit =
+                    traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
+                traderStatistic.actualProfit365?.let {
+                    viewState.setProfit(
+                        it.doubleToStringWithFormat(PROFIT_FORMAT, true),
+                        isPositiveProfit
+                    )
+                } ?: viewState.setProfit(ZERO_PERCENT, true)
+                viewState.initVP(traderStatistic, trader)
+            }, {
+                it.message
+            })
     }
 
     fun observeBtnClicked() {

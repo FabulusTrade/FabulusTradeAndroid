@@ -3,6 +3,7 @@ package ru.wintrade.navigation
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.*
@@ -92,8 +93,11 @@ object Screens {
     fun registrationAsTraderSecondScreen() =
         FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance() }
 
-    fun registrationAsTraderThirdScreen() =
-        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance() }
+    fun registrationAsTraderSecondScreen(traderInfo: TraderRegistrationInfo) =
+        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(traderInfo) }
+
+    fun registrationAsTraderThirdScreen(traderInfo: TraderRegistrationInfo) =
+        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(traderInfo) }
 
     fun registrationAsTraderFourScreen() =
         FragmentScreen { RegistrationAsTraderFragmentFour.newInstance() }

@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface RegAsTraderThirdView : MvpView {
     fun init()
+    fun showSuccessfulPatchData()
+    fun showErrorPatchData(e: Throwable)
 }

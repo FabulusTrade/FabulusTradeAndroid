@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="genders">
-        <item>Мужской</item>
-        <item>Женский</item>
+        <item>Мужчина</item>
+        <item>Женщина</item>
+    </string-array>
+
+    <string-array name="terminals">
+        <item>Тинькофф</item>
     </string-array>
 </resources>

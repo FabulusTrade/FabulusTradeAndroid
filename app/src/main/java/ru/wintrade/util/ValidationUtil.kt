@@ -22,6 +22,10 @@ enum class PhoneValidation {
     INCORRECT, ALREADY_EXISTS, OK
 }
 
+enum class DateValidation {
+    CORRECT, INVALID
+}
+
 fun isValidEmail(email: String): EmailValidation {
     val pattern = Patterns.EMAIL_ADDRESS
     return if (pattern.matcher(email).matches()) EmailValidation.OK else EmailValidation.INCORRECT
@@ -51,6 +55,25 @@ fun isValidNickname(nickname: String): NicknameValidation {
     if (!nickname.matches("^[a-zA-Z0-9]*$".toRegex()))
         return NicknameValidation.ONLY_ENG_AND_DIGIT
     return NicknameValidation.OK
+}
+
+fun isValidBirthday(date: String): DateValidation {
+    try {
+        val dateNumbers = date.split(".").map { it.toInt() }
+        if (dateNumbers.last() in 1950..2005) {
+            when {
+                dateNumbers[1] in listOf(1, 3, 5, 7, 8, 10, 12) &&
+                        dateNumbers.first() in 1..31 -> return DateValidation.CORRECT
+                dateNumbers[1] in listOf(4, 6, 9, 11) &&
+                        dateNumbers.first() in 1..30 -> return DateValidation.CORRECT
+                dateNumbers[1] == 2 &&
+                        dateNumbers.first() in 1..29 -> return DateValidation.CORRECT
+            }
+        }
+        return DateValidation.INVALID
+    } catch (e: Exception) {
+        return DateValidation.INVALID
+    }
 }
 
 private fun containsUppercaseLetter(line: String): Boolean {
