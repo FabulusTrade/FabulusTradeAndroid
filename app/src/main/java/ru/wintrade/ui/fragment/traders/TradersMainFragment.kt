@@ -25,14 +25,25 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = TradersMainFragment()
+        private const val CHECKED_FILTER = "main_traders_filter"
+        private const val DEFAULT_FILTER = 0
+        fun newInstance(checkedFilter: Int?) = TradersMainFragment().apply {
+            arguments = Bundle().apply {
+                when (checkedFilter) {
+                    null -> putInt(CHECKED_FILTER, DEFAULT_FILTER)
+                    else -> putInt(CHECKED_FILTER, checkedFilter)
+                }
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var mainPresenter: TradersMainPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradersMainPresenter().apply {
+    fun providePresenter() = TradersMainPresenter(
+        arguments?.get(CHECKED_FILTER) as Int
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -45,10 +56,10 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         return _binding?.root
     }
 
-    override fun init() {
+    override fun init(checkedFilter: Int) {
         initView()
         initListeners()
-        binding.vpMainTraders.adapter = TradersMainVPAdapter(this)
+        binding.vpMainTraders.adapter = TradersMainVPAdapter(this, checkedFilter)
         TabLayoutMediator(binding.tabLayoutMainTraders, binding.vpMainTraders) { tab, pos ->
             when (pos) {
                 0 -> tab.text = resources.getString(R.string.show)

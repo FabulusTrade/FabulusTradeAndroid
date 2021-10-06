@@ -19,14 +19,21 @@ class TradersFilterFragment : MvpAppCompatFragment(), TradersFilterView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = TradersFilterFragment()
+        private const val CHECKED_FILTER = "filter_screen_checked_filter"
+        fun newInstance(checkedFilter: Int?) = TradersFilterFragment().apply {
+            arguments = Bundle().apply {
+                putInt(CHECKED_FILTER, checkedFilter!!)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: TradersFilterPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradersFilterPresenter().apply {
+    fun providePresenter() = TradersFilterPresenter(
+        arguments?.get(CHECKED_FILTER) as Int
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -40,7 +47,34 @@ class TradersFilterFragment : MvpAppCompatFragment(), TradersFilterView {
     }
 
     override fun init() {
+        binding.run {
+            btnFilterApply.setOnClickListener {
+                presenter.applyFilter()
+            }
+            cbFilterByProfit.setOnClickListener {
+                presenter.byProfitBoxClicked()
+            }
+            cbFilterByFollowers.setOnClickListener {
+                presenter.byFollowersBoxClicked()
+            }
+        }
+    }
 
+    override fun setFilterCheckBoxState(checkedFilter: TradersFilterPresenter.CheckedFilter) {
+        when (checkedFilter) {
+            TradersFilterPresenter.CheckedFilter.BY_PROFIT -> {
+                with(binding) {
+                    cbFilterByProfit.isChecked = true
+                    cbFilterByFollowers.isChecked = false
+                }
+            }
+            TradersFilterPresenter.CheckedFilter.BY_FOLLOWERS -> {
+                with(binding) {
+                    cbFilterByProfit.isChecked = false
+                    cbFilterByFollowers.isChecked = true
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

@@ -1,16 +1,42 @@
 package ru.wintrade.mvp.presenter.traders
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 import ru.wintrade.mvp.view.traders.TradersFilterView
+import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class TradersFilterPresenter : MvpPresenter<TradersFilterView>() {
+class TradersFilterPresenter(val filter: Int) : MvpPresenter<TradersFilterView>() {
     @Inject
     lateinit var router: Router
+
+    enum class CheckedFilter {
+        BY_PROFIT, BY_FOLLOWERS
+    }
+
+    lateinit var checkedFilter: CheckedFilter
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        when (filter) {
+            CheckedFilter.BY_PROFIT.ordinal -> checkedFilter = CheckedFilter.BY_PROFIT
+            CheckedFilter.BY_FOLLOWERS.ordinal -> checkedFilter = CheckedFilter.BY_FOLLOWERS
+        }
+        viewState.setFilterCheckBoxState(checkedFilter)
+    }
+
+    fun byProfitBoxClicked() {
+        checkedFilter = CheckedFilter.BY_PROFIT
+        viewState.setFilterCheckBoxState(checkedFilter)
+    }
+
+    fun byFollowersBoxClicked() {
+        checkedFilter = CheckedFilter.BY_FOLLOWERS
+        viewState.setFilterCheckBoxState(checkedFilter)
+    }
+
+    fun applyFilter() {
+        router.navigateTo(Screens.tradersMainScreen(checkedFilter.ordinal))
     }
 }
