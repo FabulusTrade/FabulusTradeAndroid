@@ -48,11 +48,11 @@ object Screens {
     fun traderDealScreen(trader: Trader) =
         FragmentScreen { TraderTradeFragment.newInstance(trader) }
 
-    fun tradersMainScreen() = FragmentScreen { TradersMainFragment.newInstance() }
+    fun tradersMainScreen(checkedFilter: Int?) = FragmentScreen { TradersMainFragment.newInstance(checkedFilter) }
 
-    fun tradersAllScreen() = FragmentScreen { TradersAllFragment.newInstance() }
+    fun tradersAllScreen(checkedFilter: Int) = FragmentScreen { TradersAllFragment.newInstance(checkedFilter) }
 
-    fun tradersFilterScreen() = FragmentScreen { TradersFilterFragment.newInstance() }
+    fun tradersFilterScreen(checkedFilter: Int) = FragmentScreen { TradersFilterFragment.newInstance(checkedFilter) }
 
     fun subscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
 

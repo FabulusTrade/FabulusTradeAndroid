@@ -41,7 +41,7 @@ class MainPresenter : MvpPresenter<MainView>() {
                     else
                         router.newRootScreen(Screens.subscriberMainScreen())
                 } else
-                    router.newRootScreen(Screens.tradersMainScreen())
+                    router.newRootScreen(Screens.tradersMainScreen(null))
             } else
                 router.newRootScreen(Screens.onBoardScreen())
         }, 1)
@@ -49,7 +49,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
 
     fun tradersMenuClicked() {
-        router.replaceScreen(Screens.tradersMainScreen())
+        router.replaceScreen(Screens.tradersMainScreen(null))
     }
 
     fun observationMenuClicked() {

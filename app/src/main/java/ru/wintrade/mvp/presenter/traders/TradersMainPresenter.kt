@@ -8,7 +8,7 @@ import ru.wintrade.mvp.view.traders.TradersMainView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class TradersMainPresenter : MvpPresenter<TradersMainView>() {
+class TradersMainPresenter(val checkedFilter: Int) : MvpPresenter<TradersMainView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
@@ -20,7 +20,7 @@ class TradersMainPresenter : MvpPresenter<TradersMainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
+        viewState.init(checkedFilter)
         profile.user?.let {
             if (it.isTrader) {
                 viewState.setRegistrationBtnVisible(isVisible = false)

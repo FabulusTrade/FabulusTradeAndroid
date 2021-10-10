@@ -22,7 +22,12 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = TradersAllFragment()
+        private const val CHECKED_FILTER = "traders_filter"
+        fun newInstance(checkedFilter: Int?) = TradersAllFragment().apply {
+            arguments = Bundle().apply {
+                putInt(CHECKED_FILTER, checkedFilter!!)
+            }
+        }
     }
 
     private var tradersAllRVAdapter: TradersAllRVAdapter? = null
@@ -31,7 +36,9 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
     lateinit var presenter: TradersAllPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradersAllPresenter().apply {
+    fun providePresenter() = TradersAllPresenter(
+        arguments?.get(CHECKED_FILTER) as Int
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -70,6 +77,10 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
 
     override fun updateAdapter() {
         tradersAllRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun setFilterText(text: Int) {
+        binding.tvTradersAllSelectedFilter.text = resources.getText(text)
     }
 
     override fun onDestroy() {

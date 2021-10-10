@@ -18,10 +18,21 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     val newTradeSubject = PublishSubject.create<Boolean>()
 
-    fun getAllTraders(page: Int = 1): Single<Pagination<Trader>> =
+    fun getTradersProfitFiltered(page: Int = 1): Single<Pagination<Trader>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getAllTraders(page).flatMap { respPag ->
+                api.getTradersProfitFiltered(page).flatMap { respPag ->
+                    val traders = respPag.results.map { apiTrader -> mapToTrader(apiTrader) }
+                    Single.just(mapToPagination(respPag, traders))
+                }
+            } else
+                Single.error(NoInternetException())
+        }.subscribeOn(Schedulers.io())
+
+    fun getTradersFollowersFiltered(page: Int = 1): Single<Pagination<Trader>> =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.getTradersFollowersFiltered(page).flatMap { respPag ->
                     val traders = respPag.results.map { apiTrader -> mapToTrader(apiTrader) }
                     Single.just(mapToPagination(respPag, traders))
                 }

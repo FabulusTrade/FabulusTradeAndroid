@@ -8,4 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface TradersAllView : MvpView {
     fun init()
     fun updateAdapter()
+    fun setFilterText(text: Int)
 }

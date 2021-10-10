@@ -3,6 +3,7 @@ package ru.wintrade.mvp.presenter.traders
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trader
@@ -14,9 +15,11 @@ import ru.wintrade.navigation.Screens
 import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
-class TradersAllPresenter : MvpPresenter<TradersAllView>() {
+class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>() {
     companion object {
         private const val FORMAT = "0.00"
+        private const val DEFAULT_FILTER = 0
+        private const val BY_FOLLOWERS = 1
     }
 
     @Inject
@@ -80,11 +83,17 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
         super.onFirstViewAttach()
         viewState.init()
         loadMySubscription()
-        loadTraders()
+        when (checkedFilter) {
+            DEFAULT_FILTER -> loadTraders()
+            BY_FOLLOWERS -> loadTradersFilteredByFollowers()
+        }
     }
 
     fun onScrollLimit() {
-        loadTraders()
+        when (checkedFilter) {
+            DEFAULT_FILTER -> loadTraders()
+            BY_FOLLOWERS -> loadTradersFilteredByFollowers()
+        }
         loadMySubscription()
     }
 
@@ -94,16 +103,36 @@ class TradersAllPresenter : MvpPresenter<TradersAllView>() {
                 .subscribe({
                     subscriptionList.clear()
                     subscriptionList.addAll(it)
-                }, {
-
-                })
+                }, {})
         }
     }
 
     private fun loadTraders() {
+        viewState.setFilterText(R.string.cb_filter_profit_label)
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.getAllTraders(nextPage!!).observeOn(AndroidSchedulers.mainThread())
+            apiRepo.getTradersProfitFiltered(nextPage!!).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { pag ->
+                        listPresenter.traderList.addAll(pag.results)
+                        viewState.updateAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    },
+                    {
+                        it.printStackTrace()
+                        isLoading = false
+                    }
+                )
+        }
+    }
+
+    private fun loadTradersFilteredByFollowers() {
+        viewState.setFilterText(R.string.cb_filter_followers_label)
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            apiRepo.getTradersFollowersFiltered(nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { pag ->
                         listPresenter.traderList.addAll(pag.results)

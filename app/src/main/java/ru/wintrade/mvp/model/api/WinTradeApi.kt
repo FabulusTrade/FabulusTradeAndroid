@@ -8,8 +8,13 @@ import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
 
 interface WinTradeApi {
-    @GET("api/v1/trader/list/")
-    fun getAllTraders(
+    @GET("api/v1/trader/list/sort/profit/")
+    fun getTradersProfitFiltered(
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseTrader>>
+
+    @GET("api/v1/trader/list/sort/followers")
+    fun getTradersFollowersFiltered(
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseTrader>>
 
