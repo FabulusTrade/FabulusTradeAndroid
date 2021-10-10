@@ -3,6 +3,7 @@ package ru.wintrade.mvp.presenter.traders
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trader
@@ -107,6 +108,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
     }
 
     private fun loadTraders() {
+        viewState.setFilterText(R.string.cb_filter_profit_label)
         if (nextPage != null && !isLoading) {
             isLoading = true
             apiRepo.getTradersProfitFiltered(nextPage!!).observeOn(AndroidSchedulers.mainThread())
@@ -126,6 +128,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
     }
 
     private fun loadTradersFilteredByFollowers() {
+        viewState.setFilterText(R.string.cb_filter_followers_label)
         if (nextPage != null && !isLoading) {
             isLoading = true
             apiRepo.getTradersFollowersFiltered(nextPage!!)

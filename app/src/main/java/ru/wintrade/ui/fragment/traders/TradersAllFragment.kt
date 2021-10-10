@@ -79,6 +79,10 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
         tradersAllRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun setFilterText(text: Int) {
+        binding.tvTradersAllSelectedFilter.text = resources.getText(text)
+    }
+
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
