@@ -224,4 +224,7 @@
     <string name="cb_filter_profit_label">По доходности (% годовых)</string>
     <string name="cb_filter_followers_label">С наибольшим числом последователей</string>
     <string name="btn_filter_apply">Применить</string>
+    <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
+    <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
+    <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
 </resources>

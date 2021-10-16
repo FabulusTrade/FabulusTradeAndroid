@@ -2,23 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_on_board_item"
+    <TextView
+        style="@style/OnBoardText.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/on_boarding"
-         />
+        android:layout_marginHorizontal="@dimen/default_horizon_margin_on_board"
+        android:layout_marginTop="40dp"
+        android:text="@string/on_board_title"
+        android:textAlignment="center" />
+
+    <TextView
+        style="@style/OnBoardText.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/on_board_text1"
+        android:textSize="18sp" />
+
+    <TextView
+        style="@style/OnBoardText.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/on_board_text2"
+        android:textSize="18sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_on_board_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="300dp"
-        android:backgroundTint="@color/colorAccent"
         android:layout_gravity="center"
-        android:text="@string/btn_next_title"/>
+        android:layout_marginTop="80dp"
+        android:backgroundTint="@color/colorAccent"
+        android:minWidth="300dp"
+        android:text="@string/btn_next_title" />
 
 </LinearLayout>
