@@ -15,7 +15,7 @@
     <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_title">Создать учетную запись</string>
-    <string name="nickname">Никнейм</string>
+    <string name="user_name">Имя пользователя</string>
     <string name="email">Электронная почта</string>
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
@@ -27,7 +27,6 @@
     <string name="sms_resend_btn">Отправить смс еще раз</string>
     <string name="sms_not_received">НЕ ПРИШЛО СМС?</string>
     <string name="entrance_text_view_1_title">Войти</string>
-    <string name="entrance_text_input_edit_text_user_name_hint_title">Имя пользователя</string>
     <string name="enter_button_title">Войти</string>
     <string name="enter_with_google_button_title">Войти с Google</string>
     <string name="enter_with_facebook_button_title">Войти с Facebook</string>
@@ -225,4 +224,7 @@
     <string name="cb_filter_profit_label">По доходности (% годовых)</string>
     <string name="cb_filter_followers_label">С наибольшим числом последователей</string>
     <string name="btn_filter_apply">Применить</string>
+    <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
+    <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
+    <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
 </resources>

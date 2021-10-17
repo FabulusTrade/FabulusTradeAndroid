@@ -63,4 +63,14 @@
         <item name="android:layout_width">@dimen/default_button_width</item>
     </style>
 
+    <style name="OnBoardText" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="OnBoardText.Title" />
+
+    <style name="OnBoardText.Text">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

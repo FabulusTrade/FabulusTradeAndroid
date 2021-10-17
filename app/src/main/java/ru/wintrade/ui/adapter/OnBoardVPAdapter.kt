@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.item_on_board.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.IOnBoardListPresenter
 import ru.wintrade.mvp.view.item.OnBoardItemView
-import ru.wintrade.util.loadImage
 
 class OnBoardVPAdapter(
     val presenter: IOnBoardListPresenter
@@ -37,8 +36,6 @@ class OnBoardVPAdapter(
 
         override var pos = -1
 
-        override fun setImage(id: Int) = with(containerView) {
-            loadImage(id, iv_on_board_item)
-        }
+        override fun setImage(id: Int) {}
     }
 }

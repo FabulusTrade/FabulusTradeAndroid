@@ -15,4 +15,5 @@
     <dimen name="default_horizon_margin_trader_reg">32dp</dimen>
     <dimen name="default_vertical_margin_trader_reg">16dp</dimen>
     <dimen name="date_field_width">200dp</dimen>
+    <dimen name="default_horizon_margin_on_board">24dp</dimen>
 </resources>

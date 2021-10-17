@@ -15,5 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scaleType="fitStart"
-        app:srcCompat="@drawable/logo_with_text" />
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/fabulus_logo" />
 </LinearLayout>

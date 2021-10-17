@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:text="@string/nickname"
+                android:text="@string/user_name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 

@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:hint="@string/nickname"
+                android:hint="@string/user_name"
                 android:imeOptions="actionDone"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -60,10 +60,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/entrance_enter_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/LongButton"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="67dp"
             android:layout_marginTop="31dp"
             android:backgroundTint="?attr/colorAccent"
             android:minWidth="220dp"
@@ -90,10 +88,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/entrance_registration_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/LongButton"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="67dp"
             android:layout_marginTop="21dp"
             android:layout_marginBottom="21dp"
             android:backgroundTint="@color/colorBlue"

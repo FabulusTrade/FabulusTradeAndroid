@@ -5,3 +5,4 @@ const val HAS_VISITED_TUTORIAL = "hasVisitedTutorial"
 const val IS_AUTHORIZED = "isAuthorized"
 
 const val TRADER_REG_INFO_TAG = "trader registration info"
+const val COLOR_GREEN = (0xFF00923B).toInt()

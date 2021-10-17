@@ -123,7 +123,7 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
             text = profit
             setTextColor(
                 if (isPositive)
-                    Color.GREEN
+                    COLOR_GREEN
                 else
                     Color.RED
             )
