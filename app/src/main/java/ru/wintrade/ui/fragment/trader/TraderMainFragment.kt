@@ -20,6 +20,7 @@ import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
+import ru.wintrade.util.COLOR_GREEN
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.setDrawerLockMode
 
@@ -134,7 +135,7 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         binding.tvTraderStatProfit.apply {
             if (isPositive) {
                 text = profit
-                setTextColor(Color.GREEN)
+                setTextColor(COLOR_GREEN)
             } else {
                 text = profit
                 setTextColor(Color.RED)
