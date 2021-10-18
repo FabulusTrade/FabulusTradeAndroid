@@ -99,7 +99,7 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.showSuccessDialog()
-                    router.navigateTo(Screens.signInScreen())
+                    router.navigateTo(Screens.signInScreen(false))
                 }, { exception ->
                     if (exception is HttpException) {
                         val resp = exception.response()?.errorBody()?.string()

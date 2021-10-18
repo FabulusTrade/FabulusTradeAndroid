@@ -23,7 +23,7 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
     }
 
     fun openSignInScreen() {
-        router.replaceScreen(Screens.signInScreen())
+        router.replaceScreen(Screens.signInScreen(false))
     }
 
     fun resetPassBtnClicked(email: String) {
