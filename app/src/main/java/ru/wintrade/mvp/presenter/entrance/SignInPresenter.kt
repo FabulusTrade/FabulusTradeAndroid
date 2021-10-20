@@ -12,7 +12,7 @@ import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresenter<SignInView>() {
+class SignInPresenter : MvpPresenter<SignInView>() {
     @Inject
     lateinit var router: Router
 
@@ -30,7 +30,7 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init(isAsTraderRegistration)
+        viewState.init()
     }
 
     fun openRegistrationScreen() {
@@ -91,5 +91,6 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
                 it.printStackTrace()
             }
         )
+
     }
 }
