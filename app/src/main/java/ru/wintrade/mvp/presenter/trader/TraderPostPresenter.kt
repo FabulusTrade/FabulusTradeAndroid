@@ -135,7 +135,7 @@ class TraderPostPresenter(val trader: Trader) :
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.signInScreen(false))
+        router.navigateTo(Screens.signInScreen())
     }
 
     fun openSignUpScreen() {
