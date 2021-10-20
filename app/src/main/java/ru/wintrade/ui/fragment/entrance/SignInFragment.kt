@@ -27,16 +27,22 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SignInFragment()
+        private const val IS_AS_TRADER_REGISTRATION = "registration"
+        fun newInstance(isSubscriber: Boolean) = SignInFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(IS_AS_TRADER_REGISTRATION, isSubscriber)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: SignInPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SignInPresenter().apply {
-        App.instance.appComponent.inject(this)
-    }
+    fun providePresenter() =
+        SignInPresenter(arguments?.get(IS_AS_TRADER_REGISTRATION) as Boolean).apply {
+            App.instance.appComponent.inject(this)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +53,16 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         return _binding?.root
     }
 
-    override fun init() {
+    override fun init(isAsTraderRegistration: Boolean) {
         initView()
         initListeners()
+        if (isAsTraderRegistration) {
+            binding.entranceRegistrationButton.text =
+                resources.getString(R.string.registration_button_title_second)
+        } else {
+            binding.entranceRegistrationButton.text =
+                resources.getString(R.string.registration_button_title_first)
+        }
     }
 
     fun initListeners() {

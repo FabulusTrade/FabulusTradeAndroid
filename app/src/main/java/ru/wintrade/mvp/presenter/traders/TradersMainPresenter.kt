@@ -35,11 +35,17 @@ class TradersMainPresenter(val checkedFilter: Int) : MvpPresenter<TradersMainVie
         return true
     }
 
-    fun openRegistrationScreen() {
-        if (profile.user == null) {
-            router.navigateTo((Screens.signInScreen()))
-        } else {
-            router.navigateTo(Screens.registrationAsTraderFirstScreen())
+    fun openRegistrationScreen(isTraderRegistrationButtonClicked: Boolean) {
+        when {
+            profile.user == null && !isTraderRegistrationButtonClicked -> {
+                router.navigateTo(Screens.signInScreen(false))
+            }
+            isTraderRegistrationButtonClicked -> {
+                router.navigateTo(Screens.signInScreen(true))
+            }
+            else -> {
+                router.navigateTo(Screens.registrationAsTraderFirstScreen())
+            }
         }
     }
 }
