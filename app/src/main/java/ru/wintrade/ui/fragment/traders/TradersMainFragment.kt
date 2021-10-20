@@ -71,7 +71,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     fun initListeners() {
         binding.run {
             tvTradersMainRegistrationStart.setOnClickListener {
-                mainPresenter.openRegistrationScreen()
+                mainPresenter.openRegistrationScreen(true)
             }
         }
     }

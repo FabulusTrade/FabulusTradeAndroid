@@ -24,7 +24,7 @@ object Screens {
 
     fun signUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
 
-    fun signInScreen() = FragmentScreen { SignInFragment.newInstance() }
+    fun signInScreen(isSubscriber: Boolean) = FragmentScreen { SignInFragment.newInstance(isSubscriber) }
 
     fun resetPasswordScreen() = FragmentScreen { ResetPasswordFragment.newInstance() }
 

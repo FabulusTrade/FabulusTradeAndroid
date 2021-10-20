@@ -60,7 +60,7 @@ class MainPresenter : MvpPresenter<MainView>() {
                 router.replaceScreen(Screens.subscriberMainScreen())
 
         } else
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
     }
 
     fun aboutWTMenuClicked() {
@@ -71,7 +71,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         if (profile.user != null)
             router.replaceScreen(Screens.questionScreen())
         else
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
     }
 
     fun settingsMenuClicked() {
@@ -82,7 +82,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         if (profile.user != null)
             router.replaceScreen(Screens.friendInviteScreen())
         else
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
     }
 
     fun exitClicked() {
@@ -111,7 +111,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openSearchScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
         } else {
             //navigateTo SearchScreen must be here
         }
@@ -119,7 +119,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openShareScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
         } else {
             //navigateTo ShareScreen must be here
         }
@@ -127,7 +127,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun openWinScreen() {
         if (profile.user == null) {
-            router.navigateTo(Screens.signInScreen())
+            router.navigateTo(Screens.signInScreen(false))
         } else {
             //navigateTo WinScreen must be here
         }

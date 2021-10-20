@@ -15,9 +15,7 @@
     <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_title">Создать учетную запись</string>
-    <string name="user_name">Имя пользователя</string>
     <string name="email">Электронная почта</string>
-    <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="phone">Телефон</string>
     <string name="create_profile_btn">Создать профиль</string>
@@ -26,13 +24,9 @@
     <string name="confirm_btn">Подтвердить</string>
     <string name="sms_resend_btn">Отправить смс еще раз</string>
     <string name="sms_not_received">НЕ ПРИШЛО СМС?</string>
-    <string name="entrance_text_view_1_title">Войти</string>
-    <string name="enter_button_title">Войти</string>
     <string name="enter_with_google_button_title">Войти с Google</string>
     <string name="enter_with_facebook_button_title">Войти с Facebook</string>
     <string name="entrance_text_view_3_title">Нет учетной записи?</string>
-    <string name="registration_button_title">Зарегистрироваться</string>
-    <string name="entrance_text_view_2_title">ИЛИ</string>
     <string name="traders_text_view_1_title">С наибольшим числом\n последователей (за последний год)</string>
     <string name="traders_text_view_2_title">Стань популярным трейдером!\n Больше последователей - больше прибыль!</string>
     <string name="show_all">Показать всех</string>
@@ -124,7 +118,6 @@
     <string name="is_success_reg">Успешная регистрация</string>
     <string name="error">Ошибка</string>
     <string name="send">Отправить</string>
-    <string name="reset_pass_btn_title">Забыли пароль?</string>
     <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
     <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
     <string name="hide">скрыть</string>
@@ -164,7 +157,6 @@
     <string name="dialog_info_text">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
     <string name="phone_format_1">8 ([000]) [000]-[00]-[00]</string>
     <string name="phone_format_2">+7 ([000]) [000]-[00]-[00]</string>
-
     <string name="trader_reg_view1_title">Заполнить профиль</string>
     <string name="trader_reg_1_text1">Ваши  персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</string>
     <string name="trader_reg_1_text2">Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</string>
@@ -227,4 +219,14 @@
     <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
     <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
     <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
+
+    <!-- SignIn screen -->
+    <string name="entrance_text_view_1_title">Войти</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="enter_button_title">Войти</string>
+    <string name="reset_pass_btn_title">Забыли пароль?</string>
+    <string name="entrance_text_view_2_title">ИЛИ</string>
+    <string name="registration_button_title_first">Зарегистрироваться</string>
+    <string name="registration_button_title_second">ЗАРЕГИСТРИРОВАТЬСЯ трейдером</string>
 </resources>

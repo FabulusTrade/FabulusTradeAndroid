@@ -62,7 +62,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
 
         override fun deleteObservation(pos: Int) {
             if (profile.user == null) {
-                router.navigateTo(Screens.signInScreen())
+                router.navigateTo(Screens.signInScreen(false))
             } else {
                 apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
                     .observeOn(AndroidSchedulers.mainThread())
