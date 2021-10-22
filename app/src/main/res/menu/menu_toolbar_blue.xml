@@ -13,7 +13,7 @@
         android:title="@string/share" />
     <item
         android:id="@+id/menu_win"
-        android:icon="@drawable/wt"
+        android:icon="@drawable/ft"
         android:showAsAction="always"
         android:title="@string/app_name" />
 </menu>
