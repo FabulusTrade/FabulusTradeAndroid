@@ -1,50 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/header_main_height"
     android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/iv_header_main_avatar"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_no_reg_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:foreground="@drawable/bg_header_avatar"
-        android:scaleType="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+        android:layout_marginTop="40dp">
 
-    <Button
-        android:id="@+id/btn_header_main_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:backgroundTint="@color/colorAccent"
-        android:text="@string/edit_profile"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_header_main_avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/tv_header_main_nickname" />
 
-    <TextView
-        android:id="@+id/tv_header_main_nickname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/great_treader"
-        android:textColor="@color/colorWhite"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_header_main_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
-        app:layout_constraintTop_toTopOf="@+id/iv_header_main_avatar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/fabulus_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorAccent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_user_reg_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_header_main_avatar"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@null"
+            android:foreground="@drawable/bg_header_avatar"
+            android:scaleType="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+        <Button
+            android:id="@+id/btn_header_main_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/edit_profile"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_header_main_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header_main_nickname" />
+
+        <TextView
+            android:id="@+id/tv_header_main_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/great_treader"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_header_main_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_header_main_avatar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
