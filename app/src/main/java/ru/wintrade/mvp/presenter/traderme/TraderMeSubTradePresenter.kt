@@ -1,6 +1,5 @@
 package ru.wintrade.mvp.presenter.traderme
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -86,16 +85,18 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init(position)
-        apiRepo.mySubscriptions(profile.token!!).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { subscriptions ->
-                    traders.addAll(subscriptions.map { it.trader })
-                    refreshTrades()
-                    apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(getNewTradeObserver())
-                },
-                {}
-            )
+
+        apiRepo
+            .mySubscriptions(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ subscriptions ->
+                traders.addAll(subscriptions.map { it.trader })
+                refreshTrades()
+                apiRepo.newTradeSubject.observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getNewTradeObserver())
+            }, {
+                // Ошибка не обрабатывается
+            })
     }
 
     fun dealsBtnClicked() {
@@ -122,29 +123,31 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
         viewState.setRefreshing(true)
         nextPage = 1
         isLoading = true
-        apiRepo.subscriptionTrades(profile.token!!, nextPage!!)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                { pagination ->
-                    listPresenter.trades.clear()
-                    listPresenter.trades.addAll(pagination.results)
-                    resolveTraderInTrade()
-                    viewState.updateAdapter()
-                    nextPage = pagination.next
-                    isLoading = false
-                    viewState.setRefreshing(false)
-                },
-                {
-                    it.printStackTrace()
-                    isLoading = false
-                    viewState.setRefreshing(false)
-                }
-            )
+
+        apiRepo
+            .subscriptionTrades(profile.token!!, nextPage!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ pagination ->
+                listPresenter.trades.clear()
+                listPresenter.trades.addAll(pagination.results)
+                resolveTraderInTrade()
+                viewState.updateAdapter()
+                nextPage = pagination.next
+                isLoading = false
+                viewState.setRefreshing(false)
+            }, {
+                it.printStackTrace()
+                isLoading = false
+                viewState.setRefreshing(false)
+            })
     }
 
     private fun loadNextPage() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.subscriptionTrades(profile.token!!, nextPage!!)
+
+            apiRepo
+                .subscriptionTrades(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { pagination ->
@@ -153,8 +156,7 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                         viewState.updateAdapter()
                         nextPage = pagination.next
                         isLoading = false
-                    },
-                    {
+                    }, {
                         it.printStackTrace()
                         isLoading = false
                     }

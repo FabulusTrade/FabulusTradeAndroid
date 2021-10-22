@@ -20,8 +20,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
-    MvpPresenter<TraderMeProfitView>() {
+class TraderMeProfitPresenter(
+    val traderStatistic: TraderStatistic
+) : MvpPresenter<TraderMeProfitView>() {
+
     companion object {
         private const val TERM_OF_TRANSACTION_FORMAT = "0"
         private const val DEALS_AVERAGE_PROFIT_FORMAT = "0.0"
@@ -180,21 +182,25 @@ class TraderMeProfitPresenter(val traderStatistic: TraderStatistic) :
     }
 
     fun onViewResumed() {
-        apiRepo.readPinnedPost(profile.token!!).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            {
+        apiRepo
+            .readPinnedPost(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 viewState.setPinnedPostText(it.text)
-            },
-            {}
-        )
+            }, {
+                // Ошибка не обрабатывается
+            })
     }
 
     fun deletePinnedText() {
-        apiRepo.deletePinnedPost(profile.token!!)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+        apiRepo
+            .deletePinnedPost(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 viewState.setPinnedPostText(it.text)
-            },
-                {}
-            )
+            }, {
+                // Ошибка не обрабатывается
+            })
     }
 
     fun getTraderDateJoined(): String {

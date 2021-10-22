@@ -64,9 +64,11 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
             if (profile.user == null) {
                 router.navigateTo(Screens.signInScreen())
             } else {
-                apiRepo.deleteObservation(profile.token!!, traders[pos].trader.id)
+                apiRepo
+                    .deleteObservation(profile.token!!, traders[pos].trader.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({}, {})
+
                 Handler(Looper.getMainLooper()).postDelayed(
                     {
                         loadSubscriptions()
@@ -83,8 +85,10 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
     }
 
     private fun loadSubscriptions() {
-        apiRepo.mySubscriptions(profile.token!!)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(
+        apiRepo
+            .mySubscriptions(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
                 { subscriptions ->
                     val traders = subscriptions.sortedBy { it.status }.reversed()
                     listPresenter.traders.clear()

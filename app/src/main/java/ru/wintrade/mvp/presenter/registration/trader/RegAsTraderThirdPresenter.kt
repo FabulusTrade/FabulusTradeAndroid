@@ -35,25 +35,35 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
 
     fun openNextStageScreen() {
         profile.token?.let {
-            profileRepo.userProfileRemoteDataSource.get(it)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    { newProfile ->
-                        profile.user = newProfile
-                        profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                { router.newRootChain(Screens.traderMeMainScreen()) }, {})
-                    }, {})
+            profileRepo.userProfileRemoteDataSource
+                .get(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ newProfile ->
+                    profile.user = newProfile
+
+                    profileRepo
+                        .save(profile)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            router.newRootChain(Screens.traderMeMainScreen())
+                        }, {
+                            // Ошибка не обрабатывается
+                        })
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
     fun saveTraderRegistrationInfo(traderInfo: TraderRegistrationInfo) {
         profile.token?.let { token ->
             profile.user?.let { userProfile ->
-                apiRepo.updateTraderRegistrationInfo(
-                    token,
-                    userProfile.id,
-                    traderInfo.toRequest()
-                )
+                apiRepo
+                    .updateTraderRegistrationInfo(
+                        token,
+                        userProfile.id,
+                        traderInfo.toRequest()
+                    )
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         viewState.showSuccessfulPatchData()

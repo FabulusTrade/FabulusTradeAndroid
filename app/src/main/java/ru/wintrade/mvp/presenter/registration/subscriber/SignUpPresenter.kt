@@ -95,7 +95,8 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             emailValidation == EmailValidation.OK &&
             phoneValidation == PhoneValidation.OK
         ) {
-            apiRepo.signUp(nickname, password, email, formattedPhone)
+            apiRepo
+                .signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.showSuccessDialog()

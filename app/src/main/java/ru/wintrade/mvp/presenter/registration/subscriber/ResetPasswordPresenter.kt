@@ -30,11 +30,14 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
         val emailValidation = isValidEmail(email)
         viewState.setEmailError(emailValidation)
         if (emailValidation == EmailValidation.OK) {
-            apiRepo.resetPassword(email).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                viewState.showSuccessDialog()
-            }, {
-                viewState.showAlertDialog()
-            })
+            apiRepo
+                .resetPassword(email)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showSuccessDialog()
+                }, {
+                    viewState.showAlertDialog()
+                })
         }
     }
 }

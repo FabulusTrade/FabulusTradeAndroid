@@ -40,8 +40,10 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun loadTraderStatistic() {
-        apiRepo.getTraderStatistic(trader.id)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+        apiRepo
+            .getTraderStatistic(trader.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ traderStatistic ->
                 val isPositiveProfit =
                     traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
                 traderStatistic.actualProfit365?.let {
@@ -62,11 +64,13 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         if (profile.user == null) {
             router.navigateTo(Screens.signInScreen())
         } else if (isObserveActive) {
-            apiRepo.observeToTrader(profile.token!!, trader.id)
+            apiRepo
+                .observeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
         } else {
-            apiRepo.deleteObservation(profile.token!!, trader.id)
+            apiRepo
+                .deleteObservation(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {})
         }
@@ -76,7 +80,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         if (profile.user == null)
             router.navigateTo(Screens.signInScreen())
         else
-            apiRepo.subscribeToTrader(profile.token!!, trader.id)
+            apiRepo
+                .subscribeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.setSubscribeBtnActive(false)
@@ -88,7 +93,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     private fun checkSubscription() {
         if (profile.user != null) {
-            apiRepo.mySubscriptions(profile.token!!)
+            apiRepo
+                .mySubscriptions(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ subscriptions ->
                     subscriptions.find { it.trader.id == trader.id }?.let {

@@ -26,20 +26,20 @@ class SplashPresenter : MvpPresenter<SplashView>() {
             getTimer(),
             profileRepo.get(),
             BiFunction<Long, Profile, Profile> { _, t2 -> t2 })
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    profile.token = it.token
-                    profile.deviceToken = it.deviceToken
-                    profile.user = it.user
-                    profile.hasVisitedTutorial = it.hasVisitedTutorial
-                    viewState.goToMain()
-                },
-                {
-                    viewState.goToMain()
-                }
-            )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                profile.token = it.token
+                profile.deviceToken = it.deviceToken
+                profile.user = it.user
+                profile.hasVisitedTutorial = it.hasVisitedTutorial
+                viewState.goToMain()
+            }, {
+                viewState.goToMain()
+            })
     }
 
     private fun getTimer() =
-        Single.timer(loadingTime, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread())
+        Single
+            .timer(loadingTime, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
 }

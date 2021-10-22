@@ -13,8 +13,7 @@ import ru.wintrade.mvp.view.trader.TraderPostView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class TraderPostPresenter(val trader: Trader) :
-    MvpPresenter<TraderPostView>() {
+class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
     private var isLoading = false
     private var nextPage: Int? = 1
@@ -58,7 +57,10 @@ class TraderPostPresenter(val trader: Trader) :
 
         override fun postLiked(view: PostItemView) {
             val post = posts[view.pos]
-            apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+
+            apiRepo
+                .likePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     post.like()
                     if (post.isDisliked) {
@@ -72,8 +74,11 @@ class TraderPostPresenter(val trader: Trader) :
 
         override fun postDisliked(view: PostItemView) {
             val post = posts[view.pos]
-            apiRepo.dislikePost(profile.token!!, post.id)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+
+            apiRepo
+                .dislikePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
                     post.dislike()
                     if (post.isLiked) {
                         view.setLikeImage(!post.isLiked)
@@ -105,7 +110,9 @@ class TraderPostPresenter(val trader: Trader) :
             viewState.isAuthorized(false)
         } else {
             viewState.isAuthorized(true)
-            apiRepo.getTraderPosts(profile.token!!, trader.id, nextPage!!)
+
+            apiRepo
+                .getTraderPosts(profile.token!!, trader.id, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.posts.addAll(pag.results)
@@ -120,7 +127,9 @@ class TraderPostPresenter(val trader: Trader) :
     fun onScrollLimit() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.getTraderPosts(profile.token!!, trader.id, nextPage!!)
+
+            apiRepo
+                .getTraderPosts(profile.token!!, trader.id, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.posts.addAll(pag.results)

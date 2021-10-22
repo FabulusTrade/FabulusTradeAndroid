@@ -18,12 +18,11 @@ class ProfileLocalDataSource(
             profileDao.insert(mapToRoom(profile))
             emitter.onSuccess(profile)
         } else {
-            mapFromRoom(roomProfile).subscribe(
-                { profile ->
-                    emitter.onSuccess(profile)
-                },
-                {}
-            )
+            mapFromRoom(roomProfile).subscribe({ profile ->
+                emitter.onSuccess(profile)
+            }, {
+                // Ошибка не обрабатывается
+            })
         }
     }.subscribeOn(Schedulers.io())
 
@@ -32,12 +31,13 @@ class ProfileLocalDataSource(
         if (profile.user == null)
             emitter.onComplete()
         else
-            userProfileLocalDataSource.save(profile.user!!).subscribe(
-                {
+            userProfileLocalDataSource
+                .save(profile.user!!)
+                .subscribe({
                     emitter.onComplete()
-                },
-                {}
-            )
+                }, {
+                    // Ошибка не обрабатывается
+                })
     }.subscribeOn(Schedulers.io())
 
     private fun mapToRoom(profile: Profile): RoomProfile = RoomProfile(
@@ -49,16 +49,18 @@ class ProfileLocalDataSource(
 
     private fun mapFromRoom(roomProfile: RoomProfile): Single<Profile> {
         return roomProfile.userId?.let { id ->
-            userProfileLocalDataSource.get(id).flatMap { userProfile ->
-                Single.just(
-                    Profile(
-                        userProfile,
-                        roomProfile.token,
-                        roomProfile.deviceToken,
-                        roomProfile.hasVisitedTutorial
+            userProfileLocalDataSource
+                .get(id)
+                .flatMap { userProfile ->
+                    Single.just(
+                        Profile(
+                            userProfile,
+                            roomProfile.token,
+                            roomProfile.deviceToken,
+                            roomProfile.hasVisitedTutorial
+                        )
                     )
-                )
-            }
+                }
         } ?: Single.just(Profile(null, null, null, roomProfile.hasVisitedTutorial))
     }
 }

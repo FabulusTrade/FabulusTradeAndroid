@@ -16,16 +16,21 @@ class ProfileRepo(
 
     fun get(): Single<Profile> = profileLocalDataSource.get().flatMap { profile ->
         if (profile.user != null) {
-            networkStatus.isOnlineSingle().flatMap { isOnline ->
-                if (isOnline) {
-                    userProfileRemoteDataSource.get(profile.token!!).flatMap { user ->
-                        profile.user = user
-                        profileLocalDataSource.save(profile)
+            networkStatus
+                .isOnlineSingle()
+                .flatMap { isOnline ->
+                    if (isOnline) {
+                        userProfileRemoteDataSource
+                            .get(profile.token!!)
+                            .flatMap { user ->
+                                profile.user = user
+                                profileLocalDataSource.save(profile)
+                                Single.just(profile)
+                            }
+                    } else {
                         Single.just(profile)
                     }
-                } else
-                    Single.just(profile)
-            }
+                }
         } else
             Single.just(profile)
     }
