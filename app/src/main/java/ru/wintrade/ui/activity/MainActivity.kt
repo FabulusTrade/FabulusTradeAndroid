@@ -176,6 +176,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         }
     }
 
+    override fun setToolbarMenuVisible(visible: Boolean) {
+        appbarMenuVisible(visible)
+    }
+
     private fun appbarMenuVisible(visible: Boolean) {
         toolbar.menu.findItem(R.id.menu_search).isVisible = visible
         toolbar.menu.findItem(R.id.menu_share).isVisible = visible

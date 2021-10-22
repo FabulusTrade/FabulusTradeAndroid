@@ -39,6 +39,11 @@ fun MvpAppCompatFragment.setToolbarVisible(visible: Boolean = true) {
     navElementsControl?.toolbarVisible(visible)
 }
 
+fun MvpAppCompatFragment.setToolbarMenuVisible(visible: Boolean = true) {
+    val navElementsControl = this.requireActivity() as? NavElementsControl
+    navElementsControl?.setToolbarMenuVisible(visible)
+}
+
 fun Double.doubleToStringWithFormat(format: String, withPercent: Boolean? = null): String {
     return when (withPercent) {
         true -> "${DecimalFormat(format).format(this)} %"

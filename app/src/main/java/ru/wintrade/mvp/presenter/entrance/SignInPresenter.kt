@@ -82,14 +82,20 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
     private fun userProfileGranted() {
         profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
+                setAppToolbarMenuVisible(true)
                 if (profile.user!!.isTrader)
                     router.newRootScreen(Screens.traderMeMainScreen())
                 else
                     router.newRootScreen(Screens.subscriberMainScreen())
             },
             {
+                setAppToolbarMenuVisible(false)
                 it.printStackTrace()
             }
         )
+    }
+
+    private fun setAppToolbarMenuVisible(visible: Boolean) {
+        viewState.setAppToolbarMenuVisible(visible)
     }
 }

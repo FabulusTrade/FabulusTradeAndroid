@@ -16,10 +16,7 @@ import ru.wintrade.databinding.FragmentSignInBinding
 import ru.wintrade.mvp.presenter.entrance.SignInPresenter
 import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
-import ru.wintrade.util.PREFERENCE_NAME
-import ru.wintrade.util.setDrawerLockMode
-import ru.wintrade.util.setToolbarVisible
-import ru.wintrade.util.showLongToast
+import ru.wintrade.util.*
 
 class SignInFragment : MvpAppCompatFragment(), SignInView {
     private var _binding: FragmentSignInBinding? = null
@@ -99,6 +96,10 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun showToast(toast: String) {
         requireContext().showLongToast(toast)
+    }
+
+    override fun setAppToolbarMenuVisible(visible: Boolean) {
+        setToolbarMenuVisible(visible)
     }
 
     override fun onDestroyView() {

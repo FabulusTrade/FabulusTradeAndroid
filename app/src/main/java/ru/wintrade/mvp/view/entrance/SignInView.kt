@@ -12,4 +12,5 @@ interface SignInView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(toast: String)
+    fun setAppToolbarMenuVisible(visible: Boolean)
 }
