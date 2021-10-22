@@ -75,13 +75,16 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         }
         setupHeader(null, null)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.run {
+            setDisplayShowTitleEnabled(false)
+            setDisplayShowHomeEnabled(true)
+            setHomeButtonEnabled(true)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         MenuInflater(this).inflate(R.menu.menu_toolbar_blue, menu)
+        appbarMenuVisible(presenter.profile.user != null)
         return true
     }
 
@@ -171,5 +174,11 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         } else {
             toolbar.visibility = View.GONE
         }
+    }
+
+    private fun appbarMenuVisible(visible: Boolean) {
+        toolbar.menu.findItem(R.id.menu_search).isVisible = visible
+        toolbar.menu.findItem(R.id.menu_share).isVisible = visible
+        toolbar.menu.findItem(R.id.menu_win).isVisible = visible
     }
 }

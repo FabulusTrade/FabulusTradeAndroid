@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:backgroundTint="@color/colorAccent"
-            android:text="@string/edit_profile"
+            android:text="@string/fill_profile"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_header_main_avatar"
             app:layout_constraintEnd_toEndOf="parent"

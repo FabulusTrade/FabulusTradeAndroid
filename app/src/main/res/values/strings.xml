@@ -55,7 +55,7 @@
     <string name="registration_date">Дата регистрации</string>
     <string name="attached_post_title">создать закрепленную запись</string>
     <string name="coming_soon">В разработке</string>
-    <string name="edit_profile">Заполнить\n профиль</string>
+    <string name="fill_profile">Заполнить\nпрофиль трейдера</string>
     <string name="subscription">Подписка</string>
     <string name="trader">Трейдер</string>
     <string name="type_of_transaction">Тип операции</string>
@@ -229,4 +229,5 @@
     <string name="entrance_text_view_2_title">ИЛИ</string>
     <string name="registration_button_title_first">Зарегистрироваться</string>
     <string name="registration_button_title_second">ЗАРЕГИСТРИРОВАТЬСЯ трейдером</string>
+    <string name="search">Поиск</string>
 </resources>
