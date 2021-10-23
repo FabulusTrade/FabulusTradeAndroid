@@ -13,6 +13,7 @@
         android:paddingBottom="20dp"
         android:text="@string/button_popular_trader_text"
         android:textAllCaps="false"
+        android:layout_marginHorizontal="12dp"
         app:layout_constraintBottom_toTopOf="@+id/view_horizontal_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
