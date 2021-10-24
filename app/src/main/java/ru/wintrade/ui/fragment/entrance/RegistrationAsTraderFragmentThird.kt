@@ -11,10 +11,12 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderThirdBinding
+import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.ui.App
+import ru.wintrade.util.REGISTRATION_DATA
 import ru.wintrade.util.TRADER_REG_INFO_TAG
 import ru.wintrade.util.setToolbarVisible
 
@@ -32,7 +34,10 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
     lateinit var presenter: RegAsTraderThirdPresenter
 
     @ProvidePresenter
-    fun providePresenter() = RegAsTraderThirdPresenter().apply {
+    fun providePresenter() = RegAsTraderThirdPresenter(
+        arguments?.get(TRADER_REG_INFO_TAG) as TraderRegistrationInfo,
+        arguments?.get(REGISTRATION_DATA) as RegistrationTraderData
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -40,14 +45,9 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
     private val binding: FragmentRegistrationAsTraderThirdBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
-    private var traderInfo: TraderRegistrationInfo? = null
-
     override fun init() {
         initView()
         initListeners()
-        arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let {
-            traderInfo = it
-        }
     }
 
     private fun initView() {
@@ -82,10 +82,10 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
 
     private fun initListeners() {
         binding.btnBackTraderReg3.setOnClickListener {
-            traderInfo?.let { traderInfo -> presenter.openRegistrationSecondScreen(traderInfo) }
+            presenter.openRegistrationSecondScreen()
         }
         binding.btnReadyTraderReg3.setOnClickListener {
-            traderInfo?.let { presenter.saveTraderRegistrationInfo(it) }
+            presenter.saveTraderRegistrationInfo()
         }
     }
 
@@ -101,5 +101,4 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
         _binding = null
         super.onDestroyView()
     }
-
 }

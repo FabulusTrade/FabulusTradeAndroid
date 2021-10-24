@@ -9,15 +9,21 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderFirstBinding
+import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderFirstPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderFirstView
 import ru.wintrade.ui.App
+import ru.wintrade.util.REGISTRATION_DATA
 import ru.wintrade.util.setToolbarVisible
 
 class RegistrationAsTraderFragmentFirst : MvpAppCompatFragment(), RegAsTraderFirstView {
     companion object {
-        fun newInstance(): RegistrationAsTraderFragmentFirst =
-            RegistrationAsTraderFragmentFirst()
+        fun newInstance(registrationData: RegistrationTraderData) =
+            RegistrationAsTraderFragmentFirst().apply {
+                arguments = Bundle().apply {
+                    putParcelable(REGISTRATION_DATA, registrationData)
+                }
+            }
     }
 
     @InjectPresenter

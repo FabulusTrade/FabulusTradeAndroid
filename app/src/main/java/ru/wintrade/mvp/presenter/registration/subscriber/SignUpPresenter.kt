@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import retrofit2.HttpException
+import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.entity.exception.SignUpException
 import ru.wintrade.mvp.model.repo.ApiRepo
@@ -13,7 +14,7 @@ import ru.wintrade.navigation.Screens
 import ru.wintrade.util.*
 import javax.inject.Inject
 
-class SignUpPresenter : MvpPresenter<SignUpView>() {
+class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<SignUpView>() {
     @Inject
     lateinit var router: Router
 
@@ -98,8 +99,17 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             apiRepo.signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    viewState.showSuccessDialog()
-                    router.navigateTo(Screens.signInScreen(false))
+                    if (asTraderRegistration) {
+                        val registrationData = RegistrationTraderData(it.id, asTraderRegistration)
+                        router.navigateTo(
+                            Screens.registrationAsTraderFirstScreen(
+                                registrationData
+                            )
+                        )
+                    } else {
+                        viewState.showSuccessDialog()
+                        router.navigateTo(Screens.signInScreen(false))
+                    }
                 }, { exception ->
                     if (exception is HttpException) {
                         val resp = exception.response()?.errorBody()?.string()

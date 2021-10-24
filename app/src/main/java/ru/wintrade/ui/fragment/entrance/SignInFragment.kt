@@ -52,7 +52,7 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun init(isAsTraderRegistration: Boolean) {
         initView()
-        initListeners()
+        initListeners(isAsTraderRegistration)
         if (isAsTraderRegistration) {
             binding.entranceRegistrationButton.text =
                 resources.getString(R.string.registration_button_title_second)
@@ -62,10 +62,10 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         }
     }
 
-    fun initListeners() {
+    fun initListeners(asTraderRegistration: Boolean) {
         binding.run {
             btnSignInResetPass.setOnClickListener { presenter.openResetPassScreen() }
-            entranceRegistrationButton.setOnClickListener { presenter.openRegistrationScreen() }
+            entranceRegistrationButton.setOnClickListener { presenter.openRegistrationScreen(asTraderRegistration) }
             entranceEnterButton.setOnClickListener { enterBtnClicked() }
         }
     }

@@ -33,8 +33,8 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
         viewState.init(isAsTraderRegistration)
     }
 
-    fun openRegistrationScreen() {
-        router.navigateTo(Screens.signUpScreen())
+    fun openRegistrationScreen(asTraderRegistration: Boolean) {
+        router.navigateTo(Screens.signUpScreen(asTraderRegistration))
     }
 
     fun openResetPassScreen() {

@@ -27,14 +27,21 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SignUpFragment()
+        private const val IS_AS_TRADER_REGISTRATION = "registration"
+        fun newInstance(isSubscriber: Boolean) = SignUpFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(IS_AS_TRADER_REGISTRATION, isSubscriber)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SignUpPresenter().apply {
+    fun providePresenter() = SignUpPresenter(
+        arguments?.get(IS_AS_TRADER_REGISTRATION) as Boolean
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 

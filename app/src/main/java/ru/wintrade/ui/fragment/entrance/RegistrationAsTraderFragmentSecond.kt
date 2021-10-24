@@ -16,10 +16,12 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderSecondBinding
 import ru.wintrade.mvp.model.entity.Gender
+import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
+import ru.wintrade.util.REGISTRATION_DATA
 import ru.wintrade.util.TRADER_REG_INFO_TAG
 
 
@@ -40,7 +42,9 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     lateinit var presenter: RegAsTraderSecondPresenter
 
     @ProvidePresenter
-    fun providePresenter() = RegAsTraderSecondPresenter().apply {
+    fun providePresenter() = RegAsTraderSecondPresenter(
+        arguments?.get(REGISTRATION_DATA) as RegistrationTraderData
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 

@@ -206,7 +206,7 @@
     <string name="ready">Готово</string>
     <string name="enter_date_in_field">Введите дату в поле ввода.</string>
     <string name="trader_reg_patch_dialog_title">Данные записаны!</string>
-    <string name="trader_reg_patch_dialog_message">Трейдер успешно зарегистрирован. Вам на почту отправлено ПО и инструкция по его установке.</string>
+    <string name="trader_reg_patch_dialog_message">Трейдер успешно зарегистрирован. Вам на почту отправлено ПО и инструкция.</string>
     <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
     <string name="require_field">Обязательно поле</string>
     <string name="name_symbols">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>

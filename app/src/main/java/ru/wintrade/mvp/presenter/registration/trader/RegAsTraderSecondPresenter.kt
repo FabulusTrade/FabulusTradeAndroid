@@ -2,6 +2,7 @@ package ru.wintrade.mvp.presenter.registration.trader
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.navigation.Screens
@@ -14,7 +15,7 @@ import javax.inject.Inject
 const val DATE_UI_FORMAT_STRING = "%02d.%02d.%04d"
 const val DATE_PATTERN = "dd.MM.yyyy"
 
-class RegAsTraderSecondPresenter : MvpPresenter<RegAsTraderSecondView>() {
+class RegAsTraderSecondPresenter(private val registrationData: RegistrationTraderData) : MvpPresenter<RegAsTraderSecondView>() {
     @Inject
     lateinit var router: Router
 
@@ -26,7 +27,7 @@ class RegAsTraderSecondPresenter : MvpPresenter<RegAsTraderSecondView>() {
     }
 
     fun openRegistrationFirstScreen() {
-        router.navigateTo(Screens.registrationAsTraderFirstScreen())
+        router.navigateTo(Screens.registrationAsTraderFirstScreen(registrationData))
     }
 
     fun openRegistrationThirdScreen(traderInfo: TraderRegistrationInfo) {
