@@ -126,11 +126,11 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             if (isOpen) {
                 itemView.tv_item_trader_news_post.maxLines = MAX_LINES
                 itemView.btn_item_trader_news_show_text.text =
-                    itemView.context.resources.getText(R.string.hide)
+                    itemView.context.resources.getText(R.string.hide_postRv)
             } else {
                 itemView.tv_item_trader_news_post.maxLines = MIN_LINES
                 itemView.btn_item_trader_news_show_text.text =
-                    itemView.context.resources.getText(R.string.show)
+                    itemView.context.resources.getText(R.string.show_postRv)
             }
         }
     }

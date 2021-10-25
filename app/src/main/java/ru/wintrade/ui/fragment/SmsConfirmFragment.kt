@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class SmsConfirmFragment : MvpAppCompatFragment(), SmsConfirmView {
     private var _binding: FragmentSmsConfirmBinding? = null
     private val binding: FragmentSmsConfirmBinding
-        get() = checkNotNull(_binding) { getString(R.string.error) }
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
         private const val SMS_TIMEOUT = 1000L

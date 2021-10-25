@@ -60,17 +60,17 @@ class ResetPasswordFragment : MvpAppCompatFragment(), ResetPasswordView {
         AlertDialog.Builder(context)
             .setMessage(getString(R.string.reset_pass_success))
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_resetFragment) { _, _ ->
                 presenter.openSignInScreen()
             }.show()
     }
 
     override fun showAlertDialog() {
         AlertDialog.Builder(context)
-            .setTitle(getString(R.string.error))
+            .setTitle(getString(R.string.error_resetFragment))
             .setMessage(getString(R.string.reset_pass_email_not_registred))
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_resetFragment) { _, _ ->
             }.show()
     }
 

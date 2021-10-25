@@ -65,7 +65,8 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     fun initBarChart() {
         with(binding.barChartTraderProfit) {
-            data = presenter.setupBarChart(getString(R.string.year_2021))          //   <-btn text
+            data =
+                presenter.setupBarChart(getString(R.string.year_2021_traderProfit))          //   <-btn text
             legend.isEnabled = false
             data.setDrawValues(false)
             animateY(ANIMATE_DURATION)
@@ -117,10 +118,10 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     override fun setPinnedTextVisible(isOpen: Boolean) {
         binding.layoutTraderProfitAttachedPost.run {
             if (isOpen) {
-                btnAttachedPostShow.text = resources.getString(R.string.hide)
+                btnAttachedPostShow.text = resources.getString(R.string.hide_traderProfit)
                 tvAttachedPostText.maxLines = MAX_LINES
             } else {
-                btnAttachedPostShow.text = resources.getString(R.string.show)
+                btnAttachedPostShow.text = resources.getString(R.string.show_traderProfit)
                 tvAttachedPostText.maxLines = MIN_LINES
             }
         }
@@ -188,9 +189,9 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     override fun showInfoDialog() {
         AlertDialog.Builder(context)
-            .setMessage(getString(R.string.dialog_info_text))
+            .setMessage(getString(R.string.dialog_info_text_traderProfit))
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_traderProfit) { _, _ ->
             }.show()
     }
 

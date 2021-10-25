@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_weight="1"
-                android:text="@string/enter_button_title"
+                android:text="@string/enter_tradePopular"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/registration_button_title"
+                android:text="@string/registration_button_title_tradePopular"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
     </LinearLayout>

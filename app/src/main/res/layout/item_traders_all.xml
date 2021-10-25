@@ -87,7 +87,7 @@
                     android:id="@+id/tv_traders_all_item_subscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/subscription"
+                    android:text="@string/subscription_tradersAllRV"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     android:visibility="gone"
