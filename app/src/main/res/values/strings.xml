@@ -70,7 +70,7 @@
     <!-- MainActivity -->
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <!-- left_menu -->
+    <!-- drawer_layout -->
     <string name="edit_profile">Заполнить\n профиль</string>
     <string name="great_treader">Великий Трейдер</string>
 
