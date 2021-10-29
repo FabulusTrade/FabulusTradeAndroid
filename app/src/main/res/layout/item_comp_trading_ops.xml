@@ -54,7 +54,7 @@
                     android:id="@+id/tv_item_comp_trading_ops_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/price" />
+                    android:text="@string/price_itemCompTradOper" />
             </LinearLayout>
         </LinearLayout>
 

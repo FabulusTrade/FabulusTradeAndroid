@@ -67,7 +67,7 @@
             android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="@string/detail"
+            android:text="@string/detail_attachedPost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +96,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="1dp"
-            android:text="@string/show"
+            android:text="@string/show_attachedPost"
             android:textColor="@color/colorAccent"
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_attached_post_share"

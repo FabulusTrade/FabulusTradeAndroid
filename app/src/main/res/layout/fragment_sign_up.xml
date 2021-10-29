@@ -25,10 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/user_name"
-            app:helperTextEnabled="true"
+            android:hint="@string/user_name_signUp"
+            app:boxBackgroundColor="@color/colorWhite"
             app:helperText="@string/only_eng_digits"
-            app:boxBackgroundColor="@color/colorWhite">
+            app:helperTextEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sign_nickname"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/email"
+            android:hint="@string/email_signUp"
             app:boxBackgroundColor="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,10 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/password"
-            app:helperTextEnabled="true"
-            app:helperText="@string/create_password_helper_text"
+            android:hint="@string/password_signUp"
             app:boxBackgroundColor="@color/colorWhite"
+            app:helperText="@string/create_password_helper_text"
+            app:helperTextEnabled="true"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -104,8 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/phone"
-            app:expandedHintEnabled="false"
-            app:boxBackgroundColor="@color/colorWhite">
+            app:boxBackgroundColor="@color/colorWhite"
+            app:expandedHintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sign_phone"

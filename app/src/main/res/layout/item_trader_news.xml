@@ -48,7 +48,7 @@
         android:layout_height="36dp"
         android:layout_gravity="end"
         android:layout_marginBottom="1dp"
-        android:text="@string/show"
+        android:text="@string/show_postRv"
         android:textColor="@color/colorAccent"
         android:textSize="10sp"
         tools:ignore="SmallSp" />

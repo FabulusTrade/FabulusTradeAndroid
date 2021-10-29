@@ -19,10 +19,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start|center"
             android:layout_marginStart="16dp"
-            android:text="@string/your_profile" />
+            android:text="@string/your_profile_reg_tr_four" />
 
     </androidx.cardview.widget.CardView>
-
 
     <TextView
         android:id="@+id/tv_trader_reg_4_your_address"

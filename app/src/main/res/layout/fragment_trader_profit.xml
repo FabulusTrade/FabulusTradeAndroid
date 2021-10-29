@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="25dp"
-                android:text="@string/followers"
+                android:text="@string/followers_traderProfit"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/followers_joining_statistic_sample"
+                android:text="@string/followers_joining_statistic_sample_traderProfit"
                 android:textColor="@color/colorGreen"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_follower_counter"
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp"
-                android:text="@string/profitability"
+                android:text="@string/profitability_traderProfit"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/colorLightGreen"
-                android:text="@string/year_2021"
+                android:text="@string/year_2021_traderProfit"
                 android:textColor="@color/colorBlack"
                 app:cornerRadius="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_trader_profit_year_2"
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:text="@string/year_2022"
+                android:text="@string/year_2022_traderProfit"
                 android:textColor="@color/colorGray"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_trader_profit_year_1"
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="24dp"
-                android:text="@string/year_2021"
+                android:text="@string/year_2021_traderProfit"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/january"
+                android:text="@string/january_traderProfit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_jan"
                 app:layout_constraintEnd_toStartOf="@+id/view_trader_profit_vertical_divider"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_jan"
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/july"
+                android:text="@string/july_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_jan_value"
                 app:layout_constraintStart_toEndOf="@+id/view_trader_profit_vertical_divider"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_jan_value" />
@@ -183,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="38dp"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit__jul"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit__jul" />
@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/february"
+                android:text="@string/february_traderProfit"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_jan"
                 app:layout_constraintTop_toBottomOf="@+id/view_trader_profit_gorizontal_divider_1" />
 
@@ -215,7 +215,7 @@
                 android:id="@+id/tv_trader_profit_feb_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_feb"
                 app:layout_constraintEnd_toEndOf="@+id/tv_trader_profit_jan_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_jan_value"
@@ -225,7 +225,7 @@
                 android:id="@+id/tv_trader_profit_aug"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/august"
+                android:text="@string/august_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_feb_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit__jul"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_feb_value" />
@@ -257,7 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/march"
+                android:text="@string/march_traderProfit"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_feb"
                 app:layout_constraintTop_toBottomOf="@+id/view_trader_profit_gorizontal_divider_2" />
 
@@ -265,7 +265,7 @@
                 android:id="@+id/tv_trader_profit_mar_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_mar"
                 app:layout_constraintEnd_toEndOf="@+id/tv_trader_profit_feb_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_mar" />
@@ -274,7 +274,7 @@
                 android:id="@+id/tv_trader_profit_sep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/september"
+                android:text="@string/september_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_mar_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_aug"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_mar_value" />
@@ -334,7 +334,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/april"
+                android:text="@string/april_traderProfit"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_mar"
                 app:layout_constraintTop_toBottomOf="@+id/view_trader_profit_gorizontal_divider_3" />
 
@@ -342,7 +342,7 @@
                 android:id="@+id/tv_trader_profit_apr_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_apr"
                 app:layout_constraintEnd_toEndOf="@+id/tv_trader_profit_mar_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_apr" />
@@ -351,7 +351,7 @@
                 android:id="@+id/tv_trader_profit_oct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/october"
+                android:text="@string/october_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_apr_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_sep"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_apr_value" />
@@ -369,7 +369,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/may"
+                android:text="@string/may_traderProfit"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_apr"
                 app:layout_constraintTop_toBottomOf="@+id/view_trader_profit_gorizontal_divider_4" />
 
@@ -377,7 +377,7 @@
                 android:id="@+id/tv_trader_profit_may_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_may"
                 app:layout_constraintEnd_toEndOf="@+id/tv_trader_profit_apr_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_may" />
@@ -386,7 +386,7 @@
                 android:id="@+id/tv_trader_profit_nov"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/november"
+                android:text="@string/november_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_may_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_oct"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_may_value" />
@@ -404,7 +404,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/june"
+                android:text="@string/june_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/view_trader_profit_vertical_divider"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_may"
                 app:layout_constraintTop_toBottomOf="@+id/view_trader_profit_gorizontal_divider_5" />
@@ -413,7 +413,7 @@
                 android:id="@+id/tv_trader_profit_jun_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_percent"
+                android:text="@string/zero_percent_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_jun"
                 app:layout_constraintEnd_toEndOf="@+id/tv_trader_profit_may_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_jun" />
@@ -422,7 +422,7 @@
                 android:id="@+id/tv_trader_profit_dec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/december"
+                android:text="@string/december_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_jun_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_trader_profit_nov"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_jun_value" />
@@ -450,7 +450,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="38dp"
-                android:text="@string/deals_30"
+                android:text="@string/deals_30_traderProfit"
                 app:layout_constraintBottom_toTopOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -470,7 +470,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="@string/zero"
+                android:text="@string/zero_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_for_week_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_for_week_icon" />
@@ -481,7 +481,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/average_profitability_of_the_deal"
+                android:text="@string/average_profitability_of_the_deal_traderProfit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_deal_for_week_count" />
 
@@ -500,7 +500,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="@string/zero_deals_profit"
+                android:text="@string/zero_deals_profit_traderProfit"
                 android:textColor="@color/colorGreen"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_profit_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_profit_icon"
@@ -523,7 +523,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/average_trade_duration"
+                android:text="@string/average_trade_duration_traderProfit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_deal_profit_positive_value" />
 
@@ -542,7 +542,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="@string/zero"
+                android:text="@string/zero_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_trader_profit_deal_time_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_trader_profit_deal_time_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_trader_profit_deal_time_icon" />
@@ -553,7 +553,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/registration_date"
+                android:text="@string/registration_date_traderProfit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_trader_profit_deal_time_value" />
 
@@ -582,7 +582,7 @@
                 android:id="@+id/tv_trader_profit_slash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/slash"
+                android:text="@string/slash_traderProfit"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_deal_profit_positive_value"
                 app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_deal_profit_positive_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_trader_profit_deal_profit_positive_value" />
@@ -591,7 +591,7 @@
                 android:id="@+id/tv_trader_profit_deal_profit_negative_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zero_deals_profit"
+                android:text="@string/zero_deals_profit_traderProfit"
                 android:textColor="@color/colorRed"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_trader_profit_slash"
                 app:layout_constraintStart_toEndOf="@+id/tv_trader_profit_slash"

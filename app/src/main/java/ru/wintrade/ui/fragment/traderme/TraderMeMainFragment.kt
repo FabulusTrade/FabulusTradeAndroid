@@ -77,10 +77,12 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
 
     private fun loadFileFromDevice() {
         val galleryIntent =
-            Intent(Intent.ACTION_PICK).apply { this.type = getString(R.string.gallery_mask) }
+            Intent(Intent.ACTION_PICK).apply {
+                this.type = getString(R.string.gallery_mask_traderFragment)
+            }
         val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
             this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
-            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
+            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery_traderFragment))
         }
         startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
     }
