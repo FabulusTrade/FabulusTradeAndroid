@@ -16,8 +16,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?) :
-    MvpPresenter<CreatePostView>() {
+class CreatePostPresenter(
+    val isPublication: Boolean,
+    val isPinnedEdit: Boolean?
+) : MvpPresenter<CreatePostView>() {
+
     @Inject
     lateinit var profile: Profile
 
@@ -63,33 +66,39 @@ class CreatePostPresenter(val isPublication: Boolean, val isPinnedEdit: Boolean?
     }
 
     private fun updatePublication(postId: String, text: String) {
-        apiRepo.updatePublication(profile.token!!, postId, profile.user!!.id, text)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+        apiRepo
+            .updatePublication(profile.token!!, postId, profile.user!!.id, text)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 router.exit()
-            }, {})
+            }, {
+                // Ошибка не обрабатывается
+            })
     }
 
     private fun updatePost(text: String) {
-        apiRepo.updatePinnedPostPatch(profile.token!!, profile.user!!.id, text)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    router.exit()
-                },
-                {
-                    it.printStackTrace()
-                }
-            )
+        apiRepo
+            .updatePinnedPostPatch(profile.token!!, profile.user!!.id, text)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                router.exit()
+            }, {
+                it.printStackTrace()
+            })
     }
 
     private fun createPost(text: String, imageBitmap: MultipartBody.Part?) {
-        apiRepo.createPost(profile.token!!, profile.user!!.id, text, imageBitmap)
-            .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    router.exit()
-                },
-                {
-                    it.printStackTrace()
-                }
+        apiRepo
+            .createPost(
+                profile.token!!, profile.user!!.id,
+                text,
+                imageBitmap
             )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                router.exit()
+            }, {
+                it.printStackTrace()
+            })
     }
 }

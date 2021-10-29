@@ -68,11 +68,13 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
             if (profile.user == null) {
                 router.navigateTo(Screens.signInScreen())
             } else if (isChecked) {
-                apiRepo.observeToTrader(profile.token!!, traderList[pos].id)
+                apiRepo
+                    .observeToTrader(profile.token!!, traderList[pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()
             } else {
-                apiRepo.deleteObservation(profile.token!!, traderList[pos].id)
+                apiRepo
+                    .deleteObservation(profile.token!!, traderList[pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({}, {})
             }
@@ -99,11 +101,15 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
 
     private fun loadMySubscription() {
         profile.token?.let {
-            apiRepo.mySubscriptions(it).observeOn(AndroidSchedulers.mainThread())
+            apiRepo
+                .mySubscriptions(it)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     subscriptionList.clear()
                     subscriptionList.addAll(it)
-                }, {})
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
@@ -111,19 +117,18 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
         viewState.setFilterText(R.string.cb_filter_profit_label)
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.getTradersProfitFiltered(nextPage!!).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { pag ->
-                        listPresenter.traderList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    },
-                    {
-                        it.printStackTrace()
-                        isLoading = false
-                    }
-                )
+            apiRepo
+                .getTradersProfitFiltered(nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
+                    listPresenter.traderList.addAll(pag.results)
+                    viewState.updateAdapter()
+                    nextPage = pag.next
+                    isLoading = false
+                }, {
+                    it.printStackTrace()
+                    isLoading = false
+                })
         }
     }
 
@@ -131,20 +136,19 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
         viewState.setFilterText(R.string.cb_filter_followers_label)
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.getTradersFollowersFiltered(nextPage!!)
+
+            apiRepo
+                .getTradersFollowersFiltered(nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { pag ->
-                        listPresenter.traderList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    },
-                    {
-                        it.printStackTrace()
-                        isLoading = false
-                    }
-                )
+                .subscribe({ pag ->
+                    listPresenter.traderList.addAll(pag.results)
+                    viewState.updateAdapter()
+                    nextPage = pag.next
+                    isLoading = false
+                }, {
+                    it.printStackTrace()
+                    isLoading = false
+                })
         }
     }
 }

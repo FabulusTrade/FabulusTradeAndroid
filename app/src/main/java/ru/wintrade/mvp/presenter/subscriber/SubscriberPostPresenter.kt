@@ -55,7 +55,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
         override fun postLiked(view: PostItemView) {
             val post = post[view.pos]
-            apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
+
+            apiRepo
+                .likePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     post.like()
                     if (post.isDisliked) {
@@ -64,13 +67,18 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                     }
                     view.setLikesCount(post.likeCount)
                     view.setLikeImage(post.isLiked)
-                }, {})
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
 
         override fun postDisliked(view: PostItemView) {
             val post = post[view.pos]
-            apiRepo.dislikePost(profile.token!!, post.id)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+
+            apiRepo
+                .dislikePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
                     post.dislike()
                     if (post.isLiked) {
                         view.setLikeImage(!post.isLiked)
@@ -78,7 +86,9 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                     }
                     view.setDislikesCount(post.dislikeCount)
                     view.setDislikeImage(post.isDisliked)
-                }, {})
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
 
         override fun postDelete(view: PostItemView) {
@@ -113,7 +123,9 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     private fun loadPosts() {
         if (nextPage != null && !isLoading) {
             isLoading = true
-            apiRepo.getPublisherPosts(profile.token!!, nextPage!!)
+
+            apiRepo
+                .getPublisherPosts(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.post.addAll(pag.results)

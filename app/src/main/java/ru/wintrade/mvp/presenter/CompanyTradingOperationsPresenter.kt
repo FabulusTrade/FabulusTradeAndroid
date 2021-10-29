@@ -15,8 +15,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int) :
-    MvpPresenter<CompanyTradingOperationsView>() {
+class CompanyTradingOperationsPresenter(
+    val traderId: String,
+    val companyId: Int
+) : MvpPresenter<CompanyTradingOperationsView>() {
 
     companion object {
         private const val PROFIT_FORMAT = "0.00"
@@ -62,10 +64,14 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
 
         override fun itemClicked(view: CompanyTradingOperationsItemView) {
             profile.token?.let { token ->
-                apiRepo.getTradeById(token, dealsList[view.pos].id)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ trade ->
+                apiRepo
+                    .getTradeById(token, dealsList[view.pos].id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ trade ->
                         router.navigateTo(Screens.tradeDetailScreen(trade))
-                    }, {})
+                    }, {
+                        // Ошибка не обрабатывается
+                    })
             }
         }
     }
@@ -78,15 +84,17 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
 
     private fun loadCompanyDeals() {
         profile.token?.let {
-            apiRepo.getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    { pag ->
-                        listPresenter.dealsList.addAll(pag.results)
-                        viewState.updateRecyclerView()
-                        viewState.setCompanyName(pag.results[0].company)
-                        nextPage = pag.next
-                    }, {}
-                )
+            apiRepo
+                .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
+                    listPresenter.dealsList.addAll(pag.results)
+                    viewState.updateRecyclerView()
+                    viewState.setCompanyName(pag.results[0].company)
+                    nextPage = pag.next
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
@@ -94,14 +102,16 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
         if (nextPage != null && !isLoading) {
             isLoading = true
             profile.token?.let {
-                apiRepo.getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                apiRepo
+                    .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
                         listPresenter.dealsList.addAll(pag.results)
                         viewState.updateRecyclerView()
                         nextPage = pag.next
                         isLoading = false
-                    }, {
-                        it.printStackTrace()
+                    }, { t ->
+                        t.printStackTrace()
                         isLoading = false
                     })
             }

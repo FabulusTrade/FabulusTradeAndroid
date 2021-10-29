@@ -15,8 +15,11 @@ import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TraderProfitPresenter(val traderStatistic: TraderStatistic, val trader: Trader) :
-    MvpPresenter<TraderProfitView>() {
+class TraderProfitPresenter(
+    val traderStatistic: TraderStatistic,
+    val trader: Trader
+) : MvpPresenter<TraderProfitView>() {
+
     companion object {
         private const val TERM_OF_TRANSACTION_FORMAT = "0"
         private const val DEALS_AVERAGE_PROFIT_FORMAT = "0.0"
