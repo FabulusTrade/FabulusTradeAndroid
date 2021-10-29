@@ -63,7 +63,8 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
         override fun itemClicked(view: CompanyTradingOperationsItemView) {
             profile.token?.let { token ->
                 apiRepo.getTradeById(token, dealsList[view.pos].id)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ trade ->
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ trade ->
                         router.navigateTo(Screens.tradeDetailScreen(trade))
                     }, {})
             }
@@ -79,7 +80,8 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
     private fun loadCompanyDeals() {
         profile.token?.let {
             apiRepo.getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                     { pag ->
                         listPresenter.dealsList.addAll(pag.results)
                         viewState.updateRecyclerView()
@@ -95,13 +97,14 @@ class CompanyTradingOperationsPresenter(val traderId: String, val companyId: Int
             isLoading = true
             profile.token?.let {
                 apiRepo.getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
                         listPresenter.dealsList.addAll(pag.results)
                         viewState.updateRecyclerView()
                         nextPage = pag.next
                         isLoading = false
-                    }, {
-                        it.printStackTrace()
+                    }, { error ->
+                        error.printStackTrace()
                         isLoading = false
                     })
             }
