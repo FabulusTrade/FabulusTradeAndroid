@@ -231,6 +231,7 @@ interface WinTradeApi {
 
     @PATCH("api/v1/trader/{trader_id}/ ")
     fun updateTraderRegistration(
+        @Header("Authorization") token: String,
         @Path("trader_id", encoded = true) traderId: String,
         @Body registrationInfo: RequestTraderRegistrationInfo
     ): Completable

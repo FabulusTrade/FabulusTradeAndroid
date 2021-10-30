@@ -55,15 +55,18 @@ class RegAsTraderThirdPresenter(
     }
 
     fun saveTraderRegistrationInfo() {
-        apiRepo.updateTraderRegistrationInfo(
-            registrationData.traderId,
-            traderRegistrationInfo.toRequest()
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.showSuccessfulPatchData()
-            }, {
-                viewState.showErrorPatchData(it)
-            })
+        profile.token?.let { token ->
+            apiRepo.updateTraderRegistrationInfo(
+                token,
+                registrationData.traderId,
+                traderRegistrationInfo.toRequest()
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showSuccessfulPatchData()
+                }, {
+                    viewState.showErrorPatchData(it)
+                })
+        }
     }
 }
