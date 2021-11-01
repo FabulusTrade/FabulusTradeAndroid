@@ -55,7 +55,7 @@
     <string name="november">Ноябрь</string>
     <string name="june">Июнь</string>
     <string name="december">Декабрь</string>
-    <string name="deals_30">Количество сделок за 30 дней:</string>
+    <string name="deals_30">Среднее количество операций в мес.</string>
     <string name="average_profitability_of_the_deal">Средняя доходность сделок за 30 дней:</string>
     <string name="average_trade_duration">Средний срок сделки за 30 дней:</string>
     <string name="registration_date">Дата регистрации</string>
@@ -227,4 +227,17 @@
     <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
     <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
     <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
+
+    <string name="for_year">за год</string>
+    <string name="last_fifty_deals">Последние 50 сделок</string>
+    <string name="average_time_deals">Средний срок сделки. дн</string>
+    <string name="increase_and_less_deals">Прибыльных / Убыточных сделок</string>
+    <string name="average_profit_and_less_for_deals">Средняя прибыль / Убыток за сделку</string>
+    <string name="profit_and_decline_depo">Прирост / Снижение Депо</string>
+    <string name="Long">Лонг</string>
+    <string name="Short">Шорт</string>
+    <string name="relation_to_total_number_deals">Отношение к общему количеству сделок</string>
+    <string name="average_percent_profit_deal">ср % прибыли на сделку</string>
+    <string name="less_all_deals">Убыточных сделок</string>
+    <string name="average_precent_less_for_deal">ср % убытка на сделку</string>
 </resources>
