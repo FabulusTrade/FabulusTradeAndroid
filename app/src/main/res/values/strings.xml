@@ -273,7 +273,7 @@
     <string name="deals_traderFragment">Сделки</string>
     <string name="orders_traderFragment">Ордера</string>
     <string name="journal_traderFragment">Журнал</string>
-    <string name="deals_fo_month">Количество операций за последние 30 дней</string>
+    <string name="deals_fo_month">Количество операций за последние 30 дней:</string>
 
     <!-- TraderPopularInstrumentsFragment -->
     <string name="trader_pop_instr_not_auth_text">ЧАСТО ТОРГУЕМЫЕ БУМАГИ - доля сделок с прибылью и средний размер прибыли и убытка для 3 наиболее популярных бумаг (по количеству проведенных сделок)</string>
@@ -325,7 +325,7 @@
     <string name="deals_traderTrade">Сделки</string>
     <string name="orders_traderTrade">Ордера</string>
     <string name="journal_traderTrade">Журнал</string>
-    <string name="deals_fo_month_traderTrade">Количество операций за последние 30 дней</string>
+    <string name="deals_fo_month_traderTrade">Количество операций за последние 30 дней:</string>
     <string name="trader_trade_not_auth_text">СДЕЛКИ И ОРДЕРА онлайн с установленными тейк-профит и стоп-лосс. Комментарии по сделкам.</string>
     <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
     <string name="enter_button_title_traderTrade">Войти</string>
