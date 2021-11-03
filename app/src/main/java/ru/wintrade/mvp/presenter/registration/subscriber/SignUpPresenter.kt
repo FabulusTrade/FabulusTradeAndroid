@@ -96,7 +96,8 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
             emailValidation == EmailValidation.OK &&
             phoneValidation == PhoneValidation.OK
         ) {
-            apiRepo.signUp(nickname, password, email, formattedPhone)
+            apiRepo
+                .signUp(nickname, password, email, formattedPhone)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (asTraderRegistration) {

@@ -23,18 +23,21 @@ class ResetPasswordPresenter : MvpPresenter<ResetPasswordView>() {
     }
 
     fun openSignInScreen() {
-        router.replaceScreen(Screens.signInScreen(false))
+        router.replaceScreen(Screens.signInScreen())
     }
 
     fun resetPassBtnClicked(email: String) {
         val emailValidation = isValidEmail(email)
         viewState.setEmailError(emailValidation)
         if (emailValidation == EmailValidation.OK) {
-            apiRepo.resetPassword(email).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                viewState.showSuccessDialog()
-            }, {
-                viewState.showAlertDialog()
-            })
+            apiRepo
+                .resetPassword(email)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showSuccessDialog()
+                }, {
+                    viewState.showAlertDialog()
+                })
         }
     }
 }

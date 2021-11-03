@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="1"
-            android:text="@string/deals"
+            android:text="@string/deals_traderMeSub"
             android:textColor="@color/colorGray"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
@@ -31,7 +31,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="@string/orders"
+            android:text="@string/orders_traderMeSub"
             android:textColor="@color/colorGray"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="1"
-            android:text="@string/journal"
+            android:text="@string/journal_traderMeSub"
             android:textColor="@color/colorGray"
             android:textSize="10sp"
             tools:ignore="SmallSp" />

@@ -62,7 +62,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
         binding.vpMainTraders.adapter = TradersMainVPAdapter(this, checkedFilter)
         TabLayoutMediator(binding.tabLayoutMainTraders, binding.vpMainTraders) { tab, pos ->
             when (pos) {
-                0 -> tab.text = resources.getString(R.string.show)
+                0 -> tab.text = resources.getString(R.string.show_tradersMain)
                 1 -> tab.text = resources.getString(R.string.filter)
             }
         }.attach()
@@ -71,7 +71,7 @@ class TradersMainFragment : MvpAppCompatFragment(), TradersMainView, BackButtonL
     fun initListeners() {
         binding.run {
             tvTradersMainRegistrationStart.setOnClickListener {
-                mainPresenter.openRegistrationScreen(true)
+                mainPresenter.openRegistrationScreen()
             }
         }
     }

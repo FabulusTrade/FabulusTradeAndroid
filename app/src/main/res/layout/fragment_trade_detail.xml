@@ -48,6 +48,7 @@
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +127,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="@string/name"
+                android:text="@string/name_tradeFragment"
                 android:textColor="@color/colorBlack" />
 
             <TextView

@@ -48,12 +48,16 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
 
     private fun loadTrades() {
         profile.token?.let {
-            apiRepo.getTraderTradesAggregate(it, trader.id, nextPage!!)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+            apiRepo
+                .getTraderTradesAggregate(it, trader.id, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
                     listPresenter.trades.addAll(pag.results)
                     viewState.updateRecyclerView()
                     nextPage = pag.next
-                }, {})
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
@@ -73,7 +77,7 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.signInScreen(false))
+        router.navigateTo(Screens.signInScreen())
     }
 
     fun openSignUpScreen() {
@@ -96,7 +100,9 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
         }
 
         override fun onItemClick(view: TradesByCompanyItemView) {
-            router.navigateTo(Screens.companyTradingOperationsScreen(trader.id, trades[view.pos].companyId))
+            router.navigateTo(
+                Screens.companyTradingOperationsScreen(trader.id, trades[view.pos].companyId)
+            )
         }
     }
 
@@ -104,8 +110,10 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
         if (nextPage != null && !isLoading) {
             isLoading = true
             profile.token?.let {
-                apiRepo.getTraderTradesAggregate(it, trader.id, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                apiRepo
+                    .getTraderTradesAggregate(it, trader.id, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
                         listPresenter.trades.addAll(pag.results)
                         viewState.updateRecyclerView()
                         nextPage = pag.next

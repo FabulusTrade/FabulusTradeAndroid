@@ -21,11 +21,14 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
     }
 
     fun sendMessage(msg: String) {
-        apiRepo.sendQuestion(profile.token!!, msg).observeOn(AndroidSchedulers.mainThread())
+        apiRepo
+            .sendQuestion(profile.token!!, msg)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.showToast()
                 viewState.clearField()
-            }, {}
-            )
+            }, {
+                // Ошибка не обрабатывается
+            })
     }
 }

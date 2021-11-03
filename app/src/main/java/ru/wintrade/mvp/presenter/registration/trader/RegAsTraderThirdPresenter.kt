@@ -38,35 +38,43 @@ class RegAsTraderThirdPresenter(
     }
 
     fun openNextStageScreen() {
-        if (registrationData.isFastWay) {
-            router.newRootChain(Screens.signInScreen(false))
-        } else {
-            profile.token?.let {
-                profileRepo.userProfileRemoteDataSource.get(it)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                        { newProfile ->
-                            profile.user = newProfile
-                            profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    { router.newRootChain(Screens.traderMeMainScreen()) }, {})
-                        }, {})
-            }
+        profile.token?.let {
+            profileRepo.userProfileRemoteDataSource
+                .get(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ newProfile ->
+                    profile.user = newProfile
+
+                    profileRepo
+                        .save(profile)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            router.newRootChain(Screens.traderMeMainScreen())
+                        }, {
+                            // Ошибка не обрабатывается
+                        })
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
     fun saveTraderRegistrationInfo() {
         profile.token?.let { token ->
-            apiRepo.updateTraderRegistrationInfo(
-                token,
-                registrationData.traderId,
-                traderRegistrationInfo.toRequest()
-            )
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.showSuccessfulPatchData()
-                }, {
-                    viewState.showErrorPatchData(it)
-                })
+            profile.user?.let { userProfile ->
+                apiRepo
+                    .updateTraderRegistrationInfo(
+                        token,
+                        registrationData.traderId,
+                        traderRegistrationInfo.toRequest()
+                    )
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        viewState.showSuccessfulPatchData()
+                    }, {
+                        viewState.showErrorPatchData(it)
+                    })
+            }
         }
     }
 }

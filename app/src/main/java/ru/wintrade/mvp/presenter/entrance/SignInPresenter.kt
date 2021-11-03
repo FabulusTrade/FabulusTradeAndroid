@@ -52,7 +52,9 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
     }
 
     private fun deviceTokenGranted(nickname: String, password: String) {
-        apiRepo.auth(nickname, password).observeOn(AndroidSchedulers.mainThread())
+        apiRepo
+            .auth(nickname, password)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ authToken ->
                 val token = "Token $authToken"
                 profile.token = token
@@ -63,36 +65,41 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
     }
 
     private fun tokenGranted() {
-        apiRepo.postDeviceToken(profile.token!!, profile.deviceToken!!).subscribe({},
-            {
+        apiRepo
+            .postDeviceToken(profile.token!!, profile.deviceToken!!)
+            .subscribe({
+                       // данные не обрабатывются
+            }, {
                 it.printStackTrace()
             })
-        profileRepo.getRemoteUserProfile(profile).observeOn(AndroidSchedulers.mainThread())
+
+        profileRepo
+            .getRemoteUserProfile(profile)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { userProfile ->
                     profile.user = userProfile
                     userProfileGranted()
-                },
-                {
+                }, {
                     it.message
                 }
             )
     }
 
     private fun userProfileGranted() {
-        profileRepo.save(profile).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            {
+        profileRepo
+            .save(profile)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 setAppToolbarMenuVisible(true)
                 if (profile.user!!.isTrader)
                     router.newRootScreen(Screens.traderMeMainScreen())
                 else
                     router.newRootScreen(Screens.subscriberMainScreen())
-            },
-            {
+            }, {
                 setAppToolbarMenuVisible(false)
                 it.printStackTrace()
-            }
-        )
+            })
     }
 
     private fun setAppToolbarMenuVisible(visible: Boolean) {

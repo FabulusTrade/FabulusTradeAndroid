@@ -220,7 +220,7 @@ class TraderMeProfitFragment : MvpAppCompatFragment(),
         AlertDialog.Builder(context)
             .setMessage(getString(R.string.dialog_info_text))
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_traderMe) { _, _ ->
             }.show()
     }
 

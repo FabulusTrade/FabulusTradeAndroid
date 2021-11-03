@@ -30,7 +30,7 @@
                     android:layout_height="36dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorLightGreen"
-                    android:text="@string/deals"
+                    android:text="@string/deals_traderTrade"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
 
@@ -42,7 +42,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="@string/orders"
+                    android:text="@string/orders_traderTrade"
                     android:textColor="@color/colorGray"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -53,7 +53,7 @@
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_weight="1"
-                    android:text="@string/journal"
+                    android:text="@string/journal_traderTrade"
                     android:textColor="@color/colorGray"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorBlueGray"
                 android:paddingStart="16dp"
-                android:text="@string/deals_fo_month"
+                android:text="@string/deals_fo_month_traderTrade"
                 android:textColor="@color/colorPrimary"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
@@ -137,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_weight="1"
-                android:text="@string/enter_button_title"
+                android:text="@string/enter_button_title_traderTrade"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/or" />
+                android:text="@string/or_traderTrade" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_trader_trade_registration"
@@ -154,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/registration_button_title_first"
+                android:text="@string/registration_button_title_traderTrade"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
     </LinearLayout>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_horizon_margin_on_board"
         android:layout_marginTop="40dp"
-        android:text="@string/on_board_title"
+        android:text="@string/on_board_title_onBoardVP"
         android:textAlignment="center" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="28dp"
-        android:text="@string/on_board_text1"
+        android:text="@string/on_board_text1_onBoardVP"
         android:textSize="18sp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="28dp"
-        android:text="@string/on_board_text2"
+        android:text="@string/on_board_text2_onBoardVP"
         android:textSize="18sp" />
 
     <com.google.android.material.button.MaterialButton

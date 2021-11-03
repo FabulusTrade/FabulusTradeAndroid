@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/publication"
+            android:text="@string/publication_traderPost"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_weight="1"
-                android:text="@string/enter_button_title"
+                android:text="@string/enter_button_title_traderPost"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/or" />
+                android:text="@string/or_traderPost" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_trader_post_registration"
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/registration_button_title_first"
+                android:text="@string/registration_button_title_traderPost"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
     </LinearLayout>

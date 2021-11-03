@@ -44,8 +44,10 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
 
     private fun loadTraderStatistic() {
         profile.user?.id?.let {
-            apiRepo.getTraderStatistic(it)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({ traderStatistic ->
+            apiRepo
+                .getTraderStatistic(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ traderStatistic ->
                     val isPositiveProfit =
                         traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
                     traderStatistic.actualProfit365?.let {
@@ -55,8 +57,8 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
                         )
                     } ?: viewState.setProfit(ZERO_PERCENT, true)
                     viewState.initVP(traderStatistic)
-                }, {
-                    it.message
+                }, { t ->
+                    t.message
                 })
         }
     }
@@ -98,12 +100,21 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
 
     fun deleteAvatar() {
         profile.token?.let { token ->
-            apiRepo.deleteAvatar(token).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        viewState.setAvatar(it.avatar)
-                    }, {})
-                }, {})
+            apiRepo
+                .deleteAvatar(token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    apiRepo
+                        .getProfile(token)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.setAvatar(it.avatar)
+                        }, {
+                            // Ошибка не обрабатывается
+                        })
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 }

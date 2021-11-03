@@ -34,7 +34,9 @@ class SubscriberMainPresenter : MvpPresenter<SubscriberMainView>() {
     }
 
     fun getSubscriptionCount() {
-        apiRepo.getProfile(profile.token!!).observeOn(AndroidSchedulers.mainThread())
+        apiRepo
+            .getProfile(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.setSubscriptionCount(it.subscriptions_count)
             }, {
@@ -61,24 +63,41 @@ class SubscriberMainPresenter : MvpPresenter<SubscriberMainView>() {
 
     fun changeAvatar(body: MultipartBody.Part) {
         profile.token?.let { token ->
-            apiRepo.changeAvatar(token, body).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        viewState.setAvatar(it.avatar)
-                    }, {})
-                }, {}
-            )
+            apiRepo
+                .changeAvatar(token, body)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    apiRepo
+                        .getProfile(token)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.setAvatar(it.avatar)
+                        }, {
+                            // Ошибка не обрабатывается
+                        })
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
     fun deleteAvatar() {
         profile.token?.let { token ->
-            apiRepo.deleteAvatar(token).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        viewState.setAvatar(it.avatar)
-                    }, {})
-                }, {})
+            apiRepo
+                .deleteAvatar(token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    apiRepo
+                        .getProfile(token)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.setAvatar(it.avatar)
+                        }, {
+                            // Ошибка не обрабатывается
+                        })
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 }

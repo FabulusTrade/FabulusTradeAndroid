@@ -68,10 +68,10 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
     override fun showRegulationsAcceptDialog() {
         AlertDialog.Builder(context)
-            .setTitle(getString(R.string.error))
+            .setTitle(getString(R.string.error_signUp))
             .setMessage(R.string.regulations_accept)
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_signUp) { _, _ ->
             }.show()
     }
 
@@ -80,7 +80,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
             .setTitle(getString(R.string.is_success_reg))
             .setMessage(R.string.is_success_registration)
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok_signUp) { _, _ ->
             }.show()
     }
 
@@ -116,7 +116,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
     override fun setEmailError(validation: EmailValidation) {
         binding.etSignEmailLayout.error = when (validation) {
-            EmailValidation.INCORRECT -> getString(R.string.email_incorrect)
+            EmailValidation.INCORRECT -> getString(R.string.email_incorrect_signUp)
             EmailValidation.ALREADY_EXISTS -> getString(R.string.email_already_exists)
             EmailValidation.OK -> null
         }

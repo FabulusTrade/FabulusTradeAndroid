@@ -84,12 +84,16 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
 
     private fun loadTrades() {
         profile.token?.let {
-            apiRepo.getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+            apiRepo
+                .getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
                     listPresenter.trades.addAll(pag.results)
                     viewState.updateTradesAdapter()
                     nextPage = pag.next
-                }, {})
+                }, {
+                    // Ошибка не обрабатывается
+                })
         }
     }
 
@@ -97,8 +101,10 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
         if (nextPage != null && !isLoading) {
             isLoading = true
             profile.token?.let {
-                apiRepo.getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe({ pag ->
+                apiRepo
+                    .getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
                         listPresenter.trades.addAll(pag.results)
                         viewState.updateTradesAdapter()
                         nextPage = pag.next

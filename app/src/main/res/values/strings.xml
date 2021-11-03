@@ -8,36 +8,243 @@
     <string name="ask_a_question_menu_title">Задать вопрос</string>
     <string name="settings_menu_title">Настройки</string>
     <string name="exit_menu_title">Выход</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
-    <string name="btn_next_title">Продолжить</string>
-    <string name="accept_rules">Я принимаю <a href="https://www.google.com/">Правила</a> и <a href="https://www.google.com/">Условия компании</a></string>
-    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
-    <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
-    <string name="create_profile_title">Создать учетную запись</string>
-    <string name="email">Электронная почта</string>
-    <string name="confirm_password">Подтвердите пароль</string>
-    <string name="phone">Телефон</string>
-    <string name="create_profile_btn">Создать профиль</string>
-    <string name="sms_confirm_title">Подтверждение номера телефона по смс</string>
-    <string name="sms_confirm_input">Введите код из смс</string>
-    <string name="confirm_btn">Подтвердить</string>
-    <string name="sms_resend_btn">Отправить смс еще раз</string>
-    <string name="sms_not_received">НЕ ПРИШЛО СМС?</string>
     <string name="enter_with_google_button_title">Войти с Google</string>
     <string name="enter_with_facebook_button_title">Войти с Facebook</string>
     <string name="entrance_text_view_3_title">Нет учетной записи?</string>
-    <string name="traders_text_view_1_title">С наибольшим числом\n последователей (за последний год)</string>
-    <string name="button_popular_trader_text">СТАНЬ ПОПУЛЯРНЫМ ТРЕЙДЕРОМ!\nБольше последователей - больше прибыль!</string>
-    <string name="show_all">Показать всех</string>
-    <string name="filter">Фильтр</string>
     <string name="default_notification_channel_id" translatable="false">win_trade_channel</string>
+    <string name="comment_on">Комментировать</string>
+    <string name="my_deals">Мои сделки</string>
+    <string name="create">Созать</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="community">Сообщество</string>
+    <string name="observation">Наблюдение</string>
+    <string name="e_mail_quastion">E-mail для связи</string>
+    <string name="question_success">Ваш вопрос отправлен в службу поддержки, ответ будет отправлен на указанный Вами e-mail</string>
+    <string name="question_too_long">Вопрос слишком длинный</string>
+    <string name="question_too_short">Вы забыли написать вопрос</string>
+    <string name="change_ava_title">Сменить аватар</string>
+    <string name="delete_ava_title">Удалить аватар</string>
+    <string name="jan_profit">Янв</string>
+    <string name="feb_profit">Фев</string>
+    <string name="mar_profit">Мар</string>
+    <string name="apr_profit">Апр</string>
+    <string name="may_profit">Май</string>
+    <string name="jun_profit">Июн</string>
+    <string name="jul_profit">Июл</string>
+    <string name="aug_profit">Авг</string>
+    <string name="sep_profit">Сен</string>
+    <string name="oct_profit">Окт</string>
+    <string name="nov_profit">Ноя</string>
+    <string name="dec_profit">Дек</string>
+    <string name="trader_reg_view1_title">Заполнить профиль</string>
+    <string name="trader_reg_1_text1">Ваши  персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</string>
+    <string name="trader_reg_1_text2">Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</string>
+    <string name="continue_btn">Продолжить</string>
+    <string name="text_gender_man">Муж</string>
+    <string name="text_gender_woman">Жен</string>
+    <string name="day_2digit">ДД</string>
+    <string name="month_2digit">ММ</string>
+    <string name="year_4digit">ГГГГ</string>
+    <string name="profile_complete">готовый профиль</string>
+    <string name="trader_reg_1_text3">После завершения верификации профиля будет предоставлена возможность:</string>
+    <string name="trader_reg_1_text4">формировать сообщество последователей для монетизации</string>
+    <string name="trader_reg_1_text5">в один клик загружать сделки из своего торгового терминала</string>
+    <string name="trader_reg_1_text6">"вести статистику и аналитику своих сделок"</string>
+    <string name="trader_reg_1_text7">писать комментарии к своим сделкам</string>
+    <string name="trader_reg_1_text8">размещать новости и/или оставлять комментарии к новостям</string>
+    <string name="trader_reg_patch_dialog_title">Данные записаны!</string>
+
+    <!-- Traders filter screen -->
+    <string name="cb_filter_profit_label">По доходности (% годовых)</string>
+    <string name="cb_filter_followers_label">С наибольшим числом последователей</string>
+    <string name="btn_filter_apply">Применить</string>
+    <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
+    <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
+    <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
+
+    <!-- Общее Util -->
+    <string name="binding_error">Ошибка инициализации биндинга</string>
+    <string name="coming_soon">В разработке</string>
+
+    <!-- MainActivity -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <!-- drawer_layout -->
+    <string name="edit_profile">Заполнить\n профиль</string>
+    <string name="great_treader">Великий Трейдер</string>
+
+    <!-- AboutWinTradeFragment -->
+    <string name="name">Наименование</string>
+
+    <!-- CreatePostFragment -->
+    <string name="new_publication">Новая публикация</string>
+    <string name="load_file">загрузить файл</string>
+    <string name="do_publication">Опубликовать</string>
+    <string name="gallery_mask">image/*</string>
+    <string name="gallery">Галлерея</string>
+    <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
+    <string name="create_post_hint">"Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"</string>
+
+    <!-- RegistrationAsTraderFragmentFive -->
+    <string name="your_profile">Ваш профиль</string>
+    <string name="trader_reg_title1">Выберите тарифный план для своих последователей</string>
+    <string name="text_free_plan">Бесплатный</string>
+    <string name="text_pay_plan">Платный 1300 руб/мес</string>
+    <string name="detail">Подробнее…</string>
+    <string name="trader_reg_4_text1">За исключением аккаунтов (через запятую, начиная с @_____)</string>
+    <string name="text_individual_plan">Индивидуальный</string>
+    <string name="trader_reg_4_text2">Напишите стоимость в месяц, например 2000 руб</string>
+    <string name="text_invisible_plan">Сделать профиль невидимым</string>
+    <string name="trader_reg_4_text3">Пользователи, которые не являются Вашими наблюдателями и подписчиками, не будут Вас видеть</string>
+    <string name="specify_trade_terminal">Укажите Ваш торговый терминал</string>
+
+    <!-- RegistrationAsTraderFragmentFour -->
+    <string name="your_profile_reg_tr_four">Ваш профиль</string>
+    <string name="text_your_address">Ваш адрес</string>
+    <string name="text_address">Адрес</string>
+    <string name="text_street">Улица</string>
+    <string name="text_home">№</string>
+    <string name="text_city">Город</string>
+    <string name="text_country">Страна проживания</string>
+    <string name="text_country_live">Это страна моего гражданства</string>
+    <string name="text_passport_number">Номер паспорта</string>
+    <string name="remark_about_passport">Этот номер должен относится к стране вашего гражданства</string>
+    <string name="russia">Россия</string>
+
+    <!-- RegistrationAsTraderFragmentSecond -->
+    <string name="fill_profile">Заполнить\nпрофиль трейдера</string>
+    <string name="your_profile_reg_tr_second">Ваш профиль</string>
+    <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
+    <string name="text_name">Имя</string>
+    <string name="first_name">Имя</string>
+    <string name="name_symbols">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>
+    <string name="middle_name">Отчество</string>
+    <string name="second_name">Фамилия</string>
+    <string name="text_gender">Пол</string>
+    <string name="text_birthday">Дата рождения</string>
+    <string name="birthday_hint_string">ДД.ММ.ГГГГ</string>
+    <string name="error">Ошибка</string>
+    <string name="enter_date_in_field">Введите дату в поле ввода.</string>
+    <string name="text_date_format">[00]{.}[00]{.}[9900]</string>
+    <string name="require_field">Обязательно поле</string>
+
+    <!-- RegistrationAsTraderFragmentThird -->
+    <string name="your_profile_reg_tr_third">Ваш профиль</string>
+    <string name="choice_trade_terminal">Выберите Ваш торговый терминал</string>
+    <string name="trader_reg_3_text1">После нажатия на кнопку “Готово” к Вам на почту, указанную при регистрации, поступит ПО (скрипт) и инструкция по его установке для трансляции сделок на платформу WinTrade.</string>
+    <string name="ready">Готово</string>
+    <string name="trader_reg_patch_dialog_message">Трейдер успешно зарегистрирован. Вам на почту отправлено ПО и инструкция по его установке.</string>
+    <string name="ok">OK</string>
+    <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
+
+    <!-- ResetPasswordFragment -->
+    <string name="email">Электронная почта</string>
+    <string name="send">Отправить</string>
+    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в WinTrade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
+    <string name="email_incorrect">Некорректный email</string>
+    <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
+    <string name="ok_resetFragment">OK</string>
+    <string name="error_resetFragment">Ошибка</string>
+    <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
+
+    <!-- SignInFragment -->
+    <string name="entrance_text_view_1_title">Войти</string>
+    <string name="user_name">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="reset_pass_btn_title">Забыли пароль?</string>
+    <string name="enter_button_title">Войти</string>
+    <string name="entrance_text_view_2_title">ИЛИ</string>
+    <string name="registration_button_title">Зарегистрироваться</string>
+    <string name="registration_button_title_first">Зарегистрироваться</string>
+    <string name="registration_button_title_second">ЗАРЕГИСТРИРОВАТЬСЯ трейдером</string>
+    <string name="search">Поиск</string>
+
+    <!-- SignUpFragment -->
+    <string name="create_profile_title">Создать учетную запись</string>
+    <string name="user_name_signUp">Имя пользователя</string>
+    <string name="only_eng_digits">(только латинские буквы и цифры)</string>
+    <string name="email_signUp">Электронная почта</string>
+    <string name="password_signUp">Пароль</string>
+    <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="phone">Телефон</string>
+    <string name="accept_rules">Я принимаю <a href="https://www.google.com/">Правила</a> и <a href="https://www.google.com/">Условия компании</a></string>
+    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
+    <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
+    <string name="create_profile_btn">Создать профиль</string>
+    <string name="error_signUp">Ошибка</string>
+    <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
+    <string name="ok_signUp">OK</string>
+    <string name="is_success_reg">Успешная регистрация</string>
+    <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
+    <string name="nickname_too_short">Ник слишком короткий</string>
+    <string name="nickname_too_long">Ник слишком длинный</string>
+    <string name="nickname_only_eng_and_digits">Разрешены только латинские буквы и цифры</string>
+    <string name="nickname_already_exists">Пользователь с таким ником уже существует</string>
+    <string name="password_too_short">Пароль слишком короткий</string>
+    <string name="password_no_up_low_case_digits">Пароль должен содержать цифру, заглавную и строчную буквы</string>
+    <string name="password_mismatch">Пароли не совпадают</string>
+    <string name="email_incorrect_signUp">Некорректный email</string>
+    <string name="email_already_exists">Пользователь с такой почтой уже зарегистрирован</string>
+    <string name="phone_incorrect">Некорректный номер</string>
+    <string name="phone_already_exists">Пользователь с таким номером уже зарегистрирован</string>
+    <string name="phone_format_1">8 ([000]) [000]-[00]-[00]</string>
+    <string name="phone_format_2">+7 ([000]) [000]-[00]-[00]</string>
+
+    <!-- SmsConfirmFragment -->
+    <string name="sms_confirm_title">Подтверждение номера телефона по смс</string>
+    <string name="sms_confirm_input">Введите код из смс</string>
+    <string name="confirm_btn">Подтвердить</string>
+    <string name="sms_not_received">НЕ ПРИШЛО СМС?</string>
+    <string name="sms_resend_btn">Отправить смс еще раз</string>
+    <string name="second_sms_can_send">Повторный код можно получить через 40 секунд</string>
+
+    <!-- SubscriberTradeFragment -->
+    <string name="deals">Сделки</string>
+    <string name="orders">Ордера</string>
+    <string name="journal">Журнал</string>
+
+    <!-- SubscriberMainFragment -->
+    <string name="gallery_mask_subsFragment">image/*</string>
+    <string name="gallery_subsFragment">Галлерея</string>
+    <string name="subscription_count">Подписки %d</string>
+
+    <!-- TradeDetailFragment -->
+    <string name="trader">Трейдер</string>
+    <string name="operation">Операция</string>
+    <string name="type_of_transaction">Тип операции</string>
+    <string name="name_tradeFragment">Наименование</string>
+    <string name="ticker">Тикер</string>
+    <string name="price">Цена</string>
+    <string name="quantity">Количество, шт</string>
+    <string name="sum">Сумма</string>
+    <string name="date_time">Дата/время</string>
+
+    <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>
+    <string name="isSubscribe">Уже подписаны</string>
+    <string name="gallery_mask_traderFragment">image/*</string>
+    <string name="gallery_traderFragment">Галлерея</string>
+
+    <!-- TraderMeObservationFragment -->
+    <string name="deals_traderMe">Сделки</string>
+    <string name="orders_traderMe">Ордера</string>
+    <string name="journal_traderMe">Журнал</string>
+
+    <!-- TraderMePostFragment -->
+    <string name="publication">Публикации</string>
+    <string name="subscription">Подписка</string>
+    <string name="trader_news_header_title">Поделитесь новостями, идеями или комментарием</string>
+
+    <!-- TraderMeProfitFragment -->
     <string name="followers">Последователи</string>
+    <string name="followers_joining_statistic_sample">+30 (10%) за 7 дней</string>
     <string name="profitability">Доходность</string>
     <string name="year_2021">2021</string>
     <string name="year_2022">2022</string>
     <string name="january">Январь</string>
+    <string name="zero_percent">0.0%</string>
     <string name="july">Июль</string>
     <string name="february">Февраль</string>
     <string name="august">Август</string>
@@ -53,181 +260,140 @@
     <string name="average_profitability_of_the_deal">Средняя доходность сделок за 30 дней:</string>
     <string name="average_trade_duration">Средний срок сделки за 30 дней:</string>
     <string name="registration_date">Дата регистрации</string>
-    <string name="attached_post_title">создать закрепленную запись</string>
-    <string name="coming_soon">В разработке</string>
-    <string name="fill_profile">Заполнить\nпрофиль трейдера</string>
-    <string name="subscription">Подписка</string>
-    <string name="trader">Трейдер</string>
-    <string name="type_of_transaction">Тип операции</string>
-    <string name="name">Наименование</string>
-    <string name="ticker">Тикер</string>
-    <string name="price">Цена</string>
-    <string name="quantity">Количество, шт</string>
-    <string name="sum">Сумма</string>
-    <string name="date_time">Дата/время</string>
-    <string name="detail">Подробнее…</string>
-    <string name="purchase">Покупка</string>
-    <string name="date">Дата</string>
-    <string name="isSubscribe">Уже подписаны</string>
-    <string name="great_treader">Великий Трейдер</string>
-    <string name="deals">Сделки</string>
-    <string name="orders">Ордера</string>
-    <string name="journal">Журнал</string>
-    <string name="publication">Публикации</string>
-    <string name="trader_news_header_title">Поделитесь новостями, идеями или комментарием</string>
-    <string name="create_post_hint">"Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"</string>
-    <string name="show">показать</string>
-    <string name="comment_on">Комментировать</string>
-    <string name="text">Текст</string>
-    <string name="my_deals">Мои сделки</string>
-    <string name="shares">Акции</string>
-    <string name="sale_of_securities">Продажа акций</string>
-    <string name="nickname_too_short">Ник слишком короткий</string>
-    <string name="nickname_too_long">Ник слишком длинный</string>
-    <string name="nickname_only_eng_and_digits">Разрешены только латинские буквы и цифры</string>
-    <string name="nickname_already_exists">Пользователь с таким ником уже существует</string>
-    <string name="password_too_short">Пароль слишком короткий</string>
-    <string name="password_no_up_low_case_digits">Пароль должен содержать цифру, заглавную и строчную буквы</string>
-    <string name="password_mismatch">Пароли не совпадают</string>
-    <string name="email_incorrect">Некорректный email</string>
-    <string name="email_already_exists">Пользователь с такой почтой уже зарегистрирован</string>
-    <string name="phone_incorrect">Некорректный номер</string>
-    <string name="phone_already_exists">Пользователь с таким номером уже зарегистрирован</string>
-    <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
-    <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
-    <string name="new_publication">Новая публикация</string>
-    <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
-    <string name="load_file">загрузить файл</string>
-    <string name="do_publication">Опубликовать</string>
-    <string name="only_eng_digits">(только латинские буквы и цифры)</string>
-    <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
-    <string name="share">Поделиться</string>
-    <string name="create">Созать</string>
-    <string name="delete">Удалить</string>
-    <string name="edit">Редактировать</string>
-    <string name="trader_post_not_auth_text">НОВОСТИ и ИДЕИ от профессионального трейдера.</string>
-    <string name="trader_post_not_auth_text_2">Для просмотра и комментирования необходимо</string>
-    <string name="or">или</string>
-    <string name="trader_pop_instr_not_auth_text">ЧАСТО ТОРГУЕМЫЕ БУМАГИ - доля сделок с прибылью и средний размер прибыли и убытка для 3 наиболее популярных бумаг (по количеству проведенных сделок)</string>
-    <string name="trader_pop_instr_not_auth_text_2">Для просмотра необходимо</string>
-    <string name="trader_trade_not_auth_text">СДЕЛКИ И ОРДЕРА онлайн с установленными тейк-профит и стоп-лосс. Комментарии по сделкам.</string>
-    <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
-    <string name="community">Сообщество</string>
-    <string name="observation">Наблюдение</string>
-    <string name="ok">OK</string>
-    <string name="is_success_reg">Успешная регистрация</string>
-    <string name="error">Ошибка</string>
-    <string name="send">Отправить</string>
-    <string name="reset_pass_email_not_registred">Такой почты не зарегестрировано</string>
-    <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
-    <string name="hide">скрыть</string>
-    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в WinTrade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
-    <string name="operation">Операция</string>
-    <string name="e_mail_quastion">E-mail для связи</string>
-    <string name="question_success">Ваш вопрос отправлен в службу поддержки, ответ будет отправлен на указанный Вами e-mail</string>
-    <string name="question_too_long">Вопрос слишком длинный</string>
-    <string name="question_too_short">Вы забыли написать вопрос</string>
-    <string name="gallery">Галлерея</string>
-    <string name="trades_count">Количество: 1</string>
-    <string name="deals_date">Последняя сделка: 24.08.21 11:52</string>
-    <string name="deals_fo_month">Количество сделок за месяц: 999</string>
-    <string name="label_base_profit">-0,33%</string>
-    <string name="change_ava_title">Сменить аватар</string>
-    <string name="delete_ava_title">Удалить аватар</string>
-    <string name="binding_error">Ошибка инициализации биндинга</string>
-    <string name="subscription_count">Подписки %d</string>
-    <string name="gallery_mask">image/*</string>
-    <string name="jan_profit">Янв</string>
-    <string name="feb_profit">Фев</string>
-    <string name="mar_profit">Мар</string>
-    <string name="apr_profit">Апр</string>
-    <string name="may_profit">Май</string>
-    <string name="jun_profit">Июн</string>
-    <string name="jul_profit">Июл</string>
-    <string name="aug_profit">Авг</string>
-    <string name="sep_profit">Сен</string>
-    <string name="oct_profit">Окт</string>
-    <string name="nov_profit">Ноя</string>
-    <string name="dec_profit">Дек</string>
-    <string name="zero_percent">0.0%</string>
+    <string name="zero_deals_profit">0.0(0.0%)</string>
     <string name="zero">0</string>
     <string name="slash">/</string>
-    <string name="zero_deals_profit">0.0(0.0%)</string>
-    <string name="followers_joining_statistic_sample">+30 (10%) за 7 дней</string>
+    <string name="hide">скрыть</string>
+    <string name="show">показать</string>
     <string name="dialog_info_text">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
-    <string name="phone_format_1">8 ([000]) [000]-[00]-[00]</string>
-    <string name="phone_format_2">+7 ([000]) [000]-[00]-[00]</string>
-    <string name="trader_reg_view1_title">Заполнить профиль</string>
-    <string name="trader_reg_1_text1">Ваши  персональные данные будут обработаны с целью создания профиля трейдера в соответствии с нормативно- правовыми требованиями.</string>
-    <string name="trader_reg_1_text2">Хранение данных будет осуществляться с соблюдением правил конфиденциальности.</string>
-    <string name="continue_btn">Продолжить</string>
-    <string name="your_profile">Ваш профиль</string>
-    <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
-    <string name="text_name">Имя</string>
-    <string name="first_name">Имя</string>
-    <string name="middle_name">Отчество</string>
-    <string name="text_gender">Пол</string>
-    <string name="text_gender_man">Муж</string>
-    <string name="text_gender_woman">Жен</string>
-    <string name="text_birthday">Дата рождения</string>
-    <string name="day_2digit">ДД</string>
-    <string name="month_2digit">ММ</string>
-    <string name="year_4digit">ГГГГ</string>
-    <string name="birthday_hint_string">ДД.ММ.ГГГГ</string>
-    <string name="profile_complete">готовый профиль</string>
-    <string name="text_your_address">Ваш адрес</string>
-    <string name="text_address">Адрес</string>
-    <string name="text_street">Улица</string>
-    <string name="text_home">№</string>
-    <string name="text_city">Город</string>
-    <string name="text_country">Страна проживания</string>
-    <string name="russia">Россия</string>
-    <string name="text_country_live">Это страна моего гражданства</string>
-    <string name="text_passport_number">Номер паспорта</string>
-    <string name="remark_about_passport">Этот номер должен относится к стране вашего гражданства</string>
-    <string name="trader_reg_title1">Выберите тарифный план для своих последователей</string>
-    <string name="text_free_plan">Бесплатный</string>
-    <string name="text_pay_plan">Платный 1300 руб/мес</string>
-    <string name="trader_reg_4_text1">За исключением аккаунтов (через запятую, начиная с @_____)</string>
-    <string name="text_individual_plan">Индивидуальный</string>
-    <string name="trader_reg_4_text2">Напишите стоимость в месяц, например 2000 руб</string>
-    <string name="text_invisible_plan">Сделать профиль невидимым</string>
-    <string name="trader_reg_4_text3">Пользователи, которые не являются Вашими наблюдателями и подписчиками, не будут Вас видеть</string>
-    <string name="trader_reg_1_text3">После завершения верификации профиля будет предоставлена возможность:</string>
-    <string name="trader_reg_1_text4">формировать сообщество последователей для монетизации</string>
-    <string name="trader_reg_1_text5">в один клик загружать сделки из своего торгового терминала</string>
-    <string name="trader_reg_1_text6">"вести статистику и аналитику своих сделок"</string>
-    <string name="trader_reg_1_text7">писать комментарии к своим сделкам</string>
-    <string name="trader_reg_1_text8">размещать новости и/или оставлять комментарии к новостям</string>
-    <string name="second_name">Фамилия</string>
-    <string name="choice_trade_terminal">Выберите Ваш торговый терминал</string>
-    <string name="specify_trade_terminal">Укажите Ваш торговый терминал</string>
-    <string name="trader_reg_3_text1">После нажатия на кнопку “Готово” к Вам на почту, указанную при регистрации, поступит ПО (скрипт) и инструкция по его установке для трансляции сделок на платформу WinTrade.</string>
-    <string name="ready">Готово</string>
-    <string name="enter_date_in_field">Введите дату в поле ввода.</string>
-    <string name="trader_reg_patch_dialog_title">Данные записаны!</string>
-    <string name="trader_reg_patch_dialog_message">Трейдер успешно зарегистрирован. Вам на почту отправлено ПО и инструкция.</string>
-    <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
-    <string name="require_field">Обязательно поле</string>
-    <string name="name_symbols">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWабвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИЙКЛМПОНРСТУФХЦЧШЩЬЫЪЭЮЯ</string>
-    <string name="text_date_format">[00]{.}[00]{.}[9900]</string>
+    <string name="ok_traderMe">OK</string>
 
-    <!-- Traders filter screen -->
-    <string name="cb_filter_profit_label">По доходности (% годовых)</string>
-    <string name="cb_filter_followers_label">С наибольшим числом последователей</string>
-    <string name="btn_filter_apply">Применить</string>
-    <string name="on_board_title">Добро пожаловать в Fabulus Trade!</string>
-    <string name="on_board_text1">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
-    <string name="on_board_text2">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
+    <!-- TraderMeSubTradeFragment -->
+    <string name="deals_traderMeSub">Сделки</string>
+    <string name="orders_traderMeSub">Ордера</string>
+    <string name="journal_traderMeSub">Журнал</string>
 
-    <!-- SignIn screen -->
-    <string name="entrance_text_view_1_title">Войти</string>
-    <string name="user_name">Имя пользователя</string>
-    <string name="password">Пароль</string>
-    <string name="enter_button_title">Войти</string>
-    <string name="reset_pass_btn_title">Забыли пароль?</string>
-    <string name="entrance_text_view_2_title">ИЛИ</string>
-    <string name="registration_button_title_first">Зарегистрироваться</string>
-    <string name="registration_button_title_second">ЗАРЕГИСТРИРОВАТЬСЯ трейдером</string>
-    <string name="search">Поиск</string>
+    <!-- TraderMeTradeFragment -->
+    <string name="deals_traderFragment">Сделки</string>
+    <string name="orders_traderFragment">Ордера</string>
+    <string name="journal_traderFragment">Журнал</string>
+    <string name="deals_fo_month">Количество сделок за месяц: 999</string>
+
+    <!-- TraderPopularInstrumentsFragment -->
+    <string name="trader_pop_instr_not_auth_text">ЧАСТО ТОРГУЕМЫЕ БУМАГИ - доля сделок с прибылью и средний размер прибыли и убытка для 3 наиболее популярных бумаг (по количеству проведенных сделок)</string>
+    <string name="trader_pop_instr_not_auth_text_2">Для просмотра необходимо</string>
+    <string name="enter_tradePopular">Войти</string>
+    <string name="or">или</string>
+    <string name="registration_button_title_tradePopular">Зарегистрироваться</string>
+
+    <!-- TraderPostFragment -->
+    <string name="publication_traderPost">Публикации</string>
+    <string name="trader_post_not_auth_text">НОВОСТИ и ИДЕИ от профессионального трейдера.</string>
+    <string name="trader_post_not_auth_text_2">Для просмотра и комментирования необходимо</string>
+    <string name="enter_button_title_traderPost">Войти</string>
+    <string name="or_traderPost">или</string>
+    <string name="registration_button_title_traderPost">Зарегистрироваться</string>
+
+    <!-- TraderProfitFragment -->
+    <string name="followers_traderProfit">Последователи</string>
+    <string name="followers_joining_statistic_sample_traderProfit">+30 (10%) за 7 дней</string>
+    <string name="profitability_traderProfit">Доходность</string>
+    <string name="year_2021_traderProfit">2021</string>
+    <string name="year_2022_traderProfit">2022</string>
+    <string name="january_traderProfit">Январь</string>
+    <string name="zero_percent_traderProfit">0.0%</string>
+    <string name="july_traderProfit">Июль</string>
+    <string name="february_traderProfit">Февраль</string>
+    <string name="august_traderProfit">Август</string>
+    <string name="march_traderProfit">Март</string>
+    <string name="september_traderProfit">Сентябрь</string>
+    <string name="april_traderProfit">Апрель</string>
+    <string name="october_traderProfit">Октябрь</string>
+    <string name="may_traderProfit">Май</string>
+    <string name="november_traderProfit">Ноябрь</string>
+    <string name="june_traderProfit">Июнь</string>
+    <string name="december_traderProfit">Декабрь</string>
+    <string name="deals_30_traderProfit">Количество сделок за 30 дней:</string>
+    <string name="average_profitability_of_the_deal_traderProfit">Средняя доходность сделок за 30 дней:</string>
+    <string name="average_trade_duration_traderProfit">Средний срок сделки за 30 дней:</string>
+    <string name="registration_date_traderProfit">Дата регистрации</string>
+    <string name="zero_deals_profit_traderProfit">0.0(0.0%)</string>
+    <string name="zero_traderProfit">0</string>
+    <string name="slash_traderProfit">/</string>
+    <string name="hide_traderProfit">скрыть</string>
+    <string name="show_traderProfit">показать</string>
+    <string name="dialog_info_text_traderProfit">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
+    <string name="ok_traderProfit">OK</string>
+
+    <!-- TraderTradeFragment -->
+    <string name="deals_traderTrade">Сделки</string>
+    <string name="orders_traderTrade">Ордера</string>
+    <string name="journal_traderTrade">Журнал</string>
+    <string name="deals_fo_month_traderTrade">Количество сделок за месяц: 999</string>
+    <string name="trader_trade_not_auth_text">СДЕЛКИ И ОРДЕРА онлайн с установленными тейк-профит и стоп-лосс. Комментарии по сделкам.</string>
+    <string name="trader_trade_not_auth_text_2">Для просмотра и получения уведомлений необходимо</string>
+    <string name="enter_button_title_traderTrade">Войти</string>
+    <string name="or_traderTrade">или</string>
+    <string name="registration_button_title_traderTrade">Зарегистрироваться</string>
+
+    <!-- TradersAllFragment -->
+    <string name="traders_text_view_1_title">С наибольшим числом\n последователей (за последний год)</string>
+
+    <!-- TradersFilterFragment -->
+    <string name="cb_filter_profit_label_tradersFilter">По доходности (% годовых)</string>
+    <string name="cb_filter_followers_label_tradersFilter">С наибольшим числом последователей</string>
+    <string name="btn_filter_apply_tradersFilter">Применить</string>
+
+    <!-- TradersMainFragment -->
+    <string name="button_popular_trader_text">СТАНЬ ПОПУЛЯРНЫМ ТРЕЙДЕРОМ!\nБольше последователей - больше прибыль!</string>
+    <string name="traders_text_view_2_title">Стань популярным трейдером!\n Больше последователей - больше прибыль!</string>
+    <string name="show_all">Показать всех</string>
+    <string name="filter">Фильтр</string>
+    <string name="show_tradersMain">показать</string>
+
+    <!-- CompanyTradingOperationsRVAdapter -->
+    <string name="date">Дата</string>
+    <string name="sale_of_securities">Продажа акций</string>
+    <string name="price_itemCompTradOper">Цена</string>
+    <string name="label_base_profit">-0,33%</string>
+
+    <!-- OnBoardVPAdapter -->
+    <string name="on_board_title_onBoardVP">Добро пожаловать в Fabulus Trade!</string>
+    <string name="on_board_text1_onBoardVP">Сегодня великие инвестиционные стратегии создают выдающиеся трейдеры, а не банки, инвестдома или управляющие компании</string>
+    <string name="on_board_text2_onBoardVP">Мы создали место для глобального позиционирования таких профессионалов на основе их реальных заслуг, а не картинок успеха!</string>
+    <string name="btn_next_title">Продолжить</string>
+
+    <!-- SubscriberTradesRVAdapter -->
+    <string name="user_name_subscriberTradesRV">Имя пользователя</string>
+    <string name="name_subscriberTradesRV">Наименование</string>
+    <string name="purchase">Покупка</string>
+    <string name="price_subscriberTradesRV">Цена</string>
+    <string name="quantity_subscriberTradesRV">Количество, шт</string>
+    <string name="date_subscriberTradesRV">Дата</string>
+    <string name="sum_subscriberTradesRV">Сумма</string>
+    <string name="detail_subscriberTradesRV">Подробнее…</string>
+
+    <!-- PostRVAdapter -->
+    <string name="text">Текст</string>
+    <string name="show_postRv">показать</string>
+    <string name="hide_postRv">скрыть</string>
+
+    <!-- item_trader_popular_company -->
+    <string name="average_profit">Сред. Прибыль</string>
+    <string name="average_loss">Сред. Убыток</string>
+
+    <!-- TradersAllRVAdapter -->
+    <string name="subscription_tradersAllRV">Подписка</string>
+
+    <!-- item_trader_by_company -->
+    <string name="name_itemMyCompany">Наименование</string>
+    <string name="shares">Акции</string>
+    <string name="trades_count">Количество: 1</string>
+    <string name="deals_date">Последняя сделка: 24.08.21 11:52</string>
+
+    <!-- layout_attached_post -->
+    <string name="attached_post_title">создать закрепленную запись</string>
+    <string name="detail_attachedPost">Подробнее…</string>
+    <string name="share">Поделиться</string>
+    <string name="show_attachedPost">показать</string>
 </resources>
