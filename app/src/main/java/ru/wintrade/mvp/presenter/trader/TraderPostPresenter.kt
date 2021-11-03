@@ -144,7 +144,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.signInScreen())
+        router.navigateTo(Screens.signInScreen(false))
     }
 
     fun openSignUpScreen() {

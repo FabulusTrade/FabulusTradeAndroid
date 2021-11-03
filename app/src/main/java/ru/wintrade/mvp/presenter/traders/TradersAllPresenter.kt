@@ -66,7 +66,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
 
         override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
             if (profile.user == null) {
-                router.navigateTo(Screens.signInScreen())
+                router.navigateTo(Screens.signInScreen(false))
             } else if (isChecked) {
                 apiRepo
                     .observeToTrader(profile.token!!, traderList[pos].id)
