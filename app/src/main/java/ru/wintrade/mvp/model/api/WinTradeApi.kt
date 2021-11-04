@@ -236,8 +236,8 @@ interface WinTradeApi {
         @Body registrationInfo: RequestTraderRegistrationInfo
     ): Completable
 
-    @GET("/auth/username_exists/{username}/")
+    @GET("/auth/username_exists/")
     fun checkUsername(
-        @Path("username", encoded = true) traderId: String,
+        @Field("username", encoded = true) traderId: String,
     ): Completable
 }
