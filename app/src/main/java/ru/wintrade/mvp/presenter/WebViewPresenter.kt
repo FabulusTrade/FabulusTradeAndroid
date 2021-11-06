@@ -18,5 +18,4 @@ class WebViewPresenter(val url: String) : MvpPresenter<WebViewView>() {
     fun onCLoseClicked() {
         router.exit()
     }
-
 }
