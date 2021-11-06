@@ -10,4 +10,5 @@ interface TraderMeTradeView : MvpView {
     fun init()
     fun setBtnState(state: TraderMeTradePresenter.State)
     fun updateTradesAdapter()
+    fun renderOperationsCount(operationsCount: Int)
 }

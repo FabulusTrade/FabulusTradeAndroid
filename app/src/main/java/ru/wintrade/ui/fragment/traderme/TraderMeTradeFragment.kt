@@ -105,6 +105,10 @@ class TraderMeTradeFragment : MvpAppCompatFragment(), TraderMeTradeView {
         tradesByCompanyRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun renderOperationsCount(operationsCount: Int) {
+        binding.tvTraderMeDealMonthlyCounter.append(" $operationsCount")
+    }
+
     private fun myJournalStateInit() {
         binding.run {
             isActive(btnTraderMeTradeJournal)

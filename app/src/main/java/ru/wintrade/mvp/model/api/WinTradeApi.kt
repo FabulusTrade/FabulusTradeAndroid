@@ -235,4 +235,11 @@ interface WinTradeApi {
         @Path("trader_id", encoded = true) traderId: String,
         @Body registrationInfo: RequestTraderRegistrationInfo
     ): Completable
+
+    @FormUrlEncoded
+    @POST("/api/v1/trader/number_of_trades/")
+    fun getTraderOperationsCount(
+        @Field(value = "uuid") uuidTrader: String
+    ): Single<ResponseOperationsCount>
+
 }

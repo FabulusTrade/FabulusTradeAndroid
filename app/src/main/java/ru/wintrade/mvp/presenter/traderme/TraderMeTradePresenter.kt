@@ -80,6 +80,17 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
         viewState.init()
         viewState.setBtnState(State.MY_DEALS)
         loadTrades()
+        loadTraderOperationsCount()
+    }
+
+    private fun loadTraderOperationsCount() {
+        apiRepo.getTraderOperationsCount(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ operationsCount ->
+                viewState.renderOperationsCount(operationsCount)
+            }, { error ->
+                // Ошибка не обрабатывается
+            })
     }
 
     private fun loadTrades() {
