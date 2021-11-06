@@ -278,7 +278,7 @@
     <string name="deals_traderFragment">Сделки</string>
     <string name="orders_traderFragment">Ордера</string>
     <string name="journal_traderFragment">Журнал</string>
-    <string name="deals_fo_month">Количество сделок за месяц: 999</string>
+    <string name="deals_fo_month">Количество операций за месяц: 999</string>
 
     <!-- TraderPopularInstrumentsFragment -->
     <string name="trader_pop_instr_not_auth_text">ЧАСТО ТОРГУЕМЫЕ БУМАГИ - доля сделок с прибылью и средний размер прибыли и убытка для 3 наиболее популярных бумаг (по количеству проведенных сделок)</string>
@@ -390,7 +390,7 @@
     <string name="name_itemMyCompany">Наименование</string>
     <string name="shares">Акции</string>
     <string name="trades_count">Количество: 1</string>
-    <string name="deals_date">Последняя сделка: 24.08.21 11:52</string>
+    <string name="deals_date">Последняя операция: 24.08.21 11:52</string>
 
     <!-- layout_attached_post -->
     <string name="attached_post_title">создать закрепленную запись</string>
