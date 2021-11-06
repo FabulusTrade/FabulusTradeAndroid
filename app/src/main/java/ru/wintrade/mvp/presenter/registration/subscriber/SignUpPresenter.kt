@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<SignUpView>() {
     companion object {
-        const val RULES_URL = "http://fabulustrade.com/legal_notes/"
+        private const val RULES_URL = "http://fabulustrade.com/legal_notes/"
     }
 
     @Inject

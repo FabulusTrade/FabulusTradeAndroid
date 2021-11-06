@@ -18,7 +18,7 @@ import ru.wintrade.util.setToolbarVisible
 
 class WebViewFragment : MvpAppCompatFragment(), WebViewView {
     companion object {
-        const val URL_TAG = "url_tag"
+        private const val URL_TAG = "url_tag"
         fun newInstance(url: String): WebViewFragment =
             WebViewFragment().apply {
                 arguments = Bundle().apply {
