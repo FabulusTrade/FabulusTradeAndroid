@@ -15,6 +15,10 @@ import ru.wintrade.util.*
 import javax.inject.Inject
 
 class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<SignUpView>() {
+    companion object {
+        const val RULES_URL = "http://fabulustrade.com/legal_notes/"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -128,5 +132,9 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
                     }
                 })
         }
+    }
+
+    fun openRules() {
+        router.navigateTo(Screens.webViewFragment(RULES_URL))
     }
 }
