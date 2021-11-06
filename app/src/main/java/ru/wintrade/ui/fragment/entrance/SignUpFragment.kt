@@ -173,7 +173,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
             }
         }
 
-        binding.tvSignRules.setOnClickListener {
+        binding.tvSignPrivacy.setOnClickListener {
             presenter.openRules()
         }
     }

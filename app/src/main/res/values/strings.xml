@@ -169,8 +169,8 @@
     <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="phone">Телефон</string>
-    <string name="accept_rules">Я принимаю <a href="https://www.google.com/">Правила</a> и <a href="https://www.google.com/">Условия компании</a></string>
-    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
+    <string name="accept_rules">Я принимаю <font color="#00BCC1">Правила и Условия компании</font></string>
+    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <font color="#00BCC1">Политика конфеденциальности и Порядок использования файлов cookie</font></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_btn">Создать профиль</string>
     <string name="error_signUp">Ошибка</string>
