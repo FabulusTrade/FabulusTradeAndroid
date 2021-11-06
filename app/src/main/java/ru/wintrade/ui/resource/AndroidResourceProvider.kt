@@ -9,6 +9,9 @@ class AndroidResourceProvider(val context: Context) : ResourceProvider {
 
     override fun getLoadingImages() = loadingImages.map { getImageIdFromDrawable(it) }
     override fun getOnBoardImages() = onBoardImages.map { getImageIdFromDrawable(it) }
+    override fun getStringResource(resource: Int): String {
+        return context.resources.getString(resource)
+    }
 
     private fun getImageIdFromDrawable(imageName: String): Int {
         return context.resources.getIdentifier(imageName, "drawable", context.packageName)

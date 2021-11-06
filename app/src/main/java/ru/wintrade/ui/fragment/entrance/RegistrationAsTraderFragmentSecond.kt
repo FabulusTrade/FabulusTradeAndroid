@@ -16,11 +16,15 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderSecondBinding
 import ru.wintrade.mvp.model.entity.Gender
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
+import ru.wintrade.util.REGISTRATION_DATA
 import ru.wintrade.util.TRADER_REG_INFO_TAG
+import ru.wintrade.util.toApiDate
+import ru.wintrade.util.toUiDate
 
 
 class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSecondView {
@@ -28,10 +32,10 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         fun newInstance(): RegistrationAsTraderFragmentSecond =
             RegistrationAsTraderFragmentSecond()
 
-        fun newInstance(traderInfo: TraderRegistrationInfo): RegistrationAsTraderFragmentSecond =
+        fun newInstance(signUpData: SignUpData): RegistrationAsTraderFragmentSecond =
             RegistrationAsTraderFragmentSecond().apply {
                 arguments = Bundle().apply {
-                    putParcelable(TRADER_REG_INFO_TAG, traderInfo)
+                    putParcelable(REGISTRATION_DATA, signUpData)
                 }
             }
     }
@@ -40,7 +44,9 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
     lateinit var presenter: RegAsTraderSecondPresenter
 
     @ProvidePresenter
-    fun providePresenter() = RegAsTraderSecondPresenter().apply {
+    fun providePresenter() = RegAsTraderSecondPresenter(
+        arguments?.get(REGISTRATION_DATA) as SignUpData
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -85,7 +91,6 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         return _binding?.root
     }
 
-
     private fun initView() {
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
@@ -113,9 +118,15 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                 presenter.openRegistrationFirstScreen()
             }
             btnForwardTraderReg2.setOnClickListener {
-                saveTraderInfo()?.let {
-                    presenter.openRegistrationThirdScreen(it)
-                }
+                presenter.saveData(
+                    tiTraderBirthday.getTextOrError()?.toApiDate(),
+                    tiTraderFirstName.getTextOrError(),
+                    tiTraderLastName.getTextOrError(),
+                    tiTraderPatronymic.getTextOrError(),
+                    tiTraderGender.getTextOrError().let {
+                        Gender.getGender(it!!)
+                    }
+                )
             }
             btnDatePickerTraderReg2.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -132,28 +143,6 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus)
                         presenter.checkBirthday(text.toString())
-                }
-            }
-        }
-    }
-
-    private fun saveTraderInfo(): TraderRegistrationInfo? {
-        return binding.run {
-            tiTraderFirstName.getTextOrError()?.let { fistName ->
-                tiTraderPatronymic.getTextOrError()?.let { patronymic ->
-                    tiTraderLastName.getTextOrError()?.let { lastName ->
-                        tiTraderGender.getTextOrError()?.let { gender ->
-                            tiTraderBirthday.getTextOrError()?.let { birthDay ->
-                                TraderRegistrationInfo(
-                                    birthDay.toApiDate(),
-                                    fistName,
-                                    lastName,
-                                    patronymic,
-                                    Gender.getGender(gender)
-                                )
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -179,10 +168,4 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
             error = null
             text.toString()
         }
-
-    private fun String.toApiDate(): String =
-        split(".").reversed().joinToString("-")
-
-    private fun String.toUiDate(): String =
-        split("-").reversed().joinToString(".")
 }

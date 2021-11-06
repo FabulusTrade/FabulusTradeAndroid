@@ -3,7 +3,9 @@ package ru.wintrade.mvp.presenter.registration.trader
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.entity.Gender
 import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
@@ -11,7 +13,9 @@ import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
+class RegAsTraderThirdPresenter(
+    private val signUpData: SignUpData
+) : MvpPresenter<RegAsTraderThirdView>() {
     @Inject
     lateinit var router: Router
 
@@ -29,8 +33,8 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
         viewState.init()
     }
 
-    fun openRegistrationSecondScreen(traderInfo: TraderRegistrationInfo) {
-        router.navigateTo(Screens.registrationAsTraderSecondScreen(traderInfo))
+    fun openRegistrationSecondScreen() {
+        router.backTo(Screens.registrationAsTraderSecondScreen(signUpData))
     }
 
     fun openNextStageScreen() {
@@ -52,24 +56,52 @@ class RegAsTraderThirdPresenter : MvpPresenter<RegAsTraderThirdView>() {
                 }, {
                     // Ошибка не обрабатывается
                 })
-        }
+        } ?: router.newRootChain(Screens.signInScreen(false))
     }
 
-    fun saveTraderRegistrationInfo(traderInfo: TraderRegistrationInfo) {
-        profile.token?.let { token ->
-            profile.user?.let { userProfile ->
-                apiRepo
-                    .updateTraderRegistrationInfo(
-                        token,
-                        userProfile.id,
-                        traderInfo.toRequest()
-                    )
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        viewState.showSuccessfulPatchData()
-                    }, {
-                        viewState.showErrorPatchData(it)
-                    })
+    fun saveTraderRegistrationInfo() {
+        if (profile.user == null) {
+            apiRepo
+                .signUpAsTrader(
+                    signUpData.username!!,
+                    signUpData.password!!,
+                    signUpData.email!!,
+                    signUpData.phone!!,
+                    signUpData.first_name!!,
+                    signUpData.last_name!!,
+                    signUpData.patronymic!!,
+                    signUpData.date_of_birth!!,
+                    signUpData.gender!!
+                )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showSuccessfulPatchData()
+                }, {
+                    viewState.showErrorPatchData(it)
+                })
+        } else {
+            profile.token?.let { token ->
+                val traderRegistrationInfo = TraderRegistrationInfo(
+                    signUpData.date_of_birth,
+                    signUpData.first_name,
+                    signUpData.last_name,
+                    signUpData.patronymic,
+                    Gender.getGender(signUpData.gender!!)
+                )
+                profile.user?.let { userProfile ->
+                    apiRepo
+                        .updateTraderRegistrationInfo(
+                            token,
+                            userProfile.id,
+                            traderRegistrationInfo.toRequest()
+                        )
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.showSuccessfulPatchData()
+                        }, {
+                            viewState.showErrorPatchData(it)
+                        })
+                }
             }
         }
     }

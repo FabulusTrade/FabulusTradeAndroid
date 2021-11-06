@@ -14,5 +14,5 @@ data class RequestTraderRegistrationInfo(
     @Expose
     val gender: String?,
     @Expose
-    val is_trader: Boolean = true,
+    val is_trader: Boolean = true
 )

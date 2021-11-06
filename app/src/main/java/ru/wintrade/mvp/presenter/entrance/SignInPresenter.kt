@@ -12,7 +12,7 @@ import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class SignInPresenter : MvpPresenter<SignInView>() {
+class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresenter<SignInView>() {
     @Inject
     lateinit var router: Router
 
@@ -30,11 +30,11 @@ class SignInPresenter : MvpPresenter<SignInView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
+        viewState.init(isAsTraderRegistration)
     }
 
-    fun openRegistrationScreen() {
-        router.navigateTo(Screens.signUpScreen())
+    fun openRegistrationScreen(asTraderRegistration: Boolean) {
+        router.navigateTo(Screens.signUpScreen(asTraderRegistration))
     }
 
     fun openResetPassScreen() {
@@ -68,7 +68,7 @@ class SignInPresenter : MvpPresenter<SignInView>() {
         apiRepo
             .postDeviceToken(profile.token!!, profile.deviceToken!!)
             .subscribe({
-                       // данные не обрабатывются
+                // данные не обрабатывются
             }, {
                 it.printStackTrace()
             })
@@ -91,12 +91,18 @@ class SignInPresenter : MvpPresenter<SignInView>() {
             .save(profile)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                setAppToolbarMenuVisible(true)
                 if (profile.user!!.isTrader)
                     router.newRootScreen(Screens.traderMeMainScreen())
                 else
                     router.newRootScreen(Screens.subscriberMainScreen())
             }, {
+                setAppToolbarMenuVisible(false)
                 it.printStackTrace()
             })
+    }
+
+    private fun setAppToolbarMenuVisible(visible: Boolean) {
+        viewState.setAppToolbarMenuVisible(visible)
     }
 }

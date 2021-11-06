@@ -22,7 +22,7 @@ sealed class Gender {
 
     object Woman : Gender() {
         override val char: String
-            get() = "W"
+            get() = "F"
         override val text: String
             get() = "Женщина"
     }

@@ -18,7 +18,7 @@
             android:title="@string/invite_a_friend_menu_title" />
         <item
             android:id="@+id/about_menu_id"
-            android:icon="@drawable/wt"
+            android:icon="@drawable/ft"
             android:title="@string/about_service_menu_title" />
         <item
             android:id="@+id/ask_menu_id"

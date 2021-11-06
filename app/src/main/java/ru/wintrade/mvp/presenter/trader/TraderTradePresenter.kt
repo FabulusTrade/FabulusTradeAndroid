@@ -77,11 +77,11 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
     }
 
     fun openSignInScreen() {
-        router.navigateTo(Screens.signInScreen())
+        router.navigateTo(Screens.signInScreen(false))
     }
 
     fun openSignUpScreen() {
-        router.navigateTo(Screens.signUpScreen())
+        router.navigateTo(Screens.signUpScreen(false))
     }
 
     inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {

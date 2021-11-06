@@ -16,10 +16,7 @@ import ru.wintrade.databinding.FragmentSignInBinding
 import ru.wintrade.mvp.presenter.entrance.SignInPresenter
 import ru.wintrade.mvp.view.entrance.SignInView
 import ru.wintrade.ui.App
-import ru.wintrade.util.PREFERENCE_NAME
-import ru.wintrade.util.setDrawerLockMode
-import ru.wintrade.util.setToolbarVisible
-import ru.wintrade.util.showLongToast
+import ru.wintrade.util.*
 
 class SignInFragment : MvpAppCompatFragment(), SignInView {
     private var _binding: FragmentSignInBinding? = null
@@ -27,16 +24,22 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SignInFragment()
+        private const val IS_AS_TRADER_REGISTRATION = "registration"
+        fun newInstance(isSubscriber: Boolean) = SignInFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(IS_AS_TRADER_REGISTRATION, isSubscriber)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: SignInPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SignInPresenter().apply {
-        App.instance.appComponent.inject(this)
-    }
+    fun providePresenter() =
+        SignInPresenter(arguments?.get(IS_AS_TRADER_REGISTRATION) as Boolean).apply {
+            App.instance.appComponent.inject(this)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,15 +50,22 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
         return _binding?.root
     }
 
-    override fun init() {
+    override fun init(isAsTraderRegistration: Boolean) {
         initView()
-        initListeners()
+        initListeners(isAsTraderRegistration)
+        if (isAsTraderRegistration) {
+            binding.entranceRegistrationButton.text =
+                resources.getString(R.string.registration_button_title_second)
+        } else {
+            binding.entranceRegistrationButton.text =
+                resources.getString(R.string.registration_button_title_first)
+        }
     }
 
-    fun initListeners() {
+    fun initListeners(asTraderRegistration: Boolean) {
         binding.run {
             btnSignInResetPass.setOnClickListener { presenter.openResetPassScreen() }
-            entranceRegistrationButton.setOnClickListener { presenter.openRegistrationScreen() }
+            entranceRegistrationButton.setOnClickListener { presenter.openRegistrationScreen(asTraderRegistration) }
             entranceEnterButton.setOnClickListener { enterBtnClicked() }
         }
     }
@@ -86,6 +96,10 @@ class SignInFragment : MvpAppCompatFragment(), SignInView {
 
     override fun showToast(toast: String) {
         requireContext().showLongToast(toast)
+    }
+
+    override fun setAppToolbarMenuVisible(visible: Boolean) {
+        setToolbarMenuVisible(visible)
     }
 
     override fun onDestroyView() {

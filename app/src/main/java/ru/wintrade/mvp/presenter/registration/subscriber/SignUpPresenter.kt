@@ -5,20 +5,27 @@ import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import retrofit2.HttpException
+import ru.wintrade.R
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.exception.NoInternetException
 import ru.wintrade.mvp.model.entity.exception.SignUpException
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.*
 import javax.inject.Inject
 
-class SignUpPresenter : MvpPresenter<SignUpView>() {
+class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<SignUpView>() {
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     @Inject
     lateinit var router: Router
 
     @Inject
     lateinit var apiRepo: ApiRepo
+    lateinit var signUpData: SignUpData
 
     private var password = ""
     private var isCorrectPhone = false
@@ -83,7 +90,10 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
         viewState.setPhoneError(phoneValidation)
 
         if (!(isPrivacyAccepted && isRulesAccepted)) {
-            viewState.showRegulationsAcceptDialog()
+            viewState.showDialog(
+                resourceProvider.getStringResource(R.string.error_signUp),
+                resourceProvider.getStringResource(R.string.regulations_accept)
+            )
             return
         }
 
@@ -95,28 +105,58 @@ class SignUpPresenter : MvpPresenter<SignUpView>() {
             emailValidation == EmailValidation.OK &&
             phoneValidation == PhoneValidation.OK
         ) {
-            apiRepo
-                .signUp(nickname, password, email, formattedPhone)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.showSuccessDialog()
-                    router.navigateTo(Screens.signInScreen())
-                }, { exception ->
-                    if (exception is HttpException) {
-                        val resp = exception.response()?.errorBody()?.string()
-                        val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-                        val signUpException = gson.fromJson(resp, SignUpException::class.java)
-                        if (signUpException.email != null)
-                            viewState.setEmailError(EmailValidation.ALREADY_EXISTS)
-                        if (signUpException.username != null)
-                            viewState.setNicknameError(NicknameValidation.ALREADY_EXISTS)
-                        if (signUpException.phone == null)
-                            viewState.setPhoneError(PhoneValidation.ALREADY_EXISTS)
-                    }
-                    if (exception is NoInternetException) {
-                        //нет интернета
-                    }
-                })
+            if (asTraderRegistration) {
+                signUpData = SignUpData(
+                    username = nickname,
+                    password = password,
+                    email = email,
+                    phone = formattedPhone,
+                    is_trader = asTraderRegistration
+                )
+                apiRepo
+                    .checkUsername(nickname)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData))
+                    }, { exception ->
+                        exceptionProcessor(exception)
+                        viewState.showDialog(
+                            resourceProvider.getStringResource(R.string.error_signUp),
+                            resourceProvider.getStringResource(R.string.name_already_exist)
+                        )
+                    })
+            } else {
+                apiRepo
+                    .signUp(nickname, password, email, formattedPhone)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        viewState.showDialog(
+                            resourceProvider.getStringResource(R.string.is_success_reg),
+                            resourceProvider.getStringResource(R.string.is_success_registration)
+                        )
+                        router.navigateTo(Screens.signInScreen(false))
+
+                    }, { exception ->
+                        exceptionProcessor(exception)
+                    })
+            }
+        }
+    }
+
+    private fun exceptionProcessor(exception: Throwable) {
+        if (exception is HttpException) {
+            val resp = exception.response()?.errorBody()?.string()
+            val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+            val signUpException = gson.fromJson(resp, SignUpException::class.java)
+            if (signUpException.email != null)
+                viewState.setEmailError(EmailValidation.ALREADY_EXISTS)
+            if (signUpException.username != null)
+                viewState.setNicknameError(NicknameValidation.ALREADY_EXISTS)
+            if (signUpException.phone == null)
+                viewState.setPhoneError(PhoneValidation.ALREADY_EXISTS)
+        }
+        if (exception is NoInternetException) {
+            //нет интернета
         }
     }
 }
