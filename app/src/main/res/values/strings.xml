@@ -176,6 +176,7 @@
     <string name="error_signUp">Ошибка</string>
     <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
     <string name="ok_signUp">OK</string>
+    <string name="name_already_exist">Пользователь с таким именем пользователя уже существует</string>
     <string name="is_success_reg">Успешная регистрация</string>
     <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
     <string name="nickname_too_short">Ник слишком короткий</string>

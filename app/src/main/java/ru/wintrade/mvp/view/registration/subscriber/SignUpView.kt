@@ -10,15 +10,14 @@ import ru.wintrade.util.PasswordValidation
 import ru.wintrade.util.PhoneValidation
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface SignUpView: MvpView {
+interface SignUpView : MvpView {
     fun init()
     fun setNicknameError(validation: NicknameValidation)
     fun setPasswordError(validation: PasswordValidation)
     fun setPasswordConfirmError(isCorrect: Boolean)
     fun setEmailError(validation: EmailValidation)
     fun setPhoneError(validation: PhoneValidation)
+
     @StateStrategyType(SkipStrategy::class)
-    fun showRegulationsAcceptDialog()
-    @StateStrategyType(SkipStrategy::class)
-    fun showSuccessDialog()
+    fun showDialog(title: String, message: String)
 }

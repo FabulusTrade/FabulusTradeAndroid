@@ -2,8 +2,8 @@ package ru.wintrade.mvp.presenter.traders
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
-import ru.wintrade.mvp.model.entity.RegistrationTraderData
 import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.traders.TradersMainView
 import ru.wintrade.navigation.Screens
@@ -41,12 +41,12 @@ class TradersMainPresenter(val checkedFilter: Int) : MvpPresenter<TradersMainVie
             profile.user == null && !isTraderRegistrationButtonClicked -> {
                 router.navigateTo(Screens.signInScreen(false))
             }
-            isTraderRegistrationButtonClicked -> {
+            profile.user == null && isTraderRegistrationButtonClicked -> {
                 router.navigateTo(Screens.signInScreen(true))
             }
             else -> {
-                val registrationData = RegistrationTraderData(profile.user!!.id, false)
-                router.navigateTo(Screens.registrationAsTraderFirstScreen(registrationData))
+                val signUpData = SignUpData(is_trader = true)
+                router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData))
             }
         }
     }

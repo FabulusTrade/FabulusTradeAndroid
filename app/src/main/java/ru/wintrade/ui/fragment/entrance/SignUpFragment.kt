@@ -15,6 +15,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSignUpBinding
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
 import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.ui.App
@@ -28,9 +29,9 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
 
     companion object {
         private const val IS_AS_TRADER_REGISTRATION = "registration"
-        fun newInstance(isSubscriber: Boolean) = SignUpFragment().apply {
+        fun newInstance(asTraderRegistration: Boolean) = SignUpFragment().apply {
             arguments = Bundle().apply {
-                putBoolean(IS_AS_TRADER_REGISTRATION, isSubscriber)
+                putBoolean(IS_AS_TRADER_REGISTRATION, asTraderRegistration)
             }
         }
     }
@@ -64,24 +65,6 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setToolbarVisible(false)
-    }
-
-    override fun showRegulationsAcceptDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.error_signUp))
-            .setMessage(R.string.regulations_accept)
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_signUp) { _, _ ->
-            }.show()
-    }
-
-    override fun showSuccessDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.is_success_reg))
-            .setMessage(R.string.is_success_registration)
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_signUp) { _, _ ->
-            }.show()
     }
 
     override fun setNicknameError(validation: NicknameValidation) {
@@ -128,6 +111,15 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
             PhoneValidation.ALREADY_EXISTS -> getString(R.string.phone_already_exists)
             PhoneValidation.OK -> null
         }
+    }
+
+    override fun showDialog(title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok_signUp) { _, _ ->
+            }.show()
     }
 
     private fun initListeners() {

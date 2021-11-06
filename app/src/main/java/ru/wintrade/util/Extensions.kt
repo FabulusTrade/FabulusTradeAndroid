@@ -50,3 +50,9 @@ fun Double.doubleToStringWithFormat(format: String, withPercent: Boolean? = null
         else -> DecimalFormat(format).format(this)
     }
 }
+
+fun String.toApiDate(): String =
+    split(".").reversed().joinToString("-")
+
+fun String.toUiDate(): String =
+    split("-").reversed().joinToString(".")

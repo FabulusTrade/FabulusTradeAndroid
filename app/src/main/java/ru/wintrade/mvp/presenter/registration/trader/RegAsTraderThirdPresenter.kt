@@ -3,8 +3,9 @@ package ru.wintrade.mvp.presenter.registration.trader
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.entity.Gender
 import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.entity.RegistrationTraderData
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
@@ -13,8 +14,7 @@ import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
 class RegAsTraderThirdPresenter(
-    private val traderRegistrationInfo: TraderRegistrationInfo,
-    private val registrationData: RegistrationTraderData
+    private val signUpData: SignUpData
 ) : MvpPresenter<RegAsTraderThirdView>() {
     @Inject
     lateinit var router: Router
@@ -34,7 +34,7 @@ class RegAsTraderThirdPresenter(
     }
 
     fun openRegistrationSecondScreen() {
-        router.navigateTo(Screens.registrationAsTraderSecondScreen(traderRegistrationInfo))
+        router.backTo(Screens.registrationAsTraderSecondScreen(signUpData))
     }
 
     fun openNextStageScreen() {
@@ -56,24 +56,52 @@ class RegAsTraderThirdPresenter(
                 }, {
                     // Ошибка не обрабатывается
                 })
-        }
+        } ?: router.newRootChain(Screens.signInScreen(false))
     }
 
     fun saveTraderRegistrationInfo() {
-        profile.token?.let { token ->
-            profile.user?.let { userProfile ->
-                apiRepo
-                    .updateTraderRegistrationInfo(
-                        token,
-                        registrationData.traderId,
-                        traderRegistrationInfo.toRequest()
-                    )
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        viewState.showSuccessfulPatchData()
-                    }, {
-                        viewState.showErrorPatchData(it)
-                    })
+        if (profile.user == null) {
+            apiRepo
+                .signUpAsTrader(
+                    signUpData.username!!,
+                    signUpData.password!!,
+                    signUpData.email!!,
+                    signUpData.phone!!,
+                    signUpData.first_name!!,
+                    signUpData.last_name!!,
+                    signUpData.patronymic!!,
+                    signUpData.date_of_birth!!,
+                    signUpData.gender!!
+                )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showSuccessfulPatchData()
+                }, {
+                    viewState.showErrorPatchData(it)
+                })
+        } else {
+            profile.token?.let { token ->
+                val traderRegistrationInfo = TraderRegistrationInfo(
+                    signUpData.date_of_birth,
+                    signUpData.first_name,
+                    signUpData.last_name,
+                    signUpData.patronymic,
+                    Gender.getGender(signUpData.gender!!)
+                )
+                profile.user?.let { userProfile ->
+                    apiRepo
+                        .updateTraderRegistrationInfo(
+                            token,
+                            userProfile.id,
+                            traderRegistrationInfo.toRequest()
+                        )
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.showSuccessfulPatchData()
+                        }, {
+                            viewState.showErrorPatchData(it)
+                        })
+                }
             }
         }
     }

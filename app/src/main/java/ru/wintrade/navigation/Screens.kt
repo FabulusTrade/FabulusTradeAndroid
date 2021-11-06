@@ -89,17 +89,17 @@ object Screens {
         CreatePostFragment.newInstance(postId, isPublication, isPinnedEdit, pinnedText)
     }
 
-    fun registrationAsTraderFirstScreen(registrationData: RegistrationTraderData) =
-        FragmentScreen { RegistrationAsTraderFragmentFirst.newInstance(registrationData) }
+    fun registrationAsTraderFirstScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentFirst.newInstance(signUpData) }
 
     fun registrationAsTraderSecondScreen() =
         FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance() }
 
-    fun registrationAsTraderSecondScreen(traderInfo: TraderRegistrationInfo) =
-        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(traderInfo) }
+    fun registrationAsTraderSecondScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(signUpData) }
 
-    fun registrationAsTraderThirdScreen(traderInfo: TraderRegistrationInfo) =
-        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(traderInfo) }
+    fun registrationAsTraderThirdScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(signUpData) }
 
     fun registrationAsTraderFourScreen() =
         FragmentScreen { RegistrationAsTraderFragmentFour.newInstance() }

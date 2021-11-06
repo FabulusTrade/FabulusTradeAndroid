@@ -68,7 +68,7 @@ class SignInPresenter(private val isAsTraderRegistration: Boolean) : MvpPresente
         apiRepo
             .postDeviceToken(profile.token!!, profile.deviceToken!!)
             .subscribe({
-                       // данные не обрабатывются
+                // данные не обрабатывются
             }, {
                 it.printStackTrace()
             })

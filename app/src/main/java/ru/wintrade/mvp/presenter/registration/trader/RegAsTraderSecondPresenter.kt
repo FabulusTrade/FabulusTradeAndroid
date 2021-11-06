@@ -2,8 +2,9 @@ package ru.wintrade.mvp.presenter.registration.trader
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
-import ru.wintrade.mvp.model.entity.RegistrationTraderData
-import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
+import ru.wintrade.mvp.model.entity.Gender
+import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.DateValidation
@@ -15,9 +16,13 @@ import javax.inject.Inject
 const val DATE_UI_FORMAT_STRING = "%02d.%02d.%04d"
 const val DATE_PATTERN = "dd.MM.yyyy"
 
-class RegAsTraderSecondPresenter(private val registrationData: RegistrationTraderData) : MvpPresenter<RegAsTraderSecondView>() {
+class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
+    MvpPresenter<RegAsTraderSecondView>() {
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var profile: Profile
 
     private var birthday: Long? = null
 
@@ -27,19 +32,50 @@ class RegAsTraderSecondPresenter(private val registrationData: RegistrationTrade
     }
 
     fun openRegistrationFirstScreen() {
-        router.navigateTo(Screens.registrationAsTraderFirstScreen(registrationData))
+        router.backTo(Screens.registrationAsTraderFirstScreen(signUpData))
     }
 
-    fun openRegistrationThirdScreen(traderInfo: TraderRegistrationInfo) {
-        router.navigateTo(Screens.registrationAsTraderThirdScreen(traderInfo))
+    fun saveData(
+        birthDay: String?,
+        fistName: String?,
+        lastName: String?,
+        patronymic: String?,
+        gender: Gender
+    ) {
+        if (profile.user == null) {
+            signUpData = SignUpData(
+                signUpData.username,
+                signUpData.password,
+                signUpData.email,
+                signUpData.phone,
+                fistName,
+                lastName,
+                patronymic,
+                birthDay,
+                gender.char,
+                signUpData.is_trader
+            )
+        } else {
+            signUpData = SignUpData(
+                first_name = fistName,
+                last_name = lastName,
+                patronymic = patronymic,
+                date_of_birth = birthDay,
+                gender = gender.char,
+                is_trader = signUpData.is_trader
+            )
+        }
+        router.navigateTo(Screens.registrationAsTraderThirdScreen(signUpData))
     }
 
     fun checkBirthday(date: String) {
         when (isValidBirthday(date)) {
             DateValidation.INVALID -> viewState.setBirthdayError()
             DateValidation.CORRECT -> {
-                birthday = SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).parse(date)?.time
-
+                birthday = SimpleDateFormat(
+                    DATE_PATTERN,
+                    Locale.getDefault()
+                ).parse(date)?.time
             }
         }
     }
@@ -63,5 +99,4 @@ class RegAsTraderSecondPresenter(private val registrationData: RegistrationTrade
                 viewState.setBirthdayError()
         }
     }
-
 }

@@ -11,8 +11,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderThirdBinding
-import ru.wintrade.mvp.model.entity.RegistrationTraderData
-import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.ui.App
@@ -22,10 +21,10 @@ import ru.wintrade.util.setToolbarVisible
 
 class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThirdView {
     companion object {
-        fun newInstance(traderInfo: TraderRegistrationInfo): RegistrationAsTraderFragmentThird =
+        fun newInstance(signUpData: SignUpData): RegistrationAsTraderFragmentThird =
             RegistrationAsTraderFragmentThird().apply {
                 arguments = Bundle().apply {
-                    putParcelable(TRADER_REG_INFO_TAG, traderInfo)
+                    putParcelable(REGISTRATION_DATA, signUpData)
                 }
             }
     }
@@ -35,8 +34,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
 
     @ProvidePresenter
     fun providePresenter() = RegAsTraderThirdPresenter(
-        arguments?.get(TRADER_REG_INFO_TAG) as TraderRegistrationInfo,
-        arguments?.get(REGISTRATION_DATA) as RegistrationTraderData
+        arguments?.get(REGISTRATION_DATA) as SignUpData
     ).apply {
         App.instance.appComponent.inject(this)
     }
