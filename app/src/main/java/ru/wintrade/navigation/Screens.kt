@@ -103,4 +103,7 @@ object Screens {
 
     fun registrationAsTraderFourScreen() =
         FragmentScreen { RegistrationAsTraderFragmentFour.newInstance() }
+
+    fun webViewFragment(url: String) =
+        FragmentScreen { WebViewFragment.newInstance(url) }
 }

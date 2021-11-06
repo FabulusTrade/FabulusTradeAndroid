@@ -172,6 +172,10 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
                 )
             }
         }
+
+        binding.tvSignRules.setOnClickListener {
+            presenter.openRules()
+        }
     }
 
     private fun initPhoneEditText() {

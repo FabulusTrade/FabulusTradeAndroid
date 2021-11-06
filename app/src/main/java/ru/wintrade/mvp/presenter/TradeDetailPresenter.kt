@@ -1,7 +1,7 @@
 package ru.wintrade.mvp.presenter
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.view.TradeDetailView
 import java.text.SimpleDateFormat
