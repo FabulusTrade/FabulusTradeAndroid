@@ -124,7 +124,6 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
                         router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData))
                     }, { exception ->
                         exceptionProcessor(exception)
-
                     })
             } else {
                 apiRepo
@@ -158,7 +157,7 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
             signUpException.error_msg?.let { msg ->
                 viewState.showDialog(
                     resourceProvider.getStringResource(R.string.error_signUp),
-                    msg[0]
+                    msg.first()
                 )
             }
         }

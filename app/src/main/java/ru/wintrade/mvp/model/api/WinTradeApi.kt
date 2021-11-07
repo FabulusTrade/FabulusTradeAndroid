@@ -244,9 +244,8 @@ interface WinTradeApi {
     @FormUrlEncoded
     @POST("/auth/username_exists/")
     fun checkUsername(
-//        @Body request: RequestCheckSignUpData
-    @Field("username",encoded = true) username: String,
-    @Field("email",encoded = true) email: String,
+        @Field("username", encoded = true) username: String,
+        @Field("email", encoded = true) email: String,
     ): Completable
 
     @FormUrlEncoded
@@ -254,5 +253,4 @@ interface WinTradeApi {
     fun getTraderOperationsCount(
         @Field(value = "uuid") uuidTrader: String
     ): Single<ResponseOperationsCount>
-
 }
