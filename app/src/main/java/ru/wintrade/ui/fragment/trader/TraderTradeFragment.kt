@@ -187,6 +187,10 @@ class TraderTradeFragment : MvpAppCompatFragment(), TraderDealView {
         }
     }
 
+    override fun renderOperationsCount(operationsCount: Int) {
+        binding.tvTraderDealMonthlyCounter.append(" $operationsCount")
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

@@ -43,7 +43,18 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
         } else {
             viewState.isAuthorized(true)
             loadTrades()
+            loadTraderOperationsCount()
         }
+    }
+
+    private fun loadTraderOperationsCount() {
+        apiRepo.getTraderOperationsCount(trader.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ operationsCount ->
+                viewState.renderOperationsCount(operationsCount)
+            }, { error ->
+                // Ошибка не обрабатывается
+            })
     }
 
     private fun loadTrades() {

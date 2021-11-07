@@ -362,6 +362,23 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun getTraderOperationsCount(
+        uuidTrader: String,
+    ): Single<Int> = networkStatus
+        .isOnlineSingle()
+        .flatMap { isOnline ->
+            if (isOnline) {
+                api.getTraderOperationsCount(uuidTrader)
+                    .flatMap { countResponse ->
+                        Single.just(countResponse.numberOfOperations)
+                    }
+            } else {
+                Single.error(NoInternetException())
+            }
+        }
+        .subscribeOn(Schedulers.io())
+
+
     fun getTraderTradesByCompany(
         token: String,
         traderId: String,
