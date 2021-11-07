@@ -248,4 +248,11 @@ interface WinTradeApi {
     @Field("username",encoded = true) username: String,
     @Field("email",encoded = true) email: String,
     ): Completable
+
+    @FormUrlEncoded
+    @POST("/api/v1/trader/number_of_trades/")
+    fun getTraderOperationsCount(
+        @Field(value = "uuid") uuidTrader: String
+    ): Single<ResponseOperationsCount>
+
 }
