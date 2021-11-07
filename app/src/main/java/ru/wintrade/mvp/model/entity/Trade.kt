@@ -16,7 +16,7 @@ data class Trade(
     val orderStatus: String,
     val orderNum: String,
     val price: Float,
-    val count: Float,
+    val count: Int,
     val currency: String,
     val date: Date,
     val profitCount: String?,

@@ -244,6 +244,8 @@ interface WinTradeApi {
     @FormUrlEncoded
     @POST("/auth/username_exists/")
     fun checkUsername(
-        @Field("username", encoded = true) traderId: String,
+//        @Body request: RequestCheckSignUpData
+    @Field("username",encoded = true) username: String,
+    @Field("email",encoded = true) email: String,
     ): Completable
 }

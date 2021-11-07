@@ -22,7 +22,7 @@ data class ResponseTrade(
     @Expose
     val price: Float,
     @Expose
-    val count: Float,
+    val count: Int,
     @Expose
     val currency: String,
     @Expose

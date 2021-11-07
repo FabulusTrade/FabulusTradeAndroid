@@ -691,13 +691,15 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .subscribeOn(Schedulers.io())
 
     fun checkUsername(
-        username: String
+        username: String,
+        email: String
     ): Completable =
         networkStatus
             .isOnlineSingle()
             .flatMapCompletable { isOnline ->
                 if (isOnline) {
-                    api.checkUsername(username)
+//                    val request = RequestCheckSignUpData(username = username, email = email)
+                    api.checkUsername(username, email)
                 } else {
                     Completable.error(NoInternetException())
                 }
