@@ -14,5 +14,5 @@ data class SignUpData(
     val patronymic: String? = null,
     val date_of_birth: String? = null,
     val gender: String? = null,
-    var is_trader: Boolean? = null
+    val is_trader: Boolean? = null
 ) : Parcelable

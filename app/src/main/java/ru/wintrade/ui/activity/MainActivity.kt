@@ -15,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.header_main_menu.*
+import kotlinx.android.synthetic.main.header_main_menu.view.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -124,6 +126,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             userNoRegContent.visibility = View.GONE
             avatar?.let { loadImage(it, headerView.findViewById(R.id.iv_header_main_avatar)) }
             headerView.findViewById<TextView>(R.id.tv_header_main_nickname).text = username
+            binding.navView.btn_header_main_profile.setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                presenter.openSignUpTraderScreen()
+            }
         }
     }
 
