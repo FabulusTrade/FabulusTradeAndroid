@@ -15,6 +15,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSignUpBinding
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
 import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.ui.App
@@ -27,14 +28,21 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SignUpFragment()
+        private const val IS_AS_TRADER_REGISTRATION = "registration"
+        fun newInstance(asTraderRegistration: Boolean) = SignUpFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(IS_AS_TRADER_REGISTRATION, asTraderRegistration)
+            }
+        }
     }
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SignUpPresenter().apply {
+    fun providePresenter() = SignUpPresenter(
+        arguments?.get(IS_AS_TRADER_REGISTRATION) as Boolean
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -57,24 +65,6 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setToolbarVisible(false)
-    }
-
-    override fun showRegulationsAcceptDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.error_signUp))
-            .setMessage(R.string.regulations_accept)
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_signUp) { _, _ ->
-            }.show()
-    }
-
-    override fun showSuccessDialog() {
-        AlertDialog.Builder(context)
-            .setTitle(getString(R.string.is_success_reg))
-            .setMessage(R.string.is_success_registration)
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_signUp) { _, _ ->
-            }.show()
     }
 
     override fun setNicknameError(validation: NicknameValidation) {
@@ -121,6 +111,15 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
             PhoneValidation.ALREADY_EXISTS -> getString(R.string.phone_already_exists)
             PhoneValidation.OK -> null
         }
+    }
+
+    override fun showDialog(title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok_signUp) { _, _ ->
+            }.show()
     }
 
     private fun initListeners() {
@@ -172,6 +171,10 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
                     cbSignPrivacy.isChecked
                 )
             }
+        }
+
+        binding.tvSignPrivacy.setOnClickListener {
+            presenter.openRules()
         }
     }
 

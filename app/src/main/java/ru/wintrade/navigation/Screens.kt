@@ -1,10 +1,7 @@
 package ru.wintrade.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import ru.wintrade.mvp.model.entity.Trade
-import ru.wintrade.mvp.model.entity.Trader
-import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
-import ru.wintrade.mvp.model.entity.TraderStatistic
+import ru.wintrade.mvp.model.entity.*
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
@@ -22,9 +19,11 @@ import ru.wintrade.ui.fragment.traders.TradersMainFragment
 object Screens {
     fun onBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
 
-    fun signUpScreen() = FragmentScreen { SignUpFragment.newInstance() }
+    fun signUpScreen(asTraderRegistration: Boolean) =
+        FragmentScreen { SignUpFragment.newInstance(asTraderRegistration) }
 
-    fun signInScreen() = FragmentScreen { SignInFragment.newInstance() }
+    fun signInScreen(isSubscriber: Boolean) =
+        FragmentScreen { SignInFragment.newInstance(isSubscriber) }
 
     fun resetPasswordScreen() = FragmentScreen { ResetPasswordFragment.newInstance() }
 
@@ -48,11 +47,14 @@ object Screens {
     fun traderDealScreen(trader: Trader) =
         FragmentScreen { TraderTradeFragment.newInstance(trader) }
 
-    fun tradersMainScreen(checkedFilter: Int?) = FragmentScreen { TradersMainFragment.newInstance(checkedFilter) }
+    fun tradersMainScreen(checkedFilter: Int?) =
+        FragmentScreen { TradersMainFragment.newInstance(checkedFilter) }
 
-    fun tradersAllScreen(checkedFilter: Int) = FragmentScreen { TradersAllFragment.newInstance(checkedFilter) }
+    fun tradersAllScreen(checkedFilter: Int) =
+        FragmentScreen { TradersAllFragment.newInstance(checkedFilter) }
 
-    fun tradersFilterScreen(checkedFilter: Int) = FragmentScreen { TradersFilterFragment.newInstance(checkedFilter) }
+    fun tradersFilterScreen(checkedFilter: Int) =
+        FragmentScreen { TradersFilterFragment.newInstance(checkedFilter) }
 
     fun subscriberMainScreen() = FragmentScreen { SubscriberMainFragment.newInstance() }
 
@@ -87,18 +89,21 @@ object Screens {
         CreatePostFragment.newInstance(postId, isPublication, isPinnedEdit, pinnedText)
     }
 
-    fun registrationAsTraderFirstScreen() =
-        FragmentScreen { RegistrationAsTraderFragmentFirst.newInstance() }
+    fun registrationAsTraderFirstScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentFirst.newInstance(signUpData) }
 
     fun registrationAsTraderSecondScreen() =
         FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance() }
 
-    fun registrationAsTraderSecondScreen(traderInfo: TraderRegistrationInfo) =
-        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(traderInfo) }
+    fun registrationAsTraderSecondScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentSecond.newInstance(signUpData) }
 
-    fun registrationAsTraderThirdScreen(traderInfo: TraderRegistrationInfo) =
-        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(traderInfo) }
+    fun registrationAsTraderThirdScreen(signUpData: SignUpData) =
+        FragmentScreen { RegistrationAsTraderFragmentThird.newInstance(signUpData) }
 
     fun registrationAsTraderFourScreen() =
         FragmentScreen { RegistrationAsTraderFragmentFour.newInstance() }
+
+    fun webViewFragment(url: String) =
+        FragmentScreen { WebViewFragment.newInstance(url) }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Win Trade</string>
+    <string name="app_name">Fabulus Trade</string>
     <string name="on_boarding_button_text_title">Продолжить</string>
     <string name="traders_title_menu_title">Трейдеры</string>
     <string name="my_profile_title">Мой профиль</string>
@@ -113,6 +113,7 @@
     <string name="russia">Россия</string>
 
     <!-- RegistrationAsTraderFragmentSecond -->
+    <string name="fill_profile">Заполнить\nпрофиль трейдера</string>
     <string name="your_profile_reg_tr_second">Ваш профиль</string>
     <string name="trader_reg_2_text1">"     Эта информация должна совпадать с данными вашего удостоверения личности или паспорта"</string>
     <string name="text_name">Имя</string>
@@ -155,6 +156,9 @@
     <string name="enter_button_title">Войти</string>
     <string name="entrance_text_view_2_title">ИЛИ</string>
     <string name="registration_button_title">Зарегистрироваться</string>
+    <string name="registration_button_title_first">Зарегистрироваться</string>
+    <string name="registration_button_title_second">ЗАРЕГИСТРИРОВАТЬСЯ трейдером</string>
+    <string name="search">Поиск</string>
 
     <!-- SignUpFragment -->
     <string name="create_profile_title">Создать учетную запись</string>
@@ -165,13 +169,14 @@
     <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="phone">Телефон</string>
-    <string name="accept_rules">Я принимаю <a href="https://www.google.com/">Правила</a> и <a href="https://www.google.com/">Условия компании</a></string>
-    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <a href="https://www.google.com/">Политика конфеденциальности</a> и <a href="https://www.google.com/">Порядок использования файлов cookie</a></string>
+    <string name="accept_rules">Я принимаю <font color="#00BCC1">Правила и Условия компании</font></string>
+    <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <font color="#00BCC1">Политика конфеденциальности и Порядок использования файлов cookie</font></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_btn">Создать профиль</string>
     <string name="error_signUp">Ошибка</string>
     <string name="regulations_accept">Вы не приняли Правила, Условия компании и Политику конфиденциальности</string>
     <string name="ok_signUp">OK</string>
+    <string name="name_already_exist">Пользователь с таким именем пользователя уже существует</string>
     <string name="is_success_reg">Успешная регистрация</string>
     <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
     <string name="nickname_too_short">Ник слишком короткий</string>
@@ -341,6 +346,7 @@
     <string name="btn_filter_apply_tradersFilter">Применить</string>
 
     <!-- TradersMainFragment -->
+    <string name="button_popular_trader_text">СТАНЬ ПОПУЛЯРНЫМ ТРЕЙДЕРОМ!\nБольше последователей - больше прибыль!</string>
     <string name="traders_text_view_2_title">Стань популярным трейдером!\n Больше последователей - больше прибыль!</string>
     <string name="show_all">Показать всех</string>
     <string name="filter">Фильтр</string>
@@ -384,12 +390,11 @@
     <string name="name_itemMyCompany">Наименование</string>
     <string name="shares">Акции</string>
     <string name="trades_count">Количество: 1</string>
-    <string name="deals_date">Последняя сделка: 24.08.21 11:52</string>
+    <string name="deals_date">Последняя операция: 24.08.21 11:52</string>
 
     <!-- layout_attached_post -->
     <string name="attached_post_title">создать закрепленную запись</string>
     <string name="detail_attachedPost">Подробнее…</string>
     <string name="share">Поделиться</string>
     <string name="show_attachedPost">показать</string>
-
 </resources>

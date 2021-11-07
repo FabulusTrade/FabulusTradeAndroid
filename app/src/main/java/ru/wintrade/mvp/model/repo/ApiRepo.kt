@@ -422,6 +422,40 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun signUpAsTrader(
+        username: String,
+        password: String,
+        email: String,
+        phone: String,
+        firstName: String,
+        lastName: String,
+        patronymic: String,
+        date_of_birth: String,
+        gender: String
+    ): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    val requestBody =
+                        RequestSignUpAsTrader(
+                            username,
+                            password,
+                            email,
+                            phone,
+                            firstName,
+                            lastName,
+                            patronymic,
+                            date_of_birth,
+                            gender
+                        )
+                    api.signUpAsTrader(requestBody)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun createPost(
         token: String,
         id: String,
@@ -667,6 +701,20 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMapCompletable { isOnline ->
                 if (isOnline) {
                     api.updateTraderRegistration(token, traderId, requestTraderInfo)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun checkUsername(
+        username: String
+    ): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    api.checkUsername(username)
                 } else {
                     Completable.error(NoInternetException())
                 }

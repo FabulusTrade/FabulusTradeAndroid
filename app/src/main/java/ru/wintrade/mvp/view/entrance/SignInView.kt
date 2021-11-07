@@ -7,9 +7,10 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SignInView : MvpView {
-    fun init()
+    fun init(isAsTraderRegistration: Boolean)
     fun setAccess(isAuthorized: Boolean)
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(toast: String)
+    fun setAppToolbarMenuVisible(visible: Boolean)
 }

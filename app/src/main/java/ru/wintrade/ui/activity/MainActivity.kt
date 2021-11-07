@@ -5,16 +5,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.header_main_menu.view.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -68,27 +68,35 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 R.string.close
             )
         toggle.syncState()
-        nav_view.setNavigationItemSelectedListener(this)
-        nav_view.bringToFront()
+        binding.navView.run {
+            setNavigationItemSelectedListener(this@MainActivity)
+            bringToFront()
+        }
+        setupHeader(null, null)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.run {
+            setDisplayShowTitleEnabled(false)
+            setDisplayShowHomeEnabled(true)
+            setHomeButtonEnabled(true)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         MenuInflater(this).inflate(R.menu.menu_toolbar_blue, menu)
+        appbarMenuVisible(presenter.profile.user != null)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-                    drawer_layout.closeDrawer(GravityCompat.START)
-                } else {
-                    drawer_layout.openDrawer(GravityCompat.START)
-                    presenter.onDrawerOpened()
+                binding.drawerLayout.apply {
+                    if (isDrawerOpen(GravityCompat.START)) {
+                        closeDrawer(GravityCompat.START)
+                    } else {
+                        openDrawer(GravityCompat.START)
+                        presenter.onDrawerOpened()
+                    }
                 }
             }
             R.id.menu_search -> {
@@ -105,11 +113,18 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     }
 
     override fun setupHeader(avatar: String?, username: String?) {
-        val headerView = nav_view.getHeaderView(0)
-        avatar?.let {
-            loadImage(it, headerView.iv_header_main_avatar)
+        val headerView = binding.navView.getHeaderView(0)
+        val userRegContent = headerView.findViewById<ConstraintLayout>(R.id.header_user_reg_content)
+        val userNoRegContent = headerView.findViewById<ConstraintLayout>(R.id.header_no_reg_content)
+        if (username.isNullOrBlank()) {
+            userRegContent.visibility = View.GONE
+            userNoRegContent.visibility = View.VISIBLE
+        } else {
+            userRegContent.visibility = View.VISIBLE
+            userNoRegContent.visibility = View.GONE
+            avatar?.let { loadImage(it, headerView.findViewById(R.id.iv_header_main_avatar)) }
+            headerView.findViewById<TextView>(R.id.tv_header_main_nickname).text = username
         }
-        headerView.tv_header_main_nickname.text = username
     }
 
     override fun exit() {
@@ -136,7 +151,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.community_menu_id -> presenter.settingsMenuClicked()
             R.id.exit_menu_id -> presenter.exitClicked()
         }
-        drawer_layout.closeDrawer(GravityCompat.START)
+        drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -158,5 +173,15 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         } else {
             toolbar.visibility = View.GONE
         }
+    }
+
+    override fun setToolbarMenuVisible(visible: Boolean) {
+        appbarMenuVisible(visible)
+    }
+
+    private fun appbarMenuVisible(visible: Boolean) {
+        toolbar.menu.findItem(R.id.menu_search).isVisible = visible
+        toolbar.menu.findItem(R.id.menu_share).isVisible = visible
+        toolbar.menu.findItem(R.id.menu_win).isVisible = visible
     }
 }

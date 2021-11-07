@@ -2,11 +2,12 @@ package ru.wintrade.mvp.presenter.registration.trader
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderFirstView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
 
-class RegAsTraderFirstPresenter : MvpPresenter<RegAsTraderFirstView>() {
+class RegAsTraderFirstPresenter(private val signUpData: SignUpData) : MvpPresenter<RegAsTraderFirstView>() {
     @Inject
     lateinit var router: Router
 
@@ -16,6 +17,6 @@ class RegAsTraderFirstPresenter : MvpPresenter<RegAsTraderFirstView>() {
     }
 
     fun openRegistrationSecondScreen() {
-        router.navigateTo(Screens.registrationAsTraderSecondScreen())
+        router.navigateTo(Screens.registrationAsTraderSecondScreen(signUpData))
     }
 }

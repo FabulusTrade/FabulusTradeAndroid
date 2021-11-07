@@ -137,6 +137,11 @@ interface WinTradeApi {
         @Body signUpData: RequestSignUp
     ): Single<ResponseSignUp>
 
+    @POST("auth/users/")
+    fun signUpAsTrader(
+        @Body signUpData: RequestSignUpAsTrader
+    ): Completable
+
     @POST("auth/users/reset_password/")
     fun resetPassword(
         @Body email: RequestResetPass
@@ -234,6 +239,12 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Path("trader_id", encoded = true) traderId: String,
         @Body registrationInfo: RequestTraderRegistrationInfo
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("/auth/username_exists/")
+    fun checkUsername(
+        @Field("username", encoded = true) traderId: String,
     ): Completable
 
     @FormUrlEncoded

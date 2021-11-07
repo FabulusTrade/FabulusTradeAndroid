@@ -5,15 +5,15 @@
         android:id="@+id/menu_search"
         android:icon="@drawable/search"
         android:showAsAction="always"
-        android:title="Поиск" />
+        android:title="@string/search" />
     <item
         android:id="@+id/menu_share"
         android:icon="@drawable/share"
         android:showAsAction="always"
-        android:title="Поделиться" />
+        android:title="@string/share" />
     <item
         android:id="@+id/menu_win"
-        android:icon="@drawable/wt"
+        android:icon="@drawable/ft"
         android:showAsAction="always"
         android:title="@string/app_name" />
 </menu>

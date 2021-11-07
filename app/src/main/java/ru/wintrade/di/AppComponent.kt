@@ -124,4 +124,6 @@ interface AppComponent {
     fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentThird)
     fun inject(regAsTraderFourPresenter: RegAsTraderFourPresenter)
     fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentFour)
+    fun inject(webViewPresenter: WebViewPresenter)
+    fun inject(webViewFragment: WebViewFragment)
 }
