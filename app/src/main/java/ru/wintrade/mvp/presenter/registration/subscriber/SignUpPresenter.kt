@@ -118,16 +118,12 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
                     is_trader = asTraderRegistration
                 )
                 apiRepo
-                    .checkUsername(nickname)
+                    .checkUsername(nickname, email)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData))
                     }, { exception ->
                         exceptionProcessor(exception)
-                        viewState.showDialog(
-                            resourceProvider.getStringResource(R.string.error_signUp),
-                            resourceProvider.getStringResource(R.string.name_already_exist)
-                        )
                     })
             } else {
                 apiRepo
@@ -158,6 +154,12 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
                 viewState.setNicknameError(NicknameValidation.ALREADY_EXISTS)
             if (signUpException.phone == null)
                 viewState.setPhoneError(PhoneValidation.ALREADY_EXISTS)
+            signUpException.error_msg?.let { msg ->
+                viewState.showDialog(
+                    resourceProvider.getStringResource(R.string.error_signUp),
+                    msg.first()
+                )
+            }
         }
         if (exception is NoInternetException) {
             //нет интернета

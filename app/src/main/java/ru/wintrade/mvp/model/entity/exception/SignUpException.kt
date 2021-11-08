@@ -10,5 +10,7 @@ class SignUpException(
     @Expose
     val email: List<String>?,
     @Expose
-    val phone: List<String>?
+    val phone: List<String>?,
+    @Expose
+    val error_msg: List<String>?
 )

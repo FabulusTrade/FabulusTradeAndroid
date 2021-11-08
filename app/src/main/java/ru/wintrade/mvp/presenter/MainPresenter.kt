@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Profile
+import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.repo.RoomRepo
@@ -131,6 +132,10 @@ class MainPresenter : MvpPresenter<MainView>() {
         } else {
             //navigateTo WinScreen must be here
         }
+    }
+
+    fun openSignUpTraderScreen() {
+        router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData = SignUpData(is_trader = true)))
     }
 
     fun backClicked() {
