@@ -30,7 +30,16 @@ class RegAsTraderThirdPresenter(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        checkUserTraderOrFollower()
         viewState.init()
+    }
+
+    private fun checkUserTraderOrFollower() {
+        if (profile.user == null) {
+            viewState.renderInstructionText(ProfileState.NewUser)
+        } else {
+            viewState.renderInstructionText(ProfileState.Follower)
+        }
     }
 
     fun openRegistrationSecondScreen() {
@@ -105,4 +114,9 @@ class RegAsTraderThirdPresenter(
             }
         }
     }
+}
+
+sealed class ProfileState {
+    object Follower : ProfileState()
+    object NewUser : ProfileState()
 }

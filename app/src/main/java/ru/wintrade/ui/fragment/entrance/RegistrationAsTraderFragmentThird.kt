@@ -12,11 +12,11 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderThirdBinding
 import ru.wintrade.mvp.model.entity.SignUpData
+import ru.wintrade.mvp.presenter.registration.trader.ProfileState
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.ui.App
 import ru.wintrade.util.REGISTRATION_DATA
-import ru.wintrade.util.TRADER_REG_INFO_TAG
 import ru.wintrade.util.setToolbarVisible
 
 class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThirdView {
@@ -76,6 +76,18 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    override fun renderInstructionText(state: ProfileState) {
+        val textToUser = when (state) {
+            is ProfileState.NewUser -> {
+                R.string.trader_reg_3_becomeToTrader
+            }
+            is ProfileState.Follower -> {
+                R.string.trader_reg_3_fromFollowerToTrader
+            }
+        }
+        binding.tvTraderReg4Text1.text = getString(textToUser)
     }
 
     private fun initListeners() {
