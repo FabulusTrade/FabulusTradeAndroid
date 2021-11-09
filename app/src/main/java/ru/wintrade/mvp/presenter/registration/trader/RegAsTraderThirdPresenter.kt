@@ -3,12 +3,14 @@ package ru.wintrade.mvp.presenter.registration.trader
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Gender
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.repo.ProfileRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.navigation.Screens
 import javax.inject.Inject
@@ -28,6 +30,9 @@ class RegAsTraderThirdPresenter(
     @Inject
     lateinit var profileRepo: ProfileRepo
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         checkUserTraderOrFollower()
@@ -35,11 +40,10 @@ class RegAsTraderThirdPresenter(
     }
 
     private fun checkUserTraderOrFollower() {
-        if (profile.user == null) {
-            viewState.renderInstructionText(ProfileState.NewUser)
-        } else {
-            viewState.renderInstructionText(ProfileState.Follower)
+        profile.user?.let {
+            viewState.renderInstructionText(resourceProvider.getStringResource(R.string.trader_reg_3_fromFollowerToTrader))
         }
+            ?: viewState.renderInstructionText(resourceProvider.getStringResource(R.string.trader_reg_3_becomeToTrader))
     }
 
     fun openRegistrationSecondScreen() {
@@ -114,9 +118,4 @@ class RegAsTraderThirdPresenter(
             }
         }
     }
-}
-
-sealed class ProfileState {
-    object Follower : ProfileState()
-    object NewUser : ProfileState()
 }

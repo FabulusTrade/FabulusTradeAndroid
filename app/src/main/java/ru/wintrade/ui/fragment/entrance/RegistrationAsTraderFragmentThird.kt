@@ -12,7 +12,6 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentRegistrationAsTraderThirdBinding
 import ru.wintrade.mvp.model.entity.SignUpData
-import ru.wintrade.mvp.presenter.registration.trader.ProfileState
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.ui.App
@@ -78,16 +77,8 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
             }.show()
     }
 
-    override fun renderInstructionText(state: ProfileState) {
-        val textToUser = when (state) {
-            is ProfileState.NewUser -> {
-                R.string.trader_reg_3_becomeToTrader
-            }
-            is ProfileState.Follower -> {
-                R.string.trader_reg_3_fromFollowerToTrader
-            }
-        }
-        binding.tvTraderReg4Text1.text = getString(textToUser)
+    override fun renderInstructionText(text: String) {
+        binding.tvTraderReg4Text1.text = text
     }
 
     private fun initListeners() {
