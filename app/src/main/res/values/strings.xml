@@ -139,9 +139,9 @@
     <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
 
     <!-- ResetPasswordFragment -->
-    <string name="email">Электронная почта</string>
+    <string name="email">введите e-mail</string>
     <string name="send">Отправить</string>
-    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в WinTrade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
+    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в Fabulus Trade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
     <string name="email_incorrect">Некорректный email</string>
     <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
     <string name="ok_resetFragment">OK</string>
