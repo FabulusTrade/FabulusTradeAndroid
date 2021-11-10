@@ -178,7 +178,7 @@
     <string name="ok_signUp">OK</string>
     <string name="name_already_exist">Пользователь с таким именем пользователя уже существует</string>
     <string name="is_success_reg">Успешная регистрация</string>
-    <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
+    <string name="is_success_registration">Пользователь успешно зарегистрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
     <string name="nickname_too_short">Ник слишком короткий</string>
     <string name="nickname_too_long">Ник слишком длинный</string>
     <string name="nickname_only_eng_and_digits">Разрешены только латинские буквы и цифры</string>
