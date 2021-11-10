@@ -61,8 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
         android:layout_marginBottom="@dimen/default_vertical_margin_trader_reg"
-        android:text="@string/trader_reg_3_text1"
-        app:layout_constraintBottom_toTopOf="@id/btn_ready_trader_reg_3" />
+        app:layout_constraintBottom_toTopOf="@id/btn_ready_trader_reg_3"
+        tools:text="@string/trader_reg_3_becomeToTrader" />
 
     <Button
         android:id="@+id/btn_ready_trader_reg_3"
