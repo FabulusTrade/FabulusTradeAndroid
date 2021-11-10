@@ -30,7 +30,11 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
         if (holder.itemView.tv_traders_all_item_year_profit.text.substring(0, 1) == "-")
             holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.RED)
         else
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.GREEN)
+            holder.itemView.tv_traders_all_item_year_profit.setTextColor(
+                holder.itemView.context.resources.getColor(
+                    R.color.colorGreenPercent
+                )
+            )
     }
 
     fun initListeners(holder: TradersAllViewHolder) {

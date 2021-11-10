@@ -37,7 +37,11 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         if (holder.itemView.tv_subscriber_observation_profit.text.substring(0, 1) == "-") {
             holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.RED)
         } else {
-            holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.GREEN)
+            holder.itemView.tv_subscriber_observation_profit.setTextColor(
+                holder.itemView.context.resources.getColor(
+                    R.color.colorGreenPercent
+                )
+            )
         }
     }
 

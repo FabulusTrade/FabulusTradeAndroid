@@ -35,7 +35,11 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
                 holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(Color.RED)
             }
             else -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(Color.GREEN)
+                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(
+                    holder.itemView.context.resources.getColor(
+                        R.color.colorGreenPercent
+                    )
+                )
             }
         }
     }

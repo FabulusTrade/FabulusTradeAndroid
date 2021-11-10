@@ -10,7 +10,7 @@ import ru.wintrade.mvp.model.entity.MonthIndicator
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.view.trader.TraderProfitView
-import ru.wintrade.util.COLOR_GREEN
+import ru.wintrade.util.COLOR_GREEN_PERCENT
 import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -169,7 +169,7 @@ class TraderProfitPresenter(
         setBarchartData(checkedYear, checkedYearList, entries)
         val barDataSet = BarDataSet(entries, PROFITABILITY)
         barDataSet.colors =
-            listOf(COLOR_GREEN, Color.BLACK, Color.RED)
+            listOf(COLOR_GREEN_PERCENT, Color.BLACK, Color.RED)
         return BarData(labels, barDataSet)
     }
 

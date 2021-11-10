@@ -10,6 +10,7 @@
     <color name="colorBlue">#304FFE</color>
     <color name="colorLightGreen">#E3F8EB</color>
     <color name="colorGreen">#00AE46</color>
+    <color name="colorGreenPercent">#00923B</color>
     <color name="colorBlueGray">#EBF6F6</color>
     <color name="colorGrayLight">#D8D4D4</color>
     <color name="colorRed">#B52C2C</color>
