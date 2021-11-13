@@ -109,6 +109,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
                     tvAttachedPostHeader.visibility = View.GONE
                     ivAttachedPostKebab.visibility = View.GONE
                     layoutAttachedPost.visibility = View.VISIBLE
+                    layoutAttachedPostBody.visibility = View.VISIBLE
                     tvAttachedPostText.text = text
                 }
             }
