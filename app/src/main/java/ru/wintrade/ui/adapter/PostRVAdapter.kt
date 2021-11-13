@@ -96,11 +96,14 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override fun setImages(images: List<String>?) {
             if (!images.isNullOrEmpty()) {
                 itemView.rv_item_trader_news_img.apply {
+                    visibility = View.VISIBLE
                     this.layoutManager = LinearLayoutManager(context)
                     val adapter = TraderNewsImagesRVAdapter()
                     this.adapter = adapter
                     adapter.setData(images)
                 }
+            } else {
+                itemView.rv_item_trader_news_img.visibility = View.GONE
             }
         }
 
