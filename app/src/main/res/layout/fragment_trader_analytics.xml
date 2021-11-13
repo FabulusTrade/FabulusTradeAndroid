@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/attached_post"
+            layout="@layout/layout_attached_post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Последователи -->
+        <TextView
+            android:id="@+id/follower_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_medium"
+            android:layout_marginTop="@dimen/margin_top_medium"
+            android:text="@string/followers"
+            android:textSize="@dimen/text_size_low"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attached_post" />
+
+        <TextView
+            android:id="@+id/follower_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toStartOf="@id/follower_statistic"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/follower_title"
+            app:layout_constraintTop_toBottomOf="@+id/follower_title"
+            tools:text="300" />
+
+        <TextView
+            android:id="@+id/follower_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start_low"
+            android:textColor="@color/colorGreen"
+            app:layout_constraintBottom_toBottomOf="@+id/follower_counter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/follower_counter"
+            app:layout_constraintTop_toTopOf="@+id/follower_counter" />
+
+        <View
+            android:id="@+id/follower_separator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="@dimen/margin_top_low"
+            android:background="@color/colorWhiteSmoke"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/follower_counter" />
+
+        <!-- Среднее количество сделок в месяц -->
+        <TextView
+            android:id="@+id/deal_for_week_title"
+            style="@style/SecondaryTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deals_30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/follower_separator" />
+
+        <ImageView
+            android:id="@+id/deal_for_week_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            app:layout_constraintEnd_toStartOf="@id/deal_for_month_count"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/deal_for_week_title"
+            app:layout_constraintTop_toBottomOf="@+id/deal_for_week_title"
+            app:srcCompat="@drawable/ic_deal_for_week"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/deal_for_month_count"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/deal_for_week_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/deal_for_week_icon"
+            app:layout_constraintTop_toTopOf="@+id/deal_for_week_icon"
+            tools:text="10" />
+
+        <View
+            android:id="@+id/deal_for_month_separator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="@dimen/margin_top_low"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deal_for_week_icon" />
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/btn_for_year"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_medium"
+            android:text="@string/for_year"
+            app:layout_constraintEnd_toStartOf="@+id/btn_for_fifty_deals"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deal_for_month_separator" />
+
+        <Button
+            android:id="@+id/btn_for_fifty_deals"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorLightGreen"
+            android:text="@string/last_fifty_deals"
+            android:textColor="@color/colorGreen"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_for_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_for_year"
+            app:layout_constraintTop_toTopOf="@+id/btn_for_year" />
+
+
+        <!-- Среднее количество сделки, дн -->
+        <TextView
+            android:id="@+id/deal_average_time_title"
+            style="@style/SecondaryTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_time_deals"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_for_year" />
+
+        <ImageView
+            android:id="@+id/deal_average_time_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            app:layout_constraintEnd_toStartOf="@+id/deal_average_time_value"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/deal_average_time_title"
+            app:layout_constraintTop_toBottomOf="@+id/deal_average_time_title"
+            app:srcCompat="@drawable/ic_deal_for_week"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/deal_average_time_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/deal_average_time_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/deal_average_time_icon"
+            app:layout_constraintTop_toTopOf="@+id/deal_average_time_icon"
+            tools:text="10" />
+
+        <!-- Прибыльных / Убыточных сделок -->
+        <TextView
+            android:id="@+id/deal_profit_and_loss_title"
+            style="@style/SecondaryTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/increase_and_less_deals"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deal_average_time_icon" />
+
+        <ImageView
+            android:id="@+id/deal_profit_and_loss_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            app:layout_constraintEnd_toStartOf="@+id/deal_profit_and_loss_positive_value"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/deal_profit_and_loss_title"
+            app:layout_constraintTop_toBottomOf="@+id/deal_profit_and_loss_title"
+            app:srcCompat="@drawable/ic_profit"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/deal_profit_and_loss_positive_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            app:layout_constraintBottom_toBottomOf="@+id/deal_profit_and_loss_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/deal_profit_and_loss_icon"
+            app:layout_constraintTop_toTopOf="@+id/deal_profit_and_loss_icon"
+            tools:text="10 / 10" />
+
+
+        <!-- Средняя прибыль / Убыток за сделку -->
+        <TextView
+            android:id="@+id/average_profit_or_loss_title"
+            style="@style/SecondaryTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_profit_and_less_for_deals"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deal_profit_and_loss_icon" />
+
+        <ImageView
+            android:id="@+id/average_profit_or_loss_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            app:layout_constraintEnd_toStartOf="@+id/average_profit_or_loss_value"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/average_profit_or_loss_title"
+            app:layout_constraintTop_toBottomOf="@+id/average_profit_or_loss_title"
+            app:srcCompat="@drawable/ic_deal_time"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/average_profit_or_loss_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            app:layout_constraintBottom_toBottomOf="@+id/average_profit_or_loss_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/average_profit_or_loss_icon"
+            app:layout_constraintTop_toTopOf="@+id/average_profit_or_loss_icon"
+            tools:text="10 / 10" />
+
+
+        <!-- Прирост(Снижение) ДЕПО -->
+        <TextView
+            android:id="@+id/increase_and_decline_depo_title"
+            style="@style/SecondaryTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profit_and_decline_depo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/average_profit_or_loss_icon" />
+
+        <ImageView
+            android:id="@+id/increase_and_decline_depo_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_very_low"
+            app:layout_constraintEnd_toStartOf="@id/increase_and_decline_depo_value"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/increase_and_decline_depo_title"
+            app:layout_constraintTop_toBottomOf="@+id/increase_and_decline_depo_title"
+            app:srcCompat="@drawable/ic_trader_deal"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/increase_and_decline_depo_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGreen"
+            app:layout_constraintBottom_toBottomOf="@+id/increase_and_decline_depo_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/increase_and_decline_depo_icon"
+            app:layout_constraintTop_toTopOf="@+id/increase_and_decline_depo_icon"
+            tools:text="10 / 10" />
+
+        <GridLayout
+            android:id="@+id/table_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="@dimen/margin_top_low"
+            android:columnCount="3"
+            app:layout_constraintTop_toBottomOf="@+id/increase_and_decline_depo_icon">
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="3" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:text="@string/Long" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:text="@string/Short" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="start|center"
+                android:padding="3dp"
+                android:text="@string/relation_to_total_number_deals"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/all_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                android:id="@+id/all_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="start|center"
+                android:padding="3dp"
+                android:text="@string/average_time_deals"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/average_time_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                android:id="@+id/average_time_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="end|center"
+                android:text="@string/average_percent_profit_deal"
+                android:textSize="@dimen/text_size_very_low" />
+
+            <TextView
+                android:id="@+id/average_percent_profit_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:textColor="@color/colorGreen" />
+
+            <TextView
+                android:id="@+id/average_percent_profit_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:textColor="@color/colorGreen" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="start|center"
+                android:text="@string/less_all_deals"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/less_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                android:id="@+id/less_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="end|center"
+                android:text="@string/average_precent_less_for_deal"
+                android:textSize="@dimen/text_size_very_low" />
+
+            <TextView
+                android:id="@+id/average_less_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:textColor="@color/colorRed" />
+
+            <TextView
+                android:id="@+id/average_less_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2"
+                android:textColor="@color/colorRed" />
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/tv_profitability_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_medium"
+            android:text="@string/profitability"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/table_info" />
+
+        <Button
+            android:id="@+id/btn_current_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/colorLightGreen"
+            android:text="@string/year_2021"
+            android:textColor="@color/colorBlack"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next_year"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/bar_chart"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
+
+        <Button
+            android:id="@+id/btn_next_year"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:clickable="false"
+            android:text="@string/year_2022"
+            android:textColor="@color/colorGray"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_current_year"
+            app:layout_constraintEnd_toEndOf="@+id/bar_chart"
+            app:layout_constraintStart_toEndOf="@+id/btn_current_year"
+            app:layout_constraintTop_toTopOf="@+id/btn_current_year" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_current_year" />
+
+        <View
+            android:id="@+id/date_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="@dimen/margin_top_low"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bar_chart" />
+
+        <TextView
+            android:id="@+id/tv_year_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/year_2021"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_divider" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/table_profit_for_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_year_title">
+
+            <View
+                android:id="@+id/view_vertical_divider"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_jan_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/january"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_jan_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_jan_label"
+                app:layout_constraintEnd_toStartOf="@+id/view_vertical_divider"
+                app:layout_constraintTop_toTopOf="@+id/tv_jan_label"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tv_jul_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/july"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_jan_value"
+                app:layout_constraintStart_toEndOf="@+id/view_vertical_divider"
+                app:layout_constraintTop_toTopOf="@+id/tv_jan_value" />
+
+            <TextView
+                android:id="@+id/tv_jul_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="38dp"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_jul_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_jul_label" />
+
+            <View
+                android:id="@+id/view_horizontal_divider_1"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="38dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_jan_value" />
+
+            <TextView
+                android:id="@+id/tv_feb_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/february"
+                app:layout_constraintStart_toStartOf="@+id/tv_jan_label"
+                app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_1" />
+
+            <TextView
+                android:id="@+id/tv_feb_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_feb_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_jan_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_feb_label" />
+
+            <TextView
+                android:id="@+id/tv_aug_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/august"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_feb_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_jul_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_feb_value" />
+
+            <TextView
+                android:id="@+id/tv_aug_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_aug_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jul_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_aug_label" />
+
+            <View
+                android:id="@+id/view_horizontal_divider_2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="38dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_feb_value" />
+
+            <TextView
+                android:id="@+id/tv_mar_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/march"
+                app:layout_constraintStart_toStartOf="@+id/tv_feb_label"
+                app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_2" />
+
+            <TextView
+                android:id="@+id/tv_mar_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mar_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_feb_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_mar_label" />
+
+            <TextView
+                android:id="@+id/tv_sep_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/september"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mar_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_aug_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_mar_value" />
+
+            <TextView
+                android:id="@+id/tv_sep_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_sep_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_aug_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_sep_label" />
+
+            <View
+                android:id="@+id/view_horizontal_divider_3"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="38dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mar_value" />
+
+            <View
+                android:id="@+id/view_horizontal_divider_4"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="38dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_apr_value" />
+
+            <View
+                android:id="@+id/view_horizontal_divider_5"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="38dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_may_value" />
+
+            <TextView
+                android:id="@+id/tv_apr_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/april"
+                app:layout_constraintStart_toStartOf="@+id/tv_mar_label"
+                app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_3" />
+
+            <TextView
+                android:id="@+id/tv_apr_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_apr_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_mar_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_apr_label" />
+
+            <TextView
+                android:id="@+id/tv_oct_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/october"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_apr_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_sep_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_apr_value" />
+
+            <TextView
+                android:id="@+id/tv_oct_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_oct_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_sep_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_oct_label" />
+
+            <TextView
+                android:id="@+id/tv_may_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/may"
+                app:layout_constraintStart_toStartOf="@+id/tv_apr_label"
+                app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_4" />
+
+            <TextView
+                android:id="@+id/tv_may_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_may_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_apr_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_may_label" />
+
+            <TextView
+                android:id="@+id/tv_nov_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/november"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_may_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_oct_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_may_value" />
+
+            <TextView
+                android:id="@+id/tv_nov_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_nov_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_oct_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_nov_label" />
+
+            <TextView
+                android:id="@+id/tv_jun_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/june"
+                app:layout_constraintBottom_toBottomOf="@+id/view_vertical_divider"
+                app:layout_constraintStart_toStartOf="@+id/tv_may_label"
+                app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_5" />
+
+            <TextView
+                android:id="@+id/tv_jun_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_jun_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_may_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_jun_label" />
+
+            <TextView
+                android:id="@+id/tv_dec_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/december"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_jun_value"
+                app:layout_constraintStart_toStartOf="@+id/tv_nov_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_jun_value"
+                tools:ignore="TooManyViews" />
+
+            <TextView
+                android:id="@+id/tv_dec_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_dec_label"
+                app:layout_constraintEnd_toEndOf="@+id/tv_nov_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_dec_label" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_register_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_low"
+            android:layout_marginTop="@dimen/margin_top_low"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/table_profit_for_year" />
+
+        <!-- Дата регистрации -->
+        <TextView
+            android:id="@+id/tv_registration_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/registration_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_register_divider" />
+
+        <ImageView
+            android:id="@+id/iv_registration_date_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="38dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_registration_date_title"
+            app:srcCompat="@drawable/ic_registration_date"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_registration_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_registration_date_icon"
+            app:layout_constraintStart_toEndOf="@+id/iv_registration_date_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_registration_date_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

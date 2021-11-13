@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
@@ -71,6 +71,26 @@
 
     <style name="OnBoardText.Text">
         <item name="android:textSize">18sp</item>
+    </style>
+
+
+    <style name="SecondaryTitleText">
+        <item name="textAllCaps">true</item>
+        <item name="android:layout_marginTop">@dimen/margin_top_low</item>
+        <item name="android:textSize">@dimen/text_size_very_low</item>
+        <item name="android:layout_marginHorizontal" tools:ignore="NewApi">@dimen/margin_horizontal_medium</item>
+    </style>
+
+    <style name="SecondaryDefaultText">
+        <item name="android:layout_marginStart">@dimen/margin_start_medium</item>
+        <item name="android:textSize">@dimen/text_size_low</item>
+    </style>
+
+    <style name="GridDefaultText">
+        <item name="android:background">@drawable/text_stroke</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>
