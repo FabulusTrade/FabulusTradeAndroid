@@ -75,7 +75,7 @@
                     android:id="@+id/cb_traders_all_item_observe"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_observe"
+                    android:button="@drawable/ic_observe_selector"
                     android:gravity="center"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
