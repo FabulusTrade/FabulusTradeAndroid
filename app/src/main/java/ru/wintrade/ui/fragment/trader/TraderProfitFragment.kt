@@ -95,12 +95,12 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         binding.tvRegistrationDateValue.text = date
     }
 
-    override fun setFollowersCount(followersCount: Int) {
-        binding.followerCounter.text = followersCount.toString()
+    override fun setFollowersCount(followersCount: String) {
+        binding.tvFollowerCounter.text = followersCount
     }
 
-    override fun setTradesCount(tradesCount: Int) {
-        binding.dealForMonthCount.text = tradesCount.toString()
+    override fun setTradesCount(tradesCount: String) {
+        binding.tvDealForMonthCount.text = tradesCount
     }
 
     override fun setPinnedPostText(text: String?) {
@@ -174,13 +174,9 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     override fun setAverageDealsTime(dealsTime: String) {
+        binding.tvDealAverageTimeValue.text = dealsTime
     }
 
-    override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
-    }
-
-    override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
-    }
 
     override fun setJanProfit(profit: String) {
         binding.tvJanValue.text = profit
@@ -228,6 +224,74 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     override fun setDecProfit(profit: String) {
         binding.tvDecValue.text = profit
+    }
+
+    override fun setPositiveProfitPercentForTransactions(percent: String) {
+        binding.tvDealProfitPositiveValue.text = percent
+    }
+
+    override fun setNegativeProfitPercentForTransactions(percent: String) {
+        binding.tvDealProfitNegativeValue.text = percent
+    }
+
+    override fun setAverageProfitForDeal(percent: String) {
+        binding.tvAverageProfitValue.text = percent
+    }
+
+    override fun setAverageLoseForDeal(percent: String) {
+        binding.tvAverageLossValue.text = percent
+    }
+
+    override fun setDepoValue(percent: String) {
+        binding.tvDepoValue.text = percent
+    }
+
+    override fun setAllDealLong(percent: String) {
+        binding.tvAllDealLong.text = percent
+    }
+
+    override fun setAllDealShort(percent: String) {
+        binding.tvAllDealShort.text = percent
+    }
+
+    override fun setAvaregeTimeDealLong(daysCount: String) {
+        binding.tvAverageTimeDealLong.text = daysCount
+    }
+
+    override fun setAvaregeTimeDealShort(daysCount: String) {
+        binding.tvAverageTimeDealShort.text = daysCount
+    }
+
+    override fun setPercentOfProfitDealsLong(percent: String) {
+        binding.tvProfDealLong.text = percent
+    }
+
+    override fun setPercentOfProfitDealsShort(percent: String) {
+        binding.tvProfDealShort.text = percent
+    }
+
+    override fun setAvaregePercentForProfitDealLong(percent: String) {
+        binding.tvAveragePercentProfitDealLong.text = percent
+    }
+
+    override fun setAvaregePercentForProfitDealShort(percent: String) {
+        binding.tvAveragePercentProfitDealShort.text = percent
+    }
+
+    override fun setPercentOfLosingDealsLong(percent: String) {
+        binding.tvLessDealLong.text = percent
+    }
+
+    override fun setPercentOfLosingDealsShort(percent: String) {
+        binding.tvLessDealShort.text = percent
+    }
+
+    override fun setAvaregePercentForLosingDealLong(percent: String) {
+        binding.tvAverageLessDealLong.text = percent
+    }
+
+    override fun setAvaregePercentForLosingDealShort(percent: String) {
+        binding.tvAverageLessDealShort.text = percent
     }
 
     override fun onDestroyView() {

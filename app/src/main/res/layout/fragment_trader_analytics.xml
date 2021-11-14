@@ -33,17 +33,17 @@
             app:layout_constraintTop_toBottomOf="@+id/attached_post" />
 
         <TextView
-            android:id="@+id/follower_counter"
+            android:id="@+id/tv_follower_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
+            android:text="@string/zero"
             android:textSize="@dimen/text_size_medium"
             app:layout_constraintEnd_toStartOf="@id/follower_statistic"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/follower_title"
-            app:layout_constraintTop_toBottomOf="@+id/follower_title"
-            tools:text="300" />
+            app:layout_constraintTop_toBottomOf="@+id/follower_title" />
 
         <TextView
             android:id="@+id/follower_statistic"
@@ -51,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_low"
             android:textColor="@color/colorGreen"
-            app:layout_constraintBottom_toBottomOf="@+id/follower_counter"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_follower_counter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/follower_counter"
-            app:layout_constraintTop_toTopOf="@+id/follower_counter" />
+            app:layout_constraintStart_toEndOf="@+id/tv_follower_counter"
+            app:layout_constraintTop_toTopOf="@+id/tv_follower_counter" />
 
         <View
             android:id="@+id/follower_separator"
@@ -65,7 +65,7 @@
             android:background="@color/colorWhiteSmoke"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/follower_counter" />
+            app:layout_constraintTop_toBottomOf="@id/tv_follower_counter" />
 
         <!-- Среднее количество сделок в месяц -->
         <TextView
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
-            app:layout_constraintEnd_toStartOf="@id/deal_for_month_count"
+            app:layout_constraintEnd_toStartOf="@id/tv_deal_for_month_count"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/deal_for_week_title"
@@ -93,16 +93,15 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/deal_for_month_count"
+            android:id="@+id/tv_deal_for_month_count"
             style="@style/SecondaryDefaultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/zero"
             app:layout_constraintBottom_toBottomOf="@+id/deal_for_week_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toEndOf="@+id/deal_for_week_icon"
-            app:layout_constraintTop_toTopOf="@+id/deal_for_week_icon"
-            tools:text="10" />
+            app:layout_constraintTop_toTopOf="@+id/deal_for_week_icon" />
 
         <View
             android:id="@+id/deal_for_month_separator"
@@ -126,7 +125,6 @@
             android:text="@string/for_year"
             android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/btn_for_fifty_deals"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deal_for_month_separator"
             tools:ignore="SmallSp" />
@@ -142,7 +140,6 @@
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_for_year"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_for_year"
             app:layout_constraintTop_toTopOf="@+id/btn_for_year"
             tools:ignore="SmallSp" />
@@ -164,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
-            app:layout_constraintEnd_toStartOf="@+id/deal_average_time_value"
+            app:layout_constraintEnd_toStartOf="@+id/tv_deal_average_time_value"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/deal_average_time_title"
@@ -173,16 +170,15 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/deal_average_time_value"
+            android:id="@+id/tv_deal_average_time_value"
             style="@style/SecondaryDefaultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/zero"
             app:layout_constraintBottom_toBottomOf="@+id/deal_average_time_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toEndOf="@+id/deal_average_time_icon"
-            app:layout_constraintTop_toTopOf="@+id/deal_average_time_icon"
-            tools:text="10" />
+            app:layout_constraintTop_toTopOf="@+id/deal_average_time_icon" />
 
         <!-- Прибыльных / Убыточных сделок -->
         <TextView
@@ -201,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
-            app:layout_constraintEnd_toStartOf="@+id/deal_profit_and_loss_positive_value"
+            app:layout_constraintEnd_toStartOf="@+id/tv_deal_profit_positive_value"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/deal_profit_and_loss_title"
@@ -210,17 +206,16 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/deal_profit_and_loss_positive_value"
+            android:id="@+id/tv_deal_profit_positive_value"
             style="@style/SecondaryDefaultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/zero"
             android:textColor="@color/colorGreen"
             app:layout_constraintBottom_toBottomOf="@+id/deal_profit_and_loss_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintEnd_toStartOf="@+id/tv_profit_percent_slash"
             app:layout_constraintStart_toEndOf="@+id/deal_profit_and_loss_icon"
-            app:layout_constraintTop_toTopOf="@+id/deal_profit_and_loss_icon"
-            tools:text="10 / 10" />
+            app:layout_constraintTop_toTopOf="@+id/deal_profit_and_loss_icon" />
 
 
         <!-- Средняя прибыль / Убыток за сделку -->
@@ -240,7 +235,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
-            app:layout_constraintEnd_toStartOf="@+id/average_profit_or_loss_value"
+            app:layout_constraintEnd_toStartOf="@+id/tv_average_profit_value"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/average_profit_or_loss_title"
@@ -249,18 +244,16 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/average_profit_or_loss_value"
+            android:id="@+id/tv_average_profit_value"
             style="@style/SecondaryDefaultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/zero"
             android:textColor="@color/colorGreen"
             app:layout_constraintBottom_toBottomOf="@+id/average_profit_or_loss_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintEnd_toStartOf="@+id/tv_profit_slash"
             app:layout_constraintStart_toEndOf="@+id/average_profit_or_loss_icon"
-            app:layout_constraintTop_toTopOf="@+id/average_profit_or_loss_icon"
-            tools:text="10 / 10" />
-
+            app:layout_constraintTop_toTopOf="@+id/average_profit_or_loss_icon" />
 
         <!-- Прирост(Снижение) ДЕПО -->
         <TextView
@@ -279,7 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_very_low"
-            app:layout_constraintEnd_toStartOf="@id/increase_and_decline_depo_value"
+            app:layout_constraintEnd_toStartOf="@id/tv_depo_value"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/increase_and_decline_depo_title"
@@ -288,17 +281,16 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/increase_and_decline_depo_value"
+            android:id="@+id/tv_depo_value"
             style="@style/SecondaryDefaultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/zero"
             android:textColor="@color/colorGreen"
             app:layout_constraintBottom_toBottomOf="@+id/increase_and_decline_depo_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toEndOf="@+id/increase_and_decline_depo_icon"
-            app:layout_constraintTop_toTopOf="@+id/increase_and_decline_depo_icon"
-            tools:text="10 / 10" />
+            app:layout_constraintTop_toTopOf="@+id/increase_and_decline_depo_icon" />
 
         <GridLayout
             android:id="@+id/table_info"
@@ -320,14 +312,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2"
-                android:text="@string/Long" />
+                android:text="@string/title_short" />
 
             <TextView
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2"
-                android:text="@string/Short" />
+                android:text="@string/title_long" />
 
             <TextView
                 style="@style/GridDefaultText"
@@ -340,14 +332,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/all_deal_short"
+                android:id="@+id/tv_all_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/all_deal_long"
+                android:id="@+id/tv_all_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -364,14 +356,37 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/average_time_deal_short"
+                android:id="@+id/tv_average_time_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/average_time_deal_long"
+                android:id="@+id/tv_average_time_deal_long"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="4"
+                android:gravity="start|center"
+                android:text="@string/prof_all_deals"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_prof_deal_short"
+                style="@style/GridDefaultText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="2" />
+
+            <TextView
+                android:id="@+id/tv_prof_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -387,7 +402,7 @@
                 android:textSize="@dimen/text_size_very_low" />
 
             <TextView
-                android:id="@+id/average_percent_profit_deal_short"
+                android:id="@+id/tv_average_percent_profit_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -395,7 +410,7 @@
                 android:textColor="@color/colorGreen" />
 
             <TextView
-                android:id="@+id/average_percent_profit_deal_long"
+                android:id="@+id/tv_average_percent_profit_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -412,14 +427,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/less_deal_short"
+                android:id="@+id/tv_less_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/less_deal_long"
+                android:id="@+id/tv_less_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -435,7 +450,7 @@
                 android:textSize="@dimen/text_size_very_low" />
 
             <TextView
-                android:id="@+id/average_less_deal_short"
+                android:id="@+id/tv_average_less_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -443,7 +458,7 @@
                 android:textColor="@color/colorRed" />
 
             <TextView
-                android:id="@+id/average_less_deal_long"
+                android:id="@+id/tv_average_less_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -879,5 +894,51 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_registration_date_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_registration_date_icon"
             app:layout_constraintTop_toTopOf="@+id/iv_registration_date_icon" />
+
+        <TextView
+            android:id="@+id/tv_profit_percent_slash"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slash"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_deal_profit_positive_value"
+            app:layout_constraintEnd_toStartOf="@+id/tv_deal_profit_negative_value"
+            app:layout_constraintStart_toEndOf="@+id/tv_deal_profit_positive_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_deal_profit_positive_value" />
+
+        <TextView
+            android:id="@+id/tv_deal_profit_negative_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="@color/colorRed"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_profit_percent_slash"
+            app:layout_constraintStart_toEndOf="@+id/tv_profit_percent_slash"
+            app:layout_constraintTop_toTopOf="@+id/tv_profit_percent_slash"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tv_profit_slash"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slash"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_average_profit_value"
+            app:layout_constraintEnd_toStartOf="@+id/tv_average_loss_value"
+            app:layout_constraintStart_toEndOf="@+id/tv_average_profit_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_average_profit_value" />
+
+        <TextView
+            android:id="@+id/tv_average_loss_value"
+            style="@style/SecondaryDefaultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="@color/colorRed"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_profit_slash"
+            app:layout_constraintStart_toEndOf="@+id/tv_profit_slash"
+            app:layout_constraintTop_toTopOf="@+id/tv_profit_slash" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

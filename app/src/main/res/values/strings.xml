@@ -331,12 +331,13 @@
     <string name="average_time_deals">Средний срок сделки. дн</string>
     <string name="increase_and_less_deals">Прибыльных / Убыточных сделок</string>
     <string name="average_profit_and_less_for_deals">Средняя прибыль / Убыток за сделку</string>
-    <string name="profit_and_decline_depo">Прирост / Снижение Депо</string>
-    <string name="Long">Лонг</string>
-    <string name="Short">Шорт</string>
+    <string name="profit_and_decline_depo">Прирост (Снижение) Депо</string>
+    <string name="title_long">Лонг</string>
+    <string name="title_short">Шорт</string>
     <string name="relation_to_total_number_deals">Отношение к общему количеству сделок</string>
     <string name="average_percent_profit_deal">ср % прибыли на сделку</string>
     <string name="less_all_deals">Убыточных сделок</string>
+    <string name="prof_all_deals">Прибыльных сделок</string>
     <string name="average_precent_less_for_deal">ср % убытка на сделку</string>
 
     <!-- TraderTradeFragment -->

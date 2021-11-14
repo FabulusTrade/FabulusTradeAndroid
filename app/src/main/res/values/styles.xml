@@ -82,7 +82,7 @@
     </style>
 
     <style name="SecondaryDefaultText">
-        <item name="android:layout_marginStart">@dimen/margin_start_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_start_low</item>
         <item name="android:textSize">@dimen/text_size_low</item>
     </style>
 
