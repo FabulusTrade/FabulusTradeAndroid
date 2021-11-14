@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.item_sub_trade.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
+import ru.wintrade.util.formatString
 import ru.wintrade.util.loadImage
 
 class SubscriberTradesRVAdapter(
@@ -52,21 +53,21 @@ class SubscriberTradesRVAdapter(
             tv_item_sub_operation_type.text = type
         }
 
-        override fun setCompany(company: String) = with(containerView) {
-            tv_item_sub_trade_company.text = company
+        override fun setCompanyAndTicker(company: String, ticker: String) = with(containerView) {
+            tv_item_sub_trade_company.text = context.formatString(R.string.deal_company_name, company, ticker)
         }
 
-        override fun setPrice(price: String) = with(containerView) {
-            tv_item_sub_trade_price.text = price
+        override fun setPriceAndCurrency(price: Float, currency: String) = with(containerView) {
+            tv_item_sub_trade_price.text = context.formatString(R.string.deal_price, price, currency)
         }
 
         override fun setDate(date: String) = with(containerView) {
-            tv_item_sub_trade_date.text = date
+            tv_item_sub_trade_date.text = context.formatString(R.string.deal_date, date)
         }
 
         override fun setProfit(profit: String, color: Int) = with(containerView) {
             if (profit.isNotEmpty()) {
-                tv_item_sub_trade_profit_count.text = profit
+                tv_item_sub_trade_profit_count.text = context.formatString(R.string.deal_profit_count, profit)
                 tv_item_sub_trade_profit_count.setTextColor(ContextCompat.getColor(context, color))
             } else {
                 tv_item_sub_trade_profit_count.visibility = View.GONE

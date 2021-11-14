@@ -56,3 +56,6 @@ fun String.toApiDate(): String =
 
 fun String.toUiDate(): String =
     split("-").reversed().joinToString(".")
+
+fun Context.formatString(stringId: Int, vararg args: Any?): String =
+    String.format(resources.getString(stringId), *args)

@@ -53,15 +53,15 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
             }
-            view.setCompany("${trade.company}(\$${trade.ticker})")
-            view.setDate("Дата: $date")
+            view.setCompanyAndTicker(trade.company, trade.ticker)
+            view.setDate(date)
             view.setType(trade.operationType)
-            view.setPrice("Цена: ${trade.price}${trade.currency}")
+            view.setPriceAndCurrency(trade.price, trade.currency)
             trade.profitCount?.let {
                 if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit("${trade.profitCount}%", R.color.colorGreen)
+                    view.setProfit(trade.profitCount, R.color.colorGreen)
                 } else {
-                    view.setProfit("${trade.profitCount}%", R.color.colorRed)
+                    view.setProfit(trade.profitCount, R.color.colorRed)
                 }
             } ?: view.setProfit("", R.color.colorWhite)
         }
