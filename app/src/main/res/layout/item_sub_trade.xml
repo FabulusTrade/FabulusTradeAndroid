@@ -22,128 +22,103 @@
                 android:id="@+id/iv_item_sub_trade_avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:foreground="@drawable/bg_avatar"
+                android:scaleType="center"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/tv_item_sub_trade_nickname"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_weight="1.4"
                 android:layout_marginStart="8dp"
-                android:text="@string/user_name_subscriberTradesRV"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_item_sub_trade_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/tv_item_sub_trade_nickname_margin_top"
+                    android:text="@string/user_name_subscriberTradesRV"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_item_sub_trade_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/tv_item_sub_trade_date_margin_top"
+                    android:text="@string/date_subscriberTradesRV"
+                    android:textColor="@color/colorGray" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_item_sub_trade_profit_count"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_weight="1" />
+            android:layout_marginEnd="@dimen/tv_item_sub_trade_profit_count_margin_end"
+            android:layout_marginBottom="@dimen/tv_item_sub_trade_profit_count_margin_bottom"
+            android:background="@color/tv_item_sub_trade_profit_count_background"
+            android:gravity="end"
+            android:paddingStart="@dimen/tv_item_sub_trade_profit_count_padding_start"
+            android:paddingEnd="@dimen/tv_item_sub_trade_profit_count_padding_end"
+            tools:text="4.5%" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp">
+        android:layout_marginTop="6dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_item_sub_trade_company"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.4"
-            android:text="@string/name_subscriberTradesRV"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_item_sub_operation_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/purchase"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp">
-
-        <TextView
-            android:id="@+id/tv_item_sub_trade_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.4"
-            android:text="@string/price_subscriberTradesRV"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_item_sub_trade_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/quantity_subscriberTradesRV"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp">
-
-        <TextView
-            android:id="@+id/tv_item_sub_trade_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.4"
-            android:text="@string/date_subscriberTradesRV"
-            android:textColor="@color/colorGray" />
-
-        <TextView
-            android:id="@+id/tv_item_sub_trade_sum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/sum_subscriberTradesRV"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.4" />
+            android:text="@string/name_subscriberTradesRV"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/tv_item_sub_trade_more"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/detail_subscriberTradesRV"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_item_sub_operation_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_item_sub_operation_type_margit_top"
+                android:layout_weight="1.4"
+                android:text="@string/purchase"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/tv_item_sub_operation_type_text_size" />
+
+            <TextView
+                android:id="@+id/tv_item_sub_trade_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.4"
+                android:gravity="end"
+                android:layout_marginEnd="@dimen/tv_item_sub_trade_price_margin_end"
+                android:paddingEnd="@dimen/tv_item_sub_trade_price_padding_end"
+                android:text="@string/price_subscriberTradesRV"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                tools:text="Цена: 4.03$" />
+        </LinearLayout>
+
     </LinearLayout>
 
+    <View
+        android:id="@+id/delimiter_item_sub_trade"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/delimiter_item_sub_trade_layout_width"
+        android:layout_marginTop="@dimen/delimiter_item_sub_trade_margin_top"
+        android:layout_marginBottom="@dimen/delimiter_item_sub_trade_margin_bottom"
+        android:background="@color/delimiter_item_sub_trade_background_color" />
 </LinearLayout>

@@ -1,11 +1,11 @@
 package ru.wintrade.mvp.presenter.traderme
 
-import android.graphics.Color
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
@@ -53,19 +53,17 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
             }
-            view.setCompany(trade.company)
-            view.setCount("Кол-во: ${trade.count}")
+            view.setCompany("${trade.company}(\$${trade.ticker})")
             view.setDate("Дата: $date")
             view.setType(trade.operationType)
-            view.setPrice("Цена: ${trade.price} ${trade.currency}")
-            view.setSum("Сумма: ${trade.value} ${trade.currency}")
+            view.setPrice("Цена: ${trade.price}${trade.currency}")
             trade.profitCount?.let {
                 if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit("${trade.profitCount} %", Color.GREEN)
+                    view.setProfit("${trade.profitCount}%", R.color.colorGreen)
                 } else {
-                    view.setProfit("${trade.profitCount} %", Color.RED)
+                    view.setProfit("${trade.profitCount}%", R.color.colorRed)
                 }
-            } ?: view.setProfit("", Color.WHITE)
+            } ?: view.setProfit("", R.color.colorWhite)
         }
 
         override fun clicked(pos: Int) {
