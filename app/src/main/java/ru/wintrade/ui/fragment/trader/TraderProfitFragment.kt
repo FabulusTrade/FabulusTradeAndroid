@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -80,6 +82,12 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
             attachedPost.btnAttachedPostShow.setOnClickListener {
                 presenter.setPinnedTextMode()
             }
+            btnForYear.setOnClickListener {
+                presenter.getStatisticForYear()
+            }
+            btnForFiftyDeals.setOnClickListener {
+                presenter.getStatisticLastFifty()
+            }
         }
     }
 
@@ -121,6 +129,47 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
                 btnAttachedPostShow.text = resources.getString(R.string.show_traderProfit)
                 tvAttachedPostText.maxLines = MIN_LINES
             }
+        }
+    }
+
+    override fun setBtnsState(state: TraderProfitPresenter.State) {
+        when (state) {
+            TraderProfitPresenter.State.FOR_YEAR -> {
+                setForYearState()
+            }
+            TraderProfitPresenter.State.LAST_FIFTY -> {
+                setLastFiftyState()
+            }
+        }
+    }
+
+    private fun setForYearState() {
+        binding.run {
+            isActive(btnForYear)
+            isNotActive(btnForFiftyDeals)
+        }
+    }
+
+    private fun setLastFiftyState() {
+        binding.run {
+            isActive(btnForFiftyDeals)
+            isNotActive(btnForYear)
+        }
+    }
+
+    private fun isNotActive(inactiveBtn: MaterialButton) {
+        inactiveBtn.apply {
+            backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorGray))
+        }
+    }
+
+    private fun isActive(activeBtn: MaterialButton) {
+        activeBtn.apply {
+            backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorLightGreen)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary))
         }
     }
 

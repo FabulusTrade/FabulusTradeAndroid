@@ -3,15 +3,20 @@ package ru.wintrade.mvp.view.trader
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderProfitView : MvpView {
     fun init()
     fun setDateJoined(date: String)
+    fun setPinnedTextVisible(isOpen: Boolean)
+    fun setBtnsState(state: TraderProfitPresenter.State)
+
+
+
     fun setFollowersCount(followersCount: Int)
     fun setTradesCount(tradesCount: Int)
     fun setPinnedPostText(text: String?)
-    fun setPinnedTextVisible(isOpen: Boolean)
     fun setAverageDealsTime(dealsTime: String)
     fun setAverageDealsPositiveCountAndProfit(averageProfit: String)
     fun setAverageDealsNegativeCountAndProfit(averageProfit: String)

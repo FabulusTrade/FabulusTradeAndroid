@@ -30,6 +30,10 @@ class TraderProfitPresenter(
         const val PROFITABILITY = "profitability"
     }
 
+    enum class State {
+        FOR_YEAR, LAST_FIFTY
+    }
+
     var isOpen = false
     val entries = BarChartData.getBarChartEntries()
     val labels = BarChartData.getBarChartLabels()
@@ -38,8 +42,12 @@ class TraderProfitPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        viewState.setBtnsState(State.FOR_YEAR)
         viewState.setDateJoined(getTraderDateJoined())
         viewState.setPinnedTextVisible(isOpen)
+
+
+
         trader.pinnedPost?.let { viewState.setPinnedPostText(it.text) }
             ?: viewState.setPinnedPostText(null)
         traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
@@ -51,6 +59,16 @@ class TraderProfitPresenter(
         setAverageDealsCountAndProfit()
         clearProfitTable()
         setProfitTable()
+    }
+
+    fun getStatisticForYear() {
+        viewState.setBtnsState(State.FOR_YEAR)
+
+    }
+
+    fun getStatisticLastFifty() {
+       viewState.setBtnsState(State.LAST_FIFTY)
+
     }
 
     private fun setAverageDealsCountAndProfit() {
