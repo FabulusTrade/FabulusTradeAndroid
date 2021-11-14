@@ -64,7 +64,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         initListeners()
     }
 
-    fun initBarChart() {
+    private fun initBarChart() {
         with(binding.barChart) {
             data =
                 presenter.setupBarChart(getString(R.string.year_2021_traderProfit))          //   <-btn text

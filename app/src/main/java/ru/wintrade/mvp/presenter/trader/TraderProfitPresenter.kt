@@ -21,7 +21,7 @@ class TraderProfitPresenter(
 
     companion object {
         private const val ZERO_PERCENT = "0.00%"
-        const val PROFITABILITY = "profitability"
+        private const val PROFITABILITY = "profitability"
     }
 
     enum class State {
