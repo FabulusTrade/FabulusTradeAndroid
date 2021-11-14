@@ -220,8 +220,4 @@ class TraderProfitPresenter(
             viewState.setPinnedTextVisible(isOpen)
         }
     }
-
-    fun showDialog() {
-        viewState.showInfoDialog()
-    }
 }

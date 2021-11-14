@@ -115,34 +115,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deal_for_week_icon" />
 
-        <!-- Buttons -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_for_year"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_medium"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/colorLightGreen"
             android:text="@string/for_year"
+            android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/btn_for_fifty_deals"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/deal_for_month_separator" />
+            app:layout_constraintTop_toBottomOf="@+id/deal_for_month_separator"
+            tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_for_fifty_deals"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorLightGreen"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/last_fifty_deals"
-            android:textColor="@color/colorGreen"
-            android:textSize="11sp"
+            android:textColor="@color/colorGray"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_for_year"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_for_year"
-            app:layout_constraintTop_toTopOf="@+id/btn_for_year" />
-
+            app:layout_constraintTop_toTopOf="@+id/btn_for_year"
+            tools:ignore="SmallSp" />
 
         <!-- Среднее количество сделки, дн -->
         <TextView

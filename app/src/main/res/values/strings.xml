@@ -258,7 +258,7 @@
     <string name="november">Ноябрь</string>
     <string name="june">Июнь</string>
     <string name="december">Декабрь</string>
-    <string name="deals_30">Количество сделок за 30 дней:</string>
+    <string name="deals_30">Количество операций за 30 дней:</string>
     <string name="average_profitability_of_the_deal">Средняя доходность сделок за 30 дней:</string>
     <string name="average_trade_duration">Средний срок сделки за 30 дней:</string>
     <string name="registration_date">Дата регистрации</string>
@@ -326,6 +326,18 @@
     <string name="show_traderProfit">показать</string>
     <string name="dialog_info_text_traderProfit">Количество прибыльных сделок за последние 30 дней (средняя прибыль на сделку за последние 30 дней) / количество убыточных сделок за последние 30 дней (средний убыток на сделку за последние 30 дней)</string>
     <string name="ok_traderProfit">OK</string>
+    <string name="for_year">за год</string>
+    <string name="last_fifty_deals">Последние 50 сделок</string>
+    <string name="average_time_deals">Средний срок сделки. дн</string>
+    <string name="increase_and_less_deals">Прибыльных / Убыточных сделок</string>
+    <string name="average_profit_and_less_for_deals">Средняя прибыль / Убыток за сделку</string>
+    <string name="profit_and_decline_depo">Прирост / Снижение Депо</string>
+    <string name="Long">Лонг</string>
+    <string name="Short">Шорт</string>
+    <string name="relation_to_total_number_deals">Отношение к общему количеству сделок</string>
+    <string name="average_percent_profit_deal">ср % прибыли на сделку</string>
+    <string name="less_all_deals">Убыточных сделок</string>
+    <string name="average_precent_less_for_deal">ср % убытка на сделку</string>
 
     <!-- TraderTradeFragment -->
     <string name="deals_traderTrade">Сделки</string>

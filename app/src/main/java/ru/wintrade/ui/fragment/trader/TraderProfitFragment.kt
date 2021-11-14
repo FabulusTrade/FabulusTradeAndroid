@@ -1,6 +1,5 @@
 package ru.wintrade.ui.fragment.trader
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.databinding.FragmentTraderProfitBinding
+import ru.wintrade.databinding.FragmentTraderAnalyticsBinding
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
@@ -18,8 +17,8 @@ import ru.wintrade.ui.App
 
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
-    private var _binding: FragmentTraderProfitBinding? = null
-    private val binding: FragmentTraderProfitBinding
+    private var _binding: FragmentTraderAnalyticsBinding? = null
+    private val binding: FragmentTraderAnalyticsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
@@ -54,7 +53,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTraderProfitBinding.inflate(inflater, container, false)
+        _binding = FragmentTraderAnalyticsBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
@@ -64,7 +63,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     fun initBarChart() {
-        with(binding.barChartTraderProfit) {
+        with(binding.barChart) {
             data =
                 presenter.setupBarChart(getString(R.string.year_2021_traderProfit))          //   <-btn text
             legend.isEnabled = false
@@ -78,33 +77,30 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     fun initListeners() {
         binding.run {
-            layoutTraderProfitAttachedPost.btnAttachedPostShow.setOnClickListener {
+            attachedPost.btnAttachedPostShow.setOnClickListener {
                 presenter.setPinnedTextMode()
-            }
-            ivTraderProfitDealProfitInfoIcon.setOnClickListener {
-                presenter.showDialog()
             }
         }
     }
 
     override fun setDateJoined(date: String) {
-        binding.tvTraderProfitRegistrationDateValue.text = date
+        binding.tvRegistrationDateValue.text = date
     }
 
     override fun setFollowersCount(followersCount: Int) {
-        binding.tvTraderProfitFollowerCounter.text = followersCount.toString()
+        binding.followerCounter.text = followersCount.toString()
     }
 
     override fun setTradesCount(tradesCount: Int) {
-        binding.tvTraderProfitDealForWeekCount.text = tradesCount.toString()
+        binding.dealForMonthCount.text = tradesCount.toString()
     }
 
     override fun setPinnedPostText(text: String?) {
         binding.run {
             if (text.isNullOrEmpty()) {
-                layoutTraderProfitAttachedPost.root.visibility = View.GONE
+                attachedPost.root.visibility = View.GONE
             } else {
-                with(layoutTraderProfitAttachedPost) {
+                with(attachedPost) {
                     root.visibility = View.VISIBLE
                     tvAttachedPostHeader.visibility = View.GONE
                     ivAttachedPostKebab.visibility = View.GONE
@@ -117,7 +113,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     override fun setPinnedTextVisible(isOpen: Boolean) {
-        binding.layoutTraderProfitAttachedPost.run {
+        binding.attachedPost.run {
             if (isOpen) {
                 btnAttachedPostShow.text = resources.getString(R.string.hide_traderProfit)
                 tvAttachedPostText.maxLines = MAX_LINES
@@ -129,71 +125,60 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     override fun setAverageDealsTime(dealsTime: String) {
-        binding.tvTraderProfitDealTimeValue.text = dealsTime
     }
 
     override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
-        binding.tvTraderProfitDealProfitPositiveValue.text = averageProfit
     }
 
     override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
-        binding.tvTraderProfitDealProfitNegativeValue.text = averageProfit
     }
 
     override fun setJanProfit(profit: String) {
-        binding.tvTraderProfitJanValue.text = profit
+        binding.tvJanValue.text = profit
     }
 
     override fun setFebProfit(profit: String) {
-        binding.tvTraderProfitFebValue.text = profit
+        binding.tvFebValue.text = profit
     }
 
     override fun setMarProfit(profit: String) {
-        binding.tvTraderProfitMarValue.text = profit
+        binding.tvMarValue.text = profit
     }
 
     override fun setAprProfit(profit: String) {
-        binding.tvTraderProfitAprValue.text = profit
+        binding.tvAprValue.text = profit
     }
 
     override fun setMayProfit(profit: String) {
-        binding.tvTraderProfitMayValue.text = profit
+        binding.tvMayValue.text = profit
     }
 
     override fun setJunProfit(profit: String) {
-        binding.tvTraderProfitJunValue.text = profit
+        binding.tvJunValue.text = profit
     }
 
     override fun setJulProfit(profit: String) {
-        binding.tvTraderProfitJulValue.text = profit
+        binding.tvJulValue.text = profit
     }
 
     override fun setAugProfit(profit: String) {
-        binding.tvTraderProfitAugValue.text = profit
+        binding.tvAugValue.text = profit
     }
 
     override fun setSepProfit(profit: String) {
-        binding.tvTraderProfitSepValue.text = profit
+        binding.tvSepValue.text = profit
     }
 
     override fun setOctProfit(profit: String) {
-        binding.tvTraderProfitOctValue.text = profit
+        binding.tvOctValue.text = profit
     }
 
     override fun setNovProfit(profit: String) {
-        binding.tvTraderProfitNovValue.text = profit
+        binding.tvNovValue.text = profit
     }
 
     override fun setDecProfit(profit: String) {
-        binding.tvTraderProfitDecValue.text = profit
-    }
-
-    override fun showInfoDialog() {
-        AlertDialog.Builder(context)
-            .setMessage(getString(R.string.dialog_info_text_traderProfit))
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_traderProfit) { _, _ ->
-            }.show()
+        binding.tvDecValue.text = profit
     }
 
     override fun onDestroyView() {
