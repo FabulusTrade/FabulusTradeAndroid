@@ -6,8 +6,9 @@ interface SubscriberTradeItemView {
     fun setAvatar(url: String)
     fun setNickname(nickname: String)
     fun setType(type: String)
-    fun setCompanyAndTicker(company: String, ticker: String)
-    fun setPriceAndCurrency(price: Float, currency: String)
+    fun setCompany(company: String)
+    fun setPrice(price: String)
     fun setDate(date: String)
     fun setProfit(profit: String, color: Int)
+    fun setProfitVisibility(visibility: Int)
 }

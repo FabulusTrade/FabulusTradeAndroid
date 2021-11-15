@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter.traderme
 
+import android.view.View
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -10,10 +11,12 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.formatString
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +30,9 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
     @Inject
     lateinit var apiRepo: ApiRepo
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     lateinit var state: State
     private var isLoading = false
@@ -53,17 +59,32 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
             }
-            view.setCompanyAndTicker(trade.company, trade.ticker)
-            view.setDate(date)
+            view.setCompany(
+                resourceProvider.formatString(
+                    R.string.deal_company_name,
+                    trade.company,
+                    trade.ticker
+                )
+            )
+            view.setDate(resourceProvider.formatString(R.string.deal_date, date))
             view.setType(trade.operationType)
-            view.setPriceAndCurrency(trade.price, trade.currency)
-            trade.profitCount?.let {
-                if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit(trade.profitCount, R.color.colorGreen)
+            view.setPrice(
+                resourceProvider.formatString(
+                    R.string.deal_price,
+                    trade.price,
+                    trade.currency
+                )
+            )
+            trade.profitCount?.let { profitCount ->
+                val profitCountStr =
+                    resourceProvider.formatString(R.string.deal_profit_count, profitCount)
+
+                if (profitCount.toFloat() >= 0) {
+                    view.setProfit(profitCountStr, R.color.colorGreen)
                 } else {
-                    view.setProfit(trade.profitCount, R.color.colorRed)
+                    view.setProfit(profitCountStr, R.color.colorRed)
                 }
-            } ?: view.setProfit("", R.color.colorWhite)
+            } ?: view.setProfitVisibility(View.GONE)
         }
 
         override fun clicked(pos: Int) {
