@@ -20,6 +20,7 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val DATE_KEY = "date"
         private const val PROFIT_COUNT_KEY = "profit_count"
         private const val OPERATION_TYPE_NAME_KEY = "operation_type_name"
+        private const val DELAYED_TRADE_KEY = "delayed_trade"
     }
 
     @Inject
@@ -39,6 +40,7 @@ class MessagingPresenter(private val service: MessagingService) {
         val dateData = data.getOrElse(DATE_KEY) { "" }
         val profitCount = data.getOrElse(PROFIT_COUNT_KEY) { "" }
         val operationTypeName = data.getOrElse(OPERATION_TYPE_NAME_KEY) { "" }
+        val isDelayed = data.getOrElse(DELAYED_TRADE_KEY) { "" }
         val title = "$trader: $operationTypeName"
         val body = "$ticker по цене: $price"
         service.showNotification(title, body, getNotificationId())

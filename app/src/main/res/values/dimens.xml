@@ -16,4 +16,20 @@
     <dimen name="default_vertical_margin_trader_reg">16dp</dimen>
     <dimen name="date_field_width">200dp</dimen>
     <dimen name="default_horizon_margin_on_board">24dp</dimen>
+
+    <dimen name="text_size_very_low">10sp</dimen>
+    <dimen name="text_size_low">16sp</dimen>
+    <dimen name="text_size_medium">22sp</dimen>
+
+    <dimen name="margin_top_very_low">8dp</dimen>
+    <dimen name="margin_top_low">15dp</dimen>
+    <dimen name="margin_top_medium">25dp</dimen>
+
+    <dimen name="margin_start_low">8dp</dimen>
+    <dimen name="margin_start_medium">15dp</dimen>
+    <dimen name="margin_start_large">30dp</dimen>
+
+    <dimen name="margin_horizontal_low">20dp</dimen>
+    <dimen name="margin_horizontal_medium">35dp</dimen>
+
 </resources>

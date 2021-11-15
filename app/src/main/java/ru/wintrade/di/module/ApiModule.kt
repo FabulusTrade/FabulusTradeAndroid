@@ -22,7 +22,7 @@ class ApiModule {
     @Named("baseUrl")
     @Provides
     fun baseUrl(): String {
-        return "http://wintrade.fun/"
+        return "https://fabulustrade.com/"
     }
 
     @Singleton

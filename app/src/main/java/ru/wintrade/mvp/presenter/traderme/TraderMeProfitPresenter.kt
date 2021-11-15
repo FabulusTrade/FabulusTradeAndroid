@@ -26,13 +26,8 @@ class TraderMeProfitPresenter(
 ) : MvpPresenter<TraderMeProfitView>() {
 
     companion object {
-        private const val TERM_OF_TRANSACTION_FORMAT = "0"
-        private const val DEALS_AVERAGE_PROFIT_FORMAT = "0.0"
-        private const val PROFIT_MONTH_FORMAT = "0.00"
         private const val ZERO_PERCENT = "0.00%"
-        private const val ZERO = 0
-        private const val AVERAGE_PERCENT_DEFAULT = "0.0(0.0%)"
-        const val PROFITABILITY = "profitability"
+        private const val PROFITABILITY = "profitability"
     }
 
     @Inject
@@ -43,6 +38,10 @@ class TraderMeProfitPresenter(
 
     @Inject
     lateinit var apiRepo: ApiRepo
+
+    enum class State {
+        FOR_YEAR, LAST_FIFTY
+    }
 
     @Inject
     lateinit var resourceProvider: ResourceProvider
@@ -55,40 +54,156 @@ class TraderMeProfitPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        viewState.setBtnsState(State.FOR_YEAR)
         viewState.setDateJoined(getTraderDateJoined())
-        traderStatistic.audienceData[0].followersCount?.let { viewState.setFollowersCount(it) }
-        traderStatistic.amountDeals30?.let { viewState.setTradesCount(it) }
-            ?: viewState.setTradesCount(ZERO)
         viewState.setPinnedTextVisible(isOpen)
-        traderStatistic.termOfTransaction30?.let {
-            viewState.setAverageDealsTime(
-                it.doubleToStringWithFormat(TERM_OF_TRANSACTION_FORMAT)
-            )
-        } ?: viewState.setAverageDealsTime(TERM_OF_TRANSACTION_FORMAT)
-        setAverageDealsCountAndProfit()
+        traderStatistic.audienceData[0].followersCount?.let { count ->
+            viewState.setFollowersCount(count.toString())
+        }
+        traderStatistic.amountDeals30?.let { count ->
+            viewState.setTradesCount(count.toString())
+        }
+        initProfitTable()
+        getStatisticForYear()
+    }
+
+    private fun initProfitTable() {
         clearProfitTable()
         setProfitTable()
     }
 
-    private fun setAverageDealsCountAndProfit() {
-        traderStatistic.profitTrades30?.let {
-            viewState.setAverageDealsPositiveCountAndProfit(
-                "${it.doubleToStringWithFormat(DEALS_AVERAGE_PROFIT_FORMAT)}(${
-                    traderStatistic.averageProfitTrades30?.doubleToStringWithFormat(
-                        DEALS_AVERAGE_PROFIT_FORMAT, true
-                    )
-                })"
-            )
-        } ?: viewState.setAverageDealsNegativeCountAndProfit(AVERAGE_PERCENT_DEFAULT)
-        traderStatistic.losingTrades30?.let {
-            viewState.setAverageDealsNegativeCountAndProfit(
-                "${it.doubleToStringWithFormat(DEALS_AVERAGE_PROFIT_FORMAT)}(${
-                    traderStatistic.averageLosingTrades30?.doubleToStringWithFormat(
-                        DEALS_AVERAGE_PROFIT_FORMAT, true
-                    )
-                })"
-            )
-        } ?: viewState.setAverageDealsNegativeCountAndProfit(AVERAGE_PERCENT_DEFAULT)
+    fun getStatisticForYear() {
+        viewState.setBtnsState(State.FOR_YEAR)
+        initDealsStatisticFields(
+            traderStatistic.termOfTransaction365,
+            traderStatistic.profitTrades365,
+            traderStatistic.losingTrades365,
+            traderStatistic.averageProfitTrades365,
+            traderStatistic.averageLosingTrades365,
+            traderStatistic.incrDecrDepo365,
+        )
+        initStatisticTable(
+            traderStatistic.ratio365Long,
+            traderStatistic.ratio365Short,
+            traderStatistic.termOfTransaction365Long,
+            traderStatistic.termOfTransaction365Short,
+            traderStatistic.profitOfPercent365Long,
+            traderStatistic.profitOfPercent365Short,
+            traderStatistic.percentProfitOfPercent365Long,
+            traderStatistic.percentProfitOfPercent365Short,
+            traderStatistic.losingOfPercent365Long,
+            traderStatistic.losingOfPercent365Short,
+            traderStatistic.percentLosingOfPercent365Long,
+            traderStatistic.percentLosingOfPercent365Short,
+        )
+    }
+
+    fun getStatisticLastFifty() {
+        viewState.setBtnsState(State.LAST_FIFTY)
+        initDealsStatisticFields(
+            traderStatistic.termOfTransactionNDeals,
+            traderStatistic.profitOfPercentNDeals,
+            traderStatistic.losingOfPercentNDeals,
+            traderStatistic.averageProfitTradesNDeals,
+            traderStatistic.averageLosingTradesNDeals,
+            traderStatistic.incrDecrDepoNDeals,
+        )
+        initStatisticTable(
+            traderStatistic.ratioNDealsLong,
+            traderStatistic.ratioNDealsShort,
+            traderStatistic.termOfTransactionNDealsLong,
+            traderStatistic.termOfTransactionNDealsShort,
+            traderStatistic.profitOfPercentNDealsLong,
+            traderStatistic.profitOfPercentNDealsShort,
+            traderStatistic.percentProfitOfPercentNDealsLong,
+            traderStatistic.percentProfitOfPercentNDealsShort,
+            traderStatistic.losingOfPercentNDealsLong,
+            traderStatistic.losingOfPercentNDealsShort,
+            traderStatistic.percentLosingOfPercentNDealsLong,
+            traderStatistic.percentLosingOfPercentNDealsShort,
+        )
+    }
+
+    private fun initDealsStatisticFields(
+        termOfTransaction: Double?,
+        profitOfPercent: Double?,
+        losingOfPercent: Double?,
+        averageProfitTrades: Double?,
+        averageLosingTrades: Double?,
+        incrDecrDepo: Double?,
+    ) {
+        termOfTransaction?.let { term ->
+            viewState.setAverageDealsTime(term.toString())
+        }
+        profitOfPercent?.let { profit ->
+            viewState.setPositiveProfitPercentForTransactions("$profit%")
+        }
+        losingOfPercent?.let { losing ->
+            viewState.setNegativeProfitPercentForTransactions("$losing%")
+        }
+        averageProfitTrades?.let { profit ->
+            viewState.setAverageProfitForDeal("$profit%")
+        }
+        averageLosingTrades?.let { losing ->
+            viewState.setAverageLoseForDeal("$losing%")
+        }
+        incrDecrDepo?.let { value ->
+            viewState.setDepoValue("$value%")
+        }
+    }
+
+    private fun initStatisticTable(
+        ratioLong: Double?,
+        ratioShort: Double?,
+        termOfTransactionLong: Double?,
+        termOfTransactionShort: Double?,
+        profitOfPercentLong: Double?,
+        profitOfPercentShort: Double?,
+        percentProfitOfPercentLong: Double?,
+        percentProfitOfPercentShort: Double?,
+        losingOfPercentLong: Double?,
+        losingOfPercentShort: Double?,
+        percentLosingOfPercentLong: Double?,
+        percentLosingOfPercentShort: Double?,
+    ) {
+        with(traderStatistic) {
+            ratioLong?.let { value ->
+                viewState.setAllDealLong("$value%")
+            }
+            ratioShort?.let { value ->
+                viewState.setAllDealShort("$value%")
+            }
+            termOfTransactionLong?.let { daysCount ->
+                viewState.setAvaregeTimeDealLong("$daysCount")
+            }
+            termOfTransactionShort?.let { daysCount ->
+                viewState.setAvaregeTimeDealShort("$daysCount")
+            }
+            profitOfPercentLong?.let { profit ->
+                viewState.setPercentOfProfitDealsLong("$profit%")
+            }
+            profitOfPercentShort?.let { profit ->
+                viewState.setPercentOfProfitDealsShort("$profit%")
+            }
+            percentProfitOfPercentLong?.let { percent ->
+                viewState.setAvaregePercentForProfitDealLong("$percent%")
+            }
+            percentProfitOfPercentShort?.let { percent ->
+                viewState.setAvaregePercentForProfitDealShort("$percent%")
+            }
+            losingOfPercentLong?.let { percent ->
+                viewState.setPercentOfLosingDealsLong("$percent%")
+            }
+            losingOfPercentShort?.let { percent ->
+                viewState.setPercentOfLosingDealsShort("$percent%")
+            }
+            percentLosingOfPercentLong?.let { percent ->
+                viewState.setAvaregePercentForLosingDealLong("$percent%")
+            }
+            percentLosingOfPercentShort?.let { percent ->
+                viewState.setAvaregePercentForLosingDealShort("$percent%")
+            }
+        }
     }
 
     private fun clearProfitTable() {
@@ -107,114 +222,32 @@ class TraderMeProfitPresenter(
     }
 
     private fun setProfitTable() {
-        traderStatistic.monthIndicators.forEach {
-            when (it.month) {
-                1 -> viewState.setJanProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                2 -> viewState.setFebProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                3
-                -> viewState.setMarProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                4
-                -> viewState.setAprProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                5 -> viewState.setMayProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                6 -> viewState.setJunProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                7 -> viewState.setJulProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                8 -> viewState.setAugProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                9 -> viewState.setSepProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                10 -> viewState.setOctProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                11 -> viewState.setNovProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
-                12 -> viewState.setDecProfit(
-                    it.actualProfitMonth!!.doubleToStringWithFormat(
-                        PROFIT_MONTH_FORMAT, true
-                    )
-                )
+        traderStatistic.monthIndicators.forEach { indicator ->
+            when (indicator.month) {
+                1 -> viewState.setJanProfit("${indicator.actualProfitMonth}%")
+                2 -> viewState.setFebProfit("${indicator.actualProfitMonth}%")
+                3 -> viewState.setMarProfit("${indicator.actualProfitMonth}%")
+                4 -> viewState.setAprProfit("${indicator.actualProfitMonth}%")
+                5 -> viewState.setMayProfit("${indicator.actualProfitMonth}%")
+                6 -> viewState.setJunProfit("${indicator.actualProfitMonth}%")
+                7 -> viewState.setJulProfit("${indicator.actualProfitMonth}%")
+                8 -> viewState.setAugProfit("${indicator.actualProfitMonth}%")
+                9 -> viewState.setSepProfit("${indicator.actualProfitMonth}%")
+                10 -> viewState.setOctProfit("${indicator.actualProfitMonth}%")
+                11 -> viewState.setNovProfit("${indicator.actualProfitMonth}%")
+                12 -> viewState.setDecProfit("${indicator.actualProfitMonth}%")
             }
         }
     }
 
-    fun setPinnedTextMode() {
-        if (isOpen) {
-            isOpen = false
-            viewState.setPinnedTextVisible(isOpen)
-        } else {
-            isOpen = true
-            viewState.setPinnedTextVisible(isOpen)
-        }
-    }
-
-    fun onViewResumed() {
-        apiRepo
-            .readPinnedPost(profile.token!!)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.setPinnedPostText(it.text)
-            }, {
-                // Ошибка не обрабатывается
-            })
-    }
-
-    fun deletePinnedText() {
-        apiRepo
-            .deletePinnedPost(profile.token!!)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.setPinnedPostText(it.text)
-            }, {
-                // Ошибка не обрабатывается
-            })
-    }
-
-    fun getTraderDateJoined(): String {
+    private fun getTraderDateJoined(): String {
         val outputDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         return outputDateFormat.format(traderStatistic.audienceData[0].dateJoined)
     }
 
     fun setupBarChart(checkedYear: String): BarData {
         setBarchartData(checkedYear, checkedYearList, entries)
-        val barDataSet = BarDataSet(entries, TraderProfitPresenter.PROFITABILITY)
+        val barDataSet = BarDataSet(entries, PROFITABILITY)
         barDataSet.colors =
             listOf(
                 resourceProvider.getColor(R.color.colorGreenBarChart),

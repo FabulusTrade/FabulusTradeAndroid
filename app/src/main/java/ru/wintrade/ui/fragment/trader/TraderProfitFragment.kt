@@ -1,15 +1,16 @@
 package ru.wintrade.ui.fragment.trader
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
-import ru.wintrade.databinding.FragmentTraderProfitBinding
+import ru.wintrade.databinding.FragmentTraderAnalyticsBinding
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
@@ -18,8 +19,8 @@ import ru.wintrade.ui.App
 
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
-    private var _binding: FragmentTraderProfitBinding? = null
-    private val binding: FragmentTraderProfitBinding
+    private var _binding: FragmentTraderAnalyticsBinding? = null
+    private val binding: FragmentTraderAnalyticsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
@@ -54,7 +55,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTraderProfitBinding.inflate(inflater, container, false)
+        _binding = FragmentTraderAnalyticsBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
@@ -63,8 +64,8 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         initListeners()
     }
 
-    fun initBarChart() {
-        with(binding.barChartTraderProfit) {
+    private fun initBarChart() {
+        with(binding.barChart) {
             data =
                 presenter.setupBarChart(getString(R.string.year_2021_traderProfit))          //   <-btn text
             legend.isEnabled = false
@@ -78,37 +79,41 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     fun initListeners() {
         binding.run {
-            layoutTraderProfitAttachedPost.btnAttachedPostShow.setOnClickListener {
+            attachedPost.btnAttachedPostShow.setOnClickListener {
                 presenter.setPinnedTextMode()
             }
-            ivTraderProfitDealProfitInfoIcon.setOnClickListener {
-                presenter.showDialog()
+            btnForYear.setOnClickListener {
+                presenter.getStatisticForYear()
+            }
+            btnForFiftyDeals.setOnClickListener {
+                presenter.getStatisticLastFifty()
             }
         }
     }
 
     override fun setDateJoined(date: String) {
-        binding.tvTraderProfitRegistrationDateValue.text = date
+        binding.tvRegistrationDateValue.text = date
     }
 
-    override fun setFollowersCount(followersCount: Int) {
-        binding.tvTraderProfitFollowerCounter.text = followersCount.toString()
+    override fun setFollowersCount(followersCount: String) {
+        binding.tvFollowerCounter.text = followersCount
     }
 
-    override fun setTradesCount(tradesCount: Int) {
-        binding.tvTraderProfitDealForWeekCount.text = tradesCount.toString()
+    override fun setTradesCount(tradesCount: String) {
+        binding.tvDealForMonthCount.text = tradesCount
     }
 
     override fun setPinnedPostText(text: String?) {
         binding.run {
             if (text.isNullOrEmpty()) {
-                layoutTraderProfitAttachedPost.root.visibility = View.GONE
+                attachedPost.root.visibility = View.GONE
             } else {
-                with(layoutTraderProfitAttachedPost) {
+                with(attachedPost) {
                     root.visibility = View.VISIBLE
                     tvAttachedPostHeader.visibility = View.GONE
                     ivAttachedPostKebab.visibility = View.GONE
                     layoutAttachedPost.visibility = View.VISIBLE
+                    layoutAttachedPostBody.visibility = View.VISIBLE
                     tvAttachedPostText.text = text
                 }
             }
@@ -116,7 +121,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     override fun setPinnedTextVisible(isOpen: Boolean) {
-        binding.layoutTraderProfitAttachedPost.run {
+        binding.attachedPost.run {
             if (isOpen) {
                 btnAttachedPostShow.text = resources.getString(R.string.hide_traderProfit)
                 tvAttachedPostText.maxLines = MAX_LINES
@@ -127,72 +132,166 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         }
     }
 
+    override fun setBtnsState(state: TraderProfitPresenter.State) {
+        when (state) {
+            TraderProfitPresenter.State.FOR_YEAR -> {
+                setForYearState()
+            }
+            TraderProfitPresenter.State.LAST_FIFTY -> {
+                setLastFiftyState()
+            }
+        }
+    }
+
+    private fun setForYearState() {
+        binding.run {
+            isActive(btnForYear)
+            isNotActive(btnForFiftyDeals)
+        }
+    }
+
+    private fun setLastFiftyState() {
+        binding.run {
+            isActive(btnForFiftyDeals)
+            isNotActive(btnForYear)
+        }
+    }
+
+    private fun isNotActive(inactiveBtn: MaterialButton) {
+        inactiveBtn.apply {
+            backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorGray))
+        }
+    }
+
+    private fun isActive(activeBtn: MaterialButton) {
+        activeBtn.apply {
+            backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorLightGreen)
+            setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary))
+        }
+    }
+
     override fun setAverageDealsTime(dealsTime: String) {
-        binding.tvTraderProfitDealTimeValue.text = dealsTime
+        binding.tvDealAverageTimeValue.text = dealsTime
     }
 
-    override fun setAverageDealsPositiveCountAndProfit(averageProfit: String) {
-        binding.tvTraderProfitDealProfitPositiveValue.text = averageProfit
-    }
-
-    override fun setAverageDealsNegativeCountAndProfit(averageProfit: String) {
-        binding.tvTraderProfitDealProfitNegativeValue.text = averageProfit
-    }
 
     override fun setJanProfit(profit: String) {
-        binding.tvTraderProfitJanValue.text = profit
+        binding.tvJanValue.text = profit
     }
 
     override fun setFebProfit(profit: String) {
-        binding.tvTraderProfitFebValue.text = profit
+        binding.tvFebValue.text = profit
     }
 
     override fun setMarProfit(profit: String) {
-        binding.tvTraderProfitMarValue.text = profit
+        binding.tvMarValue.text = profit
     }
 
     override fun setAprProfit(profit: String) {
-        binding.tvTraderProfitAprValue.text = profit
+        binding.tvAprValue.text = profit
     }
 
     override fun setMayProfit(profit: String) {
-        binding.tvTraderProfitMayValue.text = profit
+        binding.tvMayValue.text = profit
     }
 
     override fun setJunProfit(profit: String) {
-        binding.tvTraderProfitJunValue.text = profit
+        binding.tvJunValue.text = profit
     }
 
     override fun setJulProfit(profit: String) {
-        binding.tvTraderProfitJulValue.text = profit
+        binding.tvJulValue.text = profit
     }
 
     override fun setAugProfit(profit: String) {
-        binding.tvTraderProfitAugValue.text = profit
+        binding.tvAugValue.text = profit
     }
 
     override fun setSepProfit(profit: String) {
-        binding.tvTraderProfitSepValue.text = profit
+        binding.tvSepValue.text = profit
     }
 
     override fun setOctProfit(profit: String) {
-        binding.tvTraderProfitOctValue.text = profit
+        binding.tvOctValue.text = profit
     }
 
     override fun setNovProfit(profit: String) {
-        binding.tvTraderProfitNovValue.text = profit
+        binding.tvNovValue.text = profit
     }
 
     override fun setDecProfit(profit: String) {
-        binding.tvTraderProfitDecValue.text = profit
+        binding.tvDecValue.text = profit
     }
 
-    override fun showInfoDialog() {
-        AlertDialog.Builder(context)
-            .setMessage(getString(R.string.dialog_info_text_traderProfit))
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok_traderProfit) { _, _ ->
-            }.show()
+    override fun setPositiveProfitPercentForTransactions(percent: String) {
+        binding.tvDealProfitPositiveValue.text = percent
+    }
+
+    override fun setNegativeProfitPercentForTransactions(percent: String) {
+        binding.tvDealProfitNegativeValue.text = percent
+    }
+
+    override fun setAverageProfitForDeal(percent: String) {
+        binding.tvAverageProfitValue.text = percent
+    }
+
+    override fun setAverageLoseForDeal(percent: String) {
+        binding.tvAverageLossValue.text = percent
+    }
+
+    override fun setDepoValue(percent: String) {
+        binding.tvDepoValue.text = percent
+    }
+
+    override fun setAllDealLong(percent: String) {
+        binding.tvAllDealLong.text = percent
+    }
+
+    override fun setAllDealShort(percent: String) {
+        binding.tvAllDealShort.text = percent
+    }
+
+    override fun setAvaregeTimeDealLong(daysCount: String) {
+        binding.tvAverageTimeDealLong.text = daysCount
+    }
+
+    override fun setAvaregeTimeDealShort(daysCount: String) {
+        binding.tvAverageTimeDealShort.text = daysCount
+    }
+
+    override fun setPercentOfProfitDealsLong(percent: String) {
+        binding.tvProfDealLong.text = percent
+    }
+
+    override fun setPercentOfProfitDealsShort(percent: String) {
+        binding.tvProfDealShort.text = percent
+    }
+
+    override fun setAvaregePercentForProfitDealLong(percent: String) {
+        binding.tvAveragePercentProfitDealLong.text = percent
+    }
+
+    override fun setAvaregePercentForProfitDealShort(percent: String) {
+        binding.tvAveragePercentProfitDealShort.text = percent
+    }
+
+    override fun setPercentOfLosingDealsLong(percent: String) {
+        binding.tvLessDealLong.text = percent
+    }
+
+    override fun setPercentOfLosingDealsShort(percent: String) {
+        binding.tvLessDealShort.text = percent
+    }
+
+    override fun setAvaregePercentForLosingDealLong(percent: String) {
+        binding.tvAverageLessDealLong.text = percent
+    }
+
+    override fun setAvaregePercentForLosingDealShort(percent: String) {
+        binding.tvAverageLessDealShort.text = percent
     }
 
     override fun onDestroyView() {
