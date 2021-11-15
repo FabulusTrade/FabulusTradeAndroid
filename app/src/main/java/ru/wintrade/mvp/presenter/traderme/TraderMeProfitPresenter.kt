@@ -4,7 +4,6 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.data.BarChartData
@@ -13,10 +12,8 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.model.resource.ResourceProvider
-import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeProfitView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -299,7 +296,4 @@ class TraderMeProfitPresenter(
         router.navigateTo(Screens.createPostScreen(null, false, isPinned, pinnedText))
     }
 
-    fun showDialog() {
-        viewState.showInfoDialog()
-    }
 }

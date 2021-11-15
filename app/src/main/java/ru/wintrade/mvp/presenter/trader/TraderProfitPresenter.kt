@@ -11,7 +11,6 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.trader.TraderProfitView
-import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
