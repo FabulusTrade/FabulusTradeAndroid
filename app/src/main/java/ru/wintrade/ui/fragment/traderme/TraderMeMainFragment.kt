@@ -2,7 +2,6 @@ package ru.wintrade.ui.fragment.traderme
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -124,10 +123,11 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         binding.tvTraderMeMainProfit.apply {
             text = profit
             setTextColor(
-                if (isPositive)
-                    COLOR_GREEN
-                else
-                    Color.RED
+                resources.getColor(
+                    if (isPositive)
+                        R.color.colorGreenPercent
+                    else R.color.colorRedPercent
+                )
             )
         }
     }

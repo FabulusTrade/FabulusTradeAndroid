@@ -1,24 +1,28 @@
 package ru.wintrade.mvp.presenter.trader
 
-import android.graphics.Color
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.data.BarChartData
 import ru.wintrade.mvp.model.entity.MonthIndicator
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.trader.TraderProfitView
-import ru.wintrade.util.COLOR_GREEN_PERCENT
 import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class TraderProfitPresenter(
     val traderStatistic: TraderStatistic,
     val trader: Trader
 ) : MvpPresenter<TraderProfitView>() {
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     companion object {
         private const val TERM_OF_TRANSACTION_FORMAT = "0"
@@ -169,7 +173,11 @@ class TraderProfitPresenter(
         setBarchartData(checkedYear, checkedYearList, entries)
         val barDataSet = BarDataSet(entries, PROFITABILITY)
         barDataSet.colors =
-            listOf(COLOR_GREEN_PERCENT, Color.BLACK, Color.RED)
+            listOf(
+                resourceProvider.getColor(R.color.colorGreenBarChart),
+                resourceProvider.getColor(R.color.colorBlackBarChart),
+                resourceProvider.getColor(R.color.colorRedBarChart)
+            )
         return BarData(labels, barDataSet)
     }
 

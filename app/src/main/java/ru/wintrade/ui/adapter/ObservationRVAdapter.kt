@@ -1,18 +1,23 @@
 package ru.wintrade.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_subscriber_observation.view.*
 import ru.wintrade.R
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.util.loadImage
+import javax.inject.Inject
 
 class ObservationRVAdapter(val presenter: IObservationListPresenter) :
     RecyclerView.Adapter<ObservationRVAdapter.ObservationItemViewHolder>() {
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -35,12 +40,12 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
 
     private fun setProfitColor(holder: ObservationItemViewHolder) {
         if (holder.itemView.tv_subscriber_observation_profit.text.substring(0, 1) == "-") {
-            holder.itemView.tv_subscriber_observation_profit.setTextColor(Color.RED)
+            holder.itemView.tv_subscriber_observation_profit.setTextColor(
+                resourceProvider.getColor(R.color.colorRedPercent)
+            )
         } else {
             holder.itemView.tv_subscriber_observation_profit.setTextColor(
-                holder.itemView.context.resources.getColor(
-                    R.color.colorGreenPercent
-                )
+                resourceProvider.getColor(R.color.colorGreenPercent)
             )
         }
     }
