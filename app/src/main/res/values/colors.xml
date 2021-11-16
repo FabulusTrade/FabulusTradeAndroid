@@ -10,6 +10,8 @@
     <color name="colorBlue">#304FFE</color>
     <color name="colorLightGreen">#E3F8EB</color>
     <color name="colorGreen">#00AE46</color>
+    <color name="colorGreenPercent">#00923B</color>
+    <color name="colorRedPercent">#FF0000</color>
     <color name="colorBlueGray">#EBF6F6</color>
     <color name="colorGrayLight">#D8D4D4</color>
     <color name="colorRed">#B52C2C</color>
@@ -18,4 +20,9 @@
     <color name="colorTitleRegistration">#757BB9</color>
     <color name="colorDivider">#C0C0C0</color>
     <color name="colorTraderRegBackground">#F4FBFF</color>
+    <color name="colorTextHintColor">#66000000</color>
+    <!--BAR_CHART_COLOR-->
+    <color name="colorRedBarChart">#FF0000</color>
+    <color name="colorBlackBarChart">#000000</color>
+    <color name="colorGreenBarChart">#00923B</color>
 </resources>

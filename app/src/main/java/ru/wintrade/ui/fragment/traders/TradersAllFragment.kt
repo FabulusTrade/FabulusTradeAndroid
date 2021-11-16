@@ -53,7 +53,9 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
 
     override fun init() {
         binding.rvAllTraders.run {
-            tradersAllRVAdapter = TradersAllRVAdapter(presenter.listPresenter)
+            tradersAllRVAdapter = TradersAllRVAdapter(presenter.listPresenter).apply {
+                App.instance.appComponent.inject(this)
+            }
             adapter = tradersAllRVAdapter
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(

@@ -3,9 +3,11 @@ package ru.wintrade.mvp.presenter.traderme
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.TradesByCompanyAggregated
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.traderme.TraderMeTradeView
@@ -23,6 +25,9 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
 
     @Inject
     lateinit var profile: Profile
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     private var isLoading = false
     private var nextPage: Int? = 1
@@ -59,10 +64,18 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
         override fun bind(view: TradesByCompanyItemView) {
             val trade = trades[view.pos]
 
-            view.setLastTradeTime("Последняя сделка: ${dateFormat.format(trade.lastTrade)}")
+            view.setLastTradeTime(
+                "${resourceProvider.getStringResource(R.string.last_operation)} ${
+                    dateFormat.format(trade.lastTrade)
+                }"
+            )
             view.setCompanyName(trade.companyName)
             view.setCompanyLogo(trade.companyLogo)
-            view.setTradesCount("Количество сделок: ${trade.tradesCount}")
+            view.setTradesCount(
+                "${resourceProvider.getStringResource(R.string.count_operations)} ${
+                    trade.tradesCount
+                }"
+            )
         }
 
         override fun onItemClick(view: TradesByCompanyItemView) {
