@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_traders_all.view.*
 import ru.wintrade.R
@@ -43,6 +44,16 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
             else
                 presenter.observeBtnClicked(holder.adapterPosition, false)
         }
+
+        holder.itemView.cb_traders_all_item_observe.setOnClickListener( { view: View ->
+            val context = holder.itemView.getContext()
+            if (holder.itemView.cb_traders_all_item_observe.isChecked) {
+                Toast.makeText(context, R.string.added_to_observation, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, R.string.removed_from_observation, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
     }
 
     override fun getItemCount(): Int = presenter.getCount()

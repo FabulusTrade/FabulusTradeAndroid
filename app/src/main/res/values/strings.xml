@@ -19,6 +19,8 @@
     <string name="edit">Редактировать</string>
     <string name="community">Сообщество</string>
     <string name="observation">Наблюдение</string>
+    <string name="added_to_observation">Добавлен в лист наблюдения</string>
+    <string name="removed_from_observation">Удалён из листа наблюдения</string>
     <string name="e_mail_quastion">E-mail для связи</string>
     <string name="question_success">Ваш вопрос отправлен в службу поддержки, ответ будет отправлен на указанный Вами e-mail</string>
     <string name="question_too_long">Вопрос слишком длинный</string>
