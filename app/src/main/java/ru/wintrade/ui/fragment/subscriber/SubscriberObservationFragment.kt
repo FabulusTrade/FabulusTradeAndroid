@@ -33,7 +33,9 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
     }
 
     private val observationRVAdapter: ObservationRVAdapter? by lazy {
-        ObservationRVAdapter(presenter.listPresenter)
+        ObservationRVAdapter(presenter.listPresenter).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreateView(

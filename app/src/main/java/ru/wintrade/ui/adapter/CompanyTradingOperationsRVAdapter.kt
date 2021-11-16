@@ -1,6 +1,5 @@
 package ru.wintrade.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_comp_trading_ops.view.*
 import ru.wintrade.R
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import ru.wintrade.util.loadImage
+import javax.inject.Inject
 
 class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperationsListPresenter) :
     RecyclerView.Adapter<CompanyTradingOperationsRVAdapter.DetailViewHolder>() {
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DetailViewHolder(
             LayoutInflater.from(parent.context)
@@ -32,10 +37,14 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
                     ContextCompat.getDrawable(holder.itemView.context, R.color.colorWhite)
             }
             holder.itemView.tv_item_comp_trading_ops_profit.text.substring(0, 1) == "-" -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(Color.RED)
+                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(
+                    resourceProvider.getColor(R.color.colorRedPercent)
+                )
             }
             else -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(Color.GREEN)
+                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(
+                    resourceProvider.getColor(R.color.colorGreenPercent)
+                )
             }
         }
     }

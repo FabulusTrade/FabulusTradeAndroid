@@ -1,6 +1,5 @@
 package ru.wintrade.ui.fragment.trader
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
-import ru.wintrade.util.COLOR_GREEN
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.setDrawerLockMode
 
@@ -133,13 +131,14 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     override fun setProfit(profit: String, isPositive: Boolean) {
         binding.tvTraderStatProfit.apply {
-            if (isPositive) {
-                text = profit
-                setTextColor(COLOR_GREEN)
-            } else {
-                text = profit
-                setTextColor(Color.RED)
-            }
+            text = profit
+            setTextColor(
+                resources.getColor(
+                    if (isPositive)
+                        R.color.colorGreenPercent
+                    else R.color.colorRedPercent
+                )
+            )
         }
     }
 

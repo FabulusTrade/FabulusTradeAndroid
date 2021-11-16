@@ -53,7 +53,9 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
     }
 
     fun initAdapter() {
-        observationRVAdapter = ObservationRVAdapter(presenter.listPresenter)
+        observationRVAdapter = ObservationRVAdapter(presenter.listPresenter).apply {
+            App.instance.appComponent.inject(this)
+        }
         binding.rvTraderMeSub.run {
             adapter = observationRVAdapter
             layoutManager = LinearLayoutManager(context)

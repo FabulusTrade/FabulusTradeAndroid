@@ -140,9 +140,9 @@
     <string name="trader_reg_3_becomeToTrader">После нажатия на кнопку “Готово” к Вам на электронную почту, указанную при регистрации, поступит письмо для потверждения Ваших учетных данных, а также содержащее ссылку на переход в Ваш личный кабинет на сайте fabulustrade.com\n\nВ личном кабинете Вам необходимо скачать программное обеспечение (скрипт) и ознакомиться с инструкцией по его установке для трансляции сделок на платформу Fabulus Trade.</string>
 
     <!-- ResetPasswordFragment -->
-    <string name="email">Электронная почта</string>
+    <string name="email">введите e-mail</string>
     <string name="send">Отправить</string>
-    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в WinTrade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
+    <string name="reset_pass_text">Введите e-mail, который вводили при регистрации учетной записи в Fabulus Trade. Мы отправим Вам ссылку к странице, через которую Вы сможете восстановить пароль.</string>
     <string name="email_incorrect">Некорректный email</string>
     <string name="reset_pass_success">Для восстановления доступа перейдите по ссылке, отправленной на указанную электронную почту</string>
     <string name="ok_resetFragment">OK</string>
@@ -179,7 +179,7 @@
     <string name="ok_signUp">OK</string>
     <string name="name_already_exist">Пользователь с таким именем пользователя уже существует</string>
     <string name="is_success_reg">Успешная регистрация</string>
-    <string name="is_success_registration">Пользоавтель успешно зарегестрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
+    <string name="is_success_registration">Пользователь успешно зарегистрирован, ссылка на активацию отправлена на указанную Вами почту.</string>
     <string name="nickname_too_short">Ник слишком короткий</string>
     <string name="nickname_too_long">Ник слишком длинный</string>
     <string name="nickname_only_eng_and_digits">Разрешены только латинские буквы и цифры</string>
@@ -415,4 +415,8 @@
     <string name="deal_price">Цена: %.2f%s</string>
     <string name="deal_company_name">%s ($%s)</string>
     <string name="deal_profit_count">%s%%</string>
+
+    <!--TraderTradePresenter-->
+    <string name="last_operation">Последняя операция:</string>
+    <string name="count_operations">Количество операций:</string>
 </resources>
