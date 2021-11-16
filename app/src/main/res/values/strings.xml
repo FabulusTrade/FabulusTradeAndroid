@@ -413,6 +413,6 @@
     <string name="show_attachedPost">показать</string>
     <string name="deal_date">Дата: %s</string>
     <string name="deal_price">Цена: %.2f%s</string>
-    <string name="deal_company_name">%s($%s)</string>
+    <string name="deal_company_name">%s ($%s)</string>
     <string name="deal_profit_count">%s%%</string>
 </resources>
