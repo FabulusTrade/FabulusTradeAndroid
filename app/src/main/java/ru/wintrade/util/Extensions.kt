@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
 import java.text.DecimalFormat
@@ -56,3 +57,6 @@ fun String.toApiDate(): String =
 
 fun String.toUiDate(): String =
     split("-").reversed().joinToString(".")
+
+fun ResourceProvider.formatString(stringId: Int, vararg args: Any?): String =
+    String.format(getStringResource(stringId), *args)

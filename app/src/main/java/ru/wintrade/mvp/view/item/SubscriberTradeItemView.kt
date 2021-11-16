@@ -8,8 +8,7 @@ interface SubscriberTradeItemView {
     fun setType(type: String)
     fun setCompany(company: String)
     fun setPrice(price: String)
-    fun setSum(sum: String)
-    fun setCount(count: String)
     fun setDate(date: String)
     fun setProfit(profit: String, color: Int)
+    fun setProfitVisibility(visibility: Int)
 }

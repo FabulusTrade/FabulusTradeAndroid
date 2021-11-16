@@ -32,4 +32,17 @@
     <dimen name="margin_horizontal_low">20dp</dimen>
     <dimen name="margin_horizontal_medium">35dp</dimen>
 
+    <dimen name="tv_item_sub_trade_date_margin_top">4dp</dimen>
+    <dimen name="tv_item_sub_trade_nickname_margin_top">8dp</dimen>
+    <dimen name="tv_item_sub_operation_type_margit_top">6dp</dimen>
+    <dimen name="delimiter_item_sub_trade_margin_bottom">15dp</dimen>
+    <dimen name="delimiter_item_sub_trade_layout_width">0.5dp</dimen>
+    <dimen name="delimiter_item_sub_trade_margin_top">10dp</dimen>
+    <dimen name="tv_item_sub_trade_profit_count_margin_bottom">4dp</dimen>
+    <dimen name="tv_item_sub_trade_profit_count_padding_end">11dp</dimen>
+    <dimen name="tv_item_sub_trade_price_padding_end">11dp</dimen>
+    <dimen name="tv_item_sub_trade_profit_count_padding_start">19dp</dimen>
+    <dimen name="tv_item_sub_trade_profit_count_margin_end">61dp</dimen>
+    <dimen name="tv_item_sub_trade_price_margin_end">61dp</dimen>
+    <dimen name="tv_item_sub_operation_type_text_size">18sp</dimen>
 </resources>

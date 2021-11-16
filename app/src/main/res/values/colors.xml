@@ -20,7 +20,10 @@
     <color name="colorTitleRegistration">#757BB9</color>
     <color name="colorDivider">#C0C0C0</color>
     <color name="colorTraderRegBackground">#F4FBFF</color>
+    <color name="delimiter_item_sub_trade_background_color">#D8D4D4</color>
+    <color name="tv_item_sub_trade_profit_count_background">#F3F3F3</color>
     <color name="colorTextHintColor">#66000000</color>
+  
     <!--BAR_CHART_COLOR-->
     <color name="colorRedBarChart">#FF0000</color>
     <color name="colorBlackBarChart">#000000</color>
