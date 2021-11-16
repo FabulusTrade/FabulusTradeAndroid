@@ -3,6 +3,7 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_traders_all.view.*
 import ru.wintrade.R
@@ -10,7 +11,9 @@ import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.showLongToast
 import javax.inject.Inject
+
 
 class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
     RecyclerView.Adapter<TradersAllRVAdapter.TradersAllViewHolder>() {
@@ -51,6 +54,15 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
                 presenter.observeBtnClicked(holder.adapterPosition, true)
             else
                 presenter.observeBtnClicked(holder.adapterPosition, false)
+        }
+
+        holder.itemView.cb_traders_all_item_observe.setOnClickListener { view: View ->
+            val context = holder.itemView.getContext()
+            if (holder.itemView.cb_traders_all_item_observe.isChecked) {
+                context.showLongToast(context.getResources().getString(R.string.added_to_observation), Toast.LENGTH_SHORT)
+            } else {
+                context.showLongToast(context.getResources().getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
+            }
         }
     }
 
