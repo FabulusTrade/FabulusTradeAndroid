@@ -3,12 +3,14 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_sub_trade.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
+import ru.wintrade.util.formatString
 import ru.wintrade.util.loadImage
 
 class SubscriberTradesRVAdapter(
@@ -28,7 +30,7 @@ class SubscriberTradesRVAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.containerView.tv_item_sub_trade_more.setOnClickListener {
+        holder.containerView.setOnClickListener {
             presenter.clicked(holder.pos)
         }
     }
@@ -59,21 +61,17 @@ class SubscriberTradesRVAdapter(
             tv_item_sub_trade_price.text = price
         }
 
-        override fun setSum(sum: String) = with(containerView) {
-            tv_item_sub_trade_sum.text = sum
-        }
-
-        override fun setCount(count: String) = with(containerView) {
-            tv_item_sub_trade_count.text = count
-        }
-
         override fun setDate(date: String) = with(containerView) {
             tv_item_sub_trade_date.text = date
         }
 
+        override fun setProfitVisibility(visibility: Int) = with(containerView) {
+            tv_item_sub_trade_profit_count.visibility = visibility
+        }
+
         override fun setProfit(profit: String, color: Int) = with(containerView) {
             tv_item_sub_trade_profit_count.text = profit
-            tv_item_sub_trade_profit_count.setBackgroundColor(color)
+            tv_item_sub_trade_profit_count.setTextColor(ContextCompat.getColor(context, color))
         }
     }
 }

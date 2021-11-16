@@ -13,6 +13,8 @@ class AndroidResourceProvider(val context: Context) : ResourceProvider {
         return context.resources.getString(resource)
     }
 
+    override fun getColor(resource: Int): Int = context.resources.getColor(resource)
+
     private fun getImageIdFromDrawable(imageName: String): Int {
         return context.resources.getIdentifier(imageName, "drawable", context.packageName)
     }

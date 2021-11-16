@@ -1,20 +1,23 @@
 package ru.wintrade.mvp.presenter.subscriber
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.view.View
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.formatString
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
@@ -27,6 +30,9 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
 
     @Inject
     lateinit var apiRepo: ApiRepo
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     enum class State {
         DEALS, ORDERS, JOURNAL
@@ -54,19 +60,32 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
             }
-            view.setCompany(trade.company)
-            view.setCount("Кол-во: ${trade.count}")
-            view.setDate("Дата: $date")
+            view.setCompany(
+                resourceProvider.formatString(
+                    R.string.deal_company_name,
+                    trade.company,
+                    trade.ticker
+                )
+            )
+            view.setDate(resourceProvider.formatString(R.string.deal_date, date))
             view.setType(trade.operationType)
-            view.setPrice("Цена: ${trade.price} ${trade.currency}")
-            view.setSum("Сумма: ${trade.value} ${trade.currency}")
-            trade.profitCount?.let {
-                if (trade.profitCount.toFloat() >= 0) {
-                    view.setProfit("${trade.profitCount} %", Color.GREEN)
+            view.setPrice(
+                resourceProvider.formatString(
+                    R.string.deal_price,
+                    trade.price,
+                    trade.currency
+                )
+            )
+            trade.profitCount?.let { profitCount ->
+                val profitCountStr =
+                    resourceProvider.formatString(R.string.deal_profit_count, profitCount)
+                if (profitCount.toFloat() >= 0) {
+                    view.setProfit(profitCountStr, R.color.colorGreen)
                 } else {
-                    view.setProfit("${trade.profitCount} %", Color.RED)
+                    view.setProfit(profitCountStr, R.color.colorRed)
                 }
-            } ?: view.setProfit("", Color.WHITE)
+                view.setProfitVisibility(View.VISIBLE)
+            } ?: view.setProfitVisibility(View.GONE)
         }
 
         override fun clicked(pos: Int) {

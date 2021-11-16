@@ -47,7 +47,9 @@ class CompanyTradingOperationsFragment(private val traderId: String, private val
 
     override fun init() {
         companyTradingOperationsRVAdapter =
-            CompanyTradingOperationsRVAdapter(presenter.listPresenter)
+            CompanyTradingOperationsRVAdapter(presenter.listPresenter).apply {
+                App.instance.appComponent.inject(this)
+            }
         binding.rvCompTradingOps.run {
             adapter = companyTradingOperationsRVAdapter
             layoutManager = LinearLayoutManager(context)

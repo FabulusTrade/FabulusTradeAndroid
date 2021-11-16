@@ -1,6 +1,5 @@
 package ru.wintrade.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +7,20 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_traders_all.view.*
 import ru.wintrade.R
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
+import javax.inject.Inject
+
 
 class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
     RecyclerView.Adapter<TradersAllRVAdapter.TradersAllViewHolder>() {
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TradersAllViewHolder(
         LayoutInflater
             .from(parent.context)
@@ -30,9 +36,13 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
 
     private fun setProfitColor(holder: TradersAllViewHolder) {
         if (holder.itemView.tv_traders_all_item_year_profit.text.substring(0, 1) == "-")
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.RED)
+            holder.itemView.tv_traders_all_item_year_profit.setTextColor(
+                resourceProvider.getColor(R.color.colorRedPercent)
+            )
         else
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(Color.GREEN)
+            holder.itemView.tv_traders_all_item_year_profit.setTextColor(
+                resourceProvider.getColor(R.color.colorGreenPercent)
+            )
     }
 
     fun initListeners(holder: TradersAllViewHolder) {
