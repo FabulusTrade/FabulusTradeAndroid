@@ -84,6 +84,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                 } else {
                     view.setProfit(profitCountStr, R.color.colorRed)
                 }
+                view.setProfitVisibility(View.VISIBLE)
             } ?: view.setProfitVisibility(View.GONE)
         }
 

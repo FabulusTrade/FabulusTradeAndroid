@@ -84,6 +84,7 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                 } else {
                     view.setProfit(profitCountStr, R.color.colorRed)
                 }
+                view.setProfitVisibility(View.VISIBLE)
             } ?: view.setProfitVisibility(View.GONE)
         }
 
