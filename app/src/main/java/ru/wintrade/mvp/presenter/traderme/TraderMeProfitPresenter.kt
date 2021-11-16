@@ -4,6 +4,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.data.BarChartData
@@ -296,4 +297,35 @@ class TraderMeProfitPresenter(
         router.navigateTo(Screens.createPostScreen(null, false, isPinned, pinnedText))
     }
 
+    fun onViewResumed() {
+        apiRepo
+            .readPinnedPost(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.setPinnedPostText(it.text)
+            }, {
+                // Ошибка не обрабатывается
+            })
+    }
+
+    fun deletePinnedText() {
+        apiRepo
+            .deletePinnedPost(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.setPinnedPostText(it.text)
+            }, {
+                // Ошибка не обрабатывается
+            })
+    }
+
+    fun setPinnedTextMode() {
+        if (isOpen) {
+            isOpen = false
+            viewState.setPinnedTextVisible(isOpen)
+        } else {
+            isOpen = true
+            viewState.setPinnedTextVisible(isOpen)
+        }
+    }
 }
