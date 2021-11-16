@@ -11,6 +11,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.showLongToast
 
 class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
     RecyclerView.Adapter<TradersAllRVAdapter.TradersAllViewHolder>() {
@@ -45,15 +46,14 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
                 presenter.observeBtnClicked(holder.adapterPosition, false)
         }
 
-        holder.itemView.cb_traders_all_item_observe.setOnClickListener( { view: View ->
+        holder.itemView.cb_traders_all_item_observe.setOnClickListener { view: View ->
             val context = holder.itemView.getContext()
             if (holder.itemView.cb_traders_all_item_observe.isChecked) {
-                Toast.makeText(context, R.string.added_to_observation, Toast.LENGTH_SHORT).show()
+                context.showLongToast(context.getResources().getString(R.string.added_to_observation), Toast.LENGTH_SHORT)
             } else {
-                Toast.makeText(context, R.string.removed_from_observation, Toast.LENGTH_SHORT)
-                    .show()
+                context.showLongToast(context.getResources().getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
             }
-        })
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()
