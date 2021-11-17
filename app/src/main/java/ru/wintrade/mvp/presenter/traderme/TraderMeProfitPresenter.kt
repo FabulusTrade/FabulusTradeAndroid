@@ -164,43 +164,41 @@ class TraderMeProfitPresenter(
         percentLosingOfPercentLong: Double?,
         percentLosingOfPercentShort: Double?,
     ) {
-        with(traderStatistic) {
-            ratioLong?.let { value ->
-                viewState.setAllDealLong("$value%")
-            }
-            ratioShort?.let { value ->
-                viewState.setAllDealShort("$value%")
-            }
-            termOfTransactionLong?.let { daysCount ->
-                viewState.setAvaregeTimeDealLong("$daysCount")
-            }
-            termOfTransactionShort?.let { daysCount ->
-                viewState.setAvaregeTimeDealShort("$daysCount")
-            }
-            profitOfPercentLong?.let { profit ->
-                viewState.setPercentOfProfitDealsLong("$profit%")
-            }
-            profitOfPercentShort?.let { profit ->
-                viewState.setPercentOfProfitDealsShort("$profit%")
-            }
-            percentProfitOfPercentLong?.let { percent ->
-                viewState.setAvaregePercentForProfitDealLong("$percent%")
-            }
-            percentProfitOfPercentShort?.let { percent ->
-                viewState.setAvaregePercentForProfitDealShort("$percent%")
-            }
-            losingOfPercentLong?.let { percent ->
-                viewState.setPercentOfLosingDealsLong("$percent%")
-            }
-            losingOfPercentShort?.let { percent ->
-                viewState.setPercentOfLosingDealsShort("$percent%")
-            }
-            percentLosingOfPercentLong?.let { percent ->
-                viewState.setAvaregePercentForLosingDealLong("$percent%")
-            }
-            percentLosingOfPercentShort?.let { percent ->
-                viewState.setAvaregePercentForLosingDealShort("$percent%")
-            }
+        ratioLong?.let { value ->
+            viewState.setAllDealLong("$value%")
+        }
+        ratioShort?.let { value ->
+            viewState.setAllDealShort("$value%")
+        }
+        termOfTransactionLong?.let { daysCount ->
+            viewState.setAvaregeTimeDealLong("$daysCount")
+        }
+        termOfTransactionShort?.let { daysCount ->
+            viewState.setAvaregeTimeDealShort("$daysCount")
+        }
+        profitOfPercentLong?.let { profit ->
+            viewState.setPercentOfProfitDealsLong("$profit%")
+        }
+        profitOfPercentShort?.let { profit ->
+            viewState.setNegativeProfitPercentForTransactions("$profit%")
+        }
+        percentProfitOfPercentLong?.let { percent ->
+            viewState.setAvaregePercentForProfitDealLong("$percent%")
+        }
+        percentProfitOfPercentShort?.let { percent ->
+            viewState.setAvaregePercentForProfitDealShort("$percent%")
+        }
+        losingOfPercentLong?.let { percent ->
+            viewState.setPercentOfLosingDealsLong("$percent%")
+        }
+        losingOfPercentShort?.let { percent ->
+            viewState.setPercentOfLosingDealsShort("$percent%")
+        }
+        percentLosingOfPercentLong?.let { percent ->
+            viewState.setAvaregePercentForLosingDealLong("$percent%")
+        }
+        percentLosingOfPercentShort?.let { percent ->
+            viewState.setAvaregePercentForLosingDealShort("$percent%")
         }
     }
 
