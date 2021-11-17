@@ -97,7 +97,7 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     }
 
     private fun loadTraderOperationsCount() {
-        apiRepo.getTraderOperationsCount(profile.token!!)
+        apiRepo.getTraderOperationsCount(profile.user!!.id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ operationsCount ->
                 viewState.renderOperationsCount(operationsCount)
