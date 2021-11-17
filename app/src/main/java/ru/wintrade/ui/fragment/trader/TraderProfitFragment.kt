@@ -16,6 +16,7 @@ import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.wintrade.mvp.view.trader.TraderProfitView
 import ru.wintrade.ui.App
+import ru.wintrade.util.setTextAndColor
 
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
@@ -177,53 +178,52 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         binding.tvDealAverageTimeValue.text = dealsTime
     }
 
-
-    override fun setJanProfit(profit: String) {
-        binding.tvJanValue.text = profit
+    override fun setJanProfit(profit: String, textColor: Int) {
+        binding.tvJanValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setFebProfit(profit: String) {
-        binding.tvFebValue.text = profit
+    override fun setFebProfit(profit: String, textColor: Int) {
+        binding.tvFebValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setMarProfit(profit: String) {
-        binding.tvMarValue.text = profit
+    override fun setMarProfit(profit: String, textColor: Int) {
+        binding.tvMarValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setAprProfit(profit: String) {
-        binding.tvAprValue.text = profit
+    override fun setAprProfit(profit: String, textColor: Int) {
+        binding.tvAprValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setMayProfit(profit: String) {
-        binding.tvMayValue.text = profit
+    override fun setMayProfit(profit: String, textColor: Int) {
+        binding.tvMayValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setJunProfit(profit: String) {
-        binding.tvJunValue.text = profit
+    override fun setJunProfit(profit: String, textColor: Int) {
+        binding.tvJunValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setJulProfit(profit: String) {
-        binding.tvJulValue.text = profit
+    override fun setJulProfit(profit: String, textColor: Int) {
+        binding.tvJulValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setAugProfit(profit: String) {
-        binding.tvAugValue.text = profit
+    override fun setAugProfit(profit: String, textColor: Int) {
+        binding.tvAugValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setSepProfit(profit: String) {
-        binding.tvSepValue.text = profit
+    override fun setSepProfit(profit: String, textColor: Int) {
+        binding.tvSepValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setOctProfit(profit: String) {
-        binding.tvOctValue.text = profit
+    override fun setOctProfit(profit: String, textColor: Int) {
+        binding.tvOctValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setNovProfit(profit: String) {
-        binding.tvNovValue.text = profit
+    override fun setNovProfit(profit: String, textColor: Int) {
+        binding.tvNovValue.setTextAndColor(context, profit, textColor)
     }
 
-    override fun setDecProfit(profit: String) {
-        binding.tvDecValue.text = profit
+    override fun setDecProfit(profit: String, textColor: Int) {
+        binding.tvDecValue.setTextAndColor(context, profit, textColor)
     }
 
     override fun setPositiveProfitPercentForTransactions(percent: String) {
