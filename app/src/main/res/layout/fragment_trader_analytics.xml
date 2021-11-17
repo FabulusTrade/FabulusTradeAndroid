@@ -312,14 +312,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2"
-                android:text="@string/title_short" />
+                android:text="@string/title_long" />
 
             <TextView
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2"
-                android:text="@string/title_long" />
+                android:text="@string/title_short" />
 
             <TextView
                 style="@style/GridDefaultText"
@@ -332,14 +332,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tv_all_deal_short"
+                android:id="@+id/tv_all_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/tv_all_deal_long"
+                android:id="@+id/tv_all_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -356,14 +356,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tv_average_time_deal_short"
+                android:id="@+id/tv_average_time_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/tv_average_time_deal_long"
+                android:id="@+id/tv_average_time_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -379,14 +379,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tv_prof_deal_short"
+                android:id="@+id/tv_prof_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/tv_prof_deal_long"
+                android:id="@+id/tv_prof_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -402,7 +402,7 @@
                 android:textSize="@dimen/text_size_very_low" />
 
             <TextView
-                android:id="@+id/tv_average_percent_profit_deal_short"
+                android:id="@+id/tv_average_percent_profit_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -410,7 +410,7 @@
                 android:textColor="@color/colorGreen" />
 
             <TextView
-                android:id="@+id/tv_average_percent_profit_deal_long"
+                android:id="@+id/tv_average_percent_profit_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -427,14 +427,14 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tv_less_deal_short"
+                android:id="@+id/tv_less_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_columnWeight="2" />
 
             <TextView
-                android:id="@+id/tv_less_deal_long"
+                android:id="@+id/tv_less_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -450,7 +450,7 @@
                 android:textSize="@dimen/text_size_very_low" />
 
             <TextView
-                android:id="@+id/tv_average_less_deal_short"
+                android:id="@+id/tv_average_less_deal_long"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -458,7 +458,7 @@
                 android:textColor="@color/colorRed" />
 
             <TextView
-                android:id="@+id/tv_average_less_deal_long"
+                android:id="@+id/tv_average_less_deal_short"
                 style="@style/GridDefaultText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
