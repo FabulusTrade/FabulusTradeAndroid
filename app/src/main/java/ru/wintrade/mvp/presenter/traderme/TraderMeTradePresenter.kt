@@ -97,13 +97,15 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     }
 
     private fun loadTraderOperationsCount() {
-        apiRepo.getTraderOperationsCount(profile.user!!.id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ operationsCount ->
-                viewState.renderOperationsCount(operationsCount)
-            }, { error ->
-                // Ошибка не обрабатывается
-            })
+        profile.user?.id?.let { profileId ->
+            apiRepo.getTraderOperationsCount(profileId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ operationsCount ->
+                    viewState.renderOperationsCount(operationsCount)
+                }, { error ->
+                    // Ошибка не обрабатывается
+                })
+        }
     }
 
     private fun loadTrades() {
