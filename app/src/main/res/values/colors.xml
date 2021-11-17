@@ -11,10 +11,12 @@
     <color name="colorLightGreen">#E3F8EB</color>
     <color name="colorGreen">#00AE46</color>
     <color name="colorGreenPercent">#00923B</color>
+    <color name="colorGreenPercentProfit">#008134</color>
     <color name="colorRedPercent">#FF0000</color>
     <color name="colorBlueGray">#EBF6F6</color>
     <color name="colorGrayLight">#D8D4D4</color>
     <color name="colorRed">#B52C2C</color>
+    <color name="colorRedPercentLoss">#B12B2B</color>
     <color name="colorWhiteSmoke">#F4F4F4</color>
     <color name="colorDarkGray">#858585</color>
     <color name="colorTitleRegistration">#757BB9</color>
