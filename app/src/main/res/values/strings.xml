@@ -421,4 +421,6 @@
     <!--TraderTradePresenter-->
     <string name="last_operation">Последняя операция:</string>
     <string name="count_operations">Количество операций:</string>
+    <string name="empty_profit_result">-</string>
+    <string name="month_profit">%.2f%%</string>
 </resources>

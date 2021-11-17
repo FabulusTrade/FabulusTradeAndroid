@@ -568,6 +568,7 @@
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/january"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -588,6 +589,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/july"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_jan_value"
                 app:layout_constraintStart_toEndOf="@+id/view_vertical_divider"
                 app:layout_constraintTop_toTopOf="@+id/tv_jan_value" />
@@ -622,6 +624,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/february"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/tv_jan_label"
                 app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_1" />
 
@@ -640,6 +643,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/august"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_feb_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_jul_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_feb_value" />
@@ -672,6 +676,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/march"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/tv_feb_label"
                 app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_2" />
 
@@ -689,6 +694,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/september"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_mar_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_aug_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_mar_value" />
@@ -749,6 +755,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/april"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/tv_mar_label"
                 app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_3" />
 
@@ -766,6 +773,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/october"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_apr_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_sep_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_apr_value" />
@@ -784,6 +792,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/may"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/tv_apr_label"
                 app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_4" />
 
@@ -801,6 +810,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/november"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_may_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_oct_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_may_value" />
@@ -819,6 +829,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/june"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/view_vertical_divider"
                 app:layout_constraintStart_toStartOf="@+id/tv_may_label"
                 app:layout_constraintTop_toBottomOf="@+id/view_horizontal_divider_5" />
@@ -837,6 +848,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/december"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_jun_value"
                 app:layout_constraintStart_toStartOf="@+id/tv_nov_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_jun_value"
