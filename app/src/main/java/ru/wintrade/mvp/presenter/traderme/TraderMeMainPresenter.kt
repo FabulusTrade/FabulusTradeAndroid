@@ -49,8 +49,8 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ traderStatistic ->
                     val isPositiveProfit =
-                        traderStatistic.actualProfit365.toString().substring(0, 1) != "-"
-                    traderStatistic.actualProfit365?.let {
+                        traderStatistic.incrDecrDepo365.toString().substring(0, 1) != "-"
+                    traderStatistic.incrDecrDepo365?.let {
                         viewState.setProfit(
                             it.doubleToStringWithFormat(PROFIT_FORMAT, true),
                             isPositiveProfit
