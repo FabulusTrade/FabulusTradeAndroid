@@ -11,7 +11,7 @@
     <string name="enter_with_google_button_title">Войти с Google</string>
     <string name="enter_with_facebook_button_title">Войти с Facebook</string>
     <string name="entrance_text_view_3_title">Нет учетной записи?</string>
-    <string name="default_notification_channel_id" translatable="false">win_trade_channel</string>
+    <string name="default_notification_channel_id" translatable="false">fabulus_trade_channel</string>
     <string name="comment_on">Комментировать</string>
     <string name="my_deals">Мои сделки</string>
     <string name="create">Созать</string>
@@ -424,4 +424,7 @@
     <string name="count_operations">Количество операций:</string>
     <string name="empty_profit_result">-</string>
     <string name="month_profit">%.2f%%</string>
+
+    <!--MessagingService-->
+    <string name="by_price">\u0020по цене:\u0020</string>
 </resources>

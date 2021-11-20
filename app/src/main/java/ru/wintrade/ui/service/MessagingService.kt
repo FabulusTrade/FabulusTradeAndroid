@@ -44,6 +44,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(Color.RED)
+            .setStyle(NotificationCompat.BigTextStyle())
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
@@ -55,7 +56,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Win Trade",
+                "Fabulus Trade",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
