@@ -16,10 +16,6 @@ import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>() {
-    companion object {
-        private const val PROFIT_FORMAT = "0.00"
-    }
-
     @Inject
     lateinit var router: Router
 
@@ -39,13 +35,9 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             val traderList = traders[view.pos]
             traderList.trader.username?.let { view.setTraderName(it) }
             traderList.trader.avatar?.let { view.setTraderAvatar(it) }
-            traderList.trader.yearProfit?.let {
-                view.setTraderProfit(
-                    it.doubleToStringWithFormat(PROFIT_FORMAT, true)
-                )
-            }
-            traderList.status?.let {
-                if (it.toInt() == 1)
+            traderList.trader.incrDecrDepo365?.let { profit -> view.setTraderProfit("$profit%") }
+            traderList.status?.let { status ->
+                if (status.toInt() == 1)
                     view.subscribeStatus(false)
                 else
                     view.subscribeStatus(true)
