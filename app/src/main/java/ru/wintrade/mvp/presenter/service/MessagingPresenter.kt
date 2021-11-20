@@ -1,6 +1,8 @@
 package ru.wintrade.mvp.presenter.service
 
+import ru.wintrade.R
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.ui.service.MessagingService
 import ru.wintrade.util.getNotificationId
 import javax.inject.Inject
@@ -26,6 +28,11 @@ class MessagingPresenter(private val service: MessagingService) {
     @Inject
     lateinit var apiRepo: ApiRepo
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
+    private var body = ""
+
     fun messageReceived(data: Map<String, String>) {
         val id = data.getOrElse(ID_KEY) { "" }
         val trader = data.getOrElse(TRADER_KEY) { "" }
@@ -42,7 +49,12 @@ class MessagingPresenter(private val service: MessagingService) {
         val operationTypeName = data.getOrElse(OPERATION_TYPE_NAME_KEY) { "" }
         val isDelayed = data.getOrElse(DELAYED_TRADE_KEY) { "" }
         val title = "$trader: $operationTypeName"
-        val body = "$ticker по цене: $price"
+        if (isDelayed.isEmpty()) {
+            body = ticker + resourceProvider.getStringResource(R.string.require_field) + price
+        } else {
+            body =
+                ticker + resourceProvider.getStringResource(R.string.require_field) + price + "\n" + dateData
+        }
         service.showNotification(title, body, getNotificationId())
         apiRepo.newTradeSubject.onNext(true)
     }

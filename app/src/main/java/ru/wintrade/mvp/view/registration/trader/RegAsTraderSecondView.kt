@@ -10,4 +10,5 @@ interface RegAsTraderSecondView : MvpView {
     fun setBirthdayError()
     fun showBirthdayDataPicker(date: Long)
     fun setTraderBirthday(date: String)
+    fun showToast(msg: String)
 }

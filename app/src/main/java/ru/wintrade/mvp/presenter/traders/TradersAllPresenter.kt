@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>() {
     companion object {
-        private const val FORMAT = "0.00"
         private const val DEFAULT_FILTER = 0
         private const val BY_FOLLOWERS = 1
     }
@@ -42,16 +41,12 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
 
         override fun bind(view: TradersAllItemView) {
             traderList[view.pos].username?.let { view.setTraderName(it) }
-            traderList[view.pos].yearProfit?.let {
-                view.setTraderProfit(
-                    it.doubleToStringWithFormat(FORMAT, true)
-                )
-            }
+            traderList[view.pos].incrDecrDepo365?.let { profit -> view.setTraderProfit("$profit%") }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
-            subscriptionList.forEach {
-                if (it.trader.id == traderList[view.pos].id && it.status?.toInt() == 2)
+            subscriptionList.forEach { subscription ->
+                if (subscription.trader.id == traderList[view.pos].id && subscription.status?.toInt() == 2)
                     view.setTraderObserveBtn(null)
-                else if (it.trader.id == traderList[view.pos].id && it.status?.toInt() != 2)
+                else if (subscription.trader.id == traderList[view.pos].id && subscription.status?.toInt() != 2)
                     view.setTraderObserveBtn(true)
             }
         }
