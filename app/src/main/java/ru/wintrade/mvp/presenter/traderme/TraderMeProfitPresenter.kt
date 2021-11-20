@@ -180,7 +180,7 @@ class TraderMeProfitPresenter(
             viewState.setPercentOfProfitDealsLong("$profit%")
         }
         profitOfPercentShort?.let { profit ->
-            viewState.setNegativeProfitPercentForTransactions("$profit%")
+            viewState.setPercentOfProfitDealsShort("$profit%")
         }
         percentProfitOfPercentLong?.let { percent ->
             viewState.setAvaregePercentForProfitDealLong("$percent%")
