@@ -130,6 +130,7 @@
     <string name="enter_date_in_field">Введите дату в поле ввода.</string>
     <string name="text_date_format">[00]{.}[00]{.}[9900]</string>
     <string name="require_field">Обязательно поле</string>
+    <string name="error_empty_require_field">Заполните все обязательные поля</string>
 
     <!-- RegistrationAsTraderFragmentThird -->
     <string name="your_profile_reg_tr_third">Ваш профиль</string>

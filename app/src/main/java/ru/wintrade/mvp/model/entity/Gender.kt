@@ -5,7 +5,7 @@ sealed class Gender {
     abstract val text: String
 
     companion object {
-        fun getGender(text: String): Gender =
+        fun getGender(text: String?): Gender =
             when (text) {
                 Man.text -> Man
                 Woman.text -> Woman

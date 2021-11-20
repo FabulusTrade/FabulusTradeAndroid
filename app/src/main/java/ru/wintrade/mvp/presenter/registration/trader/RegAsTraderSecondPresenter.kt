@@ -2,9 +2,11 @@ package ru.wintrade.mvp.presenter.registration.trader
 
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Gender
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.SignUpData
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.DateValidation
@@ -24,6 +26,9 @@ class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
     @Inject
     lateinit var profile: Profile
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     private var birthday: Long? = null
 
     override fun onFirstViewAttach() {
@@ -42,30 +47,38 @@ class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
         patronymic: String?,
         gender: Gender
     ) {
-        if (profile.user == null) {
-            signUpData = SignUpData(
-                signUpData.username,
-                signUpData.password,
-                signUpData.email,
-                signUpData.phone,
-                fistName,
-                lastName,
-                patronymic,
-                birthDay,
-                gender.char,
-                signUpData.is_trader
-            )
+        if (!birthDay.isNullOrEmpty()
+            || !fistName.isNullOrEmpty()
+            || !lastName.isNullOrEmpty()
+            || !patronymic.isNullOrEmpty()
+        ) {
+            if (profile.user == null) {
+                signUpData = SignUpData(
+                    signUpData.username,
+                    signUpData.password,
+                    signUpData.email,
+                    signUpData.phone,
+                    fistName,
+                    lastName,
+                    patronymic,
+                    birthDay,
+                    gender.char,
+                    signUpData.is_trader
+                )
+            } else {
+                signUpData = SignUpData(
+                    first_name = fistName,
+                    last_name = lastName,
+                    patronymic = patronymic,
+                    date_of_birth = birthDay,
+                    gender = gender.char,
+                    is_trader = signUpData.is_trader
+                )
+            }
+            router.navigateTo(Screens.registrationAsTraderThirdScreen(signUpData))
         } else {
-            signUpData = SignUpData(
-                first_name = fistName,
-                last_name = lastName,
-                patronymic = patronymic,
-                date_of_birth = birthDay,
-                gender = gender.char,
-                is_trader = signUpData.is_trader
-            )
+            viewState.showToast(resourceProvider.getStringResource(R.string.error_empty_require_field))
         }
-        router.navigateTo(Screens.registrationAsTraderThirdScreen(signUpData))
     }
 
     fun checkBirthday(date: String) {

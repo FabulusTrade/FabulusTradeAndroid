@@ -21,10 +21,7 @@ import ru.wintrade.mvp.model.entity.TraderRegistrationInfo
 import ru.wintrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.wintrade.ui.App
-import ru.wintrade.util.REGISTRATION_DATA
-import ru.wintrade.util.TRADER_REG_INFO_TAG
-import ru.wintrade.util.toApiDate
-import ru.wintrade.util.toUiDate
+import ru.wintrade.util.*
 
 
 class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSecondView {
@@ -83,6 +80,10 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         binding.tiTraderBirthday.setText(date)
     }
 
+    override fun showToast(msg: String) {
+        context?.showLongToast(msg)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -123,8 +124,8 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
                     tiTraderFirstName.getTextOrError(),
                     tiTraderLastName.getTextOrError(),
                     tiTraderPatronymic.getTextOrError(),
-                    tiTraderGender.getTextOrError().let {
-                        Gender.getGender(it!!)
+                    tiTraderGender.getTextOrError().let { gender ->
+                        Gender.getGender(gender)
                     }
                 )
             }
