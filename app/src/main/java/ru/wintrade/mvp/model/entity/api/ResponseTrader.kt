@@ -22,7 +22,7 @@ data class ResponseTrader(
     @Expose
     val trades_count: Int,
     @Expose
-    val year_profit: Double,
+    val incr_decr_depo_365: Double,
     @Expose
     val followers_count_7day: Int,
     @Expose

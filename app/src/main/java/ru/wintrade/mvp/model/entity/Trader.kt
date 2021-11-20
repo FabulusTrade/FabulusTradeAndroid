@@ -14,7 +14,7 @@ data class Trader(
     val dateJoined: String?,
     val followersCount: Int,
     val tradesCount: Int,
-    val yearProfit: Double?,
+    val incrDecrDepo365: Double?,
     val followersForWeekCount: Int,
     val pinnedPost: Post?
 ) : Parcelable
