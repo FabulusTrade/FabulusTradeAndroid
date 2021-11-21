@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.presenter.trader
 
+import android.graphics.Color
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -194,7 +195,7 @@ class TraderProfitPresenter(
     }
 
     private fun clearProfitTable() {
-        val colorEmpty = R.color.colorDarkGray
+        val colorEmpty = resourceProvider.getColor(R.color.colorDarkGray)
         val profitEmpty = resourceProvider.getStringResource(R.string.empty_profit_result)
         
         viewState.setJanProfit(profitEmpty, colorEmpty)
@@ -213,15 +214,16 @@ class TraderProfitPresenter(
 
     private fun setProfitTable() {
         traderStatistic.monthIndicators.forEach { indicator ->
-            var color = R.color.colorDarkGray
+            var color = resourceProvider.getColor(R.color.colorDarkGray)
             var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
 
-            indicator.actualProfitMonth?.let { profit ->
-                tmpProfit = resourceProvider.formatString(R.string.month_profit, profit)
-                color = if (profit.toFloat() >= 0) {
-                    R.color.colorGreenPercentProfit
-                } else {
-                    R.color.colorRedPercentLoss
+             indicator.colorActualItemMonth?.let { colorActualProfitMonth ->
+                colorActualProfitMonth.value?.let {
+                    tmpProfit = resourceProvider.formatString(R.string.month_profit, it)
+                }
+
+                colorActualProfitMonth.color?.let {
+                    color = Color.parseColor(it)
                 }
             }
 

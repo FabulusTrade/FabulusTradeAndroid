@@ -2,6 +2,7 @@ package ru.wintrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.wintrade.mvp.model.entity.ColorItem
 
 data class ResponseMonthIndicators(
     @Expose
@@ -12,5 +13,8 @@ data class ResponseMonthIndicators(
     val month: Int?,
     @Expose
     @SerializedName("actual_profit_month")
-    val actualProfitMonth: Double?
+    val actualProfitMonth: Double?,
+    @Expose
+    @SerializedName("color_actual_profit_month")
+    val colorActualItemMonth: ColorItem?
 )

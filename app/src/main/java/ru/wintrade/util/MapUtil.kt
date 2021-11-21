@@ -81,7 +81,8 @@ fun mapToTraderStatistic(response: ResponseTraderStatistic): TraderStatistic {
 fun mapToMonthIndicator(response: ResponseMonthIndicators) = MonthIndicator(
     response.year,
     response.month,
-    response.actualProfitMonth
+    response.actualProfitMonth,
+    response.colorActualItemMonth
 )
 
 fun mapToAudienceData(response: ResponseAudienceData) = AudienceData(
