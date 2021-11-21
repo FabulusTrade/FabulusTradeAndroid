@@ -427,4 +427,5 @@
 
     <!--MessagingService-->
     <string name="by_price">\u0020по цене:\u0020</string>
+    <string name="incr_decr_depo_365">%.2f%%</string>
 </resources>

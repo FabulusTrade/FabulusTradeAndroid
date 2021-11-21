@@ -7,6 +7,7 @@ import com.github.mikephil.charting.data.BarEntry
 import moxy.MvpPresenter
 import ru.wintrade.R
 import ru.wintrade.mvp.model.data.BarChartData
+import ru.wintrade.mvp.model.entity.ColorItem
 import ru.wintrade.mvp.model.entity.MonthIndicator
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
@@ -70,7 +71,7 @@ class TraderProfitPresenter(
             traderStatistic.losingTrades365,
             traderStatistic.averageProfitTrades365,
             traderStatistic.averageLosingTrades365,
-            traderStatistic.incrDecrDepo365,
+            traderStatistic.colorIncrDecrDepo365,
         )
         initStatisticTable(
             traderStatistic.ratio365Long,
@@ -96,7 +97,7 @@ class TraderProfitPresenter(
             traderStatistic.losingOfPercentNDeals,
             traderStatistic.averageProfitTradesNDeals,
             traderStatistic.averageLosingTradesNDeals,
-            traderStatistic.incrDecrDepoNDeals,
+            traderStatistic.colorIncrDecrDepoNDeals,
         )
         initStatisticTable(
             traderStatistic.ratioNDealsLong,
@@ -120,7 +121,7 @@ class TraderProfitPresenter(
         losingOfPercent: Double?,
         averageProfitTrades: Double?,
         averageLosingTrades: Double?,
-        incrDecrDepo: Double?,
+        colorIncrDecrDepo365: ColorItem?,
     ) {
         termOfTransaction?.let { term ->
             viewState.setAverageDealsTime(term.toString())
@@ -137,8 +138,19 @@ class TraderProfitPresenter(
         averageLosingTrades?.let { losing ->
             viewState.setAverageLoseForDeal("$losing%")
         }
-        incrDecrDepo?.let { value ->
-            viewState.setDepoValue("$value%")
+        colorIncrDecrDepo365?.let {  colorItem ->
+            var color = resourceProvider.getColor(R.color.colorDarkGray)
+            var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
+
+            colorItem.value?.let {
+                tmpProfit = resourceProvider.formatString(R.string.incr_decr_depo_365, it)
+            }
+
+            colorItem.color?.let {
+                color = Color.parseColor(it)
+            }
+
+            viewState.setDepoValue(tmpProfit, color)
         }
     }
 

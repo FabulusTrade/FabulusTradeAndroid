@@ -242,8 +242,8 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         binding.tvAverageLossValue.text = percent
     }
 
-    override fun setDepoValue(percent: String) {
-        binding.tvDepoValue.text = percent
+    override fun setDepoValue(percent: String, textColor: Int) {
+        binding.tvDepoValue.setTextAndColor(percent, textColor)
     }
 
     override fun setAllDealLong(percent: String) {
