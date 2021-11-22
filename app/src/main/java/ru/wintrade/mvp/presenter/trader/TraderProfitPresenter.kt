@@ -139,18 +139,18 @@ class TraderProfitPresenter(
             viewState.setAverageLoseForDeal("$losing%")
         }
         colorIncrDecrDepo365?.let {  colorItem ->
-            var color = resourceProvider.getColor(R.color.colorDarkGray)
+            var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
             var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
 
-            colorItem.value?.let {
-                tmpProfit = resourceProvider.formatString(R.string.incr_decr_depo_365, it)
+            colorItem.value?.let { value ->
+                tmpProfit = resourceProvider.formatString(R.string.incr_decr_depo_365, value)
             }
 
-            colorItem.color?.let {
-                color = Color.parseColor(it)
+            colorItem.color?.let { color ->
+                tmpColor = Color.parseColor(color)
             }
 
-            viewState.setDepoValue(tmpProfit, color)
+            viewState.setDepoValue(tmpProfit, tmpColor)
         }
     }
 

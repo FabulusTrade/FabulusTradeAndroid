@@ -424,8 +424,9 @@
     <string name="count_operations">Количество операций:</string>
     <string name="empty_profit_result">-</string>
     <string name="month_profit">%.2f%%</string>
+    <string name="incr_decr_depo_365">%.2f%%</string>
 
     <!--MessagingService-->
     <string name="by_price">\u0020по цене:\u0020</string>
-    <string name="incr_decr_depo_365">%.2f%%</string>
+
 </resources>
