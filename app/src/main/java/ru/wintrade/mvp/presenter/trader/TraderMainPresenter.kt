@@ -9,12 +9,16 @@ import ru.wintrade.mvp.model.repo.ApiRepo
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.doubleToStringWithFormat
+import java.net.ProtocolException
 import javax.inject.Inject
 
 class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     companion object {
         private const val PROFIT_FORMAT = "0.00"
         private const val ZERO_PERCENT = "0.00%"
+
+        private const val OBSERVER = 1
+        private const val TRADER = 2
     }
 
     @Inject
@@ -77,18 +81,37 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     fun subscribeToTraderBtnClicked() {
-        if (profile.user == null)
-            router.navigateTo(Screens.signInScreen(false))
-        else
-            apiRepo
-                .subscribeToTrader(profile.token!!, trader.id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.setSubscribeBtnActive(false)
-                    viewState.setObserveVisibility(false)
-                }, {
-                    it.printStackTrace()
-                })
+        when {
+            profile.user == null -> {
+                router.navigateTo(Screens.signInScreen(false))
+            }
+            isObserveActive -> {
+                apiRepo
+                    .subscribeToTrader(profile.token!!, trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        isObserveActive = !isObserveActive
+                        setVisibility(false)
+                    }, {
+                        it.printStackTrace()
+                    })
+            }
+            !isObserveActive -> {
+                apiRepo
+                    .deleteObservation(profile.token!!, trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        // Не обрабатывется
+                    }, {
+                        if (it is ProtocolException) {
+                            isObserveActive = !isObserveActive
+                            setVisibility(true)
+                        } else {
+                            it.printStackTrace()
+                        }
+                    })
+            }
+        }
     }
 
     private fun checkSubscription() {
@@ -97,14 +120,22 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                 .mySubscriptions(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ subscriptions ->
-                    subscriptions.find { it.trader.id == trader.id }?.let {
-                        if (it.status?.toInt() == 1) {
-                            setVisibility(true)
-                            isObserveActive = true
-                            viewState.setObserveActive(isObserveActive)
-                        } else
-                            setVisibility(false)
-                    } ?: setVisibility(true)
+                    subscriptions
+                        .find { it.trader.id == trader.id }
+                        ?.let {
+                            when {
+                                it.status?.toInt() == OBSERVER -> {
+                                    isObserveActive = true
+                                    setVisibility(isObserveActive)
+                                }
+                                it.status?.toInt() == TRADER -> {
+                                    isObserveActive = false
+                                    setVisibility(isObserveActive)
+                                    viewState.setObserveActive(isObserveActive)
+                                }
+                                else -> setVisibility(false)
+                            }
+                        } ?: setVisibility(true)
                 }, {
                     it.printStackTrace()
                 })
