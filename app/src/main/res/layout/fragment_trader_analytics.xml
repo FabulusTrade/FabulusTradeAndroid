@@ -286,7 +286,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/zero"
-            android:textColor="@color/colorGreen"
             app:layout_constraintBottom_toBottomOf="@+id/increase_and_decline_depo_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/increase_and_decline_depo_icon"

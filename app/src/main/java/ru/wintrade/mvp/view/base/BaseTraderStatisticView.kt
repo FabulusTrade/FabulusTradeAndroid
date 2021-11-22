@@ -30,7 +30,7 @@ interface BaseTraderStatisticView: MvpView {
     fun setNegativeProfitPercentForTransactions(percent: String)
     fun setAverageProfitForDeal(percent: String)
     fun setAverageLoseForDeal(percent: String)
-    fun setDepoValue(percent: String)
+    fun setDepoValue(percent: String, textColor: Int)
     fun setAllDealLong(percent: String)
     fun setAllDealShort(percent: String)
     fun setAvaregeTimeDealLong(daysCount: String)
