@@ -226,32 +226,32 @@ class TraderProfitPresenter(
 
     private fun setProfitTable() {
         traderStatistic.monthIndicators.forEach { indicator ->
-            var color = resourceProvider.getColor(R.color.colorDarkGray)
+            var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
             var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
 
-             indicator.colorActualItemMonth?.let { colorActualProfitMonth ->
-                colorActualProfitMonth.value?.let {
-                    tmpProfit = resourceProvider.formatString(R.string.month_profit, it)
+            indicator.colorActualItemMonth?.let { colorActualProfitMonth ->
+                colorActualProfitMonth.value?.let { value ->
+                    tmpProfit = resourceProvider.formatString(R.string.month_profit, value)
                 }
 
-                colorActualProfitMonth.color?.let {
-                    color = Color.parseColor(it)
+                colorActualProfitMonth.color?.let { color ->
+                    tmpColor = Color.parseColor(color)
                 }
             }
 
             when (indicator.month) {
-                1 -> viewState.setJanProfit(tmpProfit, color)
-                2 -> viewState.setFebProfit(tmpProfit, color)
-                3 -> viewState.setMarProfit(tmpProfit, color)
-                4 -> viewState.setAprProfit(tmpProfit, color)
-                5 -> viewState.setMayProfit(tmpProfit, color)
-                6 -> viewState.setJunProfit(tmpProfit, color)
-                7 -> viewState.setJulProfit(tmpProfit, color)
-                8 -> viewState.setAugProfit(tmpProfit, color)
-                9 -> viewState.setSepProfit(tmpProfit, color)
-                10 -> viewState.setOctProfit(tmpProfit, color)
-                11 -> viewState.setNovProfit(tmpProfit, color)
-                12 -> viewState.setDecProfit(tmpProfit, color)
+                1 -> viewState.setJanProfit(tmpProfit, tmpColor)
+                2 -> viewState.setFebProfit(tmpProfit, tmpColor)
+                3 -> viewState.setMarProfit(tmpProfit, tmpColor)
+                4 -> viewState.setAprProfit(tmpProfit, tmpColor)
+                5 -> viewState.setMayProfit(tmpProfit, tmpColor)
+                6 -> viewState.setJunProfit(tmpProfit, tmpColor)
+                7 -> viewState.setJulProfit(tmpProfit, tmpColor)
+                8 -> viewState.setAugProfit(tmpProfit, tmpColor)
+                9 -> viewState.setSepProfit(tmpProfit, tmpColor)
+                10 -> viewState.setOctProfit(tmpProfit, tmpColor)
+                11 -> viewState.setNovProfit(tmpProfit, tmpColor)
+                12 -> viewState.setDecProfit(tmpProfit, tmpColor)
             }
         }
     }
