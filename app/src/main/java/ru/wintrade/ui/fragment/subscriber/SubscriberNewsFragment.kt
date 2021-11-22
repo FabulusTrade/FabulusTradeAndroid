@@ -15,6 +15,7 @@ import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
+import ru.wintrade.ui.adapter.divider.RecyclerViewItemDecoration
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     private var _binding: FragmentSubscriberNewsBinding? = null
@@ -53,6 +54,9 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         binding.rvSubscriberNews.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(
+                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
+            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

@@ -13,13 +13,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_item_trader_news_date"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_item_trader_news_avatar"
+            android:layout_width="@dimen/avatar_in_trader_news"
+            android:layout_height="@dimen/avatar_in_trader_news"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:foreground="@drawable/bg_avatar"
+            android:scaleType="fitXY"
+            tools:src="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:gravity="start|center_vertical"
-            android:text="15.05.2021 в 10.35" />
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_item_trader_news_profileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                tools:text="MolagBal" />
+
+            <TextView
+                android:id="@+id/tv_item_trader_news_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="start|center_vertical"
+                tools:text="15.05.2021 в 10.35" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/btn_item_trader_news_menu"
@@ -58,8 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:foregroundGravity="center_horizontal"
-        />
+        android:foregroundGravity="center_horizontal" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
