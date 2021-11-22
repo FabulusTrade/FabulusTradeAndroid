@@ -179,51 +179,51 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     }
 
     override fun setJanProfit(profit: String, textColor: Int) {
-        binding.tvJanValue.setTextAndColor(context, profit, textColor)
+        binding.tvJanValue.setTextAndColor(profit, textColor)
     }
 
     override fun setFebProfit(profit: String, textColor: Int) {
-        binding.tvFebValue.setTextAndColor(context, profit, textColor)
+        binding.tvFebValue.setTextAndColor(profit, textColor)
     }
 
     override fun setMarProfit(profit: String, textColor: Int) {
-        binding.tvMarValue.setTextAndColor(context, profit, textColor)
+        binding.tvMarValue.setTextAndColor(profit, textColor)
     }
 
     override fun setAprProfit(profit: String, textColor: Int) {
-        binding.tvAprValue.setTextAndColor(context, profit, textColor)
+        binding.tvAprValue.setTextAndColor(profit, textColor)
     }
 
     override fun setMayProfit(profit: String, textColor: Int) {
-        binding.tvMayValue.setTextAndColor(context, profit, textColor)
+        binding.tvMayValue.setTextAndColor(profit, textColor)
     }
 
     override fun setJunProfit(profit: String, textColor: Int) {
-        binding.tvJunValue.setTextAndColor(context, profit, textColor)
+        binding.tvJunValue.setTextAndColor(profit, textColor)
     }
 
     override fun setJulProfit(profit: String, textColor: Int) {
-        binding.tvJulValue.setTextAndColor(context, profit, textColor)
+        binding.tvJulValue.setTextAndColor(profit, textColor)
     }
 
     override fun setAugProfit(profit: String, textColor: Int) {
-        binding.tvAugValue.setTextAndColor(context, profit, textColor)
+        binding.tvAugValue.setTextAndColor(profit, textColor)
     }
 
     override fun setSepProfit(profit: String, textColor: Int) {
-        binding.tvSepValue.setTextAndColor(context, profit, textColor)
+        binding.tvSepValue.setTextAndColor(profit, textColor)
     }
 
     override fun setOctProfit(profit: String, textColor: Int) {
-        binding.tvOctValue.setTextAndColor(context, profit, textColor)
+        binding.tvOctValue.setTextAndColor(profit, textColor)
     }
 
     override fun setNovProfit(profit: String, textColor: Int) {
-        binding.tvNovValue.setTextAndColor(context, profit, textColor)
+        binding.tvNovValue.setTextAndColor(profit, textColor)
     }
 
     override fun setDecProfit(profit: String, textColor: Int) {
-        binding.tvDecValue.setTextAndColor(context, profit, textColor)
+        binding.tvDecValue.setTextAndColor(profit, textColor)
     }
 
     override fun setPositiveProfitPercentForTransactions(percent: String) {

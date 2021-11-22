@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import moxy.MvpAppCompatFragment
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.NavElementsControl
@@ -63,9 +62,7 @@ fun String.toUiDate(): String =
 fun ResourceProvider.formatString(stringId: Int, vararg args: Any?): String =
     String.format(getStringResource(stringId), *args)
 
-fun TextView.setTextAndColor(context: Context?, textValue: String, color: Int) {
+fun TextView.setTextAndColor(textValue: String, color: Int) {
     text = textValue
-    context?.let {
-        setTextColor(ContextCompat.getColor(it, color))
-    }
+    setTextColor(color)
 }

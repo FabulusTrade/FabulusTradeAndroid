@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class MonthIndicator(
     val year: Int?,
     val month: Int?,
-    val actualProfitMonth: Double?
+    val actualProfitMonth: Double?,
+    val colorActualItemMonth: ColorItem?
 ) : Parcelable
