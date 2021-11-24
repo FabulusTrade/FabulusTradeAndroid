@@ -50,18 +50,19 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
             presenter.openTraderStat(holder.adapterPosition)
         }
         holder.itemView.cb_traders_all_item_observe.setOnClickListener {
-            if (holder.itemView.cb_traders_all_item_observe.isChecked)
-                presenter.observeBtnClicked(holder.adapterPosition, true)
-            else
-                presenter.observeBtnClicked(holder.adapterPosition, false)
-        }
-
-        holder.itemView.cb_traders_all_item_observe.setOnClickListener { view: View ->
             val context = holder.itemView.getContext()
             if (holder.itemView.cb_traders_all_item_observe.isChecked) {
-                context.showLongToast(context.getResources().getString(R.string.added_to_observation), Toast.LENGTH_SHORT)
+                presenter.observeBtnClicked(holder.adapterPosition, true)
+                context.showLongToast(
+                    context.getResources().getString(R.string.added_to_observation),
+                    Toast.LENGTH_SHORT
+                )
             } else {
-                context.showLongToast(context.getResources().getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
+                presenter.observeBtnClicked(holder.adapterPosition, false)
+                context.showLongToast(
+                    context.getResources().getString(R.string.removed_from_observation),
+                    Toast.LENGTH_SHORT
+                )
             }
         }
     }
