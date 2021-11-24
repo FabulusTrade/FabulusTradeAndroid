@@ -24,6 +24,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
+        private const val POST_ITEM_VIEW_CACHE_SIZE = 10
         fun newInstance() = TraderMePostFragment()
     }
 
@@ -72,6 +73,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
 
     private fun initRecyclerView() {
         binding.rvTraderMePost.run {
+            setItemViewCacheSize(POST_ITEM_VIEW_CACHE_SIZE)
             postRVAdapter = PostRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
