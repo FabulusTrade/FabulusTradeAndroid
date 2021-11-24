@@ -3,6 +3,7 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_subscriber_observation.view.*
 import ru.wintrade.R
@@ -10,6 +11,7 @@ import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.showLongToast
 import javax.inject.Inject
 
 class ObservationRVAdapter(val presenter: IObservationListPresenter) :
@@ -35,6 +37,8 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         }
         holder.itemView.cb_subscriber_observation.setOnClickListener {
             presenter.deleteObservation(holder.adapterPosition)
+            val context = holder.itemView.getContext()
+            context.showLongToast(context.getResources().getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
         }
     }
 
