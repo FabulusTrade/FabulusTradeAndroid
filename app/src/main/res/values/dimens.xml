@@ -48,4 +48,5 @@
 
     <dimen name="item_trader_news_item_image_vertical_margin">5dp</dimen>
     <dimen name="avatar_in_trader_news_width_and_height">38dp</dimen>
+    <dimen name="nickname_tv_size">13sp</dimen>
 </resources>
