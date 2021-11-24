@@ -48,8 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/tv_item_sub_trade_date_margin_top"
-                    android:text="@string/date_subscriberTradesRV"
-                    android:textColor="@color/colorGray" />
+                    android:textColor="@color/colorGray"
+                    tools:text="19.11.2021 09:02" />
             </LinearLayout>
         </LinearLayout>
 
@@ -78,9 +78,10 @@
             android:id="@+id/tv_item_sub_trade_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:text="@string/name_subscriberTradesRV"
             android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
