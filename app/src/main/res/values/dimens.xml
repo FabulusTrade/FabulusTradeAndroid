@@ -29,6 +29,10 @@
     <dimen name="margin_start_medium">15dp</dimen>
     <dimen name="margin_start_large">30dp</dimen>
 
+    <dimen name="margin_end_low">8dp</dimen>
+    <dimen name="margin_end_medium">15dp</dimen>
+    <dimen name="margin_end_large">30dp</dimen>
+
     <dimen name="margin_horizontal_low">20dp</dimen>
     <dimen name="margin_horizontal_medium">35dp</dimen>
 
@@ -49,4 +53,7 @@
     <dimen name="item_trader_news_item_image_vertical_margin">5dp</dimen>
     <dimen name="avatar_in_trader_news_width_and_height">38dp</dimen>
     <dimen name="nickname_tv_size">13sp</dimen>
+    <dimen name="divider_in_rv_height">1dp</dimen>
+    <dimen name="comments_in_post_count_btn_height">36dp</dimen>
+    <dimen name="post_news_show_btn_height">36dp</dimen>
 </resources>

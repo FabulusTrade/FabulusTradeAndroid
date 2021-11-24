@@ -395,6 +395,10 @@
     <string name="text">Текст</string>
     <string name="show_postRv">показать</string>
     <string name="hide_postRv">скрыть</string>
+    <string name="zero_post_item">0</string>
+    <string name="zero_comments">0 комментариев</string>
+    <string name="like_news">Поставить лайк новости</string>
+    <string name="dislike_news">Поставить дислайк новости</string>
 
     <!-- item_trader_popular_company -->
     <string name="average_profit">Сред. Прибыль</string>
