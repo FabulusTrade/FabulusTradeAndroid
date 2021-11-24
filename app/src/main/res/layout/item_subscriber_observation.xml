@@ -78,7 +78,7 @@
                     android:id="@+id/cb_subscriber_observation"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_observe"
+                    android:button="@drawable/ic_observe_selector"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
