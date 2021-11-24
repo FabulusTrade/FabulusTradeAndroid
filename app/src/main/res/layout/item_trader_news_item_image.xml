@@ -3,5 +3,5 @@
     android:id="@+id/iv_item_trader_news_item_image"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="5dp"
+    android:layout_marginVertical="@dimen/item_trader_news_item_image_vertical_margin"
     android:adjustViewBounds="true" />

@@ -45,4 +45,6 @@
     <dimen name="tv_item_sub_trade_profit_count_margin_end">61dp</dimen>
     <dimen name="tv_item_sub_trade_price_margin_end">61dp</dimen>
     <dimen name="tv_item_sub_operation_type_text_size">18sp</dimen>
+
+    <dimen name="item_trader_news_item_image_vertical_margin">5dp</dimen>
 </resources>
