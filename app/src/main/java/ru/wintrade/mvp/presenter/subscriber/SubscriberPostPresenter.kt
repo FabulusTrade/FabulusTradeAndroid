@@ -46,6 +46,8 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
                 setKebabMenuVisibility(yoursPublication(post))
+                setProfileName(post.userName)
+                setProfileAvatar(post.avatarUrl)
             }
         }
 

@@ -16,6 +16,7 @@ import ru.wintrade.mvp.presenter.trader.TraderPostPresenter
 import ru.wintrade.mvp.view.trader.TraderPostView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
+import ru.wintrade.ui.adapter.divider.RecyclerViewItemDecoration
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     private var _binding: FragmentTraderPostBinding? = null
@@ -65,6 +66,9 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
             setItemViewCacheSize(POST_ITEM_VIEW_CACHE_SIZE)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
+            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

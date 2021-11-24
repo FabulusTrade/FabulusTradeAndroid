@@ -14,4 +14,6 @@ interface PostItemView {
     fun setDislikeImage(isDisliked: Boolean)
     fun setKebabMenuVisibility(isVisible: Boolean)
     fun setPublicationItemTextMaxLines(isOpen: Boolean)
+    fun setProfileName(profileName: String)
+    fun setProfileAvatar(avatarUrlPath: String)
 }

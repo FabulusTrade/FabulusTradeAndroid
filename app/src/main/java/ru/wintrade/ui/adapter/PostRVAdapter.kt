@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import java.util.*
 
@@ -135,6 +136,14 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
                 itemView.btn_item_trader_news_show_text.text =
                     itemView.context.resources.getText(R.string.show_postRv)
             }
+        }
+
+        override fun setProfileName(profileName: String) {
+            itemView.tv_item_trader_news_profileName.text = profileName
+        }
+
+        override fun setProfileAvatar(avatarUrlPath: String) {
+            loadImage(avatarUrlPath, itemView.iv_item_trader_news_avatar)
         }
     }
 }

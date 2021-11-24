@@ -48,6 +48,8 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
                 setKebabMenuVisibility(yoursPublication(post))
+                setProfileName(post.userName)
+                setProfileAvatar(post.avatarUrl)
             }
         }
 
