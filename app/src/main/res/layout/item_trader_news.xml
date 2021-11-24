@@ -15,8 +15,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_item_trader_news_avatar"
-            android:layout_width="@dimen/avatar_in_trader_news"
-            android:layout_height="@dimen/avatar_in_trader_news"
+            android:layout_width="@dimen/avatar_in_trader_news_width_and_height"
+            android:layout_height="@dimen/avatar_in_trader_news_width_and_height"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:foreground="@drawable/bg_avatar"
