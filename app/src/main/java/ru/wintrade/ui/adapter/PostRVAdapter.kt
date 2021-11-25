@@ -1,5 +1,6 @@
 package ru.wintrade.ui.adapter
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,10 @@ import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
+import java.text.SimpleDateFormat
 import java.util.*
+
+private const val DATE_PATTERN = "dd.MM.yyyy HH:mm"
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
@@ -79,7 +83,8 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override var isOpen: Boolean = false
 
         override fun setNewsDate(date: Date) {
-            itemView.tv_item_trader_news_date.text = date.toString()
+            val dateFormat = SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(date)
+            itemView.tv_item_trader_news_date.text = dateFormat
         }
 
         override fun setPost(text: String) {
