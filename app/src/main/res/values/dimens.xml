@@ -51,6 +51,7 @@
     <dimen name="tv_item_sub_operation_type_text_size">18sp</dimen>
 
     <dimen name="item_trader_news_item_image_vertical_margin">5dp</dimen>
+    <dimen name="item_trader_news_image_group_height">250dp</dimen>
     <dimen name="avatar_in_trader_news_width_and_height">38dp</dimen>
     <dimen name="nickname_tv_size">13sp</dimen>
     <dimen name="divider_in_rv_height">1dp</dimen>

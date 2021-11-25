@@ -75,12 +75,10 @@
         android:textSize="@dimen/text_size_very_low"
         tools:ignore="SmallSp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_item_trader_news_img"
+    <com.headmostlab.imagegroup.ImageGroupView
+        android:id="@+id/image_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_low"
-        android:foregroundGravity="center_horizontal" />
+        android:layout_height="@dimen/item_trader_news_image_group_height" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

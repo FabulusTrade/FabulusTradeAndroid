@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.ui.activity.ImageBrowsingActivity
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import java.util.*
@@ -95,16 +96,15 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setImages(images: List<String>?) {
-            if (!images.isNullOrEmpty()) {
-                itemView.rv_item_trader_news_img.apply {
-                    visibility = View.VISIBLE
-                    this.layoutManager = LinearLayoutManager(context)
-                    val adapter = TraderNewsImagesRVAdapter()
-                    this.adapter = adapter
-                    adapter.setData(images)
+            with(itemView.image_group) {
+                if (images.isNullOrEmpty()) {
+                    visibility = View.GONE
+                } else {
+                    setImages(images)
+                    setOnImageClickListener { pos, url ->
+                        context.startActivity(ImageBrowsingActivity.getIntent(context, images[pos]))
+                    }
                 }
-            } else {
-                itemView.rv_item_trader_news_img.visibility = View.GONE
             }
         }
 
