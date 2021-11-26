@@ -57,8 +57,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     )
                 } ?: viewState.setProfit(ZERO_PERCENT, true)
                 viewState.initVP(traderStatistic, trader)
-            }, { e ->
-                e.message
+            }, { error ->
+                error.message
             })
     }
 
@@ -92,8 +92,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     .subscribe({
                         isObserveActive = !isObserveActive
                         setVisibility(false)
-                    }, { e ->
-                        e.printStackTrace()
+                    }, { error ->
+                        error.printStackTrace()
                     })
             }
             !isObserveActive -> {
@@ -102,12 +102,12 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         // Не обрабатывется
-                    }, { e ->
-                        if (e is ProtocolException) {
+                    }, { error ->
+                        if (error is ProtocolException) {
                             isObserveActive = !isObserveActive
                             setVisibility(true)
                         } else {
-                            e.printStackTrace()
+                            error.printStackTrace()
                         }
                     })
             }
@@ -136,8 +136,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                                 else -> setVisibility(false)
                             }
                         } ?: setVisibility(true)
-                }, { e ->
-                    e.printStackTrace()
+                }, { error ->
+                    error.printStackTrace()
                 })
         }
     }
