@@ -11,7 +11,7 @@ import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.doubleToStringWithFormat
-import ru.wintrade.util.formatGetDateAndTime
+import ru.wintrade.util.toStringFormat
 import javax.inject.Inject
 
 class CompanyTradingOperationsPresenter(
@@ -45,7 +45,7 @@ class CompanyTradingOperationsPresenter(
         override fun bind(view: CompanyTradingOperationsItemView) {
             val deals = dealsList[view.pos]
             view.setCompanyLogo(deals.companyImg)
-            view.setOperationDate("Дата ${deals.date.formatGetDateAndTime()}")
+            view.setOperationDate("Дата ${deals.date.toStringFormat()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
             if (deals.profitCount == null || deals.profitCount == ZERO) {

@@ -72,5 +72,5 @@ fun TextView.setTextAndColor(textValue: String, color: Int) {
 /**
  * Формат преобразованной даты используется "dd.MM.yyyy HH:mm"
  */
-fun Date.formatGetDateAndTime(): String =
-    SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(this)
+fun Date.toStringFormat(patternDate: String = "dd.MM.yyyy HH:mm"): String =
+    SimpleDateFormat(patternDate, Locale.getDefault()).format(this)

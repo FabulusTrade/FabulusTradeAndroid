@@ -17,8 +17,8 @@ import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.formatGetDateAndTime
 import ru.wintrade.util.formatString
+import ru.wintrade.util.toStringFormat
 import javax.inject.Inject
 
 class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
@@ -68,7 +68,7 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
             view.setDate(
                 resourceProvider.formatString(
                     R.string.deal_date,
-                    trade.date.formatGetDateAndTime()
+                    trade.date.toStringFormat()
                 )
             )
             view.setType(trade.operationType)

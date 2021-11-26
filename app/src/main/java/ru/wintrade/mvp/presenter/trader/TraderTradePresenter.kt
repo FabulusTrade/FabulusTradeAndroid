@@ -13,7 +13,7 @@ import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.trader.TraderDealView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.formatGetDateAndTime
+import ru.wintrade.util.toStringFormat
 
 import javax.inject.Inject
 
@@ -110,7 +110,7 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
 
             view.setLastTradeTime(
                 "${resourceProvider.getStringResource(R.string.last_operation)} ${
-                    trade.lastTrade?.formatGetDateAndTime()
+                    trade.lastTrade?.toStringFormat()
                 }"
             )
             view.setCompanyName(trade.companyName)
