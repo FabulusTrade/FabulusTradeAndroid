@@ -93,16 +93,12 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     override fun setSubscribeBtnActive(isActive: Boolean) {
         with(binding.btnTraderStatSubscribe) {
             if (isActive) {
-                visibility = View.VISIBLE
-                isEnabled = true
                 text = resources.getText(R.string.join)
                 backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorAccent)
                 (this as MaterialButton).strokeColor =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorAccent)
             } else {
-                visibility = View.VISIBLE
-                isEnabled = false
                 text = resources.getText(R.string.isSubscribe)
                 backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)

@@ -59,7 +59,7 @@
             android:backgroundTint="@color/colorAccent"
             android:text="@string/join"
             android:textSize="10sp"
-            android:visibility="invisible"
+            android:textColor="@color/colorBlack"
             app:layout_constraintBottom_toBottomOf="@+id/tv_trader_stat_profit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_trader_stat_name"
