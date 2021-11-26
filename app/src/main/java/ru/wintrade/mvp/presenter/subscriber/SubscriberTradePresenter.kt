@@ -2,11 +2,11 @@ package ru.wintrade.mvp.presenter.subscriber
 
 import android.annotation.SuppressLint
 import android.view.View
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Trade
@@ -18,7 +18,7 @@ import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.formatString
-import java.text.SimpleDateFormat
+import ru.wintrade.util.toStringFormat
 import javax.inject.Inject
 
 class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
@@ -54,8 +54,6 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         @SuppressLint("SimpleDateFormat")
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
-            val date = dateFormat.format(trade.date)
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
@@ -67,7 +65,12 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                     trade.ticker
                 )
             )
-            view.setDate(resourceProvider.formatString(R.string.deal_date, date))
+            view.setDate(
+                resourceProvider.formatString(
+                    R.string.deal_date,
+                    trade.date.toStringFormat()
+                )
+            )
             view.setType(trade.operationType)
             view.setPrice(
                 resourceProvider.formatString(

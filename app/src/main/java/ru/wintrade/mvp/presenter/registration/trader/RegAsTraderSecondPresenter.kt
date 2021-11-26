@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 const val DATE_UI_FORMAT_STRING = "%02d.%02d.%04d"
-const val DATE_PATTERN = "dd.MM.yyyy"
+private const val DATE_PATTERN = "dd.MM.yyyy"
 
 class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
     MvpPresenter<RegAsTraderSecondView>() {
