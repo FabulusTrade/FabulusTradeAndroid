@@ -11,12 +11,11 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.util.DATE_PATTERN
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import java.text.SimpleDateFormat
 import java.util.*
-
-private const val DATE_PATTERN = "dd.MM.yyyy HH:mm"
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {

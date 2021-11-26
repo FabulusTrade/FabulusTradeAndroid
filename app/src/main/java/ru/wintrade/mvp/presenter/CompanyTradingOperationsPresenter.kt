@@ -10,6 +10,7 @@ import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.DATE_PATTERN
 import ru.wintrade.util.doubleToStringWithFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,7 +42,7 @@ class CompanyTradingOperationsPresenter(
 
     inner class CompanyTradingOperationsRvListPresenter : ICompanyTradingOperationsListPresenter {
         val dealsList = mutableListOf<TradesSortedByCompany>()
-        private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        private val dateFormat = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
         override fun getCount(): Int = dealsList.size
 
         override fun bind(view: CompanyTradingOperationsItemView) {

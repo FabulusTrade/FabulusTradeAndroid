@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 const val DATE_UI_FORMAT_STRING = "%02d.%02d.%04d"
-const val DATE_PATTERN = "dd.MM.yyyy"
+const val DATE_PATTERN_DD_MM_YYYY = "dd.MM.yyyy"
 
 class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
     MvpPresenter<RegAsTraderSecondView>() {
@@ -86,7 +86,7 @@ class RegAsTraderSecondPresenter(private var signUpData: SignUpData) :
             DateValidation.INVALID -> viewState.setBirthdayError()
             DateValidation.CORRECT -> {
                 birthday = SimpleDateFormat(
-                    DATE_PATTERN,
+                    DATE_PATTERN_DD_MM_YYYY,
                     Locale.getDefault()
                 ).parse(date)?.time
             }

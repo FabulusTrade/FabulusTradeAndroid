@@ -16,6 +16,7 @@ import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.DATE_PATTERN
 import ru.wintrade.util.formatString
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,7 +54,7 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+            val dateFormat = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
             val date = dateFormat.format(trade.date)
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
