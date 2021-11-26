@@ -57,8 +57,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     )
                 } ?: viewState.setProfit(ZERO_PERCENT, true)
                 viewState.initVP(traderStatistic, trader)
-            }, {
-                it.message
+            }, { e ->
+                e.message
             })
     }
 
@@ -92,8 +92,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     .subscribe({
                         isObserveActive = !isObserveActive
                         setVisibility(false)
-                    }, {
-                        it.printStackTrace()
+                    }, { e ->
+                        e.printStackTrace()
                     })
             }
             !isObserveActive -> {
@@ -102,12 +102,12 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         // Не обрабатывется
-                    }, {
-                        if (it is ProtocolException) {
+                    }, { e ->
+                        if (e is ProtocolException) {
                             isObserveActive = !isObserveActive
                             setVisibility(true)
                         } else {
-                            it.printStackTrace()
+                            e.printStackTrace()
                         }
                     })
             }
@@ -122,13 +122,13 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                 .subscribe({ subscriptions ->
                     subscriptions
                         .find { it.trader.id == trader.id }
-                        ?.let {
+                        ?.let { sub ->
                             when {
-                                it.status?.toInt() == OBSERVER -> {
+                                sub.status?.toInt() == OBSERVER -> {
                                     isObserveActive = true
                                     setVisibility(isObserveActive)
                                 }
-                                it.status?.toInt() == TRADER -> {
+                                sub.status?.toInt() == TRADER -> {
                                     isObserveActive = false
                                     setVisibility(isObserveActive)
                                     viewState.setObserveActive(isObserveActive)
@@ -136,8 +136,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                                 else -> setVisibility(false)
                             }
                         } ?: setVisibility(true)
-                }, {
-                    it.printStackTrace()
+                }, { e ->
+                    e.printStackTrace()
                 })
         }
     }
