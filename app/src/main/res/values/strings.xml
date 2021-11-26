@@ -433,4 +433,8 @@
     <!--MessagingService-->
     <string name="by_price">\u0020по цене:\u0020</string>
 
+    <!--fragment_trader_analytics-->
+    <string name="average_number_of_operations_per_month">среднее кол-во операций в мес.</string>
+    <string name="tv_deal_for_month_count_text">%.0f</string>
+
 </resources>

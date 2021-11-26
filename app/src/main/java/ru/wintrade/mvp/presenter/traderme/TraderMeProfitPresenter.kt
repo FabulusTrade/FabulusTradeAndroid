@@ -60,8 +60,8 @@ class TraderMeProfitPresenter(
         traderStatistic.audienceData[0].followersCount?.let { count ->
             viewState.setFollowersCount(count.toString())
         }
-        traderStatistic.amountDeals30?.let { count ->
-            viewState.setTradesCount(count.toString())
+        traderStatistic.averageCountOperationsMonth?.let { count ->
+            viewState.setTradesCount(resourceProvider.formatString(R.string.tv_deal_for_month_count_text, count))
         }
         initProfitTable()
         getStatisticForYear()
