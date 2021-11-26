@@ -11,6 +11,8 @@ import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(applicationContext, msg, duration).show()
@@ -66,3 +68,9 @@ fun TextView.setTextAndColor(textValue: String, color: Int) {
     text = textValue
     setTextColor(color)
 }
+
+/**
+ * Формат преобразованной даты используется "dd.MM.yyyy HH:mm"
+ */
+fun Date.formatGetDateAndTime(): String =
+    SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(this)

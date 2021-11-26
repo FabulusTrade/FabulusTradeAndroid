@@ -10,10 +10,8 @@ import ru.wintrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.wintrade.mvp.view.CompanyTradingOperationsView
 import ru.wintrade.mvp.view.item.CompanyTradingOperationsItemView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.DATE_PATTERN
 import ru.wintrade.util.doubleToStringWithFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import ru.wintrade.util.formatGetDateAndTime
 import javax.inject.Inject
 
 class CompanyTradingOperationsPresenter(
@@ -42,13 +40,12 @@ class CompanyTradingOperationsPresenter(
 
     inner class CompanyTradingOperationsRvListPresenter : ICompanyTradingOperationsListPresenter {
         val dealsList = mutableListOf<TradesSortedByCompany>()
-        private val dateFormat = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
         override fun getCount(): Int = dealsList.size
 
         override fun bind(view: CompanyTradingOperationsItemView) {
             val deals = dealsList[view.pos]
             view.setCompanyLogo(deals.companyImg)
-            view.setOperationDate("Дата ${dateFormat.format(deals.date)}")
+            view.setOperationDate("Дата ${deals.date.formatGetDateAndTime()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
             if (deals.profitCount == null || deals.profitCount == ZERO) {

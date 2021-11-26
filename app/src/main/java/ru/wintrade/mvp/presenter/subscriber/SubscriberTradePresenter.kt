@@ -17,9 +17,8 @@ import ru.wintrade.mvp.presenter.adapter.ISubscriberTradesRVListPresenter
 import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.DATE_PATTERN
+import ru.wintrade.util.formatGetDateAndTime
 import ru.wintrade.util.formatString
-import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
@@ -55,8 +54,6 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         @SuppressLint("SimpleDateFormat")
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat(DATE_PATTERN)
-            val date = dateFormat.format(trade.date)
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
@@ -68,7 +65,12 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                     trade.ticker
                 )
             )
-            view.setDate(resourceProvider.formatString(R.string.deal_date, date))
+            view.setDate(
+                resourceProvider.formatString(
+                    R.string.deal_date,
+                    trade.date.formatGetDateAndTime()
+                )
+            )
             view.setType(trade.operationType)
             view.setPrice(
                 resourceProvider.formatString(

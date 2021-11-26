@@ -11,10 +11,9 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
-import ru.wintrade.util.DATE_PATTERN
+import ru.wintrade.util.formatGetDateAndTime
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
-import java.text.SimpleDateFormat
 import java.util.*
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
@@ -82,8 +81,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override var isOpen: Boolean = false
 
         override fun setNewsDate(date: Date) {
-            val dateFormat = SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(date)
-            itemView.tv_item_trader_news_date.text = dateFormat
+            itemView.tv_item_trader_news_date.text = date.formatGetDateAndTime()
         }
 
         override fun setPost(text: String) {
