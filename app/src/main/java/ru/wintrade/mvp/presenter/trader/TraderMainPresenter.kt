@@ -131,9 +131,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                                 sub.status?.toInt() == TRADER -> {
                                     isObserveActive = false
                                     setVisibility(isObserveActive)
-                                    viewState.setObserveActive(isObserveActive)
                                 }
-                                else -> setVisibility(false)
+                                else -> setVisibility(true)
                             }
                         } ?: setVisibility(true)
                 }, { error ->
@@ -143,7 +142,9 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun setVisibility(result: Boolean) {
+        isObserveActive = result
         viewState.setSubscribeBtnActive(result)
         viewState.setObserveVisibility(result)
+        viewState.setObserveActive(result)
     }
 }
