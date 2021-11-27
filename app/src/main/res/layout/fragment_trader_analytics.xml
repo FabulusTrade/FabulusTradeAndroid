@@ -73,7 +73,7 @@
             style="@style/SecondaryTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/deals_30"
+            android:text="@string/average_number_of_operations_per_month"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
