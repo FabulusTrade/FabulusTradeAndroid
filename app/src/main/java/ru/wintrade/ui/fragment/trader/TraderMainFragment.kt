@@ -21,6 +21,7 @@ import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.setDrawerLockMode
+import ru.wintrade.util.setTextAndColor
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     private var _binding: FragmentTraderMainBinding? = null
@@ -125,17 +126,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         binding.tvTraderStatName.text = username
     }
 
-    override fun setProfit(profit: String, isPositive: Boolean) {
-        binding.tvTraderStatProfit.apply {
-            text = profit
-            setTextColor(
-                resources.getColor(
-                    if (isPositive)
-                        R.color.colorGreenPercent
-                    else R.color.colorRedPercent
-                )
-            )
-        }
+    override fun setProfit(profit: String, textColor: Int) {
+        binding.tvTraderStatProfit.setTextAndColor(profit, textColor)
     }
 
     override fun setAvatar(avatar: String) {
