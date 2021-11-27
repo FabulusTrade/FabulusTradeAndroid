@@ -8,7 +8,7 @@ import ru.wintrade.mvp.model.entity.TraderStatistic
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderMeMainView: MvpView {
     fun init()
-    fun setProfit(profit: String, isPositive: Boolean)
+    fun setProfit(profit: String, textColor: Int)
     fun setUsername(username: String)
     fun setSubscriberCount(count: Int)
     fun setAvatar(url: String?)

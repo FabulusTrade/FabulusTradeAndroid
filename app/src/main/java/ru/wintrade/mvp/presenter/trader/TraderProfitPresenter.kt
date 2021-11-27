@@ -13,6 +13,7 @@ import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.trader.TraderProfitView
+import ru.wintrade.util.formatDigitWithDef
 import ru.wintrade.util.formatString
 import java.text.SimpleDateFormat
 import java.util.*
@@ -123,28 +124,46 @@ class TraderProfitPresenter(
         averageLosingTrades: Double?,
         colorIncrDecrDepo365: ColorItem?,
     ) {
-        termOfTransaction?.let { term ->
-            viewState.setAverageDealsTime(term.toString())
-        }
-        profitOfPercent?.let { profit ->
-            viewState.setPositiveProfitPercentForTransactions("$profit%")
-        }
-        losingOfPercent?.let { losing ->
-            viewState.setNegativeProfitPercentForTransactions("$losing%")
-        }
-        averageProfitTrades?.let { profit ->
-            viewState.setAverageProfitForDeal("$profit%")
-        }
-        averageLosingTrades?.let { losing ->
-            viewState.setAverageLoseForDeal("$losing%")
-        }
+        viewState.setPositiveProfitPercentForTransactions(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_deal_average_time_value_text,
+                termOfTransaction
+            )
+        )
+
+        viewState.setPositiveProfitPercentForTransactions(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_deal_profit_positive_value_text,
+                profitOfPercent
+            )
+        )
+
+        viewState.setNegativeProfitPercentForTransactions(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_deal_profit_negative_value_text,
+                losingOfPercent
+            )
+        )
+        viewState.setAverageProfitForDeal(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_profit_value_text,
+                averageProfitTrades
+            )
+        )
+
+        viewState.setAverageLoseForDeal(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_loss_value_text,
+                averageLosingTrades
+            )
+        )
+
         colorIncrDecrDepo365?.let {  colorItem ->
             var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
-            var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
-
-            colorItem.value?.let { value ->
-                tmpProfit = resourceProvider.formatString(R.string.incr_decr_depo_365, value)
-            }
+            val tmpProfit = resourceProvider.formatDigitWithDef(
+                R.string.incr_decr_depo_365,
+                colorItem.value
+            )
 
             colorItem.color?.let { color ->
                 tmpColor = Color.parseColor(color)
@@ -168,42 +187,89 @@ class TraderProfitPresenter(
         percentLosingOfPercentLong: Double?,
         percentLosingOfPercentShort: Double?,
     ) {
-        ratioLong?.let { value ->
-            viewState.setAllDealLong("$value%")
-        }
-        ratioShort?.let { value ->
-            viewState.setAllDealShort("$value%")
-        }
-        termOfTransactionLong?.let { daysCount ->
-            viewState.setAvaregeTimeDealLong("$daysCount")
-        }
-        termOfTransactionShort?.let { daysCount ->
-            viewState.setAvaregeTimeDealShort("$daysCount")
-        }
-        profitOfPercentLong?.let { profit ->
-            viewState.setPercentOfProfitDealsLong("$profit%")
-        }
-        profitOfPercentShort?.let { profit ->
-            viewState.setPercentOfProfitDealsShort("$profit%")
-        }
-        percentProfitOfPercentLong?.let { percent ->
-            viewState.setAvaregePercentForProfitDealLong("$percent%")
-        }
-        percentProfitOfPercentShort?.let { percent ->
-            viewState.setAvaregePercentForProfitDealShort("$percent%")
-        }
-        losingOfPercentLong?.let { percent ->
-            viewState.setPercentOfLosingDealsLong("$percent%")
-        }
-        losingOfPercentShort?.let { percent ->
-            viewState.setPercentOfLosingDealsShort("$percent%")
-        }
-        percentLosingOfPercentLong?.let { percent ->
-            viewState.setAvaregePercentForLosingDealLong("$percent%")
-        }
-        percentLosingOfPercentShort?.let { percent ->
-            viewState.setAvaregePercentForLosingDealShort("$percent%")
-        }
+        viewState.setAllDealLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_all_deal_long_text,
+                ratioLong
+            )
+        )
+
+        viewState.setAllDealShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_all_deal_short_text,
+                ratioShort
+            )
+        )
+
+        viewState.setAvaregeTimeDealLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_time_deal_long_text,
+                termOfTransactionLong
+            )
+        )
+
+        viewState.setAvaregeTimeDealShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_time_deal_short_text,
+                termOfTransactionShort
+            )
+        )
+
+        viewState.setPercentOfProfitDealsLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_prof_deal_long_text,
+                profitOfPercentLong
+            )
+        )
+
+        viewState.setPercentOfProfitDealsShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_prof_deal_short_text,
+                profitOfPercentShort
+            )
+        )
+
+        viewState.setAvaregePercentForProfitDealLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_percent_profit_deal_long_text,
+                percentProfitOfPercentLong
+            )
+        )
+
+        viewState.setAvaregePercentForProfitDealShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_percent_profit_deal_short_text,
+                percentProfitOfPercentShort
+            )
+        )
+
+        viewState.setPercentOfLosingDealsLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_less_deal_long_text,
+                losingOfPercentLong
+            )
+        )
+
+        viewState.setPercentOfLosingDealsShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_less_deal_short_text,
+                losingOfPercentShort
+            )
+        )
+
+        viewState.setAvaregePercentForLosingDealLong(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_less_deal_long_text,
+                percentLosingOfPercentLong
+            )
+        )
+
+        viewState.setAvaregePercentForLosingDealShort(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_average_less_deal_short_text,
+                percentLosingOfPercentShort
+            )
+        )
     }
 
     private fun clearProfitTable() {

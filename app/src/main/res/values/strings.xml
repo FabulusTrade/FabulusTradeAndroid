@@ -436,5 +436,22 @@
     <!--fragment_trader_analytics-->
     <string name="average_number_of_operations_per_month">среднее кол-во операций в мес.</string>
     <string name="tv_deal_for_month_count_text">%.0f</string>
+    <string name="tv_deal_average_time_value_text">%.0f</string>
+    <string name="tv_deal_profit_positive_value_text">%.0f%%</string>
+    <string name="tv_deal_profit_negative_value_text">%.0f%%</string>
+    <string name="tv_average_profit_value_text">%.2f%%</string>
+    <string name="tv_average_loss_value_text">%.2f%%</string>
+    <string name="tv_all_deal_long_text">%.0f%%</string>
+    <string name="tv_all_deal_short_text">%.0f%%</string>
+    <string name="tv_average_time_deal_long_text">%.2f</string>
+    <string name="tv_average_time_deal_short_text">%.2f</string>
+    <string name="tv_prof_deal_long_text">%.0f%%</string>
+    <string name="tv_prof_deal_short_text">%.0f%%</string>
+    <string name="tv_average_percent_profit_deal_long_text">%.2f%%</string>
+    <string name="tv_average_percent_profit_deal_short_text">%.2f%%</string>
+    <string name="tv_less_deal_long_text">%.0f%%</string>
+    <string name="tv_less_deal_short_text">%.0f%%</string>
+    <string name="tv_average_less_deal_long_text">%.2f%%</string>
+    <string name="tv_average_less_deal_short_text">%.2f%%</string>
 
 </resources>
