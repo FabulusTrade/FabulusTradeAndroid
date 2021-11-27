@@ -14,6 +14,6 @@ interface TraderMainView : MvpView {
     fun setObserveVisibility(isVisible: Boolean)
     fun setObserveActive(isActive: Boolean)
     fun setUsername(username: String)
-    fun setProfit(profit: String, isPositive: Boolean)
+    fun setProfit(profit: String, textColor: Int)
     fun setAvatar(avatar: String)
 }

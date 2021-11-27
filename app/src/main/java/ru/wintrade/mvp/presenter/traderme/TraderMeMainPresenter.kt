@@ -20,10 +20,6 @@ import java.util.*
 import javax.inject.Inject
 
 class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
-    companion object {
-        private const val PROFIT_FORMAT = "0.00"
-        private const val ZERO_PERCENT = "0.00%"
-    }
 
     @Inject
     lateinit var router: Router
