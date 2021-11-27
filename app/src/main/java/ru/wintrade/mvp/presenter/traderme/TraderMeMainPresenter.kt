@@ -1,16 +1,19 @@
 package ru.wintrade.mvp.presenter.traderme
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.traderme.TraderMeMainView
-import ru.wintrade.util.doubleToStringWithFormat
+import ru.wintrade.util.formatDigitWithDef
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +34,9 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -48,14 +54,23 @@ class TraderMeMainPresenter : MvpPresenter<TraderMeMainView>() {
                 .getTraderStatistic(it)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ traderStatistic ->
-                    val isPositiveProfit =
-                        traderStatistic.incrDecrDepo365.toString().substring(0, 1) != "-"
-                    traderStatistic.incrDecrDepo365?.let {
-                        viewState.setProfit(
-                            it.doubleToStringWithFormat(PROFIT_FORMAT, true),
-                            isPositiveProfit
+
+                    var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
+                    var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
+
+                    traderStatistic.colorIncrDecrDepo365?.let { colorItem ->
+                        tmpProfit = resourceProvider.formatDigitWithDef(
+                            R.string.incr_decr_depo_365,
+                            colorItem.value
                         )
-                    } ?: viewState.setProfit(ZERO_PERCENT, true)
+
+                        colorItem.color?.let { color ->
+                            tmpColor = Color.parseColor(color)
+                        }
+                    }
+
+                    viewState.setProfit(tmpProfit, tmpColor)
+
                     viewState.initVP(traderStatistic)
                 }, { t ->
                     t.message

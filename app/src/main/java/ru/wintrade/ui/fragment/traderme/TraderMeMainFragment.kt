@@ -119,17 +119,8 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         }.attach()
     }
 
-    override fun setProfit(profit: String, isPositive: Boolean) {
-        binding.tvTraderMeMainProfit.apply {
-            text = profit
-            setTextColor(
-                resources.getColor(
-                    if (isPositive)
-                        R.color.colorGreenPercent
-                    else R.color.colorRedPercent
-                )
-            )
-        }
+    override fun setProfit(profit: String, textColor: Int) {
+        binding.tvTraderMeMainProfit.setTextAndColor(profit, textColor)
     }
 
     override fun setUsername(username: String) {
