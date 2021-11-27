@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.widget.TextView
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
+import ru.wintrade.R
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
@@ -63,6 +64,17 @@ fun String.toUiDate(): String =
 
 fun ResourceProvider.formatString(stringId: Int, vararg args: Any?): String =
     String.format(getStringResource(stringId), *args)
+
+// возвращает cтроку, или строку по умолчанию
+fun ResourceProvider.formatStringWithDef(stringId: Int, value: Any?, defaultStringId: Int): String =
+    value?.let { resultValue ->
+        String.format(getStringResource(stringId), resultValue)
+    } ?: getStringResource(defaultStringId)
+
+// для цифровых значений по умолчанию возвращаем "-"
+fun ResourceProvider.formatDigitWithDef(stringId: Int, value: Any?): String =
+    formatStringWithDef(stringId, value, R.string.empty_profit_result)
+
 
 fun TextView.setTextAndColor(textValue: String, color: Int) {
     text = textValue
