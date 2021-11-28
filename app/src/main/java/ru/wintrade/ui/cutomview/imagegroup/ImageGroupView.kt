@@ -3,7 +3,7 @@ package ru.wintrade.ui.cutomview.imagegroup
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.util.AttributeSet
@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.getDimensionOrThrow
@@ -37,6 +36,7 @@ class ImageGroupView @JvmOverloads constructor(
         private const val ASPECT_RATIO = 16 / 9.0
         private const val UNSPECIFIED_WIDTH_IN_DP = 250.0
         private const val UNSPECIFIED_HEIGHT_IN_DP = UNSPECIFIED_WIDTH_IN_DP / ASPECT_RATIO
+        private const val OVERFLOW_TEXT_BACKGROUND_COLOR = "#AA000000"
     }
 
     @StyleRes
@@ -103,7 +103,7 @@ class ImageGroupView @JvmOverloads constructor(
         removeViews()
 
         repeat(min(images.size, MAX_IMAGE_VIEW_COUNT)) {
-            RippleImageView(context, rippleColor).apply {
+            RippleImageView(context).apply {
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 imageViewList.add(this)
                 addView(this)
@@ -111,12 +111,14 @@ class ImageGroupView @JvmOverloads constructor(
         }
 
         if (images.size > MAX_IMAGE_VIEW_COUNT) {
-            dimLastImageView()
             overflowTextView = TextView(context).apply {
                 TextViewCompat.setTextAppearance(this, textAppearanceStyle)
                 text = "+${images.size - MAX_IMAGE_VIEW_COUNT}"
                 gravity = Gravity.CENTER
                 includeFontPadding = false
+                background = wrapWithRipple(ColorDrawable(Color.parseColor(OVERFLOW_TEXT_BACKGROUND_COLOR)))
+                setOnClickListener { imageViewList[3].performClick() }
+                isClickable = true
                 addView(this)
             }
         }
@@ -128,10 +130,6 @@ class ImageGroupView @JvmOverloads constructor(
         removeAllViews()
         imageViewList.clear()
         overflowTextView = null
-    }
-
-    private fun dimLastImageView() {
-        imageViewList[3].setColorFilter(Color.argb(255, 50, 50, 50), PorterDuff.Mode.MULTIPLY)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -284,16 +282,16 @@ class ImageGroupView @JvmOverloads constructor(
         overflowTextView?.layout(BOTTOM_RIGHT)
     }
 
-    private class RippleImageView(context: Context, @ColorInt private val color: Int) :
+    private fun wrapWithRipple(original: Drawable?): Drawable =
+        RippleDrawable(ColorStateList.valueOf(rippleColor), original, null)
+
+    private inner class RippleImageView(context: Context) :
         AppCompatImageView(context) {
 
         override fun setImageDrawable(drawable: Drawable?) {
             super.setImageDrawable(
-                if (color == Color.TRANSPARENT) drawable else wrapWithRipple(drawable)
+                if (rippleColor == Color.TRANSPARENT) drawable else wrapWithRipple(drawable)
             )
         }
-
-        private fun wrapWithRipple(original: Drawable?): Drawable =
-            RippleDrawable(ColorStateList.valueOf(color), original, null)
     }
 }
