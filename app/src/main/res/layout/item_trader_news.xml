@@ -75,12 +75,11 @@
         android:textSize="@dimen/text_size_very_low"
         tools:ignore="SmallSp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_item_trader_news_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ru.wintrade.ui.cutomview.imagegroup.ImageGroupView
+        android:id="@+id/image_group"
         android:layout_marginTop="@dimen/margin_top_low"
-        android:foregroundGravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_group_view_height" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

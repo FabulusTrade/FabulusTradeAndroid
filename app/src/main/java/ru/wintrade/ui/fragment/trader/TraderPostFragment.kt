@@ -24,7 +24,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        private const val POST_ITEM_VIEW_CACHE_SIZE = 10
         const val TRADER = "trader"
         fun newInstance(trader: Trader) =
             TraderPostFragment().apply {
@@ -63,7 +62,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     private fun initRV() {
         postRVAdapter = PostRVAdapter(presenter.listPresenter)
         binding.rvTraderPost.run {
-            setItemViewCacheSize(POST_ITEM_VIEW_CACHE_SIZE)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(

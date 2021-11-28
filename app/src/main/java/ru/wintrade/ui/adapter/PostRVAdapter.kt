@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.ui.activity.ImageBrowsingActivity
+import ru.wintrade.ui.cutomview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import java.util.*
@@ -31,6 +32,11 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.pos = position
         presenter.bind(holder)
         initListeners(holder)
+    }
+
+    override fun onViewRecycled(holder: PostViewHolder) {
+        super.onViewRecycled(holder)
+        holder.recycle()
     }
 
     private fun initListeners(holder: PostViewHolder) {
@@ -78,6 +84,17 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override var pos: Int = -1
         override var isOpen: Boolean = false
 
+        private val imageLoader = ImageLoaderImpl(R.drawable.image_view_group_image_placeholder)
+
+        init {
+            itemView.image_group.apply {
+                setImageLoader(imageLoader)
+                setListener { _, url ->
+                    context.startActivity(ImageBrowsingActivity.getIntent(context, url))
+                }
+            }
+        }
+
         override fun setNewsDate(date: Date) {
             itemView.tv_item_trader_news_date.text = date.toString()
         }
@@ -95,16 +112,13 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setImages(images: List<String>?) {
-            if (!images.isNullOrEmpty()) {
-                itemView.rv_item_trader_news_img.apply {
+            with(itemView.image_group) {
+                if (images.isNullOrEmpty()) {
+                    visibility = View.GONE
+                } else {
                     visibility = View.VISIBLE
-                    this.layoutManager = LinearLayoutManager(context)
-                    val adapter = TraderNewsImagesRVAdapter()
-                    this.adapter = adapter
-                    adapter.setData(images)
+                    setImages(images)
                 }
-            } else {
-                itemView.rv_item_trader_news_img.visibility = View.GONE
             }
         }
 
@@ -144,6 +158,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setProfileAvatar(avatarUrlPath: String) {
             loadImage(avatarUrlPath, itemView.iv_item_trader_news_avatar)
+        }
+
+        fun recycle() {
+            imageLoader.clear()
         }
     }
 }

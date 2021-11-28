@@ -56,4 +56,9 @@
     <dimen name="divider_in_rv_height">1dp</dimen>
     <dimen name="comments_in_post_count_btn_height">36dp</dimen>
     <dimen name="post_news_show_btn_height">36dp</dimen>
+
+    <dimen name="image_group_view_image_radius">32dp</dimen>
+    <dimen name="image_group_view_grid_size">8dp</dimen>
+    <dimen name="image_group_view_height">250dp</dimen>
+
 </resources>

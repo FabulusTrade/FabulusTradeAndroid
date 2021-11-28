@@ -30,4 +30,7 @@
     <color name="colorRedBarChart">#FF0000</color>
     <color name="colorBlackBarChart">#000000</color>
     <color name="colorGreenBarChart">#00923B</color>
+
+    <color name="image_group_view_ripple_color">@color/colorLightGreen</color>
+    <color name="image_group_view_text_color">#CCFFFFFF</color>
 </resources>
