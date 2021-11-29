@@ -124,7 +124,7 @@ class TraderProfitPresenter(
         averageLosingTrades: Double?,
         colorIncrDecrDepo365: ColorItem?,
     ) {
-        viewState.setPositiveProfitPercentForTransactions(
+        viewState.setAverageDealsTime(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_deal_average_time_value_text,
                 termOfTransaction
