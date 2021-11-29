@@ -1,7 +1,10 @@
 package ru.wintrade.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import ru.wintrade.mvp.model.entity.*
+import ru.wintrade.mvp.model.entity.SignUpData
+import ru.wintrade.mvp.model.entity.Trade
+import ru.wintrade.mvp.model.entity.Trader
+import ru.wintrade.mvp.model.entity.TraderStatistic
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
@@ -106,4 +109,7 @@ object Screens {
 
     fun webViewFragment(url: String) =
         FragmentScreen { WebViewFragment.newInstance(url) }
+
+    fun imageBrowsingFragment(urlImage: String) =
+        FragmentScreen { ImageBrowsingFragment.newInstance(urlImage) }
 }

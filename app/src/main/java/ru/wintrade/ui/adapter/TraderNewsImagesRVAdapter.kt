@@ -4,15 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import kotlinx.android.synthetic.main.item_trader_news_item_image.view.*
 import ru.wintrade.R
-import ru.wintrade.ui.activity.ImageBrowsingActivity
+import ru.wintrade.navigation.Screens
+import ru.wintrade.ui.App
 import ru.wintrade.util.loadImage
+import javax.inject.Inject
 
 class TraderNewsImagesRVAdapter :
     RecyclerView.Adapter<TraderNewsImagesRVAdapter.TraderNewsImageViewHolder>() {
 
     val images = mutableListOf<String>()
+
+    @Inject
+    lateinit var router: Router
+
+    init {
+        App.instance.appComponent.inject(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TraderNewsImageViewHolder(
         LayoutInflater.from(parent.context).inflate(
@@ -41,7 +51,7 @@ class TraderNewsImagesRVAdapter :
         // Открываем активити для рассмотра картинки, передаем туда веб адрес самой картинки
         private fun setClickListener(pos: Int) {
             itemView.iv_item_trader_news_item_image.setOnClickListener {
-                it.context.startActivity(ImageBrowsingActivity.getIntent(it.context, images[pos]))
+                router.navigateTo(Screens.imageBrowsingFragment(urlImage = images[pos]))
             }
         }
 

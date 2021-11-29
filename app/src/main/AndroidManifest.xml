@@ -32,8 +32,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ImageBrowsingActivity" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_app_launcher_foreground" />
