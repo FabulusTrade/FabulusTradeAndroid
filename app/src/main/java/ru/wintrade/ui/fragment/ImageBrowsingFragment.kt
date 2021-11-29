@@ -1,4 +1,4 @@
-package ru.wintrade.ui.activity
+package ru.wintrade.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

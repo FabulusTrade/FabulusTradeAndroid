@@ -5,7 +5,6 @@ import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.model.entity.Trade
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.entity.TraderStatistic
-import ru.wintrade.ui.activity.ImageBrowsingFragment
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
