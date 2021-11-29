@@ -32,5 +32,5 @@ data class ResponseTrade(
     @Expose
     val profit_count: String,
     @Expose
-    val value: String
+    val value: Double
 )
