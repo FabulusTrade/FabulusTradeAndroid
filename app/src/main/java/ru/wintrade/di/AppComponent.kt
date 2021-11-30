@@ -25,10 +25,7 @@ import ru.wintrade.mvp.presenter.traders.TradersMainPresenter
 import ru.wintrade.ui.App
 import ru.wintrade.ui.activity.MainActivity
 import ru.wintrade.ui.activity.SplashActivity
-import ru.wintrade.ui.adapter.CompanyTradingOperationsRVAdapter
-import ru.wintrade.ui.adapter.ObservationRVAdapter
-import ru.wintrade.ui.adapter.TraderNewsImagesRVAdapter
-import ru.wintrade.ui.adapter.TradersAllRVAdapter
+import ru.wintrade.ui.adapter.*
 import ru.wintrade.ui.fragment.*
 import ru.wintrade.ui.fragment.entrance.*
 import ru.wintrade.ui.fragment.subscriber.SubscriberMainFragment
@@ -134,4 +131,5 @@ interface AppComponent {
     fun inject(tradersAllRVAdapter: TradersAllRVAdapter?)
     fun inject(companyTradingOperationsRVAdapter: CompanyTradingOperationsRVAdapter?)
     fun inject(traderNewsImagesRVAdapter: TraderNewsImagesRVAdapter)
+    fun inject(postRVAdapter: PostRVAdapter)
 }

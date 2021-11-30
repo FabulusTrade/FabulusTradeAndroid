@@ -6,22 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
-import ru.wintrade.ui.activity.ImageBrowsingActivity
+import ru.wintrade.navigation.Screens
+import ru.wintrade.ui.App
 import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import ru.wintrade.util.toStringFormat
 import java.util.*
+import javax.inject.Inject
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
+
     companion object {
         const val MAX_LINES = 5000
         const val MIN_LINES = 3
+    }
+
+    @Inject
+    lateinit var router: Router
+
+    init {
+        App.instance.appComponent.inject(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostViewHolder(
@@ -91,9 +102,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         init {
             itemView.image_group.apply {
                 setImageLoader(imageLoader)
-                setListener { _, url ->
-                    context.startActivity(ImageBrowsingActivity.getIntent(context, url))
-                }
+                setListener { _, url -> router.navigateTo(Screens.imageBrowsingFragment(url)) }
             }
         }
 
