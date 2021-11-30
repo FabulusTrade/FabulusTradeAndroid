@@ -29,8 +29,8 @@ class ImageLoaderImpl(@DrawableRes private val placeHolder: Int = 0) : ImageLoad
     }
 
     override fun clear() {
-        targetList.forEach {
-            it.get()?.let { target -> Glide.with(target.view).clear(target.view) }
+        targetList.forEach { reference ->
+            reference.get()?.let { target -> Glide.with(target.view).clear(target.view) }
         }
         targetList.clear()
     }

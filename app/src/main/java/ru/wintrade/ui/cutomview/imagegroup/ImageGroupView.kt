@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.getDimensionOrThrow
@@ -36,19 +37,25 @@ class ImageGroupView @JvmOverloads constructor(
         private const val ASPECT_RATIO = 16 / 9.0
         private const val UNSPECIFIED_WIDTH_IN_DP = 250.0
         private const val UNSPECIFIED_HEIGHT_IN_DP = UNSPECIFIED_WIDTH_IN_DP / ASPECT_RATIO
-        private const val OVERFLOW_TEXT_BACKGROUND_COLOR = "#AA000000"
     }
 
     @StyleRes
     private var textAppearanceStyle = 0
-    private val images = mutableListOf<String>()
     private var gridSize = 0f
+
+    @ColorInt
+    private var rippleColor = 0
+
+    @ColorInt
+    private var overflowTexBackgroundColor = 0
+    private var clippingDrawable: Drawable? = null
+
+    private val images = mutableListOf<String>()
     private var listener: ((index: Int, url: String) -> Unit)? = null
     private var imageLoader: ImageLoader? = null
+
     private val imageViewList = mutableListOf<ImageView>()
     private var overflowTextView: TextView? = null
-    private var rippleColor = Color.TRANSPARENT
-    private var clippingDrawable: Drawable? = null
 
     private val parentHalfWidth get() = measuredWidth * 0.5
     private val parentHalfHeight get() = measuredHeight * 0.5
@@ -58,7 +65,9 @@ class ImageGroupView @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.ImageGroupView, defStyleAttr, defStyleRes) {
             gridSize = getDimensionOrThrow(R.styleable.ImageGroupView_gridSize)
             textAppearanceStyle = getResourceId(R.styleable.ImageGroupView_overflowTexAppearance, 0)
-            rippleColor = getColor(R.styleable.ImageGroupView_rippleColor, 0)
+            rippleColor = getColor(R.styleable.ImageGroupView_rippleColor, Color.TRANSPARENT)
+            overflowTexBackgroundColor =
+                getColor(R.styleable.ImageGroupView_overflowTexBackgroundColor, Color.TRANSPARENT)
             clippingDrawable = getDrawable(R.styleable.ImageGroupView_clippingDrawable)
         }
 
@@ -91,12 +100,17 @@ class ImageGroupView @JvmOverloads constructor(
     }
 
     private fun loadImages() {
-        val imageLoader =
-            this.imageLoader ?: throw IllegalArgumentException("ImageLoader is not specified")
-        imageLoader.clear()
-        imageViewList.forEachIndexed { index, imageView ->
-            imageLoader.load(images[index], imageView, index, images.size)
+        with(imageLoader ?: throwImageLoaderIsNotSpecified()) {
+            clear()
+            imageViewList.forEachIndexed { index, imageView ->
+                load(images[index], imageView, index, images.size)
+            }
         }
+    }
+
+    private fun throwImageLoaderIsNotSpecified(): Nothing {
+        val msg = context.getString(R.string.image_group_view_image_loader_is_not_specified)
+        throw IllegalArgumentException(msg)
     }
 
     private fun prepareViews() {
@@ -113,10 +127,13 @@ class ImageGroupView @JvmOverloads constructor(
         if (images.size > MAX_IMAGE_VIEW_COUNT) {
             overflowTextView = TextView(context).apply {
                 TextViewCompat.setTextAppearance(this, textAppearanceStyle)
-                text = "+${images.size - MAX_IMAGE_VIEW_COUNT}"
+                text = context.getString(
+                    R.string.image_group_view_overflow_template,
+                    images.size - MAX_IMAGE_VIEW_COUNT
+                )
                 gravity = Gravity.CENTER
                 includeFontPadding = false
-                background = wrapWithRipple(ColorDrawable(Color.parseColor(OVERFLOW_TEXT_BACKGROUND_COLOR)))
+                background = wrapWithRipple(ColorDrawable(overflowTexBackgroundColor))
                 setOnClickListener { imageViewList[3].performClick() }
                 isClickable = true
                 addView(this)
@@ -138,7 +155,7 @@ class ImageGroupView @JvmOverloads constructor(
         measureChildren()
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         layoutChildren()
     }
 
@@ -165,17 +182,14 @@ class ImageGroupView @JvmOverloads constructor(
         }
     }
 
-    private fun doLayout(isMeasuring: Boolean = false) {
+    private fun layoutChildren() {
         when (images.size) {
             0 -> {}
-            1 -> if (isMeasuring) measure1() else layout1()
-            2 -> if (isMeasuring) measure2() else layout2()
-            3 -> if (isMeasuring) measure3() else layout3()
-            4 -> if (isMeasuring) measure4() else layout4()
-            else -> if (isMeasuring) {
-                measure4()
-                measureText()
-            } else {
+            1 -> layout1()
+            2 -> layout2()
+            3 -> layout3()
+            4 -> layout4()
+            else -> {
                 layout4()
                 layoutText()
             }
@@ -183,11 +197,17 @@ class ImageGroupView @JvmOverloads constructor(
     }
 
     private fun measureChildren() {
-        doLayout(isMeasuring = true)
-    }
-
-    private fun layoutChildren() {
-        doLayout()
+        when (images.size) {
+            0 -> {}
+            1 -> measure1()
+            2 -> measure2()
+            3 -> measure3()
+            4 -> measure4()
+            else -> {
+                measure4()
+                measureText()
+            }
+        }
     }
 
     private enum class Size {
