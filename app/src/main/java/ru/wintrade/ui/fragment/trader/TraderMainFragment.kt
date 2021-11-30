@@ -119,7 +119,11 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     }
 
     override fun setObserveActive(isActive: Boolean) {
-        binding.cbTraderStatObserve.isChecked = isActive
+        binding.cbTraderStatObserve.isActivated = isActive
+    }
+
+    override fun setObserveChecked(isChecked: Boolean) {
+        binding.cbTraderStatObserve.isChecked = isChecked
     }
 
     override fun setUsername(username: String) {

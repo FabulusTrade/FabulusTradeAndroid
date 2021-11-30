@@ -48,29 +48,29 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     private fun loadTraderStatistic() {
         apiRepo
-                .getTraderStatistic(trader.id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ traderStatistic ->
+            .getTraderStatistic(trader.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ traderStatistic ->
 
-                    var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
-                    var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
+                var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
+                var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
 
-                    traderStatistic.colorIncrDecrDepo365?.let { colorItem ->
-                        tmpProfit = resourceProvider.formatDigitWithDef(
-                                R.string.incr_decr_depo_365,
-                                colorItem.value
-                        )
+                traderStatistic.colorIncrDecrDepo365?.let { colorItem ->
+                    tmpProfit = resourceProvider.formatDigitWithDef(
+                        R.string.incr_decr_depo_365,
+                        colorItem.value
+                    )
 
-                        colorItem.color?.let { color ->
-                            tmpColor = Color.parseColor(color)
-                        }
+                    colorItem.color?.let { color ->
+                        tmpColor = Color.parseColor(color)
                     }
+                }
 
-                    viewState.setProfit(tmpProfit, tmpColor)
-                    viewState.initVP(traderStatistic, trader)
-                }, { error ->
-                    error.message
-                })
+                viewState.setProfit(tmpProfit, tmpColor)
+                viewState.initVP(traderStatistic, trader)
+            }, { error ->
+                error.message
+            })
     }
 
     fun observeBtnClicked() {
@@ -144,6 +144,11 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                                     setVisibility(isObserveActive)
                                 }
                                 else -> setVisibility(true)
+                            }
+                            if (sub.status?.toInt() == 1) {
+                                viewState.setObserveChecked(true)
+                            } else {
+                                viewState.setObserveChecked(false)
                             }
                         } ?: setVisibility(true)
                 }, { error ->

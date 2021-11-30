@@ -16,4 +16,5 @@ interface TraderMainView : MvpView {
     fun setUsername(username: String)
     fun setProfit(profit: String, textColor: Int)
     fun setAvatar(avatar: String)
+    fun setObserveChecked(isChecked: Boolean)
 }
