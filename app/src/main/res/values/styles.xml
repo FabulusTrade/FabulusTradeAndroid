@@ -10,6 +10,8 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="imageGroupViewPlaceHolderColor">@color/colorLightGreen</item>
+        <item name="imageGroupViewImageRadius">@dimen/image_group_view_image_radius</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
@@ -91,6 +93,18 @@
         <item name="android:padding">4dp</item>
         <item name="android:layout_gravity">fill</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Widget.ImageGroupViewDefStyle" parent="">
+        <item name="gridSize">@dimen/image_group_view_grid_size</item>
+        <item name="overflowTexAppearance">@style/ImageGroupViewOverflowTextAppearanceDefStyle</item>
+        <item name="overflowTexBackgroundColor">@color/image_group_view_overflow_text_view_background_color</item>
+        <item name="rippleColor">@color/image_group_view_ripple_color</item>
+        <item name="clippingDrawable">@drawable/image_view_group_background</item>
+    </style>
+
+    <style name="ImageGroupViewOverflowTextAppearanceDefStyle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/image_group_view_text_color</item>
     </style>
 
 </resources>

@@ -5,22 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
+import ru.wintrade.navigation.Screens
+import ru.wintrade.ui.App
+import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import ru.wintrade.util.toStringFormat
 import java.util.*
+import javax.inject.Inject
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
+
     companion object {
         const val MAX_LINES = 5000
         const val MIN_LINES = 3
+    }
+
+    @Inject
+    lateinit var router: Router
+
+    init {
+        App.instance.appComponent.inject(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostViewHolder(
@@ -33,6 +45,11 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.pos = position
         presenter.bind(holder)
         initListeners(holder)
+    }
+
+    override fun onViewRecycled(holder: PostViewHolder) {
+        super.onViewRecycled(holder)
+        holder.recycle()
     }
 
     private fun initListeners(holder: PostViewHolder) {
@@ -80,6 +97,15 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         override var pos: Int = -1
         override var isOpen: Boolean = false
 
+        private val imageLoader = ImageLoaderImpl(R.drawable.image_view_group_image_placeholder)
+
+        init {
+            itemView.image_group.apply {
+                setImageLoader(imageLoader)
+                setListener { _, url -> router.navigateTo(Screens.imageBrowsingFragment(url)) }
+            }
+        }
+
         override fun setNewsDate(date: Date) {
             itemView.tv_item_trader_news_date.text = date.toStringFormat()
         }
@@ -97,16 +123,13 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setImages(images: List<String>?) {
-            if (!images.isNullOrEmpty()) {
-                itemView.rv_item_trader_news_img.apply {
+            with(itemView.image_group) {
+                if (images.isNullOrEmpty()) {
+                    visibility = View.GONE
+                } else {
                     visibility = View.VISIBLE
-                    this.layoutManager = LinearLayoutManager(context)
-                    val adapter = TraderNewsImagesRVAdapter()
-                    this.adapter = adapter
-                    adapter.setData(images)
+                    setImages(images)
                 }
-            } else {
-                itemView.rv_item_trader_news_img.visibility = View.GONE
             }
         }
 
@@ -146,6 +169,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setProfileAvatar(avatarUrlPath: String) {
             loadImage(avatarUrlPath, itemView.iv_item_trader_news_avatar)
+        }
+
+        fun recycle() {
+            imageLoader.clear()
         }
     }
 }
