@@ -12,7 +12,6 @@ import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>() {
@@ -60,10 +59,20 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
                 router.navigateTo(Screens.traderMainScreen(traderList[pos]))
         }
 
+        override fun checkIfTraderIsMe(pos: Int): Boolean {
+            return profile.user?.id.equals(traderList[pos].id)
+        }
+
         override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
             if (profile.user == null) {
                 router.navigateTo(Screens.signInScreen(false))
-            } else if (isChecked) {
+            }
+
+            if (checkIfTraderIsMe(pos)) {
+                return
+            }
+
+            if (isChecked) {
                 apiRepo
                     .observeToTrader(profile.token!!, traderList[pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
