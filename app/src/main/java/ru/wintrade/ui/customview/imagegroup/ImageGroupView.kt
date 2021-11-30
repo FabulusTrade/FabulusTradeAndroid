@@ -1,4 +1,4 @@
-package ru.wintrade.ui.cutomview.imagegroup
+package ru.wintrade.ui.customview.imagegroup
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -20,8 +20,8 @@ import androidx.core.content.withStyledAttributes
 import androidx.core.view.doOnNextLayout
 import androidx.core.widget.TextViewCompat
 import ru.wintrade.R
-import ru.wintrade.ui.cutomview.imagegroup.ImageGroupView.Size.*
-import ru.wintrade.ui.cutomview.imagegroup.ImageGroupView.Position.*
+import ru.wintrade.ui.customview.imagegroup.ImageGroupView.Size.*
+import ru.wintrade.ui.customview.imagegroup.ImageGroupView.Position.*
 import kotlin.math.min
 import kotlin.math.roundToInt as rnd
 

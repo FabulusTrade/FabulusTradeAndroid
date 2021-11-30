@@ -1,4 +1,4 @@
-package ru.wintrade.ui.cutomview.imagegroup
+package ru.wintrade.ui.customview.imagegroup
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView

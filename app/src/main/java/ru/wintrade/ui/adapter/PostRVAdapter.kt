@@ -10,7 +10,7 @@ import ru.wintrade.R
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
 import ru.wintrade.ui.activity.ImageBrowsingActivity
-import ru.wintrade.ui.cutomview.imagegroup.ImageLoaderImpl
+import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
 import java.util.*
