@@ -13,8 +13,8 @@ import ru.wintrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.wintrade.mvp.view.item.TradesByCompanyItemView
 import ru.wintrade.mvp.view.trader.TraderDealView
 import ru.wintrade.navigation.Screens
-import java.text.SimpleDateFormat
-import java.util.*
+import ru.wintrade.util.toStringFormat
+
 import javax.inject.Inject
 
 class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() {
@@ -102,7 +102,6 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
 
     inner class TraderTradesRVListPresenter : ITradesByCompanyListPresenter {
         val trades = mutableListOf<TradesByCompanyAggregated>()
-        private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         override fun getCount() = trades.size
 
@@ -111,7 +110,7 @@ class TraderTradePresenter(val trader: Trader) : MvpPresenter<TraderDealView>() 
 
             view.setLastTradeTime(
                 "${resourceProvider.getStringResource(R.string.last_operation)} ${
-                    dateFormat.format(trade.lastTrade)
+                    trade.lastTrade?.toStringFormat()
                 }"
             )
             view.setCompanyName(trade.companyName)

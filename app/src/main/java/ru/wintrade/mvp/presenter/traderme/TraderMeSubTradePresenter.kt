@@ -17,8 +17,7 @@ import ru.wintrade.mvp.view.item.SubscriberTradeItemView
 import ru.wintrade.mvp.view.traderme.TraderMeSubTradeView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.formatString
-import java.text.SimpleDateFormat
-import java.util.*
+import ru.wintrade.util.toStringFormat
 import javax.inject.Inject
 
 class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTradeView>() {
@@ -53,8 +52,6 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
         override fun bind(view: SubscriberTradeItemView) {
             val trade = trades[view.pos]
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-            val date = dateFormat.format(trade.date)
             trade.trader?.let { trader ->
                 trader.avatar?.let { avatar -> view.setAvatar(avatar) }
                 trader.username?.let { username -> view.setNickname(username) }
@@ -66,7 +63,12 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
                     trade.ticker
                 )
             )
-            view.setDate(resourceProvider.formatString(R.string.deal_date, date))
+            view.setDate(
+                resourceProvider.formatString(
+                    R.string.deal_date,
+                    trade.date.toStringFormat()
+                )
+            )
             view.setType(trade.operationType)
             view.setPrice(
                 resourceProvider.formatString(

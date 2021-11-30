@@ -436,4 +436,31 @@
     <string name="image_group_view_image_loader_is_not_specified">ImageLoader is not specified</string>
     <string name="image_group_view_overflow_template">+%1$d</string>
 
+    <!--fragment_trader_analytics-->
+    <string name="average_number_of_operations_per_month">среднее кол-во операций в мес.</string>
+    <string name="tv_deal_for_month_count_text">%.0f</string>
+    <string name="tv_deal_average_time_value_text">%.0f</string>
+    <string name="tv_deal_profit_positive_value_text">%.0f%%</string>
+    <string name="tv_deal_profit_negative_value_text">%.0f%%</string>
+    <string name="tv_average_profit_value_text">%.2f%%</string>
+    <string name="tv_average_loss_value_text">%.2f%%</string>
+    <string name="tv_all_deal_long_text">%.0f%%</string>
+    <string name="tv_all_deal_short_text">%.0f%%</string>
+    <string name="tv_average_time_deal_long_text">%.2f</string>
+    <string name="tv_average_time_deal_short_text">%.2f</string>
+    <string name="tv_prof_deal_long_text">%.0f%%</string>
+    <string name="tv_prof_deal_short_text">%.0f%%</string>
+    <string name="tv_average_percent_profit_deal_long_text">%.2f%%</string>
+    <string name="tv_average_percent_profit_deal_short_text">%.2f%%</string>
+    <string name="tv_less_deal_long_text">%.0f%%</string>
+    <string name="tv_less_deal_short_text">%.0f%%</string>
+    <string name="tv_average_less_deal_long_text">%.2f%%</string>
+    <string name="tv_average_less_deal_short_text">%.2f%%</string>
+
+    <!--TradeDetailPresenter-->
+    <string name="tv_trade_detail_sum_text">%.2f</string>
+    <string name="tv_trade_detail_price_text">%.2f</string>
+    <string name="tv_trade_detail_price_title_text">Цена, %s</string>
+    <string name="tv_trade_detail_sum_title_text">Сумма, %s</string>
+
 </resources>

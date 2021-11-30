@@ -1,5 +1,6 @@
 package ru.wintrade.ui.adapter
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import ru.wintrade.ui.activity.ImageBrowsingActivity
 import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.showLongToast
+import ru.wintrade.util.toStringFormat
 import java.util.*
 
 class PostRVAdapter(val presenter: PostRVListPresenter) :
@@ -96,7 +98,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setNewsDate(date: Date) {
-            itemView.tv_item_trader_news_date.text = date.toString()
+            itemView.tv_item_trader_news_date.text = date.toStringFormat()
         }
 
         override fun setPost(text: String) {

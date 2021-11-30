@@ -43,6 +43,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
             traderList[view.pos].username?.let { view.setTraderName(it) }
             traderList[view.pos].incrDecrDepo365?.let { profit -> view.setTraderProfit("$profit%") }
             traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
+            view.setTraderObserveBtn(false)
             subscriptionList.forEach { subscription ->
                 if (subscription.trader.id == traderList[view.pos].id && subscription.status?.toInt() == 2)
                     view.setTraderObserveBtn(null)

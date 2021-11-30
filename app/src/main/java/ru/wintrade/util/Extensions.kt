@@ -7,10 +7,13 @@ import android.graphics.Bitmap
 import android.widget.TextView
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
+import ru.wintrade.R
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(applicationContext, msg, duration).show()
@@ -62,7 +65,24 @@ fun String.toUiDate(): String =
 fun ResourceProvider.formatString(stringId: Int, vararg args: Any?): String =
     String.format(getStringResource(stringId), *args)
 
+// возвращает cтроку, или строку по умолчанию
+fun ResourceProvider.formatStringWithDef(stringId: Int, value: Any?, defaultStringId: Int): String =
+    value?.let { resultValue ->
+        String.format(getStringResource(stringId), resultValue)
+    } ?: getStringResource(defaultStringId)
+
+// для цифровых значений по умолчанию возвращаем "-"
+fun ResourceProvider.formatDigitWithDef(stringId: Int, value: Any?): String =
+    formatStringWithDef(stringId, value, R.string.empty_profit_result)
+
+
 fun TextView.setTextAndColor(textValue: String, color: Int) {
     text = textValue
     setTextColor(color)
 }
+
+/**
+ * Формат преобразованной даты используется "dd.MM.yyyy HH:mm"
+ */
+fun Date.toStringFormat(patternDate: String = "dd.MM.yyyy HH:mm"): String =
+    SimpleDateFormat(patternDate, Locale.getDefault()).format(this)
