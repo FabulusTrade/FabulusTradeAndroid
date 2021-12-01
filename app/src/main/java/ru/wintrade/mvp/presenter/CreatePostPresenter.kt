@@ -54,6 +54,7 @@ class CreatePostPresenter(
     }
 
     fun addImages(images: List<Bitmap>) {
+        if (images.isEmpty()) return
         images.forEach { addImage(it) }
         viewState.showToast("Изображение прикреплено")
     }
