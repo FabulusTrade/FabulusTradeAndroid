@@ -460,28 +460,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         id: String,
         text: String,
-        image: MultipartBody.Part?
+        images: List<MultipartBody.Part>
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline) {
-                    val builder = MultipartBody.Builder()
-                    if (image == null) {
-                        builder
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("trader_id", id)
-                            .addFormDataPart("text", text)
-                            .addFormDataPart("pinned", "false")
-                    } else {
-                        builder
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("trader_id", id)
-                            .addFormDataPart("text", text)
-                            .addFormDataPart("pinned", "false")
-                            .addPart(image)
-                    }
-                    val body: RequestBody = builder.build()
+                    val body = MultipartBody.Builder().apply {
+                        setType(MultipartBody.FORM)
+                        addFormDataPart("trader_id", id)
+                        addFormDataPart("text", text)
+                        addFormDataPart("pinned", "false")
+                        images.forEach { addPart(it) }
+                    }.build()
 
                     api
                         .createPost(token, body)

@@ -33,7 +33,7 @@ class CreatePostPresenter(
     @Inject
     lateinit var router: Router
 
-    var imageBitmap: MultipartBody.Part? = null
+    var images = mutableListOf<MultipartBody.Part>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -49,20 +49,27 @@ class CreatePostPresenter(
             !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(
                 text
             )
-            else -> createPost(text, imageBitmap)
+            else -> createPost(text, images)
         }
     }
 
-    fun setImage(imageBitmap: Bitmap) {
+    fun addImages(images: List<Bitmap>) {
+        if (images.isEmpty()) return
+        images.forEach { addImage(it) }
+        viewState.showToast("Изображение прикреплено")
+    }
+
+    private fun addImage(imageBitmap: Bitmap) {
         val stream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         val byteArray = stream.toByteArray()
-        this.imageBitmap = MultipartBody.Part.createFormData(
-            "image[content]",
+        images.add(
+            MultipartBody.Part.createFormData(
+            "image[${images.size}]",
             "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault()).format(Date())}",
-            byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
+                byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
+            )
         )
-        viewState.showToast("Изображение прикреплено")
     }
 
     private fun updatePublication(postId: String, text: String) {
@@ -87,12 +94,12 @@ class CreatePostPresenter(
             })
     }
 
-    private fun createPost(text: String, imageBitmap: MultipartBody.Part?) {
+    private fun createPost(text: String, images: List<MultipartBody.Part>) {
         apiRepo
             .createPost(
                 profile.token!!, profile.user!!.id,
                 text,
-                imageBitmap
+                images
             )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

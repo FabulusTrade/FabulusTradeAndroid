@@ -1,11 +1,12 @@
 package ru.wintrade.ui.fragment
 
-import android.app.Activity
-import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -14,8 +15,6 @@ import ru.wintrade.databinding.FragmentCreatePostBinding
 import ru.wintrade.mvp.presenter.CreatePostPresenter
 import ru.wintrade.mvp.view.CreatePostView
 import ru.wintrade.ui.App
-import ru.wintrade.util.IntentConstants
-import ru.wintrade.util.createBitmapFromResult
 import ru.wintrade.util.showLongToast
 
 class CreatePostFragment(
@@ -29,6 +28,14 @@ class CreatePostFragment(
     private var _binding: FragmentCreatePostBinding? = null
     private val binding: FragmentCreatePostBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            presenter.addImages(uris.map { it.toBitmap() })
+        }
+
+    private fun Uri.toBitmap () =
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
 
     companion object {
         fun newInstance(
@@ -67,27 +74,9 @@ class CreatePostFragment(
                 presenter.onPublishClicked(postId, etCreatePost.text.toString())
             }
             btnCreatePostLoadFile.setOnClickListener {
-                loadFileFromDevice()
+                getContent.launch(getString(R.string.gallery_mask))
             }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            val imageBitmap = data.createBitmapFromResult(requireActivity())
-            presenter.setImage(imageBitmap!!)
-        }
-    }
-
-    private fun loadFileFromDevice() {
-        val galleryIntent =
-            Intent(Intent.ACTION_PICK).apply { this.type = getString(R.string.gallery_mask) }
-        val intentChooser = Intent(Intent.ACTION_CHOOSER).apply {
-            this.putExtra(Intent.EXTRA_INTENT, galleryIntent)
-            this.putExtra(Intent.EXTRA_TITLE, resources.getString(R.string.gallery))
-        }
-        startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
     }
 
     override fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?) {
