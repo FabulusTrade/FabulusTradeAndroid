@@ -3,6 +3,7 @@ package ru.wintrade.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_traders_all.view.*
@@ -47,18 +48,22 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
 
     fun initListeners(holder: TradersAllViewHolder) {
         holder.itemView.layout_all_traders_item.setOnClickListener {
-            presenter.openTraderStat(holder.adapterPosition)
+            presenter.openTraderStat(holder.bindingAdapterPosition)
         }
-        holder.itemView.cb_traders_all_item_observe.setOnClickListener {
+        holder.itemView.cb_traders_all_item_observe.setOnClickListener { view ->
             val context = holder.itemView.getContext()
             if (holder.itemView.cb_traders_all_item_observe.isChecked) {
-                presenter.observeBtnClicked(holder.adapterPosition, true)
-                context.showLongToast(
-                    context.getResources().getString(R.string.added_to_observation),
-                    Toast.LENGTH_SHORT
-                )
+                if (presenter.checkIfTraderIsMe(holder.bindingAdapterPosition)) {
+                    (view as CheckBox).setChecked(false)
+                } else {
+                    presenter.observeBtnClicked(holder.bindingAdapterPosition, true)
+                    context.showLongToast(
+                        context.getResources().getString(R.string.added_to_observation),
+                        Toast.LENGTH_SHORT
+                    )
+                }
             } else {
-                presenter.observeBtnClicked(holder.adapterPosition, false)
+                presenter.observeBtnClicked(holder.bindingAdapterPosition, false)
                 context.showLongToast(
                     context.getResources().getString(R.string.removed_from_observation),
                     Toast.LENGTH_SHORT
