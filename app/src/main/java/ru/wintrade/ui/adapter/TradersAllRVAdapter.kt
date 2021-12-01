@@ -48,22 +48,22 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
 
     fun initListeners(holder: TradersAllViewHolder) {
         holder.itemView.layout_all_traders_item.setOnClickListener {
-            presenter.openTraderStat(holder.adapterPosition)
+            presenter.openTraderStat(holder.bindingAdapterPosition)
         }
         holder.itemView.cb_traders_all_item_observe.setOnClickListener { view ->
             val context = holder.itemView.getContext()
             if (holder.itemView.cb_traders_all_item_observe.isChecked) {
-                if (presenter.checkIfTraderIsMe(holder.adapterPosition)) {
+                if (presenter.checkIfTraderIsMe(holder.bindingAdapterPosition)) {
                     (view as CheckBox).setChecked(false)
                 } else {
-                    presenter.observeBtnClicked(holder.adapterPosition, true)
+                    presenter.observeBtnClicked(holder.bindingAdapterPosition, true)
                     context.showLongToast(
                         context.getResources().getString(R.string.added_to_observation),
                         Toast.LENGTH_SHORT
                     )
                 }
             } else {
-                presenter.observeBtnClicked(holder.adapterPosition, false)
+                presenter.observeBtnClicked(holder.bindingAdapterPosition, false)
                 context.showLongToast(
                     context.getResources().getString(R.string.removed_from_observation),
                     Toast.LENGTH_SHORT
