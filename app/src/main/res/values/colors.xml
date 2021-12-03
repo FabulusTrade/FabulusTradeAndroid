@@ -31,7 +31,8 @@
     <color name="colorBlackBarChart">#000000</color>
     <color name="colorGreenBarChart">#00923B</color>
 
-    <color name="image_group_view_ripple_color">@color/colorLightGreen</color>
     <color name="image_group_view_text_color">#CCFFFFFF</color>
     <color name="image_group_view_overflow_text_view_background_color">#AA000000</color>
+    <color name="image_group_view_dimmed_image_view_color">#10000000</color>
+    <color name="image_group_view_overflow_dimmed_image_view_color">#BB000000</color>
 </resources>
