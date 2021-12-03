@@ -65,6 +65,7 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         binding.run {
             btnTraderStatSubscribe.setOnClickListener {
                 presenter.subscribeToTraderBtnClicked()
+                binding.cbTraderStatObserve.visibility = View.INVISIBLE
             }
             cbTraderStatObserve.setOnClickListener {
                 presenter.observeBtnClicked()
@@ -99,12 +100,14 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
                     ContextCompat.getColorStateList(requireContext(), R.color.colorAccent)
                 (this as MaterialButton).strokeColor =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorAccent)
+                binding.cbTraderStatObserve.visibility = View.VISIBLE
             } else {
                 text = resources.getText(R.string.isSubscribe)
                 backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
                 (this as MaterialButton).strokeColor =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
+                binding.cbTraderStatObserve.visibility = View.INVISIBLE
             }
         }
     }
