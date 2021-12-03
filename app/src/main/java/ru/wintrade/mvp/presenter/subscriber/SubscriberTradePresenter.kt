@@ -132,6 +132,10 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
         apiRepo.subscriptionTrades(profile.token!!, nextPage!!)
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 { pagination ->
+                    if (pagination.results.isEmpty()) {
+                        viewState.withoutSubscribeAnyTrader()
+                        return@subscribe
+                    }
                     listPresenter.trades.clear()
                     listPresenter.trades.addAll(pagination.results)
                     resolveTraderInTrade()
@@ -155,6 +159,10 @@ class SubscriberTradePresenter : MvpPresenter<SubscriberDealView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { pagination ->
+                        if (pagination.results.isEmpty()) {
+                            viewState.withoutSubscribeAnyTrader()
+                            return@subscribe
+                        }
                         listPresenter.trades.addAll(pagination.results)
                         resolveTraderInTrade()
                         viewState.updateAdapter()

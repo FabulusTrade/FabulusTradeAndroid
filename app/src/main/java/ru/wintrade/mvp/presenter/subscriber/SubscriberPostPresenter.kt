@@ -130,6 +130,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 .getPublisherPosts(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
+                    if (pag.results.isEmpty()) {
+                        viewState.withoutSubscribeAnyTrader()
+                        return@subscribe
+                    }
                     listPresenter.post.addAll(pag.results)
                     viewState.updateAdapter()
                     nextPage = pag.next

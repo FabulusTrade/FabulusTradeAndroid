@@ -8,4 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface SubscriberNewsView: MvpView {
     fun init()
     fun updateAdapter()
+    fun withoutSubscribeAnyTrader()
 }

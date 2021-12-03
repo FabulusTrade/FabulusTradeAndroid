@@ -14,4 +14,6 @@ interface SubscriberDealView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun setRefreshing(isRefreshing: Boolean)
+
+    fun withoutSubscribeAnyTrader()
 }
