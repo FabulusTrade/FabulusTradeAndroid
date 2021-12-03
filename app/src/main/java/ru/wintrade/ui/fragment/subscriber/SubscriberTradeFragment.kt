@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import com.google.android.material.button.MaterialButton
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -14,9 +15,12 @@ import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSubscriberDealBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberTradePresenter
+import ru.wintrade.mvp.presenter.traders.TradersAllPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberDealView
+import ru.wintrade.navigation.Screens
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.SubscriberTradesRVAdapter
+import javax.inject.Inject
 
 class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
     private var _binding: FragmentSubscriberDealBinding? = null
@@ -37,12 +41,16 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
         App.instance.appComponent.inject(this)
     }
 
+    @Inject
+    lateinit var router: Router
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSubscriberDealBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
         return _binding?.root
     }
 
@@ -90,11 +98,18 @@ class SubscriberTradeFragment : MvpAppCompatFragment(), SubscriberDealView {
             btnSubDealLogs.setOnClickListener {
                 presenter.journalBtnClicked()
             }
+            layoutHasNoSubs.tvChooseSubscribe.setOnClickListener {
+                router.navigateTo(Screens.tradersAllScreen(TradersAllPresenter.DEFAULT_FILTER))
+            }
         }
     }
 
     override fun setRefreshing(isRefreshing: Boolean) {
         binding.layoutSubDealRefresh.isRefreshing = isRefreshing
+    }
+
+    override fun withoutSubscribeAnyTrader() {
+        binding.layoutHasNoSubs.root.visibility = View.VISIBLE
     }
 
     override fun updateAdapter() {

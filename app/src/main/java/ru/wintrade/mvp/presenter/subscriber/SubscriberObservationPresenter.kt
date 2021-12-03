@@ -12,7 +12,6 @@ import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.doubleToStringWithFormat
 import javax.inject.Inject
 
 class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>() {
@@ -84,6 +83,10 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
                 val traders = subscriptions.sortedBy { it.status }.reversed()
                 listPresenter.traders.clear()
                 listPresenter.traders.addAll(traders)
+                if (traders.isEmpty()) {
+                    viewState.withoutSubscribeAnyTrader()
+                    return@subscribe
+                }
                 viewState.updateAdapter()
             }, {
                 it.printStackTrace()

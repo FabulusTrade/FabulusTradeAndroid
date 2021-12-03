@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSubscriberNewsBinding
 import ru.wintrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.wintrade.mvp.presenter.traders.TradersAllPresenter
 import ru.wintrade.mvp.view.subscriber.SubscriberNewsView
+import ru.wintrade.navigation.Screens
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.PostRVAdapter
 import ru.wintrade.ui.adapter.divider.RecyclerViewItemDecoration
+import javax.inject.Inject
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     private var _binding: FragmentSubscriberNewsBinding? = null
@@ -34,6 +38,9 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         App.instance.appComponent.inject(this)
     }
 
+    @Inject
+    lateinit var router: Router
+
     private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
 
     override fun onCreateView(
@@ -42,6 +49,7 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSubscriberNewsBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
         return _binding?.root
     }
 
@@ -51,6 +59,11 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     override fun init() {
+        initRecyclerView()
+        initListeners()
+    }
+
+    private fun initRecyclerView() {
         binding.rvSubscriberNews.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -77,8 +90,20 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         }
     }
 
+    private fun initListeners() {
+        with(binding) {
+            layoutHasNoSubs.tvChooseSubscribe.setOnClickListener {
+                router.navigateTo(Screens.tradersAllScreen(TradersAllPresenter.DEFAULT_FILTER))
+            }
+        }
+    }
+
     override fun updateAdapter() {
         postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun withoutSubscribeAnyTrader() {
+        binding.layoutHasNoSubs.root.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

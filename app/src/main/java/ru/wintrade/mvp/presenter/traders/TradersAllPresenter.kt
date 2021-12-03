@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>() {
     companion object {
-        private const val DEFAULT_FILTER = 0
-        private const val BY_FOLLOWERS = 1
+        const val DEFAULT_FILTER = 0
+        const val BY_FOLLOWERS = 1
     }
 
     @Inject
