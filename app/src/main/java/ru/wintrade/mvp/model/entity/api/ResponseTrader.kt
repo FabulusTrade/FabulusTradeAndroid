@@ -1,6 +1,8 @@
 package ru.wintrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import ru.wintrade.mvp.model.entity.ColorItem
 
 data class ResponseTrader(
     @Expose
@@ -23,6 +25,9 @@ data class ResponseTrader(
     val trades_count: Int,
     @Expose
     val incr_decr_depo_365: Double,
+    @Expose
+    @SerializedName("color_incr_decr_depo_365")
+    val colorIncrDecrDepo365: ColorItem?,
     @Expose
     val followers_count_7day: Int,
     @Expose

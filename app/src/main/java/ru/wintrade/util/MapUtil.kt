@@ -17,6 +17,7 @@ fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.followers_count,
     trader.trades_count,
     trader.incr_decr_depo_365,
+    trader.colorIncrDecrDepo365,
     trader.followers_count_7day,
     mapToPost(trader.pinned_post)
 )

@@ -15,6 +15,7 @@ data class Trader(
     val followersCount: Int,
     val tradesCount: Int,
     val incrDecrDepo365: Double?,
+    val colorIncrDecrDepo365: ColorItem?,
     val followersForWeekCount: Int,
     val pinnedPost: Post?
 ) : Parcelable
