@@ -102,7 +102,14 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         init {
             itemView.image_group.apply {
                 setImageLoader(imageLoader)
-                setListener { _, url -> router.navigateTo(Screens.imageBrowsingFragment(url)) }
+                setListener { position, _ ->
+                    router.navigateTo(
+                        Screens.imageBrowsingFragment(
+                            getImages(),
+                            position
+                        )
+                    )
+                }
             }
         }
 

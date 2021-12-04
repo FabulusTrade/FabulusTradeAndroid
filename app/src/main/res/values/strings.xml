@@ -435,7 +435,7 @@
 
     <string name="image_group_view_image_loader_is_not_specified">ImageLoader is not specified</string>
     <string name="image_group_view_overflow_template">+%1$d</string>
-    <string name="image_group_view_overflow_text_template">+%1$d</string>
+    <string name="image_group_view_overflown_text_template">+%1$d</string>
 
     <!--fragment_trader_analytics-->
     <string name="average_number_of_operations_per_month">среднее кол-во операций в мес.</string>

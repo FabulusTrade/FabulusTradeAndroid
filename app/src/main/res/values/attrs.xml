@@ -5,8 +5,8 @@
         <attr name="imageGroupViewPlaceHolderColor" format="color" />
         <attr name="imageGroupViewImageRadius" format="dimension" />
         <attr name="gridSize" format="dimension" />
-        <attr name="overflowTexAppearance" format="reference" />
-        <attr name="overflowTextTemplate" format="reference" />
+        <attr name="overflownTextAppearance" format="reference" />
+        <attr name="overflownTextTemplate" format="reference" />
         <attr name="clippingDrawable" format="reference" />
         <attr name="clipToOutline" format="boolean" />
     </declare-styleable>

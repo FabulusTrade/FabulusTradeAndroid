@@ -97,13 +97,13 @@
 
     <style name="Widget.ImageGroupViewDefStyle" parent="">
         <item name="gridSize">@dimen/image_group_view_grid_size</item>
-        <item name="overflowTexAppearance">@style/ImageGroupViewOverflowTextAppearanceDefStyle</item>
+        <item name="overflownTextAppearance">@style/ImageGroupViewOverflowingTextAppearanceDefStyle</item>
+        <item name="overflownTextTemplate">@string/image_group_view_overflown_text_template</item>
         <item name="android:background">@drawable/image_view_group_background</item>
         <item name="clipToOutline">true</item>
-        <item name="overflowTextTemplate">@string/image_group_view_overflow_text_template</item>
     </style>
 
-    <style name="ImageGroupViewOverflowTextAppearanceDefStyle" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="ImageGroupViewOverflowingTextAppearanceDefStyle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@color/image_group_view_text_color</item>
     </style>
 

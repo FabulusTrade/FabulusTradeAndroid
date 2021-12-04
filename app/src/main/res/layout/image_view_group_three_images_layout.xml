@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/space"
-        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Space
@@ -27,7 +26,6 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/space2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/space"
         app:layout_constraintTop_toTopOf="parent" />
 

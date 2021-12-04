@@ -42,15 +42,15 @@ class ImageGroupView @JvmOverloads constructor(
         )
 
     @ColorInt
-    private val dimmedOverflowImageViewColor =
+    private val dimmedOverflownImageViewColor =
         ResourcesCompat.getColor(
             resources,
-            R.color.image_group_view_overflow_dimmed_image_view_color,
+            R.color.image_group_view_dimmed_overflown_image_view_color,
             context.theme
         )
 
     @StringRes
-    private var overflowTextTemplate = 0
+    private var overflownTextTemplate = 0
 
     @StyleRes
     private val styleFromDefAttr: Int = run {
@@ -81,14 +81,14 @@ class ImageGroupView @JvmOverloads constructor(
     private val imageViewIds =
         listOf(R.id.image1, R.id.image2, R.id.image3, R.id.image4)
 
-    private val isOverflow: Boolean get() = images.size > MAX_IMAGE_VIEW_COUNT
+    private val isOverflown: Boolean get() = images.size > MAX_IMAGE_VIEW_COUNT
 
     init {
         context.withStyledAttributes(attrs, R.styleable.ImageGroupView, defStyleAttr, defStyleRes) {
             clipToOutline = getBoolean(R.styleable.ImageGroupView_clipToOutline, clipToOutline)
-            overflowTextTemplate = getResourceId(
-                R.styleable.ImageGroupView_overflowTextTemplate,
-                R.string.image_group_view_overflow_text_template
+            overflownTextTemplate = getResourceId(
+                R.styleable.ImageGroupView_overflownTextTemplate,
+                R.string.image_group_view_overflown_text_template
             )
         }
     }
@@ -105,6 +105,8 @@ class ImageGroupView @JvmOverloads constructor(
     fun setImageLoader(imageLoader: ImageLoader) {
         this.imageLoader = imageLoader
     }
+
+    fun getImages(): List<String> = images
 
     fun setImages(newImages: List<String>) {
         images.apply {
@@ -123,7 +125,7 @@ class ImageGroupView @JvmOverloads constructor(
         if (imageViewCount == 0) return
         inflateLayout(imageViewCount)
         setUpImageViews()
-        if (isOverflow) setUpOverflowTextView()
+        if (isOverflown) setUpOverflownTextView()
     }
 
     private fun loadImages() {
@@ -149,20 +151,20 @@ class ImageGroupView @JvmOverloads constructor(
     private fun throwImageLoaderError(): Nothing =
         throw IllegalArgumentException(context.getString(R.string.image_group_view_image_loader_is_not_specified))
 
-    private fun setUpOverflowTextView() {
+    private fun setUpOverflownTextView() {
         overflowTextView = findViewById<TextView>(R.id.overflow_text_view)?.apply {
             visibility = VISIBLE
-            text = getOverflowString()
+            text = getOverflownText()
         }
     }
 
-    private fun getOverflowString() =
-        context.getString(overflowTextTemplate, images.size - MAX_IMAGE_VIEW_COUNT)
+    private fun getOverflownText() =
+        context.getString(overflownTextTemplate, images.size - MAX_IMAGE_VIEW_COUNT)
 
     private fun setUpImageViews() {
         findImageViews()
         imageViewList.forEach { it.setColorFilter(dimmedImageViewColor) }
-        if (isOverflow) imageViewList[3].setColorFilter(dimmedOverflowImageViewColor)
+        if (isOverflown) imageViewList.getOrNull(3)?.setColorFilter(dimmedOverflownImageViewColor)
         listener?.let { setListener(it) }
     }
 
