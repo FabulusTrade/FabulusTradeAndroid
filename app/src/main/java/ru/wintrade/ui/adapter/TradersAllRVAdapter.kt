@@ -57,10 +57,11 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
                     (view as CheckBox).setChecked(false)
                 } else {
                     presenter.observeBtnClicked(holder.bindingAdapterPosition, true)
-                    context.showLongToast(
-                        context.getResources().getString(R.string.added_to_observation),
-                        Toast.LENGTH_SHORT
-                    )
+                    if (presenter.isLogged())
+                        context.showLongToast(
+                            context.getResources().getString(R.string.added_to_observation),
+                            Toast.LENGTH_SHORT
+                        )
                 }
             } else {
                 presenter.observeBtnClicked(holder.bindingAdapterPosition, false)

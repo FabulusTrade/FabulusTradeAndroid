@@ -53,7 +53,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
 
         override fun openTraderStat(pos: Int) {
             val trader = traderList[pos]
-            if (profile.user != null && trader.id == profile.user!!.id)
+            if (isLogged() && trader.id == profile.user!!.id)
                 router.navigateTo(Screens.traderMeMainScreen())
             else
                 router.navigateTo(Screens.traderMainScreen(traderList[pos]))
@@ -63,9 +63,14 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
             return profile.user?.id.equals(traderList[pos].id)
         }
 
+        override fun isLogged(): Boolean {
+            return profile.user != null
+        }
+
         override fun observeBtnClicked(pos: Int, isChecked: Boolean) {
             if (profile.user == null) {
                 router.navigateTo(Screens.signInScreen(false))
+                return
             }
 
             if (checkIfTraderIsMe(pos)) {

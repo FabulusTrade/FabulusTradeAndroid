@@ -8,4 +8,5 @@ interface ITradersAllListPresenter {
     fun openTraderStat(pos: Int)
     fun observeBtnClicked(pos: Int, isChecked: Boolean)
     fun checkIfTraderIsMe(pos: Int): Boolean
+    fun isLogged(): Boolean
 }
