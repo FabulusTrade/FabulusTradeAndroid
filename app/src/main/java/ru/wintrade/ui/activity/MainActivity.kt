@@ -12,8 +12,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.header_main_menu.*
 import kotlinx.android.synthetic.main.header_main_menu.view.*
@@ -42,7 +45,19 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     @InjectPresenter
     lateinit var presenter: MainPresenter
 
-    val navigator = AppNavigator(this, R.id.container)
+    val navigator = object : AppNavigator(this, R.id.container) {
+        override fun setupFragmentTransaction(
+            screen: FragmentScreen,
+            fragmentTransaction: FragmentTransaction,
+            currentFragment: Fragment?,
+            nextFragment: Fragment
+        ) {
+            fragmentTransaction.setCustomAnimations(
+                R.anim.enter_anim, R.anim.exit_anim,
+                R.anim.enter_anim, R.anim.exit_anim,
+            )
+        }
+    }
 
     @ProvidePresenter
     fun providePresenter() = MainPresenter().apply {
