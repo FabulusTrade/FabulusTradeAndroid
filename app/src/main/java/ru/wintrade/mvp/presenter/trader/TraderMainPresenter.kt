@@ -73,12 +73,11 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
             })
     }
 
-    fun observeBtnClicked() {
-        isObserveActive = !isObserveActive
+    fun observeBtnClicked(subsribe: Boolean) {
         viewState.setObserveActive(isObserveActive)
         if (profile.user == null) {
             router.navigateTo(Screens.signInScreen(false))
-        } else if (isObserveActive) {
+        } else if (subsribe) {
             apiRepo
                 .observeToTrader(profile.token!!, trader.id)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +111,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                     .deleteObservation(profile.token!!, trader.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        // Не обрабатывется
+                        isObserveActive = !isObserveActive
+                        setVisibility(true)
                     }, { error ->
                         if (error is ProtocolException) {
                             isObserveActive = !isObserveActive

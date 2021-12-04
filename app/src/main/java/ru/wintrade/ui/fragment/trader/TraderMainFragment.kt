@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
@@ -22,6 +24,7 @@ import ru.wintrade.ui.adapter.TraderMainVPAdapter
 import ru.wintrade.util.loadImage
 import ru.wintrade.util.setDrawerLockMode
 import ru.wintrade.util.setTextAndColor
+import ru.wintrade.util.showLongToast
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     private var _binding: FragmentTraderMainBinding? = null
@@ -67,8 +70,23 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
                 presenter.subscribeToTraderBtnClicked()
                 binding.cbTraderStatObserve.visibility = View.INVISIBLE
             }
-            cbTraderStatObserve.setOnClickListener {
-                presenter.observeBtnClicked()
+            cbTraderStatObserve.setOnClickListener { view ->
+                with((view as CheckBox).isChecked) {
+                    presenter.observeBtnClicked(this)
+                    val context = requireContext()
+                    if (this) {
+                        context.showLongToast(
+                            context.getResources().getString(R.string.added_to_observation),
+                            Toast.LENGTH_SHORT
+                        )
+                    } else {
+                        context.showLongToast(
+                            context.getResources().getString(R.string.removed_from_observation),
+                            Toast.LENGTH_SHORT
+                        )
+                    }
+                }
+
             }
         }
     }
