@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.widget.TextView
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
@@ -75,6 +76,14 @@ fun ResourceProvider.formatStringWithDef(stringId: Int, value: Any?, defaultStri
 fun ResourceProvider.formatDigitWithDef(stringId: Int, value: Any?): String =
     formatStringWithDef(stringId, value, R.string.empty_profit_result)
 
+// преобразует строкту с кодом света в целое число
+fun ResourceProvider.convertColorWithDef(
+    color: String?,
+    defaultColorResourceId: Int = R.color.colorGray
+): Int =
+    color?.let {
+        return Color.parseColor(color)
+    } ?: getColor(defaultColorResourceId)
 
 fun TextView.setTextAndColor(textValue: String, color: Int) {
     text = textValue
