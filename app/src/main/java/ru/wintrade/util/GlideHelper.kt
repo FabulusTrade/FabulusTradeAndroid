@@ -6,8 +6,8 @@ import androidx.core.content.res.ResourcesCompat.ID_NULL
 import com.bumptech.glide.Glide
 
 fun loadImage(path: String, container: ImageView, @DrawableRes placeholder: Int = ID_NULL) {
-    Glide.with(container.context).load(path)
-        .fitCenter()
+    Glide.with(container.context)
+        .load(path)
         .placeholder(placeholder)
         .into(container)
 }

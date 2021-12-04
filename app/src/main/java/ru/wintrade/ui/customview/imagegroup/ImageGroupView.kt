@@ -72,10 +72,10 @@ class ImageGroupView @JvmOverloads constructor(
     private val inflater = LayoutInflater.from(styledContext)
 
     private val layoutIds = listOf(
-        R.layout.image_view_group_one_image_layout,
-        R.layout.image_view_group_two_images_layout,
-        R.layout.image_view_group_three_images_layout,
-        R.layout.image_view_group_four_images_layout
+        R.layout.image_group_view_one_image_layout,
+        R.layout.image_group_view_two_images_layout,
+        R.layout.image_group_view_three_images_layout,
+        R.layout.image_group_view_four_images_layout
     )
 
     private val imageViewIds =
