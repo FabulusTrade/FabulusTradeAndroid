@@ -47,11 +47,6 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         return _binding?.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.onViewResumed()
-    }
-
     override fun init() {
         initRecyclerView()
         initListeners()

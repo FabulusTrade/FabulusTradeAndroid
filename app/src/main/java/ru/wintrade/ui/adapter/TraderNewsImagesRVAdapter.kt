@@ -51,7 +51,7 @@ class TraderNewsImagesRVAdapter :
         // Открываем активити для рассмотра картинки, передаем туда веб адрес самой картинки
         private fun setClickListener(pos: Int) {
             itemView.iv_item_trader_news_item_image.setOnClickListener {
-                router.navigateTo(Screens.imageBrowsingFragment(urlImage = images[pos]))
+                router.navigateTo(Screens.imageBrowsingFragment(listOf(images[pos])))
             }
         }
 

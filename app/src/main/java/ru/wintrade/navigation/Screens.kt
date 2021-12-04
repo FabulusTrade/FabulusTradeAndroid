@@ -110,6 +110,6 @@ object Screens {
     fun webViewFragment(url: String) =
         FragmentScreen { WebViewFragment.newInstance(url) }
 
-    fun imageBrowsingFragment(urlImage: String) =
-        FragmentScreen { ImageBrowsingFragment.newInstance(urlImage) }
+    fun imageBrowsingFragment(urls: List<String>, position: Int = 0) =
+        FragmentScreen { ImageBrowsingFragment.newInstance(urls, position) }
 }

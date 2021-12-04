@@ -5,43 +5,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
-import ru.wintrade.databinding.FragmentImageBrowsingBinding
-import ru.wintrade.util.loadImage
+import androidx.viewpager2.widget.ViewPager2
+import ru.wintrade.ui.adapter.ImageBrowsingAdapter
+import kotlin.math.max
+import kotlin.math.min
 
-const val IMAGE_PATH = "image_path"
-
-/**
- * Fragment для просмотра фото. Из главного функционала - зум фото чтобы рассмотреть его детальнее
- * Для инициализации нужно передать url картинки
- */
 class ImageBrowsingFragment : Fragment() {
 
-    private var binding: FragmentImageBrowsingBinding? = null
+    companion object {
+        private const val PARAM_IMAGE_URLS = "PARAM_IMAGE_URLS"
+        private const val PARAM_POSITION = "PARAM_POSITION"
+
+        fun newInstance(imageUrls: List<String>, position: Int = 0) =
+            ImageBrowsingFragment().apply {
+                arguments = bundleOf(
+                    PARAM_IMAGE_URLS to imageUrls.toTypedArray(),
+                    PARAM_POSITION to max(0, min(position, imageUrls.size))
+                )
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentImageBrowsingBinding.inflate(
-        inflater,
-        container,
-        false
-    ).apply {
-        binding = this
-    }.root
+    ) = ViewPager2(requireContext())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val urlImage = requireArguments().getString(IMAGE_PATH)
-        binding?.let {
-            loadImage("$urlImage", it.ivPostImage)
+        val imageUrls = (arguments?.getStringArray(PARAM_IMAGE_URLS) ?: emptyArray()).toList()
+        val position = arguments?.getInt(PARAM_POSITION) ?: 0
+        with(view as ViewPager2) {
+            adapter = ImageBrowsingAdapter(imageUrls) {
+                isUserInputEnabled = it && imageUrls.size > 1
+            }
+            doOnNextLayout {
+                setCurrentItem(position, false)
+            }
         }
     }
-
-    companion object {
-        fun newInstance(urlImage: String): Fragment = ImageBrowsingFragment().apply {
-            arguments = bundleOf(IMAGE_PATH to urlImage)
-        }
-    }
-
 }

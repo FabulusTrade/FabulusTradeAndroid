@@ -113,11 +113,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-    }
-
-    fun onViewResumed() {
-        listPresenter.post.clear()
-        nextPage = 1
+        viewState.updateAdapter()
         loadPosts()
     }
 
