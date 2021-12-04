@@ -8,10 +8,13 @@ import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.entity.Trader
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.mvp.view.traders.TradersAllView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.formatDigitWithDef
+import ru.wintrade.util.stringColorToIntWithDef
 import javax.inject.Inject
 
 class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>() {
@@ -29,6 +32,9 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
     @Inject
     lateinit var profile: Profile
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     val listPresenter = TradersAllListPresenter()
     var subscriptionList = mutableListOf<Subscription>()
     private var isLoading = false
@@ -39,14 +45,22 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
         override fun getCount(): Int = traderList.size
 
         override fun bind(view: TradersAllItemView) {
-            traderList[view.pos].username?.let { view.setTraderName(it) }
-            traderList[view.pos].incrDecrDepo365?.let { profit -> view.setTraderProfit("$profit%") }
-            traderList[view.pos].avatar?.let { view.setTraderAvatar(it) }
+            val trader = traderList[view.pos]
+            trader.username?.let { userName -> view.setTraderName(userName) }
+
+            view.setTraderProfit(
+                resourceProvider.formatDigitWithDef(
+                    R.string.tv_traders_all_item_year_profit_text,
+                    trader.colorIncrDecrDepo365?.value
+                ),
+                resourceProvider.stringColorToIntWithDef(trader.colorIncrDecrDepo365?.color)
+            )
+            trader.avatar?.let { avatar -> view.setTraderAvatar(avatar) }
             view.setTraderObserveBtn(false)
             subscriptionList.forEach { subscription ->
-                if (subscription.trader.id == traderList[view.pos].id && subscription.status?.toInt() == 2)
+                if (subscription.trader.id == trader.id && subscription.status?.toInt() == 2)
                     view.setTraderObserveBtn(null)
-                else if (subscription.trader.id == traderList[view.pos].id && subscription.status?.toInt() != 2)
+                else if (subscription.trader.id == trader.id && subscription.status?.toInt() != 2)
                     view.setTraderObserveBtn(true)
             }
         }

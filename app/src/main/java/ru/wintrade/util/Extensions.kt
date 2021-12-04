@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.widget.TextView
 import android.widget.Toast
 import moxy.MvpAppCompatFragment
@@ -74,6 +75,14 @@ fun ResourceProvider.formatStringWithDef(stringId: Int, value: Any?, defaultStri
 // для цифровых значений по умолчанию возвращаем "-"
 fun ResourceProvider.formatDigitWithDef(stringId: Int, value: Any?): String =
     formatStringWithDef(stringId, value, R.string.empty_profit_result)
+
+// преобразует цвет из строки в целочисленные эквивалент, или возвращает значение по уполчанию.
+// например: #008134 в -16744140
+fun ResourceProvider.stringColorToIntWithDef(
+    colorString: String?,
+    defaultColorResourceId: Int = R.color.colorGray
+): Int =
+    colorString?.let { Color.parseColor(colorString) } ?: getColor(defaultColorResourceId)
 
 
 fun TextView.setTextAndColor(textValue: String, color: Int) {

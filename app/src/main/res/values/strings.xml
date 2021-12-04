@@ -468,4 +468,7 @@
     <string name="you_have_no_current_subscribe_trader">У Вас нет текущих подписок</string>
     <string name="choose_trader"><u>ВЫБРАТЬ ТРЕЙДЕРА</u></string>
 
+    <!--TradersAllPresenter-->
+    <string name="tv_traders_all_item_year_profit_text">%.2f%%</string>
+
 </resources>

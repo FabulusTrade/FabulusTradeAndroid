@@ -12,6 +12,7 @@ import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.wintrade.mvp.view.item.TradersAllItemView
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.setTextAndColor
 import ru.wintrade.util.showLongToast
 import javax.inject.Inject
 
@@ -32,18 +33,6 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
         holder.pos = position
         presenter.bind(holder)
         initListeners(holder)
-        setProfitColor(holder)
-    }
-
-    private fun setProfitColor(holder: TradersAllViewHolder) {
-        if (holder.itemView.tv_traders_all_item_year_profit.text.substring(0, 1) == "-")
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(
-                resourceProvider.getColor(R.color.colorRedPercent)
-            )
-        else
-            holder.itemView.tv_traders_all_item_year_profit.setTextColor(
-                resourceProvider.getColor(R.color.colorGreenPercent)
-            )
     }
 
     fun initListeners(holder: TradersAllViewHolder) {
@@ -82,8 +71,8 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
             itemView.tv_traders_all_item_name.text = name
         }
 
-        override fun setTraderProfit(profit: String) {
-            itemView.tv_traders_all_item_year_profit.text = profit
+        override fun setTraderProfit(profit: String, textColor: Int) {
+            itemView.tv_traders_all_item_year_profit.setTextAndColor(profit, textColor)
         }
 
         override fun setTraderAvatar(avatar: String) {
