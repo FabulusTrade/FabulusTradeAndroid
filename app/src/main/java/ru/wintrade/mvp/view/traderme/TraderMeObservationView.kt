@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.view.traderme
 
+import android.widget.Toast
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -8,4 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface TraderMeObservationView: MvpView {
     fun init()
     fun updateAdapter()
+    fun showToast(text: String, duration: Int = Toast.LENGTH_SHORT)
 }

@@ -21,10 +21,7 @@ import ru.wintrade.mvp.presenter.trader.TraderMainPresenter
 import ru.wintrade.mvp.view.trader.TraderMainView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.TraderMainVPAdapter
-import ru.wintrade.util.loadImage
-import ru.wintrade.util.setDrawerLockMode
-import ru.wintrade.util.setTextAndColor
-import ru.wintrade.util.showLongToast
+import ru.wintrade.util.*
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     private var _binding: FragmentTraderMainBinding? = null
@@ -71,22 +68,7 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
                 binding.cbTraderStatObserve.visibility = View.INVISIBLE
             }
             cbTraderStatObserve.setOnClickListener { view ->
-                with((view as CheckBox).isChecked) {
-                    presenter.observeBtnClicked(this)
-                    val context = requireContext()
-                    if (this) {
-                        context.showLongToast(
-                            context.getResources().getString(R.string.added_to_observation),
-                            Toast.LENGTH_SHORT
-                        )
-                    } else {
-                        context.showLongToast(
-                            context.getResources().getString(R.string.removed_from_observation),
-                            Toast.LENGTH_SHORT
-                        )
-                    }
-                }
-
+                presenter.observeBtnClicked((view as CheckBox).isChecked)
             }
         }
     }
@@ -153,8 +135,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         binding.cbTraderStatObserve.isChecked = isChecked
     }
 
-    override fun showToast(text: String) {
-        requireContext().showLongToast(text)
+    override fun showToast(text: String, duration: Int) {
+        requireContext().showToast(text, duration)
     }
 
     override fun setUsername(username: String) {
