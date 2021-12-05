@@ -471,4 +471,10 @@
     <!--TradersAllPresenter-->
     <string name="tv_traders_all_item_year_profit_text">%.2f%%</string>
 
+    <!--SubscriberObservationPresenter-->
+    <string name="tv_subscriber_observation_profit_text">%.2f%%</string>
+
+    <!--TraderMeObservationPresenter-->
+    <string name="trader_me_tv_subscriber_observation_profit_text">%.2f%%</string>
+
 </resources>

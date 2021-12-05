@@ -7,4 +7,5 @@ interface IObservationListPresenter {
     fun bind(view: ObservationItemView)
     fun onItemClick(pos: Int)
     fun deleteObservation(pos: Int)
+    fun deleteSubscription(pos: Int)
 }

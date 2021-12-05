@@ -33,12 +33,17 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         presenter.bind(holder)
         setProfitColor(holder)
         holder.itemView.layout_traders_signed_item.setOnClickListener {
-            presenter.onItemClick(holder.adapterPosition)
+            presenter.onItemClick(holder.bindingAdapterPosition)
         }
+
         holder.itemView.cb_subscriber_observation.setOnClickListener {
-            presenter.deleteObservation(holder.adapterPosition)
-            val context = holder.itemView.getContext()
-            context.showLongToast(context.getResources().getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
+            presenter.deleteObservation(holder.bindingAdapterPosition)
+            val context = holder.itemView.context
+            context.showLongToast(context.resources.getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
+        }
+
+        holder.itemView.tv_subscriber_observation_is_subscribe.setOnClickListener {
+            presenter.deleteSubscription(holder.bindingAdapterPosition)
         }
     }
 

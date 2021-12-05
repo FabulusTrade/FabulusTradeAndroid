@@ -93,6 +93,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        binding.btnTraderStatSubscribe.visibility = View.INVISIBLE
+        binding.cbTraderStatObserve.visibility = View.INVISIBLE
     }
 
     override fun initVP(traderStatistic: TraderStatistic, trader: Trader) {
@@ -112,6 +114,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     override fun setSubscribeBtnActive(isActive: Boolean) {
         with(binding.btnTraderStatSubscribe) {
+            visibility = View.INVISIBLE
+            isClickable = isActive
             if (isActive) {
                 text = resources.getText(R.string.join)
                 backgroundTintList =
@@ -127,6 +131,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
                     ContextCompat.getColorStateList(requireContext(), R.color.colorWhite)
                 binding.cbTraderStatObserve.visibility = View.INVISIBLE
             }
+
+            visibility = View.VISIBLE
         }
     }
 
@@ -145,6 +151,10 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     override fun setObserveChecked(isChecked: Boolean) {
         binding.cbTraderStatObserve.isChecked = isChecked
+    }
+
+    override fun showToast(text: String) {
+        requireContext().showLongToast(text)
     }
 
     override fun setUsername(username: String) {

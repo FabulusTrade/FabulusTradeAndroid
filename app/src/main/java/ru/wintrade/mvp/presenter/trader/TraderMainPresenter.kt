@@ -74,19 +74,31 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     fun observeBtnClicked(subsribe: Boolean) {
-        viewState.setObserveActive(isObserveActive)
-        if (profile.user == null) {
-            router.navigateTo(Screens.signInScreen(false))
-        } else if (subsribe) {
-            apiRepo
-                .observeToTrader(profile.token!!, trader.id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
-        } else {
-            apiRepo
-                .deleteObservation(profile.token!!, trader.id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {})
+        viewState.setObserveChecked(isObserveActive)
+        when {
+            profile.user == null -> {
+                router.navigateTo(Screens.signInScreen(false))
+            }
+            subsribe -> {
+                apiRepo
+                    .observeToTrader(profile.token!!, trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        viewState.showToast(
+                            resourceProvider.getStringResource(R.string.added_to_observation)
+                        )
+                    }, {})
+            }
+            else -> {
+                apiRepo
+                    .deleteObservation(profile.token!!, trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({}, {})
+                // TODO Уточнить момент с кодом ответа 204 и перенести сообщение в subscribe success
+                viewState.showToast(
+                    resourceProvider.getStringResource(R.string.removed_from_observation)
+                )
+            }
         }
     }
 
