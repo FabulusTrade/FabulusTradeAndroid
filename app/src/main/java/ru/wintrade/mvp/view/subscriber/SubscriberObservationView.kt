@@ -9,4 +9,5 @@ interface SubscriberObservationView : MvpView {
     fun init()
     fun updateAdapter()
     fun withoutSubscribeAnyTrader()
+    fun showToast(msg: String)
 }
