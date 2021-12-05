@@ -5,14 +5,16 @@ import android.os.Looper
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.wintrade.R
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.entity.Subscription
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.navigation.Screens
-import ru.wintrade.util.doubleToStringWithFormat
+import ru.wintrade.util.formatDigitWithDef
 import javax.inject.Inject
 
 class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
@@ -25,6 +27,9 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     var listPresenter = TraderMeObservationListPresenter()
 
     inner class TraderMeObservationListPresenter : IObservationListPresenter {
@@ -33,14 +38,19 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
 
         override fun bind(view: ObservationItemView) {
             val traderList = traders[view.pos]
-            traderList.trader.username?.let { view.setTraderName(it) }
-            traderList.trader.avatar?.let { view.setTraderAvatar(it) }
-            traderList.trader.incrDecrDepo365?.let { profit -> view.setTraderProfit("$profit%") }
+            val trader = traderList.trader
+            trader.username?.let { username -> view.setTraderName(username) }
+            trader.avatar?.let { avatar -> view.setTraderAvatar(avatar) }
+
+            view.setTraderProfit(
+                resourceProvider.formatDigitWithDef(
+                    R.string.trader_me_tv_subscriber_observation_profit_text,
+                    trader.incrDecrDepo365
+                )
+            )
+
             traderList.status?.let { status ->
-                if (status.toInt() == 1)
-                    view.subscribeStatus(false)
-                else
-                    view.subscribeStatus(true)
+                view.subscribeStatus(status.toInt() != 1)
             }
         }
 
@@ -61,13 +71,29 @@ class TraderMeObservationPresenter : MvpPresenter<TraderMeObservationView>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({}, {})
 
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        loadSubscriptions()
-                    }, 200
-                )
+                reLoadSubscriptions()
             }
         }
+
+        override fun deleteSubscription(pos: Int) {
+            if (profile.user == null) {
+                router.navigateTo(Screens.signInScreen(false))
+            } else {
+                apiRepo
+                    .deleteObservation(profile.token!!, traders[pos].trader.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({}, {})
+                reLoadSubscriptions()
+            }
+        }
+    }
+
+    private fun reLoadSubscriptions(delayMills: Long = 200) {
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                loadSubscriptions()
+            }, delayMills
+        )
     }
 
     override fun onFirstViewAttach() {
