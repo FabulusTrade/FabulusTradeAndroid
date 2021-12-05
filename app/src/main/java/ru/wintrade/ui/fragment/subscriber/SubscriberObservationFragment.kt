@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
@@ -17,6 +18,7 @@ import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.ObservationRVAdapter
+import ru.wintrade.util.showLongToast
 import javax.inject.Inject
 
 class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservationView {
@@ -81,6 +83,10 @@ class SubscriberObservationFragment : MvpAppCompatFragment(), SubscriberObservat
 
     override fun withoutSubscribeAnyTrader() {
         binding.layoutHasNoSubs.root.visibility = View.VISIBLE
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showLongToast(msg)
     }
 
     override fun onDestroyView() {

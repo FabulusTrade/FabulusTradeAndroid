@@ -473,6 +473,7 @@
 
     <!--SubscriberObservationPresenter-->
     <string name="tv_subscriber_observation_profit_text">%.2f%%</string>
+    <string name="unsubscribe_from_trader_alarm_message">Чтобы отписаться от Трейдера нажмите на \"Подписка\" еще раз</string>
 
     <!--TraderMeObservationPresenter-->
     <string name="trader_me_tv_subscriber_observation_profit_text">%.2f%%</string>

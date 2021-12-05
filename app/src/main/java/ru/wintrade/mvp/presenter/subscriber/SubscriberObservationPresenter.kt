@@ -31,6 +31,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     lateinit var resourceProvider: ResourceProvider
 
     var listPresenter = SubscriberObservationListPresenter()
+    var subscriptionClickPos = -1
 
     inner class SubscriberObservationListPresenter : IObservationListPresenter {
         var traders = mutableListOf<Subscription>()
@@ -78,21 +79,44 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             if (profile.user == null) {
                 router.navigateTo(Screens.signInScreen(false))
             } else {
-                apiRepo
-                    .deleteObservation(profile.token!!, traders[pos].trader.id)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({}, {})
-                reLoadSubscriptions()
+                if (needDeleteSubscription(pos)) {
+                    apiRepo
+                        .deleteObservation(profile.token!!, traders[pos].trader.id)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({}, {})
+                    reLoadSubscriptions()
+                } else {
+                    viewState.showToast(resourceProvider.getStringResource(R.string.unsubscribe_from_trader_alarm_message))
+                }
             }
+        }
+
+        private fun needDeleteSubscription(pos: Int): Boolean {
+            return if (subscriptionClickPos == pos) {
+                clearSubscriptionClickPos()
+                true
+            } else {
+                subscriptionClickPos = pos
+                false
+            }
+        }
+
+        private fun reLoadSubscriptions(delayMills: Long = 200) {
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    loadSubscriptions()
+                }, delayMills
+            )
         }
     }
 
-    private fun reLoadSubscriptions(delayMills: Long = 200) {
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                loadSubscriptions()
-            }, delayMills
-        )
+    override fun attachView(view: SubscriberObservationView?) {
+        super.attachView(view)
+        clearSubscriptionClickPos()
+    }
+
+    private fun clearSubscriptionClickPos() {
+        subscriptionClickPos = - 1
     }
 
     override fun onFirstViewAttach() {
