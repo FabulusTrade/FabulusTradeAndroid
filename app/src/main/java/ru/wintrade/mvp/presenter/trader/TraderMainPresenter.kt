@@ -73,13 +73,13 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
             })
     }
 
-    fun observeBtnClicked(subsribe: Boolean) {
-        viewState.setObserveChecked(isObserveActive)
+    fun observeBtnClicked(subscribe: Boolean) {
+        viewState.setObserveChecked(subscribe)
         when {
             profile.user == null -> {
                 router.navigateTo(Screens.signInScreen(false))
             }
-            subsribe -> {
+            subscribe -> {
                 apiRepo
                     .observeToTrader(profile.token!!, trader.id)
                     .observeOn(AndroidSchedulers.mainThread())

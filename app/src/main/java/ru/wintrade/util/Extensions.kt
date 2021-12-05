@@ -17,6 +17,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) {
+    this.showToast(msg, duration)
+}
+
+fun Context.showToast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(applicationContext, msg, duration).show()
 }
 

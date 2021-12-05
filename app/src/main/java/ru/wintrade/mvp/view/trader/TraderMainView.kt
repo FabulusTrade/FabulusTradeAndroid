@@ -1,5 +1,6 @@
 package ru.wintrade.mvp.view.trader
 
+import android.widget.Toast
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -17,5 +18,5 @@ interface TraderMainView : MvpView {
     fun setProfit(profit: String, textColor: Int)
     fun setAvatar(avatar: String)
     fun setObserveChecked(isChecked: Boolean)
-    fun showToast(text: String)
+    fun showToast(text: String, duration: Int = Toast.LENGTH_SHORT)
 }

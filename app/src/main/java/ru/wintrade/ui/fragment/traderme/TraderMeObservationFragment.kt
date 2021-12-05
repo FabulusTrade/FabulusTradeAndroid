@@ -14,6 +14,7 @@ import ru.wintrade.mvp.presenter.traderme.TraderMeObservationPresenter
 import ru.wintrade.mvp.view.traderme.TraderMeObservationView
 import ru.wintrade.ui.App
 import ru.wintrade.ui.adapter.ObservationRVAdapter
+import ru.wintrade.util.showToast
 
 
 class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationView {
@@ -78,6 +79,10 @@ class TraderMeObservationFragment : MvpAppCompatFragment(), TraderMeObservationV
 
     override fun updateAdapter() {
         observationRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun showToast(text: String, duration: Int) {
+        requireContext().showToast(text, duration)
     }
 
     override fun onDestroyView() {
