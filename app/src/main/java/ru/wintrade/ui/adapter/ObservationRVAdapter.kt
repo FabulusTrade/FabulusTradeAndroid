@@ -11,6 +11,7 @@ import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.setTextAndColor
 import ru.wintrade.util.showLongToast
 import javax.inject.Inject
 
@@ -31,7 +32,6 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
     override fun onBindViewHolder(holder: ObservationItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        setProfitColor(holder)
         holder.itemView.layout_traders_signed_item.setOnClickListener {
             presenter.onItemClick(holder.bindingAdapterPosition)
         }
@@ -47,18 +47,6 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         }
     }
 
-    private fun setProfitColor(holder: ObservationItemViewHolder) {
-        if (holder.itemView.tv_subscriber_observation_profit.text.substring(0, 1) == "-") {
-            holder.itemView.tv_subscriber_observation_profit.setTextColor(
-                resourceProvider.getColor(R.color.colorRedPercent)
-            )
-        } else {
-            holder.itemView.tv_subscriber_observation_profit.setTextColor(
-                resourceProvider.getColor(R.color.colorGreenPercent)
-            )
-        }
-    }
-
     override fun getItemCount(): Int = presenter.getCount()
 
     inner class ObservationItemViewHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -69,8 +57,8 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
             itemView.tv_subscriber_observation_name.text = name
         }
 
-        override fun setTraderProfit(profit: String) {
-            itemView.tv_subscriber_observation_profit.text = profit
+        override fun setTraderProfit(profit: String, textColor: Int) {
+            itemView.tv_subscriber_observation_profit.setTextAndColor(profit, textColor)
         }
 
         override fun setTraderAvatar(avatar: String?) {
