@@ -15,6 +15,7 @@ import ru.wintrade.mvp.view.item.ObservationItemView
 import ru.wintrade.mvp.view.subscriber.SubscriberObservationView
 import ru.wintrade.navigation.Screens
 import ru.wintrade.util.formatDigitWithDef
+import ru.wintrade.util.stringColorToIntWithDef
 import javax.inject.Inject
 
 class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>() {
@@ -45,8 +46,9 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
             view.setTraderProfit(
                 resourceProvider.formatDigitWithDef(
                     R.string.tv_subscriber_observation_profit_text,
-                    trader.incrDecrDepo365
-                )
+                    trader.colorIncrDecrDepo365?.value
+                ),
+                resourceProvider.stringColorToIntWithDef(trader.colorIncrDecrDepo365?.color)
             )
 
             traderList.status?.let { status ->
