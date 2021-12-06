@@ -15,11 +15,18 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
 class CreatePostPresenter(
     val isPublication: Boolean,
     val isPinnedEdit: Boolean?
 ) : MvpPresenter<CreatePostView>() {
+
+    companion object {
+        const val NEW_POST_RESULT = "NEW_POST_RESULT"
+        private const val MAX_ATTACHED_IMAGE_COUNT = 4
+    }
 
     @Inject
     lateinit var profile: Profile
@@ -53,10 +60,12 @@ class CreatePostPresenter(
         }
     }
 
-    fun addImages(images: List<Bitmap>) {
-        if (images.isEmpty()) return
-        images.forEach { addImage(it) }
-        viewState.showToast("Изображение прикреплено")
+    fun addImages(newImages: List<Bitmap>) {
+        if (newImages.isEmpty()) return
+        val remain = max(MAX_ATTACHED_IMAGE_COUNT - images.size, 0)
+        val imageCountToAdd = min(newImages.size, remain)
+        repeat(imageCountToAdd) { addImage(newImages[it]) }
+        viewState.showToast("Добавлено изображений: $imageCountToAdd")
     }
 
     private fun addImage(imageBitmap: Bitmap) {
@@ -103,6 +112,7 @@ class CreatePostPresenter(
             )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                router.sendResult(NEW_POST_RESULT, it)
                 router.exit()
             }, {
                 it.printStackTrace()
