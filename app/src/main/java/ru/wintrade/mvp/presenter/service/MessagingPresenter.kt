@@ -19,6 +19,7 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val OPERATION_DATE_KEY = "operation_date"
         private const val TRADE_CURRENCY_KEY = "trade_currency"
         private const val OPERATION_TYPE_KEY = "operation_type"
+        private const val DELAYED_TRADE_KEY = "delayed_trade"
     }
 
     @Inject
@@ -36,14 +37,17 @@ class MessagingPresenter(private val service: MessagingService) {
         var price = data.getOrElse(PRICE_KEY) { "" }
         val currency = data.getOrElse(TRADE_CURRENCY_KEY) { "" }
         var dateData = data.getOrElse(OPERATION_DATE_KEY) { "" }
+        val isDelayedTrade = data.getOrElse(DELAYED_TRADE_KEY) { "" }.uppercase() == "TRUE"
 
-        if (dateData.isNotEmpty()) {
+        dateData = if (isDelayedTrade && dateData.isNotEmpty()) {
             //передаем в переменную дату ДД/ММ и время ММ:ЧЧ
-            dateData = resourceProvider.formatString(
+            resourceProvider.formatString(
                 R.string.push_date_pattern,
                 dateData.substring(0, 5),
                 dateData.substring(7, 12)
             )
+        } else {
+            ""
         }
 
         if (price.isNotEmpty()) {
