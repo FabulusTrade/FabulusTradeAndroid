@@ -30,10 +30,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
-        android:layout_marginTop="150dp"
         android:text="@string/choice_trade_terminal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4" />
+        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4"
+        app:layout_constraintVertical_bias="0.25" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_trader_reg_3_trade_terminal"
@@ -61,7 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
         android:layout_marginBottom="@dimen/default_vertical_margin_trader_reg"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@id/btn_ready_trader_reg_3"
+        app:layout_constraintTop_toBottomOf="@id/til_trader_reg_3_trade_terminal"
         tools:text="@string/trader_reg_3_becomeToTrader" />
 
     <Button
