@@ -484,4 +484,7 @@
     <string name="push_price_pattern">%.2f</string>
     <string name="push_body_pattern">%s по цене: %s %s</string>
 
+    <!--SignUpPresenter-->
+    <string name="rules_url">https://fabulustrade.com/legal_notes_mobile/</string>
+
 </resources>

@@ -56,13 +56,6 @@ class WebViewFragment : MvpAppCompatFragment(), WebViewView {
     override fun init() {
         setToolbarVisible(false)
         setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        initListeners()
-    }
-
-    private fun initListeners() {
-        binding.btnClose.setOnClickListener {
-            presenter.onCLoseClicked()
-        }
     }
 
     override fun setMainContent(url: String) {
