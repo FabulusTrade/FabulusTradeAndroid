@@ -7,5 +7,7 @@
 
     <string-array name="terminals">
         <item>Тинькофф</item>
+        <item>Freedom Finance</item>
+        <item>Interactive Brokers</item>
     </string-array>
 </resources>

@@ -13,6 +13,7 @@ import ru.wintrade.mvp.model.repo.ProfileRepo
 import ru.wintrade.mvp.model.resource.ResourceProvider
 import ru.wintrade.mvp.view.registration.trader.RegAsTraderThirdView
 import ru.wintrade.navigation.Screens
+import ru.wintrade.util.formatString
 import javax.inject.Inject
 
 class RegAsTraderThirdPresenter(
@@ -51,9 +52,9 @@ class RegAsTraderThirdPresenter(
     }
 
     fun openNextStageScreen() {
-        profile.token?.let {
+        profile.token?.let { token ->
             profileRepo.userProfileRemoteDataSource
-                .get(it)
+                .get(token)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ newProfile ->
                     profile.user = newProfile
@@ -117,5 +118,14 @@ class RegAsTraderThirdPresenter(
                 }
             }
         }
+    }
+
+    fun onNotTinkoffBrokerClicked(broker: String) {
+        viewState.showSelectedBrokerDialog(
+            resourceProvider.formatString(
+                R.string.broker_dialog_text,
+                broker
+            )
+        )
     }
 }
