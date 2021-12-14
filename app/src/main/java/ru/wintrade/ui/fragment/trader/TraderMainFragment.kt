@@ -75,8 +75,6 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
 
     private fun initView() {
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        binding.btnTraderStatSubscribe.visibility = View.INVISIBLE
-        binding.cbTraderStatObserve.visibility = View.INVISIBLE
     }
 
     override fun initVP(traderStatistic: TraderStatistic, trader: Trader) {
