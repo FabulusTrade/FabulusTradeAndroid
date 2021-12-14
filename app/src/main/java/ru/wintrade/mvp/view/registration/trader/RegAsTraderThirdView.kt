@@ -10,4 +10,5 @@ interface RegAsTraderThirdView : MvpView {
     fun showSuccessfulPatchData()
     fun showErrorPatchData(e: Throwable)
     fun renderInstructionText(text: String)
+    fun showSelectedBrokerDialog(msg: String)
 }

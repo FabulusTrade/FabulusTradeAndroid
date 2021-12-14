@@ -30,6 +30,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
 
     @InjectPresenter
     lateinit var presenter: RegAsTraderThirdPresenter
+    lateinit var terminalAdapter: ArrayAdapter<CharSequence>
 
     @ProvidePresenter
     fun providePresenter() = RegAsTraderThirdPresenter(
@@ -48,7 +49,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
     }
 
     private fun initView() {
-        val terminalAdapter = ArrayAdapter.createFromResource(
+        terminalAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.terminals,
             R.layout.support_simple_spinner_dropdown_item
@@ -81,12 +82,31 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
         binding.tvTraderReg4Text1.text = text
     }
 
+    override fun showSelectedBrokerDialog(msg: String) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(msg)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+                initView()
+            }.show()
+    }
+
     private fun initListeners() {
-        binding.btnBackTraderReg3.setOnClickListener {
-            presenter.openRegistrationSecondScreen()
-        }
-        binding.btnReadyTraderReg3.setOnClickListener {
-            presenter.saveTraderRegistrationInfo()
+        with(binding) {
+            btnBackTraderReg3.setOnClickListener {
+                presenter.openRegistrationSecondScreen()
+            }
+            btnReadyTraderReg3.setOnClickListener {
+                presenter.saveTraderRegistrationInfo()
+            }
+            tiTradeTerminal.setOnItemClickListener { adapterView, _, position, _ ->
+                when (position) {
+                    0 -> return@setOnItemClickListener
+                    else -> presenter.onNotTinkoffBrokerClicked(
+                        adapterView.adapter.getItem(position).toString()
+                    )
+                }
+            }
         }
     }
 
