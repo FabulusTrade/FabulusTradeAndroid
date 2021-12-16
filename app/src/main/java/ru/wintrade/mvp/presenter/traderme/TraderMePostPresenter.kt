@@ -153,7 +153,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             isLoading = true
             if (state == State.SUBSCRIPTION) {
                 apiRepo
-                    .getPublisherPosts(profile.token!!, nextPage!!)
+                    .getPostsFollowerAndObserving(profile.token!!, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
                         listPresenter.post.addAll(pag.results)
