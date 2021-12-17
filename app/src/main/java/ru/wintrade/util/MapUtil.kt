@@ -113,11 +113,9 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         trade.order_status,
         trade.order_num,
         trade.price,
-        trade.count,
         trade.currency,
         date,
         trade.profit_count,
-        trade.value,
         trade.subtype
     )
 }

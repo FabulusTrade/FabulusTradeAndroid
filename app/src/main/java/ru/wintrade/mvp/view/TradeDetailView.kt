@@ -13,9 +13,6 @@ interface TradeDetailView: MvpView {
     fun setTicker(ticker: String)
     fun setPrice(price: String)
     fun setPriceTitle(priceTitle: String)
-    fun setCount(count: String)
-    fun setSum(sum: String)
-    fun setSumTitle(sumTitle: String)
     fun setDate(date: String)
     fun setSubtype(type: String)
 }
