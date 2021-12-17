@@ -223,8 +223,6 @@
     <string name="name_tradeFragment">Наименование</string>
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
-    <string name="quantity">Количество, шт</string>
-    <string name="sum">Сумма</string>
     <string name="date_time">Дата/время</string>
 
     <!-- TraderMainFragment -->
@@ -460,10 +458,8 @@
     <string name="tv_average_less_deal_short_text">%.2f%%</string>
 
     <!--TradeDetailPresenter-->
-    <string name="tv_trade_detail_sum_text">%.2f</string>
     <string name="tv_trade_detail_price_text">%.2f</string>
     <string name="tv_trade_detail_price_title_text">Цена, %s</string>
-    <string name="tv_trade_detail_sum_title_text">Сумма, %s</string>
 
     <!--layout_has_no_subs-->
     <string name="you_have_no_current_subscribe_trader">У Вас нет текущих подписок</string>
