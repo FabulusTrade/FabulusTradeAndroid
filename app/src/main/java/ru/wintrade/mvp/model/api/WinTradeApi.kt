@@ -7,6 +7,9 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 import ru.wintrade.mvp.model.entity.api.*
 
+/**
+ * http://wintrade.fun/redoc/
+ */
 interface WinTradeApi {
     @GET("api/v1/trader/list/sort/profit/")
     fun getTradersProfitFiltered(
@@ -114,6 +117,15 @@ interface WinTradeApi {
     fun getTraderPosts(
         @Header("Authorization") token: String,
         @Path("trader_id") id: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponsePost>>
+
+    /**
+     * Получение постов от тех на кого подписан и от тех за кем просто наблюдаешь
+     */
+    @GET("api/v1/trader/posts/following/")
+    fun getPostsFollowerAndObserving(
+        @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponsePost>>
 

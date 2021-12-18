@@ -75,18 +75,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.tvTradeDetailPriceTitle.text = priceTitle
     }
 
-    override fun setCount(count: String) {
-        binding.tvTradeDetailCount.text = count
-    }
-
-    override fun setSum(sum: String) {
-        binding.tvTradeDetailSum.text = sum
-    }
-
-    override fun setSumTitle(sumTitle: String) {
-        binding.tvTradeDetailSumTitle.text = sumTitle
-    }
-
     override fun setDate(date: String) {
         binding.tvTradeDetailDate.text = date
     }

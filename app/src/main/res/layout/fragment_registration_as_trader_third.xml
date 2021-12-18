@@ -24,54 +24,70 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tv_trader_reg_3_trade_terminal"
-        style="@style/RegTraderLabelText.PrimaryColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
-        android:layout_marginTop="150dp"
-        android:text="@string/choice_trade_terminal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_trader_reg_3_trade_terminal"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_trader_reg_3_main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
-        android:layout_marginTop="8dp"
-        app:boxBackgroundColor="@color/design_default_color_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_trade_terminal">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_back_trader_reg_3"
+        app:layout_constraintTop_toBottomOf="@id/top_card_trader_reg_4">
 
-        <AutoCompleteTextView
-            android:id="@+id/ti_trade_terminal"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none"
-            android:maxLines="1"
-            tools:ignore="LabelFor" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@id/tv_trader_reg_4_text1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
-        android:layout_marginBottom="@dimen/default_vertical_margin_trader_reg"
-        app:layout_constraintBottom_toTopOf="@id/btn_ready_trader_reg_3"
-        tools:text="@string/trader_reg_3_becomeToTrader" />
+            <TextView
+                android:id="@+id/tv_trader_reg_3_trade_terminal"
+                style="@style/RegTraderLabelText.PrimaryColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:text="@string/choice_trade_terminal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.25" />
 
-    <Button
-        android:id="@+id/btn_ready_trader_reg_3"
-        style="@style/LongButton"
-        android:layout_marginBottom="110dp"
-        android:text="@string/ready"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_trader_reg_3_trade_terminal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginTop="8dp"
+                app:boxBackgroundColor="@color/design_default_color_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_trader_reg_3_trade_terminal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/ti_trade_terminal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@id/tv_trader_reg_4_text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_horizon_margin_trader_reg"
+                android:layout_marginBottom="@dimen/default_vertical_margin_trader_reg"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toTopOf="@id/btn_ready_trader_reg_3"
+                app:layout_constraintTop_toBottomOf="@id/til_trader_reg_3_trade_terminal"
+                tools:text="@string/trader_reg_3_becomeToTrader" />
+
+            <Button
+                android:id="@+id/btn_ready_trader_reg_3"
+                style="@style/LongButton"
+                android:layout_marginBottom="110dp"
+                android:text="@string/ready"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <ImageButton
         android:id="@+id/btn_back_trader_reg_3"

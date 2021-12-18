@@ -39,19 +39,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
             )
         )
         viewState.setDate(trade.date.toStringFormat("dd.MM.yyyy / HH:mm"))
-        viewState.setCount(trade.count.toString())
-        viewState.setSum(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_trade_detail_sum_text,
-                trade.value
-            )
-        )
-        viewState.setSumTitle(
-            resourceProvider.formatString(
-                R.string.tv_trade_detail_sum_title_text,
-                trade.currency
-            )
-        )
+
         viewState.setSubtype(trade.subtype)
     }
 

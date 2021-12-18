@@ -38,8 +38,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadTraderStatistic()
-        setVisibility(true)
-        viewState.setObserveActive(false)
+        setVisibility(false)
         viewState.init()
         viewState.setUsername(trader.username!!)
         trader.avatar?.let { viewState.setAvatar(it) }
@@ -139,6 +138,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
 
     private fun checkSubscription() {
         if (profile.user != null) {
+            setVisibility(false)
             apiRepo
                 .mySubscriptions(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -166,6 +166,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
                 }, { error ->
                     error.printStackTrace()
                 })
+        } else {
+            setVisibility(true)
         }
     }
 

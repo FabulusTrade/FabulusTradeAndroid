@@ -127,7 +127,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             isLoading = true
 
             apiRepo
-                .getPublisherPosts(profile.token!!, nextPage!!)
+                .getPostsFollowerAndObserving(profile.token!!, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     if (pag.results.isEmpty()) {

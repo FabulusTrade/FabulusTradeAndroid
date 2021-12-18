@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.text.Spanned
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -31,7 +32,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
 
     }
 
-    override fun showNotification(title: String, body: String, id: Int) {
+    override fun showNotification(title: Spanned, body: String, id: Int) {
         val intent = Intent(this, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(

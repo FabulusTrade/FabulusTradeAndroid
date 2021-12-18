@@ -138,6 +138,7 @@
     <string name="ready">Готово</string>
     <string name="trader_reg_patch_dialog_message">Трейдер успешно зарегистрирован. Вам на почту отправлено ПО и инструкция по его установке.</string>
     <string name="ok">OK</string>
+    <string name="broker_dialog_text">Работа с брокером %s будет доступна позже</string>
     <string name="trader_reg_error_dialog_message">При загрузке данных на сервер произошла ошибка:\n%s\n Повторите процедуру регистрации</string>
     <string name="trader_reg_3_fromFollowerToTrader">После нажатия на кнопку “Готово” Ваш аккаунт последователя поменяется на аккаунт трейдера. К Вам на электронную почту, указанную при регистрации, поступит письмо, содержащее ссылку на переход в Ваш личный кабинет на сайте fabulustrade.com\n\nВ личном кабинете на сайте Вам необходимо скачать программное обеспечение (скрипт) и ознакомиться с инструкцией по его установке для трансляции сделок на платформу Fabulus Trade.</string>
     <string name="trader_reg_3_becomeToTrader">После нажатия на кнопку “Готово” к Вам на электронную почту, указанную при регистрации, поступит письмо для подтверждения Ваших учетных данных, а также содержащее ссылку на переход в Ваш личный кабинет на сайте fabulustrade.com\n\nВ личном кабинете Вам необходимо скачать программное обеспечение (скрипт) и ознакомиться с инструкцией по его установке для трансляции сделок на платформу Fabulus Trade.</string>
@@ -222,8 +223,6 @@
     <string name="name_tradeFragment">Наименование</string>
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
-    <string name="quantity">Количество, шт</string>
-    <string name="sum">Сумма</string>
     <string name="date_time">Дата/время</string>
 
     <!-- TraderMainFragment -->
@@ -459,10 +458,8 @@
     <string name="tv_average_less_deal_short_text">%.2f%%</string>
 
     <!--TradeDetailPresenter-->
-    <string name="tv_trade_detail_sum_text">%.2f</string>
     <string name="tv_trade_detail_price_text">%.2f</string>
     <string name="tv_trade_detail_price_title_text">Цена, %s</string>
-    <string name="tv_trade_detail_sum_title_text">Сумма, %s</string>
 
     <!--layout_has_no_subs-->
     <string name="you_have_no_current_subscribe_trader">У Вас нет текущих подписок</string>
@@ -477,5 +474,14 @@
 
     <!--TraderMeObservationPresenter-->
     <string name="trader_me_tv_subscriber_observation_profit_text">%.2f%%</string>
+
+    <!--MessagingPresenter-->
+    <string name="push_title_pattern"><b>%s: %s %s</b></string>
+    <string name="push_date_pattern">%s (%s)</string>
+    <string name="push_price_pattern">%.2f</string>
+    <string name="push_body_pattern">%s по цене: %s %s</string>
+
+    <!--SignUpPresenter-->
+    <string name="rules_url">https://fabulustrade.com/legal_notes_mobile/</string>
 
 </resources>

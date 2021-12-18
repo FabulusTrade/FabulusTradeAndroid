@@ -1,5 +1,7 @@
 package ru.wintrade.mvp.model.messaging
 
+import android.text.Spanned
+
 interface IMessagingService {
-    fun showNotification(title: String, body: String, id: Int)
+    fun showNotification(title: Spanned, body: String, id: Int)
 }
