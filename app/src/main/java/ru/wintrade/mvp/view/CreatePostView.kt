@@ -8,5 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface CreatePostView : MvpView {
     fun init()
     fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?)
-    fun showToast(msg: String)
+    fun showImagesAddedMessage(count: Int)
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import com.jakewharton.rxbinding4.view.clicks
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -23,9 +24,19 @@ class CreatePostFragment(
     private val isPinnedEdit: Boolean? = null,
     private val pinnedText: String?
 ) :
-    MvpAppCompatFragment(),
-    CreatePostView {
+    MvpAppCompatFragment(), CreatePostView {
+
+    companion object {
+        fun newInstance(
+            postId: String?,
+            isPublication: Boolean,
+            isPinnedEdit: Boolean?,
+            pinnedText: String?
+        ) = CreatePostFragment(postId, isPublication, isPinnedEdit, pinnedText)
+    }
+
     private var _binding: FragmentCreatePostBinding? = null
+
     private val binding: FragmentCreatePostBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
@@ -34,18 +45,8 @@ class CreatePostFragment(
             presenter.addImages(uris.map { it.toBitmap() })
         }
 
-    private fun Uri.toBitmap () =
+    private fun Uri.toBitmap() =
         BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
-
-    companion object {
-        fun newInstance(
-            postId: String?,
-            isPublication: Boolean,
-            isPinnedEdit: Boolean?,
-            pinnedText: String?
-        ) =
-            CreatePostFragment(postId, isPublication, isPinnedEdit, pinnedText)
-    }
 
     @InjectPresenter
     lateinit var presenter: CreatePostPresenter
@@ -70,9 +71,10 @@ class CreatePostFragment(
 
     fun initListeners() {
         binding.run {
-            btnCreatePostPublish.setOnClickListener {
-                presenter.onPublishClicked(postId, etCreatePost.text.toString())
-            }
+            btnCreatePostPublish.clicks()
+                .map { etCreatePost.text.toString() }
+                .distinct()
+                .subscribe { text -> presenter.onPublishClicked(postId, text) }
             btnCreatePostLoadFile.setOnClickListener {
                 getContent.launch(getString(R.string.gallery_mask))
             }
@@ -92,8 +94,8 @@ class CreatePostFragment(
         }
     }
 
-    override fun showToast(msg: String) {
-        requireContext().showLongToast(msg)
+    override fun showImagesAddedMessage(count: Int) {
+        requireContext().showLongToast(getString(R.string.images_added, count))
     }
 
     override fun onDestroyView() {

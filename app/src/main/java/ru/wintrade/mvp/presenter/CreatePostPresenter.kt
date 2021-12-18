@@ -19,8 +19,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 class CreatePostPresenter(
-    val isPublication: Boolean,
-    val isPinnedEdit: Boolean?
+    private val isPublication: Boolean,
+    private val isPinnedEdit: Boolean?
 ) : MvpPresenter<CreatePostView>() {
 
     companion object {
@@ -39,6 +39,8 @@ class CreatePostPresenter(
 
     @Inject
     lateinit var router: Router
+
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
 
     var images = mutableListOf<MultipartBody.Part>()
 
@@ -65,7 +67,7 @@ class CreatePostPresenter(
         val remain = max(MAX_ATTACHED_IMAGE_COUNT - images.size, 0)
         val imageCountToAdd = min(newImages.size, remain)
         repeat(imageCountToAdd) { addImage(newImages[it]) }
-        viewState.showToast("Добавлено изображений: $imageCountToAdd")
+        viewState.showImagesAddedMessage(imageCountToAdd)
     }
 
     private fun addImage(imageBitmap: Bitmap) {
@@ -74,8 +76,7 @@ class CreatePostPresenter(
         val byteArray = stream.toByteArray()
         images.add(
             MultipartBody.Part.createFormData(
-            "image[${images.size}]",
-            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault()).format(Date())}",
+                "image[${images.size}]", "photo${dateFormat.format(Date())}",
                 byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
             )
         )
@@ -88,7 +89,7 @@ class CreatePostPresenter(
             .subscribe({
                 router.exit()
             }, {
-                // Ошибка не обрабатывается
+                it.printStackTrace()
             })
     }
 

@@ -87,6 +87,7 @@
     <string name="gallery">Галлерея</string>
     <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
     <string name="create_post_hint">"Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"</string>
+    <string name="images_added">Добавлено изображений: %1$d</string>
 
     <!-- RegistrationAsTraderFragmentFive -->
     <string name="your_profile">Ваш профиль</string>
