@@ -108,11 +108,15 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadMySubscription()
         when (checkedFilter) {
             DEFAULT_FILTER -> loadTraders()
             BY_FOLLOWERS -> loadTradersFilteredByFollowers()
         }
+    }
+
+    override fun attachView(view: TradersAllView?) {
+        super.attachView(view)
+        loadMySubscription()
     }
 
     fun onScrollLimit() {
@@ -131,6 +135,7 @@ class TradersAllPresenter(val checkedFilter: Int) : MvpPresenter<TradersAllView>
                 .subscribe({
                     subscriptionList.clear()
                     subscriptionList.addAll(it)
+                    viewState.updateAdapter()
                 }, {
                     // Ошибка не обрабатывается
                 })
