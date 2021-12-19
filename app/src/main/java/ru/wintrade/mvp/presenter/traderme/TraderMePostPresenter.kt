@@ -1,11 +1,13 @@
 package ru.wintrade.mvp.presenter.traderme
 
+import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.model.entity.Profile
 import ru.wintrade.mvp.model.repo.ApiRepo
+import ru.wintrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.wintrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.wintrade.mvp.view.item.PostItemView
 import ru.wintrade.mvp.view.trader.TraderMePostView
@@ -25,6 +27,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var state = State.PUBLICATIONS
     private var isLoading = false
     private var nextPage: Int? = 1
+    private var newPostResultListener: ResultListenerHandler? = null
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -113,7 +116,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        viewState.updateAdapter()
         loadPosts()
     }
 
@@ -122,6 +124,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onCreatePostBtnClicked() {
+        newPostResultListener = router.setResultListener(NEW_POST_RESULT) { post ->
+            (post as? Post)?.let {
+                listPresenter.post.add(0, post)
+                viewState.updateAdapter()
+            }
+        }
         router.navigateTo(
             Screens.createPostScreen(
                 postId = null,
@@ -179,5 +187,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     })
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        newPostResultListener?.dispose()
     }
 }

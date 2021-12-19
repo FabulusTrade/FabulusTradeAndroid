@@ -15,11 +15,18 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
 class CreatePostPresenter(
-    val isPublication: Boolean,
-    val isPinnedEdit: Boolean?
+    private val isPublication: Boolean,
+    private val isPinnedEdit: Boolean?
 ) : MvpPresenter<CreatePostView>() {
+
+    companion object {
+        const val NEW_POST_RESULT = "NEW_POST_RESULT"
+        private const val MAX_ATTACHED_IMAGE_COUNT = 4
+    }
 
     @Inject
     lateinit var profile: Profile
@@ -32,6 +39,8 @@ class CreatePostPresenter(
 
     @Inject
     lateinit var router: Router
+
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
 
     var images = mutableListOf<MultipartBody.Part>()
 
@@ -53,10 +62,12 @@ class CreatePostPresenter(
         }
     }
 
-    fun addImages(images: List<Bitmap>) {
-        if (images.isEmpty()) return
-        images.forEach { addImage(it) }
-        viewState.showToast("Изображение прикреплено")
+    fun addImages(newImages: List<Bitmap>) {
+        if (newImages.isEmpty()) return
+        val remain = max(MAX_ATTACHED_IMAGE_COUNT - images.size, 0)
+        val imageCountToAdd = min(newImages.size, remain)
+        repeat(imageCountToAdd) { addImage(newImages[it]) }
+        viewState.showImagesAddedMessage(imageCountToAdd)
     }
 
     private fun addImage(imageBitmap: Bitmap) {
@@ -65,8 +76,7 @@ class CreatePostPresenter(
         val byteArray = stream.toByteArray()
         images.add(
             MultipartBody.Part.createFormData(
-            "image[${images.size}]",
-            "photo${SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault()).format(Date())}",
+                "image[${images.size}]", "photo${dateFormat.format(Date())}",
                 byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
             )
         )
@@ -79,7 +89,7 @@ class CreatePostPresenter(
             .subscribe({
                 router.exit()
             }, {
-                // Ошибка не обрабатывается
+                it.printStackTrace()
             })
     }
 
@@ -102,7 +112,8 @@ class CreatePostPresenter(
                 images
             )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+            .subscribe({ post ->
+                router.sendResult(NEW_POST_RESULT, post)
                 router.exit()
             }, {
                 it.printStackTrace()
