@@ -112,8 +112,8 @@ class CreatePostPresenter(
                 images
             )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                router.sendResult(NEW_POST_RESULT, it)
+            .subscribe({ post ->
+                router.sendResult(NEW_POST_RESULT, post)
                 router.exit()
             }, {
                 it.printStackTrace()
