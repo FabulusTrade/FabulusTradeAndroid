@@ -72,8 +72,10 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/settings"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -101,10 +103,10 @@
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_trader_news" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/ic_trader_instrument" />
+<!--            <com.google.android.material.tabs.TabItem-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:icon="@drawable/ic_trader_instrument" />-->
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

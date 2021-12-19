@@ -201,8 +201,12 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     }
 
     private fun appbarMenuVisible(visible: Boolean) {
-        toolbar.menu.findItem(R.id.menu_search).isVisible = visible
-        toolbar.menu.findItem(R.id.menu_share).isVisible = visible
-        toolbar.menu.findItem(R.id.menu_win).isVisible = visible
+//        toolbar.menu.findItem(R.id.menu_search).isVisible = visible
+//        toolbar.menu.findItem(R.id.menu_share).isVisible = visible
+//        toolbar.menu.findItem(R.id.menu_win).isVisible = visible
+        // TODO скрываем меню, до момента пока не реализуем обработку событий
+        toolbar.menu.findItem(R.id.menu_search).isVisible = false
+        toolbar.menu.findItem(R.id.menu_share).isVisible = false
+        toolbar.menu.findItem(R.id.menu_win).isVisible = false
     }
 }
