@@ -15,11 +15,13 @@
         <item
             android:id="@+id/invite_a_friend_menu_id"
             android:icon="@drawable/person_add"
-            android:title="@string/invite_a_friend_menu_title" />
+            android:title="@string/invite_a_friend_menu_title"
+            android:visible="false" />
         <item
             android:id="@+id/about_menu_id"
             android:icon="@drawable/ft"
-            android:title="@string/about_service_menu_title" />
+            android:title="@string/about_service_menu_title"
+            android:visible="false" />
         <item
             android:id="@+id/ask_menu_id"
             android:icon="@drawable/live_help"
@@ -27,7 +29,8 @@
         <item
             android:id="@+id/community_menu_id"
             android:icon="@drawable/ic_community"
-            android:title="@string/community" />
+            android:title="@string/community"
+            android:visible="false" />
         <item
             android:id="@+id/exit_menu_id"
             android:icon="@drawable/close"
