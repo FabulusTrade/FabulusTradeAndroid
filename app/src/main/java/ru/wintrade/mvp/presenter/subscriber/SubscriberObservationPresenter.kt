@@ -114,6 +114,7 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
 
     override fun attachView(view: SubscriberObservationView?) {
         super.attachView(view)
+        loadSubscriptions()
         clearSubscriptionClickPos()
     }
 
@@ -124,7 +125,6 @@ class SubscriberObservationPresenter : MvpPresenter<SubscriberObservationView>()
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadSubscriptions()
     }
 
     private fun loadSubscriptions() {
