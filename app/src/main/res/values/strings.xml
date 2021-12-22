@@ -225,6 +225,7 @@
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
     <string name="date_time">Дата/время</string>
+    <string name="share_with_arguments_on_your_idea">Поделись аргументами к своей идее</string>
 
     <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>
