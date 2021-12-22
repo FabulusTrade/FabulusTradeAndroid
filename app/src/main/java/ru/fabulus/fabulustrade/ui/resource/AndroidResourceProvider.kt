@@ -18,4 +18,8 @@ class AndroidResourceProvider(val context: Context) : ResourceProvider {
     private fun getImageIdFromDrawable(imageName: String): Int {
         return context.resources.getIdentifier(imageName, "drawable", context.packageName)
     }
+
+    override fun getQuantityString(resource: Int, quantity: Int, vararg args: Any?): String {
+        return context.resources.getQuantityString(resource, quantity, *args)
+    }
 }

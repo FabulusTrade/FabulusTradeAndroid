@@ -70,6 +70,9 @@ fun String.toUiDate(): String =
 fun ResourceProvider.formatString(stringId: Int, vararg args: Any?): String =
     String.format(getStringResource(stringId), *args)
 
+fun ResourceProvider.formatQuantityString(stringId: Int, quantity: Int, vararg args: Any?): String =
+    getQuantityString(stringId, quantity, *args)
+
 // возвращает cтроку, или строку по умолчанию
 fun ResourceProvider.formatStringWithDef(stringId: Int, value: Any?, defaultStringId: Int): String =
     value?.let { resultValue ->

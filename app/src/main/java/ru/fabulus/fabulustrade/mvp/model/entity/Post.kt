@@ -19,7 +19,8 @@ data class Post(
     var likeCount: Int,
     var dislikeCount: Int,
     var isLiked: Boolean,
-    var isDisliked: Boolean
+    var isDisliked: Boolean,
+    var comments: List<Comment>,
 ) : Parcelable {
     fun like() {
         if (isLiked)
@@ -36,4 +37,6 @@ data class Post(
             dislikeCount++
         isDisliked = !isDisliked
     }
+
+    fun commentCount() : Int = comments.size
 }

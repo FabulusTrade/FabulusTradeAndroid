@@ -173,6 +173,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             loadImage(avatarUrlPath, itemView.iv_item_trader_news_avatar)
         }
 
+        override fun setCommentCount(text: String) {
+            itemView.btn_item_trader_news_show_comments.text = text
+        }
+
         fun recycle() {
             imageLoader.clear()
         }

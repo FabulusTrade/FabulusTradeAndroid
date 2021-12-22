@@ -4,14 +4,17 @@ import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
+import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
+import ru.fabulus.fabulustrade.util.formatQuantityString
 import javax.inject.Inject
 
 class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
@@ -23,6 +26,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     @Inject
     lateinit var profile: Profile
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     private var state = State.PUBLICATIONS
     private var isLoading = false
@@ -57,6 +63,14 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
+                val commentCount = post.commentCount()
+                setCommentCount(
+                    resourceProvider.formatQuantityString(
+                        R.plurals.btn_item_trader_news_show_comments_text,
+                        commentCount,
+                        commentCount
+                    )
+                )
             }
         }
 

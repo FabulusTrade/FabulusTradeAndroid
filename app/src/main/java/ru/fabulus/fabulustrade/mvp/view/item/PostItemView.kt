@@ -16,4 +16,5 @@ interface PostItemView {
     fun setPublicationItemTextMaxLines(isOpen: Boolean)
     fun setProfileName(profileName: String)
     fun setProfileAvatar(avatarUrlPath: String)
+    fun setCommentCount(text: String)
 }

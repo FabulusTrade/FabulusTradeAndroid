@@ -118,12 +118,12 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comments_in_post_count_btn_height"
-            android:text="@string/zero_comments"
             android:textSize="@dimen/text_size_very_low"
             app:layout_constraintBottom_toBottomOf="@+id/btn_item_trader_news_dislike"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_item_trader_news_dislike"
-            tools:ignore="SmallSp" />
+            tools:ignore="SmallSp"
+            tools:text="10 комментариев"/>
 
         <TextView
             android:id="@+id/tv_item_trader_news_like_count"

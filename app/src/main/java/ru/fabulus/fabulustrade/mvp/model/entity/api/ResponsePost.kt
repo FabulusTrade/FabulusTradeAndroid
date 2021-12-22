@@ -30,5 +30,7 @@ data class ResponsePost(
     @Expose
     val is_liked: Boolean,
     @Expose
-    val is_disliked: Boolean
+    val is_disliked: Boolean,
+    @Expose
+    val comments: List<ResponseComment>
 )
