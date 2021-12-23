@@ -15,7 +15,6 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.wintrade.R
 import ru.wintrade.databinding.FragmentSignUpBinding
-import ru.wintrade.mvp.model.entity.SignUpData
 import ru.wintrade.mvp.presenter.registration.subscriber.SignUpPresenter
 import ru.wintrade.mvp.view.registration.subscriber.SignUpView
 import ru.wintrade.ui.App
@@ -174,6 +173,10 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView {
         }
 
         binding.tvSignPrivacy.setOnClickListener {
+            presenter.openPrivacy()
+        }
+
+        binding.tvSignRules.setOnClickListener {
             presenter.openRules()
         }
     }
