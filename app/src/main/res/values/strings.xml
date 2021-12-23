@@ -87,6 +87,7 @@
     <string name="gallery">Галлерея</string>
     <string name="publication_header_text">Расскажите о себе и своей успешной стратегии</string>
     <string name="create_post_hint">"Поделитесь своими мыслями. Используйте \$ для инструментов или # для новости"</string>
+    <string name="images_added">Добавлено изображений: %1$d</string>
 
     <!-- RegistrationAsTraderFragmentFive -->
     <string name="your_profile">Ваш профиль</string>
@@ -174,7 +175,7 @@
     <string name="create_password_helper_text">(от 8 символов, обязательно цифры и прописные и строчные буквы)</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="phone">Телефон</string>
-    <string name="accept_rules">Я принимаю <font color="#00BCC1">Правила и Условия компании</font></string>
+    <string name="accept_rules">Я принимаю <font color="#00BCC1">Пользовательское соглашение</font></string>
     <string name="accept_privacy">Я принимаю к сведению, что предоставляемая мною информация будет использоватся в соответствии с документами <font color="#00BCC1">Политика конфеденциальности и Порядок использования файлов cookie</font></string>
     <string name="captcha">Данный сайт защищен системой reCAPTCHA. Действуют Политика конфеденциальности и Условия предоставления услуг Google</string>
     <string name="create_profile_btn">Создать профиль</string>
@@ -223,8 +224,6 @@
     <string name="name_tradeFragment">Наименование</string>
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
-    <string name="quantity">Количество, шт</string>
-    <string name="sum">Сумма</string>
     <string name="date_time">Дата/время</string>
 
     <!-- TraderMainFragment -->
@@ -460,10 +459,8 @@
     <string name="tv_average_less_deal_short_text">%.2f%%</string>
 
     <!--TradeDetailPresenter-->
-    <string name="tv_trade_detail_sum_text">%.2f</string>
     <string name="tv_trade_detail_price_text">%.2f</string>
     <string name="tv_trade_detail_price_title_text">Цена, %s</string>
-    <string name="tv_trade_detail_sum_title_text">Сумма, %s</string>
 
     <!--layout_has_no_subs-->
     <string name="you_have_no_current_subscribe_trader">У Вас нет текущих подписок</string>
@@ -486,6 +483,7 @@
     <string name="push_body_pattern">%s по цене: %s %s</string>
 
     <!--SignUpPresenter-->
-    <string name="rules_url">https://fabulustrade.com/legal_notes_mobile/</string>
+    <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
+    <string name="agreement_url">https://fabulustrade.com/agreement_notes_mobile/</string>
 
 </resources>

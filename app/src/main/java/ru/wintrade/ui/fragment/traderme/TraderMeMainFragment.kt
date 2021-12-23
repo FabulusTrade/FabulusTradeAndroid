@@ -112,9 +112,10 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
             when (pos) {
                 0 -> tab.setIcon(R.drawable.ic_trader_profit)
                 1 -> tab.setIcon(R.drawable.ic_trader_news)
-                2 -> tab.setIcon(R.drawable.ic_trader_instrument)
-                3 -> tab.setIcon(R.drawable.ic_trader_deal)
-                4 -> tab.setIcon(R.drawable.visibility)
+                // TODO скрываем меню, до момента пока не реализуем обработку событий
+//                2 -> tab.setIcon(R.drawable.ic_trader_instrument)
+                2 -> tab.setIcon(R.drawable.ic_trader_deal)
+                3 -> tab.setIcon(R.drawable.visibility)
             }
         }.attach()
     }

@@ -15,7 +15,8 @@ class TraderMeMainAdapter(fragment: Fragment, traderStatistic: TraderStatistic) 
     private val fragmentList: MutableList<Fragment> = mutableListOf(
         TraderMeProfitFragment.newInstance(traderStatistic),
         TraderMePostFragment.newInstance(),
-        TraderPopularInstrumentsFragment.newInstance(),
+        // TODO скрываем меню, до момента пока не реализуем обработку событий
+//        TraderPopularInstrumentsFragment.newInstance(),
         TraderMeTradeFragment.newInstance(),
         TraderMeObservationFragment.newInstance()
     )

@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import ru.wintrade.mvp.model.api.WinTradeApi
 import ru.wintrade.mvp.model.entity.*
 import ru.wintrade.mvp.model.entity.api.*
@@ -713,4 +712,27 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 }
             }
             .subscribeOn(Schedulers.io())
+
+    fun getPostsFollowerAndObserving(
+        token: String,
+        page: Int = 1
+    ): Single<Pagination<Post>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getPostsFollowerAndObserving(token, page)
+                        .flatMap { respPag ->
+                            val posts = respPag.results.map {
+                                mapToPost(it)!!
+                            }
+                            Single.just(mapToPagination(respPag, posts))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
 }

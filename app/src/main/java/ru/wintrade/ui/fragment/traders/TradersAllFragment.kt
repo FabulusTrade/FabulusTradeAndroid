@@ -51,6 +51,11 @@ class TradersAllFragment : MvpAppCompatFragment(), TradersAllView {
         return _binding?.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateAdapter()
+    }
+
     override fun init() {
         binding.rvAllTraders.run {
             tradersAllRVAdapter = TradersAllRVAdapter(presenter.listPresenter).apply {
