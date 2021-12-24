@@ -5,14 +5,9 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface PostDetailView: MvpView {
-    fun init()
-    fun setName(traderName: String)
-    fun setType(type: String)
-    fun setCompany(company: String)
-    fun setTicker(ticker: String)
-    fun setPrice(price: String)
-    fun setPriceTitle(priceTitle: String)
-    fun setDate(date: String)
-    fun setSubtype(type: String)
+interface PostDetailView : MvpView {
+    fun setPostAuthorAvatar(avatarUrl: String)
+    fun setPostAuthorName(authorName: String)
+    fun setPostDateCreated(dateCreatedString: String)
+    fun setPostText(text: String)
 }

@@ -13,6 +13,7 @@ import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.presenter.PostDetailPresenter
 import ru.wintrade.mvp.view.PostDetailView
 import ru.wintrade.ui.App
+import ru.wintrade.util.loadImage
 
 class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     private var _binding: FragmentPostDetailBinding? = null
@@ -45,42 +46,20 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         return _binding?.root
     }
 
-    override fun init() {
-        binding.ivTradeDetailClose.setOnClickListener {
-            presenter.closeClicked()
-        }
+    override fun setPostAuthorAvatar(avatarUrl: String) {
+        loadImage(avatarUrl, binding.ivPostAuthorAvatar)
     }
 
-    override fun setName(traderName: String) {
-        binding.tvTradeDetailTraderName.text = traderName
+    override fun setPostAuthorName(authorName: String) {
+        binding.tvPostAuthorName.text = authorName
     }
 
-    override fun setType(type: String) {
-        binding.tvTradeDetailOperation.text = type
+    override fun setPostDateCreated(dateCreatedString: String) {
+        binding.tvPostDateUpdate.text = dateCreatedString
     }
 
-    override fun setCompany(company: String) {
-        binding.tvTradeDetailCompany.text = company
-    }
-
-    override fun setTicker(ticker: String) {
-        binding.tvTradeDetailTicker.text = ticker
-    }
-
-    override fun setPrice(price: String) {
-        binding.tvTradeDetailPrice.text = price
-    }
-
-    override fun setPriceTitle(priceTitle: String) {
-        binding.tvTradeDetailPriceTitle.text = priceTitle
-    }
-
-    override fun setDate(date: String) {
-        binding.tvTradeDetailDate.text = date
-    }
-
-    override fun setSubtype(type: String) {
-        binding.tvTradeDetailType.text = type
+    override fun setPostText(text: String) {
+        binding.tvPost.text = text
     }
 
     override fun onDestroyView() {

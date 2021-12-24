@@ -1,249 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_trade_detail_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/close"
-            app:tint="@color/colorGray" />
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_post_author_avatar"
+                android:layout_width="@dimen/iv_post_author_avatar_layout_width"
+                android:layout_height="@dimen/iv_post_author_avatar_layout_height"
+                android:layout_marginStart="@dimen/iv_post_author_avatar_start"
+                android:layout_marginTop="@dimen/iv_post_author_avatar_margin_top"
+                android:foreground="@drawable/bg_avatar"
+                android:scaleType="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/tv_post_author_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/trader"
-                android:textColor="@color/colorWhite" />
+                android:layout_marginStart="@dimen/tv_post_author_name_margin_start"
+                android:layout_marginTop="@dimen/tv_post_author_name_margin_top"
+                android:maxLines="1"
+                android:textSize="@dimen/tv_post_author_name_text_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_post_author_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Post Author" />
 
             <TextView
-                android:id="@+id/tv_trade_detail_trader_name"
-                android:layout_width="0dp"
+                android:id="@+id/tv_post_date_update"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlueGray"
-            android:orientation="horizontal">
+                android:layout_marginStart="@dimen/tv_post_date_update_margin_start"
+                android:layout_marginTop="@dimen/tv_post_date_update_margin_top"
+                android:textSize="@dimen/tv_post_date_update_text_size"
+                app:layout_constraintStart_toEndOf="@+id/iv_post_author_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/tv_post_author_name"
+                tools:text="19.03.2021 11:10" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/tv_profit_percent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/operation"
-                android:textColor="@color/colorBlack" />
+                android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
+                android:textColor="#FF7878"
+                android:textSize="@dimen/iv_profit_percent_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_profit_arrow"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="-63%" />
+
+            <ImageView
+                android:id="@+id/iv_profit_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/iv_profit_arrow_margin_end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_author_follower_count"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/iv_profit_arrow_down" />
 
             <TextView
-                android:id="@+id/tv_trade_detail_operation"
-                android:layout_width="0dp"
+                android:id="@+id/tv_author_follower_count"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
+                android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
+                android:textSize="@dimen/tv_post_author_name_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_person_add"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="47" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_person_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/iv_person_add_margin_end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_attached_post_kebab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_person_add" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
+            <ImageView
+                android:id="@+id/iv_attached_post_kebab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/iv_attached_post_kebab_margin_end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_kebab" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <View
+                android:id="@+id/view_author_post_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
+                android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
+                android:background="@color/view_author_post_horizontal_divider_background_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_post_author_avatar" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/tv_post"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/type_of_transaction"
-                android:textColor="@color/colorBlack" />
+                android:layout_marginStart="@dimen/tv_post_margin_start"
+                android:layout_marginTop="@dimen/tv_post_margin_top"
+                android:layout_marginEnd="@dimen/tv_post_margin_end"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/tv_post_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/view_author_post_horizontal_divider"
+                tools:text="ЦБ России обдумывает повышение ставки до 5,5% уже в 2021 году." />
 
-            <TextView
-                android:id="@+id/tv_trade_detail_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlueGray"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/name_tradeFragment"
-                android:textColor="@color/colorBlack" />
-
-            <TextView
-                android:id="@+id/tv_trade_detail_company"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/ticker"
-                android:textColor="@color/colorBlack" />
-
-            <TextView
-                android:id="@+id/tv_trade_detail_ticker"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlueGray"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_trade_detail_price_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/price"
-                android:textColor="@color/colorBlack" />
-
-            <TextView
-                android:id="@+id/tv_trade_detail_price"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:text="@string/date_time"
-                android:textColor="@color/colorBlack" />
-
-            <TextView
-                android:id="@+id/tv_trade_detail_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorBlack" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayLight" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
