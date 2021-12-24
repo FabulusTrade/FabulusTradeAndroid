@@ -65,6 +65,9 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
             presenter.setPublicationTextMaxLines(holder)
         }
+        holder.itemView.btn_item_trader_news_show_comments.setOnClickListener {
+            presenter.showCommentDetails(holder)
+        }
     }
 
     private fun initMenu(holder: PostViewHolder) {

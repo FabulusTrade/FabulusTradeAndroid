@@ -117,6 +117,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             view.isOpen = !view.isOpen
             view.setPublicationItemTextMaxLines(view.isOpen)
         }
+
+        override fun showCommentDetails(view: PostItemView) {
+            router.navigateTo(Screens.postDetailFragment(posts[view.pos]))
+        }
     }
 
     override fun onFirstViewAttach() {

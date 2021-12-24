@@ -125,6 +125,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             view.isOpen = !view.isOpen
             view.setPublicationItemTextMaxLines(view.isOpen)
         }
+
+        override fun showCommentDetails(view: PostItemView) {
+            router.navigateTo(Screens.postDetailFragment(post[view.pos]))
+        }
     }
 
     override fun onFirstViewAttach() {

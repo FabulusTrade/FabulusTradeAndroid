@@ -1,14 +1,8 @@
-package ru.fabulus.fabulustrade.mvp.presenter.subscriber
+package ru.wintrade.mvp.presenter.subscriber
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.model.entity.Profile
-import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
-import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
@@ -17,6 +11,7 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.formatQuantityString
 import javax.inject.Inject
 
@@ -124,6 +119,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         override fun setPublicationTextMaxLines(view: PostItemView) {
             view.isOpen = !view.isOpen
             view.setPublicationItemTextMaxLines(view.isOpen)
+        }
+
+        override fun showCommentDetails(view: PostItemView) {
+            router.navigateTo(Screens.postDetailFragment(post[view.pos]))
         }
     }
 
