@@ -163,7 +163,11 @@ class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<
         }
     }
 
+    fun openPrivacy() {
+        router.navigateTo(Screens.webViewFragment(resourceProvider.getStringResource(R.string.privacy_url)))
+    }
+
     fun openRules() {
-        router.navigateTo(Screens.webViewFragment(resourceProvider.getStringResource(R.string.rules_url)))
+        router.navigateTo(Screens.webViewFragment(resourceProvider.getStringResource(R.string.agreement_url)))
     }
 }
