@@ -493,4 +493,8 @@
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
     <string name="agreement_url">https://fabulustrade.com/agreement_notes_mobile/</string>
 
+    <!--PostDetailPresenter-->
+    <string name="tv_profit_percent_text">%.2f%%</string>
+    <string name="tv_warning_text">Не является индивидуальной инвестиционной рекомендацией</string>
+
 </resources>

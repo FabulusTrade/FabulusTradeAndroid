@@ -1,9 +1,11 @@
 package ru.wintrade.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -12,8 +14,12 @@ import ru.wintrade.databinding.FragmentPostDetailBinding
 import ru.wintrade.mvp.model.entity.Post
 import ru.wintrade.mvp.presenter.PostDetailPresenter
 import ru.wintrade.mvp.view.PostDetailView
+import ru.wintrade.navigation.Screens
 import ru.wintrade.ui.App
+import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.wintrade.util.loadImage
+import ru.wintrade.util.setTextAndColor
+import javax.inject.Inject
 
 class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     private var _binding: FragmentPostDetailBinding? = null
@@ -32,6 +38,9 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     @InjectPresenter
     lateinit var presenter: PostDetailPresenter
 
+    @Inject
+    lateinit var router: Router
+
     @ProvidePresenter
     fun providePresenter() = PostDetailPresenter(requireArguments()[POST_KEY] as Post).apply {
         App.instance.appComponent.inject(this)
@@ -43,7 +52,24 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
         return _binding?.root
+    }
+
+    override fun init() {
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.btnPostLike.setOnClickListener {
+            presenter.likePost()
+        }
+        binding.btnPostDislike.setOnClickListener {
+            presenter.dislikePost()
+        }
+        binding.btnSharePost.setOnClickListener {
+            presenter.sharePost()
+        }
     }
 
     override fun setPostAuthorAvatar(avatarUrl: String) {
@@ -60,6 +86,61 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun setPostText(text: String) {
         binding.tvPost.text = text
+    }
+
+    override fun setProfit(profit: String, textColor: Int) {
+        binding.tvProfitPercent.setTextAndColor(profit, textColor)
+    }
+
+    override fun setProfitNegativeArrow() {
+        binding.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
+    }
+
+    override fun setProfitPositiveArrow() {
+        binding.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
+    }
+
+    override fun setPostImages(images: List<String>?) {
+        with(binding.imageGroup) {
+            if (images.isNullOrEmpty()) {
+                visibility = View.GONE
+            } else {
+                setImageLoader(ImageLoaderImpl(R.drawable.image_view_group_image_placeholder))
+                setListener { position, _ ->
+                    router.navigateTo(Screens.imageBrowsingFragment(getImages(), position))
+                }
+                visibility = View.VISIBLE
+                setImages(images)
+            }
+        }
+    }
+
+    override fun setLikeActiveImage() {
+        binding.btnPostLike.setImageResource(R.drawable.ic_like)
+    }
+
+    override fun setLikeInactiveImage() {
+        binding.btnPostLike.setImageResource(R.drawable.ic_like_inactive)
+    }
+
+    override fun setDislikeActiveImage() {
+        binding.btnPostDislike.setImageResource(R.drawable.ic_dislike)
+    }
+
+    override fun setDislikeInactiveImage() {
+        binding.btnPostDislike.setImageResource(R.drawable.ic_dislike_inactive)
+    }
+
+    override fun setPostLikeCount(likeCount: String) {
+        binding.tvPostLikeCount.text = likeCount
+    }
+
+    override fun setPostDislikeCount(dislikeCount: String) {
+        binding.tvPostDislikeCount.text = dislikeCount
+    }
+
+    override fun sharePost(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {

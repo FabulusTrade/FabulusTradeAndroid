@@ -11,9 +11,11 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/postConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/post_constraint_layout_margin_start"
+            android:layout_marginEnd="@dimen/post_constraint_layout_margin_end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +24,6 @@
                 android:id="@+id/iv_post_author_avatar"
                 android:layout_width="@dimen/iv_post_author_avatar_layout_width"
                 android:layout_height="@dimen/iv_post_author_avatar_layout_height"
-                android:layout_marginStart="@dimen/iv_post_author_avatar_start"
                 android:layout_marginTop="@dimen/iv_post_author_avatar_margin_top"
                 android:foreground="@drawable/bg_avatar"
                 android:scaleType="center"
@@ -61,7 +62,7 @@
                 android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
                 android:textColor="#FF7878"
                 android:textSize="@dimen/iv_profit_percent_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_profit_arrow"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,11 +73,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/iv_profit_arrow_margin_end"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_author_follower_count"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/iv_profit_arrow_down" />
+                tools:srcCompat="@drawable/ic_profit_arrow_down" />
 
             <TextView
                 android:id="@+id/tv_author_follower_count"
@@ -84,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
                 android:textSize="@dimen/tv_post_author_name_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_person_add"
                 app:layout_constraintTop_toTopOf="parent"
@@ -95,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/iv_person_add_margin_end"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_attached_post_kebab"
                 app:layout_constraintTop_toTopOf="parent"
@@ -106,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/iv_attached_post_kebab_margin_end"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_kebab" />
@@ -125,7 +126,6 @@
                 android:id="@+id/tv_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/tv_post_margin_start"
                 android:layout_marginTop="@dimen/tv_post_margin_top"
                 android:layout_marginEnd="@dimen/tv_post_margin_end"
                 android:textColor="@color/colorBlack"
@@ -133,6 +133,97 @@
                 app:layout_constraintTop_toBottomOf="@+id/view_author_post_horizontal_divider"
                 tools:text="ЦБ России обдумывает повышение ставки до 5,5% уже в 2021 году." />
 
+            <ru.wintrade.ui.customview.imagegroup.ImageGroupView
+                android:id="@+id/image_group"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_group_view_height"
+                android:layout_marginTop="@dimen/margin_top_low"
+                app:layout_constraintTop_toBottomOf="@+id/tv_post" />
+
+            <TextView
+                android:id="@+id/tv_warning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_warning_margin_top"
+                android:text="@string/tv_warning_text"
+                android:textColor="@color/tv_warning_text_color"
+                android:textSize="@dimen/tv_warning_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/image_group" />
+
+            <ImageButton
+                android:id="@+id/btn_post_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_low"
+                android:layout_marginEnd="@dimen/margin_end_low"
+                android:background="@color/colorWhite"
+                android:contentDescription="@string/like_news"
+                android:src="@drawable/ic_like_inactive"
+                app:layout_constraintEnd_toStartOf="@+id/tv_post_like_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_warning" />
+
+            <TextView
+                android:id="@+id/tv_post_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_post_item"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
+                app:layout_constraintEnd_toStartOf="@+id/btn_post_dislike"
+                app:layout_constraintStart_toEndOf="@+id/btn_post_like"
+                app:layout_constraintTop_toTopOf="@+id/btn_post_like"
+                tools:text="10"/>
+
+            <ImageButton
+                android:id="@+id/btn_post_dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_low"
+                android:layout_marginEnd="@dimen/margin_end_low"
+                android:background="@color/colorWhite"
+                android:contentDescription="@string/dislike_news"
+                android:src="@drawable/ic_dislike_inactive"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
+                app:layout_constraintEnd_toStartOf="@+id/tv_post_dislike_count"
+                app:layout_constraintStart_toEndOf="@+id/tv_post_like_count"
+                app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
+
+
+            <TextView
+                android:id="@+id/tv_post_dislike_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_low"
+                android:text="@string/zero_post_item"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
+                app:layout_constraintStart_toEndOf="@+id/btn_post_dislike"
+                app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
+                tools:text="3"
+                />
+
+            <ImageButton
+                android:id="@+id/btn_share_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/btn_share_post_margin_start"
+                android:layout_marginEnd="@dimen/margin_end_low"
+                android:background="@color/colorWhite"
+                android:contentDescription="@string/dislike_news"
+                android:src="@drawable/ic_share"
+                app:layout_constraintStart_toEndOf="@+id/tv_post_dislike_count"
+                app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
+
+            <TextView
+                android:id="@+id/btn_share_post_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_low"
+                android:text="@string/zero_post_item"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
+                app:layout_constraintStart_toEndOf="@+id/btn_share_post"
+                app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
+                tools:text="3"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

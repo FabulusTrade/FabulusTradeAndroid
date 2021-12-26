@@ -153,7 +153,8 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.dislike_count,
             post.is_liked,
             post.is_disliked,
-            comments
+            comments,
+            post.colorIncrDecrDepo365
         )
     } ?: return null
 }

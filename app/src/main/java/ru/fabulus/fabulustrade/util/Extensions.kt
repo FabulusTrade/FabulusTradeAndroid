@@ -102,3 +102,13 @@ fun TextView.setTextAndColor(textValue: String, color: Int) {
  */
 fun Date.toStringFormat(patternDate: String = "dd.MM.yyyy HH:mm"): String =
     SimpleDateFormat(patternDate, Locale.getDefault()).format(this)
+
+/** возвращает:
+ * true -  для отрицательных чисел
+ * false - для полоэительных
+ * для -0.0 вернет - true
+ * для 0.0 вернет - false
+ */
+fun Double.isNegativeDigit(): Boolean {
+    return 1/this < 0
+}

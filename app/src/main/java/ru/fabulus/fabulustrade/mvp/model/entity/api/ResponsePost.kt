@@ -1,6 +1,8 @@
 package ru.fabulus.fabulustrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import ru.wintrade.mvp.model.entity.ColorItem
 
 data class ResponsePost(
     @Expose
@@ -32,5 +34,8 @@ data class ResponsePost(
     @Expose
     val is_disliked: Boolean,
     @Expose
-    val comments: List<ResponseComment>
+    val comments: List<ResponseComment>,
+    @Expose
+    @SerializedName("color_incr_decr_depo_365")
+    val colorIncrDecrDepo365: ColorItem
 )

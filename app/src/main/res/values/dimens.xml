@@ -63,7 +63,6 @@
     <dimen name="image_group_view_height">250dp</dimen>
     <dimen name="cb_trader_stat_observe_height">20dp</dimen>
     <dimen name="tv_subscriber_observation_is_subscribe_text_size">10sp</dimen>
-    <dimen name="iv_post_author_avatar_start">13dp</dimen>
     <dimen name="iv_post_author_avatar_layout_width">65dp</dimen>
     <dimen name="iv_post_author_avatar_layout_height">65dp</dimen>
     <dimen name="iv_post_author_avatar_margin_top">8dp</dimen>
@@ -85,8 +84,12 @@
     <dimen name="iv_profit_arrow_margin_end">28dp</dimen>
     <dimen name="iv_profit_percent_text_size">12sp</dimen>
     <dimen name="tv_post_text_size">12sp</dimen>
-    <dimen name="tv_post_margin_start">16dp</dimen>
     <dimen name="tv_post_margin_end">15dp</dimen>
     <dimen name="tv_post_margin_top">4dp</dimen>
+    <dimen name="post_constraint_layout_margin_start">13dp</dimen>
+    <dimen name="post_constraint_layout_margin_end">13dp</dimen>
+    <dimen name="tv_warning_text_size">11sp</dimen>
+    <dimen name="tv_warning_margin_top">4dp</dimen>
+    <dimen name="btn_share_post_margin_start">50dp</dimen>
 
 </resources>
