@@ -36,4 +36,5 @@
     <color name="image_group_view_text_color">#CCFFFFFF</color>
     <color name="image_group_view_dimmed_image_view_color">#10000000</color>
     <color name="image_group_view_dimmed_overflown_image_view_color">#BB000000</color>
+    <color name="colorButtonTradeDetail">#30377C</color>
 </resources>

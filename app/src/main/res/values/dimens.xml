@@ -64,4 +64,16 @@
     <dimen name="cb_trader_stat_observe_height">20dp</dimen>
     <dimen name="tv_subscriber_observation_is_subscribe_text_size">10sp</dimen>
 
+
+    <dimen name="btn_publish_trader_details_width">160dp</dimen>
+    <dimen name="btn_publish_trader_details_height">35dp</dimen>
+    <dimen name="icon_publish_trader_details_size">35dp</dimen>
+    <dimen name="panel_publish_trader_details_height">50dp</dimen>
+    <dimen name="divider_publish_trader_details_size">1dp</dimen>
+    <dimen name="margin_low_publish_trader_details_size">5dp</dimen>
+    <dimen name="margin_bigger_than_low_publish_trader_details_size">8dp</dimen>
+    <dimen name="margin_medium_publish_trader_details_size">16dp</dimen>
+    <dimen name="panel_share_arguments_publish_trader_details_size">43dp</dimen>
+    <dimen name="tv_text_size_publish_trader_details">14sp</dimen>
+
 </resources>
