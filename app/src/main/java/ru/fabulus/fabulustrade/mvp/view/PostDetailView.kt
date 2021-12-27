@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.view
+package ru.fabulus.fabulustrade.mvp.view
 
 import android.content.Intent
 import moxy.MvpView

@@ -1,4 +1,4 @@
-package ru.wintrade.ui.fragment
+package ru.fabulus.fabulustrade.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,16 +9,16 @@ import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import ru.wintrade.R
-import ru.wintrade.databinding.FragmentPostDetailBinding
-import ru.wintrade.mvp.model.entity.Post
-import ru.wintrade.mvp.presenter.PostDetailPresenter
-import ru.wintrade.mvp.view.PostDetailView
-import ru.wintrade.navigation.Screens
-import ru.wintrade.ui.App
-import ru.wintrade.ui.customview.imagegroup.ImageLoaderImpl
-import ru.wintrade.util.loadImage
-import ru.wintrade.util.setTextAndColor
+import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.FragmentPostDetailBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
+import ru.fabulus.fabulustrade.mvp.view.PostDetailView
+import ru.fabulus.fabulustrade.navigation.Screens
+import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
+import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setTextAndColor
 import javax.inject.Inject
 
 class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {

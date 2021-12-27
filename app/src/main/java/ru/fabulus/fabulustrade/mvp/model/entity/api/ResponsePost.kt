@@ -2,7 +2,7 @@ package ru.fabulus.fabulustrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.wintrade.mvp.model.entity.ColorItem
+import ru.fabulus.fabulustrade.mvp.model.entity.ColorItem
 
 data class ResponsePost(
     @Expose

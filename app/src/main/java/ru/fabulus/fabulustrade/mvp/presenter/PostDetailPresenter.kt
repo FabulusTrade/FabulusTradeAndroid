@@ -1,18 +1,20 @@
-package ru.wintrade.mvp.presenter
+package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import ru.wintrade.R
-import ru.wintrade.mvp.model.entity.Post
-import ru.wintrade.mvp.model.entity.Profile
-import ru.wintrade.mvp.model.repo.ApiRepo
-import ru.wintrade.mvp.model.resource.ResourceProvider
-import ru.wintrade.mvp.view.PostDetailView
-import ru.wintrade.util.formatDigitWithDef
-import ru.wintrade.util.isNegativeDigit
-import ru.wintrade.util.toStringFormat
+import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.Profile
+import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
+import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.view.PostDetailView
+import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.isNegativeDigit
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {

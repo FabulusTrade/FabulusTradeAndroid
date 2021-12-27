@@ -1,4 +1,4 @@
-package ru.wintrade.mvp.presenter.subscriber
+package ru.fabulus.fabulustrade.mvp.presenter.subscriber
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
