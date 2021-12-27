@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ru.wintrade">
+    package="ru.fabulus.fabulustrade">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".ui.App"
+        android:name="ru.fabulus.fabulustrade.ui.App"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -18,12 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="ru.fabulus.fabulustrade.ui.activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name="ru.fabulus.fabulustrade.ui.activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/splashScreenTheme">
@@ -46,7 +46,7 @@
             android:value="@string/default_notification_channel_id" />
 
         <service
-            android:name=".ui.service.MessagingService"
+            android:name="ru.fabulus.fabulustrade.ui.service.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
