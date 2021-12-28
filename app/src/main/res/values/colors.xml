@@ -38,4 +38,5 @@
     <color name="image_group_view_dimmed_overflown_image_view_color">#BB000000</color>
     <color name="view_author_post_horizontal_divider_background_color">#D8D4D4</color>
     <color name="tv_warning_text_color">#C4C4C4</color>
+    <color name="tv_comment_count_text_color">#3D3D3D</color>
 </resources>

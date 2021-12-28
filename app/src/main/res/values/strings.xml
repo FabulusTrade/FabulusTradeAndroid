@@ -496,5 +496,7 @@
     <!--PostDetailPresenter-->
     <string name="tv_profit_percent_text">%.2f%%</string>
     <string name="tv_warning_text">Не является индивидуальной инвестиционной рекомендацией</string>
+    <string name="tv_answer_to_comment_text">ответить</string>
+    <string name="btn_like_comment_content_description">поставь лайк комментарию</string>
 
 </resources>

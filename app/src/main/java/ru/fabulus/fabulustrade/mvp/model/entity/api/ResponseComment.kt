@@ -22,7 +22,7 @@ data class ResponseComment(
     val authorUsername: String,
     @Expose
     @SerializedName("avatar")
-    val avatar: String,
+    val avatarUrl: String,
     @Expose
     @SerializedName("text")
     val text: String,

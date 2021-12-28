@@ -6,16 +6,17 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_post_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/ll_post_detail_layout_margin_start"
+        android:layout_marginEnd="@dimen/ll_post_detail_layout_margin_end"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/post_constraint_layout_margin_start"
-            android:layout_marginEnd="@dimen/post_constraint_layout_margin_end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -225,7 +226,35 @@
                 tools:text="3"
                 />
 
+            <View
+                android:id="@+id/btn_share_post_count_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
+                android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
+                android:background="@color/view_author_post_horizontal_divider_background_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count" />
+
+            <TextView
+                android:id="@+id/tv_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_comment_count_margin_top"
+                android:textColor="@color/tv_comment_count_text_color"
+                android:textSize="@dimen/tv_comment_count_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count_divider"
+                tools:text="3 комментария" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_post_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 

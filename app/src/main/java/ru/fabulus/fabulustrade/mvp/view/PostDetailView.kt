@@ -23,4 +23,6 @@ interface PostDetailView : MvpView {
     fun setDislikeActiveImage()
     fun setDislikeInactiveImage()
     fun sharePost(shareIntent: Intent)
+    fun setCommentCount(text: String)
+    fun updateCommentsAdapter()
 }

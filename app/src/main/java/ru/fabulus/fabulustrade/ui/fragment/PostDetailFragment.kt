@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -16,6 +17,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
@@ -46,6 +48,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         App.instance.appComponent.inject(this)
     }
 
+    private var commentRVAdapter: CommentRVAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,6 +62,15 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun init() {
         initListeners()
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        commentRVAdapter = CommentRVAdapter(presenter.listPresenter)
+        binding.rvPostComments.run {
+            adapter = commentRVAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun initListeners() {
@@ -141,6 +154,14 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun sharePost(shareIntent: Intent) {
         startActivity(shareIntent)
+    }
+
+    override fun setCommentCount(text: String) {
+        binding.tvCommentCount.text = text
+    }
+
+    override fun updateCommentsAdapter() {
+        commentRVAdapter?.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

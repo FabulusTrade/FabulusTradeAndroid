@@ -196,7 +196,7 @@ fun mapToComments(responseComments: List<ResponseComment>): List<Comment> {
             responseComment.parentCommentId,
             responseComment.authorUuid,
             responseComment.authorUsername,
-            responseComment.avatar,
+            responseComment.avatarUrl,
             responseComment.text,
             responseComment.dateCreate,
             responseComment.dateUpdate,

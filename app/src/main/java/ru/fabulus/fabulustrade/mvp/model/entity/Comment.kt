@@ -11,7 +11,7 @@ data class Comment(
     var parentCommentId: Long?,
     val authorUuid: String,
     val authorUsername: String,
-    val avatar: String,
+    val avatarUrl: String,
     val text: String,
     val dateCreate: Date,
     val dateUpdate: Date,
