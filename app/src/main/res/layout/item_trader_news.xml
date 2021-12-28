@@ -75,7 +75,7 @@
         android:textSize="@dimen/text_size_very_low"
         tools:ignore="SmallSp" />
 
-    <ru.wintrade.ui.customview.imagegroup.ImageGroupView
+    <ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageGroupView
         android:id="@+id/image_group"
         android:layout_marginTop="@dimen/margin_top_low"
         android:layout_width="match_parent"

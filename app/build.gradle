@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ru.wintrade"
+        applicationId "ru.fabulus.fabulustrade"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
