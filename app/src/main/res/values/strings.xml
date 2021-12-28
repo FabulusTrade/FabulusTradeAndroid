@@ -396,7 +396,7 @@
     <string name="show_postRv">показать</string>
     <string name="hide_postRv">скрыть</string>
     <string name="zero_post_item">0</string>
-    <plurals name="btn_item_trader_news_show_comments_text">
+    <plurals name="show_comments_count_text">
         <item quantity="zero">0 комментариев</item>
         <item quantity="one">%1$d комментарий</item>
         <item quantity="two">%1$d комментария</item>

@@ -59,7 +59,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                 val commentCount = post.commentCount()
                 setCommentCount(
                     resourceProvider.formatQuantityString(
-                        R.plurals.btn_item_trader_news_show_comments_text,
+                        R.plurals.show_comments_count_text,
                         commentCount,
                         commentCount
                     )
