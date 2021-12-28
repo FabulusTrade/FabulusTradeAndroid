@@ -15,6 +15,12 @@ data class Comment(
     val text: String,
     val dateCreate: Date,
     val dateUpdate: Date,
-    val likeCount: Int,
-    val dislikeCount: Int
-) : Parcelable
+    var likeCount: Int,
+    val dislikeCount: Int,
+    val isLiked: Boolean
+) : Parcelable {
+
+    fun like() {
+        likeCount++
+    }
+}

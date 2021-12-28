@@ -201,7 +201,8 @@ fun mapToComments(responseComments: List<ResponseComment>): List<Comment> {
             responseComment.dateCreate,
             responseComment.dateUpdate,
             responseComment.likeCount,
-            responseComment.dislikeCount
+            responseComment.dislikeCount,
+            responseComment.isLiked
         )
     }
 }

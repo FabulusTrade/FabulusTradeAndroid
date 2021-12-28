@@ -5,4 +5,9 @@ interface CommentItemView {
 
     fun setCommentText(text: String)
     fun setCommentAuthorAvatar(avatarUrl: String)
+    fun setCommentAuthorUserName(userName: String)
+    fun setCommentDateText(text: String)
+    fun setLikeCountText(text: String)
+    fun setLikeImageActive()
+    fun setLikeImageInactive()
 }

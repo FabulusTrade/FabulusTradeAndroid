@@ -5,4 +5,5 @@ import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
 interface CommentRVListPresenter {
     fun getCount(): Int
     fun bind(view: CommentItemView)
+    fun likeComment(view: CommentItemView)
 }

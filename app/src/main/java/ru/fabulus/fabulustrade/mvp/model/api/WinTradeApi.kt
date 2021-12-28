@@ -276,4 +276,10 @@ interface WinTradeApi {
         @Field("text") text: String,
         @Field("parent_comment") parentCommentId: Int?
     ): Single<ResponseAddComment>
+
+    @POST("api/v1/trader/like/comment/{comment_id}/")
+    fun likeComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id", encoded = true) commentId: Long
+    ): Single<ResponseLikes>
 }

@@ -37,5 +37,8 @@ data class ResponseComment(
     val likeCount: Int,
     @Expose
     @SerializedName("dislike_count")
-    val dislikeCount: Int
+    val dislikeCount: Int,
+    @Expose
+    @SerializedName("is_liked")
+    val isLiked: Boolean
 )

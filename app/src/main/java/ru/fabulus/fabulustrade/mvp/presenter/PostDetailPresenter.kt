@@ -41,15 +41,40 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         override fun getCount(): Int = commentList.size
 
         override fun bind(view: CommentItemView) {
-            val comment = commentList[view.pos]
-            initView(view, comment)
+            initView(view, commentByPos(view.pos))
         }
 
+        private fun commentByPos(pos: Int): Comment = commentList[pos]
+
+        override fun likeComment(view: CommentItemView) {
+            val comment = commentByPos(view.pos)
+            apiRepo
+                .likeComment(profile.token!!, comment.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    comment.like()
+                    view.setLikeCountText(comment.likeCount.toString())
+                    if (comment.isLiked) {
+                        view.setLikeImageActive()
+                    } else{
+                        view.setLikeImageInactive()
+                    }
+                }, {})
+        }
 
         private fun initView(view: CommentItemView, comment: Comment) {
             with(view) {
                 setCommentText(comment.text)
                 setCommentAuthorAvatar(comment.avatarUrl)
+                setCommentAuthorUserName(comment.authorUsername)
+                setCommentDateText(
+                    comment.dateCreate.toStringFormat(
+                        resourceProvider.getStringResource(
+                            R.string.comment_date_create_format
+                        )
+                    )
+                )
+                setLikeCountText(comment.likeCount.toString())
             }
         }
 

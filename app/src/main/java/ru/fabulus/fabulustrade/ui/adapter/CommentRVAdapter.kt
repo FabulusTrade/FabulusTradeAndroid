@@ -37,6 +37,13 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
+        initListeners(holder)
+    }
+
+    private fun initListeners(holder: CommentViewHolder) {
+        holder.itemView.btn_like_comment.setOnClickListener {
+            presenter.likeComment(holder)
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()
@@ -52,6 +59,26 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
 
         override fun setCommentAuthorAvatar(avatarUrl: String) {
             loadImage(avatarUrl, itemView.iv_comment_author_avatar)
+        }
+
+        override fun setCommentAuthorUserName(userName: String) {
+            itemView.tv_comment_author_name.text = userName
+        }
+
+        override fun setCommentDateText(text: String) {
+            itemView.tv_comment_date.text = text
+        }
+
+        override fun setLikeCountText(text: String) {
+            itemView.tv_comment_like_count.text = text
+        }
+
+        override fun setLikeImageActive() {
+            itemView.btn_like_comment.setImageResource(R.drawable.ic_like)
+        }
+
+        override fun setLikeImageInactive() {
+            itemView.btn_like_comment.setImageResource(R.drawable.ic_like_inactive)
         }
     }
 
