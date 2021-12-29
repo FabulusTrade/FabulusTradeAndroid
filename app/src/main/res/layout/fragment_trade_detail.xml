@@ -251,7 +251,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linear_shareArgumentsBegin"
+        android:id="@+id/linear_share_arguments_begin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/panel_share_arguments_publish_trader_details_size"
         android:layout_marginTop="@dimen/margin_medium_publish_trader_details_size"
@@ -271,14 +271,14 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/layout_argument_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium_publish_trader_details_size"
         android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
         android:stretchColumns="1,2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_shareArgumentsBegin">
+        app:layout_constraintTop_toBottomOf="@id/linear_share_arguments_begin">
 
         <TableRow
             android:background="@color/colorBlueGray"
@@ -380,14 +380,15 @@
     </TableLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_post_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_end_medium"
         android:layout_marginEnd="@dimen/margin_end_medium"
-        app:layout_constraintBottom_toTopOf="@+id/layout_sharingPanel"
+        app:layout_constraintBottom_toTopOf="@+id/layout_sharing_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+        app:layout_constraintTop_toBottomOf="@+id/layout_argument_table">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -406,7 +407,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_sharingPanel"
+        android:id="@+id/layout_sharing_panel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/panel_publish_trader_details_height"
         android:layout_marginStart="@dimen/margin_end_medium"

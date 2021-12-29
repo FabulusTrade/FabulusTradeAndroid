@@ -15,6 +15,15 @@ import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
+
+    enum class Mode {
+        TRADER_NO_ARGUMENT,
+        TRADER_FILLING_ARGUMENT,
+        TRADER_HAS_ARGUMENT
+    }
+
+    private var currentMode: Mode = Mode.TRADER_NO_ARGUMENT
+
     private var _binding: FragmentTradeDetailBinding? = null
     private val binding: FragmentTradeDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -49,6 +58,37 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
+        setMode(Mode.TRADER_NO_ARGUMENT)
+    }
+
+    fun setMode(mode: Mode) {
+        when (mode) {
+            Mode.TRADER_NO_ARGUMENT -> setTraderNoArgumentMode()
+            Mode.TRADER_FILLING_ARGUMENT -> setTraderFillingArgumentMode()
+            Mode.TRADER_HAS_ARGUMENT -> setTraderHasArgumentMode()
+        }
+        currentMode = mode
+    }
+
+    fun setTraderNoArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutPostText.visibility = View.GONE
+        binding.layoutSharingPanel.visibility = View.GONE
+    }
+
+    fun setTraderFillingArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutPostText.visibility = View.GONE
+        binding.layoutSharingPanel.visibility = View.GONE
+    }
+
+    fun setTraderHasArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutPostText.visibility = View.GONE
+        binding.layoutSharingPanel.visibility = View.GONE
     }
 
     override fun setName(traderName: String) {
