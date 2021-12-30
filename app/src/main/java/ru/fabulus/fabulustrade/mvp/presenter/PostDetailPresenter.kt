@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
 import android.graphics.Color
+import android.util.Log
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -20,6 +21,11 @@ import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
+
+    companion object {
+        private const val TAG = "PostDetailPresenter"
+    }
+
     @Inject
     lateinit var router: Router
 
@@ -56,7 +62,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                     view.setLikeCountText(comment.likeCount.toString())
                     if (comment.isLiked) {
                         view.setLikeImageActive()
-                    } else{
+                    } else {
                         view.setLikeImageInactive()
                     }
                 }, {})
@@ -117,6 +123,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
         )
         commentList.addAll(post.comments)
+        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
     }
 
     private fun setDislikeImage(isDisliked: Boolean) {
@@ -163,6 +170,28 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 viewState.setPostDislikeCount(post.dislikeCount.toString())
                 setDislikeImage(post.isDisliked)
             }, {})
+    }
+
+    fun changeSendCommentButton(text: String) {
+        if (text.trim().isEmpty()) {
+            viewState.setUnclickableSendCommentBtn()
+        } else {
+            viewState.setClickableSendCommentBtn()
+        }
+    }
+
+    fun addPostComment(text: String, parentCommentId: Int? = null) {
+        apiRepo
+            .addPostComment(profile.token!!, post.id, text, parentCommentId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.setCommentCount(post.commentCount().toString())
+                viewState.clearNewCommentText()
+            }, {
+                Log.d(TAG, "Error: ${it.message.toString()}")
+                Log.d(TAG, it.printStackTrace().toString())
+            }
+            )
     }
 
     fun sharePost() {

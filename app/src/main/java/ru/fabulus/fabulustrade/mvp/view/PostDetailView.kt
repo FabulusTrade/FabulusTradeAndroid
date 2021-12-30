@@ -25,4 +25,8 @@ interface PostDetailView : MvpView {
     fun sharePost(shareIntent: Intent)
     fun setCommentCount(text: String)
     fun updateCommentsAdapter()
+    fun setCurrentUserAvatar(avatarUrl: String)
+    fun setClickableSendCommentBtn()
+    fun setUnclickableSendCommentBtn()
+    fun clearNewCommentText()
 }

@@ -206,3 +206,14 @@ fun mapToComments(responseComments: List<ResponseComment>): List<Comment> {
         )
     }
 }
+
+fun mapToAddedComment(responseAddComment: ResponseAddComment): AddedComment {
+    return AddedComment(
+        responseAddComment.id,
+        responseAddComment.postId,
+        responseAddComment.parentCommentId,
+        responseAddComment.text,
+        responseAddComment.dateCreate,
+        responseAddComment.dateUpdate
+    )
+}

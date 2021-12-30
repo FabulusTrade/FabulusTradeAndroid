@@ -269,11 +269,12 @@ interface WinTradeApi {
     // добавление комментария к посту
     // если задан parent_comment - то добавляется комментарий к комментарию с id = parent_comment
     // внутри поста
+    @FormUrlEncoded
     @POST("/api/v1/trader/comment/create/")
     fun addPostComment(
         @Header("Authorization") token: String,
         @Field("post") postId: Int,
-        @Field("text") text: String,
+        @Field("text", encoded = true) text: String,
         @Field("parent_comment") parentCommentId: Int?
     ): Single<ResponseAddComment>
 

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_post_detail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
+    android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end">
 
-    <LinearLayout
-        android:id="@+id/ll_post_detail"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_comment_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/ll_post_detail_layout_margin_start"
-        android:layout_marginEnd="@dimen/ll_post_detail_layout_margin_end"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/ll_add_comment"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postConstraintLayout"
@@ -173,7 +176,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_post_dislike"
                 app:layout_constraintStart_toEndOf="@+id/btn_post_like"
                 app:layout_constraintTop_toTopOf="@+id/btn_post_like"
-                tools:text="10"/>
+                tools:text="10" />
 
             <ImageButton
                 android:id="@+id/btn_post_dislike"
@@ -199,8 +202,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
                 app:layout_constraintStart_toEndOf="@+id/btn_post_dislike"
                 app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
-                tools:text="3"
-                />
+                tools:text="3" />
 
             <ImageButton
                 android:id="@+id/btn_share_post"
@@ -223,8 +225,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
                 app:layout_constraintStart_toEndOf="@+id/btn_share_post"
                 app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
-                tools:text="3"
-                />
+                tools:text="3" />
 
             <View
                 android:id="@+id/btn_share_post_count_divider"
@@ -247,15 +248,53 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count_divider"
                 tools:text="3 комментария" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_post_comments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_comment_count" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_post_comments"
-            android:layout_width="match_parent"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_add_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_current_user_avatar"
+            android:layout_width="@dimen/iv_current_user_avatar_layout_width"
+            android:layout_height="@dimen/iv_current_user_avatar_layout_height"
+            android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
+            android:foreground="@drawable/bg_avatar"
+            android:scaleType="center"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <EditText
+            android:id="@+id/et_new_comment_text"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
+            android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
+            android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:hint="@string/et_new_comment_text_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:textSize="@dimen/et_new_comment_text_text_size" />
+
+        <ImageButton
+            android:id="@+id/ib_send_comment"
+            android:layout_width="@dimen/ib_send_comment_layout_width"
+            android:layout_height="@dimen/ib_send_comment_layout_height"
+            android:layout_marginBottom="@dimen/ib_send_comment_margin_bottom"
+            android:background="@drawable/ic_send_disabled"
+            android:clickable="false" />
 
     </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

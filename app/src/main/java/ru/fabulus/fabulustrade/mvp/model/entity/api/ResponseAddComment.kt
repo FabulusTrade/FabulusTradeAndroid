@@ -15,6 +15,9 @@ class ResponseAddComment(
     @SerializedName("parent_comment")
     val parentCommentId: Int?,
     @Expose
+    @SerializedName("text")
+    val text: String,
+    @Expose
     @SerializedName("date_create")
     val dateCreate: Date,
     @Expose

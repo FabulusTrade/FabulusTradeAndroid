@@ -2,9 +2,12 @@ package ru.fabulus.fabulustrade.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
@@ -83,6 +86,24 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.btnSharePost.setOnClickListener {
             presenter.sharePost()
         }
+
+        binding.ibSendComment.setOnClickListener {
+            presenter.addPostComment(binding.etNewCommentText.text.toString())
+        }
+
+        binding.etNewCommentText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                presenter.changeSendCommentButton(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
     }
 
     override fun setPostAuthorAvatar(avatarUrl: String) {
@@ -162,6 +183,26 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun updateCommentsAdapter() {
         commentRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun setCurrentUserAvatar(avatarUrl: String) {
+        loadImage(avatarUrl, binding.ivCurrentUserAvatar)
+    }
+
+    override fun setClickableSendCommentBtn() {
+        binding.ibSendComment.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_enabled)
+        binding.ibSendComment.isClickable = true
+    }
+
+    override fun setUnclickableSendCommentBtn() {
+        binding.ibSendComment.isClickable = false
+        binding.ibSendComment.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_disabled)
+    }
+
+    override fun clearNewCommentText() {
+        binding.etNewCommentText.text.clear()
     }
 
     override fun onDestroyView() {
