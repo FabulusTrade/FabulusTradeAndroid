@@ -190,30 +190,23 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
 
 fun mapToComments(responseComments: List<ResponseComment>): List<Comment> {
     return responseComments.map { responseComment ->
-        Comment(
-            responseComment.id,
-            responseComment.postId,
-            responseComment.parentCommentId,
-            responseComment.authorUuid,
-            responseComment.authorUsername,
-            responseComment.avatarUrl,
-            responseComment.text,
-            responseComment.dateCreate,
-            responseComment.dateUpdate,
-            responseComment.likeCount,
-            responseComment.dislikeCount,
-            responseComment.isLiked
-        )
+        mapToComment(responseComment)
     }
 }
 
-fun mapToAddedComment(responseAddComment: ResponseAddComment): AddedComment {
-    return AddedComment(
-        responseAddComment.id,
-        responseAddComment.postId,
-        responseAddComment.parentCommentId,
-        responseAddComment.text,
-        responseAddComment.dateCreate,
-        responseAddComment.dateUpdate
+fun mapToComment(responseComment: ResponseComment): Comment {
+    return Comment(
+        responseComment.id,
+        responseComment.postId,
+        responseComment.parentCommentId,
+        responseComment.authorUuid,
+        responseComment.authorUsername,
+        responseComment.avatarUrl,
+        responseComment.text,
+        responseComment.dateCreate,
+        responseComment.dateUpdate,
+        responseComment.likeCount,
+        responseComment.dislikeCount,
+        responseComment.isLiked
     )
 }

@@ -276,7 +276,7 @@ interface WinTradeApi {
         @Field("post") postId: Int,
         @Field("text", encoded = true) text: String,
         @Field("parent_comment") parentCommentId: Int?
-    ): Single<ResponseAddComment>
+    ): Single<ResponseComment>
 
     @POST("api/v1/trader/like/comment/{comment_id}/")
     fun likeComment(

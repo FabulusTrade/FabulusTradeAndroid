@@ -58,21 +58,27 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 .likeComment(profile.token!!, comment.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    comment.like()
-                    view.setLikeCountText(comment.likeCount.toString())
-                    if (comment.isLiked) {
-                        view.setLikeImageActive()
-                    } else {
+                    if (comment.isLiked == true) {
                         view.setLikeImageInactive()
+                        comment.unlike()
+                    } else {
+                        view.setLikeImageActive()
+                        comment.like()
                     }
+
+                    view.setLikeCountText(comment.likeCount.toString())
                 }, {})
         }
 
         private fun initView(view: CommentItemView, comment: Comment) {
             with(view) {
                 setCommentText(comment.text)
-                setCommentAuthorAvatar(comment.avatarUrl)
-                setCommentAuthorUserName(comment.authorUsername)
+                comment.avatarUrl?.let { avatarUrl -> setCommentAuthorAvatar(avatarUrl) }
+                comment.authorUsername?.let { authorUsername ->
+                    setCommentAuthorUserName(
+                        authorUsername
+                    )
+                }
                 setCommentDateText(
                     comment.dateCreate.toStringFormat(
                         resourceProvider.getStringResource(
@@ -83,8 +89,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 setLikeCountText(comment.likeCount.toString())
             }
         }
-
-
     }
 
     override fun onFirstViewAttach() {

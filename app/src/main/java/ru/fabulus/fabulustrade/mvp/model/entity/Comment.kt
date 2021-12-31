@@ -9,18 +9,24 @@ data class Comment(
     val id: Long,
     val postId: Long,
     var parentCommentId: Long?,
-    val authorUuid: String,
-    val authorUsername: String,
-    val avatarUrl: String,
+    val authorUuid: String?,
+    val authorUsername: String?,
+    val avatarUrl: String?,
     val text: String,
     val dateCreate: Date,
     val dateUpdate: Date,
     var likeCount: Int,
     val dislikeCount: Int,
-    val isLiked: Boolean
+    var isLiked: Boolean?
 ) : Parcelable {
 
     fun like() {
+        isLiked = true
         likeCount++
+    }
+
+    fun unlike() {
+        isLiked = false
+        likeCount--
     }
 }

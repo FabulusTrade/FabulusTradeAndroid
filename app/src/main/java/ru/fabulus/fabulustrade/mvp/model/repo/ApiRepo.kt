@@ -740,15 +740,15 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         postId: Int,
         text: String,
         parentCommentId: Int?
-    ): Single<AddedComment> =
+    ): Single<Comment> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline)
                     api
                         .addPostComment(token, postId, text, parentCommentId)
-                        .flatMap { responseAddComment ->
-                            Single.just(mapToAddedComment(responseAddComment))
+                        .flatMap { responseComment ->
+                            Single.just(mapToComment(responseComment))
                         }
                 else
                     Single.error(NoInternetException())

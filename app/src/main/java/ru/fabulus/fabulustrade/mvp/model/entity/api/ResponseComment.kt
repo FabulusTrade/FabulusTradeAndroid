@@ -16,13 +16,13 @@ data class ResponseComment(
     val parentCommentId: Long?,
     @Expose
     @SerializedName("author")
-    val authorUuid: String,
+    val authorUuid: String?,
     @Expose
     @SerializedName("author_username")
-    val authorUsername: String,
+    val authorUsername: String?,
     @Expose
     @SerializedName("avatar")
-    val avatarUrl: String,
+    val avatarUrl: String?,
     @Expose
     @SerializedName("text")
     val text: String,
