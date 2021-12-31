@@ -188,10 +188,10 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
     )
 }
 
-fun mapToComments(responseComments: List<ResponseComment>): List<Comment> {
+fun mapToComments(responseComments: List<ResponseComment>): MutableList<Comment> {
     return responseComments.map { responseComment ->
         mapToComment(responseComment)
-    }
+    }.toMutableList()
 }
 
 fun mapToComment(responseComment: ResponseComment): Comment {

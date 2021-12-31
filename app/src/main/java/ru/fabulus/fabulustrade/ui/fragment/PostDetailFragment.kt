@@ -185,6 +185,10 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         commentRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun setRvPosition(position: Int) {
+        binding.rvPostComments.scrollToPosition(position)
+    }
+
     override fun setCurrentUserAvatar(avatarUrl: String) {
         loadImage(avatarUrl, binding.ivCurrentUserAvatar)
     }

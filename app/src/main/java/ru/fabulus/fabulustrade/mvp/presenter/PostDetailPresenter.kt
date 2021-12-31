@@ -39,11 +39,10 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     lateinit var profile: Profile
 
     val listPresenter = CommentPostDetailPresenter()
-    val commentList = mutableListOf<Comment>()
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
-
+        private val commentList = mutableListOf<Comment>()
         override fun getCount(): Int = commentList.size
 
         override fun bind(view: CommentItemView) {
@@ -89,6 +88,13 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 setLikeCountText(comment.likeCount.toString())
             }
         }
+
+        override fun setCommentList(commentList: MutableList<Comment>) {
+            if (this.commentList.count() > 0) {
+                this.commentList.clear()
+            }
+            this.commentList.addAll(commentList)
+        }
     }
 
     override fun onFirstViewAttach() {
@@ -119,6 +125,17 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         setLikeImage(post.isLiked)
         setDislikeImage(post.isDisliked)
 
+        setCommentCount()
+        setCommentList()
+        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+    }
+
+    private fun setCommentList() {
+        listPresenter.setCommentList(post.comments)
+        viewState.updateCommentsAdapter()
+    }
+
+    private fun setCommentCount() {
         viewState.setCommentCount(
             resourceProvider.formatQuantityString(
                 R.plurals.show_comments_count_text,
@@ -126,8 +143,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 post.commentCount()
             )
         )
-        commentList.addAll(post.comments)
-        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
     }
 
     private fun setDislikeImage(isDisliked: Boolean) {
@@ -188,12 +203,20 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         apiRepo
             .addPostComment(profile.token!!, post.id, text, parentCommentId)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.setCommentCount(post.commentCount().toString())
+            .subscribe({ comment ->
+                profile.user?.let { user ->
+                    comment.authorUsername = user.username
+                    comment.avatarUrl = user.avatar
+                    comment.authorUuid = user.id
+                }
+                post.comments.add(comment)
+                setCommentCount()
+                setCommentList()
+                viewState.setRvPosition(post.commentCount() - 1)
                 viewState.clearNewCommentText()
-            }, {
-                Log.d(TAG, "Error: ${it.message.toString()}")
-                Log.d(TAG, it.printStackTrace().toString())
+            }, { error ->
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
             }
             )
     }

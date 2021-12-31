@@ -20,7 +20,7 @@ data class Post(
     var dislikeCount: Int,
     var isLiked: Boolean,
     var isDisliked: Boolean,
-    var comments: List<Comment>,
+    var comments: MutableList<Comment>,
     val colorIncrDecrDepo365: ColorItem
 ) : Parcelable {
     fun like() {
