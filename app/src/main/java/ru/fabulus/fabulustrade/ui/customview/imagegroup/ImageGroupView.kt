@@ -175,4 +175,6 @@ class ImageGroupView @JvmOverloads constructor(
             }
         }
     }
+
+    fun getImageViews(): List<ImageView> = imageViewList
 }

@@ -84,7 +84,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
             presenter.dislikePost()
         }
         binding.btnSharePost.setOnClickListener {
-            presenter.sharePost()
+            presenter.sharePost(binding.imageGroup.getImageViews())
         }
 
         binding.ibSendComment.setOnClickListener {

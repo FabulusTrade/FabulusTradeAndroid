@@ -500,5 +500,17 @@
     <string name="btn_like_comment_content_description">поставь лайк комментарию</string>
     <string name="comment_date_create_format">dd MMM\'. в\' HH:mm</string>
     <string name="et_new_comment_text_hint">Комментарий</string>
+    <string name="share_message_pattern">
+                Fabulus Trade - независимая социальная сеть для трейдеров и инвесторов
+                <br />
+                <br />
+                <a href="https://play.google.com/store/apps/details?id=ru.fabulus.fabulustrade">
+                    https://play.google.com/store/apps/details?id=ru.fabulus.fabulustrade
+                </a>
+                <br />
+                <br />
+    </string>
+    <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
+    <string name="share_message_title">Поделиться</string>
 
 </resources>

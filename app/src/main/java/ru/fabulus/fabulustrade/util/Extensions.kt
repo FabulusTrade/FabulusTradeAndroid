@@ -5,13 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
+import androidx.core.graphics.drawable.toBitmap
 import moxy.MvpAppCompatFragment
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.NavElementsControl
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -105,10 +115,47 @@ fun Date.toStringFormat(patternDate: String = "dd.MM.yyyy HH:mm"): String =
 
 /** возвращает:
  * true -  для отрицательных чисел
- * false - для полоэительных
+ * false - для положительных
  * для -0.0 вернет - true
  * для 0.0 вернет - false
  */
 fun Double.isNegativeDigit(): Boolean {
-    return 1/this < 0
+    return 1 / this < 0
+}
+
+fun ImageView.getBitmapUriFromDrawable(): Uri? {
+
+    val context = this.context
+    val drawable: Drawable = this.drawable
+    var bmp: Bitmap? = null
+
+    bmp = drawable.toBitmap()
+    var bmpUri: Uri? = null
+    try {
+
+        // Use methods on Context to access package-specific directories on external storage.
+        // This way, you don't need to request external read/write permission.
+        // See https://youtu.be/5xVh-7ywKpE?t=25m25s
+        val file = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            "share_image_" + System.currentTimeMillis() + ".png"
+        )
+        bmpUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val out = FileOutputStream(file)
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
+            out.close()
+
+            // wrap File object into a content provider. NOTE: authority here should match authority in manifest declaration
+            FileProvider.getUriForFile(
+                context,
+                context.getString(R.string.file_provider_name),
+                file
+            ) // use this version for API >= 24
+        } else {
+            Uri.fromFile(file)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return bmpUri
 }

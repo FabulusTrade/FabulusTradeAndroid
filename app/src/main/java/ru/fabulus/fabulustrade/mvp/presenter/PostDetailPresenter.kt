@@ -1,7 +1,11 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
+import androidx.core.text.HtmlCompat
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -14,10 +18,7 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
-import ru.fabulus.fabulustrade.util.formatDigitWithDef
-import ru.fabulus.fabulustrade.util.formatQuantityString
-import ru.fabulus.fabulustrade.util.isNegativeDigit
-import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
@@ -221,7 +222,37 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
     }
 
-    fun sharePost() {
+    fun sharePost(imageViewIdList: List<ImageView>) {
+
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/html"
+
+            val title = HtmlCompat.fromHtml(
+                resourceProvider.formatString(
+                    R.string.share_message_pattern,
+                    post.text
+                ), HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
+
+            putExtra(Intent.EXTRA_TEXT, title)
+            if (post.images.count() > 0) {
+                val bmpUri: Uri? = imageViewIdList[0].getBitmapUriFromDrawable()
+                if (bmpUri != null) {
+                    putExtra(Intent.EXTRA_STREAM, bmpUri)
+
+                    type = "image/*"
+                }
+            }
+
+        }
+
+        viewState.sharePost(
+            Intent.createChooser(
+                shareIntent,
+                resourceProvider.getStringResource(R.string.share_message_title)
+            )
+        )
 
     }
 
