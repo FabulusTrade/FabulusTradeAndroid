@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.fabulus.fabulustrade.BuildConfig
 import ru.fabulus.fabulustrade.mvp.model.api.WinTradeApi
 import ru.fabulus.fabulustrade.mvp.model.network.NetworkStatus
 import ru.fabulus.fabulustrade.ui.App
@@ -22,7 +23,7 @@ class ApiModule {
     @Named("baseUrl")
     @Provides
     fun baseUrl(): String {
-        return "https://fabulustrade.com/"
+        return BuildConfig.baseUrl
     }
 
     @Singleton
