@@ -256,17 +256,20 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         )
 
         if (bmpUri != null) {
-            val resInfoList: List<ResolveInfo> = imageViewIdList[0].context.packageManager
-                .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+            imageViewIdList[0].context.let { context ->
+                val resInfoList: List<ResolveInfo> = context.packageManager
+                    .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
 
-            for (resolveInfo in resInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                imageViewIdList[0].context.grantUriPermission(
-                    packageName,
-                    bmpUri,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
+                for (resolveInfo in resInfoList) {
+                    val packageName = resolveInfo.activityInfo.packageName
+                    context.grantUriPermission(
+                        packageName,
+                        bmpUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                }
             }
+
         }
 
         viewState.sharePost(chooser)
