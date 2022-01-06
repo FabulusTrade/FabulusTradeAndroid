@@ -1,6 +1,8 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
 import android.util.Log
@@ -224,6 +226,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
     fun sharePost(imageViewIdList: List<ImageView>) {
 
+        var bmpUri: Uri? = null
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/html"
@@ -237,7 +240,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
             putExtra(Intent.EXTRA_TEXT, title)
             if (post.images.count() > 0) {
-                val bmpUri: Uri? = imageViewIdList[0].getBitmapUriFromDrawable()
+                bmpUri = imageViewIdList[0].getBitmapUriFromDrawable()
                 if (bmpUri != null) {
                     putExtra(Intent.EXTRA_STREAM, bmpUri)
 
@@ -247,12 +250,26 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         }
 
-        viewState.sharePost(
-            Intent.createChooser(
-                shareIntent,
-                resourceProvider.getStringResource(R.string.share_message_title)
-            )
+        val chooser = Intent.createChooser(
+            shareIntent,
+            resourceProvider.getStringResource(R.string.share_message_title)
         )
+
+        if (bmpUri != null) {
+            val resInfoList: List<ResolveInfo> = imageViewIdList[0].context.packageManager
+                .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+
+            for (resolveInfo in resInfoList) {
+                val packageName = resolveInfo.activityInfo.packageName
+                imageViewIdList[0].context.grantUriPermission(
+                    packageName,
+                    bmpUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+        }
+
+        viewState.sharePost(chooser)
 
     }
 
