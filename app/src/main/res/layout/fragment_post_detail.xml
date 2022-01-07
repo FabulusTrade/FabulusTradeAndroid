@@ -12,8 +12,8 @@
         android:id="@+id/nsv_comment_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
+        android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/ll_add_comment"
         app:layout_constraintTop_toTopOf="parent">
 
