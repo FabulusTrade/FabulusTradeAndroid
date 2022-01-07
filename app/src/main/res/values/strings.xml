@@ -512,5 +512,6 @@
     </string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
+    <string name="reply_on_comment_pattern">\@%s </string>
 
 </resources>

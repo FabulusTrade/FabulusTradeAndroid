@@ -739,7 +739,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         postId: Int,
         text: String,
-        parentCommentId: Int?
+        parentCommentId: Long?
     ): Single<Comment> =
         networkStatus
             .isOnlineSingle()

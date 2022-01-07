@@ -8,6 +8,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.text.HtmlCompat
+import androidx.core.text.toSpannable
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -42,6 +43,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     lateinit var profile: Profile
 
     val listPresenter = CommentPostDetailPresenter()
+    private var parentCommentId: Long? = null
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -74,7 +76,19 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         private fun initView(view: CommentItemView, comment: Comment) {
             with(view) {
-                setCommentText(comment.text)
+
+                if (comment.parentCommentId != null) {
+                    setCommentText(
+                        comment.text.toSpannableText(
+                            0,
+                            getParentCommentAuthorUsername(comment.parentCommentId!!).length + 1,
+                            resourceProvider.getColor(R.color.author_color_in_comment)
+                        )
+                    )
+                } else {
+                    setCommentText(comment.text.toSpannable())
+                }
+
                 comment.avatarUrl?.let { avatarUrl -> setCommentAuthorAvatar(avatarUrl) }
                 comment.authorUsername?.let { authorUsername ->
                     setCommentAuthorUserName(
@@ -97,6 +111,44 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 this.commentList.clear()
             }
             this.commentList.addAll(commentList)
+        }
+
+        override fun replyOnComment(view: CommentItemView) {
+            val comment = commentByPos(view.pos)
+            parentCommentId = comment.id
+
+            val textStr = resourceProvider.formatString(
+                R.string.reply_on_comment_pattern,
+                comment.authorUsername
+            )
+            val text = textStr.toSpannableText(
+                0,
+                textStr.length,
+                resourceProvider.getColor(R.color.author_color_in_comment)
+            )
+
+            viewState.prepareReplyToComment(text)
+        }
+
+        private fun getParentCommentAuthorUsername(parentCommentId: Long): String {
+            for (comment in commentList) {
+                if (comment.id == parentCommentId) {
+                    return comment.authorUsername ?: ""
+                }
+            }
+
+            return ""
+        }
+
+        override fun recalcParentCommentId(commentText: String) {
+            if (parentCommentId != null && commentText.indexOf(
+                    getParentCommentAuthorUsername(
+                        parentCommentId!!
+                    )
+                ) != 0
+            ) {
+                parentCommentId = null
+            }
         }
     }
 
@@ -202,7 +254,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         }
     }
 
-    fun addPostComment(text: String, parentCommentId: Int? = null) {
+    fun addPostComment(text: String, parentCommentId: Long? = null) {
         apiRepo
             .addPostComment(profile.token!!, post.id, text, parentCommentId)
             .observeOn(AndroidSchedulers.mainThread())
@@ -223,6 +275,8 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             }
             )
     }
+
+    fun getParentCommentId() = parentCommentId
 
     fun sharePost(imageViewIdList: List<ImageView>) {
 

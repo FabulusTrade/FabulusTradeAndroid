@@ -8,4 +8,6 @@ interface CommentRVListPresenter {
     fun bind(view: CommentItemView)
     fun likeComment(view: CommentItemView)
     fun setCommentList(commentList: MutableList<Comment>)
+    fun replyOnComment(view: CommentItemView)
+    fun recalcParentCommentId(commentText: String)
 }

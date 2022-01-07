@@ -9,6 +9,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -158,4 +161,19 @@ fun ImageView.getBitmapUriFromDrawable(): Uri? {
         e.printStackTrace()
     }
     return bmpUri
+}
+
+fun String.toSpannableText(
+    startIndex: Int,
+    endIndex: Int,
+    textColor: Int
+): Spannable {
+    val outPutColoredText: Spannable = SpannableString(this)
+    if (endIndex > startIndex) {
+        outPutColoredText.setSpan(
+            ForegroundColorSpan(textColor), startIndex, endIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+    return outPutColoredText
 }

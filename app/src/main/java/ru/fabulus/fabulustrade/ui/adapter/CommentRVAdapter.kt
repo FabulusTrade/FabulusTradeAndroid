@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.ui.adapter
 
 
+import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,10 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
         holder.itemView.btn_like_comment.setOnClickListener {
             presenter.likeComment(holder)
         }
+
+        holder.itemView.tv_answer_to_comment.setOnClickListener {
+            presenter.replyOnComment(holder)
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()
@@ -53,7 +58,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
 
         override var pos: Int = -1
 
-        override fun setCommentText(text: String) {
+        override fun setCommentText(text: Spannable) {
             itemView.tv_comment_post.text = text
         }
 

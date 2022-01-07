@@ -97,8 +97,7 @@
     <dimen name="tv_comment_author_name_margin_top">8dp</dimen>
     <dimen name="btn_comment_menu_margin_start">50dp</dimen>
     <dimen name="tv_comment_date_margin_start">15dp</dimen>
-    <dimen name="btn_answer_to_comment_margin_start">10dp</dimen>
-    <dimen name="tv_answer_to_comment_margin_start">2dp</dimen>
+    <dimen name="tv_answer_to_comment_margin_start">10dp</dimen>
     <dimen name="iv_current_user_avatar_layout_width">40dp</dimen>
     <dimen name="iv_current_user_avatar_layout_height">40dp</dimen>
     <dimen name="et_new_comment_text_text_size">16sp</dimen>

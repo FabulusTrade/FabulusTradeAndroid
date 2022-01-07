@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.ui.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spanned
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -88,7 +89,14 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
 
         binding.ibSendComment.setOnClickListener {
-            presenter.addPostComment(binding.etNewCommentText.text.toString())
+
+            binding.etNewCommentText.text.toString().let { text ->
+                presenter.listPresenter.recalcParentCommentId(text)
+                presenter.addPostComment(
+                    text,
+                    presenter.getParentCommentId()
+                )
+            }
         }
 
         binding.etNewCommentText.addTextChangedListener(object : TextWatcher {
@@ -207,6 +215,10 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun clearNewCommentText() {
         binding.etNewCommentText.text.clear()
+    }
+
+    override fun prepareReplyToComment(text: Spanned) {
+        binding.etNewCommentText.setText(text)
     }
 
     override fun onDestroyView() {

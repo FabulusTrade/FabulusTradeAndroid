@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.mvp.view
 
 import android.content.Intent
+import android.text.Spanned
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -30,4 +31,5 @@ interface PostDetailView : MvpView {
     fun setClickableSendCommentBtn()
     fun setUnclickableSendCommentBtn()
     fun clearNewCommentText()
+    fun prepareReplyToComment(text: Spanned)
 }
