@@ -85,6 +85,10 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
         override fun setLikeImageInactive() {
             itemView.btn_like_comment.setImageResource(R.drawable.ic_like_inactive)
         }
+
+        override fun setReplyPostColor(backgroundColor: Int) {
+            itemView.cv_comment_header.setCardBackgroundColor(backgroundColor)
+        }
     }
 
 }

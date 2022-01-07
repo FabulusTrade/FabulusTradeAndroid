@@ -499,7 +499,7 @@
     <string name="tv_answer_to_comment_text">ответить</string>
     <string name="btn_like_comment_content_description">поставь лайк комментарию</string>
     <string name="comment_date_create_format">dd MMM\'. в\' HH:mm</string>
-    <string name="et_new_comment_text_hint">Комментарий</string>
+    <string name="et_new_comment_text_hint">Ваш комментарий</string>
     <string name="share_message_pattern">
                 Fabulus Trade - независимая социальная сеть для трейдеров и инвесторов
                 <br />

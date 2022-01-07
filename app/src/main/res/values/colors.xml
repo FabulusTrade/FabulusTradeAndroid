@@ -39,6 +39,7 @@
     <color name="view_author_post_horizontal_divider_background_color">#D8D4D4</color>
     <color name="tv_warning_text_color">#C4C4C4</color>
     <color name="tv_comment_count_text_color">#3D3D3D</color>
-    <color name="ll_comment_header_background_color">#F6F7F9</color>
+    <color name="cv_comment_header_background_color">#F6F7F9</color>
     <color name="author_color_in_comment">#376DF9</color>
+    <color name="cv_comment_header_background_color_reply">#E4EDFF</color>
 </resources>

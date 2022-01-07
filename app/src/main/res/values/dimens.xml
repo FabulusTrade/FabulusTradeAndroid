@@ -96,8 +96,8 @@
     <dimen name="iv_comment_author_avatar_width_and_height">38dp</dimen>
     <dimen name="tv_comment_author_name_margin_top">8dp</dimen>
     <dimen name="btn_comment_menu_margin_start">50dp</dimen>
-    <dimen name="tv_comment_date_margin_start">15dp</dimen>
-    <dimen name="tv_answer_to_comment_margin_start">10dp</dimen>
+    <dimen name="tv_comment_date_margin_start">30dp</dimen>
+    <dimen name="tv_answer_to_comment_margin_end">28dp</dimen>
     <dimen name="iv_current_user_avatar_layout_width">40dp</dimen>
     <dimen name="iv_current_user_avatar_layout_height">40dp</dimen>
     <dimen name="et_new_comment_text_text_size">16sp</dimen>
@@ -109,5 +109,20 @@
     <dimen name="et_new_comment_text_margin_start">5dp</dimen>
     <dimen name="et_new_comment_text_margin_end">5dp</dimen>
     <dimen name="ib_send_comment_margin_bottom">5dp</dimen>
+    <dimen name="tv_comment_post_margin_top">2dp</dimen>
+    <dimen name="tv_comment_post_margin_bottom">8dp</dimen>
+    <dimen name="cv_comment_header_elevation">4dp</dimen>
+    <dimen name="cv_comment_header_corner_radius">20dp</dimen>
+    <dimen name="ll_comment_header_padding_start">7dp</dimen>
+    <dimen name="ll_comment_header_padding_end">7dp</dimen>
+    <dimen name="cl_comment_soft_panel_margin_top">10dp</dimen>
+    <dimen name="btn_comment_menu_margin_top">1dp</dimen>
+    <dimen name="tv_comment_like_count_text_size">11sp</dimen>
+    <dimen name="tv_comment_date_text_size">11sp</dimen>
+    <dimen name="tv_answer_to_comment_text_size">11sp</dimen>
+    <dimen name="cl_item_comment_margin_start">0dp</dimen>
+    <dimen name="cl_item_comment_margin_top">20dp</dimen>
+    <dimen name="cl_item_comment_margin_end">15dp</dimen>
+    <dimen name="cl_item_comment_margin_bottom">20dp</dimen>
 
 </resources>

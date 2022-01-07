@@ -128,6 +128,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
 
             viewState.prepareReplyToComment(text)
+            view.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color_reply))
         }
 
         private fun getParentCommentAuthorUsername(parentCommentId: Long): String {

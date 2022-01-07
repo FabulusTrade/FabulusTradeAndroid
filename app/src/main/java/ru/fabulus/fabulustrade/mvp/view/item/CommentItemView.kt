@@ -12,4 +12,5 @@ interface CommentItemView {
     fun setLikeCountText(text: String)
     fun setLikeImageActive()
     fun setLikeImageInactive()
+    fun setReplyPostColor(backgroundColor: Int)
 }
