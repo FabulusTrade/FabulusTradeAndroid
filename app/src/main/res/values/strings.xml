@@ -501,13 +501,14 @@
     <string name="comment_date_create_format">dd MMM\'. в\' HH:mm</string>
     <string name="et_new_comment_text_hint">Ваш комментарий</string>
     <string name="share_message_pattern">Fabulus Trade - независимая социальная сеть для трейдеров и инвесторов
-                \n\n
+                \n
                 https://play.google.com/store/apps/details?id=ru.fabulus.fabulustrade
                 \n\n
                 @%s
-                \n\n
+                \n
                 %s
     </string>
+    <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
     <string name="reply_on_comment_pattern">\@%s </string>

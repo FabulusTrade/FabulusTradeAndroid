@@ -282,17 +282,24 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     fun getParentCommentId() = parentCommentId
 
     fun sharePost(imageViewIdList: List<ImageView>) {
-//TODO поправить шаблон отправляемого сообщения
+        val maxSharedLenText = 400
         var bmpUri: Uri? = null
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            type = "text/html"
+            type = "text/plain"
 
-            val title = resourceProvider.formatString(
+            var title = resourceProvider.formatString(
                 R.string.share_message_pattern,
                 post.userName,
                 post.text
             )
+
+            if (title.length > maxSharedLenText) {
+                title = resourceProvider.formatString(
+                    R.string.share_message_pattern_big_text,
+                    title.substring(0, maxSharedLenText)
+                )
+            }
 
             putExtra(Intent.EXTRA_TEXT, title)
             if (post.images.count() > 0) {
