@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
-import androidx.core.text.HtmlCompat
 import androidx.core.text.toSpannable
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -128,6 +127,9 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
 
             viewState.prepareReplyToComment(text)
+//            TODO менять фон после отправки сообщения
+//            одновренменно может быть выделенно только одно сообщене
+
             view.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color_reply))
         }
 
@@ -280,29 +282,26 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     fun getParentCommentId() = parentCommentId
 
     fun sharePost(imageViewIdList: List<ImageView>) {
-
+//TODO поправить шаблон отправляемого сообщения
         var bmpUri: Uri? = null
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/html"
 
-            val title = HtmlCompat.fromHtml(
-                resourceProvider.formatString(
-                    R.string.share_message_pattern,
-                    post.text
-                ), HtmlCompat.FROM_HTML_MODE_COMPACT
+            val title = resourceProvider.formatString(
+                R.string.share_message_pattern,
+                post.userName,
+                post.text
             )
 
             putExtra(Intent.EXTRA_TEXT, title)
             if (post.images.count() > 0) {
-                bmpUri = imageViewIdList[0].getBitmapUriFromDrawable()
-                if (bmpUri != null) {
+                imageViewIdList[0].getBitmapUriFromDrawable()?.let { uri ->
+                    bmpUri = uri
                     putExtra(Intent.EXTRA_STREAM, bmpUri)
-
                     type = "image/*"
                 }
             }
-
         }
 
         val chooser = Intent.createChooser(
@@ -310,7 +309,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             resourceProvider.getStringResource(R.string.share_message_title)
         )
 
-        if (bmpUri != null) {
+        bmpUri?.let { uri ->
             imageViewIdList[0].context.let { context ->
                 val resInfoList: List<ResolveInfo> = context.packageManager
                     .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
@@ -319,7 +318,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                     val packageName = resolveInfo.activityInfo.packageName
                     context.grantUriPermission(
                         packageName,
-                        bmpUri,
+                        uri,
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                 }
