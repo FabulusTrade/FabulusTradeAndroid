@@ -42,4 +42,6 @@
     <color name="cv_comment_header_background_color">#F6F7F9</color>
     <color name="author_color_in_comment">#376DF9</color>
     <color name="cv_comment_header_background_color_reply">#E4EDFF</color>
+    <color name="popup_menu_background">#E4EDFF</color>
+
 </resources>
