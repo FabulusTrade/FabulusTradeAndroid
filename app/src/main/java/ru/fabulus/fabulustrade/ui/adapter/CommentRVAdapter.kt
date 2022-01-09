@@ -141,6 +141,10 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
                 menu.show()
             }
         }
+
+        override fun hideReplyBtn() {
+            itemView.tv_answer_to_comment.visibility = View.INVISIBLE
+        }
     }
 
 

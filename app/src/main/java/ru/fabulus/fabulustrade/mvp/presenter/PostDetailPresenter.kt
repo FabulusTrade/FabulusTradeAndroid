@@ -56,7 +56,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         private fun initMenu(view: CommentItemView, comment: Comment) {
 
-            if (comment.authorUuid == profile.user?.id) {
+            if (isSelfComment(comment)) {
                 view.setBtnCommentMenuSelf(comment)
             } else {
                 view.setBtnCommentMenuSomeone(comment)
@@ -112,8 +112,15 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                     )
                 )
                 setLikeCountText(comment.likeCount.toString())
+
+                if (isSelfComment(comment)) {
+                    hideReplyBtn()
+                }
             }
         }
+
+        private fun isSelfComment(comment: Comment): Boolean =
+            (comment.authorUuid == profile.user?.id)
 
         override fun setCommentList(commentList: MutableList<Comment>) {
             if (this.commentList.count() > 0) {

@@ -16,4 +16,5 @@ interface CommentItemView {
     fun setReplyPostColor(backgroundColor: Int)
     fun setBtnCommentMenuSelf(comment: Comment)
     fun setBtnCommentMenuSomeone(comment: Comment)
+    fun hideReplyBtn()
 }
