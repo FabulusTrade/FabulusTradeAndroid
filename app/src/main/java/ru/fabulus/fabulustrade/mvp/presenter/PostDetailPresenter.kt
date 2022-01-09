@@ -192,8 +192,9 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             }
         }
 
-        override fun complainOnComment(comment: Comment) {
-//            TODO("Not yet implemented")
+        override fun complainOnComment(comment: Comment, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
     }
 

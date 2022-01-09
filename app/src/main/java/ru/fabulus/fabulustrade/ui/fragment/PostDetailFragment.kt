@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -25,6 +26,7 @@ import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
@@ -224,6 +226,16 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun showToast(text: String) {
         requireContext().showToast(text)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.ibSendComment,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {

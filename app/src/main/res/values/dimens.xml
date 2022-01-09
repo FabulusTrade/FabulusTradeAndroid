@@ -124,5 +124,9 @@
     <dimen name="cl_item_comment_margin_top">20dp</dimen>
     <dimen name="cl_item_comment_margin_end">15dp</dimen>
     <dimen name="cl_item_comment_margin_bottom">20dp</dimen>
+    <dimen name="tv_complain_toast_margin_top">24dp</dimen>
+    <dimen name="tv_complain_toast_text_size">14sp</dimen>
+    <dimen name="ll_send_complain_snackbar_padding_top">10dp</dimen>
+    <dimen name="ll_send_complain_snackbar_padding_bottom">10dp</dimen>
 
 </resources>

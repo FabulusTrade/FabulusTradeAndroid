@@ -33,4 +33,5 @@ interface PostDetailView : MvpView {
     fun clearNewCommentText()
     fun prepareReplyToComment(text: Spanned)
     fun showToast(text: String)
+    fun showComplainSnackBar()
 }

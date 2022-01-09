@@ -13,5 +13,5 @@ interface CommentRVListPresenter {
     fun editComment(comment: Comment)
     fun copyComment(comment: Comment)
     fun deleteComment(comment: Comment)
-    fun complainOnComment(comment: Comment)
+    fun complainOnComment(comment: Comment, reason: String)
 }

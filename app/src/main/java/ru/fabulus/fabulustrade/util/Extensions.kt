@@ -12,11 +12,15 @@ import android.os.Environment
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import moxy.MvpAppCompatFragment
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
@@ -35,6 +39,35 @@ fun Context.showLongToast(msg: CharSequence, duration: Int = Toast.LENGTH_LONG) 
 
 fun Context.showToast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(applicationContext, msg, duration).show()
+}
+
+fun showCustomSnackbar(
+    layoutId: Int,
+    layoutInflater: LayoutInflater,
+    containerLayout: View,
+    msg: CharSequence,
+    duration: Int = Snackbar.LENGTH_SHORT
+) {
+
+    val snackbar = Snackbar.make(containerLayout, msg, duration)
+
+    // Get the Snackbar's layout view
+    val layout = snackbar.view as SnackbarLayout
+
+    // Hide the text
+    val textView = layout.findViewById<View>(R.id.snackbar_text) as TextView
+    textView.visibility = View.INVISIBLE
+
+    // Inflate our custom view
+    val snackView: View = layoutInflater.inflate(layoutId, null)
+
+    //If the view is not covering the whole snackbar layout, add this line
+    layout.setPadding(0, 0, 0, 0)
+
+    // Add the view to the Snackbar's layout
+    layout.addView(snackView, 0)
+    // Show the Snackbar
+    snackbar.show()
 }
 
 fun Intent.createBitmapFromResult(activity: Activity): Bitmap? {
