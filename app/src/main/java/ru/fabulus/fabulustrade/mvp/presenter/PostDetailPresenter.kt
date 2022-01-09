@@ -43,6 +43,8 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
     val listPresenter = CommentPostDetailPresenter()
     private var parentCommentId: Long? = null
+    private var parentCommentAuthorUsername: String? = null
+    private var parentCommentView: CommentItemView? = null
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -131,11 +133,16 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         override fun replyOnComment(view: CommentItemView) {
             val comment = commentByPos(view.pos)
+            if (parentCommentId != null) {
+                clearParentComment()
+            }
             parentCommentId = comment.id
+            parentCommentAuthorUsername = comment.authorUsername
+            parentCommentView = view
 
             val textStr = resourceProvider.formatString(
                 R.string.reply_on_comment_pattern,
-                comment.authorUsername
+                parentCommentAuthorUsername
             )
             val text = textStr.toSpannableText(
                 0,
@@ -144,9 +151,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
 
             viewState.prepareReplyToComment(text)
-//            TODO менять фон после отправки сообщения
-//            одновренменно может быть выделенно только одно сообщене
-
             view.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color_reply))
         }
 
@@ -160,15 +164,17 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             return ""
         }
 
-        override fun recalcParentCommentId(commentText: String) {
-            if (parentCommentId != null && commentText.indexOf(
-                    getParentCommentAuthorUsername(
-                        parentCommentId!!
-                    )
-                ) != 0
+        override fun recalcParentComment(commentText: String) {
+            if (parentCommentId != null && commentText.indexOf(parentCommentAuthorUsername!!) != 1
             ) {
-                parentCommentId = null
+                clearParentComment()
             }
+        }
+
+        private fun clearParentComment() {
+            parentCommentId = null
+            parentCommentView!!.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color))
+            parentCommentView = null
         }
 
         override fun editComment(comment: Comment) {

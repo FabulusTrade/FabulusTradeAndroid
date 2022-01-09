@@ -9,7 +9,7 @@ interface CommentRVListPresenter {
     fun likeComment(view: CommentItemView)
     fun setCommentList(commentList: MutableList<Comment>)
     fun replyOnComment(view: CommentItemView)
-    fun recalcParentCommentId(commentText: String)
+    fun recalcParentComment(commentText: String)
     fun editComment(comment: Comment)
     fun copyComment(comment: Comment)
     fun deleteComment(comment: Comment)

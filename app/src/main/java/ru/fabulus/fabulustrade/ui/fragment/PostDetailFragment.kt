@@ -94,7 +94,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.ibSendComment.setOnClickListener {
 
             binding.etNewCommentText.text.toString().let { text ->
-                presenter.listPresenter.recalcParentCommentId(text)
+                presenter.listPresenter.recalcParentComment(text)
                 presenter.addPostComment(
                     text,
                     presenter.getParentCommentId()
