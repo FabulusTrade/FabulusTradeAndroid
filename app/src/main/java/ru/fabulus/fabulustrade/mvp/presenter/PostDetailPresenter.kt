@@ -165,7 +165,11 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         }
 
         override fun editComment(comment: Comment) {
-            TODO("Not yet implemented")
+            if (isCanEditComment(comment.dateCreate)) {
+                //TODO метод для редактирования коментария
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
+            }
         }
 
         override fun copyComment(comment: Comment) {
@@ -174,7 +178,11 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         }
 
         override fun deleteComment(comment: Comment) {
-//            TODO("Not yet implemented")
+            if (isCanDeleteComment(comment.dateCreate)) {
+                //TODO метод для удаления коментария
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_deleted))
+            }
         }
 
         override fun complainOnComment(comment: Comment) {
@@ -309,7 +317,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     fun getParentCommentId() = parentCommentId
 
     fun sharePost(imageViewIdList: List<ImageView>) {
-        val maxSharedLenText = 400
         var bmpUri: Uri? = null
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -321,10 +328,10 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 post.text
             )
 
-            if (title.length > maxSharedLenText) {
+            if (title.length > MAX_SHARED_LEN_POST_TEXT) {
                 title = resourceProvider.formatString(
                     R.string.share_message_pattern_big_text,
-                    title.substring(0, maxSharedLenText)
+                    title.substring(0, MAX_SHARED_LEN_POST_TEXT)
                 )
             }
 

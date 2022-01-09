@@ -517,5 +517,7 @@
     <string name="delete_comment_text">Удалить</string>
     <string name="complain_on_comment_text">Пожаловаться</string>
     <string name="text_copied">Текст скопирован</string>
+    <string name="comment_can_not_be_edited">Невозможно изменить комментарий созданный более 1 часа назад</string>
+    <string name="comment_can_not_be_deleted">Невозможно удалить комментарий созданный более 1 часа назад</string>
 
 </resources>
