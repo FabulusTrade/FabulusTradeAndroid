@@ -32,4 +32,5 @@ interface PostDetailView : MvpView {
     fun setUnclickableSendCommentBtn()
     fun clearNewCommentText()
     fun prepareReplyToComment(text: Spanned)
+    fun showToast(text: String)
 }

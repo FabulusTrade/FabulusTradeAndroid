@@ -25,6 +25,7 @@ import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
+import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
 class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
@@ -219,6 +220,10 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun prepareReplyToComment(text: Spanned) {
         binding.etNewCommentText.setText(text)
+    }
+
+    override fun showToast(text: String) {
+        requireContext().showToast(text)
     }
 
     override fun onDestroyView() {

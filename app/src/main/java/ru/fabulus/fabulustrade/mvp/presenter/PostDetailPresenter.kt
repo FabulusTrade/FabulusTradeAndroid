@@ -51,6 +51,16 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         override fun bind(view: CommentItemView) {
             initView(view, commentByPos(view.pos))
+            initMenu(view, commentByPos(view.pos))
+        }
+
+        private fun initMenu(view: CommentItemView, comment: Comment) {
+
+            if (comment.authorUuid == profile.user?.id) {
+                view.setBtnCommentMenuSelf(comment)
+            } else {
+                view.setBtnCommentMenuSomeone(comment)
+            }
         }
 
         private fun commentByPos(pos: Int): Comment = commentList[pos]
@@ -152,6 +162,23 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             ) {
                 parentCommentId = null
             }
+        }
+
+        override fun editComment(comment: Comment) {
+            TODO("Not yet implemented")
+        }
+
+        override fun copyComment(comment: Comment) {
+            resourceProvider.copyToClipboard(comment.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun deleteComment(comment: Comment) {
+//            TODO("Not yet implemented")
+        }
+
+        override fun complainOnComment(comment: Comment) {
+//            TODO("Not yet implemented")
         }
     }
 

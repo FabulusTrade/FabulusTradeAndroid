@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.mvp.view.item
 
 import android.text.Spannable
+import ru.fabulus.fabulustrade.mvp.model.entity.Comment
 
 interface CommentItemView {
     var pos: Int
@@ -13,4 +14,6 @@ interface CommentItemView {
     fun setLikeImageActive()
     fun setLikeImageInactive()
     fun setReplyPostColor(backgroundColor: Int)
+    fun setBtnCommentMenuSelf(comment: Comment)
+    fun setBtnCommentMenuSomeone(comment: Comment)
 }

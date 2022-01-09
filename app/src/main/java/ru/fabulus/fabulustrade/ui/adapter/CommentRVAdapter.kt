@@ -5,10 +5,13 @@ import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
 import kotlinx.android.synthetic.main.item_comment.view.*
+import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Comment
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
@@ -89,6 +92,56 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
         override fun setReplyPostColor(backgroundColor: Int) {
             itemView.cv_comment_header.setCardBackgroundColor(backgroundColor)
         }
+
+        override fun setBtnCommentMenuSelf(comment: Comment) {
+            itemView.btn_comment_menu.setOnClickListener { btn ->
+                val menu = PopupMenu(itemView.context, btn)
+                menu.inflate(R.menu.menu_self_comment)
+
+                menu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+
+                        R.id.edit_comment -> {
+                            presenter.editComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.copy_comment_text -> {
+                            presenter.copyComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.delete_comment -> {
+                            presenter.deleteComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                menu.show()
+            }
+        }
+
+        override fun setBtnCommentMenuSomeone(comment: Comment) {
+            itemView.btn_comment_menu.setOnClickListener { btn ->
+                val menu = PopupMenu(itemView.context, btn)
+                menu.inflate(R.menu.menu_someone_comment)
+
+                menu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.copy_comment_text -> {
+                            presenter.copyComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.complain_on_comment -> {
+                            presenter.complainOnComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                menu.show()
+            }
+        }
     }
+
 
 }
