@@ -59,9 +59,16 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             presenter.closeClicked()
         }
         setMode(Mode.TRADER_NO_ARGUMENT)
+        initClickListeners()
     }
 
-    fun setMode(mode: Mode) {
+    private fun initClickListeners() {
+        binding.linearShareArgumentsBegin.setOnClickListener {
+            setMode(Mode.TRADER_FILLING_ARGUMENT)
+        }
+    }
+
+    private fun setMode(mode: Mode) {
         when (mode) {
             Mode.TRADER_NO_ARGUMENT -> setTraderNoArgumentMode()
             Mode.TRADER_FILLING_ARGUMENT -> setTraderFillingArgumentMode()
@@ -70,21 +77,26 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         currentMode = mode
     }
 
-    fun setTraderNoArgumentMode() {
+    private fun setTraderNoArgumentMode() {
         binding.linearShareArgumentsBegin.visibility = View.VISIBLE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
     }
 
-    fun setTraderFillingArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
-        binding.layoutArgumentTable.visibility = View.GONE
-        binding.layoutPostText.visibility = View.GONE
-        binding.layoutSharingPanel.visibility = View.GONE
+    private fun setTraderFillingArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.GONE
+        binding.layoutArgumentTable.visibility = View.VISIBLE
+        binding.layoutPostText.visibility = View.VISIBLE
+        binding.layoutSharingPanel.visibility = View.VISIBLE
+        binding.linearShareHead.visibility = View.VISIBLE
+        binding.ivTradeDetailClose.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+        }
     }
 
-    fun setTraderHasArgumentMode() {
+    private fun setTraderHasArgumentMode() {
         binding.linearShareArgumentsBegin.visibility = View.VISIBLE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
