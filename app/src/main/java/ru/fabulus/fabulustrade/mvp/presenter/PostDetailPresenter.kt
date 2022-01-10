@@ -238,6 +238,12 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+        viewState.setAuthorFollowerCount(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_author_follower_count,
+                post.followersCount
+            )
+        )
     }
 
     private fun setCommentList() {

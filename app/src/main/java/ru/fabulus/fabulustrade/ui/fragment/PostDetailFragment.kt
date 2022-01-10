@@ -242,6 +242,10 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
+    override fun setAuthorFollowerCount(text: String) {
+        binding.tvAuthorFollowerCount.text = text
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

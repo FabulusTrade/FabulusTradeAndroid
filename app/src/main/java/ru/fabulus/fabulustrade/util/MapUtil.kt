@@ -142,6 +142,7 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.id,
             post.username,
             post.avatar,
+            post.followersCount,
             post.trader_id,
             post.text,
             post.post_status,

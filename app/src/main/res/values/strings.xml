@@ -527,5 +527,6 @@
     <string name="flood_spam">Флуд / Спам</string>
     <string name="begging_extortion">Попрошайничество / Вымогательство</string>
     <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
+    <string name="tv_author_follower_count">%d</string>
 
 </resources>

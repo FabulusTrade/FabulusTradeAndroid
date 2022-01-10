@@ -37,5 +37,8 @@ data class ResponsePost(
     val comments: MutableList<ResponseComment>,
     @Expose
     @SerializedName("color_incr_decr_depo_365")
-    val colorIncrDecrDepo365: ColorItem
+    val colorIncrDecrDepo365: ColorItem,
+    @Expose
+    @SerializedName("followers_count")
+    val followersCount: Int
 )

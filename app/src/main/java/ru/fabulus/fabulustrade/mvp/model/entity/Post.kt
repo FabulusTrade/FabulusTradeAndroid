@@ -9,6 +9,7 @@ data class Post(
     val id: Int,
     val userName: String,
     val avatarUrl: String,
+    val followersCount: Int,
     val traderId: String,
     val text: String,
     val postStatus: String,

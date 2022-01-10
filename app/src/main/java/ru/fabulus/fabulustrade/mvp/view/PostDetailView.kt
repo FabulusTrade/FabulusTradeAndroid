@@ -35,4 +35,5 @@ interface PostDetailView : MvpView {
     fun showToast(text: String)
     fun showComplainSnackBar()
     fun scrollNsvCommentViewToBottom()
+    fun setAuthorFollowerCount(text: String)
 }
