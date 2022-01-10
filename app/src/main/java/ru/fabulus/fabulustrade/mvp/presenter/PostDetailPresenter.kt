@@ -323,6 +323,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 setCommentCount()
                 setCommentList()
                 viewState.setRvPosition(post.commentCount() - 1)
+                viewState.scrollNsvCommentViewToBottom()
                 viewState.clearNewCommentText()
             }, { error ->
                 Log.d(TAG, "Error: ${error.message.toString()}")
