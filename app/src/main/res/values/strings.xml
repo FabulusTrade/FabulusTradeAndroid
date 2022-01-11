@@ -511,7 +511,7 @@
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
-    <string name="reply_on_comment_pattern">\@%s </string>
+    <string name="reply_on_comment_pattern">\@%s\ </string>
     <string name="edit_comment_text">Редактировать</string>
     <string name="copy_comment_text">Скопировать текст</string>
     <string name="delete_comment_text">Удалить</string>

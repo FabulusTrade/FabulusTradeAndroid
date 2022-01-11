@@ -221,7 +221,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun prepareReplyToComment(text: Spanned) {
-        binding.etNewCommentText.setText(text)
+        with(binding.etNewCommentText) {
+            setText(text)
+            requestFocus()
+            setSelection(length())
+        }
     }
 
     override fun showToast(text: String) {
