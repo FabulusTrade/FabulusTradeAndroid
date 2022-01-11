@@ -116,6 +116,8 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 setLikeCountText(comment.likeCount.toString())
                 if (comment.isLiked == true) {
                     view.setLikeImageActive()
+                } else {
+                    view.setLikeImageInactive()
                 }
 
                 if (isSelfComment(comment)) {
