@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -60,6 +61,30 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
         setMode(Mode.TRADER_NO_ARGUMENT)
         initClickListeners()
+    }
+
+    private fun initTextChangeListeners() {
+        val price = binding.tvTradeDetailPrice.text.trim().toString()
+
+        binding.etTakeProfit.addTextChangedListener {
+            binding.tvTakeProfitResult.text = formatOnFormulaToTable(
+                it.toString(),
+                price
+            )
+        }
+        binding.etStopLoss.addTextChangedListener {
+            binding.tvStopLossResult.text = formatOnFormulaToTable(
+                it.toString(),
+                price
+            )
+        }
+    }
+
+    private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
+        val number = numberText.trim().toDouble()
+        val price = priceText.trim().toDouble()
+        val returnValue = (((number / price) - 1) * 100)
+        return "%.2f".format(returnValue)
     }
 
     private fun initClickListeners() {
@@ -121,6 +146,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     override fun setPrice(price: String) {
         binding.tvTradeDetailPrice.text = price
+        initTextChangeListeners()
     }
 
     override fun setPriceTitle(priceTitle: String) {

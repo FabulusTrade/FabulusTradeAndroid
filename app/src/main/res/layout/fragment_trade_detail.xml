@@ -311,19 +311,23 @@
             android:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/take_profit_price"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_takeProfit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:inputType="number"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_takeProfitResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -342,21 +346,25 @@
             android:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/stop_loss_price"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_stopLoss"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
+                android:inputType="number"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_stopLossResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/tv_text_size_publish_trader_details"
@@ -383,13 +391,15 @@
             android:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/realization_day"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_howManyDay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_span="2"
@@ -426,7 +436,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite"
-                android:lines="11" />
+                android:lines="9" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
