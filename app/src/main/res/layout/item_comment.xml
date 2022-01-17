@@ -123,7 +123,7 @@
             android:id="@+id/tv_comment_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/zero_post_item"
+            android:text="@string/zero_digit_text"
             android:textSize="@dimen/tv_comment_like_count_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/btn_like_comment"
             app:layout_constraintEnd_toEndOf="parent"

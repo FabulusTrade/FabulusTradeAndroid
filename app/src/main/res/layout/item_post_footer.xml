@@ -7,7 +7,7 @@
 
 
     <ImageButton
-        android:id="@+id/btn_post_like"
+        android:id="@+id/btn_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_low"
@@ -15,23 +15,23 @@
         android:background="@color/colorWhite"
         android:contentDescription="@string/like_news"
         android:src="@drawable/ic_like_inactive"
-        app:layout_constraintEnd_toStartOf="@+id/tv_post_like_count"
+        app:layout_constraintEnd_toStartOf="@+id/tv_like_count"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_post_like_count"
+        android:id="@+id/tv_like_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/zero_post_item"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
-        app:layout_constraintEnd_toStartOf="@+id/btn_post_dislike"
-        app:layout_constraintStart_toEndOf="@+id/btn_post_like"
-        app:layout_constraintTop_toTopOf="@+id/btn_post_like"
+        android:text="@string/zero_digit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dislike"
+        app:layout_constraintStart_toEndOf="@+id/btn_like"
+        app:layout_constraintTop_toTopOf="@+id/btn_like"
         tools:text="10" />
 
     <ImageButton
-        android:id="@+id/btn_post_dislike"
+        android:id="@+id/btn_dislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_low"
@@ -39,53 +39,53 @@
         android:background="@color/colorWhite"
         android:contentDescription="@string/dislike_news"
         android:src="@drawable/ic_dislike_inactive"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
-        app:layout_constraintEnd_toStartOf="@+id/tv_post_dislike_count"
-        app:layout_constraintStart_toEndOf="@+id/tv_post_like_count"
-        app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
+        app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+        app:layout_constraintEnd_toStartOf="@+id/tv_dislike_count"
+        app:layout_constraintStart_toEndOf="@+id/tv_like_count"
+        app:layout_constraintTop_toTopOf="@+id/btn_like" />
 
 
     <TextView
-        android:id="@+id/tv_post_dislike_count"
+        android:id="@+id/tv_dislike_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_low"
-        android:text="@string/zero_post_item"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
-        app:layout_constraintStart_toEndOf="@+id/btn_post_dislike"
-        app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
+        android:text="@string/zero_digit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_dislike"
+        app:layout_constraintStart_toEndOf="@+id/btn_dislike"
+        app:layout_constraintTop_toTopOf="@+id/btn_dislike"
         tools:text="3" />
 
     <ImageButton
-        android:id="@+id/btn_share_post"
+        android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/btn_share_post_margin_start"
+        android:layout_marginStart="@dimen/btn_share_margin_start"
         android:layout_marginEnd="@dimen/margin_end_low"
         android:background="@color/colorWhite"
         android:contentDescription="@string/dislike_news"
         android:src="@drawable/ic_share"
-        app:layout_constraintStart_toEndOf="@+id/tv_post_dislike_count"
-        app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
+        app:layout_constraintStart_toEndOf="@+id/tv_dislike_count"
+        app:layout_constraintTop_toTopOf="@+id/btn_like" />
 
     <TextView
-        android:id="@+id/btn_share_post_count"
+        android:id="@+id/btn_share_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_low"
-        android:text="@string/zero_post_item"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
-        app:layout_constraintStart_toEndOf="@+id/btn_share_post"
-        app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
+        android:text="@string/zero_digit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_dislike"
+        app:layout_constraintStart_toEndOf="@+id/btn_share"
+        app:layout_constraintTop_toTopOf="@+id/btn_dislike"
         tools:text="3" />
 
     <View
-        android:id="@+id/btn_share_post_count_divider"
+        android:id="@+id/btn_share_count_divider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
-        android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
-        android:background="@color/view_author_post_horizontal_divider_background_color"
+        android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+        android:layout_marginTop="@dimen/view_author_horizontal_divider_margin_top"
+        android:background="@color/view_author_horizontal_divider_background_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_share_count" />
 </androidx.constraintlayout.widget.ConstraintLayout>

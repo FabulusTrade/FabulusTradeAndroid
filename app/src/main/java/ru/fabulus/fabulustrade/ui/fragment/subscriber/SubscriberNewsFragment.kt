@@ -18,7 +18,6 @@ import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
 import javax.inject.Inject
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
@@ -67,9 +66,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         binding.rvSubscriberNews.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

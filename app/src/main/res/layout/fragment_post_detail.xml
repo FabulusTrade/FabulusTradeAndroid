@@ -37,9 +37,9 @@
             <View
                 android:id="@+id/view_author_post_horizontal_divider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
-                android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
-                android:background="@color/view_author_post_horizontal_divider_background_color"
+                android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+                android:layout_marginTop="@dimen/view_author_horizontal_divider_margin_top"
+                android:background="@color/view_author_horizontal_divider_background_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inc_item_post_header" />

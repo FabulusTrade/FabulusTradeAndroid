@@ -84,13 +84,13 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         with(binding) {
 
             with(incItemPostFooter) {
-                btnPostLike.setOnClickListener {
+                btnLike.setOnClickListener {
                     presenter.likePost()
                 }
-                btnPostDislike.setOnClickListener {
+                btnDislike.setOnClickListener {
                     presenter.dislikePost()
                 }
-                btnSharePost.setOnClickListener {
+                btnShare.setOnClickListener {
                     presenter.sharePost(binding.imageGroup.getImageViews())
                 }
             }
@@ -130,15 +130,15 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setPostAuthorAvatar(avatarUrl: String) {
-        loadImage(avatarUrl, binding.incItemPostHeader.ivPostAuthorAvatar)
+        loadImage(avatarUrl, binding.incItemPostHeader.ivAuthorAvatar)
     }
 
     override fun setPostAuthorName(authorName: String) {
-        binding.incItemPostHeader.tvPostAuthorName.text = authorName
+        binding.incItemPostHeader.tvAuthorName.text = authorName
     }
 
     override fun setPostDateCreated(dateCreatedString: String) {
-        binding.incItemPostHeader.tvPostDateUpdate.text = dateCreatedString
+        binding.incItemPostHeader.tvDate.text = dateCreatedString
     }
 
     override fun setPostText(text: String) {
@@ -173,27 +173,27 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setLikeActiveImage() {
-        binding.incItemPostFooter.btnPostLike.setImageResource(R.drawable.ic_like)
+        binding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like)
     }
 
     override fun setLikeInactiveImage() {
-        binding.incItemPostFooter.btnPostLike.setImageResource(R.drawable.ic_like_inactive)
+        binding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like_inactive)
     }
 
     override fun setDislikeActiveImage() {
-        binding.incItemPostFooter.btnPostDislike.setImageResource(R.drawable.ic_dislike)
+        binding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike)
     }
 
     override fun setDislikeInactiveImage() {
-        binding.incItemPostFooter.btnPostDislike.setImageResource(R.drawable.ic_dislike_inactive)
+        binding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike_inactive)
     }
 
     override fun setPostLikeCount(likeCount: String) {
-        binding.incItemPostFooter.tvPostLikeCount.text = likeCount
+        binding.incItemPostFooter.tvLikeCount.text = likeCount
     }
 
     override fun setPostDislikeCount(dislikeCount: String) {
-        binding.incItemPostFooter.tvPostDislikeCount.text = dislikeCount
+        binding.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
     override fun sharePost(shareIntent: Intent) {
