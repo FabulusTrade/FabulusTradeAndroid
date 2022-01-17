@@ -81,52 +81,64 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     private fun initListeners() {
-        binding.btnPostLike.setOnClickListener {
-            presenter.likePost()
-        }
-        binding.btnPostDislike.setOnClickListener {
-            presenter.dislikePost()
-        }
-        binding.btnSharePost.setOnClickListener {
-            presenter.sharePost(binding.imageGroup.getImageViews())
-        }
+        with(binding) {
 
-        binding.ibSendComment.setOnClickListener {
-
-            binding.etNewCommentText.text.toString().let { text ->
-                presenter.listPresenter.recalcParentComment(text)
-                presenter.addPostComment(
-                    text,
-                    presenter.getParentCommentId()
-                )
-            }
-        }
-
-        binding.etNewCommentText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+            with(incItemPostFooter) {
+                btnPostLike.setOnClickListener {
+                    presenter.likePost()
+                }
+                btnPostDislike.setOnClickListener {
+                    presenter.dislikePost()
+                }
+                btnSharePost.setOnClickListener {
+                    presenter.sharePost(binding.imageGroup.getImageViews())
+                }
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                presenter.changeSendCommentButton(s.toString())
+
+            ibSendComment.setOnClickListener {
+
+                etNewCommentText.text.toString().let { text ->
+                    presenter.listPresenter.recalcParentComment(text)
+                    presenter.addPostComment(
+                        text,
+                        presenter.getParentCommentId()
+                    )
+                }
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            etNewCommentText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
 
-            }
-        })
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.changeSendCommentButton(s.toString())
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+            })
+        }
+
     }
 
     override fun setPostAuthorAvatar(avatarUrl: String) {
-        loadImage(avatarUrl, binding.ivPostAuthorAvatar)
+        loadImage(avatarUrl, binding.incItemPostHeader.ivPostAuthorAvatar)
     }
 
     override fun setPostAuthorName(authorName: String) {
-        binding.tvPostAuthorName.text = authorName
+        binding.incItemPostHeader.tvPostAuthorName.text = authorName
     }
 
     override fun setPostDateCreated(dateCreatedString: String) {
-        binding.tvPostDateUpdate.text = dateCreatedString
+        binding.incItemPostHeader.tvPostDateUpdate.text = dateCreatedString
     }
 
     override fun setPostText(text: String) {
@@ -134,15 +146,15 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setProfit(profit: String, textColor: Int) {
-        binding.tvProfitPercent.setTextAndColor(profit, textColor)
+        binding.incItemPostHeader.tvProfitPercent.setTextAndColor(profit, textColor)
     }
 
     override fun setProfitNegativeArrow() {
-        binding.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
+        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
     }
 
     override fun setProfitPositiveArrow() {
-        binding.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
+        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
     }
 
     override fun setPostImages(images: List<String>?) {
@@ -161,27 +173,27 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setLikeActiveImage() {
-        binding.btnPostLike.setImageResource(R.drawable.ic_like)
+        binding.incItemPostFooter.btnPostLike.setImageResource(R.drawable.ic_like)
     }
 
     override fun setLikeInactiveImage() {
-        binding.btnPostLike.setImageResource(R.drawable.ic_like_inactive)
+        binding.incItemPostFooter.btnPostLike.setImageResource(R.drawable.ic_like_inactive)
     }
 
     override fun setDislikeActiveImage() {
-        binding.btnPostDislike.setImageResource(R.drawable.ic_dislike)
+        binding.incItemPostFooter.btnPostDislike.setImageResource(R.drawable.ic_dislike)
     }
 
     override fun setDislikeInactiveImage() {
-        binding.btnPostDislike.setImageResource(R.drawable.ic_dislike_inactive)
+        binding.incItemPostFooter.btnPostDislike.setImageResource(R.drawable.ic_dislike_inactive)
     }
 
     override fun setPostLikeCount(likeCount: String) {
-        binding.tvPostLikeCount.text = likeCount
+        binding.incItemPostFooter.tvPostLikeCount.text = likeCount
     }
 
     override fun setPostDislikeCount(dislikeCount: String) {
-        binding.tvPostDislikeCount.text = dislikeCount
+        binding.incItemPostFooter.tvPostDislikeCount.text = dislikeCount
     }
 
     override fun sharePost(shareIntent: Intent) {
@@ -247,7 +259,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setAuthorFollowerCount(text: String) {
-        binding.tvAuthorFollowerCount.text = text
+        binding.incItemPostHeader.tvAuthorFollowerCount.text = text
     }
 
     override fun onDestroyView() {

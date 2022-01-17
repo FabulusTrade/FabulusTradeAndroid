@@ -529,4 +529,11 @@
     <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
     <string name="tv_author_follower_count">%d</string>
 
+    <string name="iv_post_author_avatar_content_description">аватар автора поста</string>
+    <string name="iv_person_add_content_description">количество подписчиков автора поста</string>
+    <string name="iv_attached_post_kebab_content_description">выпадающее меню автора поста</string>
+    <string name="iv_current_user_avatar_content_description">мой аватар</string>
+    <string name="ib_send_comment_content_description">отправить комментарий</string>
+    <string name="iv_profit_arrow_content_description">стрелка профита</string>
+
 </resources>
