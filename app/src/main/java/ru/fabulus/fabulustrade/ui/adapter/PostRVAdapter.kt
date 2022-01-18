@@ -21,6 +21,7 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setTextAndColor
 import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.toStringFormat
 import java.util.*
@@ -126,6 +127,22 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setNewsDate(date: Date) {
             itemView.inc_item_post_header.tv_date.text = date.toStringFormat()
+        }
+
+        override fun setProfit(profit: String, textColor: Int) {
+            itemView.inc_item_post_header.tv_profit_percent.setTextAndColor(profit, textColor)
+        }
+
+        override fun setProfitNegativeArrow() {
+            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_down)
+        }
+
+        override fun setProfitPositiveArrow() {
+            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_up)
+        }
+
+        override fun setAuthorFollowerCount(text: String) {
+            itemView.inc_item_post_header.tv_author_follower_count.text = text
         }
 
         override fun setPost(text: String) {

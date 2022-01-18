@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.mvp.presenter.trader
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.graphics.Color
 import android.net.Uri
 import android.widget.ImageView
 import com.github.terrakok.cicerone.Router
@@ -18,10 +19,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.MAX_SHARED_LEN_POST_TEXT
-import ru.fabulus.fabulustrade.util.formatQuantityString
-import ru.fabulus.fabulustrade.util.formatString
-import ru.fabulus.fabulustrade.util.getBitmapUriFromDrawable
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
@@ -126,6 +124,26 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                         R.plurals.show_comments_count_text,
                         commentCount,
                         commentCount
+                    )
+                )
+                setProfit(
+                    resourceProvider.formatDigitWithDef(
+                        R.string.tv_profit_percent_text,
+                        post.colorIncrDecrDepo365.value
+                    ),
+                    Color.parseColor(post.colorIncrDecrDepo365.color)
+                )
+
+                if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
+                    setProfitNegativeArrow()
+                } else {
+                    setProfitPositiveArrow()
+                }
+
+                setAuthorFollowerCount(
+                    resourceProvider.formatDigitWithDef(
+                        R.string.tv_author_follower_count,
+                        post.followersCount
                     )
                 )
             }

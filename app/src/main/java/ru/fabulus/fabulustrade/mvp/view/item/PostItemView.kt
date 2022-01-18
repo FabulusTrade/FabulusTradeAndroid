@@ -17,4 +17,10 @@ interface PostItemView {
     fun setProfileName(profileName: String)
     fun setProfileAvatar(avatarUrlPath: String)
     fun setCommentCount(text: String)
+
+    fun setProfit(profit: String, textColor: Int)
+    fun setProfitNegativeArrow()
+    fun setProfitPositiveArrow()
+    fun setAuthorFollowerCount(text: String)
+
 }
