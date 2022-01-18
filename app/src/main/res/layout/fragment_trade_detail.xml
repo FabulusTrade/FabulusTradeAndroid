@@ -324,7 +324,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:maxLength="7"
+                android:maxLength="13"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -360,7 +360,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:maxLength="7"
+                android:maxLength="13"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
