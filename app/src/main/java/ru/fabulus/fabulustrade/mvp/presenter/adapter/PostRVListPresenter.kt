@@ -1,8 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter.adapter
 
+import ru.fabulus.fabulustrade.mvp.presenter.PostFooterPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 
-interface PostRVListPresenter {
+interface PostRVListPresenter : PostFooterPresenter {
     fun getCount(): Int
     fun bind(view: PostItemView)
     fun postLiked(view: PostItemView)

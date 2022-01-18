@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.trader
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -107,6 +108,10 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
                 layoutTraderPostNotAuth.visibility = View.GONE
             }
         }
+    }
+
+    override fun share(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {

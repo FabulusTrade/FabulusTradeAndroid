@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.traderme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -134,6 +135,10 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
 
     override fun updateAdapter() {
         postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun share(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {
