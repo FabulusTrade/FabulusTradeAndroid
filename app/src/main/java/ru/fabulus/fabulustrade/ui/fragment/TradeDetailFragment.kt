@@ -65,26 +65,29 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     private fun initTextChangeListeners() {
         val price = binding.tvTradeDetailPrice.text.trim().toString()
-
-        binding.etTakeProfit.addTextChangedListener {
+        binding.etTakeProfit.addTextChangedListener { editText ->
             binding.tvTakeProfitResult.text = formatOnFormulaToTable(
-                it.toString(),
+                editText.toString(),
                 price
             )
         }
-        binding.etStopLoss.addTextChangedListener {
+        binding.etStopLoss.addTextChangedListener { editText ->
             binding.tvStopLossResult.text = formatOnFormulaToTable(
-                it.toString(),
+                editText.toString(),
                 price
             )
         }
     }
 
     private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
-        val number = numberText.trim().toDouble()
-        val price = priceText.trim().toDouble()
-        val returnValue = (((number / price) - 1) * 100)
-        return "%.2f".format(returnValue)
+        return try {
+            val number = numberText.trim().toDouble()
+            val price = priceText.trim().toDouble()
+            val returnValue = (((number / price) - 1) * 100)
+            "%.2f".format(returnValue)
+        } catch (e: NumberFormatException) {
+            ""
+        }
     }
 
     private fun initClickListeners() {

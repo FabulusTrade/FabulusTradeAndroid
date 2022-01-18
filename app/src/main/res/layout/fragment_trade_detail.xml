@@ -323,7 +323,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:maxLength="7"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -358,7 +359,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:maxLength="7"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -405,6 +407,7 @@
                 android:layout_span="2"
                 android:gravity="center"
                 android:inputType="number"
+                android:maxLength="3"
                 android:textSize="@dimen/tv_text_size_publish_trader_details"
                 tools:text="3 дн" />
         </TableRow>
