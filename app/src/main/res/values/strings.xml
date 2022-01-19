@@ -403,7 +403,14 @@
     <string name="show_postRv">показать</string>
     <string name="hide_postRv">скрыть</string>
     <string name="zero_post_item">0</string>
-    <string name="zero_comments">0 комментариев</string>
+    <plurals name="show_comments_count_text">
+        <item quantity="zero">0 комментариев</item>
+        <item quantity="one">%1$d комментарий</item>
+        <item quantity="two">%1$d комментария</item>
+        <item quantity="few">%1$d комментария</item>
+        <item quantity="many">%1$d комментариев</item>
+        <item quantity="other">%1$d комментарев</item>
+    </plurals>
     <string name="like_news">Поставить лайк новости</string>
     <string name="dislike_news">Поставить дислайк новости</string>
 
@@ -492,5 +499,41 @@
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
     <string name="agreement_url">https://fabulustrade.com/agreement_notes_mobile/</string>
+
+    <!--PostDetailPresenter-->
+    <string name="tv_profit_percent_text">%.2f%%</string>
+    <string name="tv_warning_text">Не является индивидуальной инвестиционной рекомендацией</string>
+    <string name="tv_answer_to_comment_text">ответить</string>
+    <string name="btn_like_comment_content_description">поставь лайк комментарию</string>
+    <string name="comment_date_create_format">dd MMM\'. в\' HH:mm</string>
+    <string name="et_new_comment_text_hint">Ваш комментарий</string>
+    <string name="share_message_pattern">Fabulus Trade - независимая социальная сеть для трейдеров и инвесторов
+                \n
+                https://play.google.com/store/apps/details?id=ru.fabulus.fabulustrade
+                \n\n
+                @%s
+                \n
+                %s
+    </string>
+    <string name="share_message_pattern_big_text">%s...</string>
+    <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
+    <string name="share_message_title">Поделиться</string>
+    <string name="reply_on_comment_pattern">\@%s\ </string>
+    <string name="edit_comment_text">Редактировать</string>
+    <string name="copy_comment_text">Скопировать текст</string>
+    <string name="delete_comment_text">Удалить</string>
+    <string name="complain_on_comment_text">Пожаловаться</string>
+    <string name="text_copied">Текст скопирован</string>
+    <string name="comment_can_not_be_edited">Невозможно изменить комментарий созданный более 1 часа назад</string>
+    <string name="comment_can_not_be_deleted">Невозможно удалить комментарий созданный более 1 часа назад</string>
+    <string name="unethical_content">Неэтичный контент</string>
+    <string name="mat_insults_provocation">Мат / Оскорбления / Провокация</string>
+    <string name="threats_harassment">Угрозы / Преследование</string>
+    <string name="market_manipulation">Манипулирование рынком</string>
+    <string name="advertising">Реклама</string>
+    <string name="flood_spam">Флуд / Спам</string>
+    <string name="begging_extortion">Попрошайничество / Вымогательство</string>
+    <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
+    <string name="tv_author_follower_count">%d</string>
 
 </resources>

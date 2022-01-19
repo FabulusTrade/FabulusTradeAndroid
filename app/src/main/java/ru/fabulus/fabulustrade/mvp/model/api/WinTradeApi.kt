@@ -265,4 +265,22 @@ interface WinTradeApi {
     fun getTraderOperationsCount(
         @Field(value = "uuid") uuidTrader: String
     ): Single<ResponseOperationsCount>
+
+    // добавление комментария к посту
+    // если задан parent_comment - то добавляется комментарий к комментарию с id = parent_comment
+    // внутри поста
+    @FormUrlEncoded
+    @POST("/api/v1/trader/comment/create/")
+    fun addPostComment(
+        @Header("Authorization") token: String,
+        @Field("post") postId: Int,
+        @Field("text", encoded = true) text: String,
+        @Field("parent_comment") parentCommentId: Long?
+    ): Single<ResponseComment>
+
+    @POST("api/v1/trader/like/comment/{comment_id}/")
+    fun likeComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id", encoded = true) commentId: Long
+    ): Single<ResponseLikes>
 }

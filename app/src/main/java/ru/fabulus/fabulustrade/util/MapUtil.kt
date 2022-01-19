@@ -137,10 +137,12 @@ fun mapToPost(post: ResponsePost?): Post? {
         val dateCreate = dateFormat.parse(post.date_create)
         val dateUpd = dateFormat.parse(post.date_update)
         val images = post.images.map { it.image }
+        val comments = mapToComments(post.comments)
         return Post(
             post.id,
             post.username,
             post.avatar,
+            post.followersCount,
             post.trader_id,
             post.text,
             post.post_status,
@@ -151,7 +153,9 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.like_count,
             post.dislike_count,
             post.is_liked,
-            post.is_disliked
+            post.is_disliked,
+            comments,
+            post.colorIncrDecrDepo365
         )
     } ?: return null
 }
@@ -182,5 +186,28 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
         companyTrade.profit_count,
         companyTrade.price,
         companyTrade.currency
+    )
+}
+
+fun mapToComments(responseComments: List<ResponseComment>): MutableList<Comment> {
+    return responseComments.map { responseComment ->
+        mapToComment(responseComment)
+    }.toMutableList()
+}
+
+fun mapToComment(responseComment: ResponseComment): Comment {
+    return Comment(
+        responseComment.id,
+        responseComment.postId,
+        responseComment.parentCommentId,
+        responseComment.authorUuid,
+        responseComment.authorUsername,
+        responseComment.avatarUrl,
+        responseComment.text,
+        responseComment.dateCreate,
+        responseComment.dateUpdate,
+        responseComment.likeCount,
+        responseComment.dislikeCount,
+        responseComment.isLiked
     )
 }

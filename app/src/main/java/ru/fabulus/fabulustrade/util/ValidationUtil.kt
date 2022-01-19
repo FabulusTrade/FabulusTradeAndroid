@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.util
 
 import android.util.Patterns
+import java.util.*
 
 private const val passwordMinLength = 8
 private const val nicknameMinLength = 3
@@ -87,3 +88,13 @@ private fun containsLowercaseLetter(line: String): Boolean {
 private fun containsDigit(line: String): Boolean {
     return line.matches(".*[0-9].*".toRegex())
 }
+
+fun isCanEditComment(dateCreated: Date): Boolean {
+    return ((currentTimeInMillis() - dateCreated.time) < EDIT_COMMENT_PERIOD)
+}
+
+fun isCanDeleteComment(dateCreated: Date): Boolean {
+    return ((currentTimeInMillis() - dateCreated.time) < DELETE_COMMENT_PERIOD)
+}
+
+fun currentTimeInMillis(): Long = Calendar.getInstance().timeInMillis

@@ -1,6 +1,8 @@
 package ru.fabulus.fabulustrade.mvp.model.entity.api
 
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import ru.fabulus.fabulustrade.mvp.model.entity.ColorItem
 
 data class ResponsePost(
     @Expose
@@ -30,5 +32,13 @@ data class ResponsePost(
     @Expose
     val is_liked: Boolean,
     @Expose
-    val is_disliked: Boolean
+    val is_disliked: Boolean,
+    @Expose
+    val comments: MutableList<ResponseComment>,
+    @Expose
+    @SerializedName("color_incr_decr_depo_365")
+    val colorIncrDecrDepo365: ColorItem,
+    @Expose
+    @SerializedName("followers_count")
+    val followersCount: Int
 )

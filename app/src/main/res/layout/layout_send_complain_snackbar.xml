@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_send_complain_snackbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ll_send_complain_snackbar_background_color"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/ll_send_complain_snackbar_padding_top"
+    android:paddingBottom="@dimen/ll_send_complain_snackbar_padding_bottom">
+
+
+    <include
+        layout="@layout/layout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tv_complain_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tv_complain_toast_margin_top"
+        android:gravity="center"
+        android:text="@string/tv_complain_toast_text"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/tv_complain_toast_text_size" />
+</LinearLayout>

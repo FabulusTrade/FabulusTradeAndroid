@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -105,6 +106,10 @@
 
     <style name="ImageGroupViewOverflowingTextAppearanceDefStyle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@color/image_group_view_text_color</item>
+    </style>
+
+    <style name="PopupMenu" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:popupBackground">@color/popup_menu_background</item>
     </style>
 
 </resources>

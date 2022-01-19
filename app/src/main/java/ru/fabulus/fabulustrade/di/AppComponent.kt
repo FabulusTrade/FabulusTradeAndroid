@@ -132,4 +132,7 @@ interface AppComponent {
     fun inject(companyTradingOperationsRVAdapter: CompanyTradingOperationsRVAdapter?)
     fun inject(traderNewsImagesRVAdapter: TraderNewsImagesRVAdapter)
     fun inject(postRVAdapter: PostRVAdapter)
+    fun inject(postDetailFragment: PostDetailFragment)
+    fun inject(postDetailPresenter: PostDetailPresenter)
+    fun inject(commentRVAdapter: CommentRVAdapter)
 }

@@ -10,4 +10,5 @@ interface PostRVListPresenter {
     fun postDelete(view: PostItemView)
     fun postUpdate(view: PostItemView)
     fun setPublicationTextMaxLines(view: PostItemView)
+    fun showCommentDetails(view: PostItemView)
 }

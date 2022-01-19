@@ -9,6 +9,7 @@ data class Post(
     val id: Int,
     val userName: String,
     val avatarUrl: String,
+    val followersCount: Int,
     val traderId: String,
     val text: String,
     val postStatus: String,
@@ -19,7 +20,9 @@ data class Post(
     var likeCount: Int,
     var dislikeCount: Int,
     var isLiked: Boolean,
-    var isDisliked: Boolean
+    var isDisliked: Boolean,
+    var comments: MutableList<Comment>,
+    val colorIncrDecrDepo365: ColorItem
 ) : Parcelable {
     fun like() {
         if (isLiked)
@@ -36,4 +39,6 @@ data class Post(
             dislikeCount++
         isDisliked = !isDisliked
     }
+
+    fun commentCount() : Int = comments.size
 }
