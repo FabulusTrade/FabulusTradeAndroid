@@ -1,5 +1,11 @@
 package ru.fabulus.fabulustrade.mvp.presenter.trader
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.graphics.Color
+import android.net.Uri
+import android.widget.ImageView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -13,7 +19,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.formatQuantityString
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
@@ -44,6 +50,62 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             initView(view, post)
         }
 
+        override fun share(position: Int, imageViewIdList: List<ImageView>) {
+            var bmpUri: Uri? = null
+            val post = posts[position]
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+
+                var title = resourceProvider.formatString(
+                    R.string.share_message_pattern,
+                    post.userName,
+                    post.text
+                )
+
+                if (title.length > MAX_SHARED_LEN_POST_TEXT) {
+                    title = resourceProvider.formatString(
+                        R.string.share_message_pattern_big_text,
+                        title.substring(0, MAX_SHARED_LEN_POST_TEXT)
+                    )
+                }
+
+                putExtra(Intent.EXTRA_TEXT, title)
+                if (post.images.count() > 0) {
+                    imageViewIdList[0].getBitmapUriFromDrawable()?.let { uri ->
+                        bmpUri = uri
+                        putExtra(Intent.EXTRA_STREAM, bmpUri)
+                        type = "image/*"
+                    }
+                }
+            }
+
+            val chooser = Intent.createChooser(
+                shareIntent,
+                resourceProvider.getStringResource(R.string.share_message_title)
+            )
+
+            bmpUri?.let { uri ->
+                imageViewIdList[0].context.let { context ->
+                    val resInfoList: List<ResolveInfo> = context.packageManager
+                        .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+
+                    for (resolveInfo in resInfoList) {
+                        val packageName = resolveInfo.activityInfo.packageName
+                        context.grantUriPermission(
+                            packageName,
+                            uri,
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+                    }
+                }
+
+            }
+
+            viewState.share(chooser)
+
+        }
+
         private fun initView(view: PostItemView, post: Post) {
             with(view) {
                 setNewsDate(post.dateCreate)
@@ -62,6 +124,26 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                         R.plurals.show_comments_count_text,
                         commentCount,
                         commentCount
+                    )
+                )
+                setProfit(
+                    resourceProvider.formatDigitWithDef(
+                        R.string.tv_profit_percent_text,
+                        post.colorIncrDecrDepo365.value
+                    ),
+                    Color.parseColor(post.colorIncrDecrDepo365.color)
+                )
+
+                if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
+                    setProfitNegativeArrow()
+                } else {
+                    setProfitPositiveArrow()
+                }
+
+                setAuthorFollowerCount(
+                    resourceProvider.formatDigitWithDef(
+                        R.string.tv_author_follower_count,
+                        post.followersCount
                     )
                 )
             }

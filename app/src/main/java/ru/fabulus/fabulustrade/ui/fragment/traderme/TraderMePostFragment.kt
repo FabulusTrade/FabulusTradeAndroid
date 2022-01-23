@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.traderme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     private var _binding: FragmentTraderMePostsBinding? = null
@@ -71,9 +71,6 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             postRVAdapter = PostRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -138,6 +135,10 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
 
     override fun updateAdapter() {
         postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun share(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {

@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.subscriber
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
 import javax.inject.Inject
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
@@ -67,9 +67,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         binding.rvSubscriberNews.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -104,6 +101,10 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     override fun withoutSubscribeAnyTrader() {
         binding.layoutHasNoSubs.root.visibility = View.VISIBLE
+    }
+
+    override fun share(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {

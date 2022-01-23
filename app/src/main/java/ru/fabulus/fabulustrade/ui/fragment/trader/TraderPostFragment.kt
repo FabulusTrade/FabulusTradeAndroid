@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.trader
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,6 @@ import ru.fabulus.fabulustrade.mvp.presenter.trader.TraderPostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     private var _binding: FragmentTraderPostBinding? = null
@@ -64,9 +64,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         binding.rvTraderPost.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -111,6 +108,10 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
                 layoutTraderPostNotAuth.visibility = View.GONE
             }
         }
+    }
+
+    override fun share(shareIntent: Intent) {
+        startActivity(shareIntent)
     }
 
     override fun onDestroyView() {

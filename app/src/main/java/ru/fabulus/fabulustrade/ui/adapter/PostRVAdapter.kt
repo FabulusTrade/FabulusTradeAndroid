@@ -7,7 +7,13 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
+import kotlinx.android.synthetic.main.fragment_post_detail.view.*
+import kotlinx.android.synthetic.main.item_post_footer.view.*
+import kotlinx.android.synthetic.main.item_post_header.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
+import kotlinx.android.synthetic.main.item_trader_news.view.image_group
+import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_footer
+import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_header
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
@@ -15,6 +21,7 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setTextAndColor
 import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.toStringFormat
 import java.util.*
@@ -53,13 +60,13 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
     }
 
     private fun initListeners(holder: PostViewHolder) {
-        holder.itemView.btn_item_trader_news_like.setOnClickListener {
+        holder.itemView.inc_item_post_footer.btn_like.setOnClickListener {
             presenter.postLiked(holder)
         }
-        holder.itemView.btn_item_trader_news_dislike.setOnClickListener {
+        holder.itemView.inc_item_post_footer.btn_dislike.setOnClickListener {
             presenter.postDisliked(holder)
         }
-        holder.itemView.btn_item_trader_news_menu.setOnClickListener {
+        holder.itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener {
             initMenu(holder)
         }
         holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
@@ -68,10 +75,17 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.itemView.btn_item_trader_news_show_comments.setOnClickListener {
             presenter.showCommentDetails(holder)
         }
+
+        holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
+            presenter.share(holder.pos, holder.itemView.image_group.getImageViews())
+        }
     }
 
     private fun initMenu(holder: PostViewHolder) {
-        val menu = PopupMenu(holder.itemView.context, holder.itemView.btn_item_trader_news_menu)
+        val menu = PopupMenu(
+            holder.itemView.context,
+            holder.itemView.inc_item_post_header.iv_attached_kebab
+        )
         menu.inflate(R.menu.menu_publication)
         menu.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -112,7 +126,23 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setNewsDate(date: Date) {
-            itemView.tv_item_trader_news_date.text = date.toStringFormat()
+            itemView.inc_item_post_header.tv_date.text = date.toStringFormat()
+        }
+
+        override fun setProfit(profit: String, textColor: Int) {
+            itemView.inc_item_post_header.tv_profit_percent.setTextAndColor(profit, textColor)
+        }
+
+        override fun setProfitNegativeArrow() {
+            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_down)
+        }
+
+        override fun setProfitPositiveArrow() {
+            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_up)
+        }
+
+        override fun setAuthorFollowerCount(text: String) {
+            itemView.inc_item_post_header.tv_author_follower_count.text = text
         }
 
         override fun setPost(text: String) {
@@ -120,11 +150,11 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setLikesCount(likes: Int) {
-            itemView.tv_item_trader_news_like_count.text = likes.toString()
+            itemView.inc_item_post_footer.tv_like_count.text = likes.toString()
         }
 
         override fun setDislikesCount(dislikesCount: Int) {
-            itemView.tv_item_trader_news_dislike_count.text = dislikesCount.toString()
+            itemView.inc_item_post_footer.tv_dislike_count.text = dislikesCount.toString()
         }
 
         override fun setImages(images: List<String>?) {
@@ -139,21 +169,27 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setLikeImage(isLiked: Boolean) {
-            if (isLiked)
-                itemView.btn_item_trader_news_like.setImageResource(R.drawable.ic_like)
-            else itemView.btn_item_trader_news_like.setImageResource(R.drawable.ic_like_inactive)
+            if (isLiked) {
+                itemView.inc_item_post_footer.btn_like.setImageResource(R.drawable.ic_like)
+            } else {
+                itemView.inc_item_post_footer.btn_like.setImageResource(R.drawable.ic_like_inactive)
+            }
         }
 
         override fun setDislikeImage(isDisliked: Boolean) {
-            if (isDisliked)
-                itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike)
-            else itemView.btn_item_trader_news_dislike.setImageResource(R.drawable.ic_dislike_inactive)
+            if (isDisliked) {
+                itemView.inc_item_post_footer.btn_dislike.setImageResource(R.drawable.ic_dislike)
+            } else {
+                itemView.inc_item_post_footer.btn_dislike.setImageResource(R.drawable.ic_dislike_inactive)
+            }
         }
 
         override fun setKebabMenuVisibility(isVisible: Boolean) {
-            if (isVisible)
-                itemView.btn_item_trader_news_menu.visibility = View.VISIBLE
-            else itemView.btn_item_trader_news_menu.visibility = View.GONE
+            if (isVisible) {
+                itemView.inc_item_post_header.iv_attached_kebab.visibility = View.VISIBLE
+            } else {
+                itemView.inc_item_post_header.iv_attached_kebab.visibility = View.GONE
+            }
         }
 
         override fun setPublicationItemTextMaxLines(isOpen: Boolean) {
@@ -169,11 +205,11 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setProfileName(profileName: String) {
-            itemView.tv_item_trader_news_profileName.text = profileName
+            itemView.inc_item_post_header.tv_author_name.text = profileName
         }
 
         override fun setProfileAvatar(avatarUrlPath: String) {
-            loadImage(avatarUrlPath, itemView.iv_item_trader_news_avatar)
+            loadImage(avatarUrlPath, itemView.inc_item_post_header.iv_author_avatar)
         }
 
         override fun setCommentCount(text: String) {

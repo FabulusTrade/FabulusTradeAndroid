@@ -395,7 +395,7 @@
     <string name="text">Текст</string>
     <string name="show_postRv">показать</string>
     <string name="hide_postRv">скрыть</string>
-    <string name="zero_post_item">0</string>
+    <string name="zero_digit_text">0</string>
     <plurals name="show_comments_count_text">
         <item quantity="zero">0 комментариев</item>
         <item quantity="one">%1$d комментарий</item>
@@ -508,6 +508,7 @@
                 \n
                 %s
     </string>
+    <string name="et_update_comment_text_hint" >Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
@@ -528,5 +529,14 @@
     <string name="begging_extortion">Попрошайничество / Вымогательство</string>
     <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
     <string name="tv_author_follower_count">%d</string>
+
+    <string name="iv_author_avatar_content_description">аватар автора поста</string>
+    <string name="iv_person_add_content_description">количество подписчиков автора поста</string>
+    <string name="iv_attached_kebab_content_description">выпадающее меню автора поста</string>
+    <string name="iv_current_user_avatar_content_description">мой аватар</string>
+    <string name="ib_send_comment_content_description">отправить комментарий</string>
+    <string name="ib_update_comment_content_description">изменить комментарий</string>
+    <string name="iv_profit_arrow_content_description">стрелка профита</string>
+    <string name="tv_editable_text_label_text">Редактирование</string>
 
 </resources>
