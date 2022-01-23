@@ -508,6 +508,7 @@
                 \n
                 %s
     </string>
+    <string name="et_update_comment_text_hint" >Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
@@ -534,6 +535,8 @@
     <string name="iv_attached_kebab_content_description">выпадающее меню автора поста</string>
     <string name="iv_current_user_avatar_content_description">мой аватар</string>
     <string name="ib_send_comment_content_description">отправить комментарий</string>
+    <string name="ib_update_comment_content_description">изменить комментарий</string>
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
+    <string name="tv_editable_text_label_text">Редактирование</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
+import android.text.Spannable
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.text.toSpannable
@@ -45,6 +46,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     private var parentCommentId: Long? = null
     private var parentCommentAuthorUsername: String? = null
     private var parentCommentView: CommentItemView? = null
+    private var updatedCommentView: CommentItemView? = null
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -65,7 +67,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             }
         }
 
-        private fun commentByPos(pos: Int): Comment = commentList[pos]
+        override fun commentByPos(position: Int): Comment = commentList[position]
 
         override fun likeComment(view: CommentItemView) {
             val comment = commentByPos(view.pos)
@@ -88,17 +90,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         private fun initView(view: CommentItemView, comment: Comment) {
             with(view) {
 
-                if (comment.parentCommentId != null) {
-                    setCommentText(
-                        comment.text.toSpannableText(
-                            0,
-                            getParentCommentAuthorUsername(comment.parentCommentId!!).length + 1,
-                            resourceProvider.getColor(R.color.author_color_in_comment)
-                        )
-                    )
-                } else {
-                    setCommentText(comment.text.toSpannable())
-                }
+                setCommentText(prepareCommentText(comment))
 
                 comment.avatarUrl?.let { avatarUrl -> setCommentAuthorAvatar(avatarUrl) }
                 comment.authorUsername?.let { authorUsername ->
@@ -123,6 +115,18 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 if (isSelfComment(comment)) {
                     hideReplyBtn()
                 }
+            }
+        }
+
+        private fun prepareCommentText(comment: Comment): Spannable {
+            return if (comment.parentCommentId != null) {
+                comment.text.toSpannableText(
+                    0,
+                    getParentCommentAuthorUsername(comment.parentCommentId!!).length + 1,
+                    resourceProvider.getColor(R.color.author_color_in_comment)
+                )
+            } else {
+                comment.text.toSpannable()
             }
         }
 
@@ -182,9 +186,10 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             parentCommentView = null
         }
 
-        override fun editComment(comment: Comment) {
+        override fun editComment(view: CommentItemView, comment: Comment) {
             if (isCanEditComment(comment.dateCreate)) {
-                //TODO метод для редактирования коментария
+                updatedCommentView = view
+                viewState.prepareUpdateComment(prepareCommentText(comment))
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
             }
@@ -206,6 +211,11 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         override fun complainOnComment(comment: Comment, reason: String) {
             //TODO метод для отправки жалобы
             viewState.showComplainSnackBar()
+        }
+
+        override fun updateCommentItem(position: Int, comment: Comment) {
+            this.commentList[position] = comment
+            viewState.notifyItemChanged(position)
         }
     }
 
@@ -229,6 +239,8 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         } else {
             viewState.setProfitPositiveArrow()
         }
+
+        viewState.showSendComment()
 
         viewState.setPostImages(post.images)
         viewState.setPostLikeCount(post.likeCount.toString())
@@ -317,7 +329,15 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         }
     }
 
-    fun addPostComment(text: String, parentCommentId: Long? = null) {
+    fun changeUpdateCommentButton(text: String) {
+        if (text.trim().isEmpty()) {
+            viewState.setUnclickableUpdateCommentBtn()
+        } else {
+            viewState.setClickableUpdateCommentBtn()
+        }
+    }
+
+    private fun addPostComment(text: String, parentCommentId: Long? = null) {
         apiRepo
             .addPostComment(profile.token!!, post.id, text, parentCommentId)
             .observeOn(AndroidSchedulers.mainThread())
@@ -338,6 +358,56 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 Log.d(TAG, error.printStackTrace().toString())
             }
             )
+    }
+
+    fun sendComment(text: String) {
+        text.let { commentText ->
+            listPresenter.recalcParentComment(commentText)
+            addPostComment(
+                commentText,
+                getParentCommentId()
+            )
+        }
+    }
+
+    fun updateComment(text: String) {
+        if (updatedCommentView != null) {
+            val pos = updatedCommentView!!.pos
+            val comment = listPresenter.commentByPos(pos)
+            if (comment.text != text) {
+                apiRepo
+                    .updateComment(profile.token!!, comment.id, text)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ commentTmp ->
+
+                        listPresenter.updateCommentItem(
+                            pos, Comment(
+                                comment.id,
+                                comment.postId,
+                                comment.parentCommentId,
+                                comment.authorUuid,
+                                comment.authorUsername,
+                                comment.avatarUrl,
+                                commentTmp.text,
+                                commentTmp.dateCreate,
+                                commentTmp.dateUpdate,
+                                comment.likeCount,
+                                comment.dislikeCount,
+                                comment.isLiked
+                            )
+                        )
+                        viewState.showSendComment()
+                    }, { error ->
+                        Log.d(
+                            TAG,
+                            "Error in PostDetailPresenter 'updateComment': ${error.message.toString()}"
+                        )
+                        Log.d(TAG, error.printStackTrace().toString())
+                    }
+                    )
+            }
+            updatedCommentView = null
+        }
     }
 
     fun getParentCommentId() = parentCommentId
@@ -395,6 +465,10 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
         viewState.sharePost(chooser)
 
+    }
+
+    fun closeUpdateComment() {
+        viewState.showSendComment()
     }
 
 }

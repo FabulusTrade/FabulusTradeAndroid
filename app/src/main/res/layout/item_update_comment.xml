@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/iv_edit_margin_start"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorGray" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="@dimen/iv_close_margin_end"
+            android:src="@drawable/close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/tv_editable_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/tv_editable_text_label_margin_start"
+            android:layout_marginTop="@dimen/tv_editable_text_label_margin_top"
+            android:text="@string/tv_editable_text_label_text"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_edit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_editable_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/tv_editable_text_margin_start"
+            android:layout_marginTop="@dimen/tv_editable_text_margin_top"
+            android:layout_marginBottom="@dimen/tv_editable_text_margin_bottom"
+            android:layout_weight="1"
+            android:textSize="@dimen/tv_editable_text_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_edit"
+            app:layout_constraintTop_toBottomOf="@+id/tv_editable_text_label"
+            tools:text="Текст для редактированияТекст для редактированияТекст для редактированияТекст для редактированияТекст для редактированияТекст для редактирования" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/view_author_horizontal_divider_background_color" />
+
+    <LinearLayout
+        android:id="@+id/ll_update_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ll_update_comment_margin_top"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close">
+
+        <ImageView
+            android:id="@+id/iv_current_user_avatar_update_comment"
+            android:layout_width="@dimen/iv_current_user_avatar_layout_width"
+            android:layout_height="@dimen/iv_current_user_avatar_layout_height"
+            android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
+            android:contentDescription="@string/iv_current_user_avatar_content_description"
+            android:foreground="@drawable/bg_avatar"
+            android:scaleType="center"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <EditText
+            android:id="@+id/et_update_comment_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
+            android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
+            android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
+            android:layout_weight="1"
+            android:autofillHints="@string/et_update_comment_text_hint"
+            android:background="@color/colorWhite"
+            android:hint="@string/et_update_comment_text_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="200"
+            android:textSize="@dimen/et_new_comment_text_text_size" />
+
+        <ImageButton
+            android:id="@+id/ib_update_comment"
+            android:layout_width="@dimen/ib_update_comment_layout_width"
+            android:layout_height="@dimen/ib_update_comment_layout_height"
+            android:layout_marginBottom="@dimen/ib_update_comment_margin_bottom"
+            android:background="@drawable/ic_check_disabled"
+            android:contentDescription="@string/ib_send_comment_content_description" />
+    </LinearLayout>
+</LinearLayout>

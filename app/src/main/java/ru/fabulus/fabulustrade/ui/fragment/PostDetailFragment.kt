@@ -95,36 +95,74 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
                 }
             }
 
-
-            ibSendComment.setOnClickListener {
-
-                etNewCommentText.text.toString().let { text ->
-                    presenter.listPresenter.recalcParentComment(text)
-                    presenter.addPostComment(
-                        text,
-                        presenter.getParentCommentId()
-                    )
+            with(incItemSendComment) {
+                ibSendComment.setOnClickListener {
+                    etNewCommentText.text.toString().let { text ->
+                        presenter.sendComment(text)
+                    }
                 }
+
+                etNewCommentText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        presenter.changeSendCommentButton(s.toString())
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+                })
             }
 
-            etNewCommentText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-
+            with(incItemUpdateComment) {
+                ibUpdateComment.setOnClickListener {
+                    etUpdateCommentText.text.toString().let { text ->
+                        presenter.updateComment(text)
+                    }
                 }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    presenter.changeSendCommentButton(s.toString())
+                ivClose.setOnClickListener {
+                    presenter.closeUpdateComment()
                 }
 
-                override fun afterTextChanged(s: Editable?) {
+                etUpdateCommentText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
 
-                }
-            })
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        presenter.changeUpdateCommentButton(s.toString())
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+                })
+            }
+
         }
 
     }
@@ -208,36 +246,74 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         commentRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun notifyItemChanged(position: Int) {
+        commentRVAdapter?.notifyItemChanged(position)
+    }
+
     override fun setRvPosition(position: Int) {
         binding.rvPostComments.scrollToPosition(position)
     }
 
     override fun setCurrentUserAvatar(avatarUrl: String) {
-        loadImage(avatarUrl, binding.ivCurrentUserAvatar)
+        loadImage(avatarUrl, binding.incItemSendComment.ivCurrentUserAvatar)
     }
 
     override fun setClickableSendCommentBtn() {
-        binding.ibSendComment.background =
+        binding.incItemSendComment.ibSendComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_enabled)
-        binding.ibSendComment.isClickable = true
+        binding.incItemSendComment.ibSendComment.isClickable = true
     }
 
     override fun setUnclickableSendCommentBtn() {
-        binding.ibSendComment.isClickable = false
-        binding.ibSendComment.background =
+        binding.incItemSendComment.ibSendComment.isClickable = false
+        binding.incItemSendComment.ibSendComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_disabled)
     }
 
+    override fun setClickableUpdateCommentBtn() {
+        binding.incItemUpdateComment.ibUpdateComment.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_enabled)
+        binding.incItemUpdateComment.ibUpdateComment.isClickable = true
+    }
+
+    override fun setUnclickableUpdateCommentBtn() {
+        binding.incItemUpdateComment.ibUpdateComment.isClickable = false
+        binding.incItemUpdateComment.ibUpdateComment.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_disabled)
+    }
+
     override fun clearNewCommentText() {
-        binding.etNewCommentText.text.clear()
+        binding.incItemSendComment.etNewCommentText.text.clear()
     }
 
     override fun prepareReplyToComment(text: Spanned) {
-        with(binding.etNewCommentText) {
+        showSendComment()
+        with(binding.incItemSendComment.etNewCommentText) {
             setText(text)
             requestFocus()
             setSelection(length())
         }
+    }
+
+    override fun prepareUpdateComment(text: Spanned) {
+        showUpdateComment()
+        with(binding.incItemUpdateComment) {
+            ivCurrentUserAvatarUpdateComment.setImageDrawable(binding.incItemSendComment.ivCurrentUserAvatar.drawable)
+            tvEditableText.text = text
+            with(etUpdateCommentText) {
+                setText(text)
+                requestFocus()
+                setSelection(length())
+            }
+        }
+    }
+
+    override fun setIncItemSendCommentVisibility(visibility: Int) {
+        binding.incItemSendComment.root.visibility = visibility
+    }
+
+    override fun setIncItemUpdateCommentVisibility(visibility: Int) {
+        binding.incItemUpdateComment.root.visibility = visibility
     }
 
     override fun showToast(text: String) {
@@ -248,7 +324,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         showCustomSnackbar(
             R.layout.layout_send_complain_snackbar,
             layoutInflater,
-            binding.ibSendComment,
+            binding.incItemSendComment.ibSendComment,
             "",
             Snackbar.LENGTH_LONG
         )
@@ -260,6 +336,16 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun setAuthorFollowerCount(text: String) {
         binding.incItemPostHeader.tvAuthorFollowerCount.text = text
+    }
+
+    override fun showSendComment() {
+        setIncItemSendCommentVisibility(View.VISIBLE)
+        setIncItemUpdateCommentVisibility(View.GONE)
+    }
+
+    override fun showUpdateComment() {
+        setIncItemSendCommentVisibility(View.GONE)
+        setIncItemUpdateCommentVisibility(View.VISIBLE)
     }
 
     override fun onDestroyView() {

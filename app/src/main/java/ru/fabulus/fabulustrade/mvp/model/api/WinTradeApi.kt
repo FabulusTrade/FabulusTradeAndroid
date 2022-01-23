@@ -278,6 +278,15 @@ interface WinTradeApi {
         @Field("parent_comment") parentCommentId: Long?
     ): Single<ResponseComment>
 
+    // обновление текста комментария
+    @FormUrlEncoded
+    @PATCH("/api/v1/trader/comment/{comment_id}/update/")
+    fun updateComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long,
+        @Field("text", encoded = true) text: String
+    ): Single<ResponseComment>
+
     @POST("api/v1/trader/like/comment/{comment_id}/")
     fun likeComment(
         @Header("Authorization") token: String,

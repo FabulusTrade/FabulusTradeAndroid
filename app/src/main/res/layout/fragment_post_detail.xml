@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/ll_add_comment"
+        app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,46 +102,26 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/ll_add_comment"
+        android:id="@+id/ll_work_with_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_current_user_avatar"
-            android:layout_width="@dimen/iv_current_user_avatar_layout_width"
-            android:layout_height="@dimen/iv_current_user_avatar_layout_height"
-            android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
-            android:contentDescription="@string/iv_current_user_avatar_content_description"
-            android:foreground="@drawable/bg_avatar"
-            android:scaleType="center"
-            tools:srcCompat="@tools:sample/avatars" />
+        <include
+            android:id="@+id/inc_item_send_comment"
+            layout="@layout/item_send_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
 
-        <EditText
-            android:id="@+id/et_new_comment_text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
-            android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
-            android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
-            android:layout_weight="1"
-            android:autofillHints="@string/et_new_comment_text_hint"
-            android:background="@color/colorWhite"
-            android:hint="@string/et_new_comment_text_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="200"
-            android:textSize="@dimen/et_new_comment_text_text_size" />
-
-        <ImageButton
-            android:id="@+id/ib_send_comment"
-            android:layout_width="@dimen/ib_send_comment_layout_width"
-            android:layout_height="@dimen/ib_send_comment_layout_height"
-            android:layout_marginBottom="@dimen/ib_send_comment_margin_bottom"
-            android:background="@drawable/ic_send_disabled"
-            android:clickable="false"
-            android:contentDescription="@string/ib_send_comment_content_description" />
-
+        <include
+            android:id="@+id/inc_item_update_comment"
+            layout="@layout/item_update_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
