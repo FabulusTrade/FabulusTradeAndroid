@@ -380,22 +380,23 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ commentTmp ->
 
-                        listPresenter.updateCommentItem(
-                            pos, Comment(
-                                comment.id,
-                                comment.postId,
-                                comment.parentCommentId,
-                                comment.authorUuid,
-                                comment.authorUsername,
-                                comment.avatarUrl,
-                                commentTmp.text,
-                                commentTmp.dateCreate,
-                                commentTmp.dateUpdate,
-                                comment.likeCount,
-                                comment.dislikeCount,
-                                comment.isLiked
-                            )
+                        val newComment = Comment(
+                            comment.id,
+                            comment.postId,
+                            comment.parentCommentId,
+                            comment.authorUuid,
+                            comment.authorUsername,
+                            comment.avatarUrl,
+                            commentTmp.text,
+                            commentTmp.dateCreate,
+                            commentTmp.dateUpdate,
+                            comment.likeCount,
+                            comment.dislikeCount,
+                            comment.isLiked
                         )
+                        post.comments[pos] = newComment
+
+                        listPresenter.updateCommentItem(pos, newComment)
                         viewState.showSendComment()
                     }, { error ->
                         Log.d(
