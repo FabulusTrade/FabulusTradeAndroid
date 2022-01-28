@@ -47,6 +47,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     private var parentCommentAuthorUsername: String? = null
     private var parentCommentView: CommentItemView? = null
     private var updatedCommentView: CommentItemView? = null
+    private val maxCommentLength = 200
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -159,7 +160,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 resourceProvider.getColor(R.color.author_color_in_comment)
             )
 
-            viewState.prepareReplyToComment(text)
+            viewState.prepareReplyToComment(text, maxCommentLength)
             view.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color_reply))
         }
 
@@ -189,7 +190,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         override fun editComment(view: CommentItemView, comment: Comment) {
             if (isCanEditComment(comment.dateCreate)) {
                 updatedCommentView = view
-                viewState.prepareUpdateComment(prepareCommentText(comment))
+                viewState.prepareUpdateComment(prepareCommentText(comment), maxCommentLength)
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
             }
@@ -240,7 +241,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             viewState.setProfitPositiveArrow()
         }
 
-        viewState.showSendComment()
+        viewState.showSendComment(maxCommentLength)
 
         viewState.setPostImages(post.images)
         viewState.setPostLikeCount(post.likeCount.toString())
@@ -397,7 +398,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                         post.comments[pos] = newComment
 
                         listPresenter.updateCommentItem(pos, newComment)
-                        viewState.showSendComment()
+                        viewState.showSendComment(maxCommentLength)
                     }, { error ->
                         Log.d(
                             TAG,
@@ -469,7 +470,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     }
 
     fun closeUpdateComment() {
-        viewState.showSendComment()
+        viewState.showSendComment(maxCommentLength)
     }
 
 }

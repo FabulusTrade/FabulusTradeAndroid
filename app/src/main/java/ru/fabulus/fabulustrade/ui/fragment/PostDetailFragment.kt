@@ -3,6 +3,8 @@ package ru.fabulus.fabulustrade.ui.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.Spanned
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -77,6 +79,24 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.rvPostComments.run {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    override fun setMaxSendCommentLength(maxLength: Int) {
+        with(binding) {
+            with(incItemSendComment) {
+                tilNewCommentText.counterMaxLength = maxLength
+                etNewCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+            }
+        }
+    }
+
+    override fun setMaxUpdateCommentLength(maxLength: Int) {
+        with(binding) {
+            with(incItemUpdateComment) {
+                tilUpdateCommentText.counterMaxLength = maxLength
+                etUpdateCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+            }
         }
     }
 
@@ -283,11 +303,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun clearNewCommentText() {
-        binding.incItemSendComment.etNewCommentText.text.clear()
+        binding.incItemSendComment.etNewCommentText.text?.clear()
     }
 
-    override fun prepareReplyToComment(text: Spanned) {
-        showSendComment()
+    override fun prepareReplyToComment(text: Spanned, maxCommentLength: Int) {
+        showSendComment(maxCommentLength)
         with(binding.incItemSendComment.etNewCommentText) {
             setText(text)
             requestFocus()
@@ -295,8 +315,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
     }
 
-    override fun prepareUpdateComment(text: Spanned) {
-        showUpdateComment()
+    override fun prepareUpdateComment(text: Spanned, maxCommentLength: Int) {
+        showUpdateComment(maxCommentLength)
         with(binding.incItemUpdateComment) {
             ivCurrentUserAvatarUpdateComment.setImageDrawable(binding.incItemSendComment.ivCurrentUserAvatar.drawable)
             tvEditableText.text = text
@@ -338,12 +358,14 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostHeader.tvAuthorFollowerCount.text = text
     }
 
-    override fun showSendComment() {
-        setIncItemSendCommentVisibility(View.VISIBLE)
+    override fun showSendComment(maxCommentLength: Int) {
+        setMaxSendCommentLength(maxCommentLength)
         setIncItemUpdateCommentVisibility(View.GONE)
+        setIncItemSendCommentVisibility(View.VISIBLE)
     }
 
-    override fun showUpdateComment() {
+    override fun showUpdateComment(maxCommentLength: Int) {
+        setMaxUpdateCommentLength(maxCommentLength)
         setIncItemSendCommentVisibility(View.GONE)
         setIncItemUpdateCommentVisibility(View.VISIBLE)
     }
