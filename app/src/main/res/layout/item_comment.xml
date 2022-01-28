@@ -59,7 +59,6 @@
                     android:layout_marginTop="@dimen/tv_comment_post_margin_top"
                     android:layout_marginBottom="@dimen/tv_comment_post_margin_bottom"
                     android:ellipsize="end"
-                    android:maxLines="3"
                     tools:text="Комментарий к посту" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
