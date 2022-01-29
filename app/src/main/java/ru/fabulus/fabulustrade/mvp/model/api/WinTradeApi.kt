@@ -287,6 +287,13 @@ interface WinTradeApi {
         @Field("text", encoded = true) text: String
     ): Single<ResponseComment>
 
+    // удаление комментария
+    @DELETE("/api/v1/trader/comment/{comment_id}/delete/")
+    fun deleteComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long
+    ): Single<ResponseComment>
+
     @POST("api/v1/trader/like/comment/{comment_id}/")
     fun likeComment(
         @Header("Authorization") token: String,
