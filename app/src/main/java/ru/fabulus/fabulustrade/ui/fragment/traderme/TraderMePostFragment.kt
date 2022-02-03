@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.util.showToast
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     private var _binding: FragmentTraderMePostsBinding? = null
@@ -37,6 +39,11 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     private var postRVAdapter: PostRVAdapter? = null
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            incRepostCount()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -138,7 +145,15 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     override fun share(shareIntent: Intent) {
-        startActivity(shareIntent)
+        resultLauncher.launch(shareIntent)
+    }
+
+    override fun incRepostCount() {
+        presenter.listPresenter.incRepostCount()
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showToast(msg)
     }
 
     override fun onDestroyView() {

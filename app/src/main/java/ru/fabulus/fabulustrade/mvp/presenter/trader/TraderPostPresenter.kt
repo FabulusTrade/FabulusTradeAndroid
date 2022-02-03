@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -43,6 +44,9 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val posts = mutableListOf<Post>()
+        private val tag = "TraderPostPresenter"
+        private var sharedItemPosition: Int? = null
+
         override fun getCount(): Int = posts.size
 
         override fun bind(view: PostItemView) {
@@ -50,9 +54,34 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             initView(view, post)
         }
 
+        fun incRepostCount() {
+            if (sharedItemPosition != null) {
+                val post = posts[sharedItemPosition!!]
+                sharedItemPosition = null
+                apiRepo
+                    .incRepostCount(post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ incPostResult ->
+                        if (incPostResult.result.equals("ok", true)) {
+                            post.incRepostCount()
+                        } else {
+                            viewState.showToast(incPostResult.message)
+                        }
+                    }, { error ->
+                        Log.d(
+                            tag,
+                            "Error incRepostCount: ${error.message.toString()}"
+                        )
+                        Log.d(tag, error.printStackTrace().toString())
+                    }
+                    )
+            }
+        }
+
         override fun share(position: Int, imageViewIdList: List<ImageView>) {
             var bmpUri: Uri? = null
             val post = posts[position]
+            sharedItemPosition = position
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
@@ -146,6 +175,8 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                         post.followersCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
             }
         }
 

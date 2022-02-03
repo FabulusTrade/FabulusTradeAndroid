@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
@@ -49,6 +50,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val postList = mutableListOf<Post>()
+        private val tag = "TraderMePostPresenter"
+        private var sharedItemPosition: Int? = null
 
         override fun getCount(): Int = postList.size
 
@@ -97,6 +100,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         post.followersCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
             }
         }
 
@@ -156,9 +161,34 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
+        fun incRepostCount() {
+            if (sharedItemPosition != null) {
+                val post = postList[sharedItemPosition!!]
+                sharedItemPosition = null
+                apiRepo
+                    .incRepostCount(post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ incPostResult ->
+                        if (incPostResult.result.equals("ok", true)) {
+                            post.incRepostCount()
+                        } else {
+                            viewState.showToast(incPostResult.message)
+                        }
+                    }, { error ->
+                        Log.d(
+                            tag,
+                            "Error incRepostCount: ${error.message.toString()}"
+                        )
+                        Log.d(tag, error.printStackTrace().toString())
+                    }
+                    )
+            }
+        }
+
         override fun share(position: Int, imageViewIdList: List<ImageView>) {
             var bmpUri: Uri? = null
             val post = postList[position]
+            sharedItemPosition = position
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
