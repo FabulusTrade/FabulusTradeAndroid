@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.content.Intent
 import android.widget.ImageView
 
 interface PostFooterPresenter {

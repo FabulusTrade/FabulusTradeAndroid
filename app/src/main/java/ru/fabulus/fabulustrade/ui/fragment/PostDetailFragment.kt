@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
@@ -45,6 +46,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
             }
         }
     }
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            presenter.incRepostCount()
+        }
 
     @InjectPresenter
     lateinit var presenter: PostDetailPresenter
@@ -254,8 +260,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
-    override fun sharePost(shareIntent: Intent) {
-        startActivity(shareIntent)
+    override fun sharePost(repostIntent: Intent) {
+        resultLauncher.launch(repostIntent)
     }
 
     override fun setCommentCount(text: String) {
@@ -368,6 +374,10 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         setMaxUpdateCommentLength(maxCommentLength)
         setIncItemSendCommentVisibility(View.GONE)
         setIncItemUpdateCommentVisibility(View.VISIBLE)
+    }
+
+    override fun setRepostCount(text: String) {
+        binding.incItemPostFooter.tvRepostCount.text = text
     }
 
     override fun onDestroyView() {

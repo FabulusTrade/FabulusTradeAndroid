@@ -259,6 +259,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 post.followersCount
             )
         )
+        viewState.setRepostCount(post.repostCount.toString())
     }
 
     private fun setCommentList() {
@@ -369,6 +370,24 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 getParentCommentId()
             )
         }
+    }
+
+    fun incRepostCount() {
+        apiRepo
+            .incRepostCount(post.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ incPostResult ->
+                if (incPostResult.result.equals("ok", true)) {
+                    post.incRepostCount()
+                    viewState.setRepostCount(post.repostCount.toString())
+                } else {
+                    viewState.showToast(incPostResult.message)
+                }
+            }, { error ->
+                Log.d(TAG, "Error incRepostCount: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     fun updateComment(text: String) {
