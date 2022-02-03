@@ -117,7 +117,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
                     presenter.dislikePost()
                 }
                 btnShare.setOnClickListener {
-                    presenter.sharePost(binding.imageGroup.getImageViews())
+                    presenter.share(binding.imageGroup.getImageViews())
                 }
             }
 
@@ -260,7 +260,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
-    override fun sharePost(repostIntent: Intent) {
+    override fun share(repostIntent: Intent) {
         resultLauncher.launch(repostIntent)
     }
 
