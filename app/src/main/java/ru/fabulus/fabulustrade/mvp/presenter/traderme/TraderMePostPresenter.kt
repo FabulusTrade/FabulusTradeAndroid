@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
@@ -49,6 +50,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val postList = mutableListOf<Post>()
+        private val tag = "TraderMePostPresenter"
+        private var sharedView: PostItemView? = null
 
         override fun getCount(): Int = postList.size
 
@@ -97,6 +100,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         post.followersCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
             }
         }
 
@@ -156,60 +161,41 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
-        override fun share(position: Int, imageViewIdList: List<ImageView>) {
-            var bmpUri: Uri? = null
-            val post = postList[position]
-            val shareIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
+        override fun incRepostCount() {
+            if (sharedView != null) {
+                val post = postList[sharedView!!.pos]
 
-                var title = resourceProvider.formatString(
-                    R.string.share_message_pattern,
-                    post.userName,
-                    post.text
-                )
-
-                if (title.length > MAX_SHARED_LEN_POST_TEXT) {
-                    title = resourceProvider.formatString(
-                        R.string.share_message_pattern_big_text,
-                        title.substring(0, MAX_SHARED_LEN_POST_TEXT)
-                    )
-                }
-
-                putExtra(Intent.EXTRA_TEXT, title)
-                if (post.images.count() > 0) {
-                    imageViewIdList[0].getBitmapUriFromDrawable()?.let { uri ->
-                        bmpUri = uri
-                        putExtra(Intent.EXTRA_STREAM, bmpUri)
-                        type = "image/*"
-                    }
-                }
-            }
-
-            val chooser = Intent.createChooser(
-                shareIntent,
-                resourceProvider.getStringResource(R.string.share_message_title)
-            )
-
-            bmpUri?.let { uri ->
-                imageViewIdList[0].context.let { context ->
-                    val resInfoList: List<ResolveInfo> = context.packageManager
-                        .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
-
-                    for (resolveInfo in resInfoList) {
-                        val packageName = resolveInfo.activityInfo.packageName
-                        context.grantUriPermission(
-                            packageName,
-                            uri,
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                apiRepo
+                    .incRepostCount(post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ incPostResult ->
+                        if (incPostResult.result.equals("ok", true)) {
+                            post.incRepostCount()
+                            sharedView!!.setRepostCount(post.repostCount.toString())
+                        } else {
+                            viewState.showToast(incPostResult.message)
+                        }
+                        sharedView = null
+                    }, { error ->
+                        Log.d(
+                            tag,
+                            "Error incRepostCount: ${error.message.toString()}"
                         )
+                        Log.d(tag, error.printStackTrace().toString())
+                        sharedView = null
                     }
-                }
-
+                    )
             }
+        }
 
-            viewState.share(chooser)
-
+        override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
+            sharedView = view
+            viewState.share(
+                resourceProvider.getSharePostIntent(
+                    postList[view.pos],
+                    imageViewIdList
+                )
+            )
         }
     }
 

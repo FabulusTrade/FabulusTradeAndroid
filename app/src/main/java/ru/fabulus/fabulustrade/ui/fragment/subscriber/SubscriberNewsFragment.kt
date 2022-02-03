@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
@@ -19,6 +20,7 @@ import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
@@ -42,6 +44,11 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     lateinit var router: Router
 
     private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            presenter.listPresenter.incRepostCount()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,7 +111,11 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     override fun share(shareIntent: Intent) {
-        startActivity(shareIntent)
+        resultLauncher.launch(shareIntent)
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showToast(msg)
     }
 
     override fun onDestroyView() {

@@ -1,9 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter.adapter
 
-import ru.fabulus.fabulustrade.mvp.presenter.PostFooterPresenter
+import android.widget.ImageView
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 
-interface PostRVListPresenter : PostFooterPresenter {
+interface PostRVListPresenter {
     fun getCount(): Int
     fun bind(view: PostItemView)
     fun postLiked(view: PostItemView)
@@ -12,4 +12,7 @@ interface PostRVListPresenter : PostFooterPresenter {
     fun postUpdate(view: PostItemView)
     fun setPublicationTextMaxLines(view: PostItemView)
     fun showCommentDetails(view: PostItemView)
+
+    fun share(view: PostItemView, imageViewIdList: List<ImageView>)
+    fun incRepostCount()
 }

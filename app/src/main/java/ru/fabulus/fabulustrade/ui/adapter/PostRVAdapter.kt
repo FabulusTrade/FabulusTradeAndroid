@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.fragment_post_detail.view.*
 import kotlinx.android.synthetic.main.item_post_footer.view.*
 import kotlinx.android.synthetic.main.item_post_header.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
@@ -77,7 +76,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
-            presenter.share(holder.pos, holder.itemView.image_group.getImageViews())
+            presenter.share(holder, holder.itemView.image_group.getImageViews())
         }
     }
 
@@ -214,6 +213,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setCommentCount(text: String) {
             itemView.btn_item_trader_news_show_comments.text = text
+        }
+
+        override fun setRepostCount(text: String) {
+            itemView.tv_repost_count.text = text
         }
 
         fun recycle() {

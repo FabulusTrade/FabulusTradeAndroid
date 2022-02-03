@@ -22,7 +22,8 @@ data class Post(
     var isLiked: Boolean,
     var isDisliked: Boolean,
     var comments: MutableList<Comment>,
-    val colorIncrDecrDepo365: ColorItem
+    val colorIncrDecrDepo365: ColorItem,
+    var repostCount: Int
 ) : Parcelable {
     fun like() {
         if (isLiked)
@@ -41,4 +42,8 @@ data class Post(
     }
 
     fun commentCount() : Int = comments.size
+
+    fun incRepostCount() {
+        repostCount += 1
+    }
 }

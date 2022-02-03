@@ -788,4 +788,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Completable.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
+
+    fun incRepostCount(postId: Int): Single<IncPostResult> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .incRepostCount(postId)
+                        .flatMap { responseIncRepostCount ->
+                            Single.just(mapToIncPostResult(responseIncRepostCount))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
 }

@@ -22,5 +22,6 @@ interface PostItemView {
     fun setProfitNegativeArrow()
     fun setProfitPositiveArrow()
     fun setAuthorFollowerCount(text: String)
+    fun setRepostCount(text: String)
 
 }
