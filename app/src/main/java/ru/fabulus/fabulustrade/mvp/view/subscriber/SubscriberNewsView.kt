@@ -14,4 +14,9 @@ interface SubscriberNewsView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun share(shareIntent: Intent)
+
+    fun incRepostCount()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(msg: String)
 }

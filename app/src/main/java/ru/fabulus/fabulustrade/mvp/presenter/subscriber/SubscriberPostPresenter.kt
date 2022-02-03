@@ -5,11 +5,10 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.item_post_header.view.*
-import kotlinx.android.synthetic.main.item_trader_news.view.*
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
@@ -43,6 +42,8 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val postList = mutableListOf<Post>()
+        private val tag = "TraderRVListPresenter"
+        private var sharedItemPosition: Int? = null
 
         override fun getCount(): Int = postList.size
 
@@ -51,9 +52,34 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             initView(view, post)
         }
 
+        fun incRepostCount() {
+            if (sharedItemPosition != null) {
+                val post = postList[sharedItemPosition!!]
+                sharedItemPosition = null
+                apiRepo
+                    .incRepostCount(post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ incPostResult ->
+                        if (incPostResult.result.equals("ok", true)) {
+                            post.incRepostCount()
+                        } else {
+                            viewState.showToast(incPostResult.message)
+                        }
+                    }, { error ->
+                        Log.d(
+                            tag,
+                            "Error incRepostCount: ${error.message.toString()}"
+                        )
+                        Log.d(tag, error.printStackTrace().toString())
+                    }
+                    )
+            }
+        }
+
         override fun share(position: Int, imageViewIdList: List<ImageView>) {
             var bmpUri: Uri? = null
             val post = postList[position]
+            sharedItemPosition = position
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
@@ -147,6 +173,8 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                         post.followersCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
             }
         }
 
