@@ -161,7 +161,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
-        fun incRepostCount() {
+        override fun incRepostCount() {
             if (sharedItemPosition != null) {
                 val post = postList[sharedItemPosition!!]
                 sharedItemPosition = null

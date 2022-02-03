@@ -52,7 +52,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             initView(view, post)
         }
 
-        fun incRepostCount() {
+        override fun incRepostCount() {
             if (sharedItemPosition != null) {
                 val post = postList[sharedItemPosition!!]
                 sharedItemPosition = null

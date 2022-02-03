@@ -54,7 +54,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             initView(view, post)
         }
 
-        fun incRepostCount() {
+        override fun incRepostCount() {
             if (sharedItemPosition != null) {
                 val post = posts[sharedItemPosition!!]
                 sharedItemPosition = null

@@ -14,4 +14,5 @@ interface PostRVListPresenter {
     fun showCommentDetails(view: PostItemView)
 
     fun share(position: Int, imageViewIdList: List<ImageView>)
+    fun incRepostCount()
 }
