@@ -9,8 +9,5 @@ class ResponseIncRepostCount(
     val result: String,
     @Expose
     @SerializedName("message")
-    val message: String,
-    @Expose
-    @SerializedName("error_code")
-    val errorCode: String?
+    val message: String
 )

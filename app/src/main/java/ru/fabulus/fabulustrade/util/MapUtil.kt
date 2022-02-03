@@ -216,7 +216,6 @@ fun mapToComment(responseComment: ResponseComment): Comment {
 fun mapToIncPostResult(responseIncRepostCount: ResponseIncRepostCount): IncPostResult {
     return IncPostResult(
         responseIncRepostCount.result,
-        responseIncRepostCount.message,
-        responseIncRepostCount.errorCode,
+        responseIncRepostCount.message
     )
 }
