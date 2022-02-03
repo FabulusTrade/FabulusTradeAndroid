@@ -37,6 +37,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
     private var isLoading = false
     private var nextPage: Int? = 1
+    private var isShareResumeAction: Boolean = false
 
     val listPresenter = TraderRVListPresenter()
 
@@ -55,7 +56,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         override fun incRepostCount() {
             if (sharedView != null) {
                 val post = postList[sharedView!!.pos]
-
+                isShareResumeAction = true
                 apiRepo
                     .incRepostCount(post.id)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -200,9 +201,13 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     }
 
     fun onViewResumed() {
-        listPresenter.postList.clear()
-        nextPage = 1
-        loadPosts()
+        if (!isShareResumeAction) {
+            listPresenter.postList.clear()
+            nextPage = 1
+            loadPosts()
+        } else {
+            isShareResumeAction = false
+        }
     }
 
     fun onScrollLimit() {
