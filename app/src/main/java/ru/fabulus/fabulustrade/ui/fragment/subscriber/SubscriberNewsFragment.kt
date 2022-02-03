@@ -47,7 +47,7 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            incRepostCount()
+            presenter.listPresenter.incRepostCount()
         }
 
     override fun onCreateView(
@@ -68,11 +68,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     override fun init() {
         initRecyclerView()
         initListeners()
-    }
-
-    // вызываем через метод, иначе не обновлятся вьюха
-    override fun incRepostCount() {
-        presenter.listPresenter.incRepostCount()
     }
 
     private fun initRecyclerView() {

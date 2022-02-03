@@ -49,7 +49,7 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            incRepostCount()
+            presenter.listPresenter.incRepostCount()
         }
 
     override fun onCreateView(
@@ -119,10 +119,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
 
     override fun share(shareIntent: Intent) {
         resultLauncher.launch(shareIntent)
-    }
-
-    override fun incRepostCount() {
-        presenter.listPresenter.incRepostCount()
     }
 
     override fun showToast(msg: String) {

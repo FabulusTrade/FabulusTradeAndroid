@@ -76,7 +76,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
-            presenter.share(holder.pos, holder.itemView.image_group.getImageViews())
+            presenter.share(holder, holder.itemView.image_group.getImageViews())
         }
     }
 

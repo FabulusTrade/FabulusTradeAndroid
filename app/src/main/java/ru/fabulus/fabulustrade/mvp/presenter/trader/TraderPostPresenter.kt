@@ -45,7 +45,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     inner class TraderRVListPresenter : PostRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
-        private var sharedItemPosition: Int? = null
+        private var sharedView: PostItemView? = null
 
         override fun getCount(): Int = posts.size
 
@@ -55,34 +55,37 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         }
 
         override fun incRepostCount() {
-            if (sharedItemPosition != null) {
-                val post = posts[sharedItemPosition!!]
-                sharedItemPosition = null
+            if (sharedView != null) {
+                val post = posts[sharedView!!.pos]
+
                 apiRepo
                     .incRepostCount(post.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ incPostResult ->
                         if (incPostResult.result.equals("ok", true)) {
                             post.incRepostCount()
+                            sharedView!!.setRepostCount(post.repostCount.toString())
                         } else {
                             viewState.showToast(incPostResult.message)
                         }
+                        sharedView = null
                     }, { error ->
                         Log.d(
                             tag,
                             "Error incRepostCount: ${error.message.toString()}"
                         )
                         Log.d(tag, error.printStackTrace().toString())
+                        sharedView = null
                     }
                     )
             }
         }
 
-        override fun share(position: Int, imageViewIdList: List<ImageView>) {
-            sharedItemPosition = position
+        override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
+            sharedView = view
             viewState.share(
                 resourceProvider.getSharePostIntent(
-                    posts[position],
+                    posts[view.pos],
                     imageViewIdList
                 )
             )

@@ -13,6 +13,6 @@ interface PostRVListPresenter {
     fun setPublicationTextMaxLines(view: PostItemView)
     fun showCommentDetails(view: PostItemView)
 
-    fun share(position: Int, imageViewIdList: List<ImageView>)
+    fun share(view: PostItemView, imageViewIdList: List<ImageView>)
     fun incRepostCount()
 }
