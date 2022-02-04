@@ -52,12 +52,22 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null
+        private var updatedPostView: PostItemView? = null
 
         override fun getCount(): Int = postList.size
 
         override fun bind(view: PostItemView) {
             val post = postList[view.pos]
             initView(view, post)
+            initMenu(view, post)
+        }
+
+        private fun initMenu(view: PostItemView, post: Post) {
+            if (yoursPublication(post)) {
+                view.setIvAttachedKebabMenuSelf(post)
+            } else {
+                view.setIvAttachedKebabMenuSomeone(post)
+            }
         }
 
         private fun initView(view: PostItemView, post: Post) {
@@ -69,7 +79,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setDislikeImage(post.isDisliked)
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
-                setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
                 val commentCount = post.commentCount()
@@ -137,19 +146,46 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 }, {})
         }
 
-        override fun postDelete(view: PostItemView) {
-            val post = postList[view.pos]
-            apiRepo.deletePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listPresenter.postList.clear()
-                    nextPage = 1
-                    loadPosts()
-                }, {})
+        override fun deletePost(post: Post) {
+            if (isCanDeletePost(post.dateCreate)) {
+
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        listPresenter.postList.clear()
+                        nextPage = 1
+                        loadPosts()
+                    }, {})
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+            }
         }
 
-        override fun postUpdate(view: PostItemView) {
-            val post = postList[view.pos]
-            router.navigateTo(Screens.createPostScreen(post.id.toString(), true, null, post.text))
+        override fun editPost(view: PostItemView, post: Post) {
+            if (isCanEditPost(post.dateCreate)) {
+                updatedPostView = view
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+            }
+        }
+
+        override fun copyPost(post: Post) {
+            resourceProvider.copyToClipboard(post.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun complainOnPost(post: Post, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

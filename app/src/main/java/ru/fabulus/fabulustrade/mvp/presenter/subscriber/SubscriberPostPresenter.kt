@@ -45,13 +45,24 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         val postList = mutableListOf<Post>()
         private val tag = "TraderRVListPresenter"
         private var sharedView: PostItemView? = null
+        private var updatedPostView: PostItemView? = null
 
         override fun getCount(): Int = postList.size
 
         override fun bind(view: PostItemView) {
             val post = postList[view.pos]
             initView(view, post)
+            initMenu(view, post)
         }
+
+        private fun initMenu(view: PostItemView, post: Post) {
+            if (yoursPublication(post)) {
+                view.setIvAttachedKebabMenuSelf(post)
+            } else {
+                view.setIvAttachedKebabMenuSomeone(post)
+            }
+        }
+
 
         override fun incRepostCount() {
             if (sharedView != null) {
@@ -99,7 +110,6 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 setDislikeImage(post.isDisliked)
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
-                setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
                 val commentCount = post.commentCount()
@@ -177,12 +187,31 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 })
         }
 
-        override fun postDelete(view: PostItemView) {
-            //nothing
+        override fun deletePost(post: Post) {
+            if (isCanDeletePost(post.dateCreate)) {
+                //TODO метод для удаления коментария
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+            }
         }
 
-        override fun postUpdate(view: PostItemView) {
-            //nothing
+        override fun editPost(view: PostItemView, post: Post) {
+            if (isCanEditPost(post.dateCreate)) {
+                updatedPostView = view
+//                viewState.prepareEditPost(post, MAX_LEN_POST_TEXT)
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+            }
+        }
+
+        override fun copyPost(post: Post) {
+            resourceProvider.copyToClipboard(post.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun complainOnPost(post: Post, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

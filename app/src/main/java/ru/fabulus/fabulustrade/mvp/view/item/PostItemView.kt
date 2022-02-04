@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.view.item
 
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import java.util.*
 
 interface PostItemView {
@@ -12,7 +13,6 @@ interface PostItemView {
     fun setImages(images: List<String>?)
     fun setLikeImage(isLiked: Boolean)
     fun setDislikeImage(isDisliked: Boolean)
-    fun setKebabMenuVisibility(isVisible: Boolean)
     fun setPublicationItemTextMaxLines(isOpen: Boolean)
     fun setProfileName(profileName: String)
     fun setProfileAvatar(avatarUrlPath: String)
@@ -23,5 +23,7 @@ interface PostItemView {
     fun setProfitPositiveArrow()
     fun setAuthorFollowerCount(text: String)
     fun setRepostCount(text: String)
+    fun setIvAttachedKebabMenuSelf(post: Post)
+    fun setIvAttachedKebabMenuSomeone(post: Post)
 
 }

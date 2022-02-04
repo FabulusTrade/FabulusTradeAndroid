@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -19,6 +20,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
@@ -150,6 +152,16 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
 
     override fun showToast(msg: String) {
         requireContext().showToast(msg)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.rvTraderMePost,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {
