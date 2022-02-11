@@ -1,10 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter.traderme
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
@@ -17,6 +13,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
@@ -41,6 +38,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var isLoading = false
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
+    private var updatePostResultListener: ResultListenerHandler? = null
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -58,6 +56,15 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         override fun bind(view: PostItemView) {
             val post = postList[view.pos]
             initView(view, post)
+            initMenu(view, post)
+        }
+
+        private fun initMenu(view: PostItemView, post: Post) {
+            if (yoursPublication(post)) {
+                view.setIvAttachedKebabMenuSelf(post)
+            } else {
+                view.setIvAttachedKebabMenuSomeone(post)
+            }
         }
 
         private fun initView(view: PostItemView, post: Post) {
@@ -69,7 +76,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setDislikeImage(post.isDisliked)
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
-                setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
                 val commentCount = post.commentCount()
@@ -137,19 +143,52 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 }, {})
         }
 
-        override fun postDelete(view: PostItemView) {
+        override fun deletePost(view: PostItemView) {
             val post = postList[view.pos]
-            apiRepo.deletePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listPresenter.postList.clear()
-                    nextPage = 1
-                    loadPosts()
-                }, {})
+            if (isCanDeletePost(post.dateCreate)) {
+
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        listPresenter.postList.removeAt(view.pos)
+                        viewState.updateAdapter()
+
+                    }, {})
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+            }
         }
 
-        override fun postUpdate(view: PostItemView) {
-            val post = postList[view.pos]
-            router.navigateTo(Screens.createPostScreen(post.id.toString(), true, null, post.text))
+        override fun editPost(view: PostItemView, post: Post) {
+            if (isCanEditPost(post.dateCreate)) {
+                updatePostResultListener = router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        listPresenter.postList[view.pos] = updatedPost
+                        viewState.updateAdapter()
+                    }
+                }
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+            }
+        }
+
+        override fun copyPost(post: Post) {
+            resourceProvider.copyToClipboard(post.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun complainOnPost(post: Post, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {
@@ -278,5 +317,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     override fun onDestroy() {
         super.onDestroy()
         newPostResultListener?.dispose()
+        updatePostResultListener?.dispose()
     }
 }

@@ -1,12 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter.subscriber
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
+import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -15,6 +12,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
@@ -38,7 +36,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     private var isLoading = false
     private var nextPage: Int? = 1
     private var isShareResumeAction: Boolean = false
-
+    private var updatePostResultListener: ResultListenerHandler? = null
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
@@ -51,7 +49,17 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         override fun bind(view: PostItemView) {
             val post = postList[view.pos]
             initView(view, post)
+            initMenu(view, post)
         }
+
+        private fun initMenu(view: PostItemView, post: Post) {
+            if (yoursPublication(post)) {
+                view.setIvAttachedKebabMenuSelf(post)
+            } else {
+                view.setIvAttachedKebabMenuSomeone(post)
+            }
+        }
+
 
         override fun incRepostCount() {
             if (sharedView != null) {
@@ -99,7 +107,6 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 setDislikeImage(post.isDisliked)
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
-                setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
                 val commentCount = post.commentCount()
@@ -177,12 +184,52 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 })
         }
 
-        override fun postDelete(view: PostItemView) {
-            //nothing
+        override fun deletePost(view: PostItemView) {
+            val post = postList[view.pos]
+            if (isCanDeletePost(post.dateCreate)) {
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        listPresenter.postList.removeAt(view.pos)
+                        viewState.updateAdapter()
+
+                    }, {})
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+            }
         }
 
-        override fun postUpdate(view: PostItemView) {
-            //nothing
+        override fun editPost(view: PostItemView, post: Post) {
+            if (isCanEditPost(post.dateCreate)) {
+                updatePostResultListener =
+                    router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            listPresenter.postList[view.pos] = updatedPost
+                            viewState.updateAdapter()
+                        }
+                    }
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+            }
+        }
+
+        override fun copyPost(post: Post) {
+            resourceProvider.copyToClipboard(post.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun complainOnPost(post: Post, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {
@@ -235,5 +282,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                     isLoading = false
                 })
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        updatePostResultListener?.dispose()
     }
 }

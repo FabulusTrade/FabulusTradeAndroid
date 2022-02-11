@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -20,6 +21,7 @@ import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
@@ -116,6 +118,16 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     override fun showToast(msg: String) {
         requireContext().showToast(msg)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.rvSubscriberNews,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {

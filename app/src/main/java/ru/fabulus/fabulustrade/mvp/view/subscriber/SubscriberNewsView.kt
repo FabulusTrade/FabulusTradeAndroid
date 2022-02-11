@@ -17,4 +17,5 @@ interface SubscriberNewsView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(msg: String)
+    fun showComplainSnackBar()
 }

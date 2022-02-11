@@ -186,7 +186,7 @@ interface WinTradeApi {
         @Path("id") postId: String,
         @Field("trader_id") id: String,
         @Field("text") text: String
-    ): Completable
+    ): Single<ResponsePost>
 
     @POST("auth/avatar/")
     @Multipart

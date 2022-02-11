@@ -96,5 +96,12 @@ fun isCanEditComment(dateCreated: Date): Boolean {
 fun isCanDeleteComment(dateCreated: Date): Boolean {
     return ((currentTimeInMillis() - dateCreated.time) < DELETE_COMMENT_PERIOD)
 }
+fun isCanEditPost(dateCreated: Date): Boolean {
+    return ((currentTimeInMillis() - dateCreated.time) < EDIT_POST_PERIOD)
+}
+
+fun isCanDeletePost(dateCreated: Date): Boolean {
+    return ((currentTimeInMillis() - dateCreated.time) < DELETE_POST_PERIOD)
+}
 
 fun currentTimeInMillis(): Long = Calendar.getInstance().timeInMillis
