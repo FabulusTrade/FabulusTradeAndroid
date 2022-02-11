@@ -9,7 +9,7 @@ interface PostRVListPresenter {
     fun bind(view: PostItemView)
     fun postLiked(view: PostItemView)
     fun postDisliked(view: PostItemView)
-    fun deletePost(post: Post)
+    fun deletePost(view: PostItemView)
     fun editPost(view: PostItemView, post: Post)
     fun copyPost(post: Post)
     fun complainOnPost(post: Post, reason: String)

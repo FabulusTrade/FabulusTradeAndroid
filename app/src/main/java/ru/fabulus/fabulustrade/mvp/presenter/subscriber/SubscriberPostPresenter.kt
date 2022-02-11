@@ -184,9 +184,16 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 })
         }
 
-        override fun deletePost(post: Post) {
+        override fun deletePost(view: PostItemView) {
+            val post = postList[view.pos]
             if (isCanDeletePost(post.dateCreate)) {
-                //TODO метод для удаления коментария
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        listPresenter.postList.removeAt(view.pos)
+                        viewState.updateAdapter()
+
+                    }, {})
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }

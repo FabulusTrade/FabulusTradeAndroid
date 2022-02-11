@@ -181,9 +181,16 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                 }, {})
         }
 
-        override fun deletePost(post: Post) {
+        override fun deletePost(view: PostItemView) {
+            val post = posts[view.pos]
             if (isCanDeletePost(post.dateCreate)) {
-                //TODO метод для удаления коментария
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        listPresenter.posts.removeAt(view.pos)
+                        viewState.updateAdapter()
+
+                    }, {})
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }

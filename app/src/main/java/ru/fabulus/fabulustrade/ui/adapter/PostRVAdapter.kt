@@ -172,7 +172,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
                             return@setOnMenuItemClickListener true
                         }
                         R.id.delete_comment -> {
-                            presenter.deletePost(post)
+                            presenter.deletePost(this)
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false
