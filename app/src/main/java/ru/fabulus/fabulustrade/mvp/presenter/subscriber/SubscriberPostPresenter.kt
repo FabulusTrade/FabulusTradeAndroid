@@ -1,12 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter.subscriber
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
+import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -15,6 +12,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
@@ -38,14 +36,13 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     private var isLoading = false
     private var nextPage: Int? = 1
     private var isShareResumeAction: Boolean = false
-
+    private var updatePostResultListener: ResultListenerHandler? = null
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderRVListPresenter"
         private var sharedView: PostItemView? = null
-        private var updatedPostView: PostItemView? = null
 
         override fun getCount(): Int = postList.size
 
@@ -197,8 +194,22 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
         override fun editPost(view: PostItemView, post: Post) {
             if (isCanEditPost(post.dateCreate)) {
-                updatedPostView = view
-//                viewState.prepareEditPost(post, MAX_LEN_POST_TEXT)
+                updatePostResultListener =
+                    router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            listPresenter.postList[view.pos] = updatedPost
+                            viewState.updateAdapter()
+                        }
+                    }
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
             }
@@ -264,5 +275,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                     isLoading = false
                 })
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        updatePostResultListener?.dispose()
     }
 }

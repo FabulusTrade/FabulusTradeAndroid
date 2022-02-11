@@ -1,12 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter.trader
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
+import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -16,6 +13,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trader
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
@@ -41,12 +39,12 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     lateinit var resourceProvider: ResourceProvider
 
     val listPresenter = TraderRVListPresenter()
+    private var updatePostResultListener: ResultListenerHandler? = null
 
     inner class TraderRVListPresenter : PostRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
         private var sharedView: PostItemView? = null
-        private var updatedPostView: PostItemView? = null
 
         override fun getCount(): Int = posts.size
 
@@ -193,8 +191,22 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
         override fun editPost(view: PostItemView, post: Post) {
             if (isCanEditPost(post.dateCreate)) {
-                updatedPostView = view
-//                viewState.prepareEditPost(post, MAX_LEN_POST_TEXT)
+                updatePostResultListener =
+                    router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            listPresenter.posts[view.pos] = updatedPost
+                            viewState.updateAdapter()
+                        }
+                    }
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
             }
@@ -266,5 +278,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
     fun openSignUpScreen() {
         router.navigateTo(Screens.signUpScreen(false))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        updatePostResultListener?.dispose()
     }
 }
