@@ -552,14 +552,16 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         postId: String,
         traderId: String,
         text: String
-    ): Completable =
+    ): Single<Post> =
         networkStatus
             .isOnlineSingle()
-            .flatMapCompletable { isOnline ->
+            .flatMap { isOnline ->
                 if (isOnline) {
-                    api.updatePublication(token, postId, traderId, text)
+                    api.updatePublication(token, postId, traderId, text).flatMap { response ->
+                        Single.just(mapToPost(response)!!)
+                    }
                 } else {
-                    Completable.error(NoInternetException())
+                    Single.error(NoInternetException())
                 }
             }
             .subscribeOn(Schedulers.io())

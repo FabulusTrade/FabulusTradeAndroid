@@ -25,6 +25,7 @@ class CreatePostPresenter(
 
     companion object {
         const val NEW_POST_RESULT = "NEW_POST_RESULT"
+        const val UPDATE_POST_RESULT = "UPDATE_POST_RESULT"
         private const val MAX_ATTACHED_IMAGE_COUNT = 4
     }
 
@@ -86,7 +87,8 @@ class CreatePostPresenter(
         apiRepo
             .updatePublication(profile.token!!, postId, profile.user!!.id, text)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+            .subscribe({ post ->
+                router.sendResult(UPDATE_POST_RESULT,  post)
                 router.exit()
             }, {
                 it.printStackTrace()

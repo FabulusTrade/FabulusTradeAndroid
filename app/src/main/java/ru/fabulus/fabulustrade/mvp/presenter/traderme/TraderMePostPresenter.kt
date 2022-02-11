@@ -13,6 +13,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
@@ -37,6 +38,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var isLoading = false
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
+    private var updatePostResultListener: ResultListenerHandler? = null
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -48,7 +50,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null
-        private var updatedPostView: PostItemView? = null
 
         override fun getCount(): Int = postList.size
 
@@ -159,7 +160,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun editPost(view: PostItemView, post: Post) {
             if (isCanEditPost(post.dateCreate)) {
-                updatedPostView = view
+                updatePostResultListener = router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        listPresenter.postList[view.pos] = updatedPost
+                        viewState.updateAdapter()
+                    }
+                }
 
                 router.navigateTo(
                     Screens.createPostScreen(
@@ -310,5 +316,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     override fun onDestroy() {
         super.onDestroy()
         newPostResultListener?.dispose()
+        updatePostResultListener?.dispose()
     }
 }
