@@ -47,4 +47,7 @@ interface PostDetailView : MvpView {
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)
     fun setRepostCount(text: String)
+    fun setKebabMenuSelf()
+    fun setKebabMenuSomeone()
+    fun setUpdateData(text: String)
 }

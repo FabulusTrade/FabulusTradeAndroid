@@ -531,6 +531,7 @@
     <string name="begging_extortion">Попрошайничество / Вымогательство</string>
     <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
     <string name="tv_author_follower_count">%d</string>
+    <string name="toast_complain_to">Жалоба отправлена</string>
 
     <string name="iv_author_avatar_content_description">аватар автора поста</string>
     <string name="iv_person_add_content_description">количество подписчиков автора поста</string>
