@@ -227,6 +227,34 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         viewState.setPostAuthorName(post.userName)
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
+
+        viewState.showSendComment(maxCommentLength)
+
+        viewState.setPostImages(post.images)
+        viewState.setPostLikeCount(post.likeCount.toString())
+        viewState.setPostDislikeCount(post.dislikeCount.toString())
+
+        setLikeImage(post.isLiked)
+        setDislikeImage(post.isDisliked)
+        setHeadersIcons()
+
+        setCommentCount()
+        setCommentList()
+        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+        viewState.setRepostCount(post.repostCount.toString())
+    }
+
+    private fun setHeadersIcons(){
+        viewState.setFlashVisibility(yourPublication(post))
+        viewState.setProfitAndFollowersVisibility(!yourPublication(post))
+
+        if(!yourPublication(post)){
+            setProfit()
+            setFollowersCount()
+        }
+    }
+
+    private fun setProfit(){
         viewState.setProfit(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_profit_percent_text,
@@ -240,26 +268,19 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         } else {
             viewState.setProfitPositiveArrow()
         }
+    }
 
-        viewState.showSendComment(maxCommentLength)
-
-        viewState.setPostImages(post.images)
-        viewState.setPostLikeCount(post.likeCount.toString())
-        viewState.setPostDislikeCount(post.dislikeCount.toString())
-
-        setLikeImage(post.isLiked)
-        setDislikeImage(post.isDisliked)
-
-        setCommentCount()
-        setCommentList()
-        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+    private fun setFollowersCount(){
         viewState.setAuthorFollowerCount(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_author_follower_count,
                 post.followersCount
             )
         )
-        viewState.setRepostCount(post.repostCount.toString())
+    }
+
+    private fun yourPublication(post: Post):Boolean{
+        return post.traderId == profile.user?.id
     }
 
     private fun setCommentList() {

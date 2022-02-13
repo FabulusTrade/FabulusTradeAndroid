@@ -47,4 +47,6 @@ interface PostDetailView : MvpView {
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)
     fun setRepostCount(text: String)
+    fun setFlashVisibility(isVisible:Boolean)
+    fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }

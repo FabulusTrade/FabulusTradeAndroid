@@ -78,6 +78,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setDislikesCount(post.dislikeCount)
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
+                initHeadersIcons(view, post)
                 val commentCount = post.commentCount()
                 setCommentCount(
                     resourceProvider.formatQuantityString(
@@ -86,6 +87,26 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         commentCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
+            }
+        }
+
+        private fun initHeadersIcons(view: PostItemView,post: Post){
+            with(view){
+                setFlashVisibility(yoursPublication(post))
+                setProfitAndFollowersVisibility(!yoursPublication(post))
+
+                if(!yoursPublication(post)){
+                    setProfit(view, post)
+                    setFollowersCount(view, post)
+                }
+
+            }
+        }
+
+        private fun setProfit(view: PostItemView,post: Post){
+            with(view){
                 setProfit(
                     resourceProvider.formatDigitWithDef(
                         R.string.tv_profit_percent_text,
@@ -99,15 +120,17 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 } else {
                     setProfitPositiveArrow()
                 }
+            }
+        }
 
+        private fun setFollowersCount(view: PostItemView,post: Post){
+            with(view){
                 setAuthorFollowerCount(
                     resourceProvider.formatDigitWithDef(
                         R.string.tv_author_follower_count,
                         post.followersCount
                     )
                 )
-
-                setRepostCount(post.repostCount.toString())
             }
         }
 

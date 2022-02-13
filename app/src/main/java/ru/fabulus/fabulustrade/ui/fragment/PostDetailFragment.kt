@@ -380,6 +380,34 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostFooter.tvRepostCount.text = text
     }
 
+    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
+        with(incItemPostHeader){
+            if(isVisible){
+                icFlash.visibility = View.VISIBLE
+            }else{
+                icFlash.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setProfitAndFollowersVisibility(isVisible: Boolean) = with(binding) {
+        with(incItemPostHeader){
+            if(isVisible){
+                ivProfitArrow.visibility = View.VISIBLE
+                tvProfitPercent.visibility = View.VISIBLE
+
+                ivPersonAdd.visibility = View.VISIBLE
+                tvAuthorFollowerCount.visibility = View.VISIBLE
+            }else{
+                ivProfitArrow.visibility = View.GONE
+                tvProfitPercent.visibility = View.GONE
+
+                ivPersonAdd.visibility = View.GONE
+                tvAuthorFollowerCount.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
