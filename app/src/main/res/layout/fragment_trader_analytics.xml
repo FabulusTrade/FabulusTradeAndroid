@@ -476,43 +476,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/table_info" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_two_years_ago"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorLightGreen"
-            android:textColor="@color/colorBlack"
+            android:text="@string/year_two_ago"
+            android:textColor="@color/colorGray"
             app:cornerRadius="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_current_year"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@+id/btn_previous_year"
             app:layout_constraintStart_toStartOf="@+id/bar_chart"
             app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_previous_year"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorLightGreen"
             android:text="@string/year_previous"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorGray"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/btn_current_year"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/btn_two_years_ago"
             app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_current_year"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/colorLightGreen"
             android:text="@string/year_this"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_previous_year"
             app:layout_constraintEnd_toEndOf="@+id/bar_chart"

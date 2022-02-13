@@ -17,6 +17,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderProfitView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.setTextAndColor
+import java.util.*
 
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
@@ -30,6 +31,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         private const val MIN_LINES = 3
         private const val STATISTIC = "statistic"
         private const val TRADER = "trader"
+
         fun newInstance(traderStatistic: TraderStatistic, trader: Trader) =
             TraderProfitFragment().apply {
                 arguments = Bundle().apply {
@@ -51,6 +53,15 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
             App.instance.appComponent.inject(this)
         }
 
+    private val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR);
+
+    private var selectedYearShift: Int = 0
+
+    private val selectedYear: Int
+        get() {
+            return currentYear + selectedYearShift
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,12 +74,41 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
     override fun init() {
         initBarChart()
         initListeners()
+        initYearsButtons()
+        selectYearForProfit(0)
+    }
+
+    private fun initYearsButtons() {
+        binding.run {
+            btnCurrentYear.run {
+                setText(currentYear.toString())
+                setOnClickListener { selectYearForProfit(0) }
+            }
+            btnPreviousYear.run {
+                setText((currentYear - 1).toString())
+                setOnClickListener { selectYearForProfit(-1) }
+            }
+            btnTwoYearsAgo.run {
+                setText((currentYear - 2).toString())
+                setOnClickListener { selectYearForProfit(-2) }
+            }
+        }
+    }
+
+    private fun selectYearForProfit(yearShift: Int) {
+        if (yearShift > 0 || yearShift < -2)
+            throw Exception("Internal error: wrong year shift")
+        selectedYearShift = yearShift
+        setButtonsStatesForSelectedYear(yearShift)
+        binding.tvYearTitle.setText(selectedYear.toString())
+        initBarChart()
+        presenter.initProfitTable()
     }
 
     private fun initBarChart() {
         with(binding.barChart) {
             data =
-                presenter.setupBarChart(getString(R.string.year_2021_traderProfit))          //   <-btn text
+                presenter.setupBarChart(selectedYear.toString())          //   <-btn text
             legend.isEnabled = false
             data.setDrawValues(false)
             animateY(ANIMATE_DURATION)
@@ -155,6 +195,26 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         binding.run {
             isActive(btnForFiftyDeals)
             isNotActive(btnForYear)
+        }
+    }
+
+    private fun setButtonsStatesForSelectedYear(shiftFromCurrent: Int) {
+        when (shiftFromCurrent) {
+            0 -> binding.run {
+                isNotActive(btnTwoYearsAgo)
+                isNotActive(btnPreviousYear)
+                isActive(btnCurrentYear)
+            }
+            -1 -> binding.run {
+                isNotActive(btnTwoYearsAgo)
+                isActive(btnPreviousYear)
+                isNotActive(btnCurrentYear)
+            }
+            -2 -> binding.run {
+                isActive(btnTwoYearsAgo)
+                isNotActive(btnPreviousYear)
+                isNotActive(btnCurrentYear)
+            }
         }
     }
 
