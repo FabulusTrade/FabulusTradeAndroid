@@ -12,7 +12,9 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELETE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
@@ -39,6 +41,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
     private var updatePostResultListener: ResultListenerHandler? = null
+    private var deletePostResultListener: ResultListenerHandler? = null
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -150,23 +153,26 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 apiRepo.deletePost(profile.token!!, post.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        listPresenter.postList.removeAt(view.pos)
-                        viewState.updateAdapter()
-
+                        removePostAt(view.pos)
                     }, {})
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }
         }
 
+        private fun removePostAt(pos: Int) {
+            listPresenter.postList.removeAt(pos)
+            viewState.updateAdapter()
+        }
+
         override fun editPost(view: PostItemView, post: Post) {
             if (isCanEditPost(post.dateCreate)) {
-                updatePostResultListener = router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
-                    (updatedPost as? Post)?.let {
-                        listPresenter.postList[view.pos] = updatedPost
-                        viewState.updateAdapter()
+                updatePostResultListener =
+                    router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            updatedPostAt(view.pos, updatedPost)
+                        }
                     }
-                }
 
                 router.navigateTo(
                     Screens.createPostScreen(
@@ -179,6 +185,11 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
             }
+        }
+
+        private fun updatedPostAt(pos: Int, updatedPost: Post) {
+            listPresenter.postList[pos] = updatedPost
+            viewState.updateAdapter()
         }
 
         override fun copyPost(post: Post) {
@@ -197,6 +208,17 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         override fun showCommentDetails(view: PostItemView) {
+            updatePostResultListener =
+                router.setResultListener(UPDATE_POST_IN_FRAGMENT_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        updatedPostAt(view.pos, updatedPost)
+                    }
+                }
+
+            deletePostResultListener =
+                router.setResultListener(DELETE_POST_RESULT) {
+                    removePostAt(view.pos)
+                }
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
@@ -318,5 +340,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         super.onDestroy()
         newPostResultListener?.dispose()
         updatePostResultListener?.dispose()
+        deletePostResultListener?.dispose()
     }
 }
