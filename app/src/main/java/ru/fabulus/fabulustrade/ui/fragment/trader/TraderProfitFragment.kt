@@ -31,6 +31,9 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         private const val MIN_LINES = 3
         private const val STATISTIC = "statistic"
         private const val TRADER = "trader"
+        private const val YEAR_SHIFT_CURRENT = 0
+        private const val YEAR_SHIFT_PREVIOUS = -1
+        private const val YEAR_SHIFT_TWO_AGO = -2
 
         fun newInstance(traderStatistic: TraderStatistic, trader: Trader) =
             TraderProfitFragment().apply {
@@ -55,7 +58,7 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     private val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR);
 
-    private var selectedYearShift: Int = 0
+    private var selectedYearShift: Int = YEAR_SHIFT_CURRENT
 
     private val selectedYear: Int
         get() {
@@ -75,28 +78,28 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
         initBarChart()
         initListeners()
         initYearsButtons()
-        selectYearForProfit(0)
+        selectYearForProfit(YEAR_SHIFT_CURRENT)
     }
 
     private fun initYearsButtons() {
         binding.run {
             btnCurrentYear.run {
                 setText(currentYear.toString())
-                setOnClickListener { selectYearForProfit(0) }
+                setOnClickListener { selectYearForProfit(YEAR_SHIFT_CURRENT) }
             }
             btnPreviousYear.run {
-                setText((currentYear - 1).toString())
-                setOnClickListener { selectYearForProfit(-1) }
+                setText((currentYear + YEAR_SHIFT_PREVIOUS).toString())
+                setOnClickListener { selectYearForProfit(YEAR_SHIFT_PREVIOUS) }
             }
             btnTwoYearsAgo.run {
-                setText((currentYear - 2).toString())
-                setOnClickListener { selectYearForProfit(-2) }
+                setText((currentYear + YEAR_SHIFT_TWO_AGO).toString())
+                setOnClickListener { selectYearForProfit(YEAR_SHIFT_TWO_AGO) }
             }
         }
     }
 
     private fun selectYearForProfit(yearShift: Int) {
-        if (yearShift > 0 || yearShift < -2)
+        if (yearShift > YEAR_SHIFT_CURRENT || yearShift < YEAR_SHIFT_TWO_AGO)
             throw Exception("Internal error: wrong year shift")
         selectedYearShift = yearShift
         setButtonsStatesForSelectedYear(yearShift)
