@@ -1,14 +1,11 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.text.Spannable
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.text.toSpannable
+import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -21,10 +18,11 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
+class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
 
     companion object {
         private const val TAG = "PostDetailPresenter"
@@ -48,6 +46,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     private var parentCommentView: CommentItemView? = null
     private var updatedCommentView: CommentItemView? = null
     private val maxCommentLength = 200
+    private var updatePostResultListener: ResultListenerHandler? = null
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -223,6 +222,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        initMenu()
         viewState.setPostAuthorAvatar(post.avatarUrl)
         viewState.setPostAuthorName(post.userName)
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
@@ -260,6 +260,18 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             )
         )
         viewState.setRepostCount(post.repostCount.toString())
+    }
+
+    private fun initMenu() {
+        if (isSelfPost(post)) {
+            viewState.setPostMenuSelf(post)
+        } else {
+            viewState.setPostMenuSomeone(post)
+        }
+    }
+
+    private fun isSelfPost(post: Post): Boolean {
+        return post.traderId == profile.user?.id
     }
 
     private fun setCommentList() {
@@ -446,6 +458,62 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
     fun closeUpdateComment() {
         viewState.showSendComment(maxCommentLength)
+    }
+
+    fun deletePost() {
+        if (isCanDeletePost(post.dateCreate)) {
+            apiRepo.deletePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    router.sendResult(CreatePostPresenter.DELETE_POST_RESULT, "")
+                    router.exit()
+                }, {})
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+        }
+    }
+
+    fun editPost() {
+        if (isCanEditPost(post.dateCreate)) {
+            updatePostResultListener =
+                router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        post = updatedPost
+                        viewState.setPostText(post.text)
+                        viewState.setPostImages(post.images)
+                        router.sendResult(
+                            CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
+                            updatedPost
+                        )
+                    }
+                }
+
+            router.navigateTo(
+                Screens.createPostScreen(
+                    post.id.toString(),
+                    true,
+                    null,
+                    post.text
+                )
+            )
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+        }
+    }
+
+    fun copyPost() {
+        resourceProvider.copyToClipboard(post.text)
+        viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+    }
+
+    fun complainOnPost(reason: String) {
+        //TODO метод для отправки жалобы
+        viewState.showComplainSnackBar()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        updatePostResultListener?.dispose()
     }
 
 }

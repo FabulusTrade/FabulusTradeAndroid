@@ -37,6 +37,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     private var nextPage: Int? = 1
     private var isShareResumeAction: Boolean = false
     private var updatePostResultListener: ResultListenerHandler? = null
+    private var deletePostResultListener: ResultListenerHandler? = null
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
@@ -190,13 +191,16 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 apiRepo.deletePost(profile.token!!, post.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        listPresenter.postList.removeAt(view.pos)
-                        viewState.updateAdapter()
-
+                        removePostAt(view.pos)
                     }, {})
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }
+        }
+
+        private fun removePostAt(pos: Int) {
+            listPresenter.postList.removeAt(pos)
+            viewState.updateAdapter()
         }
 
         override fun editPost(view: PostItemView, post: Post) {
@@ -204,8 +208,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 updatePostResultListener =
                     router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
                         (updatedPost as? Post)?.let {
-                            listPresenter.postList[view.pos] = updatedPost
-                            viewState.updateAdapter()
+                            updatedPostAt(view.pos, updatedPost)
                         }
                     }
 
@@ -220,6 +223,11 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
             }
+        }
+
+        private fun updatedPostAt(pos: Int, updatedPost: Post) {
+            listPresenter.postList[pos] = updatedPost
+            viewState.updateAdapter()
         }
 
         override fun copyPost(post: Post) {
@@ -238,6 +246,17 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         }
 
         override fun showCommentDetails(view: PostItemView) {
+            updatePostResultListener =
+                router.setResultListener(CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        updatedPostAt(view.pos, updatedPost)
+                    }
+                }
+
+            deletePostResultListener =
+                router.setResultListener(CreatePostPresenter.DELETE_POST_RESULT) {
+                    removePostAt(view.pos)
+                }
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
     }
@@ -287,5 +306,6 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     override fun onDestroy() {
         super.onDestroy()
         updatePostResultListener?.dispose()
+        deletePostResultListener?.dispose()
     }
 }
