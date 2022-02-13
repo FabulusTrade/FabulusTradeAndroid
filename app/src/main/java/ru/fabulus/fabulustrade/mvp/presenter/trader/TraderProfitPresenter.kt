@@ -350,7 +350,7 @@ class TraderProfitPresenter(
         entries: MutableList<BarEntry>
     ) {
         checkedYearList.clear()
-==        for (entry in BarChartData.getBarChartEntries()) {
+        for (entry in BarChartData.getBarChartEntries()) {
             entries.set(entry.xIndex, entry)
         }
         traderStatistic.monthIndicators.forEach {
