@@ -7,11 +7,9 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.Spanned
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -78,13 +76,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun init() {
-        initHeaderIcons()
         initListeners()
         initRecyclerView()
-    }
-
-    private fun initHeaderIcons() {
-        presenter.initHeaderIcons()
     }
 
     private fun initRecyclerView() {
@@ -115,12 +108,6 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     private fun initListeners() {
         with(binding) {
-
-            with(incItemPostHeader) {
-                ivAttachedKebab.setOnClickListener {
-                    presenter.initKebabMenu()
-                }
-            }
 
             with(incItemPostFooter) {
                 btnLike.setOnClickListener {
@@ -205,7 +192,6 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
 
     }
-
 
     override fun setPostAuthorAvatar(avatarUrl: String) {
         loadImage(avatarUrl, binding.incItemPostHeader.ivAuthorAvatar)
@@ -393,95 +379,6 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     override fun setRepostCount(text: String) {
         binding.incItemPostFooter.tvRepostCount.text = text
     }
-
-    override fun setKebabMenuSelf() = with(binding) {
-        with(incItemPostHeader) {
-            val menu = PopupMenu(requireContext(), ivAttachedKebab)
-
-            menu.inflate(R.menu.menu_self_comment)
-
-            menu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-
-                    R.id.edit_comment -> {
-                        presenter.editPost()
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.copy_comment_text -> {
-                        presenter.copyPost()
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.delete_comment -> {
-                        presenter.deletePost()
-                        return@setOnMenuItemClickListener true
-                    }
-                    else -> return@setOnMenuItemClickListener false
-                }
-            }
-            menu.show()
-        }
-    }
-
-    override fun setKebabMenuSomeone() = with(binding) {
-        with(incItemPostHeader) {
-            val menu = PopupMenu(requireContext(), ivAttachedKebab)
-            menu.inflate(R.menu.menu_someone_comment)
-
-            menu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.mi_copy_comment_text -> {
-                        presenter.copyPost()
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.mi_unethical_content,
-                    R.id.mi_mat_insults_provocation,
-                    R.id.mi_threats_harassment,
-                    R.id.mi_market_manipulation,
-                    R.id.mi_advertising,
-                    R.id.mi_flood_spam,
-                    R.id.mi_begging_extortion -> {
-                        presenter.complainOnPost(menuItem.title.toString())
-                        return@setOnMenuItemClickListener true
-                    }
-                    else -> return@setOnMenuItemClickListener false
-                }
-            }
-            menu.show()
-        }
-    }
-
-    override fun setUpdateData(text: String) {
-        binding.tvPost.text = text
-    }
-
-    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader){
-            if(isVisible){
-                icFlash.visibility = View.VISIBLE
-            }else{
-                icFlash.visibility = View.GONE
-            }
-        }
-    }
-
-    override fun setProfitAndFollowersVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader){
-            if(isVisible){
-                tvProfitPercent.visibility = View.VISIBLE
-                ivProfitArrow.visibility = View.VISIBLE
-
-                ivPersonAdd.visibility = View.VISIBLE
-                tvAuthorFollowerCount.visibility = View.VISIBLE
-            }else{
-                tvProfitPercent.visibility = View.GONE
-                ivProfitArrow.visibility = View.GONE
-
-                ivPersonAdd.visibility = View.GONE
-                tvAuthorFollowerCount.visibility = View.GONE
-            }
-        }
-    }
-
 
     override fun onDestroyView() {
         _binding = null

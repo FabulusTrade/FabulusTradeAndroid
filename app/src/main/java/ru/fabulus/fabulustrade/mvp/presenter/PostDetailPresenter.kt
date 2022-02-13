@@ -9,7 +9,6 @@ import android.text.Spannable
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.text.toSpannable
-import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -22,8 +21,6 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
-import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
-import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
@@ -44,8 +41,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
     @Inject
     lateinit var profile: Profile
-
-    private var updatePostResultListener: ResultListenerHandler? = null
 
     val listPresenter = CommentPostDetailPresenter()
     private var parentCommentId: Long? = null
@@ -232,36 +227,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         viewState.setPostAuthorName(post.userName)
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
-
-
-        viewState.showSendComment(maxCommentLength)
-
-        viewState.setPostImages(post.images)
-        viewState.setPostLikeCount(post.likeCount.toString())
-        viewState.setPostDislikeCount(post.dislikeCount.toString())
-
-        setLikeImage(post.isLiked)
-        setDislikeImage(post.isDisliked)
-
-        setCommentCount()
-        setCommentList()
-        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
-
-        viewState.setRepostCount(post.repostCount.toString())
-    }
-
-    fun initHeaderIcons(){
-
-        viewState.setFlashVisibility(isSelfPost(post))
-        viewState.setProfitAndFollowersVisibility(!isSelfPost(post))
-
-        if(!isSelfPost(post)){
-            initProfit()
-            initFollowersCount()
-        }
-    }
-
-    private fun initProfit(){
         viewState.setProfit(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_profit_percent_text,
@@ -275,17 +240,27 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         } else {
             viewState.setProfitPositiveArrow()
         }
-    }
 
-    private fun initFollowersCount(){
+        viewState.showSendComment(maxCommentLength)
+
+        viewState.setPostImages(post.images)
+        viewState.setPostLikeCount(post.likeCount.toString())
+        viewState.setPostDislikeCount(post.dislikeCount.toString())
+
+        setLikeImage(post.isLiked)
+        setDislikeImage(post.isDisliked)
+
+        setCommentCount()
+        setCommentList()
+        viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
         viewState.setAuthorFollowerCount(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_author_follower_count,
                 post.followersCount
             )
         )
+        viewState.setRepostCount(post.repostCount.toString())
     }
-
 
     private fun setCommentList() {
         listPresenter.setCommentList(post.comments)
@@ -316,62 +291,6 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         } else {
             viewState.setLikeInactiveImage()
         }
-    }
-
-    fun initKebabMenu() {
-        if (isSelfPost(post)) {
-            viewState.setKebabMenuSelf()
-        } else {
-            viewState.setKebabMenuSomeone()
-        }
-    }
-
-    fun editPost() {
-        if (isCanEditPost(post.dateCreate)) {
-            updatePostResultListener = router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
-                (updatedPost as? Post)?.let {
-                    viewState.setUpdateData(updatedPost.text)
-                }
-            }
-
-            router.navigateTo(
-                Screens.createPostScreen(
-                    post.id.toString(),
-                    true,
-                    null,
-                    post.text
-                )
-            )
-        } else {
-            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
-        }
-    }
-
-    fun copyPost() {
-        resourceProvider.copyToClipboard(post.text)
-        viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
-    }
-
-    fun deletePost() {
-        if (isCanDeletePost(post.dateCreate)) {
-            apiRepo.deletePost(profile.token!!, post.id)
-                    //TODO
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    router.navigateTo(Screens.traderMeMainScreen())
-                }, {})
-        } else {
-            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
-        }
-    }
-
-    fun complainOnPost(reason: String) {
-        //TODO метод для отправки жалобы
-        viewState.showComplainSnackBar()
-    }
-
-    private fun isSelfPost(post: Post): Boolean {
-        return post.traderId == profile.user?.id
     }
 
     fun likePost() {

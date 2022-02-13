@@ -26,6 +26,8 @@ class CreatePostPresenter(
     companion object {
         const val NEW_POST_RESULT = "NEW_POST_RESULT"
         const val UPDATE_POST_RESULT = "UPDATE_POST_RESULT"
+        const val UPDATE_POST_IN_FRAGMENT_RESULT = "UPDATE_POST_IN_FRAGMENT_RESULT"
+        const val DELETE_POST_RESULT = "DELETE_POST_RESULT"
         private const val MAX_ATTACHED_IMAGE_COUNT = 4
     }
 

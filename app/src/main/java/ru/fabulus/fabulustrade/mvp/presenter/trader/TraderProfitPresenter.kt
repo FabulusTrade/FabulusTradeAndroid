@@ -53,13 +53,18 @@ class TraderProfitPresenter(
             viewState.setFollowersCount(count.toString())
         }
         traderStatistic.averageCountOperationsMonth?.let { count ->
-            viewState.setTradesCount(resourceProvider.formatString(R.string.tv_deal_for_month_count_text, count))
+            viewState.setTradesCount(
+                resourceProvider.formatString(
+                    R.string.tv_deal_for_month_count_text,
+                    count
+                )
+            )
         }
         initProfitTable()
         getStatisticForYear()
     }
 
-    private fun initProfitTable() {
+    fun initProfitTable() {
         clearProfitTable()
         setProfitTable()
     }
@@ -158,7 +163,7 @@ class TraderProfitPresenter(
             )
         )
 
-        colorIncrDecrDepo365?.let {  colorItem ->
+        colorIncrDecrDepo365?.let { colorItem ->
             var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
             val tmpProfit = resourceProvider.formatDigitWithDef(
                 R.string.incr_decr_depo_365,
@@ -275,7 +280,7 @@ class TraderProfitPresenter(
     private fun clearProfitTable() {
         val colorEmpty = resourceProvider.getColor(R.color.colorDarkGray)
         val profitEmpty = resourceProvider.getStringResource(R.string.empty_profit_result)
-        
+
         viewState.setJanProfit(profitEmpty, colorEmpty)
         viewState.setFebProfit(profitEmpty, colorEmpty)
         viewState.setMarProfit(profitEmpty, colorEmpty)
@@ -291,7 +296,7 @@ class TraderProfitPresenter(
     }
 
     private fun setProfitTable() {
-        traderStatistic.monthIndicators.forEach { indicator ->
+        checkedYearList.forEach { indicator ->
             var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
             var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
 
@@ -344,6 +349,10 @@ class TraderProfitPresenter(
         checkedYearList: MutableList<MonthIndicator>,
         entries: MutableList<BarEntry>
     ) {
+        checkedYearList.clear()
+        for (entry in BarChartData.getBarChartEntries()) {
+            entries.set(entry.xIndex, entry)
+        }
         traderStatistic.monthIndicators.forEach {
             if (it.year.toString() == checkedYear) {
                 checkedYearList.add(it)

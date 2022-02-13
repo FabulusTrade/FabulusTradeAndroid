@@ -476,35 +476,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/table_info" />
 
-        <Button
-            android:id="@+id/btn_current_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorLightGreen"
-            android:text="@string/year_2021"
-            android:textColor="@color/colorBlack"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_next_year"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/bar_chart"
-            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
-
-        <Button
-            android:id="@+id/btn_next_year"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_two_years_ago"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:clickable="false"
-            android:text="@string/year_2022"
+            android:layout_marginTop="20dp"
+            tools:text="2020"
             android:textColor="@color/colorGray"
             app:cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_current_year"
+            app:layout_constraintEnd_toStartOf="@+id/btn_previous_year"
+            app:layout_constraintStart_toStartOf="@+id/bar_chart"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_previous_year"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            tools:text="2021"
+            android:textColor="@color/colorGray"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_current_year"
+            app:layout_constraintStart_toEndOf="@+id/btn_two_years_ago"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_current_year"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorLightGreen"
+            tools:text="2022"
+            android:textColor="@color/colorBlack"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_previous_year"
             app:layout_constraintEnd_toEndOf="@+id/bar_chart"
-            app:layout_constraintStart_toEndOf="@+id/btn_current_year"
-            app:layout_constraintTop_toTopOf="@+id/btn_current_year" />
+            app:layout_constraintStart_toEndOf="@+id/btn_previous_year"
+            app:layout_constraintTop_toTopOf="@+id/btn_previous_year" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"
@@ -514,7 +524,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_current_year" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_previous_year" />
 
         <View
             android:id="@+id/date_divider"
@@ -533,7 +543,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="24dp"
-            android:text="@string/year_2021"
+            tools:text="2022"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
