@@ -203,17 +203,17 @@ class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {
 
     private fun setButtonsStatesForSelectedYear(shiftFromCurrent: Int) {
         when (shiftFromCurrent) {
-            0 -> binding.run {
+                YEAR_SHIFT_CURRENT -> binding.run {
                 isNotActive(btnTwoYearsAgo)
                 isNotActive(btnPreviousYear)
                 isActive(btnCurrentYear)
             }
-            -1 -> binding.run {
+            YEAR_SHIFT_PREVIOUS -> binding.run {
                 isNotActive(btnTwoYearsAgo)
                 isActive(btnPreviousYear)
                 isNotActive(btnCurrentYear)
             }
-            -2 -> binding.run {
+            YEAR_SHIFT_TWO_AGO -> binding.run {
                 isActive(btnTwoYearsAgo)
                 isNotActive(btnPreviousYear)
                 isNotActive(btnCurrentYear)
