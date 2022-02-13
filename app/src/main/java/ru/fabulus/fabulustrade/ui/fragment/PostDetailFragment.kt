@@ -3,11 +3,14 @@ package ru.fabulus.fabulustrade.ui.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.Spanned
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.terrakok.cicerone.Router
@@ -43,6 +46,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
             }
         }
     }
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            presenter.incRepostCount()
+        }
 
     @InjectPresenter
     lateinit var presenter: PostDetailPresenter
@@ -80,6 +88,24 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
     }
 
+    override fun setMaxSendCommentLength(maxLength: Int) {
+        with(binding) {
+            with(incItemSendComment) {
+                tilNewCommentText.counterMaxLength = maxLength
+                etNewCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+            }
+        }
+    }
+
+    override fun setMaxUpdateCommentLength(maxLength: Int) {
+        with(binding) {
+            with(incItemUpdateComment) {
+                tilUpdateCommentText.counterMaxLength = maxLength
+                etUpdateCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
+            }
+        }
+    }
+
     private fun initListeners() {
         with(binding) {
 
@@ -91,7 +117,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
                     presenter.dislikePost()
                 }
                 btnShare.setOnClickListener {
-                    presenter.sharePost(binding.imageGroup.getImageViews())
+                    presenter.share(binding.imageGroup.getImageViews())
                 }
             }
 
@@ -234,8 +260,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
-    override fun sharePost(shareIntent: Intent) {
-        startActivity(shareIntent)
+    override fun share(repostIntent: Intent) {
+        resultLauncher.launch(repostIntent)
     }
 
     override fun setCommentCount(text: String) {
@@ -283,11 +309,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun clearNewCommentText() {
-        binding.incItemSendComment.etNewCommentText.text.clear()
+        binding.incItemSendComment.etNewCommentText.text?.clear()
     }
 
-    override fun prepareReplyToComment(text: Spanned) {
-        showSendComment()
+    override fun prepareReplyToComment(text: Spanned, maxCommentLength: Int) {
+        showSendComment(maxCommentLength)
         with(binding.incItemSendComment.etNewCommentText) {
             setText(text)
             requestFocus()
@@ -295,8 +321,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
     }
 
-    override fun prepareUpdateComment(text: Spanned) {
-        showUpdateComment()
+    override fun prepareUpdateComment(text: Spanned, maxCommentLength: Int) {
+        showUpdateComment(maxCommentLength)
         with(binding.incItemUpdateComment) {
             ivCurrentUserAvatarUpdateComment.setImageDrawable(binding.incItemSendComment.ivCurrentUserAvatar.drawable)
             tvEditableText.text = text
@@ -338,14 +364,20 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         binding.incItemPostHeader.tvAuthorFollowerCount.text = text
     }
 
-    override fun showSendComment() {
-        setIncItemSendCommentVisibility(View.VISIBLE)
+    override fun showSendComment(maxCommentLength: Int) {
+        setMaxSendCommentLength(maxCommentLength)
         setIncItemUpdateCommentVisibility(View.GONE)
+        setIncItemSendCommentVisibility(View.VISIBLE)
     }
 
-    override fun showUpdateComment() {
+    override fun showUpdateComment(maxCommentLength: Int) {
+        setMaxUpdateCommentLength(maxCommentLength)
         setIncItemSendCommentVisibility(View.GONE)
         setIncItemUpdateCommentVisibility(View.VISIBLE)
+    }
+
+    override fun setRepostCount(text: String) {
+        binding.incItemPostFooter.tvRepostCount.text = text
     }
 
     override fun onDestroyView() {

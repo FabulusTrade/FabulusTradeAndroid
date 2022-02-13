@@ -155,7 +155,8 @@ fun mapToPost(post: ResponsePost?): Post? {
             post.is_liked,
             post.is_disliked,
             comments,
-            post.colorIncrDecrDepo365
+            post.colorIncrDecrDepo365,
+            post.repostCount
         )
     } ?: return null
 }
@@ -209,5 +210,12 @@ fun mapToComment(responseComment: ResponseComment): Comment {
         responseComment.likeCount,
         responseComment.dislikeCount,
         responseComment.isLiked
+    )
+}
+
+fun mapToIncPostResult(responseIncRepostCount: ResponseIncRepostCount): IncPostResult {
+    return IncPostResult(
+        responseIncRepostCount.result,
+        responseIncRepostCount.message
     )
 }

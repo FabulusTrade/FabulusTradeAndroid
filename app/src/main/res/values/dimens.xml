@@ -106,12 +106,12 @@
     <dimen name="ib_send_comment_layout_height">40dp</dimen>
     <dimen name="ib_update_comment_layout_width">40dp</dimen>
     <dimen name="ib_update_comment_layout_height">40dp</dimen>
-    <dimen name="iv_current_user_avatar_margin_bottom">5dp</dimen>
+    <dimen name="iv_current_user_avatar_margin_bottom">25dp</dimen>
     <dimen name="et_new_comment_text_margin_bottom">5dp</dimen>
     <dimen name="et_new_comment_text_margin_start">5dp</dimen>
     <dimen name="et_new_comment_text_margin_end">5dp</dimen>
-    <dimen name="ib_send_comment_margin_bottom">5dp</dimen>
-    <dimen name="ib_update_comment_margin_bottom">5dp</dimen>
+    <dimen name="ib_send_comment_margin_bottom">25dp</dimen>
+    <dimen name="ib_update_comment_margin_bottom">25dp</dimen>
     <dimen name="tv_comment_post_margin_top">2dp</dimen>
     <dimen name="tv_comment_post_margin_bottom">8dp</dimen>
     <dimen name="cv_comment_header_elevation">4dp</dimen>

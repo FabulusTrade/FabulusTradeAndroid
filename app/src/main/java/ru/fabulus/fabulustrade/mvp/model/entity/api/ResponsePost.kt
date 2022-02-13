@@ -40,5 +40,8 @@ data class ResponsePost(
     val colorIncrDecrDepo365: ColorItem,
     @Expose
     @SerializedName("followers_count")
-    val followersCount: Int
+    val followersCount: Int,
+    @Expose
+    @SerializedName("repost_count")
+    val repostCount: Int
 )

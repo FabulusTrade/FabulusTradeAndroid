@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_add_comment"
     android:layout_width="match_parent"
@@ -10,34 +11,48 @@
         android:id="@+id/iv_current_user_avatar"
         android:layout_width="@dimen/iv_current_user_avatar_layout_width"
         android:layout_height="@dimen/iv_current_user_avatar_layout_height"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
         android:contentDescription="@string/iv_current_user_avatar_content_description"
         android:foreground="@drawable/bg_avatar"
         android:scaleType="center"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <EditText
-        android:id="@+id/et_new_comment_text"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_new_comment_text"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
         android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
         android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
         android:layout_weight="1"
-        android:autofillHints="@string/et_new_comment_text_hint"
-        android:background="@color/colorWhite"
-        android:hint="@string/et_new_comment_text_hint"
-        android:inputType="textCapSentences|textMultiLine"
-        android:maxLength="200"
-        android:textSize="@dimen/et_new_comment_text_text_size" />
+        app:counterEnabled="true"
+        app:hintEnabled="false"
+        app:placeholderText="@string/et_new_comment_text_hint"
+        tools:counterMaxLength="200">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_new_comment_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:hint="@string/et_new_comment_text_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="6"
+            android:textSize="@dimen/et_new_comment_text_text_size"
+            tools:maxLength="200" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/ib_send_comment"
         android:layout_width="@dimen/ib_send_comment_layout_width"
         android:layout_height="@dimen/ib_send_comment_layout_height"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/ib_send_comment_margin_bottom"
         android:background="@drawable/ic_send_disabled"
         android:clickable="false"
         android:contentDescription="@string/ib_send_comment_content_description" />
+
 
 </LinearLayout>

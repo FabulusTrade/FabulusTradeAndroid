@@ -55,6 +55,7 @@
             android:layout_marginTop="@dimen/tv_editable_text_margin_top"
             android:layout_marginBottom="@dimen/tv_editable_text_margin_bottom"
             android:layout_weight="1"
+            android:maxEms="23"
             android:textSize="@dimen/tv_editable_text_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_edit"
@@ -82,31 +83,44 @@
             android:id="@+id/iv_current_user_avatar_update_comment"
             android:layout_width="@dimen/iv_current_user_avatar_layout_width"
             android:layout_height="@dimen/iv_current_user_avatar_layout_height"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
             android:contentDescription="@string/iv_current_user_avatar_content_description"
             android:foreground="@drawable/bg_avatar"
             android:scaleType="center"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <EditText
-            android:id="@+id/et_update_comment_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_update_comment_text"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
             android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
             android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
             android:layout_weight="1"
-            android:autofillHints="@string/et_update_comment_text_hint"
-            android:background="@color/colorWhite"
-            android:hint="@string/et_update_comment_text_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="200"
-            android:textSize="@dimen/et_new_comment_text_text_size" />
+            app:counterEnabled="true"
+            app:hintEnabled="false"
+            app:placeholderText="@string/et_update_comment_text_hint"
+            tools:counterMaxLength="200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_update_comment_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:hint="@string/et_update_comment_text_hint"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="6"
+                android:textSize="@dimen/et_new_comment_text_text_size"
+                tools:maxLength="200" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/ib_update_comment"
             android:layout_width="@dimen/ib_update_comment_layout_width"
             android:layout_height="@dimen/ib_update_comment_layout_height"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="@dimen/ib_update_comment_margin_bottom"
             android:background="@drawable/ic_check_disabled"
             android:contentDescription="@string/ib_send_comment_content_description" />

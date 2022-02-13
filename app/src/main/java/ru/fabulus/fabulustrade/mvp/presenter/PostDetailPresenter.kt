@@ -47,6 +47,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     private var parentCommentAuthorUsername: String? = null
     private var parentCommentView: CommentItemView? = null
     private var updatedCommentView: CommentItemView? = null
+    private val maxCommentLength = 200
 
     inner class CommentPostDetailPresenter : CommentRVListPresenter {
 
@@ -159,7 +160,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 resourceProvider.getColor(R.color.author_color_in_comment)
             )
 
-            viewState.prepareReplyToComment(text)
+            viewState.prepareReplyToComment(text, maxCommentLength)
             view.setReplyPostColor(resourceProvider.getColor(R.color.cv_comment_header_background_color_reply))
         }
 
@@ -189,7 +190,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         override fun editComment(view: CommentItemView, comment: Comment) {
             if (isCanEditComment(comment.dateCreate)) {
                 updatedCommentView = view
-                viewState.prepareUpdateComment(prepareCommentText(comment))
+                viewState.prepareUpdateComment(prepareCommentText(comment), maxCommentLength)
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
             }
@@ -240,7 +241,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
             viewState.setProfitPositiveArrow()
         }
 
-        viewState.showSendComment()
+        viewState.showSendComment(maxCommentLength)
 
         viewState.setPostImages(post.images)
         viewState.setPostLikeCount(post.likeCount.toString())
@@ -258,6 +259,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                 post.followersCount
             )
         )
+        viewState.setRepostCount(post.repostCount.toString())
     }
 
     private fun setCommentList() {
@@ -370,6 +372,24 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         }
     }
 
+    fun incRepostCount() {
+        apiRepo
+            .incRepostCount(post.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ incPostResult ->
+                if (incPostResult.result.equals("ok", true)) {
+                    post.incRepostCount()
+                    viewState.setRepostCount(post.repostCount.toString())
+                } else {
+                    viewState.showToast(incPostResult.message)
+                }
+            }, { error ->
+                Log.d(TAG, "Error incRepostCount: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
+    }
+
     fun updateComment(text: String) {
         if (updatedCommentView != null) {
             val pos = updatedCommentView!!.pos
@@ -397,7 +417,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
                         post.comments[pos] = newComment
 
                         listPresenter.updateCommentItem(pos, newComment)
-                        viewState.showSendComment()
+                        viewState.showSendComment(maxCommentLength)
                     }, { error ->
                         Log.d(
                             TAG,
@@ -413,63 +433,19 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
 
     fun getParentCommentId() = parentCommentId
 
-    fun sharePost(imageViewIdList: List<ImageView>) {
-        var bmpUri: Uri? = null
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            type = "text/plain"
+    fun share(imageViewIdList: List<ImageView>) {
 
-            var title = resourceProvider.formatString(
-                R.string.share_message_pattern,
-                post.userName,
-                post.text
+        viewState.share(
+            resourceProvider.getSharePostIntent(
+                post,
+                imageViewIdList
             )
-
-            if (title.length > MAX_SHARED_LEN_POST_TEXT) {
-                title = resourceProvider.formatString(
-                    R.string.share_message_pattern_big_text,
-                    title.substring(0, MAX_SHARED_LEN_POST_TEXT)
-                )
-            }
-
-            putExtra(Intent.EXTRA_TEXT, title)
-            if (post.images.count() > 0) {
-                imageViewIdList[0].getBitmapUriFromDrawable()?.let { uri ->
-                    bmpUri = uri
-                    putExtra(Intent.EXTRA_STREAM, bmpUri)
-                    type = "image/*"
-                }
-            }
-        }
-
-        val chooser = Intent.createChooser(
-            shareIntent,
-            resourceProvider.getStringResource(R.string.share_message_title)
         )
-
-        bmpUri?.let { uri ->
-            imageViewIdList[0].context.let { context ->
-                val resInfoList: List<ResolveInfo> = context.packageManager
-                    .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
-
-                for (resolveInfo in resInfoList) {
-                    val packageName = resolveInfo.activityInfo.packageName
-                    context.grantUriPermission(
-                        packageName,
-                        uri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    )
-                }
-            }
-
-        }
-
-        viewState.sharePost(chooser)
 
     }
 
     fun closeUpdateComment() {
-        viewState.showSendComment()
+        viewState.showSendComment(maxCommentLength)
     }
 
 }
