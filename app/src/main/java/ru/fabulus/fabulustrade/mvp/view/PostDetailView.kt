@@ -50,4 +50,8 @@ interface PostDetailView : MvpView {
     fun setKebabMenuSelf()
     fun setKebabMenuSomeone()
     fun setUpdateData(text: String)
+    fun setFlashVisibility(isVisible: Boolean)
+    fun setProfitAndFollowersVisibility(isVisible: Boolean)
+
+
 }

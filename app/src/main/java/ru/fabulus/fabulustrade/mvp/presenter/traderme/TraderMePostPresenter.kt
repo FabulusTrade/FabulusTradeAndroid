@@ -12,6 +12,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
@@ -22,6 +23,7 @@ import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
+
     @Inject
     lateinit var router: Router
 
@@ -47,6 +49,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
+
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null
@@ -78,6 +81,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setDislikesCount(post.dislikeCount)
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
+                setHeaderIcon(view, post)
+                setRepostCount(post.repostCount.toString())
                 val commentCount = post.commentCount()
                 setCommentCount(
                     resourceProvider.formatQuantityString(
@@ -86,6 +91,22 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         commentCount
                     )
                 )
+            }
+        }
+
+        private fun setHeaderIcon(view: PostItemView, post: Post) {
+            with(view) {
+                setFlashVisibility(yoursPublication(post))
+                setProfitAndFollowersVisibility(!yoursPublication(post))
+                if (!yoursPublication(post)) {
+                    setProfit(view, post)
+                    setFollowersCount(view, post)
+                }
+            }
+        }
+
+        private fun setProfit(view: PostItemView, post: Post) {
+            with(view) {
                 setProfit(
                     resourceProvider.formatDigitWithDef(
                         R.string.tv_profit_percent_text,
@@ -99,15 +120,17 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 } else {
                     setProfitPositiveArrow()
                 }
+            }
+        }
 
+        private fun setFollowersCount(view: PostItemView, post: Post){
+            with(view){
                 setAuthorFollowerCount(
                     resourceProvider.formatDigitWithDef(
                         R.string.tv_author_follower_count,
                         post.followersCount
                     )
                 )
-
-                setRepostCount(post.repostCount.toString())
             }
         }
 
@@ -146,7 +169,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         override fun deletePost(view: PostItemView) {
             val post = postList[view.pos]
             if (isCanDeletePost(post.dateCreate)) {
-
                 apiRepo.deletePost(profile.token!!, post.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -154,6 +176,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         viewState.updateAdapter()
 
                     }, {})
+
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }
@@ -161,12 +184,13 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun editPost(view: PostItemView, post: Post) {
             if (isCanEditPost(post.dateCreate)) {
-                updatePostResultListener = router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
-                    (updatedPost as? Post)?.let {
-                        listPresenter.postList[view.pos] = updatedPost
-                        viewState.updateAdapter()
+                updatePostResultListener =
+                    router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            listPresenter.postList[view.pos] = updatedPost
+                            viewState.updateAdapter()
+                        }
                     }
-                }
 
                 router.navigateTo(
                     Screens.createPostScreen(
@@ -247,6 +271,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     fun onScrollLimit() {
         loadPosts()
     }
+
+    private fun removePostAt(pos: Int) {
+        listPresenter.postList.removeAt(pos)
+        viewState.updateAdapter()
+    }
+
 
     fun onCreatePostBtnClicked() {
         newPostResultListener = router.setResultListener(NEW_POST_RESULT) { post ->

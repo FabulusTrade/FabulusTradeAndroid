@@ -210,6 +210,32 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             }
         }
 
+        override fun setFlashVisibility(isVisible: Boolean) {
+            if(isVisible){
+                itemView.ic_flash.visibility = View.VISIBLE
+            }else{
+                itemView.ic_flash.visibility = View.GONE
+            }
+        }
+
+        override fun setProfitAndFollowersVisibility(isVisible: Boolean) {
+            if (isVisible){
+                itemView.iv_profit_arrow.visibility = View.VISIBLE
+                itemView.tv_profit_percent.visibility = View.VISIBLE
+
+                itemView.tv_author_follower_count.visibility = View.VISIBLE
+                itemView.iv_person_add.visibility = View.VISIBLE
+            }else{
+                itemView.iv_profit_arrow.visibility = View.GONE
+                itemView.tv_profit_percent.visibility = View.GONE
+
+                itemView.tv_author_follower_count.visibility = View.GONE
+                itemView.iv_person_add.visibility = View.GONE
+            }
+        }
+
+
+
         override fun setPublicationItemTextMaxLines(isOpen: Boolean) {
             if (isOpen) {
                 itemView.tv_item_trader_news_post.maxLines = MAX_LINES

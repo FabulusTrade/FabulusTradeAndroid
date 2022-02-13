@@ -232,19 +232,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         viewState.setPostAuthorName(post.userName)
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
-        viewState.setProfit(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_profit_percent_text,
-                post.colorIncrDecrDepo365.value
-            ),
-            Color.parseColor(post.colorIncrDecrDepo365.color)
-        )
 
-        if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
-            viewState.setProfitNegativeArrow()
-        } else {
-            viewState.setProfitPositiveArrow()
-        }
 
         viewState.showSendComment(maxCommentLength)
 
@@ -258,13 +246,44 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
         setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+
+        viewState.setRepostCount(post.repostCount.toString())
+    }
+
+    fun initHeaderIcons(){
+
+        viewState.setFlashVisibility(isSelfPost(post))
+        viewState.setProfitAndFollowersVisibility(!isSelfPost(post))
+
+        if(!isSelfPost(post)){
+            initProfit()
+            initFollowersCount()
+        }
+    }
+
+    private fun initProfit(){
+        viewState.setProfit(
+            resourceProvider.formatDigitWithDef(
+                R.string.tv_profit_percent_text,
+                post.colorIncrDecrDepo365.value
+            ),
+            Color.parseColor(post.colorIncrDecrDepo365.color)
+        )
+
+        if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
+            viewState.setProfitNegativeArrow()
+        } else {
+            viewState.setProfitPositiveArrow()
+        }
+    }
+
+    private fun initFollowersCount(){
         viewState.setAuthorFollowerCount(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_author_follower_count,
                 post.followersCount
             )
         )
-        viewState.setRepostCount(post.repostCount.toString())
     }
 
 
@@ -336,6 +355,7 @@ class PostDetailPresenter(val post: Post) : MvpPresenter<PostDetailView>() {
     fun deletePost() {
         if (isCanDeletePost(post.dateCreate)) {
             apiRepo.deletePost(profile.token!!, post.id)
+                    //TODO
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     router.navigateTo(Screens.traderMeMainScreen())
