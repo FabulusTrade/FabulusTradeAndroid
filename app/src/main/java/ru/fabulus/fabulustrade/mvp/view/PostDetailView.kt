@@ -50,4 +50,6 @@ interface PostDetailView : MvpView {
     fun setRepostCount(text: String)
     fun setPostMenuSelf(post: Post)
     fun setPostMenuSomeone(post: Post)
+    fun setFlashVisibility(isVisible:Boolean)
+    fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }

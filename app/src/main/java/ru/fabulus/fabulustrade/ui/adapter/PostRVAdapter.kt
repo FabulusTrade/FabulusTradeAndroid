@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
+import kotlinx.android.synthetic.main.fragment_trader_analytics.view.*
 import kotlinx.android.synthetic.main.item_post_footer.view.*
 import kotlinx.android.synthetic.main.item_post_header.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
@@ -207,6 +208,30 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
                     }
                 }
                 menu.show()
+            }
+        }
+
+        override fun setFlashVisibility(isVisible: Boolean) {
+            if(isVisible){
+                itemView.iv_flash.visibility = View.VISIBLE
+            }else{
+                itemView.iv_flash.visibility = View.GONE
+            }
+        }
+
+        override fun setProfitAndFollowersVisibility(isVisible: Boolean) {
+            if(isVisible){
+                itemView.iv_person_add.visibility = View.VISIBLE
+                itemView.tv_author_follower_count.visibility = View.VISIBLE
+
+                itemView.iv_profit_arrow.visibility = View.VISIBLE
+                itemView.tv_profit_percent.visibility = View.VISIBLE
+            }else{
+                itemView.iv_person_add.visibility = View.GONE
+                itemView.tv_author_follower_count.visibility = View.GONE
+
+                itemView.iv_profit_arrow.visibility = View.GONE
+                itemView.tv_profit_percent.visibility = View.GONE
             }
         }
 

@@ -92,6 +92,18 @@
         app:srcCompat="@drawable/ic_person_add" />
 
     <ImageView
+        android:id="@+id/iv_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_person_add"
+        android:layout_marginStart="@dimen/item_header_flash_margin_start"
+        app:layout_constraintStart_toEndOf="@+id/iv_author_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_flash_grey"
+        android:visibility="gone"/>
+
+    <ImageView
         android:id="@+id/iv_attached_kebab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

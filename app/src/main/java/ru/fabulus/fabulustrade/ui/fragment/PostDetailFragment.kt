@@ -436,6 +436,34 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
     }
 
+    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
+        with(incItemPostHeader){
+            if(isVisible){
+                ivFlash.visibility = View.VISIBLE
+            }else{
+                ivFlash.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setProfitAndFollowersVisibility(isVisible: Boolean) = with(binding) {
+        with(incItemPostHeader){
+            if(isVisible){
+                ivProfitArrow.visibility = View.VISIBLE
+                tvProfitPercent.visibility = View.VISIBLE
+
+                ivPersonAdd.visibility = View.VISIBLE
+                tvAuthorFollowerCount.visibility = View.VISIBLE
+            }else{
+                ivProfitArrow.visibility = View.GONE
+                tvProfitPercent.visibility = View.GONE
+
+                ivPersonAdd.visibility = View.GONE
+                tvAuthorFollowerCount.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

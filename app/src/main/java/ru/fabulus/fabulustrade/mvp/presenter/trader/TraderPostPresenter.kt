@@ -111,6 +111,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                 setDislikesCount(post.dislikeCount)
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
+                setHeaderIcon(view, post)
                 val commentCount = post.commentCount()
                 setCommentCount(
                     resourceProvider.formatQuantityString(
@@ -119,28 +120,38 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                         commentCount
                     )
                 )
-                setProfit(
-                    resourceProvider.formatDigitWithDef(
-                        R.string.tv_profit_percent_text,
-                        post.colorIncrDecrDepo365.value
-                    ),
-                    Color.parseColor(post.colorIncrDecrDepo365.color)
-                )
-
-                if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
-                    setProfitNegativeArrow()
-                } else {
-                    setProfitPositiveArrow()
-                }
-
-                setAuthorFollowerCount(
-                    resourceProvider.formatDigitWithDef(
-                        R.string.tv_author_follower_count,
-                        post.followersCount
-                    )
-                )
 
                 setRepostCount(post.repostCount.toString())
+            }
+        }
+
+        private fun setHeaderIcon(view: PostItemView,post: Post){
+            with(view){
+                setFlashVisibility(yoursPublication(post))
+                setProfitAndFollowersVisibility(!yoursPublication(post))
+
+                if(!yoursPublication(post)){
+                    setProfit(
+                        resourceProvider.formatDigitWithDef(
+                            R.string.tv_profit_percent_text,
+                            post.colorIncrDecrDepo365.value
+                        ),
+                        Color.parseColor(post.colorIncrDecrDepo365.color)
+                    )
+
+                    if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
+                        setProfitNegativeArrow()
+                    } else {
+                        setProfitPositiveArrow()
+                    }
+
+                    setAuthorFollowerCount(
+                        resourceProvider.formatDigitWithDef(
+                            R.string.tv_author_follower_count,
+                            post.followersCount
+                        )
+                    )
+                }
             }
         }
 
