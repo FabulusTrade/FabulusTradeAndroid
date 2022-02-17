@@ -165,6 +165,9 @@ fun ImageView.getBitmapUriFromDrawable(): Uri? {
     val drawable: Drawable = this.drawable
     var bmp: Bitmap? = null
 
+    if (drawable.intrinsicHeight <= 0 || drawable.intrinsicWidth <= 0) {
+        return null //картинка ещё не загрузилась
+    }
     bmp = drawable.toBitmap()
     var bmpUri: Uri? = null
     try {
