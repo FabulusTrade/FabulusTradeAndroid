@@ -541,4 +541,10 @@
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
     <string name="tv_editable_text_label_text">Редактирование</string>
 
+    <!-- CompanyTradingOperationsJournal -->
+    <string name="remaining_position_comp_trad_ops_journal">Остаток позиции</string>
+    <string name="price_item_comp_trad_ops_journal">Цена</string>
+    <string name="quantity_item_comp_trad_ops_journal">Количество</string>
+    <string name="operations_comp_trad_ops_journal">Журнал операций</string>
+
 </resources>

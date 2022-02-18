@@ -142,5 +142,17 @@
     <dimen name="tv_editable_text_text_size">12sp</dimen>
     <dimen name="tv_editable_text_margin_bottom">5dp</dimen>
     <dimen name="item_header_flash_margin_start">150dp</dimen>
-
+    <dimen name="tv_comp_trading_ops_journal_padding_vertical">10dp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_name_text_size">20sp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_operations_title_text_size">18sp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_operations_title_padding_start">15dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_margin_horizontal">15dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_margin_vertical">5dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_padding_top">5dp</dimen>
+    <dimen name="tv_item_comp_trading_ops_journal_padding_horizontal">15dp</dimen>
+    <dimen name="iv_item_comp_trading_ops_journal_logo_size">50dp</dimen>
+    <dimen name="iv_item_comp_trading_ops_journal_margin_top">17dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_padding_start">16dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_list_divider_layout_height">2dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_list_divider_margin_top">10dp</dimen>
 </resources>
