@@ -1,41 +1,28 @@
 package ru.fabulus.fabulustrade.mvp.presenter.trader
 
 import android.graphics.Color
-import com.github.terrakok.cicerone.Router
+import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
-import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trader
-import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
-import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.model.entity.TraderStatistic
+import ru.fabulus.fabulustrade.mvp.presenter.base.BaseTraderMvpPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMainView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import java.net.ProtocolException
-import javax.inject.Inject
 
-class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
+class TraderMainPresenter(val trader: Trader) : BaseTraderMvpPresenter<TraderMainView>() {
     companion object {
         private const val OBSERVER = 1
         private const val TRADER = 2
+        private const val LOG = "VVV"
     }
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var apiRepo: ApiRepo
-
-    @Inject
-    lateinit var profile: Profile
-
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
-
-    var isObserveActive: Boolean = false
+    private var isObserveActive: Boolean = false
 
     override fun onFirstViewAttach() {
+        Log.d(LOG, "TraderMainPresenter. onFirstViewAttach()")
         super.onFirstViewAttach()
         loadTraderStatistic()
         setVisibility(false)
@@ -46,10 +33,11 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun loadTraderStatistic() {
+        Log.d(LOG, "TraderMainPresenter. loadTraderStatistic()")
         apiRepo
             .getTraderStatistic(trader.id)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ traderStatistic ->
+            .subscribe({ traderStatistic: TraderStatistic ->
 
                 var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
                 var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
@@ -73,6 +61,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     fun observeBtnClicked(subscribe: Boolean) {
+        Log.d(LOG, "TraderMainPresenter. observeBtnClicked()")
         viewState.setObserveChecked(subscribe)
         when {
             profile.user == null -> {
@@ -102,6 +91,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     fun subscribeToTraderBtnClicked() {
+        Log.d(LOG, "TraderMainPresenter. subscribeToTraderBtnClicked()")
         when {
             profile.user == null -> {
                 router.navigateTo(Screens.signInScreen(false))
@@ -137,6 +127,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun checkSubscription() {
+        Log.d(LOG, "TraderMainPresenter. checkSubscription()")
         if (profile.user != null) {
             setVisibility(false)
             apiRepo
@@ -172,6 +163,7 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
     }
 
     private fun setVisibility(result: Boolean) {
+        Log.d(LOG, "TraderMainPresenter. setVisibility()")
         isObserveActive = result
         viewState.setSubscribeBtnActive(result)
         viewState.setObserveVisibility(result)
