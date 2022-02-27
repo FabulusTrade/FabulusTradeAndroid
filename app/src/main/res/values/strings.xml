@@ -523,6 +523,8 @@
     <string name="text_copied">Текст скопирован</string>
     <string name="comment_can_not_be_edited">Невозможно изменить комментарий созданный более 1 часа назад</string>
     <string name="comment_can_not_be_deleted">Невозможно удалить комментарий созданный более 1 часа назад</string>
+    <string name="post_can_not_be_edited">Невозможно изменить пост созданный более 1 часа назад</string>
+    <string name="post_can_not_be_deleted">Невозможно удалить пост созданный более 1 часа назад</string>
     <string name="unethical_content">Неэтичный контент</string>
     <string name="mat_insults_provocation">Мат / Оскорбления / Провокация</string>
     <string name="threats_harassment">Угрозы / Преследование</string>

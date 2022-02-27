@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -17,6 +19,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.trader.TraderPostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showToast
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     private var _binding: FragmentTraderPostBinding? = null
@@ -44,6 +48,11 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     }
 
     private var postRVAdapter: PostRVAdapter? = null
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            presenter.listPresenter.incRepostCount()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,8 +119,24 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         }
     }
 
+
+
     override fun share(shareIntent: Intent) {
-        startActivity(shareIntent)
+        resultLauncher.launch(shareIntent)
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showToast(msg)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.rvTraderPost,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {

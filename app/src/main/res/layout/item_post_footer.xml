@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@+id/btn_like" />
 
     <TextView
-        android:id="@+id/btn_share_count"
+        android:id="@+id/tv_repost_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_low"
@@ -87,5 +87,5 @@
         android:background="@color/view_author_horizontal_divider_background_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_share_count" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_repost_count" />
 </androidx.constraintlayout.widget.ConstraintLayout>

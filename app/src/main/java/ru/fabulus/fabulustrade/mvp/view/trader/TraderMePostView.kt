@@ -13,7 +13,10 @@ interface TraderMePostView : MvpView {
     fun setBtnsState(state: TraderMePostPresenter.State)
     fun updateAdapter()
 
-    // footer
     @StateStrategyType(SkipStrategy::class)
     fun share(shareIntent: Intent)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(msg: String)
+    fun showComplainSnackBar()
 }

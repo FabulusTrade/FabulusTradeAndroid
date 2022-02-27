@@ -5,6 +5,7 @@ import android.text.Spanned
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface PostDetailView : MvpView {
@@ -23,7 +24,7 @@ interface PostDetailView : MvpView {
     fun setLikeInactiveImage()
     fun setDislikeActiveImage()
     fun setDislikeInactiveImage()
-    fun sharePost(shareIntent: Intent)
+    fun share(shareIntent: Intent)
     fun setCommentCount(text: String)
     fun updateCommentsAdapter()
     fun setRvPosition(position: Int)
@@ -46,4 +47,9 @@ interface PostDetailView : MvpView {
     fun notifyItemChanged(position: Int)
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)
+    fun setRepostCount(text: String)
+    fun setPostMenuSelf(post: Post)
+    fun setPostMenuSomeone(post: Post)
+    fun setFlashVisibility(isVisible:Boolean)
+    fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }

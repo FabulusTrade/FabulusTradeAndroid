@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.fragment_post_detail.view.*
+import kotlinx.android.synthetic.main.fragment_trader_analytics.view.*
 import kotlinx.android.synthetic.main.item_post_footer.view.*
 import kotlinx.android.synthetic.main.item_post_header.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.item_trader_news.view.image_group
 import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_footer
 import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_header
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -66,9 +67,6 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.itemView.inc_item_post_footer.btn_dislike.setOnClickListener {
             presenter.postDisliked(holder)
         }
-        holder.itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener {
-            initMenu(holder)
-        }
         holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
             presenter.setPublicationTextMaxLines(holder)
         }
@@ -77,34 +75,8 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
-            presenter.share(holder.pos, holder.itemView.image_group.getImageViews())
+            presenter.share(holder, holder.itemView.image_group.getImageViews())
         }
-    }
-
-    private fun initMenu(holder: PostViewHolder) {
-        val menu = PopupMenu(
-            holder.itemView.context,
-            holder.itemView.inc_item_post_header.iv_attached_kebab
-        )
-        menu.inflate(R.menu.menu_publication)
-        menu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.publication_share -> {
-                    holder.itemView.context?.showLongToast("Поделиться")
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.publication_text_edit -> {
-                    presenter.postUpdate(holder)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.publication_text_delete -> {
-                    presenter.postDelete(holder)
-                    return@setOnMenuItemClickListener true
-                }
-                else -> return@setOnMenuItemClickListener false
-            }
-        }
-        menu.show()
     }
 
     override fun getItemCount(): Int = presenter.getCount()
@@ -184,11 +156,82 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             }
         }
 
-        override fun setKebabMenuVisibility(isVisible: Boolean) {
-            if (isVisible) {
-                itemView.inc_item_post_header.iv_attached_kebab.visibility = View.VISIBLE
-            } else {
-                itemView.inc_item_post_header.iv_attached_kebab.visibility = View.GONE
+        override fun setIvAttachedKebabMenuSelf(post: Post) {
+            itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener { btn ->
+                val menu = PopupMenu(itemView.context, btn)
+                menu.inflate(R.menu.menu_self_comment)
+
+                menu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+
+                        R.id.edit_comment -> {
+                            presenter.editPost(this, post)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.copy_comment_text -> {
+                            presenter.copyPost(post)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.delete_comment -> {
+                            presenter.deletePost(this)
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                menu.show()
+            }
+        }
+
+        override fun setIvAttachedKebabMenuSomeone(post: Post) {
+            itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener { btn ->
+                val menu = PopupMenu(itemView.context, btn)
+                menu.inflate(R.menu.menu_someone_comment)
+
+                menu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.mi_copy_comment_text -> {
+                            presenter.copyPost(post)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.mi_unethical_content,
+                        R.id.mi_mat_insults_provocation,
+                        R.id.mi_threats_harassment,
+                        R.id.mi_market_manipulation,
+                        R.id.mi_advertising,
+                        R.id.mi_flood_spam,
+                        R.id.mi_begging_extortion -> {
+                            presenter.complainOnPost(post, menuItem.title.toString())
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                menu.show()
+            }
+        }
+
+        override fun setFlashVisibility(isVisible: Boolean) {
+            if(isVisible){
+                itemView.iv_flash.visibility = View.VISIBLE
+            }else{
+                itemView.iv_flash.visibility = View.GONE
+            }
+        }
+
+        override fun setProfitAndFollowersVisibility(isVisible: Boolean) {
+            if(isVisible){
+                itemView.iv_person_add.visibility = View.VISIBLE
+                itemView.tv_author_follower_count.visibility = View.VISIBLE
+
+                itemView.iv_profit_arrow.visibility = View.VISIBLE
+                itemView.tv_profit_percent.visibility = View.VISIBLE
+            }else{
+                itemView.iv_person_add.visibility = View.GONE
+                itemView.tv_author_follower_count.visibility = View.GONE
+
+                itemView.iv_profit_arrow.visibility = View.GONE
+                itemView.tv_profit_percent.visibility = View.GONE
             }
         }
 
@@ -214,6 +257,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setCommentCount(text: String) {
             itemView.btn_item_trader_news_show_comments.text = text
+        }
+
+        override fun setRepostCount(text: String) {
+            itemView.tv_repost_count.text = text
         }
 
         fun recycle() {

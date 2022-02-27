@@ -186,7 +186,7 @@ interface WinTradeApi {
         @Path("id") postId: String,
         @Field("trader_id") id: String,
         @Field("text") text: String
-    ): Completable
+    ): Single<ResponsePost>
 
     @POST("auth/avatar/")
     @Multipart
@@ -292,4 +292,10 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Path(value = "comment_id", encoded = true) commentId: Long
     ): Single<ResponseLikes>
+
+    // счетчик количества репостов
+    @GET("api/v1/trader/post/{post_id}/repost")
+    fun incRepostCount(
+        @Path(value = "post_id") postId: Int
+    ): Single<ResponseIncRepostCount>
 }
