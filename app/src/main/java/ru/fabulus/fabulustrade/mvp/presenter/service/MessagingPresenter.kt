@@ -71,7 +71,8 @@ class MessagingPresenter(private val service: MessagingService) {
                 R.string.push_title_pattern,
                 trader,
                 operationType,
-                dateData
+                dateData,
+                operationSubTypeResult
             ), FROM_HTML_MODE_LEGACY
         )
 
@@ -79,8 +80,7 @@ class MessagingPresenter(private val service: MessagingService) {
             R.string.push_body_pattern,
             company,
             price,
-            currency,
-            operationSubTypeResult
+            currency
         )
 
         service.showNotification(title, body, getNotificationId())
