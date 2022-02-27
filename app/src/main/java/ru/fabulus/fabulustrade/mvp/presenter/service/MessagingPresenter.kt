@@ -20,6 +20,9 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val TRADE_CURRENCY_KEY = "trade_currency"
         private const val OPERATION_TYPE_KEY = "operation_type"
         private const val DELAYED_TRADE_KEY = "delayed_trade"
+        private const val OPERATION_SUBTYPE_KEY = "operation_subtype"
+        private const val OPERATION_SUBTYPE_OPENING_VALUE = "opening"
+        private const val OPERATION_SUBTYPE_CLOSING_VALUE = "closing"
     }
 
     @Inject
@@ -29,6 +32,7 @@ class MessagingPresenter(private val service: MessagingService) {
     lateinit var resourceProvider: ResourceProvider
 
     private var body = ""
+    private var operationSubTypeResult = ""
 
     fun messageReceived(data: Map<String, String>) {
         val trader = data.getOrElse(TRADER_KEY) { "" }
@@ -38,6 +42,13 @@ class MessagingPresenter(private val service: MessagingService) {
         val currency = data.getOrElse(TRADE_CURRENCY_KEY) { "" }
         var dateData = data.getOrElse(OPERATION_DATE_KEY) { "" }
         val isDelayedTrade = data.getOrElse(DELAYED_TRADE_KEY) { "" }.uppercase() == "TRUE"
+        val operationSubType = data.getOrElse(OPERATION_SUBTYPE_KEY) { "" }
+
+        operationSubTypeResult = when (operationSubType) {
+            OPERATION_SUBTYPE_OPENING_VALUE -> resourceProvider.getStringResource(R.string.push_body_opening_subtype)
+            OPERATION_SUBTYPE_CLOSING_VALUE -> resourceProvider.getStringResource(R.string.push_body_closing_subtype)
+            else -> resourceProvider.getStringResource(R.string.empty_string)
+        }
 
         dateData = if (isDelayedTrade && dateData.isNotEmpty()) {
             //передаем в переменную дату ДД/ММ и время ММ:ЧЧ
@@ -68,7 +79,8 @@ class MessagingPresenter(private val service: MessagingService) {
             R.string.push_body_pattern,
             company,
             price,
-            currency
+            currency,
+            operationSubTypeResult
         )
 
         service.showNotification(title, body, getNotificationId())
