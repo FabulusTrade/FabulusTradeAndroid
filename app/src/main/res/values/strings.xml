@@ -484,12 +484,12 @@
     <string name="trader_me_tv_subscriber_observation_profit_text">%.2f%%</string>
 
     <!--MessagingPresenter-->
-    <string name="push_title_pattern"><b>%s: %s %s \n%s</b></string>
+    <string name="push_title_pattern"><b>%s: %s %s</b></string>
     <string name="push_date_pattern">%s (%s)</string>
     <string name="push_price_pattern">%.2f</string>
     <string name="push_body_pattern">%s по цене: %s %s</string>
-    <string name="push_body_opening_subtype">Открытие позиции</string>
-    <string name="push_body_closing_subtype">Закрытие позиции</string>
+    <string name="push_body_opening_subtype">&lt;b>Открытие позиции&lt;/b></string>
+    <string name="push_body_closing_subtype">&lt;b>Закрытие позиции&lt;/b></string>
     <string name="empty_string" />
 
     <!--SignUpPresenter-->

@@ -9,6 +9,7 @@ import ru.fabulus.fabulustrade.ui.service.MessagingService
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
 import ru.fabulus.fabulustrade.util.getNotificationId
+import ru.fabulus.fabulustrade.util.toSpanned
 import javax.inject.Inject
 
 class MessagingPresenter(private val service: MessagingService) {
@@ -49,6 +50,7 @@ class MessagingPresenter(private val service: MessagingService) {
             OPERATION_SUBTYPE_CLOSING_VALUE -> resourceProvider.getStringResource(R.string.push_body_closing_subtype)
             else -> resourceProvider.getStringResource(R.string.empty_string)
         }
+        val operationResultTitle = operationSubTypeResult.toSpanned()
 
         dateData = if (isDelayedTrade && dateData.isNotEmpty()) {
             //передаем в переменную дату ДД/ММ и время ММ:ЧЧ
@@ -71,8 +73,7 @@ class MessagingPresenter(private val service: MessagingService) {
                 R.string.push_title_pattern,
                 trader,
                 operationType,
-                dateData,
-                operationSubTypeResult
+                dateData
             ), FROM_HTML_MODE_LEGACY
         )
 
@@ -83,7 +84,7 @@ class MessagingPresenter(private val service: MessagingService) {
             currency
         )
 
-        service.showNotification(title, body, getNotificationId())
+        service.showNotification(title, operationResultTitle, body, getNotificationId())
         apiRepo.newTradeSubject.onNext(true)
     }
 }
