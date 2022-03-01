@@ -508,7 +508,7 @@
                 \n
                 %s
     </string>
-    <string name="et_update_comment_text_hint" >Измененный комментарий</string>
+    <string name="et_update_comment_text_hint">Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
@@ -540,5 +540,8 @@
     <string name="ib_update_comment_content_description">изменить комментарий</string>
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
     <string name="tv_editable_text_label_text">Редактирование</string>
+    <string name="general_news_feed_menu_title">Новстная лента</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

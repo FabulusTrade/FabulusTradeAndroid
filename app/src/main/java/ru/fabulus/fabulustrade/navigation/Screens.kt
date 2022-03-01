@@ -116,4 +116,6 @@ object Screens {
 
     fun postDetailFragment(post: Post) =
         FragmentScreen { PostDetailFragment.newInstance(post) }
+
+    fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
 }
