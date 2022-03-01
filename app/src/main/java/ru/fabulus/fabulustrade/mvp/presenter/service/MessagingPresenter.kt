@@ -32,7 +32,6 @@ class MessagingPresenter(private val service: MessagingService) {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    private var body = ""
     private var operationSubTypeResult = ""
 
     fun messageReceived(data: Map<String, String>) {
@@ -45,11 +44,31 @@ class MessagingPresenter(private val service: MessagingService) {
         val isDelayedTrade = data.getOrElse(DELAYED_TRADE_KEY) { "" }.uppercase() == "TRUE"
         val operationSubType = data.getOrElse(OPERATION_SUBTYPE_KEY) { "" }
 
+        var isSale: Boolean? = null
+
+        if (operationType.uppercase()
+                .equals(resourceProvider.getStringResource(R.string.uppercased_sale_string))
+        )
+            isSale = true
+        if (operationType.uppercase()
+                .equals(resourceProvider.getStringResource(R.string.uppercased_buy_string))
+        )
+            isSale = false
+
         operationSubTypeResult = when (operationSubType) {
-            OPERATION_SUBTYPE_OPENING_VALUE -> resourceProvider.getStringResource(R.string.push_body_opening_subtype)
-            OPERATION_SUBTYPE_CLOSING_VALUE -> resourceProvider.getStringResource(R.string.push_body_closing_subtype)
+            OPERATION_SUBTYPE_OPENING_VALUE ->
+                resourceProvider.getStringResource(R.string.push_body_opening_subtype) + " " + isSale?.let {
+                    if (isSale!!) resourceProvider.getStringResource(R.string.short_position)
+                    else resourceProvider.getStringResource(R.string.long_position)
+                }
+            OPERATION_SUBTYPE_CLOSING_VALUE ->
+                resourceProvider.getStringResource(R.string.push_body_closing_subtype) + " " + isSale?.let {
+                    if (isSale!!) resourceProvider.getStringResource(R.string.long_position)
+                    else resourceProvider.getStringResource(R.string.short_position)
+                }
             else -> resourceProvider.getStringResource(R.string.empty_string)
         }
+
         val operationResultTitle = operationSubTypeResult.toSpanned()
 
         dateData = if (isDelayedTrade && dateData.isNotEmpty()) {
@@ -77,7 +96,7 @@ class MessagingPresenter(private val service: MessagingService) {
             ), FROM_HTML_MODE_LEGACY
         )
 
-        body = resourceProvider.formatString(
+        val body = resourceProvider.formatString(
             R.string.push_body_pattern,
             company,
             price,

@@ -543,5 +543,9 @@
     <string name="ib_update_comment_content_description">изменить комментарий</string>
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
     <string name="tv_editable_text_label_text">Редактирование</string>
+    <string name="uppercased_sale_string">ПРОДАЖА</string>
+    <string name="uppercased_buy_string">ПОКУПКА</string>
+    <string name="short_position">SHORT</string>
+    <string name="long_position">LONG</string>
 
 </resources>
