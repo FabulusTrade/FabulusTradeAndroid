@@ -1,16 +1,15 @@
 package ru.fabulus.fabulustrade.mvp.view.traderme
 
-import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.fabulus.fabulustrade.mvp.model.entity.TraderStatistic
+import ru.fabulus.fabulustrade.mvp.view.base.BaseTraderView
 
 @StateStrategyType(AddToEndStrategy::class)
-interface TraderMeMainView: MvpView {
+interface TraderMeMainView: BaseTraderView {
     fun init()
     fun setProfit(profit: String, textColor: Int)
     fun setUsername(username: String)
     fun setSubscriberCount(count: Int)
-    fun setAvatar(url: String?)
     fun initVP(traderStatistic: TraderStatistic)
 }
