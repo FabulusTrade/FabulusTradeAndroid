@@ -1,39 +1,21 @@
 package ru.fabulus.fabulustrade.mvp.presenter.trader
 
-import android.graphics.Color
-import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
-import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trader
-import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
-import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.model.entity.TraderStatistic
+import ru.fabulus.fabulustrade.mvp.presenter.base.BaseTraderMvpPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMainView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import java.net.ProtocolException
-import javax.inject.Inject
 
-class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
+class TraderMainPresenter(val trader: Trader) : BaseTraderMvpPresenter<TraderMainView>() {
     companion object {
         private const val OBSERVER = 1
         private const val TRADER = 2
     }
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var apiRepo: ApiRepo
-
-    @Inject
-    lateinit var profile: Profile
-
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
-
-    var isObserveActive: Boolean = false
+    private var isObserveActive: Boolean = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -49,22 +31,8 @@ class TraderMainPresenter(val trader: Trader) : MvpPresenter<TraderMainView>() {
         apiRepo
             .getTraderStatistic(trader.id)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ traderStatistic ->
-
-                var tmpColor = resourceProvider.getColor(R.color.colorDarkGray)
-                var tmpProfit = resourceProvider.getStringResource(R.string.empty_profit_result)
-
-                traderStatistic.colorIncrDecrDepo365?.let { colorItem ->
-                    tmpProfit = resourceProvider.formatDigitWithDef(
-                        R.string.incr_decr_depo_365,
-                        colorItem.value
-                    )
-
-                    colorItem.color?.let { color ->
-                        tmpColor = Color.parseColor(color)
-                    }
-                }
-
+            .subscribe({ traderStatistic: TraderStatistic ->
+                val (tmpColor, tmpProfit) = getProfitAndColor(traderStatistic)
                 viewState.setProfit(tmpProfit, tmpColor)
                 viewState.initVP(traderStatistic, trader)
             }, { error ->

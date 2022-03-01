@@ -16,10 +16,24 @@ fun ResourceProvider.getSharePostIntent(post: Post, imageViewIdList: List<ImageV
         action = Intent.ACTION_SEND
         type = "text/plain"
 
+        var textPost = post.text
+
+        if (post.images.count() > 0) {
+            imageViewIdList[0].getBitmapUriFromDrawable()
+                ?.let { uri ->
+                    bmpUri = uri
+                    putExtra(Intent.EXTRA_STREAM, bmpUri)
+                    type = "image/*"
+                }
+                ?: run {
+                    textPost = "${post.images.first()}\n\n${post.text}"
+                }
+        }
+
         var title = formatString(
             R.string.share_message_pattern,
             post.userName,
-            post.text
+            textPost
         )
 
         if (title.length > MAX_SHARED_LEN_POST_TEXT) {
@@ -30,13 +44,6 @@ fun ResourceProvider.getSharePostIntent(post: Post, imageViewIdList: List<ImageV
         }
 
         putExtra(Intent.EXTRA_TEXT, title)
-        if (post.images.count() > 0) {
-            imageViewIdList[0].getBitmapUriFromDrawable()?.let { uri ->
-                bmpUri = uri
-                putExtra(Intent.EXTRA_STREAM, bmpUri)
-                type = "image/*"
-            }
-        }
     }
 
     val chooser = Intent.createChooser(
