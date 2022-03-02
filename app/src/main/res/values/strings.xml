@@ -488,6 +488,9 @@
     <string name="push_date_pattern">%s (%s)</string>
     <string name="push_price_pattern">%.2f</string>
     <string name="push_body_pattern">%s по цене: %s %s</string>
+    <string name="push_body_opening_subtype">&lt;b>Открытие позиции&lt;/b></string>
+    <string name="push_body_closing_subtype">&lt;b>Закрытие позиции&lt;/b></string>
+    <string name="empty_string" />
 
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
@@ -540,5 +543,9 @@
     <string name="ib_update_comment_content_description">изменить комментарий</string>
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
     <string name="tv_editable_text_label_text">Редактирование</string>
+    <string name="uppercased_sale_string">ПРОДАЖА</string>
+    <string name="uppercased_buy_string">ПОКУПКА</string>
+    <string name="short_position">SHORT</string>
+    <string name="long_position">LONG</string>
 
 </resources>
