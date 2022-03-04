@@ -54,6 +54,13 @@ class CompanyTradingOperationsFragment(private val traderId: String, private val
             adapter = companyTradingOperationsRVAdapter
             layoutManager = LinearLayoutManager(context)
         }
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.btnCompanyTradingOperationsOpenJournal.setOnClickListener {
+            presenter.openJournal()
+        }
     }
 
     override fun updateRecyclerView() {

@@ -3,21 +3,21 @@ package ru.fabulus.fabulustrade.mvp.presenter
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import ru.fabulus.fabulustrade.mvp.model.entity.JournalTradesSortedByCompany
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
-import ru.fabulus.fabulustrade.mvp.model.entity.TradesSortedByCompany
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
-import ru.fabulus.fabulustrade.mvp.view.CompanyTradingOperationsView
-import ru.fabulus.fabulustrade.mvp.view.item.CompanyTradingOperationsItemView
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.ICompanyTradingOperationsJournalListPresenter
+import ru.fabulus.fabulustrade.mvp.view.CompanyTradingOperationsJournalView
+import ru.fabulus.fabulustrade.mvp.view.item.CompanyTradingOperationsJournalItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.doubleToStringWithFormat
 import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
-class CompanyTradingOperationsPresenter(
+class CompanyTradingOperationsJournalPresenter(
     val traderId: String,
     val companyId: Int
-) : MvpPresenter<CompanyTradingOperationsView>() {
+) : MvpPresenter<CompanyTradingOperationsJournalView>() {
 
     companion object {
         private const val PROFIT_FORMAT = "0.00"
@@ -36,13 +36,14 @@ class CompanyTradingOperationsPresenter(
     private var isLoading = false
     private var nextPage: Int? = 1
 
-    val listPresenter = CompanyTradingOperationsRvListPresenter()
+    val listPresenter = CompanyTradingOperationsJournalRvListPresenter()
 
-    inner class CompanyTradingOperationsRvListPresenter : ICompanyTradingOperationsListPresenter {
-        val dealsList = mutableListOf<TradesSortedByCompany>()
+    inner class CompanyTradingOperationsJournalRvListPresenter :
+        ICompanyTradingOperationsJournalListPresenter {
+        val dealsList = mutableListOf<JournalTradesSortedByCompany>()
         override fun getCount(): Int = dealsList.size
 
-        override fun bind(view: CompanyTradingOperationsItemView) {
+        override fun bind(view: CompanyTradingOperationsJournalItemView) {
             val deals = dealsList[view.pos]
             view.setCompanyLogo(deals.companyImg)
             view.setOperationDate("Дата ${deals.date.toStringFormat()}")
@@ -60,7 +61,7 @@ class CompanyTradingOperationsPresenter(
             }
         }
 
-        override fun itemClicked(view: CompanyTradingOperationsItemView) {
+        override fun itemClicked(view: CompanyTradingOperationsJournalItemView) {
             profile.token?.let { token ->
                 apiRepo
                     .getTradeById(token, dealsList[view.pos].id)
@@ -77,13 +78,13 @@ class CompanyTradingOperationsPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadCompanyDeals()
+        loadCompanyDealsJournal()
     }
 
-    private fun loadCompanyDeals() {
+    private fun loadCompanyDealsJournal() {
         profile.token?.let {
             apiRepo
-                .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
+                .getTraderTradesJournalByCompany(it, traderId, companyId, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.dealsList.addAll(pag.results)
@@ -96,16 +97,12 @@ class CompanyTradingOperationsPresenter(
         }
     }
 
-    fun openJournal() {
-        router.navigateTo(Screens.companyTradingOperationsJournalScreen(traderId, companyId))
-    }
-
     fun onScrollLimit() {
         if (nextPage != null && !isLoading) {
             isLoading = true
             profile.token?.let {
                 apiRepo
-                    .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
+                    .getTraderTradesJournalByCompany(it, traderId, companyId, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
                         listPresenter.dealsList.addAll(pag.results)
