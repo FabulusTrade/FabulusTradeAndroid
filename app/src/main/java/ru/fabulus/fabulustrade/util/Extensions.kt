@@ -201,6 +201,29 @@ fun ImageView.getBitmapUriFromDrawable(): Uri? {
     return bmpUri
 }
 
+fun <T : View> T.show(): T {
+    if (visibility != View.VISIBLE) {
+        visibility = View.VISIBLE
+    }
+    return this
+}
+
+fun <T : View> T.hide(): T {
+    if (visibility != View.GONE) {
+        visibility = View.GONE
+    }
+    return this
+}
+
+inline fun <T : View> T.visibilityByCondition(condition: () -> Boolean): T {
+    if (condition()) {
+        show()
+    } else {
+        hide()
+    }
+    return this
+}
+
 fun String.toSpannableText(
     startIndex: Int,
     endIndex: Int,

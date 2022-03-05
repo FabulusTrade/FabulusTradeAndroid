@@ -7,13 +7,9 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.fragment_trader_analytics.view.*
 import kotlinx.android.synthetic.main.item_post_footer.view.*
 import kotlinx.android.synthetic.main.item_post_header.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
-import kotlinx.android.synthetic.main.item_trader_news.view.image_group
-import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_footer
-import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_header
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
@@ -23,8 +19,8 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
-import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.visibilityByCondition
 import java.util.*
 import javax.inject.Inject
 
@@ -212,21 +208,17 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setFlashVisibility(isVisible: Boolean) {
-            if(isVisible){
-                itemView.iv_flash.visibility = View.VISIBLE
-            }else{
-                itemView.iv_flash.visibility = View.GONE
-            }
+            itemView.iv_flash.visibilityByCondition { isVisible }
         }
 
         override fun setProfitAndFollowersVisibility(isVisible: Boolean) {
-            if(isVisible){
+            if (isVisible) {
                 itemView.iv_person_add.visibility = View.VISIBLE
                 itemView.tv_author_follower_count.visibility = View.VISIBLE
 
                 itemView.iv_profit_arrow.visibility = View.VISIBLE
                 itemView.tv_profit_percent.visibility = View.VISIBLE
-            }else{
+            } else {
                 itemView.iv_person_add.visibility = View.GONE
                 itemView.tv_author_follower_count.visibility = View.GONE
 

@@ -132,33 +132,34 @@ fun <T, V> mapToPagination(
     )
 
 fun mapToPost(post: ResponsePost?): Post? {
-    post?.let {
+    return post?.let {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val dateCreate = dateFormat.parse(post.date_create)
         val dateUpd = dateFormat.parse(post.date_update)
         val images = post.images.map { it.image }
         val comments = mapToComments(post.comments)
-        return Post(
-            post.id,
-            post.username,
-            post.avatar,
-            post.followersCount,
-            post.trader_id,
-            post.text,
-            post.post_status,
-            dateCreate,
-            dateUpd,
-            post.pinned,
-            images,
-            post.like_count,
-            post.dislike_count,
-            post.is_liked,
-            post.is_disliked,
-            comments,
-            post.colorIncrDecrDepo365,
-            post.repostCount
+        Post(
+            id = post.id,
+            userName = post.username,
+            avatarUrl = post.avatar,
+            followersCount = post.followersCount,
+            traderId = post.trader_id,
+            text = post.text,
+            postStatus = post.post_status,
+            dateCreate = dateCreate,
+            dateUpdate = dateUpd,
+            pinned = post.pinned,
+            images = images,
+            likeCount = post.like_count,
+            dislikeCount = post.dislike_count,
+            isLiked = post.is_liked,
+            isDisliked = post.is_disliked,
+            comments = comments,
+            colorIncrDecrDepo365 = post.colorIncrDecrDepo365,
+            repostCount = post.repostCount,
+            isFlashed = post.isFlashed
         )
-    } ?: return null
+    }
 }
 
 fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompanyAggregated? {
