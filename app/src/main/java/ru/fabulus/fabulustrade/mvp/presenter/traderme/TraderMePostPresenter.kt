@@ -95,6 +95,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
+        private fun initStateOfFlashButton(post:Post) {
+
+        }
+
         private fun setHeaderIcon(view: PostItemView,post: Post){
             with(view){
                 setFlashVisibility(yoursPublication(post))
