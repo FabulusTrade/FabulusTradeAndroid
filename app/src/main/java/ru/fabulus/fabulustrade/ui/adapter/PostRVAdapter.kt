@@ -73,6 +73,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
             presenter.share(holder, holder.itemView.image_group.getImageViews())
         }
+
+        holder.itemView.iv_flash.setOnClickListener {
+            presenter.toFlash(holder)
+        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()
@@ -209,6 +213,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
         override fun setFlashVisibility(isVisible: Boolean) {
             itemView.iv_flash.visibilityByCondition { isVisible }
+        }
+
+        override fun setFlashColor(color: Int) {
+            itemView.iv_flash.setColorFilter(color)
         }
 
         override fun setProfitAndFollowersVisibility(isVisible: Boolean) {

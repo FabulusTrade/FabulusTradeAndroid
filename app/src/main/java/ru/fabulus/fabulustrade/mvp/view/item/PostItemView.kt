@@ -25,7 +25,9 @@ interface PostItemView {
     fun setRepostCount(text: String)
     fun setIvAttachedKebabMenuSelf(post: Post)
     fun setIvAttachedKebabMenuSomeone(post: Post)
-    fun setFlashVisibility(isVisible: Boolean)
-    fun setProfitAndFollowersVisibility(isVisible: Boolean)
 
+    fun setFlashVisibility(isVisible: Boolean)
+    fun setFlashColor(color: Int)
+
+    fun setProfitAndFollowersVisibility(isVisible: Boolean)
 }

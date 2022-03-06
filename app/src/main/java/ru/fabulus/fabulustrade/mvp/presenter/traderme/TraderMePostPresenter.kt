@@ -95,16 +95,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
-        private fun initStateOfFlashButton(post:Post) {
-
-        }
-
-        private fun setHeaderIcon(view: PostItemView,post: Post){
-            with(view){
-                setFlashVisibility(yoursPublication(post))
+        private fun setHeaderIcon(view: PostItemView, post: Post) {
+            with(view) {
+                initFlashIcon(post)
                 setProfitAndFollowersVisibility(!yoursPublication(post))
 
-                if(!yoursPublication(post)){
+                if (!yoursPublication(post)) {
                     setProfit(
                         resourceProvider.formatDigitWithDef(
                             R.string.tv_profit_percent_text,
@@ -127,6 +123,11 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     )
                 }
             }
+        }
+
+        private fun PostItemView.initFlashIcon(post: Post) {
+            setFlashVisibility(yoursPublication(post))
+            setFlashColor(post, this)
         }
 
         private fun yoursPublication(post: Post): Boolean {
@@ -262,6 +263,23 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     }
                     )
             }
+        }
+
+        override fun toFlash(view: PostItemView) {
+            val post = postList[view.pos]
+            post.isFlashed = !post.isFlashed
+            setFlashColor(post, view)
+        }
+
+        private fun setFlashColor(
+            post: Post,
+            view: PostItemView
+        ) {
+            if (post.isFlashed) {
+                resourceProvider.getColor(R.color.colorGreen)
+            } else {
+                resourceProvider.getColor(R.color.colorBlue)
+            }.let { view.setFlashColor(it) }
         }
 
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {

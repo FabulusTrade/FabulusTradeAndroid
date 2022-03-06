@@ -89,6 +89,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             }
         }
 
+        override fun toFlash(view: PostItemView) {
+            TODO("Not yet implemented")
+        }
+
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
             sharedView = view
             viewState.share(
