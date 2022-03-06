@@ -18,4 +18,5 @@ interface PostRVListPresenter {
 
     fun share(view: PostItemView, imageViewIdList: List<ImageView>)
     fun incRepostCount()
+    fun toFlash(view: PostItemView)
 }

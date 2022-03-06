@@ -97,7 +97,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/item_header_flash_margin_start"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/iv_person_add"
