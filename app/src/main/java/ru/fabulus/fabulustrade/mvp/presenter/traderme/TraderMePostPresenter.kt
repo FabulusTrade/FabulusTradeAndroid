@@ -16,7 +16,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELET
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -49,7 +49,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     val listPresenter = TraderRVListPresenter()
 
-    inner class TraderRVListPresenter : PostRVListPresenter {
+    inner class TraderRVListPresenter : TraderMePostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null

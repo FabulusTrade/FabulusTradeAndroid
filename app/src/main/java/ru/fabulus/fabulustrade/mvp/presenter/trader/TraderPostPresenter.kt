@@ -90,10 +90,6 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             }
         }
 
-        override fun toFlash(view: PostItemView) {
-            TODO("Not yet implemented")
-        }
-
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
             sharedView = view
             viewState.share(

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
@@ -75,7 +76,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         holder.itemView.iv_flash.setOnClickListener {
-            presenter.toFlash(holder)
+            (presenter as? TraderMePostRVListPresenter)?.toFlash(holder)
         }
     }
 
