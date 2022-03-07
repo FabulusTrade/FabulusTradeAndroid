@@ -553,5 +553,6 @@
     <string name="price_item_comp_trad_ops_journal">Цена</string>
     <string name="quantity_item_comp_trad_ops_journal">Количество</string>
     <string name="operations_comp_trad_ops_journal">Журнал операций</string>
+    <string name="pcs_string">" шт."</string>
 
 </resources>

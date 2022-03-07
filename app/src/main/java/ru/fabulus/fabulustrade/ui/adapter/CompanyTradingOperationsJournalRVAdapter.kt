@@ -75,7 +75,8 @@ class CompanyTradingOperationsJournalRVAdapter(val presenter: ICompanyTradingOpe
         }
 
         override fun setEndCount(endCount: Int) {
-            itemView.tv_item_comp_trading_ops_journal_quantity.text = endCount.toString()
+            itemView.tv_item_comp_trading_ops_journal_quantity.text = endCount.toString() + resourceProvider.getStringResource(
+                            R.string.pcs_string)
         }
 
         override fun setVisible(visible: Boolean) {

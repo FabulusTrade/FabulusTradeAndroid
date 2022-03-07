@@ -155,4 +155,5 @@
     <dimen name="layout_comp_trading_ops_journal_padding_start">16dp</dimen>
     <dimen name="view_item_comp_trading_ops_journal_list_divider_layout_height">2dp</dimen>
     <dimen name="view_item_comp_trading_ops_journal_list_divider_margin_top">10dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_operation_type_width">80dp</dimen>
 </resources>
