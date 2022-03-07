@@ -267,8 +267,22 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
         override fun toFlash(view: PostItemView) {
             val post = postList[view.pos]
-            post.isFlashed = !post.isFlashed
+            if (!post.isFlashed) {
+                viewState.showQuestionToFlashDialog {
+                    completeFlashing(post, view)
+                }
+            } else {
+                viewState.showMessagePostIsPosted()
+            }
+        }
+
+        private fun completeFlashing(
+            post: Post,
+            view: PostItemView
+        ) {
+            post.isFlashed = true
             setFlashColor(post, view)
+            viewState.showMessagePostIsPosted()
         }
 
         private fun setFlashColor(

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -162,6 +163,32 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             "",
             Snackbar.LENGTH_LONG
         )
+    }
+
+    override fun showQuestionToFlashDialog(onClickYes: () -> Unit) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(R.string.send_this_post_to_the_general_feed)
+                .setPositiveButton(R.string.yes) { dialog, _ ->
+                    onClickYes()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.no) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostIsPosted() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(R.string.the_post_is_posted_in_the_general_feed)
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
     }
 
     override fun onDestroyView() {

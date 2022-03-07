@@ -548,4 +548,10 @@
     <string name="short_position">SHORT</string>
     <string name="long_position">LONG</string>
 
+    <!--flash posts-->
+    <string name="yes">Да</string>
+    <string name="send_this_post_to_the_general_feed">Отправить этот пост в общую ленту?</string>
+    <string name="no">Нет</string>
+    <string name="the_post_is_posted_in_the_general_feed">Пост размещен в общей ленте!</string>
+
 </resources>
