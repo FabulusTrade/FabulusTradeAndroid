@@ -18,5 +18,9 @@ data class ResponseCompanyTradingOperationsJournal(
     @Expose
     val price: Float,
     @Expose
-    val currency: String
+    val currency: String,
+    @Expose
+    val endCount: Int,
+    @Expose
+    val visible: Boolean
 )

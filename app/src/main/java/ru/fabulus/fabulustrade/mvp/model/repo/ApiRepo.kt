@@ -404,7 +404,6 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     fun getTraderTradesJournalByCompany(
         token: String,
-        traderId: String,
         companyId: Int,
         page: Int = 1
     ): Single<Pagination<JournalTradesSortedByCompany>> =
@@ -413,7 +412,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMap { isOnline ->
                 if (isOnline) {
                     api
-                        .getDealsJournalByCompany(token, traderId, companyId, page)
+                        .getDealsJournalByCompany(token, companyId, page)
                         .flatMap { respPag ->
                             val trades = respPag.results.map {
                                 mapToTradeJournalByCompany(it)

@@ -57,23 +57,24 @@
                             android:id="@+id/tv_item_comp_trading_ops_journal_operation"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="1"
                             android:textColor="@color/colorBlack"
                             android:textStyle="bold"
                             tools:text="@string/purchase" />
 
                         <CheckBox
                             android:id="@+id/tv_item_comp_trading_ops_journal_observation"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:button="@drawable/ic_observe_selector"
+                            android:layout_weight="1.5"
+                            android:button="@drawable/ic_eye_green_selector"
                             android:visibility="visible" />
 
                         <TextView
                             android:id="@+id/tv_item_comp_trading_ops_journal_profit"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:background="@color/colorWhiteSmoke"
                             android:gravity="end"
                             android:paddingHorizontal="@dimen/tv_item_comp_trading_ops_journal_padding_horizontal"
@@ -108,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+                        android:visibility="invisible"
                         app:srcCompat="@drawable/ic_clip" />
 
                     <TextView
@@ -116,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:gravity="end"
-                        tools:text="@string/quantity_item_comp_trad_ops_journal"/>
+                        tools:text="@string/quantity_item_comp_trad_ops_journal" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -49,6 +49,8 @@ class CompanyTradingOperationsJournalPresenter(
             view.setOperationDate("Дата ${deals.date.toStringFormat()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
+            view.setEndCount(deals.endCount)
+            view.setVisible(deals.visible)
             if (deals.profitCount == null || deals.profitCount == ZERO) {
                 view.setProfitCount(null)
             } else {
@@ -84,7 +86,7 @@ class CompanyTradingOperationsJournalPresenter(
     private fun loadCompanyDealsJournal() {
         profile.token?.let {
             apiRepo
-                .getTraderTradesJournalByCompany(it, traderId, companyId, nextPage!!)
+                .getTraderTradesJournalByCompany(it, companyId, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.dealsList.addAll(pag.results)
@@ -102,7 +104,7 @@ class CompanyTradingOperationsJournalPresenter(
             isLoading = true
             profile.token?.let {
                 apiRepo
-                    .getTraderTradesJournalByCompany(it, traderId, companyId, nextPage!!)
+                    .getTraderTradesJournalByCompany(it, companyId, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
                         listPresenter.dealsList.addAll(pag.results)

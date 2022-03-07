@@ -73,5 +73,13 @@ class CompanyTradingOperationsJournalRVAdapter(val presenter: ICompanyTradingOpe
         override fun setTradePrice(price: String) {
             itemView.tv_item_comp_trading_ops_journal_price.text = price
         }
+
+        override fun setEndCount(endCount: Int) {
+            itemView.tv_item_comp_trading_ops_journal_quantity.text = endCount.toString()
+        }
+
+        override fun setVisible(visible: Boolean) {
+            itemView.tv_item_comp_trading_ops_journal_observation.isChecked = visible
+        }
     }
 }
