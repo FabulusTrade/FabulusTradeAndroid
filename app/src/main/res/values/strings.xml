@@ -555,4 +555,10 @@
     <string name="operations_comp_trad_ops_journal">Журнал операций</string>
     <string name="pcs_string">" шт."</string>
 
+    <!--flash posts-->
+    <string name="yes">Да</string>
+    <string name="send_this_post_to_the_general_feed">Отправить этот пост в общую ленту?</string>
+    <string name="no">Нет</string>
+    <string name="the_post_is_posted_in_the_general_feed">Пост размещен в общей ленте!</string>
+
 </resources>

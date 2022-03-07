@@ -19,4 +19,8 @@ interface TraderMePostView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun showToast(msg: String)
     fun showComplainSnackBar()
+    @StateStrategyType(SkipStrategy::class)
+    fun showQuestionToFlashDialog(onClickYes: () -> Unit)
+    @StateStrategyType(SkipStrategy::class)
+    fun showMessagePostIsPosted()
 }
