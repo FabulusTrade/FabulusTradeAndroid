@@ -144,6 +144,13 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseCompanyTradingOperations>>
 
+    @GET("api/v1/trader/my_trade_detailed/by_company/{company_id}/")
+    fun getDealsJournalByCompany(
+        @Header("Authorization") token: String,
+        @Path("company_id") companyId: Int,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseCompanyTradingOperationsJournal>>
+
     @POST("auth/users/")
     fun signUp(
         @Body signUpData: RequestSignUp

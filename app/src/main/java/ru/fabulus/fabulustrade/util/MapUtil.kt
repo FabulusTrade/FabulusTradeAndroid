@@ -190,6 +190,23 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
     )
 }
 
+fun mapToTradeJournalByCompany(companyTrade: ResponseCompanyTradingOperationsJournal): JournalTradesSortedByCompany {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val tradeDate = dateFormat.parse(companyTrade.date)
+    return JournalTradesSortedByCompany(
+        companyTrade.id,
+        companyTrade.operation_type,
+        companyTrade.company,
+        companyTrade.company_img,
+        tradeDate,
+        companyTrade.profit_count,
+        companyTrade.price,
+        companyTrade.currency,
+        companyTrade.endCount,
+        companyTrade.visible
+    )
+}
+
 fun mapToComments(responseComments: List<ResponseComment>): MutableList<Comment> {
     return responseComments.map { responseComment ->
         mapToComment(responseComment)

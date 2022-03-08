@@ -548,4 +548,11 @@
     <string name="short_position">SHORT</string>
     <string name="long_position">LONG</string>
 
+    <!-- CompanyTradingOperationsJournal -->
+    <string name="remaining_position_comp_trad_ops_journal">Остаток позиции</string>
+    <string name="price_item_comp_trad_ops_journal">Цена</string>
+    <string name="quantity_item_comp_trad_ops_journal">Количество</string>
+    <string name="operations_comp_trad_ops_journal">Журнал операций</string>
+    <string name="pcs_string">" шт."</string>
+
 </resources>
