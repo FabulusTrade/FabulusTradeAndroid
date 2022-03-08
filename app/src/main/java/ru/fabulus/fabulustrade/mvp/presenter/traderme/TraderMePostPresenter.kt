@@ -37,6 +37,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     lateinit var resourceProvider: ResourceProvider
 
     private var state = State.PUBLICATIONS
+    private var flashedPostsOnlyFilter = false
     private var isLoading = false
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
@@ -336,14 +337,31 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     fun publicationsBtnClicked() {
         state = State.PUBLICATIONS
-        viewState.setBtnsState(state)
-        nextPage = 1
-        listPresenter.postList.clear()
-        loadPosts()
+        initLoadingPosts()
     }
 
     fun subscriptionBtnClicked() {
         state = State.SUBSCRIPTION
+        initLoadingPosts()
+    }
+
+    fun flashedPostsBtnClicked() {
+        if (!flashedPostsOnlyFilter) {
+            flashedPostsOnlyFilter = true
+            initLoadingPosts()
+        }
+    }
+
+    fun backClicked(): Boolean {
+        if (flashedPostsOnlyFilter) {
+            flashedPostsOnlyFilter = false
+            initLoadingPosts()
+            return true
+        }
+        return false
+    }
+
+    private fun initLoadingPosts() {
         viewState.setBtnsState(state)
         nextPage = 1
         listPresenter.postList.clear()
@@ -355,7 +373,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             isLoading = true
             if (state == State.SUBSCRIPTION) {
                 apiRepo
-                    .getPostsFollowerAndObserving(profile.token!!, nextPage!!)
+                    .getPostsFollowerAndObserving(profile.token!!, nextPage!!, flashedPostsOnlyFilter)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
                         listPresenter.postList.addAll(pag.results)
@@ -368,7 +386,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     })
             } else {
                 apiRepo
-                    .getMyPosts(profile.token!!, nextPage!!)
+                    .getMyPosts(profile.token!!, nextPage!!, flashedPostsOnlyFilter)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
                         listPresenter.postList.addAll(pag.results)

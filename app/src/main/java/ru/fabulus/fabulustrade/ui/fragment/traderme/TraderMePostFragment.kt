@@ -20,11 +20,12 @@ import ru.fabulus.fabulustrade.databinding.FragmentTraderMePostsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 
-class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
+class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButtonListener {
     private var _binding: FragmentTraderMePostsBinding? = null
     private val binding: FragmentTraderMePostsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -72,6 +73,9 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             }
             btnTraderNewsSubscription.setOnClickListener {
                 presenter.subscriptionBtnClicked()
+            }
+            ivFlash.setOnClickListener {
+                presenter.flashedPostsBtnClicked()
             }
         }
     }
@@ -194,5 +198,9 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun backClicked(): Boolean {
+        return presenter.backClicked()
     }
 }
