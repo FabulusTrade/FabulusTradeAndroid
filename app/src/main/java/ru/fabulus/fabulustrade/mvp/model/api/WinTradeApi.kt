@@ -126,7 +126,8 @@ interface WinTradeApi {
     @GET("api/v1/trader/posts/following/")
     fun getPostsFollowerAndObserving(
         @Header("Authorization") token: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("flashed_posts_only") flashedPostsOnly: Boolean
     ): Single<ResponsePagination<ResponsePost>>
 
     @GET("api/v1/trader/{trader_id}/aggregated/")
@@ -231,7 +232,8 @@ interface WinTradeApi {
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("flashed_posts_only") flashedPostsOnly: Boolean = false
     ): Single<ResponsePagination<ResponsePost>>
 
     @POST("api/v1/feedback/send/")

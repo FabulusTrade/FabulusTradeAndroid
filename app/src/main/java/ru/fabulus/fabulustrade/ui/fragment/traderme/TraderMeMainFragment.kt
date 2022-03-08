@@ -26,6 +26,8 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     private val binding: FragmentTraderMeMainBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
+    private var viewPageAdapter: TraderMeMainAdapter? = null
+
     companion object {
         fun newInstance() = TraderMeMainFragment()
     }
@@ -104,7 +106,8 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     }
 
     override fun initVP(traderStatistic: TraderStatistic) {
-        binding.vpTraderMeMain.adapter = TraderMeMainAdapter(this, traderStatistic)
+        viewPageAdapter = TraderMeMainAdapter(this, traderStatistic)
+        binding.vpTraderMeMain.adapter = viewPageAdapter
         TabLayoutMediator(
             binding.tabLayoutTraderMainMe,
             binding.vpTraderMeMain
@@ -134,6 +137,11 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     }
 
     override fun backClicked(): Boolean {
+        val currentPage = binding.vpTraderMeMain.currentItem
+        val currentFragment = viewPageAdapter?.getFragment(currentPage)
+        if (currentFragment is BackButtonListener && currentFragment.backClicked()) {
+            return true
+        }
         presenter.backClicked()
         return true
     }
