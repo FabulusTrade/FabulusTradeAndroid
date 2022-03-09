@@ -6,10 +6,12 @@ import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
+import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELETE_POST_RESULT
@@ -38,7 +40,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     private var state = State.PUBLICATIONS
     private var flashedPostsOnlyFilter = false
-    private var isLoading = false
+    private var loadingPostDisposable: Disposable? = null
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
     private var updatePostResultListener: ResultListenerHandler? = null
@@ -337,66 +339,85 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     fun publicationsBtnClicked() {
         state = State.PUBLICATIONS
-        initLoadingPosts()
+        initNewLoadingPosts()
+        loadPosts()
     }
 
     fun subscriptionBtnClicked() {
         state = State.SUBSCRIPTION
-        initLoadingPosts()
+        initNewLoadingPosts()
+        loadPosts()
     }
 
     fun flashedPostsBtnClicked() {
         if (!flashedPostsOnlyFilter) {
             flashedPostsOnlyFilter = true
-            initLoadingPosts()
+            loadPosts(true)
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_filter_is_set))
         }
     }
 
     fun backClicked(): Boolean {
         if (flashedPostsOnlyFilter) {
             flashedPostsOnlyFilter = false
-            initLoadingPosts()
+            initNewLoadingPosts()
+            loadPosts()
             return true
         }
         return false
     }
 
-    private fun initLoadingPosts() {
+    private fun initNewLoadingPosts() {
         viewState.setBtnsState(state)
         nextPage = 1
         listPresenter.postList.clear()
-        loadPosts()
     }
 
-    private fun loadPosts() {
-        if (nextPage != null && !isLoading) {
-            isLoading = true
+    private fun loadPosts(forceLoading: Boolean = false) {
+        loadingPostDisposable?.dispose()
+        if (nextPage != null || forceLoading) {
+            loadingPostDisposable = getPostsFromRepositoryByState(forceLoading)
+                ?.let { single ->
+                    single.observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ pag ->
+                            processResultOfLoad(pag)
+                        }, {
+                            it.printStackTrace()
+                        })
+                }
+        }
+    }
+
+    private fun processResultOfLoad(pag: Pagination<Post>) {
+        if (flashedPostsOnlyFilter) {
+            if (pag.results.isEmpty()) {
+                viewState.showToast(resourceProvider.getStringResource(R.string.no_posted_posts))
+                flashedPostsOnlyFilter = false
+                if (listPresenter.postList.isEmpty()) {
+                    initNewLoadingPosts()
+                    loadPosts()
+                }
+                return
+            }
+            initNewLoadingPosts()
+        }
+        listPresenter.postList.addAll(pag.results)
+        viewState.updateAdapter()
+        nextPage = pag.next
+    }
+
+    private fun getPostsFromRepositoryByState(forceLoading: Boolean) = profile.token?.let { token ->
+        val pageToLoad = if (forceLoading) {
+            null
+        } else {
+            nextPage
+        } ?: 1
+        with(apiRepo) {
             if (state == State.SUBSCRIPTION) {
-                apiRepo
-                    .getPostsFollowerAndObserving(profile.token!!, nextPage!!, flashedPostsOnlyFilter)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pag ->
-                        listPresenter.postList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    })
+                getPostsFollowerAndObserving(token, pageToLoad, flashedPostsOnlyFilter)
             } else {
-                apiRepo
-                    .getMyPosts(profile.token!!, nextPage!!, flashedPostsOnlyFilter)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pag ->
-                        listPresenter.postList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    })
+                getMyPosts(token, pageToLoad, flashedPostsOnlyFilter)
             }
         }
     }
@@ -406,5 +427,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         newPostResultListener?.dispose()
         updatePostResultListener?.dispose()
         deletePostResultListener?.dispose()
+        loadingPostDisposable?.dispose()
     }
 }

@@ -201,6 +201,9 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
     }
 
     override fun backClicked(): Boolean {
-        return presenter.backClicked()
+        if (this::presenter.isInitialized) {
+            return presenter.backClicked()
+        }
+        return false
     }
 }

@@ -101,6 +101,12 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         setToolbarVisible(true)
     }
 
+    private fun cancelFlashFilter(): Boolean {
+        val currentPage = binding.vpTraderMeMain.currentItem
+        val currentFragment = viewPageAdapter?.getFragment(currentPage)
+        return (currentFragment is BackButtonListener && currentFragment.backClicked())
+    }
+
     override fun setAvatar(url: String?) {
         url?.let { loadImage(it, binding.ivTraderMeMainAva) }
     }
@@ -137,9 +143,7 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
     }
 
     override fun backClicked(): Boolean {
-        val currentPage = binding.vpTraderMeMain.currentItem
-        val currentFragment = viewPageAdapter?.getFragment(currentPage)
-        if (currentFragment is BackButtonListener && currentFragment.backClicked()) {
+        if (cancelFlashFilter()) {
             return true
         }
         presenter.backClicked()
