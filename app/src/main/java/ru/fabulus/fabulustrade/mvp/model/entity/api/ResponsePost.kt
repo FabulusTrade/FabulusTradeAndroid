@@ -46,5 +46,5 @@ data class ResponsePost(
     val repostCount: Int,
     @Expose
     @SerializedName("is_flashed")
-    val isFlashed: Boolean = false //TODO аглушка до расширения API
+    val isFlashed: Boolean = false //TODO заглушка до расширения API
 )

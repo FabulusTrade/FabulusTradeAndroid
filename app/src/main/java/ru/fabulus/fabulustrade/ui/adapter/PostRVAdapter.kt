@@ -75,8 +75,10 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             presenter.share(holder, holder.itemView.image_group.getImageViews())
         }
 
-        holder.itemView.iv_flash.setOnClickListener {
-            (presenter as? TraderMePostRVListPresenter)?.toFlash(holder)
+        if (presenter is TraderMePostRVListPresenter) {
+            holder.itemView.iv_flash.setOnClickListener {
+                presenter.toFlash(holder)
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
@@ -23,6 +24,7 @@ import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
@@ -40,7 +42,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     private var state = State.PUBLICATIONS
     private var flashedPostsOnlyFilter = false
+    private var limitOfNewFlashPosts: Int = 0
     private var loadingPostDisposable: Disposable? = null
+    private var gettingLimitOfFlashPostsDisposable: Disposable? = null
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
     private var updatePostResultListener: ResultListenerHandler? = null
@@ -129,7 +133,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         private fun PostItemView.initFlashIcon(post: Post) {
-            setFlashVisibility(yoursPublication(post))
+            setFlashVisibility(
+                yoursPublication(post) &&
+                        (post.isFlashed ||
+                                isCanFlashPostByCreateDate(post.dateCreate) &&
+                                limitOfNewFlashPosts > 0)
+            )
             setFlashColor(post, this)
         }
 
@@ -283,9 +292,14 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             post: Post,
             view: PostItemView
         ) {
+            limitOfNewFlashPosts--//TODO добавить вызов API функции
             post.isFlashed = true
             setFlashColor(post, view)
             viewState.showMessagePostIsPosted()
+            if (limitOfNewFlashPosts == 0) {
+                viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_limit_exhausted))
+                viewState.updateAdapter()
+            }
         }
 
         private fun setFlashColor(
@@ -314,6 +328,21 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         super.onFirstViewAttach()
         viewState.init()
         loadPosts()
+
+        getLimitOfNewFlashPosts()
+    }
+
+    private fun getLimitOfNewFlashPosts() {
+        //TODO заменить как появится API функция
+        gettingLimitOfFlashPostsDisposable?.dispose()
+        gettingLimitOfFlashPostsDisposable = Single
+            .just(2)
+            .delay(5, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                limitOfNewFlashPosts = 3
+                viewState.updateAdapter()
+            }, {})
     }
 
     fun onScrollLimit() {
@@ -428,5 +457,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         updatePostResultListener?.dispose()
         deletePostResultListener?.dispose()
         loadingPostDisposable?.dispose()
+        gettingLimitOfFlashPostsDisposable?.dispose()
     }
 }

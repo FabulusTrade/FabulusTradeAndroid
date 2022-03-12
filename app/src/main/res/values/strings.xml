@@ -562,5 +562,6 @@
     <string name="the_post_is_posted_in_the_general_feed">Пост размещен в общей ленте!</string>
     <string name="message_flash_filter_is_set">Отбор размещённых в общей ленте новостей установлен. Для сброса отбора нажмите кнопку \"назад\".</string>
     <string name="no_posted_posts">Нет размещенных публикаций.</string>
+    <string name="message_flash_limit_exhausted">Исчерпан лимит на размещение новостей в общей ленте.</string>
 
 </resources>

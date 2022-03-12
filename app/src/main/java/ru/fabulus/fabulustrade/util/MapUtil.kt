@@ -5,6 +5,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.*
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
     trader.id,
@@ -157,7 +158,8 @@ fun mapToPost(post: ResponsePost?): Post? {
             comments = comments,
             colorIncrDecrDepo365 = post.colorIncrDecrDepo365,
             repostCount = post.repostCount,
-            isFlashed = post.isFlashed
+            //isFlashed = post.isFlashed TODO заглушка до расширения API
+            isFlashed = Random.nextInt(10) == 1
         )
     }
 }
