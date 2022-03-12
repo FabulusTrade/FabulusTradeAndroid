@@ -410,7 +410,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 ?.let { single ->
                     single.observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ pag ->
-                            processResultOfLoad(pag)
+                            processResultOfLoad(pag, forceLoading)
                         }, {
                             it.printStackTrace()
                         })
@@ -418,7 +418,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
     }
 
-    private fun processResultOfLoad(pag: Pagination<Post>) {
+    private fun processResultOfLoad(pag: Pagination<Post>, forceLoading: Boolean) {
         if (flashedPostsOnlyFilter) {
             if (pag.results.isEmpty()) {
                 viewState.showToast(resourceProvider.getStringResource(R.string.no_posted_posts))
@@ -429,7 +429,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 }
                 return
             }
-            initNewLoadingPosts()
+            if (forceLoading) {
+                initNewLoadingPosts()
+            }
         }
         listPresenter.postList.addAll(pag.results)
         viewState.updateAdapter()
