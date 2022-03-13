@@ -236,3 +236,9 @@ fun mapToIncPostResult(responseIncRepostCount: ResponseIncRepostCount): IncPostR
         responseIncRepostCount.message
     )
 }
+
+fun mapToDeleteCommentResult(responseDeleteComment: ResponseDeleteComment): DeleteCommentResult {
+    return DeleteCommentResult(
+        responseDeleteComment.result
+    )
+}

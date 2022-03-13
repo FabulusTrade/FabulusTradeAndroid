@@ -814,6 +814,21 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun deleteComment(token: String, commentId: Long): Single<DeleteCommentResult> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .deleteComment(token, commentId)
+                        .flatMap { responseDeleteComment ->
+                            Single.just(mapToDeleteCommentResult(responseDeleteComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
     fun incRepostCount(postId: Int): Single<IncPostResult> =
         networkStatus
             .isOnlineSingle()
