@@ -305,4 +305,10 @@ interface WinTradeApi {
     fun incRepostCount(
         @Path(value = "post_id") postId: Int
     ): Single<ResponseIncRepostCount>
+
+    @DELETE("api/v1/trader/comment/{comment_id}/delete/")
+    fun deleteComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long
+    ): Single<ResponseDeleteComment>
 }

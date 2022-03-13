@@ -200,9 +200,23 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun deleteComment(comment: Comment) {
+        override fun deleteComment(view: CommentItemView, comment: Comment) {
             if (isCanDeleteComment(comment.dateCreate)) {
-                //TODO метод для удаления коментария
+                apiRepo
+                    .deleteComment(profile.token!!, comment.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ deleteCommentResult ->
+
+                        post.comments.removeAt(view.pos)
+                        setCommentCount()
+                        setCommentList()
+                        viewState.setRvPosition(view.pos - 1)
+                        viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                    }, { error ->
+                        Log.d(TAG, "Error: ${error.message.toString()}")
+                        Log.d(TAG, error.printStackTrace().toString())
+                    }
+                    )
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_deleted))
             }
