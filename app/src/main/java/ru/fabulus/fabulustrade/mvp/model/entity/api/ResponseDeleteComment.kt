@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 class ResponseDeleteComment(
     @Expose
-    @SerializedName("Result")
-    val result: String
+    @SerializedName("result")
+    val result: String,
+    @Expose
+    @SerializedName("message")
+    val message: String?
+
 )
