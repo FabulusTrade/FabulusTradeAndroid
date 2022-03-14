@@ -206,13 +206,24 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
                     .deleteComment(profile.token!!, comment.id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ deleteCommentResult ->
-
-                        post.comments.removeAt(view.pos)
-                        setCommentCount()
-                        setCommentList()
-                        viewState.setRvPosition(view.pos - 1)
-                        viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                        if (deleteCommentResult.result.equals("ok", true)) {
+                            post.comments.removeAt(view.pos)
+                            setCommentCount()
+                            setCommentList()
+                            viewState.setRvPosition(view.pos - 1)
+                            viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                        } else {
+                            deleteCommentResult.message?.let { message ->
+                                viewState.showToast(
+                                    resourceProvider.formatString(
+                                        R.string.error_comment_deleted,
+                                        message
+                                    )
+                                )
+                            }
+                        }
                     }, { error ->
+                        viewState.showToast(resourceProvider.getStringResource(R.string.request_error_comment_deleted))
                         Log.d(TAG, "Error: ${error.message.toString()}")
                         Log.d(TAG, error.printStackTrace().toString())
                     }
