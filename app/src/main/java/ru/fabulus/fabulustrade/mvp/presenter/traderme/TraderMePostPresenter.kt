@@ -1,5 +1,8 @@
 package ru.fabulus.fabulustrade.mvp.presenter.traderme
 
+import android.graphics.Color
+import android.util.Log
+import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -9,12 +12,15 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELETE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.formatQuantityString
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
@@ -34,6 +40,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var isLoading = false
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
+    private var updatePostResultListener: ResultListenerHandler? = null
+    private var deletePostResultListener: ResultListenerHandler? = null
 
     enum class State {
         PUBLICATIONS, SUBSCRIPTION
@@ -42,13 +50,24 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     val listPresenter = TraderRVListPresenter()
 
     inner class TraderRVListPresenter : PostRVListPresenter {
-        val post = mutableListOf<Post>()
+        val postList = mutableListOf<Post>()
+        private val tag = "TraderMePostPresenter"
+        private var sharedView: PostItemView? = null
 
-        override fun getCount(): Int = post.size
+        override fun getCount(): Int = postList.size
 
         override fun bind(view: PostItemView) {
-            val post = post[view.pos]
+            val post = postList[view.pos]
             initView(view, post)
+            initMenu(view, post)
+        }
+
+        private fun initMenu(view: PostItemView, post: Post) {
+            if (yoursPublication(post)) {
+                view.setIvAttachedKebabMenuSelf(post)
+            } else {
+                view.setIvAttachedKebabMenuSomeone(post)
+            }
         }
 
         private fun initView(view: PostItemView, post: Post) {
@@ -60,9 +79,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 setDislikeImage(post.isDisliked)
                 setLikesCount(post.likeCount)
                 setDislikesCount(post.dislikeCount)
-                setKebabMenuVisibility(yoursPublication(post))
                 setProfileName(post.userName)
                 setProfileAvatar(post.avatarUrl)
+                setHeaderIcon(view, post)
                 val commentCount = post.commentCount()
                 setCommentCount(
                     resourceProvider.formatQuantityString(
@@ -71,6 +90,38 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                         commentCount
                     )
                 )
+
+                setRepostCount(post.repostCount.toString())
+            }
+        }
+
+        private fun setHeaderIcon(view: PostItemView,post: Post){
+            with(view){
+                setFlashVisibility(yoursPublication(post))
+                setProfitAndFollowersVisibility(!yoursPublication(post))
+
+                if(!yoursPublication(post)){
+                    setProfit(
+                        resourceProvider.formatDigitWithDef(
+                            R.string.tv_profit_percent_text,
+                            post.colorIncrDecrDepo365.value
+                        ),
+                        Color.parseColor(post.colorIncrDecrDepo365.color)
+                    )
+
+                    if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
+                        setProfitNegativeArrow()
+                    } else {
+                        setProfitPositiveArrow()
+                    }
+
+                    setAuthorFollowerCount(
+                        resourceProvider.formatDigitWithDef(
+                            R.string.tv_author_follower_count,
+                            post.followersCount
+                        )
+                    )
+                }
             }
         }
 
@@ -79,7 +130,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         override fun postLiked(view: PostItemView) {
-            val post = post[view.pos]
+            val post = postList[view.pos]
             apiRepo.likePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     post.like()
@@ -93,7 +144,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         override fun postDisliked(view: PostItemView) {
-            val post = post[view.pos]
+            val post = postList[view.pos]
             apiRepo.dislikePost(profile.token!!, post.id)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
                     post.dislike()
@@ -106,19 +157,60 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 }, {})
         }
 
-        override fun postDelete(view: PostItemView) {
-            val post = post[view.pos]
-            apiRepo.deletePost(profile.token!!, post.id).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listPresenter.post.clear()
-                    nextPage = 1
-                    loadPosts()
-                }, {})
+        override fun deletePost(view: PostItemView) {
+            val post = postList[view.pos]
+            if (isCanDeletePost(post.dateCreate)) {
+
+                apiRepo.deletePost(profile.token!!, post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        removePostAt(view.pos)
+                    }, {})
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+            }
         }
 
-        override fun postUpdate(view: PostItemView) {
-            val post = post[view.pos]
-            router.navigateTo(Screens.createPostScreen(post.id.toString(), true, null, post.text))
+        private fun removePostAt(pos: Int) {
+            listPresenter.postList.removeAt(pos)
+            viewState.updateAdapter()
+        }
+
+        override fun editPost(view: PostItemView, post: Post) {
+            if (isCanEditPost(post.dateCreate)) {
+                updatePostResultListener =
+                    router.setResultListener(UPDATE_POST_RESULT) { updatedPost ->
+                        (updatedPost as? Post)?.let {
+                            updatedPostAt(view.pos, updatedPost)
+                        }
+                    }
+
+                router.navigateTo(
+                    Screens.createPostScreen(
+                        post.id.toString(),
+                        true,
+                        null,
+                        post.text
+                    )
+                )
+            } else {
+                viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+            }
+        }
+
+        private fun updatedPostAt(pos: Int, updatedPost: Post) {
+            listPresenter.postList[pos] = updatedPost
+            viewState.updateAdapter()
+        }
+
+        override fun copyPost(post: Post) {
+            resourceProvider.copyToClipboard(post.text)
+            viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
+        }
+
+        override fun complainOnPost(post: Post, reason: String) {
+            //TODO метод для отправки жалобы
+            viewState.showComplainSnackBar()
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {
@@ -127,7 +219,55 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         override fun showCommentDetails(view: PostItemView) {
-            router.navigateTo(Screens.postDetailFragment(post[view.pos]))
+            updatePostResultListener =
+                router.setResultListener(UPDATE_POST_IN_FRAGMENT_RESULT) { updatedPost ->
+                    (updatedPost as? Post)?.let {
+                        updatedPostAt(view.pos, updatedPost)
+                    }
+                }
+
+            deletePostResultListener =
+                router.setResultListener(DELETE_POST_RESULT) {
+                    removePostAt(view.pos)
+                }
+            router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
+        }
+
+        override fun incRepostCount() {
+            if (sharedView != null) {
+                val post = postList[sharedView!!.pos]
+
+                apiRepo
+                    .incRepostCount(post.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ incPostResult ->
+                        if (incPostResult.result.equals("ok", true)) {
+                            post.incRepostCount()
+                            sharedView!!.setRepostCount(post.repostCount.toString())
+                        } else {
+                            viewState.showToast(incPostResult.message)
+                        }
+                        sharedView = null
+                    }, { error ->
+                        Log.d(
+                            tag,
+                            "Error incRepostCount: ${error.message.toString()}"
+                        )
+                        Log.d(tag, error.printStackTrace().toString())
+                        sharedView = null
+                    }
+                    )
+            }
+        }
+
+        override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
+            sharedView = view
+            viewState.share(
+                resourceProvider.getSharePostIntent(
+                    postList[view.pos],
+                    imageViewIdList
+                )
+            )
         }
     }
 
@@ -144,7 +284,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     fun onCreatePostBtnClicked() {
         newPostResultListener = router.setResultListener(NEW_POST_RESULT) { post ->
             (post as? Post)?.let {
-                listPresenter.post.add(0, post)
+                listPresenter.postList.add(0, post)
                 viewState.updateAdapter()
             }
         }
@@ -162,7 +302,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         state = State.PUBLICATIONS
         viewState.setBtnsState(state)
         nextPage = 1
-        listPresenter.post.clear()
+        listPresenter.postList.clear()
         loadPosts()
     }
 
@@ -170,7 +310,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         state = State.SUBSCRIPTION
         viewState.setBtnsState(state)
         nextPage = 1
-        listPresenter.post.clear()
+        listPresenter.postList.clear()
         loadPosts()
     }
 
@@ -182,7 +322,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     .getPostsFollowerAndObserving(profile.token!!, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
-                        listPresenter.post.addAll(pag.results)
+                        listPresenter.postList.addAll(pag.results)
                         viewState.updateAdapter()
                         nextPage = pag.next
                         isLoading = false
@@ -195,7 +335,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     .getMyPosts(profile.token!!, nextPage!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ pag ->
-                        listPresenter.post.addAll(pag.results)
+                        listPresenter.postList.addAll(pag.results)
                         viewState.updateAdapter()
                         nextPage = pag.next
                         isLoading = false
@@ -210,5 +350,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     override fun onDestroy() {
         super.onDestroy()
         newPostResultListener?.dispose()
+        updatePostResultListener?.dispose()
+        deletePostResultListener?.dispose()
     }
 }

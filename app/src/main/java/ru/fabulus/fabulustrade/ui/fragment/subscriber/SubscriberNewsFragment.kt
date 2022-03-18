@@ -1,12 +1,15 @@
 package ru.fabulus.fabulustrade.ui.fragment.subscriber
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -18,7 +21,8 @@ import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
 class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
@@ -42,6 +46,11 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     lateinit var router: Router
 
     private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            presenter.listPresenter.incRepostCount()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,9 +76,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         binding.rvSubscriberNews.run {
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -104,6 +110,24 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     override fun withoutSubscribeAnyTrader() {
         binding.layoutHasNoSubs.root.visibility = View.VISIBLE
+    }
+
+    override fun share(shareIntent: Intent) {
+        resultLauncher.launch(shareIntent)
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showToast(msg)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.rvSubscriberNews,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {

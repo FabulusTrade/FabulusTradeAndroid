@@ -32,33 +32,34 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
 
     }
 
-    override fun showNotification(title: Spanned, body: String, id: Int) {
+    override fun showNotification(title: Spanned, operationResultTitle: Spanned, body: String, id: Int) {
         val intent = Intent(this, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT
+                this, 0, intent,
+                PendingIntent.FLAG_ONE_SHOT
         )
 
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
-            .setColor(Color.RED)
-            .setStyle(NotificationCompat.BigTextStyle())
-            .setContentTitle(title)
-            .setContentText(body)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_app_launcher_foreground)
+                .setColor(Color.RED)
+                .setContentTitle(title)
+                .setStyle(NotificationCompat.InboxStyle()
+                        .addLine(operationResultTitle)
+                        .addLine(body))
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
 
         val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                channelId,
-                "Fabulus Trade",
-                NotificationManager.IMPORTANCE_DEFAULT
+                    channelId,
+                    "Fabulus Trade",
+                    NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
         }

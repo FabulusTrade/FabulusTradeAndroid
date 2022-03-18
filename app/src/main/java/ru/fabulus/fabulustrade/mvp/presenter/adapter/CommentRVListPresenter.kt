@@ -10,8 +10,10 @@ interface CommentRVListPresenter {
     fun setCommentList(commentList: MutableList<Comment>)
     fun replyOnComment(view: CommentItemView)
     fun recalcParentComment(commentText: String)
-    fun editComment(comment: Comment)
+    fun editComment(view: CommentItemView, comment: Comment)
     fun copyComment(comment: Comment)
-    fun deleteComment(comment: Comment)
+    fun deleteComment(view: CommentItemView, comment: Comment)
     fun complainOnComment(comment: Comment, reason: String)
+    fun commentByPos(position: Int): Comment
+    fun updateCommentItem(position: Int, comment: Comment)
 }

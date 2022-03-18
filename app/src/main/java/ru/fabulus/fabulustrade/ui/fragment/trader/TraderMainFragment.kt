@@ -20,7 +20,10 @@ import ru.fabulus.fabulustrade.mvp.presenter.trader.TraderMainPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMainView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.TraderMainVPAdapter
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setDrawerLockMode
+import ru.fabulus.fabulustrade.util.setTextAndColor
+import ru.fabulus.fabulustrade.util.showToast
 
 class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
     private var _binding: FragmentTraderMainBinding? = null
@@ -144,8 +147,8 @@ class TraderMainFragment : MvpAppCompatFragment(), TraderMainView {
         binding.tvTraderStatProfit.setTextAndColor(profit, textColor)
     }
 
-    override fun setAvatar(avatar: String) {
-        loadImage(avatar, binding.ivTraderStatAva)
+    override fun setAvatar(avatar: String?) {
+        avatar?.let { loadImage(it, binding.ivTraderStatAva) }
     }
 
     override fun onDestroyView() {

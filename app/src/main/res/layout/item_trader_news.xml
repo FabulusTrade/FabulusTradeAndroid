@@ -7,52 +7,14 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <LinearLayout
+    <include
+        android:id="@+id/inc_item_post_header"
+        layout="@layout/item_post_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_item_trader_news_avatar"
-            android:layout_width="@dimen/avatar_in_trader_news_width_and_height"
-            android:layout_height="@dimen/avatar_in_trader_news_width_and_height"
-            android:layout_marginTop="@dimen/margin_top_very_low"
-            android:layout_marginEnd="@dimen/margin_top_very_low"
-            android:foreground="@drawable/bg_avatar"
-            android:scaleType="fitXY"
-            tools:src="@tools:sample/avatars" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_item_trader_news_profileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top_very_low"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/nickname_tv_size"
-                tools:text="MolagBal" />
-
-            <TextView
-                android:id="@+id/tv_item_trader_news_date"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                tools:text="15.05.2021 в 10.35" />
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_item_trader_news_menu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:backgroundTint="@color/colorWhite"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_kebab" />
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_trader_news_post"
@@ -77,73 +39,33 @@
 
     <ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageGroupView
         android:id="@+id/image_group"
-        android:layout_marginTop="@dimen/margin_top_low"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/image_group_view_height" />
+        android:layout_height="@dimen/image_group_view_height"
+        android:layout_marginTop="@dimen/margin_top_low" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/btn_item_trader_news_like"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/inc_item_post_footer"
+            layout="@layout/item_post_footer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_low"
-            android:layout_marginEnd="@dimen/margin_end_low"
-            android:background="@color/colorWhite"
-            android:contentDescription="@string/like_news"
-            android:src="@drawable/ic_like_inactive"
-            app:layout_constraintEnd_toStartOf="@+id/tv_item_trader_news_like_count"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/btn_item_trader_news_dislike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_start_low"
-            android:layout_marginEnd="@dimen/margin_end_low"
-            android:background="@color/colorWhite"
-            android:contentDescription="@string/dislike_news"
-            android:src="@drawable/ic_dislike_inactive"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_item_trader_news_like"
-            app:layout_constraintEnd_toStartOf="@+id/tv_item_trader_news_dislike_count"
-            app:layout_constraintStart_toEndOf="@+id/tv_item_trader_news_like_count"
-            app:layout_constraintTop_toTopOf="@+id/btn_item_trader_news_like"
-            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btn_item_trader_news_show_comments"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comments_in_post_count_btn_height"
+            android:layout_marginTop="@dimen/btn_item_trader_news_show_comments_margin_top"
             android:textSize="@dimen/text_size_very_low"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_item_trader_news_dislike"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_item_trader_news_dislike"
+            app:layout_constraintTop_toTopOf="@+id/inc_item_post_footer"
             tools:ignore="SmallSp"
-            tools:text="10 комментариев"/>
-
-        <TextView
-            android:id="@+id/tv_item_trader_news_like_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_post_item"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_item_trader_news_like"
-            app:layout_constraintEnd_toStartOf="@+id/btn_item_trader_news_dislike"
-            app:layout_constraintStart_toEndOf="@+id/btn_item_trader_news_like"
-            app:layout_constraintTop_toTopOf="@+id/btn_item_trader_news_like" />
-
-        <TextView
-            android:id="@+id/tv_item_trader_news_dislike_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_start_low"
-            android:text="@string/zero_post_item"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_item_trader_news_dislike"
-            app:layout_constraintStart_toEndOf="@+id/btn_item_trader_news_dislike"
-            app:layout_constraintTop_toTopOf="@+id/btn_item_trader_news_dislike" />
+            tools:text="10 комментариев" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

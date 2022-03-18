@@ -1,13 +1,16 @@
 package ru.fabulus.fabulustrade.ui.fragment.traderme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -17,7 +20,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.ui.adapter.divider.RecyclerViewItemDecoration
+import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showToast
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     private var _binding: FragmentTraderMePostsBinding? = null
@@ -37,6 +41,11 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
     }
 
     private var postRVAdapter: PostRVAdapter? = null
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            presenter.listPresenter.incRepostCount()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,9 +80,6 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             postRVAdapter = PostRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                RecyclerViewItemDecoration(requireContext(), R.drawable.divider_rv_horizontal)
-            )
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -138,6 +144,24 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
 
     override fun updateAdapter() {
         postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun share(shareIntent: Intent) {
+        resultLauncher.launch(shareIntent)
+    }
+
+    override fun showToast(msg: String) {
+        requireContext().showToast(msg)
+    }
+
+    override fun showComplainSnackBar() {
+        showCustomSnackbar(
+            R.layout.layout_send_complain_snackbar,
+            layoutInflater,
+            binding.rvTraderMePost,
+            "",
+            Snackbar.LENGTH_LONG
+        )
     }
 
     override fun onDestroyView() {

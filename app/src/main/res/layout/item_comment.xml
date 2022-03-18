@@ -59,7 +59,6 @@
                     android:layout_marginTop="@dimen/tv_comment_post_margin_top"
                     android:layout_marginBottom="@dimen/tv_comment_post_margin_bottom"
                     android:ellipsize="end"
-                    android:maxLines="3"
                     tools:text="Комментарий к посту" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -123,7 +122,7 @@
             android:id="@+id/tv_comment_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/zero_post_item"
+            android:text="@string/zero_digit_text"
             android:textSize="@dimen/tv_comment_like_count_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/btn_like_comment"
             app:layout_constraintEnd_toEndOf="parent"

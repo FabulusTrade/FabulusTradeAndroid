@@ -144,6 +144,13 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseCompanyTradingOperations>>
 
+    @GET("api/v1/trader/my_trade_detailed/by_company/{company_id}/")
+    fun getDealsJournalByCompany(
+        @Header("Authorization") token: String,
+        @Path("company_id") companyId: Int,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseCompanyTradingOperationsJournal>>
+
     @POST("auth/users/")
     fun signUp(
         @Body signUpData: RequestSignUp
@@ -186,7 +193,7 @@ interface WinTradeApi {
         @Path("id") postId: String,
         @Field("trader_id") id: String,
         @Field("text") text: String
-    ): Completable
+    ): Single<ResponsePost>
 
     @POST("auth/avatar/")
     @Multipart
@@ -278,9 +285,30 @@ interface WinTradeApi {
         @Field("parent_comment") parentCommentId: Long?
     ): Single<ResponseComment>
 
+    // обновление текста комментария
+    @FormUrlEncoded
+    @PATCH("/api/v1/trader/comment/{comment_id}/update/")
+    fun updateComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long,
+        @Field("text", encoded = true) text: String
+    ): Single<ResponseComment>
+
     @POST("api/v1/trader/like/comment/{comment_id}/")
     fun likeComment(
         @Header("Authorization") token: String,
         @Path(value = "comment_id", encoded = true) commentId: Long
     ): Single<ResponseLikes>
+
+    // счетчик количества репостов
+    @GET("api/v1/trader/post/{post_id}/repost")
+    fun incRepostCount(
+        @Path(value = "post_id") postId: Int
+    ): Single<ResponseIncRepostCount>
+
+    @DELETE("api/v1/trader/comment/{comment_id}/delete/")
+    fun deleteComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long
+    ): Single<ResponseDeleteComment>
 }

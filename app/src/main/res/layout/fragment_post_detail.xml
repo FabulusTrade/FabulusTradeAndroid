@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/ll_add_comment"
+        app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,107 +25,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_post_author_avatar"
-                android:layout_width="@dimen/iv_post_author_avatar_layout_width"
-                android:layout_height="@dimen/iv_post_author_avatar_layout_height"
-                android:layout_marginTop="@dimen/iv_post_author_avatar_margin_top"
-                android:foreground="@drawable/bg_avatar"
-                android:scaleType="center"
+            <include
+                android:id="@+id/inc_item_post_header"
+                layout="@layout/item_post_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/tv_post_author_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/tv_post_author_name_margin_start"
-                android:layout_marginTop="@dimen/tv_post_author_name_margin_top"
-                android:maxLines="1"
-                android:textSize="@dimen/tv_post_author_name_text_size"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/iv_post_author_avatar"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Post Author" />
-
-            <TextView
-                android:id="@+id/tv_post_date_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/tv_post_date_update_margin_start"
-                android:layout_marginTop="@dimen/tv_post_date_update_margin_top"
-                android:textSize="@dimen/tv_post_date_update_text_size"
-                app:layout_constraintStart_toEndOf="@+id/iv_post_author_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/tv_post_author_name"
-                tools:text="19.03.2021 11:10" />
-
-            <TextView
-                android:id="@+id/tv_profit_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
-                android:textColor="#FF7878"
-                android:textSize="@dimen/iv_profit_percent_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_profit_arrow"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="-63%" />
-
-            <ImageView
-                android:id="@+id/iv_profit_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/iv_profit_arrow_margin_end"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv_author_follower_count"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_profit_arrow_down" />
-
-            <TextView
-                android:id="@+id/tv_author_follower_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
-                android:textSize="@dimen/tv_post_author_name_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_person_add"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="47" />
-
-            <ImageView
-                android:id="@+id/iv_person_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/iv_person_add_margin_end"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_attached_post_kebab"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_person_add" />
-
-            <ImageView
-                android:id="@+id/iv_attached_post_kebab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/iv_attached_post_kebab_margin_end"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_post_author_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_kebab" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/view_author_post_horizontal_divider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
-                android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
-                android:background="@color/view_author_post_horizontal_divider_background_color"
+                android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+                android:layout_marginTop="@dimen/view_author_horizontal_divider_margin_top"
+                android:background="@color/view_author_horizontal_divider_background_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_post_author_avatar" />
+                app:layout_constraintTop_toBottomOf="@+id/inc_item_post_header" />
 
             <TextView
                 android:id="@+id/tv_post"
@@ -155,88 +72,13 @@
                 android:textSize="@dimen/tv_warning_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/image_group" />
 
-            <ImageButton
-                android:id="@+id/btn_post_like"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/inc_item_post_footer"
+                layout="@layout/item_post_footer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top_low"
-                android:layout_marginEnd="@dimen/margin_end_low"
-                android:background="@color/colorWhite"
-                android:contentDescription="@string/like_news"
-                android:src="@drawable/ic_like_inactive"
-                app:layout_constraintEnd_toStartOf="@+id/tv_post_like_count"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_warning" />
-
-            <TextView
-                android:id="@+id/tv_post_like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/zero_post_item"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
-                app:layout_constraintEnd_toStartOf="@+id/btn_post_dislike"
-                app:layout_constraintStart_toEndOf="@+id/btn_post_like"
-                app:layout_constraintTop_toTopOf="@+id/btn_post_like"
-                tools:text="10" />
-
-            <ImageButton
-                android:id="@+id/btn_post_dislike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start_low"
-                android:layout_marginEnd="@dimen/margin_end_low"
-                android:background="@color/colorWhite"
-                android:contentDescription="@string/dislike_news"
-                android:src="@drawable/ic_dislike_inactive"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_post_like"
-                app:layout_constraintEnd_toStartOf="@+id/tv_post_dislike_count"
-                app:layout_constraintStart_toEndOf="@+id/tv_post_like_count"
-                app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
-
-
-            <TextView
-                android:id="@+id/tv_post_dislike_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start_low"
-                android:text="@string/zero_post_item"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
-                app:layout_constraintStart_toEndOf="@+id/btn_post_dislike"
-                app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
-                tools:text="3" />
-
-            <ImageButton
-                android:id="@+id/btn_share_post"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/btn_share_post_margin_start"
-                android:layout_marginEnd="@dimen/margin_end_low"
-                android:background="@color/colorWhite"
-                android:contentDescription="@string/dislike_news"
-                android:src="@drawable/ic_share"
-                app:layout_constraintStart_toEndOf="@+id/tv_post_dislike_count"
-                app:layout_constraintTop_toTopOf="@+id/btn_post_like" />
-
-            <TextView
-                android:id="@+id/btn_share_post_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start_low"
-                android:text="@string/zero_post_item"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_post_dislike"
-                app:layout_constraintStart_toEndOf="@+id/btn_share_post"
-                app:layout_constraintTop_toTopOf="@+id/btn_post_dislike"
-                tools:text="3" />
-
-            <View
-                android:id="@+id/btn_share_post_count_divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/view_author_post_horizontal_divider_layout_height"
-                android:layout_marginTop="@dimen/view_author_post_horizontal_divider_margin_top"
-                android:background="@color/view_author_post_horizontal_divider_background_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count" />
 
             <TextView
                 android:id="@+id/tv_comment_count"
@@ -246,7 +88,7 @@
                 android:textColor="@color/tv_comment_count_text_color"
                 android:textSize="@dimen/tv_comment_count_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_share_post_count_divider"
+                app:layout_constraintTop_toBottomOf="@+id/inc_item_post_footer"
                 tools:text="3 комментария" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -260,43 +102,26 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/ll_add_comment"
+        android:id="@+id/ll_work_with_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_current_user_avatar"
-            android:layout_width="@dimen/iv_current_user_avatar_layout_width"
-            android:layout_height="@dimen/iv_current_user_avatar_layout_height"
-            android:layout_marginBottom="@dimen/iv_current_user_avatar_margin_bottom"
-            android:foreground="@drawable/bg_avatar"
-            android:scaleType="center"
-            tools:srcCompat="@tools:sample/avatars" />
+        <include
+            android:id="@+id/inc_item_send_comment"
+            layout="@layout/item_send_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
 
-        <EditText
-            android:id="@+id/et_new_comment_text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/et_new_comment_text_margin_start"
-            android:layout_marginEnd="@dimen/et_new_comment_text_margin_end"
-            android:layout_marginBottom="@dimen/et_new_comment_text_margin_bottom"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:hint="@string/et_new_comment_text_hint"
-            android:inputType="textCapSentences|textMultiLine"
-            android:maxLength="200"
-            android:textSize="@dimen/et_new_comment_text_text_size" />
-
-        <ImageButton
-            android:id="@+id/ib_send_comment"
-            android:layout_width="@dimen/ib_send_comment_layout_width"
-            android:layout_height="@dimen/ib_send_comment_layout_height"
-            android:layout_marginBottom="@dimen/ib_send_comment_margin_bottom"
-            android:background="@drawable/ic_send_disabled"
-            android:clickable="false" />
-
+        <include
+            android:id="@+id/inc_item_update_comment"
+            layout="@layout/item_update_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

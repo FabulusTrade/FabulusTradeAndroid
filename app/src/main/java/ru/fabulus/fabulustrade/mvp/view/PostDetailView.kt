@@ -5,6 +5,7 @@ import android.text.Spanned
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface PostDetailView : MvpView {
@@ -23,7 +24,7 @@ interface PostDetailView : MvpView {
     fun setLikeInactiveImage()
     fun setDislikeActiveImage()
     fun setDislikeInactiveImage()
-    fun sharePost(shareIntent: Intent)
+    fun share(shareIntent: Intent)
     fun setCommentCount(text: String)
     fun updateCommentsAdapter()
     fun setRvPosition(position: Int)
@@ -31,9 +32,24 @@ interface PostDetailView : MvpView {
     fun setClickableSendCommentBtn()
     fun setUnclickableSendCommentBtn()
     fun clearNewCommentText()
-    fun prepareReplyToComment(text: Spanned)
+    fun prepareReplyToComment(text: Spanned, maxCommentLength: Int)
+    fun prepareUpdateComment(text: Spanned, maxCommentLength: Int)
     fun showToast(text: String)
     fun showComplainSnackBar()
     fun scrollNsvCommentViewToBottom()
     fun setAuthorFollowerCount(text: String)
+    fun setClickableUpdateCommentBtn()
+    fun setUnclickableUpdateCommentBtn()
+    fun setIncItemSendCommentVisibility(visibility: Int)
+    fun setIncItemUpdateCommentVisibility(visibility: Int)
+    fun showSendComment(maxCommentLength: Int)
+    fun showUpdateComment(maxCommentLength: Int)
+    fun notifyItemChanged(position: Int)
+    fun setMaxSendCommentLength(maxLength: Int)
+    fun setMaxUpdateCommentLength(maxLength: Int)
+    fun setRepostCount(text: String)
+    fun setPostMenuSelf(post: Post)
+    fun setPostMenuSomeone(post: Post)
+    fun setFlashVisibility(isVisible:Boolean)
+    fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }

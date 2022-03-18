@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_comp_trading_ops_journal_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/tv_comp_trading_ops_journal_padding_vertical"
+        android:text="@string/name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/tv_comp_trading_ops_journal_name_text_size" />
+
+    <TextView
+        android:id="@+id/tv_comp_trading_ops_journal_operations_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingVertical="@dimen/tv_comp_trading_ops_journal_padding_vertical"
+        android:paddingStart="@dimen/tv_comp_trading_ops_journal_operations_title_padding_start"
+        android:text="@string/operations_comp_trad_ops_journal"
+        android:textSize="@dimen/tv_comp_trading_ops_journal_operations_title_text_size"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_comp_trading_ops_journal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_comp_trading_ops_journal" />
+</LinearLayout>

@@ -402,7 +402,7 @@
     <string name="text">Текст</string>
     <string name="show_postRv">показать</string>
     <string name="hide_postRv">скрыть</string>
-    <string name="zero_post_item">0</string>
+    <string name="zero_digit_text">0</string>
     <plurals name="show_comments_count_text">
         <item quantity="zero">0 комментариев</item>
         <item quantity="one">%1$d комментарий</item>
@@ -495,6 +495,9 @@
     <string name="push_date_pattern">%s (%s)</string>
     <string name="push_price_pattern">%.2f</string>
     <string name="push_body_pattern">%s по цене: %s %s</string>
+    <string name="push_body_opening_subtype">&lt;b>Открытие позиции&lt;/b></string>
+    <string name="push_body_closing_subtype">&lt;b>Закрытие позиции&lt;/b></string>
+    <string name="empty_string" />
 
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
@@ -515,6 +518,7 @@
                 \n
                 %s
     </string>
+    <string name="et_update_comment_text_hint" >Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
@@ -526,6 +530,11 @@
     <string name="text_copied">Текст скопирован</string>
     <string name="comment_can_not_be_edited">Невозможно изменить комментарий созданный более 1 часа назад</string>
     <string name="comment_can_not_be_deleted">Невозможно удалить комментарий созданный более 1 часа назад</string>
+    <string name="comment_deleted">Комментарий удален</string>
+    <string name="error_comment_deleted">Ошибка при удалении комментария: %s</string>
+    <string name="request_error_comment_deleted">Ошибка при удалении комментария. Попробуйте позже</string>
+    <string name="post_can_not_be_edited">Невозможно изменить пост созданный более 1 часа назад</string>
+    <string name="post_can_not_be_deleted">Невозможно удалить пост созданный более 1 часа назад</string>
     <string name="unethical_content">Неэтичный контент</string>
     <string name="mat_insults_provocation">Мат / Оскорбления / Провокация</string>
     <string name="threats_harassment">Угрозы / Преследование</string>
@@ -535,5 +544,25 @@
     <string name="begging_extortion">Попрошайничество / Вымогательство</string>
     <string name="tv_complain_toast_text">Жалоба отправлена!\n\nСпасибо за Ваше обращение!\n\nМы проверим публикацию и примем соответствующие меры.</string>
     <string name="tv_author_follower_count">%d</string>
+
+    <string name="iv_author_avatar_content_description">аватар автора поста</string>
+    <string name="iv_person_add_content_description">количество подписчиков автора поста</string>
+    <string name="iv_attached_kebab_content_description">выпадающее меню автора поста</string>
+    <string name="iv_current_user_avatar_content_description">мой аватар</string>
+    <string name="ib_send_comment_content_description">отправить комментарий</string>
+    <string name="ib_update_comment_content_description">изменить комментарий</string>
+    <string name="iv_profit_arrow_content_description">стрелка профита</string>
+    <string name="tv_editable_text_label_text">Редактирование</string>
+    <string name="uppercased_sale_string">ПРОДАЖА</string>
+    <string name="uppercased_buy_string">ПОКУПКА</string>
+    <string name="short_position">SHORT</string>
+    <string name="long_position">LONG</string>
+
+    <!-- CompanyTradingOperationsJournal -->
+    <string name="remaining_position_comp_trad_ops_journal">Остаток позиции</string>
+    <string name="price_item_comp_trad_ops_journal">Цена</string>
+    <string name="quantity_item_comp_trad_ops_journal">Количество</string>
+    <string name="operations_comp_trad_ops_journal">Журнал операций</string>
+    <string name="pcs_string">" шт."</string>
 
 </resources>

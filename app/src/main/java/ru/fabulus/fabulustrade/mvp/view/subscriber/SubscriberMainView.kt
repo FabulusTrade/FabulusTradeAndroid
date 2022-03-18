@@ -1,13 +1,12 @@
 package ru.fabulus.fabulustrade.mvp.view.subscriber
 
-import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.mvp.view.base.BaseTraderView
 
 @StateStrategyType(AddToEndStrategy::class)
-interface SubscriberMainView : MvpView {
+interface SubscriberMainView : BaseTraderView {
     fun init()
-    fun setAvatar(ava: String?)
     fun setName(username: String)
     fun setSubscriptionCount(count: Int)
 }

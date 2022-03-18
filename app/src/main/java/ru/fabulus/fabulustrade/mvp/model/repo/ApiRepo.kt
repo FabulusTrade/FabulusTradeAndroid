@@ -402,6 +402,29 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun getTraderTradesJournalByCompany(
+        token: String,
+        companyId: Int,
+        page: Int = 1
+    ): Single<Pagination<JournalTradesSortedByCompany>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getDealsJournalByCompany(token, companyId, page)
+                        .flatMap { respPag ->
+                            val trades = respPag.results.map {
+                                mapToTradeJournalByCompany(it)
+                            }
+                            Single.just(mapToPagination(respPag, trades))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun signUp(
         username: String,
         password: String,
@@ -552,14 +575,16 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         postId: String,
         traderId: String,
         text: String
-    ): Completable =
+    ): Single<Post> =
         networkStatus
             .isOnlineSingle()
-            .flatMapCompletable { isOnline ->
+            .flatMap { isOnline ->
                 if (isOnline) {
-                    api.updatePublication(token, postId, traderId, text)
+                    api.updatePublication(token, postId, traderId, text).flatMap { response ->
+                        Single.just(mapToPost(response)!!)
+                    }
                 } else {
-                    Completable.error(NoInternetException())
+                    Single.error(NoInternetException())
                 }
             }
             .subscribeOn(Schedulers.io())
@@ -755,6 +780,25 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun updateComment(
+        token: String,
+        commentId: Long,
+        text: String
+    ): Single<Comment> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .updateComment(token, commentId, text)
+                        .flatMap { responseComment ->
+                            Single.just(mapToComment(responseComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
     fun likeComment(token: String, commentId: Long): Completable =
         networkStatus
             .isOnlineSingle()
@@ -767,6 +811,36 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         }
                 else
                     Completable.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun deleteComment(token: String, commentId: Long): Single<DeleteCommentResult> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .deleteComment(token, commentId)
+                        .flatMap { responseDeleteComment ->
+                            Single.just(mapToDeleteCommentResult(responseDeleteComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun incRepostCount(postId: Int): Single<IncPostResult> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .incRepostCount(postId)
+                        .flatMap { responseIncRepostCount ->
+                            Single.just(mapToIncPostResult(responseIncRepostCount))
+                        }
+                else
+                    Single.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
 }

@@ -96,6 +96,10 @@ class CompanyTradingOperationsPresenter(
         }
     }
 
+    fun openJournal() {
+        router.navigateTo(Screens.companyTradingOperationsJournalScreen(traderId, companyId))
+    }
+
     fun onScrollLimit() {
         if (nextPage != null && !isLoading) {
             isLoading = true
