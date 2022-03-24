@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inc_post_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/fragment_post_detail">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_comment_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment"
+        app:layout_constraintTop_toBottomOf="@id/inc_item_post_header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/view_author_post_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+                android:layout_marginTop="@dimen/view_author_horizontal_divider_margin_top"
+                android:background="@color/view_author_horizontal_divider_background_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_post_margin_top"
+                android:layout_marginEnd="@dimen/tv_post_margin_end"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/tv_post_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/view_author_post_horizontal_divider"
+                tools:text="ЦБ России обдумывает повышение ставки до 5,5% уже в 2021 году." />
+
+            <ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageGroupView
+                android:id="@+id/image_group"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_group_view_height"
+                android:layout_marginTop="@dimen/margin_top_low"
+                app:layout_constraintTop_toBottomOf="@+id/tv_post" />
+
+            <TextView
+                android:id="@+id/tv_warning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_warning_margin_top"
+                android:text="@string/tv_warning_text"
+                android:textColor="@color/tv_warning_text_color"
+                android:textSize="@dimen/tv_warning_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/image_group" />
+
+            <include
+                android:id="@+id/inc_item_post_footer"
+                layout="@layout/item_post_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_warning" />
+
+            <TextView
+                android:id="@+id/tv_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_comment_count_margin_top"
+                android:textColor="@color/tv_comment_count_text_color"
+                android:textSize="@dimen/tv_comment_count_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inc_item_post_footer"
+                tools:text="3 комментария" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_post_comments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_comment_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_work_with_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <include
+            android:id="@+id/inc_item_send_comment"
+            layout="@layout/item_send_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <include
+            android:id="@+id/inc_item_update_comment"
+            layout="@layout/item_update_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
+    </LinearLayout>
+</FrameLayout>
