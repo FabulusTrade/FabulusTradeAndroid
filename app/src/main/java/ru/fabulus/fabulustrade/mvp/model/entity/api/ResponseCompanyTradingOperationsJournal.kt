@@ -14,7 +14,7 @@ data class ResponseCompanyTradingOperationsJournal(
     @Expose
     val date: String,
     @Expose
-    val profit_count: Double,
+    val profit_count: Double?,
     @Expose
     val price: Float,
     @Expose
