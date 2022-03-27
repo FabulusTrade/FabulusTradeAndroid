@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
-    android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end">
+    android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/inc_item_post_header"
@@ -19,8 +20,10 @@
     <include
         android:id="@+id/inc_post_layout"
         layout="@layout/layout_post_with_comments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inc_item_post_header"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/inc_item_post_header" />
 </androidx.constraintlayout.widget.ConstraintLayout>
