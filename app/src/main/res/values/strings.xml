@@ -225,6 +225,13 @@
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
     <string name="date_time">Дата/время</string>
+    <string name="share_with_arguments_on_your_idea">Поделись аргументами к своей идее</string>
+    <string name="arguments_head_idea">Комментарий к полученному результату</string>
+    <string name="publish">Опубликовать</string>
+    <string name="upload_file">Загрузить файл</string>
+    <string name="realization_day">Срок реализации, дн</string>
+    <string name="stop_loss_price">Стоп-лосс (цена / -%)</string>
+    <string name="take_profit_price">Тейк профит (цена / %)</string>
 
     <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -15,6 +16,15 @@ import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
+
+    enum class Mode {
+        TRADER_NO_ARGUMENT,
+        TRADER_FILLING_ARGUMENT,
+        TRADER_HAS_ARGUMENT
+    }
+
+    private var currentMode: Mode = Mode.TRADER_NO_ARGUMENT
+
     private var _binding: FragmentTradeDetailBinding? = null
     private val binding: FragmentTradeDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -49,6 +59,76 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
+        setMode(Mode.TRADER_NO_ARGUMENT)
+        initClickListeners()
+    }
+
+    private fun initTextChangeListeners() {
+        val price = binding.tvTradeDetailPrice.text.trim().toString()
+        binding.etTakeProfit.addTextChangedListener { editText ->
+            binding.tvTakeProfitResult.text = formatOnFormulaToTable(
+                editText.toString(),
+                price
+            )
+        }
+        binding.etStopLoss.addTextChangedListener { editText ->
+            binding.tvStopLossResult.text = formatOnFormulaToTable(
+                editText.toString(),
+                price
+            )
+        }
+    }
+
+    private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
+        return try {
+            val number = numberText.trim().toDouble()
+            val price = priceText.trim().toDouble()
+            val returnValue = (((number / price) - 1) * 100)
+            "%.2f".format(returnValue)
+        } catch (e: NumberFormatException) {
+            ""
+        }
+    }
+
+    private fun initClickListeners() {
+        binding.linearShareArgumentsBegin.setOnClickListener {
+            setMode(Mode.TRADER_FILLING_ARGUMENT)
+        }
+    }
+
+    private fun setMode(mode: Mode) {
+        when (mode) {
+            Mode.TRADER_NO_ARGUMENT -> setTraderNoArgumentMode()
+            Mode.TRADER_FILLING_ARGUMENT -> setTraderFillingArgumentMode()
+            Mode.TRADER_HAS_ARGUMENT -> setTraderHasArgumentMode()
+        }
+        currentMode = mode
+    }
+
+    private fun setTraderNoArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutPostText.visibility = View.GONE
+        binding.layoutSharingPanel.visibility = View.GONE
+    }
+
+    private fun setTraderFillingArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.GONE
+        binding.layoutArgumentTable.visibility = View.VISIBLE
+        binding.layoutPostText.visibility = View.VISIBLE
+        binding.layoutSharingPanel.visibility = View.VISIBLE
+        binding.linearShareHead.visibility = View.VISIBLE
+        binding.ivTradeDetailClose.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+        }
+    }
+
+    private fun setTraderHasArgumentMode() {
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutPostText.visibility = View.GONE
+        binding.layoutSharingPanel.visibility = View.GONE
     }
 
     override fun setName(traderName: String) {
@@ -69,6 +149,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     override fun setPrice(price: String) {
         binding.tvTradeDetailPrice.text = price
+        initTextChangeListeners()
     }
 
     override fun setPriceTitle(priceTitle: String) {
