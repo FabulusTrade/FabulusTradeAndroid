@@ -12,7 +12,7 @@ interface PostRVListPresenter {
     fun deletePost(view: PostItemView)
     fun editPost(view: PostItemView, post: Post)
     fun copyPost(post: Post)
-    fun complainOnPost(post: Post, reason: String)
+    fun complainOnPost(post: Post, complaintId: Int)
     fun setPublicationTextMaxLines(view: PostItemView)
     fun showCommentDetails(view: PostItemView)
 

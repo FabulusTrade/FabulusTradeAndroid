@@ -311,4 +311,18 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Path(value = "comment_id") commentId: Long
     ): Single<ResponseDeleteComment>
+
+    //список жалоб
+    @GET("api/v1/trader/complaint/")
+    fun getComplaints(
+        @Header("Authorization") token: String
+    ): Single<ResponseComplaints>
+
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/posts/{post_id}/complaint/")
+    fun complaintOnPost(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id") postId: Int,
+        @Field("complaint") complaintId: Int
+    ): Completable
 }

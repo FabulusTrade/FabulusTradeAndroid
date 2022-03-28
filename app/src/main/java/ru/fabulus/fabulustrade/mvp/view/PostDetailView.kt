@@ -5,6 +5,7 @@ import android.text.Spanned
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 
 @StateStrategyType(AddToEndSingleStrategy::class)
@@ -49,7 +50,7 @@ interface PostDetailView : MvpView {
     fun setMaxUpdateCommentLength(maxLength: Int)
     fun setRepostCount(text: String)
     fun setPostMenuSelf(post: Post)
-    fun setPostMenuSomeone(post: Post)
+    fun setPostMenuSomeone(post: Post, complaintList: List<Complaint>)
     fun setFlashVisibility(isVisible:Boolean)
     fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }
