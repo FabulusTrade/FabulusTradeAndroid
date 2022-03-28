@@ -15,7 +15,6 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -58,6 +57,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             val post = posts[view.pos]
             initView(view, post)
             initMenu(view, post)
+            initButtonVisibility(view)
         }
 
         private fun initMenu(view: PostItemView, post: Post) {
@@ -66,6 +66,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             } else {
                 fillComplaints(view, post)
             }
+        }
+
+        private fun initButtonVisibility(view: PostItemView) {
+            view.getCountLineAndSetButtonVisibility()
         }
 
         private fun fillComplaints(view: PostItemView, post: Post) {

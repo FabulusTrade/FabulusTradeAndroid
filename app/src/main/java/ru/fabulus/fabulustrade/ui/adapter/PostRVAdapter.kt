@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.ui.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -25,7 +26,6 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
-import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.toStringFormat
 import java.util.*
 import javax.inject.Inject
@@ -87,6 +87,7 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         PostItemView {
         override var pos: Int = -1
         override var isOpen: Boolean = false
+        override var countPostTextLine: Int = -1
 
         private val imageLoader = ImageLoaderImpl(R.drawable.image_view_group_image_placeholder)
 
@@ -234,6 +235,20 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
 
                 itemView.iv_profit_arrow.visibility = View.GONE
                 itemView.tv_profit_percent.visibility = View.GONE
+            }
+        }
+
+        override fun getCountLineAndSetButtonVisibility() {
+            itemView.tv_item_trader_news_post.maxLines = MAX_LINES
+            itemView.tv_item_trader_news_post.post {
+                countPostTextLine = itemView.tv_item_trader_news_post.lineCount
+                Log.d("TAG777", "count: $countPostTextLine pos: $pos")
+                if (countPostTextLine > MIN_LINES) {
+                    itemView.btn_item_trader_news_show_text.visibility = View.VISIBLE
+                } else {
+                    itemView.btn_item_trader_news_show_text.visibility = View.INVISIBLE
+                }
+                itemView.tv_item_trader_news_post.maxLines = MIN_LINES
             }
         }
 
