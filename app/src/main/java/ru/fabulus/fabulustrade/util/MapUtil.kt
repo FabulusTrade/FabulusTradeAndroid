@@ -244,3 +244,16 @@ fun mapToDeleteCommentResult(responseDeleteComment: ResponseDeleteComment): Dele
 
     )
 }
+
+fun mapToComplaints(responseComplaints: ResponseComplaints): List<Complaint> {
+    return responseComplaints.results.map { responseComplaint ->
+        mapToComplaint(responseComplaint)
+    }.toList()
+}
+
+fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
+    return Complaint(
+        responseComplaint.id,
+        responseComplaint.text
+    )
+}
