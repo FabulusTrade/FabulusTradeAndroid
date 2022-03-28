@@ -242,7 +242,6 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             itemView.tv_item_trader_news_post.maxLines = MAX_LINES
             itemView.tv_item_trader_news_post.post {
                 countPostTextLine = itemView.tv_item_trader_news_post.lineCount
-                Log.d("TAG777", "count: $countPostTextLine pos: $pos")
                 if (countPostTextLine > MIN_LINES) {
                     itemView.btn_item_trader_news_show_text.visibility = View.VISIBLE
                 } else {
