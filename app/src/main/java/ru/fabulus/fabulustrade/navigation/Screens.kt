@@ -1,11 +1,7 @@
 package ru.fabulus.fabulustrade.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import ru.fabulus.fabulustrade.mvp.model.entity.SignUpData
-import ru.fabulus.fabulustrade.mvp.model.entity.Trade
-import ru.fabulus.fabulustrade.mvp.model.entity.Trader
-import ru.fabulus.fabulustrade.mvp.model.entity.TraderStatistic
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment

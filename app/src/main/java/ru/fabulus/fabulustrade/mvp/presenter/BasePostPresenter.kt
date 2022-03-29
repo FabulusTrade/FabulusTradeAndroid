@@ -17,13 +17,12 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
-import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
+class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
 
     companion object {
         private const val TAG = "PostDetailPresenter"
@@ -248,7 +247,6 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        initMenu()
         viewState.setPostAuthorAvatar(post.avatarUrl)
         viewState.setPostAuthorName(post.userName)
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
@@ -268,13 +266,9 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 
-        viewState.setRepostCount(post.repostCount.toString())
     }
 
     private fun setHeadersIcons(){
-        viewState.setFlashVisibility(isSelfPost(post))
-        viewState.setProfitAndFollowersVisibility(!isSelfPost(post))
-
         if(!isSelfPost(post)){
             setProfit()
             setFollowersCount()
@@ -304,14 +298,6 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
                 post.followersCount
             )
         )
-    }
-
-    private fun initMenu() {
-        if (isSelfPost(post)) {
-            viewState.setPostMenuSelf(post)
-        } else {
-            viewState.setPostMenuSomeone(post)
-        }
     }
 
     private fun isSelfPost(post: Post): Boolean {
@@ -435,9 +421,6 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
             .subscribe({ incPostResult ->
                 if (incPostResult.result.equals("ok", true)) {
                     post.incRepostCount()
-                    viewState.setRepostCount(post.repostCount.toString())
-                } else {
-                    viewState.showToast(incPostResult.message)
                 }
             }, { error ->
                 Log.d(TAG, "Error incRepostCount: ${error.message.toString()}")
@@ -559,5 +542,4 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         super.onDestroy()
         updatePostResultListener?.dispose()
     }
-
 }
