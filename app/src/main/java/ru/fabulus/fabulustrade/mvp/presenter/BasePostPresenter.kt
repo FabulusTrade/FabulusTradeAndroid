@@ -268,14 +268,14 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
 
     }
 
-    private fun setHeadersIcons(){
-        if(!isSelfPost(post)){
+    private fun setHeadersIcons() {
+        if (!isSelfPost(post)) {
             setProfit()
             setFollowersCount()
         }
     }
 
-    private fun setProfit(){
+    private fun setProfit() {
         viewState.setProfit(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_profit_percent_text,
@@ -291,7 +291,7 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
         }
     }
 
-    private fun setFollowersCount(){
+    private fun setFollowersCount() {
         viewState.setAuthorFollowerCount(
             resourceProvider.formatDigitWithDef(
                 R.string.tv_author_follower_count,
@@ -533,9 +533,12 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
         viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
     }
 
-    fun complainOnPost(reason: String) {
-        //TODO метод для отправки жалобы
-        viewState.showComplainSnackBar()
+    fun complainOnPost(complaintId: Int) {
+        apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showComplainSnackBar()
+            }, {})
     }
 
     override fun onDestroy() {

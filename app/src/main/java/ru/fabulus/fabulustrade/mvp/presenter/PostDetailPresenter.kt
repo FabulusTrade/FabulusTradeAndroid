@@ -310,8 +310,21 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         if (isSelfPost(post)) {
             viewState.setPostMenuSelf(post)
         } else {
-            viewState.setPostMenuSomeone(post)
+            fillComplaints()
         }
+    }
+
+    private fun fillComplaints() {
+        apiRepo
+            .getComplaints(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ complaintList ->
+                viewState.setPostMenuSomeone(post, complaintList)
+            }, { error ->
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     private fun isSelfPost(post: Post): Boolean {
@@ -550,9 +563,13 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
     }
 
-    fun complainOnPost(reason: String) {
-        //TODO метод для отправки жалобы
-        viewState.showComplainSnackBar()
+    fun complainOnPost(complaintId: Int) {
+        apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showComplainSnackBar()
+            }, {})
+
     }
 
     override fun onDestroy() {

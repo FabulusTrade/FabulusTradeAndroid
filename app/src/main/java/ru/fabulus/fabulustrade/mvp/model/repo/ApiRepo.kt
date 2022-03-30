@@ -843,4 +843,32 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Single.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
+
+
+    fun getComplaints(token: String): Single<List<Complaint>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .getComplaints(token)
+                        .flatMap { responseComplaints ->
+                            Single.just(mapToComplaints(responseComplaints))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun complainOnPost(token: String, postId: Int, complainId: Int): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    api.complaintOnPost(token, postId, complainId)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
 }
