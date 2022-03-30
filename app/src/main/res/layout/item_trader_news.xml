@@ -22,9 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_low"
         android:ellipsize="end"
-        android:maxLines="3"
         android:text="@string/text" />
-
 
     <Button
         android:id="@+id/btn_item_trader_news_show_text"
@@ -35,6 +33,7 @@
         android:text="@string/show_postRv"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_very_low"
+        android:visibility="visible"
         tools:ignore="SmallSp" />
 
     <ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageGroupView

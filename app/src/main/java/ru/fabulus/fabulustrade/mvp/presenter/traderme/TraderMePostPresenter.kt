@@ -64,6 +64,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             val post = postList[view.pos]
             initView(view, post)
             initMenu(view, post)
+            initButtonVisibility(view)
         }
 
         private fun initMenu(view: PostItemView, post: Post) {
@@ -72,6 +73,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             } else {
                 fillComplaints(view, post)
             }
+        }
+
+        private fun initButtonVisibility(view: PostItemView) {
+            view.getCountLineAndSetButtonVisibility()
         }
 
         private fun fillComplaints(view: PostItemView, post: Post) {
