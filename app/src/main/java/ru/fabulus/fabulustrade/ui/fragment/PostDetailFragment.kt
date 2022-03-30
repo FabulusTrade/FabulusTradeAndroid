@@ -4,10 +4,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
+import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
 
 class PostDetailFragment : BasePostFragment(), PostDetailView {
 
@@ -20,6 +27,15 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         }
     }
 
+    @InjectPresenter
+    lateinit var postDetailPresenter: PostDetailPresenter
+
+    @ProvidePresenter
+    fun providePostDetailPresenter() =
+        PostDetailPresenter(requireArguments()[POST_KEY] as Post).apply {
+            App.instance.appComponent.inject(this)
+        }
+
     override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
         with(incItemPostHeader) {
             if (isVisible) {
@@ -27,6 +43,14 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
             } else {
                 ivFlash.visibility = View.GONE
             }
+        }
+    }
+
+    override fun initRecyclerView() {
+        commentRVAdapter = CommentRVAdapter(postDetailPresenter.listPresenter)
+        postBinding.rvPostComments.run {
+            adapter = commentRVAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 

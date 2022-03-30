@@ -22,7 +22,6 @@ import ru.fabulus.fabulustrade.databinding.FragmentPostDetailBinding
 import ru.fabulus.fabulustrade.databinding.LayoutPostWithCommentsBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
@@ -59,7 +58,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     @Inject
     lateinit var router: Router
 
-    private var commentRVAdapter: CommentRVAdapter? = null
+    protected var commentRVAdapter: CommentRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +75,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         initRecyclerView()
     }
 
-    private fun initRecyclerView() {
+    protected open fun initRecyclerView() {
         commentRVAdapter = CommentRVAdapter(presenter.listPresenter)
         postBinding.rvPostComments.run {
             adapter = commentRVAdapter
