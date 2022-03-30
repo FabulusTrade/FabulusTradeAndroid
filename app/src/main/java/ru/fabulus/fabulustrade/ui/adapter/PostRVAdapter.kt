@@ -1,7 +1,6 @@
 package ru.fabulus.fabulustrade.ui.adapter
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -234,7 +233,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
                 tvProfitPercent.visibilityByCondition { isVisible }
             }
 
-        override fun getCountLineAndSetButtonVisibility = with(binding) {
+        override fun getCountLineAndSetButtonVisibility(): Unit = with(binding) {
             tvItemTraderNewsPost.maxLines = MAX_LINES
             tvItemTraderNewsPost.post {
                 countPostTextLine = tvItemTraderNewsPost.lineCount
@@ -247,7 +246,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
             }
         }
 
-        override fun setPublicationItemTextMaxLines(isOpen: Boolean) = with(binding){
+        override fun setPublicationItemTextMaxLines(isOpen: Boolean) = with(binding) {
             if (isOpen) {
                 tvItemTraderNewsPost.maxLines = MAX_LINES
                 btnItemTraderNewsShowText.text =
