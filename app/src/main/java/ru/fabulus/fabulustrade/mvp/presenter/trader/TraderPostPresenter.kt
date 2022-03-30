@@ -147,12 +147,12 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             }
         }
 
-        private fun setHeaderIcon(view: PostItemView,post: Post){
-            with(view){
+        private fun setHeaderIcon(view: PostItemView, post: Post) {
+            with(view) {
                 setFlashVisibility(yoursPublication(post))
                 setProfitAndFollowersVisibility(!yoursPublication(post))
 
-                if(!yoursPublication(post)){
+                if (!yoursPublication(post)) {
                     setProfit(
                         resourceProvider.formatDigitWithDef(
                             R.string.tv_profit_percent_text,
