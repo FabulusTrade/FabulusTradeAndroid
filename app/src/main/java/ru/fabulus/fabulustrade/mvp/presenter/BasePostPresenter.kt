@@ -43,6 +43,7 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
     private var updatePostResultListener: ResultListenerHandler? = null
 
     override fun onFirstViewAttach() {
+        App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()

@@ -10,7 +10,6 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App

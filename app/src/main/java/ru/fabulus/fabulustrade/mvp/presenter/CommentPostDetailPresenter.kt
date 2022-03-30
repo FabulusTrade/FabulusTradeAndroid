@@ -14,11 +14,15 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
+import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) : CommentRVListPresenter {
 
+    init {
+        App.instance.appComponent.inject(this)
+    }
     @Inject
     lateinit var router: Router
 

@@ -14,6 +14,7 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
+import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
@@ -37,14 +38,11 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
 
     lateinit var listPresenter: CommentPostDetailPresenter
 
-    private var parentCommentId: Long? = null
-    private var parentCommentAuthorUsername: String? = null
-    private var parentCommentView: CommentItemView? = null
-    private var updatedCommentView: CommentItemView? = null
     private val maxCommentLength = 200
     private var updatePostResultListener: ResultListenerHandler? = null
 
     override fun onFirstViewAttach() {
+        App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()
