@@ -1,8 +1,10 @@
 package ru.fabulus.fabulustrade.ui.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
@@ -90,6 +92,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
         PostItemView {
         override var pos: Int = -1
         override var isOpen: Boolean = false
+        override var countPostTextLine: Int = -1
 
         private val imageLoader = ImageLoaderImpl(R.drawable.image_view_group_image_placeholder)
 
@@ -230,6 +233,19 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
                 ivProfitArrow.visibilityByCondition { isVisible }
                 tvProfitPercent.visibilityByCondition { isVisible }
             }
+
+        override fun getCountLineAndSetButtonVisibility = with(binding) {
+            tvItemTraderNewsPost.maxLines = MAX_LINES
+            tvItemTraderNewsPost.post {
+                countPostTextLine = tvItemTraderNewsPost.lineCount
+                if (countPostTextLine > MIN_LINES) {
+                    btnItemTraderNewsShowText.visibility = View.VISIBLE
+                } else {
+                    btnItemTraderNewsShowText.visibility = View.INVISIBLE
+                }
+                tvItemTraderNewsPost.maxLines = MIN_LINES
+            }
+        }
 
         override fun setPublicationItemTextMaxLines(isOpen: Boolean) = with(binding){
             if (isOpen) {
