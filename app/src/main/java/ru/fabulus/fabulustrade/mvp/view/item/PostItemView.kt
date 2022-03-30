@@ -7,6 +7,7 @@ import java.util.*
 interface PostItemView {
     var pos: Int
     var isOpen: Boolean
+    var countPostTextLine: Int
     fun setNewsDate(date: Date)
     fun setPost(text: String)
     fun setLikesCount(likes: Int)
@@ -28,5 +29,5 @@ interface PostItemView {
     fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>)
     fun setFlashVisibility(isVisible: Boolean)
     fun setProfitAndFollowersVisibility(isVisible: Boolean)
-
+    fun getCountLineAndSetButtonVisibility()
 }
