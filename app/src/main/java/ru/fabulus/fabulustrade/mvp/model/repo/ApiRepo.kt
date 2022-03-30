@@ -815,6 +815,21 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun deleteComment(token: String, commentId: Long): Single<DeleteCommentResult> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .deleteComment(token, commentId)
+                        .flatMap { responseDeleteComment ->
+                            Single.just(mapToDeleteCommentResult(responseDeleteComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
     fun incRepostCount(postId: Int): Single<IncPostResult> =
         networkStatus
             .isOnlineSingle()
@@ -827,6 +842,34 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         }
                 else
                     Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+
+    fun getComplaints(token: String): Single<List<Complaint>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .getComplaints(token)
+                        .flatMap { responseComplaints ->
+                            Single.just(mapToComplaints(responseComplaints))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun complainOnPost(token: String, postId: Int, complainId: Int): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    api.complaintOnPost(token, postId, complainId)
+                } else {
+                    Completable.error(NoInternetException())
+                }
             }
             .subscribeOn(Schedulers.io())
 }

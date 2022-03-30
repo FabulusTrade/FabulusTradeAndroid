@@ -200,9 +200,34 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun deleteComment(comment: Comment) {
+        override fun deleteComment(view: CommentItemView, comment: Comment) {
             if (isCanDeleteComment(comment.dateCreate)) {
-                //TODO метод для удаления коментария
+                apiRepo
+                    .deleteComment(profile.token!!, comment.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ deleteCommentResult ->
+                        if (deleteCommentResult.result.equals("ok", true)) {
+                            post.comments.removeAt(view.pos)
+                            setCommentCount()
+                            setCommentList()
+                            viewState.setRvPosition(view.pos - 1)
+                            viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                        } else {
+                            deleteCommentResult.message?.let { message ->
+                                viewState.showToast(
+                                    resourceProvider.formatString(
+                                        R.string.error_comment_deleted,
+                                        message
+                                    )
+                                )
+                            }
+                        }
+                    }, { error ->
+                        viewState.showToast(resourceProvider.getStringResource(R.string.request_error_comment_deleted))
+                        Log.d(TAG, "Error: ${error.message.toString()}")
+                        Log.d(TAG, error.printStackTrace().toString())
+                    }
+                    )
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_deleted))
             }
@@ -284,8 +309,21 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         if (isSelfPost(post)) {
             viewState.setPostMenuSelf(post)
         } else {
-            viewState.setPostMenuSomeone(post)
+            fillComplaints()
         }
+    }
+
+    private fun fillComplaints() {
+        apiRepo
+            .getComplaints(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ complaintList ->
+                viewState.setPostMenuSomeone(post, complaintList)
+            }, { error ->
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     private fun isSelfPost(post: Post): Boolean {
@@ -524,9 +562,13 @@ class PostDetailPresenter(var post: Post) : MvpPresenter<PostDetailView>() {
         viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
     }
 
-    fun complainOnPost(reason: String) {
-        //TODO метод для отправки жалобы
-        viewState.showComplainSnackBar()
+    fun complainOnPost(complaintId: Int) {
+        apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showComplainSnackBar()
+            }, {})
+
     }
 
     override fun onDestroy() {

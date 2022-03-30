@@ -110,7 +110,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
                             return@setOnMenuItemClickListener true
                         }
                         R.id.delete_comment -> {
-                            presenter.deleteComment(comment)
+                            presenter.deleteComment(this, comment)
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false
@@ -129,16 +129,6 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
                     when (menuItem.itemId) {
                         R.id.mi_copy_comment_text -> {
                             presenter.copyComment(comment)
-                            return@setOnMenuItemClickListener true
-                        }
-                        R.id.mi_unethical_content,
-                        R.id.mi_mat_insults_provocation,
-                        R.id.mi_threats_harassment,
-                        R.id.mi_market_manipulation,
-                        R.id.mi_advertising,
-                        R.id.mi_flood_spam,
-                        R.id.mi_begging_extortion -> {
-                            presenter.complainOnComment(comment, menuItem.title.toString())
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false

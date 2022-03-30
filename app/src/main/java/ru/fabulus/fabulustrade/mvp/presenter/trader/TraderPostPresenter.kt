@@ -15,6 +15,7 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -42,6 +43,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
+    companion object {
+        private const val TAG = "TraderPostPresenter"
+    }
+
     inner class TraderRVListPresenter : PostRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
@@ -59,8 +64,21 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             if (yoursPublication(post)) {
                 view.setIvAttachedKebabMenuSelf(post)
             } else {
-                view.setIvAttachedKebabMenuSomeone(post)
+                fillComplaints(view, post)
             }
+        }
+
+        private fun fillComplaints(view: PostItemView, post: Post) {
+            apiRepo
+                .getComplaints(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ complaintList ->
+                    view.setIvAttachedKebabMenuSomeone(post, complaintList)
+                }, { error ->
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
         }
 
         override fun incRepostCount() {
@@ -243,9 +261,12 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun complainOnPost(post: Post, reason: String) {
-            //TODO метод для отправки жалобы
-            viewState.showComplainSnackBar()
+        override fun complainOnPost(post: Post, complaintId: Int) {
+            apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showComplainSnackBar()
+                }, {})
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

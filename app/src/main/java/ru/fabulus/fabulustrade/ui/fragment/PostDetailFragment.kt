@@ -8,6 +8,7 @@ import android.text.InputFilter.LengthFilter
 import android.text.Spanned
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -21,6 +22,8 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentPostDetailBinding
+import ru.fabulus.fabulustrade.databinding.LayoutPostWithCommentsBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
@@ -38,6 +41,9 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     private var _binding: FragmentPostDetailBinding? = null
     private val binding: FragmentPostDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
+    private val postBinding: LayoutPostWithCommentsBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
 
     companion object {
         const val POST_KEY = "post"
@@ -83,14 +89,14 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     private fun initRecyclerView() {
         commentRVAdapter = CommentRVAdapter(presenter.listPresenter)
-        binding.rvPostComments.run {
+        postBinding.rvPostComments.run {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     override fun setMaxSendCommentLength(maxLength: Int) {
-        with(binding) {
+        with(postBinding) {
             with(incItemSendComment) {
                 tilNewCommentText.counterMaxLength = maxLength
                 etNewCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
@@ -99,7 +105,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setMaxUpdateCommentLength(maxLength: Int) {
-        with(binding) {
+        with(postBinding) {
             with(incItemUpdateComment) {
                 tilUpdateCommentText.counterMaxLength = maxLength
                 etUpdateCommentText.filters = arrayOf<InputFilter>(LengthFilter(maxLength))
@@ -108,7 +114,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     private fun initListeners() {
-        with(binding) {
+        with(postBinding) {
 
             with(incItemPostFooter) {
                 btnLike.setOnClickListener {
@@ -118,7 +124,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
                     presenter.dislikePost()
                 }
                 btnShare.setOnClickListener {
-                    presenter.share(binding.imageGroup.getImageViews())
+                    presenter.share(postBinding.imageGroup.getImageViews())
                 }
             }
 
@@ -207,7 +213,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setPostText(text: String) {
-        binding.tvPost.text = text
+        postBinding.tvPost.text = text
     }
 
     override fun setProfit(profit: String, textColor: Int) {
@@ -223,7 +229,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setPostImages(images: List<String>?) {
-        with(binding.imageGroup) {
+        with(postBinding.imageGroup) {
             if (images.isNullOrEmpty()) {
                 visibility = View.GONE
             } else {
@@ -238,27 +244,27 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setLikeActiveImage() {
-        binding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like)
+        postBinding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like)
     }
 
     override fun setLikeInactiveImage() {
-        binding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like_inactive)
+        postBinding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like_inactive)
     }
 
     override fun setDislikeActiveImage() {
-        binding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike)
+        postBinding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike)
     }
 
     override fun setDislikeInactiveImage() {
-        binding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike_inactive)
+        postBinding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike_inactive)
     }
 
     override fun setPostLikeCount(likeCount: String) {
-        binding.incItemPostFooter.tvLikeCount.text = likeCount
+        postBinding.incItemPostFooter.tvLikeCount.text = likeCount
     }
 
     override fun setPostDislikeCount(dislikeCount: String) {
-        binding.incItemPostFooter.tvDislikeCount.text = dislikeCount
+        postBinding.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
     override fun share(repostIntent: Intent) {
@@ -266,7 +272,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setCommentCount(text: String) {
-        binding.tvCommentCount.text = text
+        postBinding.tvCommentCount.text = text
     }
 
     override fun updateCommentsAdapter() {
@@ -278,44 +284,44 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setRvPosition(position: Int) {
-        binding.rvPostComments.scrollToPosition(position)
+        postBinding.rvPostComments.scrollToPosition(position)
     }
 
     override fun setCurrentUserAvatar(avatarUrl: String) {
-        loadImage(avatarUrl, binding.incItemSendComment.ivCurrentUserAvatar)
+        loadImage(avatarUrl, postBinding.incItemSendComment.ivCurrentUserAvatar)
     }
 
     override fun setClickableSendCommentBtn() {
-        binding.incItemSendComment.ibSendComment.background =
+        postBinding.incItemSendComment.ibSendComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_enabled)
-        binding.incItemSendComment.ibSendComment.isClickable = true
+        postBinding.incItemSendComment.ibSendComment.isClickable = true
     }
 
     override fun setUnclickableSendCommentBtn() {
-        binding.incItemSendComment.ibSendComment.isClickable = false
-        binding.incItemSendComment.ibSendComment.background =
+        postBinding.incItemSendComment.ibSendComment.isClickable = false
+        postBinding.incItemSendComment.ibSendComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_send_disabled)
     }
 
     override fun setClickableUpdateCommentBtn() {
-        binding.incItemUpdateComment.ibUpdateComment.background =
+        postBinding.incItemUpdateComment.ibUpdateComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_enabled)
-        binding.incItemUpdateComment.ibUpdateComment.isClickable = true
+        postBinding.incItemUpdateComment.ibUpdateComment.isClickable = true
     }
 
     override fun setUnclickableUpdateCommentBtn() {
-        binding.incItemUpdateComment.ibUpdateComment.isClickable = false
-        binding.incItemUpdateComment.ibUpdateComment.background =
+        postBinding.incItemUpdateComment.ibUpdateComment.isClickable = false
+        postBinding.incItemUpdateComment.ibUpdateComment.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_disabled)
     }
 
     override fun clearNewCommentText() {
-        binding.incItemSendComment.etNewCommentText.text?.clear()
+        postBinding.incItemSendComment.etNewCommentText.text?.clear()
     }
 
     override fun prepareReplyToComment(text: Spanned, maxCommentLength: Int) {
         showSendComment(maxCommentLength)
-        with(binding.incItemSendComment.etNewCommentText) {
+        with(postBinding.incItemSendComment.etNewCommentText) {
             setText(text)
             requestFocus()
             setSelection(length())
@@ -324,8 +330,8 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
 
     override fun prepareUpdateComment(text: Spanned, maxCommentLength: Int) {
         showUpdateComment(maxCommentLength)
-        with(binding.incItemUpdateComment) {
-            ivCurrentUserAvatarUpdateComment.setImageDrawable(binding.incItemSendComment.ivCurrentUserAvatar.drawable)
+        with(postBinding.incItemUpdateComment) {
+            ivCurrentUserAvatarUpdateComment.setImageDrawable(postBinding.incItemSendComment.ivCurrentUserAvatar.drawable)
             tvEditableText.text = text
             with(etUpdateCommentText) {
                 setText(text)
@@ -336,11 +342,11 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setIncItemSendCommentVisibility(visibility: Int) {
-        binding.incItemSendComment.root.visibility = visibility
+        postBinding.incItemSendComment.root.visibility = visibility
     }
 
     override fun setIncItemUpdateCommentVisibility(visibility: Int) {
-        binding.incItemUpdateComment.root.visibility = visibility
+        postBinding.incItemUpdateComment.root.visibility = visibility
     }
 
     override fun showToast(text: String) {
@@ -351,14 +357,14 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         showCustomSnackbar(
             R.layout.layout_send_complain_snackbar,
             layoutInflater,
-            binding.incItemSendComment.ibSendComment,
+            postBinding.incItemSendComment.ibSendComment,
             "",
             Snackbar.LENGTH_LONG
         )
     }
 
     override fun scrollNsvCommentViewToBottom() {
-        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
+        postBinding.nsvCommentView.post { postBinding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setAuthorFollowerCount(text: String) {
@@ -378,7 +384,7 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
     }
 
     override fun setRepostCount(text: String) {
-        binding.incItemPostFooter.tvRepostCount.text = text
+        postBinding.incItemPostFooter.tvRepostCount.text = text
     }
 
     override fun setPostMenuSelf(post: Post) {
@@ -408,31 +414,30 @@ class PostDetailFragment : MvpAppCompatFragment(), PostDetailView {
         }
     }
 
-    override fun setPostMenuSomeone(post: Post) {
+    override fun setPostMenuSomeone(post: Post, complaintList: List<Complaint>) {
         binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
-            val menu = PopupMenu(context, btn)
-            menu.inflate(R.menu.menu_someone_comment)
+            val popupMenu = PopupMenu(context, btn)
+            popupMenu.inflate(R.menu.menu_someone_comment)
+            val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+            complaintList.forEach { complaint ->
+                complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
+                    .setOnMenuItemClickListener {
+                        presenter.complainOnPost(complaint.id)
+                        return@setOnMenuItemClickListener true
+                    }
+            }
 
-            menu.setOnMenuItemClickListener { menuItem ->
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.mi_copy_comment_text -> {
                         presenter.copyPost()
                         return@setOnMenuItemClickListener true
                     }
-                    R.id.mi_unethical_content,
-                    R.id.mi_mat_insults_provocation,
-                    R.id.mi_threats_harassment,
-                    R.id.mi_market_manipulation,
-                    R.id.mi_advertising,
-                    R.id.mi_flood_spam,
-                    R.id.mi_begging_extortion -> {
-                        presenter.complainOnPost(menuItem.title.toString())
-                        return@setOnMenuItemClickListener true
-                    }
                     else -> return@setOnMenuItemClickListener false
                 }
             }
-            menu.show()
+            popupMenu.show()
         }
     }
 

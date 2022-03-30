@@ -71,8 +71,8 @@ object Screens {
 
     fun tradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
 
-    fun companyTradingOperationsScreen(traderId: String, companyId: Int) =
-        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId) }
+    fun companyTradingOperationsScreen(traderId: String, companyId: Int, isMyOperations: Boolean = false) =
+        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId, isMyOperations) }
 
     fun companyTradingOperationsJournalScreen(traderId: String, companyId: Int) =
         FragmentScreen { CompanyTradingOperationsJournalFragment.newInstance(traderId, companyId) }

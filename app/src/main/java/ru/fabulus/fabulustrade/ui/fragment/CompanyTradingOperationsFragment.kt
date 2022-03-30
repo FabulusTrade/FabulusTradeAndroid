@@ -15,15 +15,15 @@ import ru.fabulus.fabulustrade.mvp.view.CompanyTradingOperationsView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CompanyTradingOperationsRVAdapter
 
-class CompanyTradingOperationsFragment(private val traderId: String, private val companyId: Int) :
+class CompanyTradingOperationsFragment(private val traderId: String, private val companyId: Int, private val isMyOperations: Boolean) :
     MvpAppCompatFragment(), CompanyTradingOperationsView {
     private var _binding: FragmentCompanyTradingOperationsBinding? = null
     private val binding: FragmentCompanyTradingOperationsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance(traderId: String, companyId: Int) =
-            CompanyTradingOperationsFragment(traderId, companyId)
+        fun newInstance(traderId: String, companyId: Int, isMyOperations: Boolean) =
+            CompanyTradingOperationsFragment(traderId, companyId, isMyOperations)
     }
 
     @InjectPresenter
@@ -42,6 +42,7 @@ class CompanyTradingOperationsFragment(private val traderId: String, private val
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCompanyTradingOperationsBinding.inflate(inflater, container, false)
+        if (!isMyOperations) binding.btnCompanyTradingOperationsOpenJournal.visibility = View.GONE
         return _binding?.root
     }
 

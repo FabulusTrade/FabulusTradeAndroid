@@ -56,6 +56,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     val listPresenter = TraderRVListPresenter()
 
+    companion object {
+        private const val TAG = "TraderMePostPresenter"
+    }
+
     inner class TraderRVListPresenter : TraderMePostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
@@ -73,8 +77,21 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             if (yoursPublication(post)) {
                 view.setIvAttachedKebabMenuSelf(post)
             } else {
-                view.setIvAttachedKebabMenuSomeone(post)
+                fillComplaints(view, post)
             }
+        }
+
+        private fun fillComplaints(view: PostItemView, post: Post) {
+            apiRepo
+                .getComplaints(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ complaintList ->
+                    view.setIvAttachedKebabMenuSomeone(post, complaintList)
+                }, { error ->
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
         }
 
         private fun initView(view: PostItemView, post: Post) {
@@ -225,9 +242,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun complainOnPost(post: Post, reason: String) {
-            //TODO метод для отправки жалобы
-            viewState.showComplainSnackBar()
+        override fun complainOnPost(post: Post, complaintId: Int) {
+            apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showComplainSnackBar()
+                }, {})
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

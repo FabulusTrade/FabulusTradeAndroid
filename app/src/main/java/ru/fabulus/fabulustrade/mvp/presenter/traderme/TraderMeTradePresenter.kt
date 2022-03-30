@@ -80,7 +80,8 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
             router.navigateTo(
                 Screens.companyTradingOperationsScreen(
                     profile.user!!.id,
-                    trades[view.pos].companyId
+                    trades[view.pos].companyId,
+                    true
                 )
             )
         }

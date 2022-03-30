@@ -239,3 +239,24 @@ fun mapToIncPostResult(responseIncRepostCount: ResponseIncRepostCount): IncPostR
         responseIncRepostCount.message
     )
 }
+
+fun mapToDeleteCommentResult(responseDeleteComment: ResponseDeleteComment): DeleteCommentResult {
+    return DeleteCommentResult(
+        responseDeleteComment.result,
+        responseDeleteComment.message
+
+    )
+}
+
+fun mapToComplaints(responseComplaints: ResponseComplaints): List<Complaint> {
+    return responseComplaints.results.map { responseComplaint ->
+        mapToComplaint(responseComplaint)
+    }.toList()
+}
+
+fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
+    return Complaint(
+        responseComplaint.id,
+        responseComplaint.text
+    )
+}
