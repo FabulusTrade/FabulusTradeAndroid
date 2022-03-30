@@ -1,7 +1,6 @@
 package ru.fabulus.fabulustrade.ui.adapter
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
