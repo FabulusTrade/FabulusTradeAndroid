@@ -221,8 +221,8 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     override fun editComment(view: CommentItemView, comment: Comment) {
         if (isCanEditComment(comment.dateCreate)) {
             updatedCommentView = view
-        } else {
             viewState.prepareUpdateComment(prepareCommentText(comment), BasePostPresenter.maxCommentLength)
+        } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
         }
     }
