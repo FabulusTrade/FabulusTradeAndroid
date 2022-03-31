@@ -5,21 +5,21 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.*
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
-    trader.id,
-    trader.username,
-    trader.avatar,
-    trader.kval,
-    trader.is_trader,
-    trader.is_active,
-    trader.date_joined,
-    trader.followers_count,
-    trader.trades_count,
-    trader.colorIncrDecrDepo365,
-    trader.followers_count_7day,
-    mapToPost(trader.pinned_post)
+    id = trader.id,
+    username = trader.username,
+    avatar = trader.avatar,
+    kval = trader.kval,
+    isActive = trader.is_trader,
+    isTrader = trader.is_active,
+    dateJoined = trader.date_joined,
+    followersCount = trader.followers_count,
+    tradesCount = trader.trades_count,
+    colorIncrDecrDepo365 = trader.colorIncrDecrDepo365,
+    followersForWeekCount = trader.followers_count_7day,
+    pinnedPost = mapToPost(trader.pinned_post),
+    flashLimit = trader.flashLimit
 )
 
 fun mapToTraderStatistic(response: ResponseTraderStatistic): TraderStatistic {
@@ -158,8 +158,7 @@ fun mapToPost(post: ResponsePost?): Post? {
             comments = comments,
             colorIncrDecrDepo365 = post.colorIncrDecrDepo365,
             repostCount = post.repostCount,
-            //isFlashed = post.isFlashed TODO заглушка до расширения API
-            isFlashed = Random.nextInt(10) == 1
+            isFlashed = post.isFlashed
         )
     }
 }

@@ -24,7 +24,7 @@ interface WinTradeApi {
     @GET("api/v1/trader/{trader_id}/")
     fun getTraderById(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: Long
+        @Path(value = "trader_id", encoded = true) traderId: String
     ): Single<ResponseTrader>
 
     @GET("api/v1/trader/{trader_id}/trade/")
@@ -327,4 +327,12 @@ interface WinTradeApi {
         @Path(value = "post_id") postId: Int,
         @Field("complaint") complaintId: Int
     ): Completable
+
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/post/{post_id}/")
+    fun setFlashedPost(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id") postId: Int,
+        @Field("is_flashed") isFlashed: Boolean
+    ): Single<ResponseSetFlashedPost>
 }

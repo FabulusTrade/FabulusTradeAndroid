@@ -185,7 +185,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         }
     }
 
-    override fun showMessagePostIsPosted() {
+    override fun showMessagePostIsFlashed() {
         context?.let {
             AlertDialog.Builder(it)
                 .setMessage(R.string.the_post_is_posted_in_the_general_feed)
