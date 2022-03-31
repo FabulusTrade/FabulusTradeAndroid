@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
-import dagger.Provides
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
@@ -19,7 +18,7 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
+open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {
 
     companion object {
         const val TAG = "BasePostPresenter"
@@ -65,7 +64,6 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
         listPresenter.setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
-
     }
 
     private fun setHeadersIcons() {

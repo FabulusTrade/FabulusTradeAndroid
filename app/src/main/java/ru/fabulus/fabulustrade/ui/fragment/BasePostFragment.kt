@@ -47,11 +47,11 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         }
 
     @InjectPresenter
-    lateinit var presenter: BasePostPresenter
+    lateinit var presenter: BasePostPresenter<BasePostView>
 
     @ProvidePresenter
     fun providePresenter() =
-        BasePostPresenter(requireArguments()[PostDetailFragment.POST_KEY] as Post).apply {
+        BasePostPresenter<BasePostView>(requireArguments()[PostDetailFragment.POST_KEY] as Post).apply {
             App.instance.appComponent.inject(this)
         }
 
