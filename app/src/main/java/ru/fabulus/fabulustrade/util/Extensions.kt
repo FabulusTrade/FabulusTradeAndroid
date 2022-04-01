@@ -23,7 +23,9 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
+import com.google.gson.GsonBuilder
 import moxy.MvpAppCompatFragment
+import retrofit2.HttpException
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.NavElementsControl
@@ -223,6 +225,18 @@ inline fun <T : View> T.visibilityByCondition(condition: () -> Boolean): T {
     }
     return this
 }
+
+//Извлекает ответ заданного типа из HttpException
+inline fun <reified T> HttpException.extractResponse(): T? =
+    this.response()
+        ?.errorBody()
+        ?.string()
+        ?.let { rawResponse ->
+            GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .fromJson(rawResponse, T::class.java)
+        }
 
 fun String.toSpannableText(
     startIndex: Int,

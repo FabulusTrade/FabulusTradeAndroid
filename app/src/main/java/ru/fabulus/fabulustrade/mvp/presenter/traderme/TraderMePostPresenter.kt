@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
-import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
@@ -352,13 +351,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             getLimitOfNewFlashPosts()
             val errorMessage = when (exception) {
                 is HttpException -> {
-                    val resp = exception.response()?.errorBody()?.string()
-                    val gson =
-                        GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-                            .create()
-                    val response =
-                        gson.fromJson(resp, ResponseSetFlashedPost::class.java)
-                    response.message
+                    exception
+                        .extractResponse<ResponseSetFlashedPost>()
+                        ?.message
                 }
                 is NoInternetException -> {
                     resourceProvider.getStringResource(R.string.message_flash_offline_exception)
