@@ -339,7 +339,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         ) {
             setFlashColor(post, view)
             viewState.showMessagePostIsFlashed()
-            updatePost(post)
+            post.isFlashed = true
+            updatePostOnView(post)
             limitOfNewFlashPosts = response.flashLimit ?: 0
             if (limitOfNewFlashPosts == 0) {
                 viewState.updateAdapter()
@@ -364,9 +365,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             viewState.showToast(errorMessage)
         }
 
-        private fun updatePost(post: Post) {
+        private fun updatePostOnView(post: Post) {
             val pos: Int = listPresenter.postList.indexOfFirst { it.id == post.id }
-            post.isFlashed = true
             updatedPostAt(pos, post)
         }
 
@@ -401,7 +401,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     private fun getLimitOfNewFlashPosts() {
-
         gettingLimitOfFlashPostsDisposable?.dispose()
         gettingLimitOfFlashPostsDisposable = profile.token?.let { token ->
             profile.user?.let { user ->
