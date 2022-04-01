@@ -42,7 +42,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
     private var updatePostResultListener: ResultListenerHandler? = null
 
     override fun onFirstViewAttach() {
-        App.instance.appComponent.inject(this)
+        App.instance.appComponent.inject(this as BasePostPresenter<BasePostView>)
         super.onFirstViewAttach()
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()
@@ -59,47 +59,10 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
 
         setLikeImage(post.isLiked)
         setDislikeImage(post.isDisliked)
-        setHeadersIcons()
 
         listPresenter.setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
-    }
-
-    private fun setHeadersIcons() {
-        if (!isSelfPost(post)) {
-            setProfit()
-            setFollowersCount()
-        }
-    }
-
-    private fun setProfit() {
-        viewState.setProfit(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_profit_percent_text,
-                post.colorIncrDecrDepo365.value
-            ),
-            Color.parseColor(post.colorIncrDecrDepo365.color)
-        )
-
-        if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
-            viewState.setProfitNegativeArrow()
-        } else {
-            viewState.setProfitPositiveArrow()
-        }
-    }
-
-    private fun setFollowersCount() {
-        viewState.setAuthorFollowerCount(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_author_follower_count,
-                post.followersCount
-            )
-        )
-    }
-
-    private fun isSelfPost(post: Post): Boolean {
-        return post.traderId == profile.user?.id
     }
 
     private fun setCommentList() {

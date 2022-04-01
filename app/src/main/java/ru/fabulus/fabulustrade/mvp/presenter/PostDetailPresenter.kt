@@ -21,6 +21,8 @@ class PostDetailPresenter(override var post: Post) : BasePostPresenter<PostDetai
 
         initMenu()
 
+        setHeadersIcons()
+
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 
         viewState.setRepostCount(post.repostCount.toString())
@@ -84,21 +86,5 @@ class PostDetailPresenter(override var post: Post) : BasePostPresenter<PostDetai
 
     private fun isSelfPost(post: Post): Boolean {
         return post.traderId == profile.user?.id
-    }
-
-    private fun setDislikeImage(isDisliked: Boolean) {
-        if (isDisliked) {
-            viewState.setDislikeActiveImage()
-        } else {
-            viewState.setDislikeInactiveImage()
-        }
-    }
-
-    private fun setLikeImage(isLiked: Boolean) {
-        if (isLiked) {
-            viewState.setLikeActiveImage()
-        } else {
-            viewState.setLikeInactiveImage()
-        }
     }
 }

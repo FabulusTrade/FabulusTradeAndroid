@@ -139,7 +139,7 @@ interface AppComponent {
     fun inject(postRVAdapter: PostRVAdapter)
     fun inject(basePostFragment: BasePostFragment)
     fun inject(postDetailPresenter: PostDetailPresenter)
-    fun <T> inject(basePostPresenter: BasePostPresenter<BasePostView>)
+    fun inject(basePostPresenter: BasePostPresenter<BasePostView>)
     fun inject(commentPostDetailPresenter: CommentPostDetailPresenter)
     fun inject(commentRVAdapter: CommentRVAdapter)
 }
