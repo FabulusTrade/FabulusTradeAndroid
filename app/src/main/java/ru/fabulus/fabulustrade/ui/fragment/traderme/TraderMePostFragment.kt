@@ -103,14 +103,21 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         }
     }
 
-    override fun setBtnsState(state: TraderMePostPresenter.State) {
-        when (state) {
-            TraderMePostPresenter.State.PUBLICATIONS -> {
+    override fun setBtnsState(state: TraderMePostPresenter.ButtonsState) {
+        when (state.mode) {
+            TraderMePostPresenter.ButtonsState.Mode.PUBLICATIONS -> {
                 publicationsStateInit()
             }
-            TraderMePostPresenter.State.SUBSCRIPTION -> {
+            TraderMePostPresenter.ButtonsState.Mode.SUBSCRIPTION -> {
                 subscriptionStateInit()
             }
+        }
+        if (state.flashedPostsOnlyFilter) {
+            R.color.colorGreen
+        } else {
+            R.color.colorGreen_27
+        }.let {
+            binding.ivFlash.setColorFilter(requireContext().resources.getColor(it))
         }
     }
 
@@ -119,7 +126,6 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
             isActive(btnTraderNewsSubscription)
             isNotActive(btnTraderNewsPublication)
             layoutTraderNewsTitle.visibility = View.GONE
-
         }
     }
 

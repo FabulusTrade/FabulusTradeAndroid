@@ -664,7 +664,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
-    fun getMyPosts(token: String, page: Int = 1, flashedPostsOnly: Boolean = false): Single<Pagination<Post>> =
+    fun getMyPosts(
+        token: String,
+        page: Int = 1,
+        flashedPostsOnly: Boolean = false
+    ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
@@ -877,7 +881,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnLine ->
-                if (isOnLine)  {
+                if (isOnLine) {
                     api.setFlashedPost(token, post.id, true)
                 } else {
                     Single.error(NoInternetException())

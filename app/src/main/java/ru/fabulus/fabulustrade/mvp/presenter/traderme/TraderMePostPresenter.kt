@@ -41,8 +41,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    private var state = State.PUBLICATIONS
-    private var flashedPostsOnlyFilter = false
+    private var buttonsState = ButtonsState(ButtonsState.Mode.PUBLICATIONS, false)
     private var limitOfNewFlashPosts: Int = 0
     private var loadingPostDisposable: Disposable? = null
     private var gettingLimitOfFlashPostsDisposable: Disposable? = null
@@ -51,8 +50,19 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
-    enum class State {
-        PUBLICATIONS, SUBSCRIPTION
+    class ButtonsState(
+        val mode: Mode,
+        val flashedPostsOnlyFilter: Boolean
+    ) {
+        enum class Mode {
+            PUBLICATIONS, SUBSCRIPTION
+        }
+
+        fun getNewStateWithMode(mode: Mode): ButtonsState =
+            ButtonsState(mode, this.flashedPostsOnlyFilter)
+
+        fun getNewStateWithFlashedOnlyFilter(flashedPostsOnlyFilter: Boolean) =
+            ButtonsState(this.mode, flashedPostsOnlyFilter)
     }
 
     val listPresenter = TraderRVListPresenter()
@@ -439,20 +449,20 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun publicationsBtnClicked() {
-        state = State.PUBLICATIONS
+        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.PUBLICATIONS)
         initNewLoadingPosts()
         loadPosts()
     }
 
     fun subscriptionBtnClicked() {
-        state = State.SUBSCRIPTION
+        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.SUBSCRIPTION)
         initNewLoadingPosts()
         loadPosts()
     }
 
     fun flashedPostsBtnClicked() {
-        if (!flashedPostsOnlyFilter) {
-            flashedPostsOnlyFilter = true
+        if (!buttonsState.flashedPostsOnlyFilter) {
+            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter( true)
             loadPosts(true)
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_filter_is_set))
@@ -460,8 +470,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun backClicked(): Boolean {
-        if (flashedPostsOnlyFilter) {
-            flashedPostsOnlyFilter = false
+        if (buttonsState.flashedPostsOnlyFilter) {
+            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
             initNewLoadingPosts()
             loadPosts()
             return true
@@ -470,7 +480,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     private fun initNewLoadingPosts() {
-        viewState.setBtnsState(state)
+        viewState.setBtnsState(buttonsState)
         nextPage = 1
         listPresenter.postList.clear()
     }
@@ -491,10 +501,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     private fun displayResultOfLoad(pag: Pagination<Post>, forceLoading: Boolean) {
-        if (flashedPostsOnlyFilter) {
+        if (buttonsState.flashedPostsOnlyFilter) {
             if (pag.results.isEmpty()) {
                 viewState.showToast(resourceProvider.getStringResource(R.string.no_posted_posts))
-                flashedPostsOnlyFilter = false
+                buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
                 if (listPresenter.postList.isEmpty()) {
                     initNewLoadingPosts()
                     loadPosts()
@@ -518,10 +528,14 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 nextPage ?: 1
             }
             with(apiRepo) {
-                if (state == State.SUBSCRIPTION) {
-                    getPostsFollowerAndObserving(token, pageToLoad, flashedPostsOnlyFilter)
+                if (buttonsState.mode == ButtonsState.Mode.SUBSCRIPTION) {
+                    getPostsFollowerAndObserving(
+                        token,
+                        pageToLoad,
+                        buttonsState.flashedPostsOnlyFilter
+                    )
                 } else {
-                    getMyPosts(token, pageToLoad, flashedPostsOnlyFilter)
+                    getMyPosts(token, pageToLoad, buttonsState.flashedPostsOnlyFilter)
                 }
             }
         }

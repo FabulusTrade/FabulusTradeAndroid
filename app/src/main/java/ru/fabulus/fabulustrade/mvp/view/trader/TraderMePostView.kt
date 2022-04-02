@@ -10,7 +10,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderMePostView : MvpView {
     fun init()
-    fun setBtnsState(state: TraderMePostPresenter.State)
+    fun setBtnsState(state: TraderMePostPresenter.ButtonsState)
     fun updateAdapter()
 
     @StateStrategyType(SkipStrategy::class)
