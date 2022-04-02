@@ -47,7 +47,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         }
 
     @InjectPresenter
-    lateinit var presenter: BasePostPresenter<BasePostView>
+    open lateinit var presenter: BasePostPresenter<BasePostView>
 
     @ProvidePresenter
     fun providePresenter() =

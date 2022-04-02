@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
@@ -15,7 +14,10 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.getSharePostIntent
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {

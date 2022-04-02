@@ -10,7 +10,9 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
+import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
@@ -29,11 +31,18 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
     @InjectPresenter
     lateinit var postDetailPresenter: PostDetailPresenter
 
+    override lateinit var presenter: BasePostPresenter<BasePostView>
+
     @ProvidePresenter
     fun providePostDetailPresenter() =
         PostDetailPresenter(requireArguments()[POST_KEY] as Post).apply {
             App.instance.appComponent.inject(this)
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = postDetailPresenter as BasePostPresenter<BasePostView>
+    }
 
     override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
         with(incItemPostHeader) {
@@ -66,15 +75,15 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
                 when (menuItem.itemId) {
 
                     R.id.edit_comment -> {
-                        presenter.editPost()
+                        postDetailPresenter.editPost()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.copy_comment_text -> {
-                        presenter.copyPost()
+                        postDetailPresenter.copyPost()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.delete_comment -> {
-                        presenter.deletePost()
+                        postDetailPresenter.deletePost()
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false
@@ -92,7 +101,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
             complaintList.forEach { complaint ->
                 complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
                     .setOnMenuItemClickListener {
-                        presenter.complainOnPost(complaint.id)
+                        postDetailPresenter.complainOnPost(complaint.id)
                         return@setOnMenuItemClickListener true
                     }
             }
@@ -100,7 +109,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.mi_copy_comment_text -> {
-                        presenter.copyPost()
+                        postDetailPresenter.copyPost()
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false
