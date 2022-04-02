@@ -481,6 +481,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
     private fun initNewLoadingPosts() {
         viewState.setBtnsState(buttonsState)
+        viewState.detachAdapter()
         nextPage = 1
         listPresenter.postList.clear()
     }
@@ -515,8 +516,13 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 initNewLoadingPosts()
             }
         }
+        val itIsFirstLoadingPosts = listPresenter.postList.isEmpty()
         listPresenter.postList.addAll(pag.results)
-        viewState.updateAdapter()
+        if (itIsFirstLoadingPosts) {
+            viewState.attachAdapter()
+        } else {
+            viewState.updateAdapter()
+        }
         nextPage = pag.next
     }
 

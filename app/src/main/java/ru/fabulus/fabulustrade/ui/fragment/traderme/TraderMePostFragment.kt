@@ -157,6 +157,14 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         postRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun detachAdapter() {
+        binding.rvTraderMePost.adapter = null
+    }
+
+    override fun attachAdapter() {
+        binding.rvTraderMePost.adapter = postRVAdapter
+    }
+
     override fun share(shareIntent: Intent) {
         resultLauncher.launch(shareIntent)
     }
