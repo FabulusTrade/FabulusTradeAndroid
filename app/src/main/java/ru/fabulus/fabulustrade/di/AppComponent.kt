@@ -22,6 +22,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.*
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersFilterPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersMainPresenter
+import ru.fabulus.fabulustrade.mvp.view.BasePostView
+import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.activity.MainActivity
 import ru.fabulus.fabulustrade.ui.activity.SplashActivity
@@ -137,7 +139,7 @@ interface AppComponent {
     fun inject(postRVAdapter: PostRVAdapter)
     fun inject(basePostFragment: BasePostFragment)
     fun inject(postDetailPresenter: PostDetailPresenter)
-    fun inject(basePostPresenter: BasePostPresenter)
+    fun inject(basePostPresenter: BasePostPresenter<BasePostView>)
     fun inject(commentPostDetailPresenter: CommentPostDetailPresenter)
     fun inject(commentRVAdapter: CommentRVAdapter)
 }

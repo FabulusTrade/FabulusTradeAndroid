@@ -1,11 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
-import dagger.Provides
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
@@ -16,10 +14,13 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.getSharePostIntent
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
-class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
+open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {
 
     companion object {
         const val TAG = "BasePostPresenter"
@@ -43,7 +44,7 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
     private var updatePostResultListener: ResultListenerHandler? = null
 
     override fun onFirstViewAttach() {
-        App.instance.appComponent.inject(this)
+        App.instance.appComponent.inject(this as BasePostPresenter<BasePostView>)
         super.onFirstViewAttach()
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()
@@ -60,48 +61,10 @@ class BasePostPresenter(var post: Post) : MvpPresenter<BasePostView>() {
 
         setLikeImage(post.isLiked)
         setDislikeImage(post.isDisliked)
-        setHeadersIcons()
 
         listPresenter.setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
-
-    }
-
-    private fun setHeadersIcons() {
-        if (!isSelfPost(post)) {
-            setProfit()
-            setFollowersCount()
-        }
-    }
-
-    private fun setProfit() {
-        viewState.setProfit(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_profit_percent_text,
-                post.colorIncrDecrDepo365.value
-            ),
-            Color.parseColor(post.colorIncrDecrDepo365.color)
-        )
-
-        if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
-            viewState.setProfitNegativeArrow()
-        } else {
-            viewState.setProfitPositiveArrow()
-        }
-    }
-
-    private fun setFollowersCount() {
-        viewState.setAuthorFollowerCount(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_author_follower_count,
-                post.followersCount
-            )
-        )
-    }
-
-    private fun isSelfPost(post: Post): Boolean {
-        return post.traderId == profile.user?.id
     }
 
     private fun setCommentList() {
