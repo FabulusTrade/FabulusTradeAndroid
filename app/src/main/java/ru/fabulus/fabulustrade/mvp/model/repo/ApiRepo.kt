@@ -71,7 +71,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
-    fun getTraderById(token: String, traderId: Long): Single<Trader> =
+    fun getTraderById(token: String, traderId: String): Single<Trader> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
@@ -664,15 +664,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
-    fun getMyPosts(token: String, page: Int = 1): Single<Pagination<Post>> =
+    fun getMyPosts(
+        token: String,
+        page: Int = 1,
+        flashedPostsOnly: Boolean = false
+    ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline) {
                     api
-                        .getMyPosts(token, page)
+                        .getMyPosts(token, page, flashedPostsOnly)
                         .flatMap { respPag ->
-                            val posts = respPag.results.map { mapToPost(it)!! }
+                            val posts = respPag.results.mapNotNull { mapToPost(it) }
                             Single.just(mapToPagination(respPag, posts))
                         }
                 } else {
@@ -740,14 +744,15 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     fun getPostsFollowerAndObserving(
         token: String,
-        page: Int = 1
+        page: Int = 1,
+        flashedPostsOnly: Boolean = false
     ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline) {
                     api
-                        .getPostsFollowerAndObserving(token, page)
+                        .getPostsFollowerAndObserving(token, page, flashedPostsOnly)
                         .flatMap { respPag ->
                             val posts = respPag.results.map {
                                 mapToPost(it)!!
@@ -868,6 +873,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     api.complaintOnPost(token, postId, complainId)
                 } else {
                     Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setFlashedPost(token: String, post: Post): Single<ResponseSetFlashedPost> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnLine ->
+                if (isOnLine) {
+                    api.setFlashedPost(token, post.id, true)
+                } else {
+                    Single.error(NoInternetException())
                 }
             }
             .subscribeOn(Schedulers.io())

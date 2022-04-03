@@ -24,7 +24,7 @@ interface WinTradeApi {
     @GET("api/v1/trader/{trader_id}/")
     fun getTraderById(
         @Header("Authorization") token: String,
-        @Path(value = "trader_id", encoded = true) traderId: Long
+        @Path(value = "trader_id", encoded = true) traderId: String
     ): Single<ResponseTrader>
 
     @GET("api/v1/trader/{trader_id}/trade/")
@@ -126,7 +126,8 @@ interface WinTradeApi {
     @GET("api/v1/trader/posts/following/")
     fun getPostsFollowerAndObserving(
         @Header("Authorization") token: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("flashed_posts_only") flashedPostsOnly: Boolean
     ): Single<ResponsePagination<ResponsePost>>
 
     @GET("api/v1/trader/{trader_id}/aggregated/")
@@ -238,7 +239,8 @@ interface WinTradeApi {
     @GET("api/v1/trader/posts/my/")
     fun getMyPosts(
         @Header("Authorization") token: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("flashed_posts_only") flashedPostsOnly: Boolean = false
     ): Single<ResponsePagination<ResponsePost>>
 
     @POST("api/v1/feedback/send/")
@@ -325,4 +327,12 @@ interface WinTradeApi {
         @Path(value = "post_id") postId: Int,
         @Field("complaint") complaintId: Int
     ): Completable
+
+    @FormUrlEncoded
+    @PATCH("api/v1/trader/post/{post_id}/")
+    fun setFlashedPost(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id") postId: Int,
+        @Field("is_flashed") isFlashed: Boolean
+    ): Single<ResponseSetFlashedPost>
 }

@@ -23,7 +23,9 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
+import com.google.gson.GsonBuilder
 import moxy.MvpAppCompatFragment
+import retrofit2.HttpException
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.NavElementsControl
@@ -200,6 +202,41 @@ fun ImageView.getBitmapUriFromDrawable(): Uri? {
     }
     return bmpUri
 }
+
+fun <T : View> T.show(): T {
+    if (visibility != View.VISIBLE) {
+        visibility = View.VISIBLE
+    }
+    return this
+}
+
+fun <T : View> T.hide(): T {
+    if (visibility != View.GONE) {
+        visibility = View.GONE
+    }
+    return this
+}
+
+inline fun <T : View> T.visibilityByCondition(condition: () -> Boolean): T {
+    if (condition()) {
+        show()
+    } else {
+        hide()
+    }
+    return this
+}
+
+//Извлекает ответ заданного типа из HttpException
+inline fun <reified T> HttpException.extractResponse(): T? =
+    this.response()
+        ?.errorBody()
+        ?.string()
+        ?.let { rawResponse ->
+            GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .fromJson(rawResponse, T::class.java)
+        }
 
 fun String.toSpannableText(
     startIndex: Int,

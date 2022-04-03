@@ -6,17 +6,22 @@ import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFlashedPost
+import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
+import ru.fabulus.fabulustrade.mvp.model.entity.exception.NoInternetException
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELETE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -36,15 +41,28 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    private var state = State.PUBLICATIONS
-    private var isLoading = false
+    private var buttonsState = ButtonsState(ButtonsState.Mode.PUBLICATIONS, false)
+    private var limitOfNewFlashPosts: Int = 0
+    private var loadingPostDisposable: Disposable? = null
+    private var gettingLimitOfFlashPostsDisposable: Disposable? = null
     private var nextPage: Int? = 1
     private var newPostResultListener: ResultListenerHandler? = null
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
-    enum class State {
-        PUBLICATIONS, SUBSCRIPTION
+    class ButtonsState(
+        val mode: Mode,
+        val flashedPostsOnlyFilter: Boolean
+    ) {
+        enum class Mode {
+            PUBLICATIONS, SUBSCRIPTION
+        }
+
+        fun getNewStateWithMode(mode: Mode): ButtonsState =
+            ButtonsState(mode, this.flashedPostsOnlyFilter)
+
+        fun getNewStateWithFlashedOnlyFilter(flashedPostsOnlyFilter: Boolean) =
+            ButtonsState(this.mode, flashedPostsOnlyFilter)
     }
 
     val listPresenter = TraderRVListPresenter()
@@ -53,7 +71,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         private const val TAG = "TraderMePostPresenter"
     }
 
-    inner class TraderRVListPresenter : PostRVListPresenter {
+    inner class TraderRVListPresenter : TraderMePostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null
@@ -117,12 +135,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
-        private fun setHeaderIcon(view: PostItemView,post: Post){
-            with(view){
-                setFlashVisibility(yoursPublication(post))
+        private fun setHeaderIcon(view: PostItemView, post: Post) {
+            with(view) {
+                initFlashIcon(post)
                 setProfitAndFollowersVisibility(!yoursPublication(post))
 
-                if(!yoursPublication(post)){
+                if (!yoursPublication(post)) {
                     setProfit(
                         resourceProvider.formatDigitWithDef(
                             R.string.tv_profit_percent_text,
@@ -145,6 +163,16 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                     )
                 }
             }
+        }
+
+        private fun PostItemView.initFlashIcon(post: Post) {
+            setFlashVisibility(
+                yoursPublication(post) &&
+                        (post.isFlashed ||
+                                isCanFlashPostByCreateDate(post.dateCreate) &&
+                                limitOfNewFlashPosts > 0)
+            )
+            setFlashColor(post, this)
         }
 
         private fun yoursPublication(post: Post): Boolean {
@@ -285,6 +313,84 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
+        override fun toFlash(view: PostItemView) {
+            val post = postList[view.pos]
+            if (!post.isFlashed) {
+                viewState.showQuestionToFlashDialog {
+                    completeFlashing(post, view)
+                }
+            } else {
+                viewState.showMessagePostIsFlashed()
+            }
+        }
+
+        private fun completeFlashing(
+            post: Post,
+            view: PostItemView
+        ) {
+            profile.token?.let { token ->
+                apiRepo
+                    .setFlashedPost(token, post)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { response ->
+                            processSuccessfulResponseOnFlashing(post, view, response)
+                        },
+                        { exception ->
+                            processErrorOnFlashing(exception)
+                        })
+            }
+        }
+
+        private fun processSuccessfulResponseOnFlashing(
+            post: Post,
+            view: PostItemView,
+            response: ResponseSetFlashedPost
+        ) {
+            setFlashColor(post, view)
+            viewState.showMessagePostIsFlashed()
+            post.isFlashed = true
+            updatePostOnView(post)
+            limitOfNewFlashPosts = response.flashLimit ?: 0
+            if (limitOfNewFlashPosts == 0) {
+                viewState.updateAdapter()
+                viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_limit_exhausted))
+            }
+        }
+
+        private fun processErrorOnFlashing(exception: Throwable) {
+            getLimitOfNewFlashPosts()
+            val errorMessage = when (exception) {
+                is HttpException -> {
+                    exception
+                        .extractResponse<ResponseSetFlashedPost>()
+                        ?.message
+                }
+                is NoInternetException -> {
+                    resourceProvider.getStringResource(R.string.message_flash_offline_exception)
+                }
+                else -> null
+            }
+                ?: resourceProvider.getStringResource(R.string.message_flash_other_exception)
+            viewState.showToast(errorMessage)
+        }
+
+        private fun updatePostOnView(post: Post) {
+            val pos: Int = listPresenter.postList.indexOfFirst { it.id == post.id }
+            updatedPostAt(pos, post)
+        }
+
+        private fun setFlashColor(
+            post: Post,
+            view: PostItemView
+        ) {
+            if (post.isFlashed) {
+                resourceProvider.getColor(R.color.colorGreen)
+            } else {
+                resourceProvider.getColor(R.color.colorBlue)
+            }.let { view.setFlashColor(it) }
+        }
+
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
             sharedView = view
             viewState.share(
@@ -300,6 +406,25 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         super.onFirstViewAttach()
         viewState.init()
         loadPosts()
+
+        getLimitOfNewFlashPosts()
+    }
+
+    private fun getLimitOfNewFlashPosts() {
+        gettingLimitOfFlashPostsDisposable?.dispose()
+        gettingLimitOfFlashPostsDisposable = profile.token?.let { token ->
+            profile.user?.let { user ->
+                apiRepo
+                    .getTraderById(token, user.id)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ trader ->
+                        limitOfNewFlashPosts = trader.flashLimit
+                        viewState.updateAdapter()
+                    }, {
+                        it.printStackTrace()
+                    })
+            }
+        }
     }
 
     fun onScrollLimit() {
@@ -324,58 +449,109 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun publicationsBtnClicked() {
-        state = State.PUBLICATIONS
-        viewState.setBtnsState(state)
-        nextPage = 1
-        listPresenter.postList.clear()
+        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.PUBLICATIONS)
+        initNewLoadingPosts()
         loadPosts()
     }
 
     fun subscriptionBtnClicked() {
-        state = State.SUBSCRIPTION
-        viewState.setBtnsState(state)
-        nextPage = 1
-        listPresenter.postList.clear()
+        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.SUBSCRIPTION)
+        initNewLoadingPosts()
         loadPosts()
     }
 
-    private fun loadPosts() {
-        if (nextPage != null && !isLoading) {
-            isLoading = true
-            if (state == State.SUBSCRIPTION) {
-                apiRepo
-                    .getPostsFollowerAndObserving(profile.token!!, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pag ->
-                        listPresenter.postList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    })
-            } else {
-                apiRepo
-                    .getMyPosts(profile.token!!, nextPage!!)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ pag ->
-                        listPresenter.postList.addAll(pag.results)
-                        viewState.updateAdapter()
-                        nextPage = pag.next
-                        isLoading = false
-                    }, {
-                        it.printStackTrace()
-                        isLoading = false
-                    })
-            }
+    fun flashedPostsBtnClicked() {
+        if (!buttonsState.flashedPostsOnlyFilter) {
+            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter( true)
+            loadPosts(true)
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_filter_is_set))
         }
     }
+
+    fun backClicked(): Boolean {
+        if (buttonsState.flashedPostsOnlyFilter) {
+            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
+            initNewLoadingPosts()
+            loadPosts()
+            return true
+        }
+        return false
+    }
+
+    private fun initNewLoadingPosts() {
+        viewState.setBtnsState(buttonsState)
+        viewState.detachAdapter()
+        nextPage = 1
+        listPresenter.postList.clear()
+    }
+
+    private fun loadPosts(forceLoading: Boolean = false) {
+        loadingPostDisposable?.dispose()
+        if (nextPage != null || forceLoading) {
+            loadingPostDisposable = getPostsFromRepositoryByState(forceLoading)
+                ?.let { single ->
+                    single.observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ pag ->
+                            displayResultOfLoad(pag, forceLoading)
+                        }, {
+                            it.printStackTrace()
+                        })
+                }
+        }
+    }
+
+    private fun displayResultOfLoad(pag: Pagination<Post>, forceLoading: Boolean) {
+        if (buttonsState.flashedPostsOnlyFilter) {
+            if (pag.results.isEmpty()) {
+                viewState.showToast(resourceProvider.getStringResource(R.string.no_posted_posts))
+                buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
+                if (listPresenter.postList.isEmpty()) {
+                    initNewLoadingPosts()
+                    loadPosts()
+                }
+                return
+            }
+            if (forceLoading) {
+                initNewLoadingPosts()
+            }
+        }
+        val itIsFirstLoadingPosts = listPresenter.postList.isEmpty()
+        listPresenter.postList.addAll(pag.results)
+        if (itIsFirstLoadingPosts) {
+            viewState.attachAdapter()
+        } else {
+            viewState.updateAdapter()
+        }
+        nextPage = pag.next
+    }
+
+    private fun getPostsFromRepositoryByState(forceLoading: Boolean) =
+        profile.token?.let { token ->
+            val pageToLoad = if (forceLoading) {
+                1
+            } else {
+                nextPage ?: 1
+            }
+            with(apiRepo) {
+                if (buttonsState.mode == ButtonsState.Mode.SUBSCRIPTION) {
+                    getPostsFollowerAndObserving(
+                        token,
+                        pageToLoad,
+                        buttonsState.flashedPostsOnlyFilter
+                    )
+                } else {
+                    getMyPosts(token, pageToLoad, buttonsState.flashedPostsOnlyFilter)
+                }
+            }
+        }
 
     override fun onDestroy() {
         super.onDestroy()
         newPostResultListener?.dispose()
         updatePostResultListener?.dispose()
         deletePostResultListener?.dispose()
+        loadingPostDisposable?.dispose()
+        gettingLimitOfFlashPostsDisposable?.dispose()
     }
 }

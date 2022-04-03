@@ -28,6 +28,8 @@ interface PostItemView {
     fun setIvAttachedKebabMenuSelf(post: Post)
     fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>)
     fun setFlashVisibility(isVisible: Boolean)
+    fun setFlashColor(color: Int)
+
     fun setProfitAndFollowersVisibility(isVisible: Boolean)
     fun getCountLineAndSetButtonVisibility()
 }
