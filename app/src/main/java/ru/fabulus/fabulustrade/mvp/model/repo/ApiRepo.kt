@@ -877,6 +877,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun complainOnComment(token: String, commentId: Long, complainId: Int): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    api.complaintOnComment(token, commentId, complainId)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun setFlashedPost(token: String, post: Post): Single<ResponseSetFlashedPost> =
         networkStatus
             .isOnlineSingle()

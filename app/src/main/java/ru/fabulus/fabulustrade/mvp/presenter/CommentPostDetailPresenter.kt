@@ -23,6 +23,10 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     init {
         App.instance.appComponent.inject(this)
     }
+
+    companion object {
+        private const val TAG = "CommentPostDetailPres"
+    }
     @Inject
     lateinit var router: Router
 
@@ -57,8 +61,21 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
         if (isSelfComment(comment)) {
             view.setBtnCommentMenuSelf(comment)
         } else {
-            view.setBtnCommentMenuSomeone(comment)
+            fillComplaints(view, comment)
         }
+    }
+
+    private fun fillComplaints(view: CommentItemView, comment: Comment) {
+        apiRepo
+            .getComplaints(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ complaintList ->
+                view.setBtnCommentMenuSomeone(comment, complaintList)
+            }, { error ->
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     override fun commentByPos(position: Int): Comment = commentList[position]
@@ -306,9 +323,12 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
         }
     }
 
-    override fun complainOnComment(comment: Comment, reason: String) {
-        //TODO метод для отправки жалобы
-        viewState.showComplainSnackBar()
+    override fun complainOnComment(commentId: Long, complaintId: Int) {
+        apiRepo.complainOnComment(profile.token!!, commentId, complaintId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.showComplainSnackBar()
+            }, {})
     }
 
     override fun updateCommentItem(position: Int, comment: Comment) {
