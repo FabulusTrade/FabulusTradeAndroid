@@ -13,7 +13,7 @@ interface CommentRVListPresenter {
     fun editComment(view: CommentItemView, comment: Comment)
     fun copyComment(comment: Comment)
     fun deleteComment(view: CommentItemView, comment: Comment)
-    fun complainOnComment(comment: Comment, reason: String)
+    fun complainOnComment(commentId: Long, complaintId: Int)
     fun commentByPos(position: Int): Comment
     fun updateCommentItem(position: Int, comment: Comment)
 }

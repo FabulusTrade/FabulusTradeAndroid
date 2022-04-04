@@ -329,6 +329,14 @@ interface WinTradeApi {
     ): Completable
 
     @FormUrlEncoded
+    @PATCH("api/v1/trader/comment/{comment_id}/complaint/")
+    fun complaintOnComment(
+        @Header("Authorization") token: String,
+        @Path(value = "comment_id") commentId: Long,
+        @Field("complaint") complaintId: Int
+    ): Completable
+
+    @FormUrlEncoded
     @PATCH("api/v1/trader/post/{post_id}/")
     fun setFlashedPost(
         @Header("Authorization") token: String,
