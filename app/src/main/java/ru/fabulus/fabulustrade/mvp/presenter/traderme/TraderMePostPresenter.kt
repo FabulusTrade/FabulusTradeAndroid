@@ -51,8 +51,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private var deletePostResultListener: ResultListenerHandler? = null
 
     class ButtonsState(
-        var mode: Mode,
-        var flashedPostsOnlyFilter: Boolean
+        val mode: Mode,
+        val flashedPostsOnlyFilter: Boolean
     ) {
         enum class Mode {
             PUBLICATIONS, SUBSCRIPTION
