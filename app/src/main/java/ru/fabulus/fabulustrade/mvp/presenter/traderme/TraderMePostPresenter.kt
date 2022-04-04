@@ -63,8 +63,10 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         mode: ButtonsState.Mode = this.mode,
         flashedPostsOnlyFilter: Boolean = this.flashedPostsOnlyFilter
     ) = ButtonsState(mode, flashedPostsOnlyFilter)
-        .also { buttonsState = it }
-
+        .also {
+            buttonsState = it
+            viewState.setBtnsState(buttonsState)
+        }
 
     val listPresenter = TraderRVListPresenter()
 
@@ -471,8 +473,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         buttonsState.setNewStateOfButtons(
             flashedPostsOnlyFilter = !buttonsState.flashedPostsOnlyFilter
         )
-
-        viewState.setBtnsState(buttonsState)
         loadPosts(true)
     }
 
@@ -487,7 +487,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     private fun initNewLoadingPosts() {
-        viewState.setBtnsState(buttonsState)
         viewState.detachAdapter()
         nextPage = 1
         listPresenter.postList.clear()
@@ -519,9 +518,9 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 }
                 return
             }
-            if (forceLoading) {
-                initNewLoadingPosts()
-            }
+        }
+        if (forceLoading) {
+            initNewLoadingPosts()
         }
         val itIsFirstLoadingPosts = listPresenter.postList.isEmpty()
         listPresenter.postList.addAll(pag.results)
