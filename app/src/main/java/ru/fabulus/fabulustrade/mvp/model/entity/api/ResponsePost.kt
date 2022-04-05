@@ -43,5 +43,11 @@ data class ResponsePost(
     val followersCount: Int,
     @Expose
     @SerializedName("repost_count")
-    val repostCount: Int
+    val repostCount: Int,
+    @Expose
+    @SerializedName("is_flashed")
+    val isFlashed: Boolean,
+    @Expose
+    @SerializedName("date_flashed")
+    val dateFlashed: String?
 )

@@ -48,7 +48,7 @@ class CompanyTradingOperationsPresenter(
             view.setOperationDate("Дата ${deals.date.toStringFormat()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
-            if (deals.profitCount == null || deals.profitCount == ZERO) {
+            if (deals.profitCount == null) {
                 view.setProfitCount(null)
             } else {
                 view.setProfitCount(
@@ -94,6 +94,10 @@ class CompanyTradingOperationsPresenter(
                     // Ошибка не обрабатывается
                 })
         }
+    }
+
+    fun openJournal() {
+        router.navigateTo(Screens.companyTradingOperationsJournalScreen(traderId, companyId))
     }
 
     fun onScrollLimit() {

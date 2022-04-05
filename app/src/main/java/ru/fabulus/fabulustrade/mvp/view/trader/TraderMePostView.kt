@@ -10,8 +10,12 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 @StateStrategyType(AddToEndStrategy::class)
 interface TraderMePostView : MvpView {
     fun init()
-    fun setBtnsState(state: TraderMePostPresenter.State)
+    fun setBtnsState(state: TraderMePostPresenter.ButtonsState)
     fun updateAdapter()
+    @StateStrategyType(SkipStrategy::class)
+    fun detachAdapter()
+    @StateStrategyType(SkipStrategy::class)
+    fun attachAdapter()
 
     @StateStrategyType(SkipStrategy::class)
     fun share(shareIntent: Intent)
@@ -19,4 +23,8 @@ interface TraderMePostView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun showToast(msg: String)
     fun showComplainSnackBar()
+    @StateStrategyType(SkipStrategy::class)
+    fun showQuestionToFlashDialog(onClickYes: () -> Unit)
+    @StateStrategyType(SkipStrategy::class)
+    fun showMessagePostIsFlashed()
 }

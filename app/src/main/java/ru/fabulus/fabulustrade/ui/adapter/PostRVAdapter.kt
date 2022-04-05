@@ -2,33 +2,30 @@ package ru.fabulus.fabulustrade.ui.adapter
 
 
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.fragment_trader_analytics.view.*
-import kotlinx.android.synthetic.main.item_post_footer.view.*
-import kotlinx.android.synthetic.main.item_post_header.view.*
-import kotlinx.android.synthetic.main.item_trader_news.view.*
-import kotlinx.android.synthetic.main.item_trader_news.view.image_group
-import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_footer
-import kotlinx.android.synthetic.main.item_trader_news.view.inc_item_post_header
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemTraderNewsBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.customview.imagegroup.ImageLoaderImpl
 import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
-import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.visibilityByCondition
 import java.util.*
 import javax.inject.Inject
 
-class PostRVAdapter(val presenter: PostRVListPresenter) :
+class PostRVAdapter(private val presenter: PostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
 
     companion object {
@@ -43,16 +40,17 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         App.instance.appComponent.inject(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PostViewHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.item_trader_news, parent, false
-        )
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        val binding =
+            ItemTraderNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val holder = PostViewHolder(binding)
+        initListeners(binding, holder)
+        return holder
+    }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        initListeners(holder)
     }
 
     override fun onViewRecycled(holder: PostViewHolder) {
@@ -60,36 +58,45 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         holder.recycle()
     }
 
-    private fun initListeners(holder: PostViewHolder) {
-        holder.itemView.inc_item_post_footer.btn_like.setOnClickListener {
-            presenter.postLiked(holder)
+    private fun initListeners(binding: ItemTraderNewsBinding, holder: PostViewHolder) =
+        with(binding) {
+            with(incItemPostFooter) {
+                btnLike.setOnClickListener {
+                    presenter.postLiked(holder)
+                }
+                btnDislike.setOnClickListener {
+                    presenter.postDisliked(holder)
+                }
+                btnShare.setOnClickListener {
+                    presenter.share(holder, imageGroup.getImageViews())
+                }
+            }
+            btnItemTraderNewsShowText.setOnClickListener {
+                presenter.setPublicationTextMaxLines(holder)
+            }
+            btnItemTraderNewsShowComments.setOnClickListener {
+                presenter.showCommentDetails(holder)
+            }
+            if (presenter is TraderMePostRVListPresenter) {
+                incItemPostHeader.ivFlash.setOnClickListener {
+                    presenter.toFlash(holder)
+                }
+            }
         }
-        holder.itemView.inc_item_post_footer.btn_dislike.setOnClickListener {
-            presenter.postDisliked(holder)
-        }
-        holder.itemView.btn_item_trader_news_show_text.setOnClickListener {
-            presenter.setPublicationTextMaxLines(holder)
-        }
-        holder.itemView.btn_item_trader_news_show_comments.setOnClickListener {
-            presenter.showCommentDetails(holder)
-        }
-
-        holder.itemView.inc_item_post_footer.btn_share.setOnClickListener {
-            presenter.share(holder, holder.itemView.image_group.getImageViews())
-        }
-    }
 
     override fun getItemCount(): Int = presenter.getCount()
 
-    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view),
+    inner class PostViewHolder(private val binding: ItemTraderNewsBinding) :
+        RecyclerView.ViewHolder(binding.root),
         PostItemView {
         override var pos: Int = -1
         override var isOpen: Boolean = false
+        override var countPostTextLine: Int = -1
 
         private val imageLoader = ImageLoaderImpl(R.drawable.image_view_group_image_placeholder)
 
         init {
-            itemView.image_group.apply {
+            binding.imageGroup.apply {
                 setImageLoader(imageLoader)
                 setListener { position, _ ->
                     router.navigateTo(Screens.imageBrowsingFragment(getImages(), position))
@@ -98,66 +105,64 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
         }
 
         override fun setNewsDate(date: Date) {
-            itemView.inc_item_post_header.tv_date.text = date.toStringFormat()
+            binding.incItemPostHeader.tvDate.text = date.toStringFormat()
         }
 
         override fun setProfit(profit: String, textColor: Int) {
-            itemView.inc_item_post_header.tv_profit_percent.setTextAndColor(profit, textColor)
+            binding.incItemPostHeader.tvProfitPercent.setTextAndColor(profit, textColor)
         }
 
         override fun setProfitNegativeArrow() {
-            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_down)
+            binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
         }
 
         override fun setProfitPositiveArrow() {
-            itemView.inc_item_post_header.iv_profit_arrow.setImageResource(R.drawable.ic_profit_arrow_up)
+            binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
         }
 
         override fun setAuthorFollowerCount(text: String) {
-            itemView.inc_item_post_header.tv_author_follower_count.text = text
+            binding.incItemPostHeader.tvAuthorFollowerCount.text = text
         }
 
         override fun setPost(text: String) {
-            itemView.tv_item_trader_news_post.text = text
+            binding.tvItemTraderNewsPost.text = text
         }
 
         override fun setLikesCount(likes: Int) {
-            itemView.inc_item_post_footer.tv_like_count.text = likes.toString()
+            binding.incItemPostFooter.tvLikeCount.text = likes.toString()
         }
 
         override fun setDislikesCount(dislikesCount: Int) {
-            itemView.inc_item_post_footer.tv_dislike_count.text = dislikesCount.toString()
+            binding.incItemPostFooter.tvDislikeCount.text = dislikesCount.toString()
         }
 
         override fun setImages(images: List<String>?) {
-            with(itemView.image_group) {
-                if (images.isNullOrEmpty()) {
-                    visibility = View.GONE
+            with(binding.imageGroup) {
+                visibilityByCondition { !images.isNullOrEmpty() }
+                images?.let { setImages(it) }
+            }
+        }
+
+        override fun setLikeImage(isLiked: Boolean) =
+            with(binding.incItemPostFooter.btnLike) {
+                if (isLiked) {
+                    setImageResource(R.drawable.ic_like)
                 } else {
-                    visibility = View.VISIBLE
-                    setImages(images)
+                    setImageResource(R.drawable.ic_like_inactive)
                 }
             }
-        }
 
-        override fun setLikeImage(isLiked: Boolean) {
-            if (isLiked) {
-                itemView.inc_item_post_footer.btn_like.setImageResource(R.drawable.ic_like)
-            } else {
-                itemView.inc_item_post_footer.btn_like.setImageResource(R.drawable.ic_like_inactive)
+        override fun setDislikeImage(isDisliked: Boolean) =
+            with(binding.incItemPostFooter.btnDislike) {
+                if (isDisliked) {
+                    setImageResource(R.drawable.ic_dislike)
+                } else {
+                    setImageResource(R.drawable.ic_dislike_inactive)
+                }
             }
-        }
-
-        override fun setDislikeImage(isDisliked: Boolean) {
-            if (isDisliked) {
-                itemView.inc_item_post_footer.btn_dislike.setImageResource(R.drawable.ic_dislike)
-            } else {
-                itemView.inc_item_post_footer.btn_dislike.setImageResource(R.drawable.ic_dislike_inactive)
-            }
-        }
 
         override fun setIvAttachedKebabMenuSelf(post: Post) {
-            itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener { btn ->
+            binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
                 val menu = PopupMenu(itemView.context, btn)
                 menu.inflate(R.menu.menu_self_comment)
 
@@ -183,84 +188,90 @@ class PostRVAdapter(val presenter: PostRVListPresenter) :
             }
         }
 
-        override fun setIvAttachedKebabMenuSomeone(post: Post) {
-            itemView.inc_item_post_header.iv_attached_kebab.setOnClickListener { btn ->
-                val menu = PopupMenu(itemView.context, btn)
-                menu.inflate(R.menu.menu_someone_comment)
+        override fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>) {
+            binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
+                val popupMenu = PopupMenu(itemView.context, btn)
+                popupMenu.inflate(R.menu.menu_someone_comment)
 
-                menu.setOnMenuItemClickListener { menuItem ->
+                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+                complaintList.forEach { complaint ->
+                    complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
+                        .setOnMenuItemClickListener {
+                            presenter.complainOnPost(post, complaint.id)
+                            return@setOnMenuItemClickListener true
+                        }
+                }
+
+
+                popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.mi_copy_comment_text -> {
                             presenter.copyPost(post)
                             return@setOnMenuItemClickListener true
                         }
-                        R.id.mi_unethical_content,
-                        R.id.mi_mat_insults_provocation,
-                        R.id.mi_threats_harassment,
-                        R.id.mi_market_manipulation,
-                        R.id.mi_advertising,
-                        R.id.mi_flood_spam,
-                        R.id.mi_begging_extortion -> {
-                            presenter.complainOnPost(post, menuItem.title.toString())
-                            return@setOnMenuItemClickListener true
-                        }
                         else -> return@setOnMenuItemClickListener false
                     }
                 }
-                menu.show()
+                popupMenu.show()
             }
         }
 
         override fun setFlashVisibility(isVisible: Boolean) {
-            if(isVisible){
-                itemView.iv_flash.visibility = View.VISIBLE
-            }else{
-                itemView.iv_flash.visibility = View.GONE
+            binding.incItemPostHeader.ivFlash.visibilityByCondition { isVisible }
+        }
+
+        override fun setFlashColor(color: Int) {
+            binding.incItemPostHeader.ivFlash.setColorFilter(color)
+        }
+
+        override fun setProfitAndFollowersVisibility(isVisible: Boolean): Unit =
+            with(binding.incItemPostHeader) {
+                ivPersonAdd.visibilityByCondition { isVisible }
+                tvAuthorFollowerCount.visibilityByCondition { isVisible }
+
+                ivProfitArrow.visibilityByCondition { isVisible }
+                tvProfitPercent.visibilityByCondition { isVisible }
+            }
+
+        override fun getCountLineAndSetButtonVisibility(): Unit = with(binding) {
+            tvItemTraderNewsPost.maxLines = MAX_LINES
+            tvItemTraderNewsPost.post {
+                countPostTextLine = tvItemTraderNewsPost.lineCount
+                if (countPostTextLine > MIN_LINES) {
+                    btnItemTraderNewsShowText.visibility = View.VISIBLE
+                } else {
+                    btnItemTraderNewsShowText.visibility = View.INVISIBLE
+                }
+                tvItemTraderNewsPost.maxLines = MIN_LINES
             }
         }
 
-        override fun setProfitAndFollowersVisibility(isVisible: Boolean) {
-            if(isVisible){
-                itemView.iv_person_add.visibility = View.VISIBLE
-                itemView.tv_author_follower_count.visibility = View.VISIBLE
-
-                itemView.iv_profit_arrow.visibility = View.VISIBLE
-                itemView.tv_profit_percent.visibility = View.VISIBLE
-            }else{
-                itemView.iv_person_add.visibility = View.GONE
-                itemView.tv_author_follower_count.visibility = View.GONE
-
-                itemView.iv_profit_arrow.visibility = View.GONE
-                itemView.tv_profit_percent.visibility = View.GONE
-            }
-        }
-
-        override fun setPublicationItemTextMaxLines(isOpen: Boolean) {
+        override fun setPublicationItemTextMaxLines(isOpen: Boolean) = with(binding) {
             if (isOpen) {
-                itemView.tv_item_trader_news_post.maxLines = MAX_LINES
-                itemView.btn_item_trader_news_show_text.text =
+                tvItemTraderNewsPost.maxLines = MAX_LINES
+                btnItemTraderNewsShowText.text =
                     itemView.context.resources.getText(R.string.hide_postRv)
             } else {
-                itemView.tv_item_trader_news_post.maxLines = MIN_LINES
-                itemView.btn_item_trader_news_show_text.text =
+                tvItemTraderNewsPost.maxLines = MIN_LINES
+                btnItemTraderNewsShowText.text =
                     itemView.context.resources.getText(R.string.show_postRv)
             }
         }
 
         override fun setProfileName(profileName: String) {
-            itemView.inc_item_post_header.tv_author_name.text = profileName
+            binding.incItemPostHeader.tvAuthorName.text = profileName
         }
 
         override fun setProfileAvatar(avatarUrlPath: String) {
-            loadImage(avatarUrlPath, itemView.inc_item_post_header.iv_author_avatar)
+            loadImage(avatarUrlPath, binding.incItemPostHeader.ivAuthorAvatar)
         }
 
         override fun setCommentCount(text: String) {
-            itemView.btn_item_trader_news_show_comments.text = text
+            binding.btnItemTraderNewsShowComments.text = text
         }
 
         override fun setRepostCount(text: String) {
-            itemView.tv_repost_count.text = text
+            binding.incItemPostFooter.tvRepostCount.text = text
         }
 
         fun recycle() {

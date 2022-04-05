@@ -225,6 +225,13 @@
     <string name="ticker">Тикер</string>
     <string name="price">Цена</string>
     <string name="date_time">Дата/время</string>
+    <string name="share_with_arguments_on_your_idea">Поделись аргументами к своей идее</string>
+    <string name="arguments_head_idea">Комментарий к полученному результату</string>
+    <string name="publish">Опубликовать</string>
+    <string name="upload_file">Загрузить файл</string>
+    <string name="realization_day">Срок реализации, дн</string>
+    <string name="stop_loss_price">Стоп-лосс (цена / -%)</string>
+    <string name="take_profit_price">Тейк профит (цена / %)</string>
 
     <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>
@@ -488,6 +495,9 @@
     <string name="push_date_pattern">%s (%s)</string>
     <string name="push_price_pattern">%.2f</string>
     <string name="push_body_pattern">%s по цене: %s %s</string>
+    <string name="push_body_opening_subtype">&lt;b>Открытие позиции</string>
+    <string name="push_body_closing_subtype">&lt;b>Закрытие позиции</string>
+    <string name="empty_string" />
 
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
@@ -520,6 +530,9 @@
     <string name="text_copied">Текст скопирован</string>
     <string name="comment_can_not_be_edited">Невозможно изменить комментарий созданный более 1 часа назад</string>
     <string name="comment_can_not_be_deleted">Невозможно удалить комментарий созданный более 1 часа назад</string>
+    <string name="comment_deleted">Комментарий удален</string>
+    <string name="error_comment_deleted">Ошибка при удалении комментария: %s</string>
+    <string name="request_error_comment_deleted">Ошибка при удалении комментария. Попробуйте позже</string>
     <string name="post_can_not_be_edited">Невозможно изменить пост созданный более 1 часа назад</string>
     <string name="post_can_not_be_deleted">Невозможно удалить пост созданный более 1 часа назад</string>
     <string name="unethical_content">Неэтичный контент</string>
@@ -540,6 +553,27 @@
     <string name="ib_update_comment_content_description">изменить комментарий</string>
     <string name="iv_profit_arrow_content_description">стрелка профита</string>
     <string name="tv_editable_text_label_text">Редактирование</string>
+    <string name="uppercased_sale_string">ПРОДАЖА</string>
+    <string name="uppercased_buy_string">ПОКУПКА</string>
+    <string name="short_position">SHORT&lt;/b></string>
+    <string name="long_position">LONG&lt;/b></string>
+
+    <!-- CompanyTradingOperationsJournal -->
+    <string name="remaining_position_comp_trad_ops_journal">Остаток позиции</string>
+    <string name="price_item_comp_trad_ops_journal">Цена</string>
+    <string name="quantity_item_comp_trad_ops_journal">Количество</string>
+    <string name="operations_comp_trad_ops_journal">Журнал операций</string>
+    <string name="pcs_string">" шт."</string>
+
+    <!--flash posts-->
+    <string name="yes">Да</string>
+    <string name="send_this_post_to_the_general_feed">Отправить этот пост в общую ленту?</string>
+    <string name="no">Нет</string>
+    <string name="the_post_is_posted_in_the_general_feed">Пост размещен в общей ленте!</string>
+    <string name="no_posted_posts">Нет размещенных публикаций.</string>
+    <string name="message_flash_limit_exhausted">Исчерпан лимит на размещение новостей в общей ленте.</string>
+    <string name="message_flash_offline_exception">Не удалось разместить новость в общей ленте по причине отсутствия интернета.</string>
+    <string name="message_flash_other_exception">Не удалось разместить новость в общей ленте.</string>
     <string name="general_news_feed_menu_title">Новстная лента</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

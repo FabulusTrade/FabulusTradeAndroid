@@ -12,8 +12,8 @@ interface CommentRVListPresenter {
     fun recalcParentComment(commentText: String)
     fun editComment(view: CommentItemView, comment: Comment)
     fun copyComment(comment: Comment)
-    fun deleteComment(comment: Comment)
-    fun complainOnComment(comment: Comment, reason: String)
+    fun deleteComment(view: CommentItemView, comment: Comment)
+    fun complainOnComment(commentId: Long, complaintId: Int)
     fun commentByPos(position: Int): Comment
     fun updateCommentItem(position: Int, comment: Comment)
 }

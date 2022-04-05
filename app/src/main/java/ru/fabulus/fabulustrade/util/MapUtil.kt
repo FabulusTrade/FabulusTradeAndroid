@@ -7,18 +7,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun mapToTrader(trader: ResponseTrader) = Trader(
-    trader.id,
-    trader.username,
-    trader.avatar,
-    trader.kval,
-    trader.is_trader,
-    trader.is_active,
-    trader.date_joined,
-    trader.followers_count,
-    trader.trades_count,
-    trader.colorIncrDecrDepo365,
-    trader.followers_count_7day,
-    mapToPost(trader.pinned_post)
+    id = trader.id,
+    username = trader.username,
+    avatar = trader.avatar,
+    kval = trader.kval,
+    isActive = trader.is_trader,
+    isTrader = trader.is_active,
+    dateJoined = trader.date_joined,
+    followersCount = trader.followers_count,
+    tradesCount = trader.trades_count,
+    colorIncrDecrDepo365 = trader.colorIncrDecrDepo365,
+    followersForWeekCount = trader.followers_count_7day,
+    pinnedPost = mapToPost(trader.pinned_post),
+    flashLimit = trader.flashLimit
 )
 
 fun mapToTraderStatistic(response: ResponseTraderStatistic): TraderStatistic {
@@ -132,33 +133,34 @@ fun <T, V> mapToPagination(
     )
 
 fun mapToPost(post: ResponsePost?): Post? {
-    post?.let {
+    return post?.let {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val dateCreate = dateFormat.parse(post.date_create)
         val dateUpd = dateFormat.parse(post.date_update)
         val images = post.images.map { it.image }
         val comments = mapToComments(post.comments)
-        return Post(
-            post.id,
-            post.username,
-            post.avatar,
-            post.followersCount,
-            post.trader_id,
-            post.text,
-            post.post_status,
-            dateCreate,
-            dateUpd,
-            post.pinned,
-            images,
-            post.like_count,
-            post.dislike_count,
-            post.is_liked,
-            post.is_disliked,
-            comments,
-            post.colorIncrDecrDepo365,
-            post.repostCount
+        Post(
+            id = post.id,
+            userName = post.username,
+            avatarUrl = post.avatar,
+            followersCount = post.followersCount,
+            traderId = post.trader_id,
+            text = post.text,
+            postStatus = post.post_status,
+            dateCreate = dateCreate,
+            dateUpdate = dateUpd,
+            pinned = post.pinned,
+            images = images,
+            likeCount = post.like_count,
+            dislikeCount = post.dislike_count,
+            isLiked = post.is_liked,
+            isDisliked = post.is_disliked,
+            comments = comments,
+            colorIncrDecrDepo365 = post.colorIncrDecrDepo365,
+            repostCount = post.repostCount,
+            isFlashed = post.isFlashed
         )
-    } ?: return null
+    }
 }
 
 fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompanyAggregated? {
@@ -190,6 +192,23 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
     )
 }
 
+fun mapToTradeJournalByCompany(companyTrade: ResponseCompanyTradingOperationsJournal): JournalTradesSortedByCompany {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val tradeDate = dateFormat.parse(companyTrade.date)
+    return JournalTradesSortedByCompany(
+        companyTrade.id,
+        companyTrade.operation_type,
+        companyTrade.company,
+        companyTrade.company_img,
+        tradeDate,
+        companyTrade.profit_count,
+        companyTrade.price,
+        companyTrade.currency,
+        companyTrade.endCount,
+        companyTrade.visible
+    )
+}
+
 fun mapToComments(responseComments: List<ResponseComment>): MutableList<Comment> {
     return responseComments.map { responseComment ->
         mapToComment(responseComment)
@@ -217,5 +236,26 @@ fun mapToIncPostResult(responseIncRepostCount: ResponseIncRepostCount): IncPostR
     return IncPostResult(
         responseIncRepostCount.result,
         responseIncRepostCount.message
+    )
+}
+
+fun mapToDeleteCommentResult(responseDeleteComment: ResponseDeleteComment): DeleteCommentResult {
+    return DeleteCommentResult(
+        responseDeleteComment.result,
+        responseDeleteComment.message
+
+    )
+}
+
+fun mapToComplaints(responseComplaints: ResponseComplaints): List<Complaint> {
+    return responseComplaints.results.map { responseComplaint ->
+        mapToComplaint(responseComplaint)
+    }.toList()
+}
+
+fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
+    return Complaint(
+        responseComplaint.id,
+        responseComplaint.text
     )
 }

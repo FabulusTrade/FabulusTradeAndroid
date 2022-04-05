@@ -31,5 +31,8 @@ data class ResponseTrader(
     @Expose
     val followers_count_7day: Int,
     @Expose
-    val pinned_post: ResponsePost?
+    val pinned_post: ResponsePost?,
+    @Expose
+    @SerializedName("flash_limit")
+    val flashLimit: Int
 )

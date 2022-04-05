@@ -13,6 +13,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
@@ -40,6 +41,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     private var deletePostResultListener: ResultListenerHandler? = null
     val listPresenter = TraderRVListPresenter()
 
+    companion object {
+        private const val TAG = "SubscriberPostPresenter"
+    }
+
     inner class TraderRVListPresenter : PostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderRVListPresenter"
@@ -51,14 +56,32 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             val post = postList[view.pos]
             initView(view, post)
             initMenu(view, post)
+            initButtonVisibility(view)
         }
 
         private fun initMenu(view: PostItemView, post: Post) {
             if (yoursPublication(post)) {
                 view.setIvAttachedKebabMenuSelf(post)
             } else {
-                view.setIvAttachedKebabMenuSomeone(post)
+                fillComplaints(view, post)
             }
+        }
+
+        private fun initButtonVisibility(view: PostItemView) {
+            view.getCountLineAndSetButtonVisibility()
+        }
+
+        private fun fillComplaints(view: PostItemView, post: Post) {
+            apiRepo
+                .getComplaints(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ complaintList ->
+                    view.setIvAttachedKebabMenuSomeone(post, complaintList)
+                }, { error ->
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
         }
 
 
@@ -235,9 +258,12 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun complainOnPost(post: Post, reason: String) {
-            //TODO метод для отправки жалобы
-            viewState.showComplainSnackBar()
+        override fun complainOnPost(post: Post, complaintId: Int) {
+            apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showComplainSnackBar()
+                }, {})
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

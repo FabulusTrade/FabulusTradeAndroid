@@ -1,33 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/mi_copy_comment_text"
         android:title="@string/copy_comment_text" />
     <item
         android:id="@+id/mi_complain_on_comment"
         android:title="@string/complain_on_comment_text">
-        <menu>
-            <item
-                android:id="@+id/mi_unethical_content"
-                android:title="@string/unethical_content" />
-            <item
-                android:id="@+id/mi_mat_insults_provocation"
-                android:title="@string/mat_insults_provocation" />
-            <item
-                android:id="@+id/mi_threats_harassment"
-                android:title="@string/threats_harassment" />
-            <item
-                android:id="@+id/mi_market_manipulation"
-                android:title="@string/market_manipulation" />
-            <item
-                android:id="@+id/mi_advertising"
-                android:title="@string/advertising" />
-            <item
-                android:id="@+id/mi_flood_spam"
-                android:title="@string/flood_spam" />
-            <item
-                android:id="@+id/mi_begging_extortion"
-                android:title="@string/begging_extortion" />
+        <menu
+            tools:text="Текст меню заполняется динамически в коде">
+
         </menu>
     </item>
 

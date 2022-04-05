@@ -22,6 +22,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.*
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersFilterPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersMainPresenter
+import ru.fabulus.fabulustrade.mvp.view.BasePostView
+import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.activity.MainActivity
 import ru.fabulus.fabulustrade.ui.activity.SplashActivity
@@ -103,6 +105,8 @@ interface AppComponent {
     fun inject(tradeDetailPresenter: TradeDetailPresenter)
     fun inject(companyTradingOperationsFragment: CompanyTradingOperationsFragment)
     fun inject(companyTradingOperationsPresenter: CompanyTradingOperationsPresenter)
+    fun inject(companyTradingOperationsJournalFragment: CompanyTradingOperationsJournalFragment)
+    fun inject(companyTradingOperationsJournalPresenter: CompanyTradingOperationsJournalPresenter)
     fun inject(traderMeObservationFragment: TraderMeObservationFragment)
     fun inject(traderMeObservationPresenter: TraderMeObservationPresenter)
     fun inject(traderMeTradeFragment: TraderMeTradeFragment)
@@ -130,9 +134,12 @@ interface AppComponent {
     fun inject(observationRVAdapter: ObservationRVAdapter?)
     fun inject(tradersAllRVAdapter: TradersAllRVAdapter?)
     fun inject(companyTradingOperationsRVAdapter: CompanyTradingOperationsRVAdapter?)
+    fun inject(companyTradingOperationsJournalRVAdapter: CompanyTradingOperationsJournalRVAdapter?)
     fun inject(traderNewsImagesRVAdapter: TraderNewsImagesRVAdapter)
     fun inject(postRVAdapter: PostRVAdapter)
-    fun inject(postDetailFragment: PostDetailFragment)
+    fun inject(basePostFragment: BasePostFragment)
     fun inject(postDetailPresenter: PostDetailPresenter)
+    fun inject(basePostPresenter: BasePostPresenter<BasePostView>)
+    fun inject(commentPostDetailPresenter: CommentPostDetailPresenter)
     fun inject(commentRVAdapter: CommentRVAdapter)
 }

@@ -9,8 +9,10 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +23,9 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
+import com.google.gson.GsonBuilder
 import moxy.MvpAppCompatFragment
+import retrofit2.HttpException
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.NavElementsControl
@@ -199,6 +203,41 @@ fun ImageView.getBitmapUriFromDrawable(): Uri? {
     return bmpUri
 }
 
+fun <T : View> T.show(): T {
+    if (visibility != View.VISIBLE) {
+        visibility = View.VISIBLE
+    }
+    return this
+}
+
+fun <T : View> T.hide(): T {
+    if (visibility != View.GONE) {
+        visibility = View.GONE
+    }
+    return this
+}
+
+inline fun <T : View> T.visibilityByCondition(condition: () -> Boolean): T {
+    if (condition()) {
+        show()
+    } else {
+        hide()
+    }
+    return this
+}
+
+//Извлекает ответ заданного типа из HttpException
+inline fun <reified T> HttpException.extractResponse(): T? =
+    this.response()
+        ?.errorBody()
+        ?.string()
+        ?.let { rawResponse ->
+            GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .fromJson(rawResponse, T::class.java)
+        }
+
 fun String.toSpannableText(
     startIndex: Int,
     endIndex: Int,
@@ -212,4 +251,14 @@ fun String.toSpannableText(
         )
     }
     return outPutColoredText
+}
+
+//Для корректной обработки текста при использовании HTML-escaped string
+fun String.toSpanned(): Spanned {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        @Suppress("DEPRECATION")
+        return Html.fromHtml(this)
+    }
 }

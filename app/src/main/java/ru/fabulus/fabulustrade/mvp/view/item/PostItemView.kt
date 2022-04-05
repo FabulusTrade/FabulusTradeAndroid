@@ -1,11 +1,13 @@
 package ru.fabulus.fabulustrade.mvp.view.item
 
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import java.util.*
 
 interface PostItemView {
     var pos: Int
     var isOpen: Boolean
+    var countPostTextLine: Int
     fun setNewsDate(date: Date)
     fun setPost(text: String)
     fun setLikesCount(likes: Int)
@@ -24,8 +26,10 @@ interface PostItemView {
     fun setAuthorFollowerCount(text: String)
     fun setRepostCount(text: String)
     fun setIvAttachedKebabMenuSelf(post: Post)
-    fun setIvAttachedKebabMenuSomeone(post: Post)
+    fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>)
     fun setFlashVisibility(isVisible: Boolean)
-    fun setProfitAndFollowersVisibility(isVisible: Boolean)
+    fun setFlashColor(color: Int)
 
+    fun setProfitAndFollowersVisibility(isVisible: Boolean)
+    fun getCountLineAndSetButtonVisibility()
 }

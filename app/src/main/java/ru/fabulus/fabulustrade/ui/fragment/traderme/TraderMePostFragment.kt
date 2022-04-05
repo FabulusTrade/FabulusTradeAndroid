@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +20,12 @@ import ru.fabulus.fabulustrade.databinding.FragmentTraderMePostsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 
-class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
+class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButtonListener {
     private var _binding: FragmentTraderMePostsBinding? = null
     private val binding: FragmentTraderMePostsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -72,6 +74,9 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             btnTraderNewsSubscription.setOnClickListener {
                 presenter.subscriptionBtnClicked()
             }
+            ivFlash.setOnClickListener {
+                presenter.flashedPostsBtnClicked()
+            }
         }
     }
 
@@ -98,14 +103,21 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         }
     }
 
-    override fun setBtnsState(state: TraderMePostPresenter.State) {
-        when (state) {
-            TraderMePostPresenter.State.PUBLICATIONS -> {
+    override fun setBtnsState(state: TraderMePostPresenter.ButtonsState) {
+        when (state.mode) {
+            TraderMePostPresenter.ButtonsState.Mode.PUBLICATIONS -> {
                 publicationsStateInit()
             }
-            TraderMePostPresenter.State.SUBSCRIPTION -> {
+            TraderMePostPresenter.ButtonsState.Mode.SUBSCRIPTION -> {
                 subscriptionStateInit()
             }
+        }
+        if (state.flashedPostsOnlyFilter) {
+            R.color.colorGreen
+        } else {
+            R.color.colorGreen_27
+        }.let {
+            binding.ivFlash.setColorFilter(requireContext().resources.getColor(it))
         }
     }
 
@@ -114,7 +126,6 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
             isActive(btnTraderNewsSubscription)
             isNotActive(btnTraderNewsPublication)
             layoutTraderNewsTitle.visibility = View.GONE
-
         }
     }
 
@@ -146,6 +157,14 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         postRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun detachAdapter() {
+        binding.rvTraderMePost.adapter = null
+    }
+
+    override fun attachAdapter() {
+        binding.rvTraderMePost.adapter = postRVAdapter
+    }
+
     override fun share(shareIntent: Intent) {
         resultLauncher.launch(shareIntent)
     }
@@ -164,8 +183,41 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView {
         )
     }
 
+    override fun showQuestionToFlashDialog(onClickYes: () -> Unit) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(R.string.send_this_post_to_the_general_feed)
+                .setPositiveButton(R.string.yes) { dialog, _ ->
+                    onClickYes()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.no) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostIsFlashed() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(R.string.the_post_is_posted_in_the_general_feed)
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun backClicked(): Boolean {
+        if (this::presenter.isInitialized) {
+            return presenter.backClicked()
+        }
+        return false
     }
 }

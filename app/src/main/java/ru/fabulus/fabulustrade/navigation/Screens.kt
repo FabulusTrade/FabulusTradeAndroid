@@ -1,11 +1,7 @@
 package ru.fabulus.fabulustrade.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import ru.fabulus.fabulustrade.mvp.model.entity.SignUpData
-import ru.fabulus.fabulustrade.mvp.model.entity.Trade
-import ru.fabulus.fabulustrade.mvp.model.entity.Trader
-import ru.fabulus.fabulustrade.mvp.model.entity.TraderStatistic
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
@@ -71,8 +67,11 @@ object Screens {
 
     fun tradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
 
-    fun companyTradingOperationsScreen(traderId: String, companyId: Int) =
-        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId) }
+    fun companyTradingOperationsScreen(traderId: String, companyId: Int, isMyOperations: Boolean = false) =
+        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId, isMyOperations) }
+
+    fun companyTradingOperationsJournalScreen(traderId: String, companyId: Int) =
+        FragmentScreen { CompanyTradingOperationsJournalFragment.newInstance(traderId, companyId) }
 
     fun traderObservationScreen() = FragmentScreen { TraderMeObservationFragment.newInstance() }
 

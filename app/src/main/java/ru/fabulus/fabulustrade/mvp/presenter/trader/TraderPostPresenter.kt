@@ -42,6 +42,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
+    companion object {
+        private const val TAG = "TraderPostPresenter"
+    }
+
     inner class TraderRVListPresenter : PostRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
@@ -53,14 +57,32 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             val post = posts[view.pos]
             initView(view, post)
             initMenu(view, post)
+            initButtonVisibility(view)
         }
 
         private fun initMenu(view: PostItemView, post: Post) {
             if (yoursPublication(post)) {
                 view.setIvAttachedKebabMenuSelf(post)
             } else {
-                view.setIvAttachedKebabMenuSomeone(post)
+                fillComplaints(view, post)
             }
+        }
+
+        private fun initButtonVisibility(view: PostItemView) {
+            view.getCountLineAndSetButtonVisibility()
+        }
+
+        private fun fillComplaints(view: PostItemView, post: Post) {
+            apiRepo
+                .getComplaints(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ complaintList ->
+                    view.setIvAttachedKebabMenuSomeone(post, complaintList)
+                }, { error ->
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
         }
 
         override fun incRepostCount() {
@@ -125,12 +147,12 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             }
         }
 
-        private fun setHeaderIcon(view: PostItemView,post: Post){
-            with(view){
+        private fun setHeaderIcon(view: PostItemView, post: Post) {
+            with(view) {
                 setFlashVisibility(yoursPublication(post))
                 setProfitAndFollowersVisibility(!yoursPublication(post))
 
-                if(!yoursPublication(post)){
+                if (!yoursPublication(post)) {
                     setProfit(
                         resourceProvider.formatDigitWithDef(
                             R.string.tv_profit_percent_text,
@@ -243,9 +265,12 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             viewState.showToast(resourceProvider.getStringResource(R.string.text_copied))
         }
 
-        override fun complainOnPost(post: Post, reason: String) {
-            //TODO метод для отправки жалобы
-            viewState.showComplainSnackBar()
+        override fun complainOnPost(post: Post, complaintId: Int) {
+            apiRepo.complainOnPost(profile.token!!, post.id, complaintId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showComplainSnackBar()
+                }, {})
         }
 
         override fun setPublicationTextMaxLines(view: PostItemView) {

@@ -95,13 +95,16 @@
         android:id="@+id/iv_flash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_header_flash_margin_start"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/iv_person_add"
-        android:layout_marginStart="@dimen/item_header_flash_margin_start"
         app:layout_constraintStart_toEndOf="@+id/iv_author_avatar"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_flash_grey"
-        android:visibility="gone"/>
+        app:tint="@color/colorBlue"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/iv_attached_kebab"

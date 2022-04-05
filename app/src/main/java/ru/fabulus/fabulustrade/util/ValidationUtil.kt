@@ -104,4 +104,8 @@ fun isCanDeletePost(dateCreated: Date): Boolean {
     return ((currentTimeInMillis() - dateCreated.time) < DELETE_POST_PERIOD)
 }
 
+fun isCanFlashPostByCreateDate(dateCreated: Date): Boolean {
+    return ((currentTimeInMillis() - dateCreated.time) < FLASH_POST_PERIOD)
+}
+
 fun currentTimeInMillis(): Long = Calendar.getInstance().timeInMillis

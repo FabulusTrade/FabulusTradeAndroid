@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.ui.adapter
 
 import android.text.Spannable
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Comment
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
@@ -110,7 +112,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
                             return@setOnMenuItemClickListener true
                         }
                         R.id.delete_comment -> {
-                            presenter.deleteComment(comment)
+                            presenter.deleteComment(this, comment)
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false
@@ -120,31 +122,30 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
             }
         }
 
-        override fun setBtnCommentMenuSomeone(comment: Comment) {
+        override fun setBtnCommentMenuSomeone(comment: Comment, complaintList: List<Complaint>) {
             itemView.btn_comment_menu.setOnClickListener { btn ->
-                val menu = PopupMenu(itemView.context, btn)
-                menu.inflate(R.menu.menu_someone_comment)
+                val popupMenu = PopupMenu(itemView.context, btn)
+                popupMenu.inflate(R.menu.menu_someone_comment)
 
-                menu.setOnMenuItemClickListener { menuItem ->
+                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+                complaintList.forEach { complaint ->
+                    complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
+                        .setOnMenuItemClickListener {
+                            presenter.complainOnComment(comment.id, complaint.id)
+                            return@setOnMenuItemClickListener true
+                        }
+                }
+
+                popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.mi_copy_comment_text -> {
                             presenter.copyComment(comment)
                             return@setOnMenuItemClickListener true
                         }
-                        R.id.mi_unethical_content,
-                        R.id.mi_mat_insults_provocation,
-                        R.id.mi_threats_harassment,
-                        R.id.mi_market_manipulation,
-                        R.id.mi_advertising,
-                        R.id.mi_flood_spam,
-                        R.id.mi_begging_extortion -> {
-                            presenter.complainOnComment(comment, menuItem.title.toString())
-                            return@setOnMenuItemClickListener true
-                        }
                         else -> return@setOnMenuItemClickListener false
                     }
                 }
-                menu.show()
+                popupMenu.show()
             }
         }
 

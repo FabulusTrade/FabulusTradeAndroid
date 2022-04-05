@@ -10,6 +10,7 @@
     <color name="colorBlue">#304FFE</color>
     <color name="colorLightGreen">#E3F8EB</color>
     <color name="colorGreen">#00AE46</color>
+    <color name="colorGreen_27">#4400AE46</color>
     <color name="colorGreenPercent">#00923B</color>
     <color name="colorGreenPercentProfit">#008134</color>
     <color name="colorRedPercent">#FF0000</color>
@@ -44,5 +45,5 @@
     <color name="cv_comment_header_background_color_reply">#E4EDFF</color>
     <color name="popup_menu_background">#E4EDFF</color>
     <color name="ll_send_complain_snackbar_background_color">#E4EDFF</color>
-
+    <color name="colorButtonTradeDetail">#30377C</color>
 </resources>

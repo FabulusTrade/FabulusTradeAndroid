@@ -23,4 +23,6 @@ class TraderMeMainAdapter(fragment: Fragment, traderStatistic: TraderStatistic) 
     override fun getItemCount(): Int = fragmentList.size
 
     override fun createFragment(position: Int): Fragment = fragmentList[position]
+
+    fun getFragment(position: Int): Fragment = fragmentList[position]
 }

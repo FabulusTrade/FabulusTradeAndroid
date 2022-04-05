@@ -131,6 +131,18 @@
     <dimen name="tv_complain_toast_text_size">14sp</dimen>
     <dimen name="ll_send_complain_snackbar_padding_top">10dp</dimen>
     <dimen name="ll_send_complain_snackbar_padding_bottom">10dp</dimen>
+
+    <dimen name="btn_publish_trader_details_width">160dp</dimen>
+    <dimen name="btn_publish_trader_details_height">35dp</dimen>
+    <dimen name="icon_publish_trader_details_size">35dp</dimen>
+    <dimen name="panel_publish_trader_details_height">50dp</dimen>
+    <dimen name="divider_publish_trader_details_size">1dp</dimen>
+    <dimen name="margin_low_publish_trader_details_size">5dp</dimen>
+    <dimen name="margin_bigger_than_low_publish_trader_details_size">8dp</dimen>
+    <dimen name="margin_medium_publish_trader_details_size">16dp</dimen>
+    <dimen name="panel_share_arguments_publish_trader_details_size">43dp</dimen>
+    <dimen name="tv_text_size_publish_trader_details">14sp</dimen>
+
     <dimen name="btn_item_trader_news_show_comments_margin_top">5dp</dimen>
     <dimen name="ll_update_comment_margin_top">5dp</dimen>
     <dimen name="tv_editable_text_label_margin_top">5dp</dimen>
@@ -142,5 +154,18 @@
     <dimen name="tv_editable_text_text_size">12sp</dimen>
     <dimen name="tv_editable_text_margin_bottom">5dp</dimen>
     <dimen name="item_header_flash_margin_start">150dp</dimen>
-
+    <dimen name="tv_comp_trading_ops_journal_padding_vertical">10dp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_name_text_size">20sp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_operations_title_text_size">18sp</dimen>
+    <dimen name="tv_comp_trading_ops_journal_operations_title_padding_start">15dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_margin_horizontal">15dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_margin_vertical">5dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_padding_top">5dp</dimen>
+    <dimen name="tv_item_comp_trading_ops_journal_padding_horizontal">15dp</dimen>
+    <dimen name="iv_item_comp_trading_ops_journal_logo_size">50dp</dimen>
+    <dimen name="iv_item_comp_trading_ops_journal_margin_top">17dp</dimen>
+    <dimen name="layout_comp_trading_ops_journal_padding_start">16dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_list_divider_layout_height">2dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_list_divider_margin_top">10dp</dimen>
+    <dimen name="view_item_comp_trading_ops_journal_operation_type_width">80dp</dimen>
 </resources>
