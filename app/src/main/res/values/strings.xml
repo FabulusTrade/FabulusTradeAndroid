@@ -570,7 +570,6 @@
     <string name="send_this_post_to_the_general_feed">Отправить этот пост в общую ленту?</string>
     <string name="no">Нет</string>
     <string name="the_post_is_posted_in_the_general_feed">Пост размещен в общей ленте!</string>
-    <string name="message_flash_filter_is_set">Отбор размещённых в общей ленте новостей установлен. Для сброса отбора нажмите кнопку \"назад\".</string>
     <string name="no_posted_posts">Нет размещенных публикаций.</string>
     <string name="message_flash_limit_exhausted">Исчерпан лимит на размещение новостей в общей ленте.</string>
     <string name="message_flash_offline_exception">Не удалось разместить новость в общей ленте по причине отсутствия интернета.</string>

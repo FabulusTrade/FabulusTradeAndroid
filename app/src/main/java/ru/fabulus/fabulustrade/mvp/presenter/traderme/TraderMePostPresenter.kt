@@ -57,13 +57,16 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         enum class Mode {
             PUBLICATIONS, SUBSCRIPTION
         }
-
-        fun getNewStateWithMode(mode: Mode): ButtonsState =
-            ButtonsState(mode, this.flashedPostsOnlyFilter)
-
-        fun getNewStateWithFlashedOnlyFilter(flashedPostsOnlyFilter: Boolean) =
-            ButtonsState(this.mode, flashedPostsOnlyFilter)
     }
+
+    private fun ButtonsState.setNewStateOfButtons(
+        mode: ButtonsState.Mode = this.mode,
+        flashedPostsOnlyFilter: Boolean = this.flashedPostsOnlyFilter
+    ) = ButtonsState(mode, flashedPostsOnlyFilter)
+        .also {
+            buttonsState = it
+            viewState.setBtnsState(buttonsState)
+        }
 
     val listPresenter = TraderRVListPresenter()
 
@@ -449,29 +452,33 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun publicationsBtnClicked() {
-        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.PUBLICATIONS)
+        buttonsState.setNewStateOfButtons(
+            mode = ButtonsState.Mode.PUBLICATIONS,
+            flashedPostsOnlyFilter = false
+        )
         initNewLoadingPosts()
         loadPosts()
     }
 
     fun subscriptionBtnClicked() {
-        buttonsState = buttonsState.getNewStateWithMode(ButtonsState.Mode.SUBSCRIPTION)
+        buttonsState.setNewStateOfButtons(
+            mode = ButtonsState.Mode.SUBSCRIPTION,
+            flashedPostsOnlyFilter = false
+        )
         initNewLoadingPosts()
         loadPosts()
     }
 
     fun flashedPostsBtnClicked() {
-        if (!buttonsState.flashedPostsOnlyFilter) {
-            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter( true)
-            loadPosts(true)
-        } else {
-            viewState.showToast(resourceProvider.getStringResource(R.string.message_flash_filter_is_set))
-        }
+        buttonsState.setNewStateOfButtons(
+            flashedPostsOnlyFilter = !buttonsState.flashedPostsOnlyFilter
+        )
+        loadPosts(true)
     }
 
     fun backClicked(): Boolean {
         if (buttonsState.flashedPostsOnlyFilter) {
-            buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
+            buttonsState.setNewStateOfButtons(flashedPostsOnlyFilter = false)
             initNewLoadingPosts()
             loadPosts()
             return true
@@ -480,7 +487,6 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     private fun initNewLoadingPosts() {
-        viewState.setBtnsState(buttonsState)
         viewState.detachAdapter()
         nextPage = 1
         listPresenter.postList.clear()
@@ -505,16 +511,16 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         if (buttonsState.flashedPostsOnlyFilter) {
             if (pag.results.isEmpty()) {
                 viewState.showToast(resourceProvider.getStringResource(R.string.no_posted_posts))
-                buttonsState = buttonsState.getNewStateWithFlashedOnlyFilter(false)
+                buttonsState.setNewStateOfButtons(flashedPostsOnlyFilter = false)
                 if (listPresenter.postList.isEmpty()) {
                     initNewLoadingPosts()
                     loadPosts()
                 }
                 return
             }
-            if (forceLoading) {
-                initNewLoadingPosts()
-            }
+        }
+        if (forceLoading) {
+            initNewLoadingPosts()
         }
         val itIsFirstLoadingPosts = listPresenter.postList.isEmpty()
         listPresenter.postList.addAll(pag.results)
