@@ -237,8 +237,38 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
 
     override fun editComment(view: CommentItemView, comment: Comment) {
         if (isCanEditComment(comment.dateCreate)) {
-            updatedCommentView = view
-            viewState.prepareUpdateComment(prepareCommentText(comment), BasePostPresenter.maxCommentLength)
+            apiRepo
+                .getBlockUserInfo(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ blockUserInfo ->
+                    if (blockUserInfo.isEnabledAddComment()) {
+                        updatedCommentView = view
+                        viewState.prepareUpdateComment(
+                            prepareCommentText(comment),
+                            BasePostPresenter.maxCommentLength
+                        )
+                    } else {
+                        viewState.showToast(
+                            resourceProvider.formatString(
+                                R.string.block_send_comment_text,
+                                blockUserInfo.commentsBlockTime.toStringFormat(
+                                    "dd.MM.yyyy"
+                                )
+                            )
+                        )
+                    }
+                }, { error ->
+                    // приходит ошибка 401 если пользователь никогда не блокировался
+                    updatedCommentView = view
+                    viewState.prepareUpdateComment(
+                        prepareCommentText(comment),
+                        BasePostPresenter.maxCommentLength
+                    )
+
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_edited))
         }

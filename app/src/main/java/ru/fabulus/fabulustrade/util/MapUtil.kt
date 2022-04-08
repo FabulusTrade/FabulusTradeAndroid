@@ -259,3 +259,11 @@ fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
         responseComplaint.text
     )
 }
+
+fun mapToBlockUserInfo(responseBlockUserInfo: ResponseBlockUserInfo): BlockUserInfo {
+    return BlockUserInfo(
+        responseBlockUserInfo.blockedUserId,
+        responseBlockUserInfo.commentsBlockTime,
+        responseBlockUserInfo.postsBlockTime
+    )
+}

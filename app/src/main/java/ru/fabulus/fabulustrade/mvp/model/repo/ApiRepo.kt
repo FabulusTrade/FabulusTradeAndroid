@@ -900,4 +900,19 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 }
             }
             .subscribeOn(Schedulers.io())
+
+    fun getBlockUserInfo(token: String): Single<BlockUserInfo> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .getBlockUserInfo(token)
+                        .flatMap { responseBlockUserInfo ->
+                            Single.just(mapToBlockUserInfo(responseBlockUserInfo))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
 }

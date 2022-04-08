@@ -370,6 +370,16 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         setIncItemUpdateCommentVisibility(View.VISIBLE)
     }
 
+    override fun setSendEditCommentPanel(text: String, enabled: Boolean) {
+        with(postBinding) {
+            with(incItemSendComment) {
+                llAddComment.isEnabled = enabled
+                etNewCommentText.setText(text)
+                etNewCommentText.isEnabled = enabled
+            }
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

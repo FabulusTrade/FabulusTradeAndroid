@@ -262,3 +262,5 @@ fun String.toSpanned(): Spanned {
         return Html.fromHtml(this)
     }
 }
+
+fun Date.largeThenCurrentDate(): Boolean = (this.time > currentTimeInMillis())
