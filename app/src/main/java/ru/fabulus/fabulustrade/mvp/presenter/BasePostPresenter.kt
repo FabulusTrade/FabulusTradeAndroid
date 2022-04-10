@@ -69,7 +69,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
             .getBlockUserInfo(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ blockUserInfo ->
-                val enabledPanel = blockUserInfo.isEnabledAddComment()
+                val enabledPanel = blockUserInfo.isEnabledOperationsOnComment()
                 var text = ""
                 if (!enabledPanel) {
                     text = resourceProvider.formatString(
@@ -217,30 +217,57 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
 
     fun editPost() {
         if (isCanEditPost(post.dateCreate)) {
-            updatePostResultListener =
-                router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
-                    (updatedPost as? Post)?.let {
-                        post = updatedPost
-                        viewState.setPostText(post.text)
-                        viewState.setPostImages(post.images)
-                        router.sendResult(
-                            CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
-                            updatedPost
+            apiRepo
+                .getBlockUserInfo(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ blockUserInfo ->
+                    if (blockUserInfo.isEnabledOperationsOnPost()) {
+                        prepareEditPost()
+                    } else {
+                        viewState.showToast(
+                            resourceProvider.formatString(
+                                R.string.block_operation_on_post,
+                                blockUserInfo.postsBlockTime.toStringFormat(
+                                    "dd.MM.yyyy"
+                                )
+                            )
                         )
                     }
-                }
+                }, { error ->
+                    // приходит ошибка 401 если пользователь никогда не блокировался
+                    prepareEditPost()
 
-            router.navigateTo(
-                Screens.createPostScreen(
-                    post.id.toString(),
-                    true,
-                    null,
-                    post.text
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
                 )
-            )
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
         }
+    }
+
+    private fun prepareEditPost() {
+        updatePostResultListener =
+            router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                (updatedPost as? Post)?.let {
+                    post = updatedPost
+                    viewState.setPostText(post.text)
+                    viewState.setPostImages(post.images)
+                    router.sendResult(
+                        CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
+                        updatedPost
+                    )
+                }
+            }
+
+        router.navigateTo(
+            Screens.createPostScreen(
+                post.id.toString(),
+                true,
+                null,
+                post.text
+            )
+        )
     }
 
     fun copyPost() {

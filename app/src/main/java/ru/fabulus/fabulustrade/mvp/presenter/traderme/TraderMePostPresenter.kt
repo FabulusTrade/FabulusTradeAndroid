@@ -17,6 +17,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import ru.fabulus.fabulustrade.mvp.model.entity.exception.NoInternetException
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELETE_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
@@ -213,15 +214,41 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         override fun deletePost(view: PostItemView) {
             val post = postList[view.pos]
             if (isCanDeletePost(post.dateCreate)) {
-
-                apiRepo.deletePost(profile.token!!, post.id)
+                apiRepo
+                    .getBlockUserInfo(profile.token!!)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        removePostAt(view.pos)
-                    }, {})
+                    .subscribe({ blockUserInfo ->
+                        if (blockUserInfo.isEnabledOperationsOnPost()) {
+                            delPost(post, view.pos)
+                        } else {
+                            viewState.showToast(
+                                resourceProvider.formatString(
+                                    R.string.block_operation_on_post,
+                                    blockUserInfo.postsBlockTime.toStringFormat(
+                                        "dd.MM.yyyy"
+                                    )
+                                )
+                            )
+                        }
+                    }, { error ->
+                        // приходит ошибка 401 если пользователь никогда не блокировался
+                        delPost(post, view.pos)
+
+                        Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                        Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+                    }
+                    )
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }
+        }
+
+        private fun delPost(post: Post, position: Int) {
+            apiRepo.deletePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    removePostAt(position)
+                }, {})
         }
 
         private fun removePostAt(pos: Int) {
@@ -435,6 +462,32 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     }
 
     fun onCreatePostBtnClicked() {
+        apiRepo
+            .getBlockUserInfo(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ blockUserInfo ->
+                if (blockUserInfo.isEnabledOperationsOnPost()) {
+                    createNewPost()
+                } else {
+                    viewState.showToast(
+                        resourceProvider.formatString(
+                            R.string.block_operation_on_post,
+                            blockUserInfo.postsBlockTime.toStringFormat(
+                                "dd.MM.yyyy"
+                            )
+                        )
+                    )
+                }
+            }, { error ->
+                // приходит ошибка 401 если пользователь никогда не блокировался
+                createNewPost()
+                Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+            }
+            )
+    }
+
+    private fun createNewPost() {
         newPostResultListener = router.setResultListener(NEW_POST_RESULT) { post ->
             (post as? Post)?.let {
                 listPresenter.postList.add(0, post)

@@ -241,7 +241,7 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
                 .getBlockUserInfo(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ blockUserInfo ->
-                    if (blockUserInfo.isEnabledAddComment()) {
+                    if (blockUserInfo.isEnabledOperationsOnComment()) {
                         updatedCommentView = view
                         viewState.prepareUpdateComment(
                             prepareCommentText(comment),
@@ -326,7 +326,7 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
                 .getBlockUserInfo(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ blockUserInfo ->
-                    if (blockUserInfo.isEnabledAddComment()) {
+                    if (blockUserInfo.isEnabledOperationsOnComment()) {
                         delComment(view, comment)
                     } else {
                         viewState.showToast(

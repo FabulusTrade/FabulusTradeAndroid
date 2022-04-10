@@ -12,7 +12,7 @@ data class BlockUserInfo(
     val postsBlockTime: Date
 ) : Parcelable {
 
-    fun isEnabledAddComment(): Boolean = !commentsBlockTime.largeThenCurrentDate()
-    fun isBlockAddPost(): Boolean = postsBlockTime.largeThenCurrentDate()
+    fun isEnabledOperationsOnComment(): Boolean = !commentsBlockTime.largeThenCurrentDate()
+    fun isEnabledOperationsOnPost(): Boolean = postsBlockTime.largeThenCurrentDate()
 
 }
