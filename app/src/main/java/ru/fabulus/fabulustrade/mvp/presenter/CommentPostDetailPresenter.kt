@@ -323,34 +323,61 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     override fun deleteComment(view: CommentItemView, comment: Comment) {
         if (isCanDeleteComment(comment.dateCreate)) {
             apiRepo
-                .deleteComment(profile.token!!, comment.id)
+                .getBlockUserInfo(profile.token!!)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ deleteCommentResult ->
-                    if (deleteCommentResult.result.equals("ok", true)) {
-                        post.comments.removeAt(view.pos)
-                        setCommentCount()
-                        setCommentList()
-                        viewState.setRvPosition(view.pos - 1)
-                        viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                .subscribe({ blockUserInfo ->
+                    if (blockUserInfo.isEnabledAddComment()) {
+                        delComment(view, comment)
                     } else {
-                        deleteCommentResult.message?.let { message ->
-                            viewState.showToast(
-                                resourceProvider.formatString(
-                                    R.string.error_comment_deleted,
-                                    message
+                        viewState.showToast(
+                            resourceProvider.formatString(
+                                R.string.block_send_comment_text,
+                                blockUserInfo.commentsBlockTime.toStringFormat(
+                                    "dd.MM.yyyy"
                                 )
                             )
-                        }
+                        )
                     }
                 }, { error ->
-                    viewState.showToast(resourceProvider.getStringResource(R.string.request_error_comment_deleted))
-                    Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
-                    Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+                    // приходит ошибка 401 если пользователь никогда не блокировался
+                    delComment(view, comment)
+
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
                 }
                 )
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.comment_can_not_be_deleted))
         }
+    }
+
+    private fun delComment(view: CommentItemView, comment: Comment) {
+        apiRepo
+            .deleteComment(profile.token!!, comment.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ deleteCommentResult ->
+                if (deleteCommentResult.result.equals("ok", true)) {
+                    post.comments.removeAt(view.pos)
+                    setCommentCount()
+                    setCommentList()
+                    viewState.setRvPosition(view.pos - 1)
+                    viewState.showToast(resourceProvider.getStringResource(R.string.comment_deleted))
+                } else {
+                    deleteCommentResult.message?.let { message ->
+                        viewState.showToast(
+                            resourceProvider.formatString(
+                                R.string.error_comment_deleted,
+                                message
+                            )
+                        )
+                    }
+                }
+            }, { error ->
+                viewState.showToast(resourceProvider.getStringResource(R.string.request_error_comment_deleted))
+                Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     override fun complainOnComment(commentId: Long, complaintId: Int) {
