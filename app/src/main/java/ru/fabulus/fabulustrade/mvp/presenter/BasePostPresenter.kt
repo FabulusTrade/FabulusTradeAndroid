@@ -14,10 +14,7 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.getSharePostIntent
-import ru.fabulus.fabulustrade.util.isCanDeletePost
-import ru.fabulus.fabulustrade.util.isCanEditPost
-import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {
@@ -53,7 +50,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
 
-        viewState.showSendComment(maxCommentLength)
+        initSendCommentPanel()
 
         viewState.setPostImages(post.images)
         viewState.setPostLikeCount(post.likeCount.toString())
@@ -65,6 +62,34 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
         listPresenter.setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+    }
+
+    private fun initSendCommentPanel() {
+        apiRepo
+            .getBlockUserInfo(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ blockUserInfo ->
+                val enabledPanel = blockUserInfo.isEnabledAddComment()
+                var text = ""
+                if (!enabledPanel) {
+                    text = resourceProvider.formatString(
+                        R.string.block_send_comment_text,
+                        blockUserInfo.commentsBlockTime.toStringFormat(
+                            "dd.MM.yyyy"
+                        )
+                    )
+                }
+                viewState.setSendEditCommentPanel(text, enabledPanel)
+                viewState.showSendComment(maxCommentLength)
+
+            }, { error ->
+                // приходит ошибка 401 если пользователь никогда не блокировался
+                viewState.showSendComment(maxCommentLength)
+
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     private fun setCommentList() {
