@@ -21,7 +21,11 @@ class ImageListOfPostAdapter(private val presenter: CreatePostPresenter) :
         )
         val viewHolder = ImageViewHolder(binding)
         binding.buttonDeleteImage.setOnClickListener {
-            viewHolder.imageOfPost?.let { imageOfPost -> presenter.markToDeleteImageOnServer(imageOfPost) }
+            viewHolder.imageOfPost?.let { imageOfPost ->
+                presenter.markToDeleteImageOnServer(
+                    imageOfPost
+                )
+            }
         }
         return viewHolder
     }
@@ -33,9 +37,17 @@ class ImageListOfPostAdapter(private val presenter: CreatePostPresenter) :
     override fun getItemCount(): Int = imagesList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateImages(images: List<CreatePostPresenter.ImageOfPost>) {
+    fun updateImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    ) {
+        val deletedPosition = imagesList.indexOf(deletedImage)
         imagesList = images
-        notifyDataSetChanged()
+        if (deletedPosition >= 0) {
+            notifyItemRemoved(deletedPosition)
+        } else {
+            notifyDataSetChanged()
+        }
     }
 
     class ImageViewHolder(private val binding: ItemImageOfPostBinding) :

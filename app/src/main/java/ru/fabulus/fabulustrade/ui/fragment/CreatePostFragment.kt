@@ -105,8 +105,11 @@ class CreatePostFragment(
         requireContext().showLongToast(getString(R.string.images_added, count))
     }
 
-    override fun updateListOfImages(images: List<CreatePostPresenter.ImageOfPost>) {
-        imageListOfPostAdapter.updateImages(images)
+    override fun updateListOfImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    ) {
+        imageListOfPostAdapter.updateImages(images, deletedImage)
     }
 
     override fun onDestroyView() {

@@ -10,5 +10,8 @@ interface CreatePostView : MvpView {
     fun init()
     fun setHintText(isPublication: Boolean, isPinnedEdit: Boolean?)
     fun showImagesAddedMessage(count: Int)
-    fun updateListOfImages(images: List<CreatePostPresenter.ImageOfPost>)
+    fun updateListOfImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    )
 }

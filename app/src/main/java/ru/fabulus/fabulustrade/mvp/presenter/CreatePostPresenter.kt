@@ -51,7 +51,7 @@ class CreatePostPresenter(
         updateListOfImage()
     }
 
-    private fun updateListOfImage() {
+    private fun updateListOfImage(deletedImage: ImageOfPost? = null) {
         (post?.let { post ->
             post.images.map { ImageOfPost.ImageOnBack(it) }
         }
@@ -64,7 +64,7 @@ class CreatePostPresenter(
                     ImageOfPost.ImageOnDevice(it)
                 }
             }
-            .let { viewState.updateListOfImages(it) }
+            .let { viewState.updateListOfImages(it, deletedImage) }
     }
 
     sealed class ImageOfPost {
@@ -178,6 +178,6 @@ class CreatePostPresenter(
         } else if (imageOfPost is ImageOfPost.ImageOnDevice) {
             imagesToAdd.remove(imageOfPost.image)
         }
-        updateListOfImage()
+        updateListOfImage(imageOfPost)
     }
 }
