@@ -263,6 +263,14 @@ fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
     )
 }
 
+fun mapToBlockUserInfo(responseBlockUserInfo: ResponseBlockUserInfo): BlockUserInfo {
+    return BlockUserInfo(
+        responseBlockUserInfo.blockedUserId,
+        responseBlockUserInfo.commentsBlockTime,
+        responseBlockUserInfo.postsBlockTime
+    )
+}
+
 fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
     return MultipartBody.Part.createFormData(

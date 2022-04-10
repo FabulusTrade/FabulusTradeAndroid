@@ -12,6 +12,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
@@ -211,14 +212,42 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
         override fun deletePost(view: PostItemView) {
             val post = postList[view.pos]
             if (isCanDeletePost(post.dateCreate)) {
-                apiRepo.deletePost(profile.token!!, post.id)
+                apiRepo
+                    .getBlockUserInfo(profile.token!!)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        removePostAt(view.pos)
-                    }, {})
+                    .subscribe({ blockUserInfo ->
+                        if (blockUserInfo.isEnabledOperationsOnPost()) {
+                            delPost(post, view.pos)
+                        } else {
+                            viewState.showToast(
+                                resourceProvider.formatString(
+                                    R.string.block_operation_on_post,
+                                    blockUserInfo.postsBlockTime.toStringFormat(
+                                        "dd.MM.yyyy"
+                                    )
+                                )
+                            )
+                        }
+                    }, { error ->
+                        // приходит ошибка 401 если пользователь никогда не блокировался
+                        delPost(post, view.pos)
+
+                        Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                        Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+                    }
+                    )
+
             } else {
                 viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
             }
+        }
+
+        private fun delPost(post: Post, position: Int) {
+            apiRepo.deletePost(profile.token!!, post.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    removePostAt(position)
+                }, {})
         }
 
         private fun removePostAt(pos: Int) {

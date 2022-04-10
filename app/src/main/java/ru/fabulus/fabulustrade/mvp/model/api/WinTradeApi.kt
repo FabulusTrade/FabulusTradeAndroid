@@ -351,4 +351,10 @@ interface WinTradeApi {
         @Path(value = "post_id") postId: Int,
         @Field("is_flashed") isFlashed: Boolean
     ): Single<ResponseSetFlashedPost>
+
+    //разрешения на добавление поста, комментария
+    @GET("api/v1/trader/block/me/")
+    fun getBlockUserInfo(
+        @Header("Authorization") token: String
+    ): Single<ResponseBlockUserInfo>
 }

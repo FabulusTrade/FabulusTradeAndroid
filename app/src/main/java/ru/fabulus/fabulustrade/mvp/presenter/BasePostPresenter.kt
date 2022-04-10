@@ -14,10 +14,7 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.getSharePostIntent
-import ru.fabulus.fabulustrade.util.isCanDeletePost
-import ru.fabulus.fabulustrade.util.isCanEditPost
-import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
 open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {
@@ -53,7 +50,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
         viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
 
-        viewState.showSendComment(maxCommentLength)
+        initSendCommentPanel()
 
         viewState.setPostImages(post.images)
         viewState.setPostLikeCount(post.likeCount.toString())
@@ -65,6 +62,35 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
         listPresenter.setCommentCount()
         setCommentList()
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
+    }
+
+    private fun initSendCommentPanel() {
+        apiRepo
+            .getBlockUserInfo(profile.token!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ blockUserInfo ->
+                val enabledPanel = blockUserInfo.isEnabledOperationsOnComment()
+
+                var text = ""
+                if (!enabledPanel) {
+                    text = resourceProvider.formatString(
+                        R.string.block_send_comment_text,
+                        blockUserInfo.commentsBlockTime.toStringFormat(
+                            "dd.MM.yyyy"
+                        )
+                    )
+                }
+                viewState.setSendEditCommentPanel(text, enabledPanel)
+                viewState.showSendComment(maxCommentLength)
+
+            }, { error ->
+                // приходит ошибка 401 если пользователь никогда не блокировался
+                viewState.showSendComment(maxCommentLength)
+
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
     private fun setCommentList() {
@@ -192,30 +218,57 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
 
     fun editPost() {
         if (isCanEditPost(post.dateCreate)) {
-            updatePostResultListener =
-                router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
-                    (updatedPost as? Post)?.let {
-                        post = updatedPost
-                        viewState.setPostText(post.text)
-                        viewState.setPostImages(post.images)
-                        router.sendResult(
-                            CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
-                            updatedPost
+            apiRepo
+                .getBlockUserInfo(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ blockUserInfo ->
+                    if (blockUserInfo.isEnabledOperationsOnPost()) {
+                        prepareEditPost()
+                    } else {
+                        viewState.showToast(
+                            resourceProvider.formatString(
+                                R.string.block_operation_on_post,
+                                blockUserInfo.postsBlockTime.toStringFormat(
+                                    "dd.MM.yyyy"
+                                )
+                            )
                         )
                     }
-                }
+                }, { error ->
+                    // приходит ошибка 401 если пользователь никогда не блокировался
+                    prepareEditPost()
 
-            router.navigateTo(
-                Screens.createPostScreen(
-                    post,
-                    true,
-                    null,
-                    post.text
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
                 )
-            )
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
         }
+    }
+
+    private fun prepareEditPost() {
+        updatePostResultListener =
+            router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedPost ->
+                (updatedPost as? Post)?.let {
+                    post = updatedPost
+                    viewState.setPostText(post.text)
+                    viewState.setPostImages(post.images)
+                    router.sendResult(
+                        CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
+                        updatedPost
+                    )
+                }
+            }
+
+        router.navigateTo(
+            Screens.createPostScreen(
+                post,
+                true,
+                null,
+                post.text
+            )
+        )
     }
 
     fun copyPost() {

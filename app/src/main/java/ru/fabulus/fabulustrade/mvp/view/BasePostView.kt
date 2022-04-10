@@ -44,6 +44,7 @@ interface BasePostView : MvpView {
     fun setIncItemUpdateCommentVisibility(visibility: Int)
     fun showSendComment(maxCommentLength: Int)
     fun showUpdateComment(maxCommentLength: Int)
+    fun setSendEditCommentPanel(text: String, enabled: Boolean)
     fun notifyItemChanged(position: Int)
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)

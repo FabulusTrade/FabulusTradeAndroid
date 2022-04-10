@@ -575,4 +575,8 @@
     <string name="message_flash_offline_exception">Не удалось разместить новость в общей ленте по причине отсутствия интернета.</string>
     <string name="message_flash_other_exception">Не удалось разместить новость в общей ленте.</string>
 
+    <!--BasePostPresenter-->
+    <string name="block_send_comment_text">Заблокированно до %s</string>
+    <string name="block_operation_on_post">Заблокированно до %s</string>
+
 </resources>
