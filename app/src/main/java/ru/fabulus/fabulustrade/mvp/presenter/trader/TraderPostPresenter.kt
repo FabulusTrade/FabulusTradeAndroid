@@ -244,7 +244,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
                 router.navigateTo(
                     Screens.createPostScreen(
-                        post.id.toString(),
+                        post,
                         true,
                         null,
                         post.text

@@ -187,13 +187,14 @@ interface WinTradeApi {
         @Field("text") text: String
     ): Completable
 
-    @FormUrlEncoded
     @PATCH("api/v1/trader/post/{id}/")
+    @Multipart
     fun updatePublication(
         @Header("Authorization") token: String,
         @Path("id") postId: String,
-        @Field("trader_id") id: String,
-        @Field("text") text: String
+        @Part id: MultipartBody.Part,
+        @Part text: MultipartBody.Part,
+        @Part imagesToAdd: List<MultipartBody.Part>
     ): Single<ResponsePost>
 
     @POST("auth/avatar/")
@@ -234,6 +235,13 @@ interface WinTradeApi {
     fun deletePost(
         @Header("Authorization") token: String,
         @Path(value = "id", encoded = true) postId: Int
+    ): Completable
+
+    @DELETE("api/v1/trader/post/{id}/image/{fileName}")
+    fun deleteImageInPost(
+        @Header("Authorization") token: String,
+        @Path(value = "id") postId: String,
+        @Path(value = "fileName") fileName: String
     ): Completable
 
     @GET("api/v1/trader/posts/my/")

@@ -1,5 +1,8 @@
 package ru.fabulus.fabulustrade.util
 
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.mvp.model.entity.api.*
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
@@ -257,5 +260,13 @@ fun mapToComplaint(responseComplaint: ResponseComplaint): Complaint {
     return Complaint(
         responseComplaint.id,
         responseComplaint.text
+    )
+}
+
+fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
+    return MultipartBody.Part.createFormData(
+        "image[$index]", "photo${dateFormat.format(Date())}",
+        this.toRequestBody("image/*".toMediaTypeOrNull(), 0, this.size)
     )
 }

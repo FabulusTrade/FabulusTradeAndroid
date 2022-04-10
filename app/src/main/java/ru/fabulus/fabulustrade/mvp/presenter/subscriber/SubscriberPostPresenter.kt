@@ -237,7 +237,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
 
                 router.navigateTo(
                     Screens.createPostScreen(
-                        post.id.toString(),
+                        post,
                         true,
                         null,
                         post.text

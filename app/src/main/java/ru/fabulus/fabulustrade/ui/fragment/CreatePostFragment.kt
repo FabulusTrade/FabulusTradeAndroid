@@ -13,13 +13,15 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentCreatePostBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.CreatePostView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.ImageListOfPostAdapter
 import ru.fabulus.fabulustrade.util.showLongToast
 
 class CreatePostFragment(
-    private val postId: String? = null,
+    private val post: Post? = null,
     private val isPublication: Boolean,
     private val isPinnedEdit: Boolean? = null,
     private val pinnedText: String?
@@ -28,11 +30,11 @@ class CreatePostFragment(
 
     companion object {
         fun newInstance(
-            postId: String?,
+            post: Post?,
             isPublication: Boolean,
             isPinnedEdit: Boolean?,
             pinnedText: String?
-        ) = CreatePostFragment(postId, isPublication, isPinnedEdit, pinnedText)
+        ) = CreatePostFragment(post, isPublication, isPinnedEdit, pinnedText)
     }
 
     private var _binding: FragmentCreatePostBinding? = null
@@ -45,6 +47,10 @@ class CreatePostFragment(
             presenter.addImages(uris.map { it.toBitmap() })
         }
 
+    private val imageListOfPostAdapter by lazy {
+        ImageListOfPostAdapter(presenter)
+    }
+
     private fun Uri.toBitmap() =
         BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
 
@@ -52,7 +58,7 @@ class CreatePostFragment(
     lateinit var presenter: CreatePostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = CreatePostPresenter(isPublication, isPinnedEdit).apply {
+    fun providePresenter() = CreatePostPresenter(post, isPublication, isPinnedEdit).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -67,6 +73,7 @@ class CreatePostFragment(
 
     override fun init() {
         initListeners()
+        binding.listOfImages.adapter = imageListOfPostAdapter
     }
 
     fun initListeners() {
@@ -74,7 +81,7 @@ class CreatePostFragment(
             btnCreatePostPublish.clicks()
                 .map { etCreatePost.text.toString() }
                 .distinct()
-                .subscribe { text -> presenter.onPublishClicked(postId, text) }
+                .subscribe { text -> presenter.onPublishClicked(text) }
             btnCreatePostLoadFile.setOnClickListener {
                 getContent.launch(getString(R.string.gallery_mask))
             }
@@ -96,6 +103,10 @@ class CreatePostFragment(
 
     override fun showImagesAddedMessage(count: Int) {
         requireContext().showLongToast(getString(R.string.images_added, count))
+    }
+
+    override fun updateListOfImages(images: List<CreatePostPresenter.ImageOfPost>) {
+        imageListOfPostAdapter.updateImages(images)
     }
 
     override fun onDestroyView() {

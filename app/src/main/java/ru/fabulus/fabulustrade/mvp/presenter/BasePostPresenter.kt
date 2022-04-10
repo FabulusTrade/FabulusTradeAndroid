@@ -207,7 +207,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
 
             router.navigateTo(
                 Screens.createPostScreen(
-                    post.id.toString(),
+                    post,
                     true,
                     null,
                     post.text

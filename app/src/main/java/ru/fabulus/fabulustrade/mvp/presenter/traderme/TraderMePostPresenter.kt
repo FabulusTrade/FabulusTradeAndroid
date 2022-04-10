@@ -240,7 +240,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
 
                 router.navigateTo(
                     Screens.createPostScreen(
-                        post.id.toString(),
+                        post,
                         true,
                         null,
                         post.text
@@ -443,7 +443,7 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
         router.navigateTo(
             Screens.createPostScreen(
-                postId = null,
+                post = null,
                 isPublication = true,
                 isPinnedEdit = false,
                 pinnedText = null
