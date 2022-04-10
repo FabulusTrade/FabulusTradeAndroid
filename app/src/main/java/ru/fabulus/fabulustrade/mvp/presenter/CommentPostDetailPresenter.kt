@@ -242,6 +242,7 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ blockUserInfo ->
                     if (blockUserInfo.isEnabledOperationsOnComment()) {
+
                         updatedCommentView = view
                         viewState.prepareUpdateComment(
                             prepareCommentText(comment),

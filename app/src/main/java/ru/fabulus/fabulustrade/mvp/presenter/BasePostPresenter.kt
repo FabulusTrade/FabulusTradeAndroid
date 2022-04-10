@@ -70,6 +70,7 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ blockUserInfo ->
                 val enabledPanel = blockUserInfo.isEnabledOperationsOnComment()
+
                 var text = ""
                 if (!enabledPanel) {
                     text = resourceProvider.formatString(

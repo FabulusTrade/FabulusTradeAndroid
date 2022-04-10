@@ -13,6 +13,5 @@ data class BlockUserInfo(
 ) : Parcelable {
 
     fun isEnabledOperationsOnComment(): Boolean = !commentsBlockTime.largeThenCurrentDate()
-    fun isEnabledOperationsOnPost(): Boolean = postsBlockTime.largeThenCurrentDate()
-
+    fun isEnabledOperationsOnPost(): Boolean = !postsBlockTime.largeThenCurrentDate()
 }
