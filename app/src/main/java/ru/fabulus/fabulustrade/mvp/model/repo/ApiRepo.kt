@@ -482,7 +482,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         id: String,
         text: String,
-        images: List<MultipartBody.Part>
+        images: MutableList<ByteArray>
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
@@ -493,7 +493,9 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         addFormDataPart("trader_id", id)
                         addFormDataPart("text", text)
                         addFormDataPart("pinned", "false")
-                        images.forEach { addPart(it) }
+                        images.forEachIndexed { index, byteArray ->
+                            addPart(byteArray.mapToMultipartBodyPart(index))
+                        }
                     }.build()
 
                     api
@@ -574,13 +576,27 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         postId: String,
         traderId: String,
-        text: String
+        text: String,
+        imagesOnServerToDelete: MutableSet<String>,
+        imagesToAdd: MutableList<ByteArray>
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline) {
-                    api.updatePublication(token, postId, traderId, text).flatMap { response ->
+                    imagesOnServerToDelete.forEach { urlFilename ->
+                        val fileName = urlFilename.substringAfterLast('/')
+                        api.deleteImageInPost(token, postId, fileName)
+                            .blockingSubscribe({},{
+                                it.printStackTrace()
+                            })
+                    }
+                    api.updatePublication(
+                        token, postId,
+                        MultipartBody.Part.createFormData("trader_id", traderId),
+                        MultipartBody.Part.createFormData("text", text),
+                        imagesToAdd.mapIndexed { index, bytes -> bytes.mapToMultipartBodyPart(index) }
+                    ).flatMap { response ->
                         Single.just(mapToPost(response)!!)
                     }
                 } else {

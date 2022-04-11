@@ -1,5 +1,8 @@
 package ru.fabulus.fabulustrade.util
 
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.mvp.model.entity.api.*
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
@@ -265,5 +268,13 @@ fun mapToBlockUserInfo(responseBlockUserInfo: ResponseBlockUserInfo): BlockUserI
         responseBlockUserInfo.blockedUserId,
         responseBlockUserInfo.commentsBlockTime,
         responseBlockUserInfo.postsBlockTime
+    )
+}
+
+fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
+    return MultipartBody.Part.createFormData(
+        "image[$index]", "photo${dateFormat.format(Date())}",
+        this.toRequestBody("image/*".toMediaTypeOrNull(), 0, this.size)
     )
 }

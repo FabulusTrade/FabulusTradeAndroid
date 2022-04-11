@@ -4,21 +4,18 @@ import android.graphics.Bitmap
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.view.CreatePostView
 import ru.fabulus.fabulustrade.util.ImageHelper
 import java.io.ByteArrayOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
 class CreatePostPresenter(
+    private val post: Post?,
     private val isPublication: Boolean,
     private val isPinnedEdit: Boolean?
 ) : MvpPresenter<CreatePostView>() {
@@ -43,31 +40,71 @@ class CreatePostPresenter(
     @Inject
     lateinit var router: Router
 
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
+    private var imagesToAdd = mutableListOf<ByteArray>()
 
-    var images = mutableListOf<MultipartBody.Part>()
+    private val imagesOnServerToDelete = mutableSetOf<String>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         viewState.setHintText(isPublication, isPinnedEdit)
+        updateListOfImage()
     }
 
-    fun onPublishClicked(postId: String?, text: String) {
+    private fun updateListOfImage(deletedImage: ImageOfPost? = null) {
+        (post?.let { post ->
+            post.images.map { ImageOfPost.ImageOnBack(it) }
+        }
+            ?.let { imageList ->
+                imageList - imagesOnServerToDelete.map { ImageOfPost.ImageOnBack(it) }
+            }
+            ?: listOf<ImageOfPost>())
+            .let { imageList ->
+                imageList + imagesToAdd.map {
+                    ImageOfPost.ImageOnDevice(it)
+                }
+            }
+            .let { viewState.updateListOfImages(it, deletedImage) }
+    }
+
+    sealed class ImageOfPost {
+        data class ImageOnBack(val image: String) : ImageOfPost()
+        data class ImageOnDevice(val image: ByteArray) : ImageOfPost() {
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as ImageOnDevice
+
+                if (!image.contentEquals(other.image)) return false
+
+                return true
+            }
+
+            override fun hashCode(): Int {
+                return image.contentHashCode()
+            }
+        }
+    }
+
+    fun onPublishClicked(text: String) {
         if (text.isEmpty())
             return
         when {
-            isPublication && !postId.isNullOrEmpty() -> updatePublication(postId, text)
-            !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(
-                text
-            )
-            else -> createPost(text, images)
+            isPublication && post != null -> updatePublication(post.id.toString(), text)
+            !isPublication && (isPinnedEdit == null || isPinnedEdit) -> updatePost(text)
+            else -> createPost(text)
         }
     }
 
     fun addImages(newImages: List<Bitmap>) {
         if (newImages.isEmpty()) return
-        val remain = max(MAX_ATTACHED_IMAGE_COUNT - images.size, 0)
+        val remain =
+            max(
+                MAX_ATTACHED_IMAGE_COUNT - (post?.images?.size
+                    ?: 0) + imagesToAdd.size + imagesOnServerToDelete.size,
+                0
+            )
         val imageCountToAdd = min(newImages.size, remain)
         repeat(imageCountToAdd) { addImage(newImages[it]) }
         viewState.showImagesAddedMessage(imageCountToAdd)
@@ -76,44 +113,55 @@ class CreatePostPresenter(
     private fun addImage(imageBitmap: Bitmap) {
         val stream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
-        val byteArray = stream.toByteArray()
-        images.add(
-            MultipartBody.Part.createFormData(
-                "image[${images.size}]", "photo${dateFormat.format(Date())}",
-                byteArray.toRequestBody("image/*".toMediaTypeOrNull(), 0, byteArray.size)
-            )
-        )
+        imagesToAdd.add(stream.toByteArray())
+        updateListOfImage()
     }
 
-    private fun updatePublication(postId: String, text: String) {
-        apiRepo
-            .updatePublication(profile.token!!, postId, profile.user!!.id, text)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ post ->
-                router.sendResult(UPDATE_POST_RESULT,  post)
-                router.exit()
-            }, {
-                it.printStackTrace()
-            })
+    private fun updatePublication(
+        postId: String,
+        text: String
+    ) {
+        profile.token?.let { token ->
+            profile.user?.let { user ->
+                apiRepo
+                    .updatePublication(
+                        token = token,
+                        postId = postId,
+                        traderId = user.id,
+                        text = text,
+                        imagesOnServerToDelete = imagesOnServerToDelete,
+                        imagesToAdd = imagesToAdd
+                    )
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ post ->
+                        router.sendResult(UPDATE_POST_RESULT, post)
+                        router.exit()
+                    }, {
+                        it.printStackTrace()
+                    })
+            }
+        }
     }
 
-    private fun updatePost(text: String) {
-        apiRepo
-            .updatePinnedPostPatch(profile.token!!, profile.user!!.id, text)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                router.exit()
-            }, {
-                it.printStackTrace()
-            })
+    private fun updatePost(text: String) = profile.token?.let { token ->
+        profile.user?.let { user ->
+            apiRepo
+                .updatePinnedPostPatch(token, user.id, text)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    router.exit()
+                }, {
+                    it.printStackTrace()
+                })
+        }
     }
 
-    private fun createPost(text: String, images: List<MultipartBody.Part>) {
+    private fun createPost(text: String) {
         apiRepo
             .createPost(
                 profile.token!!, profile.user!!.id,
                 text,
-                images
+                imagesToAdd
             )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ post ->
@@ -122,5 +170,14 @@ class CreatePostPresenter(
             }, {
                 it.printStackTrace()
             })
+    }
+
+    fun markToDeleteImageOnServer(imageOfPost: ImageOfPost) {
+        if (imageOfPost is ImageOfPost.ImageOnBack) {
+            imagesOnServerToDelete.add(imageOfPost.image)
+        } else if (imageOfPost is ImageOfPost.ImageOnDevice) {
+            imagesToAdd.remove(imageOfPost.image)
+        }
+        updateListOfImage(imageOfPost)
     }
 }
