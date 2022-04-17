@@ -130,6 +130,13 @@ interface WinTradeApi {
         @Query("flashed_posts_only") flashedPostsOnly: Boolean
     ): Single<ResponsePagination<ResponsePost>>
 
+    @GET("/api/v1/trader/posts/all/")
+    fun getAllPosts(
+        @Header("Authorization") token: String?,
+        @Query("page") page: Int = 1,
+        @Query("flashed_posts_only") flashedPostsOnly: Boolean
+    ):  Single<ResponsePagination<ResponsePost>>
+
     @GET("api/v1/trader/{trader_id}/aggregated/")
     fun getAggregatedTrades(
         @Header("Authorization") token: String,

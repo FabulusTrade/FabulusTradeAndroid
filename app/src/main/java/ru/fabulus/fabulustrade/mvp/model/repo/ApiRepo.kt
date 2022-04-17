@@ -742,6 +742,29 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun getPostsForGeneralNews(
+        token: String?,
+        page: Int = 1
+    ): Single<Pagination<Post>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnLine ->
+                if (isOnLine) {
+                    api
+                        .getAllPosts(token, page, flashedPostsOnly = true)
+                        .flatMap { respPage ->
+                            val posts = respPage.results.mapNotNull {
+                                mapToPost(it)
+                            }
+                            Single.just(mapToPagination(respPage, posts))
+                        }
+
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun getPostsFollowerAndObserving(
         token: String,
         page: Int = 1,

@@ -28,7 +28,7 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
+open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     @Inject
     lateinit var router: Router
 
@@ -495,7 +495,12 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
     private fun loadPosts(forceLoading: Boolean = false) {
         loadingPostDisposable?.dispose()
         if (nextPage != null || forceLoading) {
-            loadingPostDisposable = getPostsFromRepositoryByState(forceLoading)
+            val pageToLoad = if (forceLoading) {
+                1
+            } else {
+                nextPage ?: 1
+            }
+            loadingPostDisposable = getPostsFromRepository(pageToLoad)
                 ?.let { single ->
                     single.observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ pag ->
@@ -532,13 +537,8 @@ class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         nextPage = pag.next
     }
 
-    private fun getPostsFromRepositoryByState(forceLoading: Boolean) =
+    protected open fun getPostsFromRepository(pageToLoad: Int) =
         profile.token?.let { token ->
-            val pageToLoad = if (forceLoading) {
-                1
-            } else {
-                nextPage ?: 1
-            }
             with(apiRepo) {
                 if (buttonsState.mode == ButtonsState.Mode.SUBSCRIPTION) {
                     getPostsFollowerAndObserving(

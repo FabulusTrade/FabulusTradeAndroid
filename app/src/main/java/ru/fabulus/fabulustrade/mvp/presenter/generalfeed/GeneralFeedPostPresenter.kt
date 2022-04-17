@@ -1,26 +1,11 @@
 package ru.fabulus.fabulustrade.mvp.presenter.generalfeed
 
-import com.github.terrakok.cicerone.Router
-import moxy.MvpPresenter
-import ru.fabulus.fabulustrade.mvp.model.entity.Profile
-import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
-import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
-import ru.fabulus.fabulustrade.mvp.view.generalfeed.GeneralFeedPostView
-import javax.inject.Inject
+import io.reactivex.rxjava3.core.Single
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
+import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 
-class GeneralFeedPostPresenter : MvpPresenter<GeneralFeedPostView>() {
-
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var apiRepo: ApiRepo
-
-    @Inject
-    lateinit var profile: Profile
-
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
-
-
+class GeneralFeedPostPresenter : TraderMePostPresenter() {
+    override fun getPostsFromRepository(pageToLoad: Int): Single<Pagination<Post>>? =
+            apiRepo.getPostsForGeneralNews(profile.token, pageToLoad)
 }
