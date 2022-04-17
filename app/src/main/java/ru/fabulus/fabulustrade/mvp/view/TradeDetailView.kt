@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.mvp.view
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface TradeDetailView: MvpView {
@@ -15,4 +16,5 @@ interface TradeDetailView: MvpView {
     fun setPriceTitle(priceTitle: String)
     fun setDate(date: String)
     fun setSubtype(type: String)
+    fun setMode(mode: TradeDetailFragment.Mode)
 }
