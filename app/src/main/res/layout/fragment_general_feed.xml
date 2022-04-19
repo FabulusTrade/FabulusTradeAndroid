@@ -9,6 +9,10 @@
         android:id="@+id/rv_general_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_trader_news"/>
+        tools:listitem="@layout/item_trader_news" />
+
+    <include
+        android:id="@+id/layout_posts_not_auth"
+        layout="@layout/layout_posts_not_auth" />
 
 </FrameLayout>

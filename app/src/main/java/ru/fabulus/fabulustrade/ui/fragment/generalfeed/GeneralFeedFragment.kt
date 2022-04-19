@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -21,8 +22,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
-import ru.fabulus.fabulustrade.util.showCustomSnackbar
-import ru.fabulus.fabulustrade.util.showToast
+import ru.fabulus.fabulustrade.util.*
 
 
 class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
@@ -30,7 +30,7 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
     private val binding: FragmentGeneralFeedBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
-    companion object{
+    companion object {
         fun newInstance() = GeneralFeedFragment()
     }
 
@@ -50,16 +50,44 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
     private var postRVAdapter: PostRVAdapter? = null
 
     override fun init() {
+        initView()
         initRecyclerView()
+        initListeners()
     }
 
-    override fun setBtnsState(state: TraderMePostPresenter.ButtonsState) {
+    private fun initView() {
+        setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        setToolbarVisible(true)
+    }
 
+    override fun setBtnsState(state: TraderMePostPresenter.ButtonsState) {}
+
+    fun initListeners() {
+        binding.layoutPostsNotAuth.run {
+            btnTraderPostEntry.setOnClickListener {
+                presenter.openSignInScreen()
+            }
+            btnTraderPostRegistration.setOnClickListener {
+                presenter.openSignUpScreen()
+            }
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun updateAdapter() {
         postRVAdapter?.notifyDataSetChanged()
+    }
+
+    override fun isAuthorized(isAuth: Boolean) {
+        binding.run {
+            if (!isAuth) {
+                rvGeneralFeed.hide()
+                layoutPostsNotAuth.layoutTraderPostNotAuth.show()
+            } else {
+                rvGeneralFeed.show()
+                layoutPostsNotAuth.layoutTraderPostNotAuth.hide()
+            }
+        }
     }
 
     override fun detachAdapter() {
@@ -131,5 +159,10 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
     ): View? {
         _binding = FragmentGeneralFeedBinding.inflate(inflater, container, false)
         return _binding?.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

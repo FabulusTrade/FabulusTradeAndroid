@@ -93,7 +93,7 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     }
 
     fun initListeners() {
-        binding.run {
+        binding.layoutPostsNotAuth.run {
             btnTraderPostEntry.setOnClickListener {
                 presenter.openSignInScreen()
             }
@@ -111,10 +111,10 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         binding.run {
             if (!isAuth) {
                 layoutTraderPostIsAuth.visibility = View.GONE
-                layoutTraderPostNotAuth.visibility = View.VISIBLE
+                layoutPostsNotAuth.layoutTraderPostNotAuth.visibility = View.VISIBLE
             } else {
                 layoutTraderPostIsAuth.visibility = View.VISIBLE
-                layoutTraderPostNotAuth.visibility = View.GONE
+                layoutPostsNotAuth.layoutTraderPostNotAuth.visibility = View.GONE
             }
         }
     }
