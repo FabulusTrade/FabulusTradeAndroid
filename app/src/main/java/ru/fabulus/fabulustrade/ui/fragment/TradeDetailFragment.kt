@@ -25,7 +25,14 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         NOT_TRADER_HAS_ARGUMENT
     }
 
+    enum class TradeType {
+        OPENING_TRADE,
+        CLOSING_TRADE
+    }
+
     private var currentMode: Mode = Mode.NOT_TRADER_NO_ARGUMENT
+
+    private var tradeType: TradeType = TradeType.OPENING_TRADE
 
     private var _binding: FragmentTradeDetailBinding? = null
     private val binding: FragmentTradeDetailBinding
@@ -62,6 +69,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             presenter.closeClicked()
         }
         setMode(Mode.NOT_TRADER_NO_ARGUMENT)
+        setTradeType(TradeType.OPENING_TRADE)
         initClickListeners()
     }
 
@@ -107,6 +115,16 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             Mode.NOT_TRADER_HAS_ARGUMENT -> setNotTraderHasArgumentMode()
         }
         currentMode = mode
+    }
+
+    override fun setTradeType(type: TradeType) {
+        when (type) {
+            TradeType.OPENING_TRADE -> {
+                binding.tvShareHead.text = "123"
+            }
+            TradeType.CLOSING_TRADE -> return
+        }
+        tradeType = type
     }
 
     private fun setTraderNoArgumentMode() {

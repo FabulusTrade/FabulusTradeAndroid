@@ -17,4 +17,5 @@ interface TradeDetailView: MvpView {
     fun setDate(date: String)
     fun setSubtype(type: String)
     fun setMode(mode: TradeDetailFragment.Mode)
+    fun setTradeType(type: TradeDetailFragment.TradeType)
 }
