@@ -574,9 +574,7 @@
     <string name="message_flash_limit_exhausted">Исчерпан лимит на размещение новостей в общей ленте.</string>
     <string name="message_flash_offline_exception">Не удалось разместить новость в общей ленте по причине отсутствия интернета.</string>
     <string name="message_flash_other_exception">Не удалось разместить новость в общей ленте.</string>
-    <string name="general_news_feed_menu_title">Новстная лента</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="general_news_feed_menu_title">Новостная лента</string>
 
     <!--BasePostPresenter-->
     <string name="block_send_comment_text">Заблокированно до %s</string>
