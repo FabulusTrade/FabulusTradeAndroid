@@ -165,6 +165,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.traders_menu_id -> presenter.tradersMenuClicked()
+            R.id.general_news_feed_id -> presenter.generalFeedClicked()
             R.id.observation_list_menu_id -> presenter.observationMenuClicked()
             R.id.invite_a_friend_menu_id -> presenter.friendInviteMenuClicked()
             R.id.about_menu_id -> presenter.aboutWTMenuClicked()

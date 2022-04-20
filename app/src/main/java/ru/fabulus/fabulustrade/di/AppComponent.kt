@@ -30,6 +30,7 @@ import ru.fabulus.fabulustrade.ui.activity.SplashActivity
 import ru.fabulus.fabulustrade.ui.adapter.*
 import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
+import ru.fabulus.fabulustrade.ui.fragment.generalfeed.GeneralFeedFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberObservationFragment
@@ -127,6 +128,7 @@ interface AppComponent {
     fun inject(registrationAsTraderSecondFragment: RegistrationAsTraderFragmentSecond)
     fun inject(regAsTraderThirdPresenter: RegAsTraderThirdPresenter)
     fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentThird)
+    fun inject(generalFeedFragment: GeneralFeedFragment)
     fun inject(regAsTraderFourPresenter: RegAsTraderFourPresenter)
     fun inject(registrationAsTraderFirstFragment: RegistrationAsTraderFragmentFour)
     fun inject(webViewPresenter: WebViewPresenter)

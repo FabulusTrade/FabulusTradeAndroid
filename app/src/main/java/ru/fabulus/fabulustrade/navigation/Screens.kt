@@ -4,6 +4,7 @@ import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
+import ru.fabulus.fabulustrade.ui.fragment.generalfeed.GeneralFeedFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberNewsFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberObservationFragment
@@ -115,4 +116,6 @@ object Screens {
 
     fun postDetailFragment(post: Post) =
         FragmentScreen { PostDetailFragment.newInstance(post) }
+
+    fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
 }
