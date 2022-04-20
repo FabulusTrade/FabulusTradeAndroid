@@ -9,6 +9,11 @@
             android:icon="@drawable/grade"
             android:title="@string/traders_title_menu_title" />
         <item
+            android:id="@+id/general_news_feed_id"
+            android:checked="false"
+            android:icon="@drawable/ic_flash_drawer"
+            android:title="@string/general_news_feed_menu_title" />
+        <item
             android:id="@+id/observation_list_menu_id"
             android:icon="@drawable/visibility"
             android:title="@string/my_profile_title" />

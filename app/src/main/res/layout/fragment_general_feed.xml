@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.generalfeed.GeneralFeedFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_general_feed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_trader_news" />
+
+    <include
+        android:id="@+id/layout_posts_not_auth"
+        layout="@layout/layout_posts_not_auth" />
+
+</FrameLayout>

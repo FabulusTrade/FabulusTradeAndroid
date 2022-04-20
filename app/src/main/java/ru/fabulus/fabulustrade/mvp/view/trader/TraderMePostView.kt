@@ -12,14 +12,15 @@ interface TraderMePostView : MvpView {
     fun init()
     fun setBtnsState(state: TraderMePostPresenter.ButtonsState)
     fun updateAdapter()
+    fun isAuthorized(isAuth: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun detachAdapter()
+
     @StateStrategyType(SkipStrategy::class)
     fun attachAdapter()
 
     @StateStrategyType(SkipStrategy::class)
     fun share(shareIntent: Intent)
-
     @StateStrategyType(SkipStrategy::class)
     fun showToast(msg: String)
     fun showComplainSnackBar()

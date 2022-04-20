@@ -157,6 +157,8 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         postRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun isAuthorized(isAuth: Boolean) {}
+
     override fun detachAdapter() {
         binding.rvTraderMePost.adapter = null
     }

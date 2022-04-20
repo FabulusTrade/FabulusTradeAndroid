@@ -53,6 +53,10 @@ class MainPresenter : MvpPresenter<MainView>() {
         router.replaceScreen(Screens.tradersMainScreen(null))
     }
 
+    fun generalFeedClicked() {
+        router.replaceScreen(Screens.generalFeedFragment())
+    }
+
     fun observationMenuClicked() {
         if (profile.user != null) {
             if (profile.user!!.isTrader)

@@ -518,7 +518,7 @@
                 \n
                 %s
     </string>
-    <string name="et_update_comment_text_hint" >Измененный комментарий</string>
+    <string name="et_update_comment_text_hint">Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>
     <string name="share_message_title">Поделиться</string>
@@ -574,6 +574,9 @@
     <string name="message_flash_limit_exhausted">Исчерпан лимит на размещение новостей в общей ленте.</string>
     <string name="message_flash_offline_exception">Не удалось разместить новость в общей ленте по причине отсутствия интернета.</string>
     <string name="message_flash_other_exception">Не удалось разместить новость в общей ленте.</string>
+    <string name="general_news_feed_menu_title">Новстная лента</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--BasePostPresenter-->
     <string name="block_send_comment_text">Заблокированно до %s</string>
