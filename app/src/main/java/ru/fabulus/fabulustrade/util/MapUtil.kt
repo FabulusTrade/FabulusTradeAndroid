@@ -271,6 +271,23 @@ fun mapToBlockUserInfo(responseBlockUserInfo: ResponseBlockUserInfo): BlockUserI
     )
 }
 
+fun mapToCommentBlockUserInfo(responseCommentBlockedUsers: ResponseBlockUserComments): List<CommentBlockedUser> {
+    return responseCommentBlockedUsers.usersList.map { user ->
+        CommentBlockedUser(
+            user.authorID,
+            user.blockedUserID
+        )
+    }.toList()
+}
+
+fun mapToResultBlockUserComment(responseBlockCommentUser: ResponseBlockCommentUser): ResultBlockUserComment {
+    return ResultBlockUserComment(responseBlockCommentUser.result)
+}
+
+fun mapToResultUnblockUserComment(responseUnblockCommentUser: ResponseUnblockCommentUser): ResultUnblockUserComment {
+    return ResultUnblockUserComment(responseUnblockCommentUser.result)
+}
+
 fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
     return MultipartBody.Part.createFormData(

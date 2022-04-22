@@ -364,4 +364,26 @@ interface WinTradeApi {
     fun getBlockUserInfo(
         @Header("Authorization") token: String
     ): Single<ResponseBlockUserInfo>
+
+    //запрещено ли добавлять комментарии к посту
+    @GET("api/v1/trader/post/{post_id}/blocked_users/")
+    fun getCommentBlockedUsers(
+        @Header("Authorization") token: String,
+        @Path(value = "post_id") postId: Int
+    ): Single<ResponseBlockUserComments>
+
+    // блокировка добавления комменатирев к своим постам
+    @POST("api/v1/trader/block_comments/")
+    fun blockUserComments(
+        @Header("Authorization") token: String,
+        @Body body: RequestBlockUserComments
+    ): Single<ResponseBlockCommentUser>
+
+    // разблокировка добавления комменатирев к своим постам
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "api/v1/trader/block_comments/", hasBody = true)
+    fun unblockUserComments(
+        @Header("Authorization") token: String,
+        @Field("blockedUserID") userID: String
+    ): Single<ResponseUnblockCommentUser>
 }

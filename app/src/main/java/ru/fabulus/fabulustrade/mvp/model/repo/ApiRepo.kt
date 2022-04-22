@@ -954,4 +954,50 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Single.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
+
+    fun getCommentBlockedUsers(token: String, postId: Int): Single<List<CommentBlockedUser>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .getCommentBlockedUsers(token, postId)
+                        .flatMap { responseCommentBlockedUsers ->
+                            Single.just(mapToCommentBlockUserInfo(responseCommentBlockedUsers))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun blockUserComments(token: String, userId: String): Single<ResultBlockUserComment> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .blockUserComments(token, RequestBlockUserComments(userId))
+                        .flatMap { responseBlockCommentUser ->
+                            Single.just(mapToResultBlockUserComment(responseBlockCommentUser))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+
+    fun unblockUserComments(token: String, userId: String): Single<ResultUnblockUserComment> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .unblockUserComments(token, userId)
+                        .flatMap { resultUnblockUserComment ->
+                            Single.just(mapToResultUnblockUserComment(resultUnblockUserComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
 }

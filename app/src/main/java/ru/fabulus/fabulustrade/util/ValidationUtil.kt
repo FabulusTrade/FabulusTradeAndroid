@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.util
 
 import android.util.Patterns
+import ru.fabulus.fabulustrade.mvp.model.entity.CommentBlockedUser
 import java.util.*
 
 private const val passwordMinLength = 8
@@ -109,3 +110,16 @@ fun isCanFlashPostByCreateDate(dateCreated: Date): Boolean {
 }
 
 fun currentTimeInMillis(): Long = Calendar.getInstance().timeInMillis
+
+fun List<CommentBlockedUser>.isLocked(userId: String): Boolean {
+    var result = false
+    if (this.count() > 0) {
+        for (item in this) {
+            if (item.blockedUserID == userId) {
+                result = true
+                break
+            }
+        }
+    }
+    return result
+}
