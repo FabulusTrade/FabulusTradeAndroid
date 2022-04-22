@@ -12,6 +12,12 @@
 
         </menu>
     </item>
+    <item
+        android:id="@+id/mi_lock_user_comment"
+        android:title="@string/lock_user_comment" />
+    <item
+        android:id="@+id/mi_unlock_user_comment"
+        android:title="@string/unlock_user_comment" />
 
 
 </menu>
