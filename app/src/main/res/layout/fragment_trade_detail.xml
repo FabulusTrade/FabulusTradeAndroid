@@ -282,6 +282,7 @@
         android:background="@color/colorBlueGray"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetail">
 
@@ -302,6 +303,7 @@
         android:layout_marginTop="@dimen/margin_top_very_low"
         android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
         android:stretchColumns="1,2"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_share_arguments_begin">
 
@@ -424,6 +426,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_end_medium"
         android:layout_marginEnd="@dimen/margin_end_medium"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/layout_sharing_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -453,6 +456,7 @@
         android:layout_marginEnd="@dimen/margin_end_medium"
         android:layout_marginBottom="@dimen/margin_end_medium"
         android:gravity="center_vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -486,6 +490,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

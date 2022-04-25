@@ -59,7 +59,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
-        setMode(Mode.TRADER_NO_ARGUMENT)
         initClickListeners()
     }
 
