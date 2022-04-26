@@ -11,9 +11,11 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
+import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
+import javax.inject.Inject
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
@@ -120,9 +122,17 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     override fun setTradeType(type: TradeType) {
         when (type) {
             TradeType.OPENING_TRADE -> {
-                binding.tvShareHead.text = "123"
+                binding.tvShareHead.text = resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvShareArgument.text = resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvFirstLineLabel.text = resources.getString(R.string.take_profit_price)
+                binding.tvSecondLineLabel.text = resources.getString(R.string.stop_loss_price)
             }
-            TradeType.CLOSING_TRADE -> return
+            TradeType.CLOSING_TRADE -> {
+                binding.tvShareHead.text = resources.getString(R.string.arguments_head_idea)
+                binding.tvShareArgument.text = resources.getString(R.string.comment_to_result)
+                binding.tvFirstLineLabel.text = resources.getString(R.string.income)
+                binding.tvSecondLineLabel.text = resources.getString(R.string.loss)
+            }
         }
         tradeType = type
     }

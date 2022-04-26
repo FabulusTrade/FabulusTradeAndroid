@@ -227,11 +227,14 @@
     <string name="date_time">Дата/время</string>
     <string name="share_with_arguments_on_your_idea">Поделись аргументами к своей идее</string>
     <string name="arguments_head_idea">Комментарий к полученному результату</string>
+    <string name="comment_to_result">Комментарий к полученному результату</string>
     <string name="publish">Опубликовать</string>
     <string name="upload_file">Загрузить файл</string>
     <string name="realization_day">Срок реализации, дн</string>
     <string name="stop_loss_price">Стоп-лосс (цена / -%)</string>
     <string name="take_profit_price">Тейк профит (цена / %)</string>
+    <string name="income">Прибыль</string>
+    <string name="loss">Убыток</string>
 
     <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>

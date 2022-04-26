@@ -287,6 +287,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetail">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_share_argument"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share_with_arguments_on_your_idea"
@@ -312,6 +313,7 @@
             android:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_first_line_label"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -348,6 +350,7 @@
             android:showDividers="middle">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_second_line_label"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
