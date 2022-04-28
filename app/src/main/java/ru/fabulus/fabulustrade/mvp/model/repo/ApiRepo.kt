@@ -508,6 +508,38 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun createArgument(
+        token: String,
+        id: String,
+        text: String,
+        trade: String,
+        images: MutableList<ByteArray>
+    ): Single<Post> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    val body = MultipartBody.Builder().apply {
+                        setType(MultipartBody.FORM)
+                        addFormDataPart("trader_id", id)
+                        addFormDataPart("text", text)
+                        addFormDataPart("trade", trade)
+                        addFormDataPart("pinned", "false")
+                        images.forEachIndexed { index, byteArray ->
+                            addPart(byteArray.mapToMultipartBodyPart(index))
+                        }
+                    }.build()
+
+                    api
+                        .createPost(token, body)
+                        .flatMap { response ->
+                            Single.just(mapToPost(response)!!)
+                        }
+                } else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
     fun changeAvatar(token: String, body: MultipartBody.Part): Completable =
         networkStatus
             .isOnlineSingle()

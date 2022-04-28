@@ -191,7 +191,8 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
         tradeDate,
         companyTrade.profit_count,
         companyTrade.price,
-        companyTrade.currency
+        companyTrade.currency,
+        companyTrade.posts
     )
 }
 

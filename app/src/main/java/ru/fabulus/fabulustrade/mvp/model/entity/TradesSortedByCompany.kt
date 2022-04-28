@@ -10,5 +10,6 @@ data class TradesSortedByCompany(
     val date: Date,
     val profitCount: Double?,
     val price: Float,
-    val currency: String
+    val currency: String,
+    val posts: String?
 )

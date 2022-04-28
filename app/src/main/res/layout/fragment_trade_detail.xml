@@ -440,6 +440,7 @@
             app:counterMaxLength="2000">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_create_post"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite"
@@ -479,6 +480,7 @@
             app:layout_constraintTop_toTopOf="@+id/appCompatImageView" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatPublish"
             android:layout_width="@dimen/btn_publish_trader_details_width"
             android:layout_height="@dimen/btn_publish_trader_details_height"
             android:layout_gravity="end"

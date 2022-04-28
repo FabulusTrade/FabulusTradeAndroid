@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import com.jakewharton.rxbinding4.view.clicks
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -70,8 +71,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
-        setMode(Mode.NOT_TRADER_NO_ARGUMENT)
-        setTradeType(TradeType.OPENING_TRADE)
         initClickListeners()
     }
 
@@ -106,6 +105,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.linearShareArgumentsBegin.setOnClickListener {
             setMode(Mode.TRADER_FILLING_ARGUMENT)
         }
+        binding.appCompatPublish.clicks()
+            .map { binding.etCreatePost.text.toString() }
+            .distinct()
+            .subscribe { text -> presenter.onPublishClicked(text) }
     }
 
     override fun setMode(mode: Mode) {
@@ -122,8 +125,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     override fun setTradeType(type: TradeType) {
         when (type) {
             TradeType.OPENING_TRADE -> {
-                binding.tvShareHead.text = resources.getString(R.string.share_with_arguments_on_your_idea)
-                binding.tvShareArgument.text = resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvShareHead.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvShareArgument.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
                 binding.tvFirstLineLabel.text = resources.getString(R.string.take_profit_price)
                 binding.tvSecondLineLabel.text = resources.getString(R.string.stop_loss_price)
             }
