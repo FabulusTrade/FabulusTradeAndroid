@@ -513,7 +513,10 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         id: String,
         text: String,
         trade: String,
-        images: MutableList<ByteArray>
+        images: MutableList<ByteArray>,
+        stopLoss: Float?,
+        takeProfit: Float?,
+        dealTerm: Int?
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
@@ -525,6 +528,15 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         addFormDataPart("text", text)
                         addFormDataPart("trade", trade)
                         addFormDataPart("pinned", "false")
+                        stopLoss?.let {
+                            addFormDataPart("stop_loss", it.toString())
+                        }
+                        takeProfit?.let {
+                            addFormDataPart("take_profit", it.toString())
+                        }
+                        dealTerm?.let {
+                            addFormDataPart("deal_term", it.toString())
+                        }
                         images.forEachIndexed { index, byteArray ->
                             addPart(byteArray.mapToMultipartBodyPart(index))
                         }
@@ -619,7 +631,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     imagesOnServerToDelete.forEach { urlFilename ->
                         val fileName = urlFilename.substringAfterLast('/')
                         api.deleteImageInPost(token, postId, fileName)
-                            .blockingSubscribe({},{
+                            .blockingSubscribe({}, {
                                 it.printStackTrace()
                             })
                     }

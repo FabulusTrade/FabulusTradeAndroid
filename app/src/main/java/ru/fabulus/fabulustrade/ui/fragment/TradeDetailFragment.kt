@@ -105,10 +105,13 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.linearShareArgumentsBegin.setOnClickListener {
             setMode(Mode.TRADER_FILLING_ARGUMENT)
         }
-        binding.appCompatPublish.clicks()
-            .map { binding.etCreatePost.text.toString() }
-            .distinct()
-            .subscribe { text -> presenter.onPublishClicked(text) }
+        binding.appCompatPublish.setOnClickListener {
+            val text = binding.etCreatePost.text.toString()
+            val stopLoss = binding.etStopLoss.text.toString().toFloatOrNull()
+            val takeProfit = binding.etTakeProfit.text.toString().toFloatOrNull()
+            val dealTerm = binding.etHowManyDay.text.toString().toIntOrNull()
+            presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
+        }
     }
 
     override fun setMode(mode: Mode) {

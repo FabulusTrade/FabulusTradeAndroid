@@ -59,7 +59,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iv_item_comp_trading_ops_journal_attached_post_clip"
+            android:id="@+id/iv_item_comp_trading_ops_attached_post_clip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"

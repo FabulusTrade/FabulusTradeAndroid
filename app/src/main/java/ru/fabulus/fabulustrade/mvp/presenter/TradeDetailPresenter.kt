@@ -76,23 +76,36 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
         }
     }
 
-    fun onPublishClicked(text: String) {
+    fun onPublishClicked(
+        text: String,
+        stopLoss: Float?,
+        takeProfit: Float?,
+        dealTerm: Int?
+    ) {
         if (text.isEmpty())
             return
-        createArgument(text)
+        createArgument(text, stopLoss, takeProfit, dealTerm)
     }
 
-    private fun createArgument(text: String) {
+    private fun createArgument(
+        text: String,
+        stopLoss: Float?,
+        takeProfit: Float?,
+        dealTerm: Int?
+    ) {
         apiRepo
             .createArgument(
                 profile.token!!, profile.user!!.id,
                 text,
                 trade.id.toString(),
-                imagesToAdd
+                imagesToAdd,
+                stopLoss,
+                takeProfit,
+                dealTerm
             )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ post ->
-                router.sendResult(TradeDetailPresenter.NEW_ARGUMENT_RESULT, post)
+                router.sendResult(NEW_ARGUMENT_RESULT, post)
                 router.exit()
             }, {
                 it.printStackTrace()
