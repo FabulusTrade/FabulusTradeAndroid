@@ -14,10 +14,14 @@
     </item>
     <item
         android:id="@+id/mi_lock_user_comment"
-        android:title="@string/lock_user_comment" />
+        android:title="@string/lock_user_comment"
+        android:visible="false"
+        tools:visible="true" />
     <item
         android:id="@+id/mi_unlock_user_comment"
-        android:title="@string/unlock_user_comment" />
+        android:title="@string/unlock_user_comment"
+        android:visible="false"
+        tools:visible="true" />
 
 
 </menu>
