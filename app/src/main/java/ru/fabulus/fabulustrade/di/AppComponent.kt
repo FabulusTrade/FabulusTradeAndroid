@@ -144,4 +144,6 @@ interface AppComponent {
     fun inject(basePostPresenter: BasePostPresenter<BasePostView>)
     fun inject(commentPostDetailPresenter: CommentPostDetailPresenter)
     fun inject(commentRVAdapter: CommentRVAdapter)
+    fun inject(blacklistFragment: BlacklistFragment)
+    fun inject(blacklistPresenter: BlacklistPresenter)
 }
