@@ -586,5 +586,6 @@
     <!--BasePostPresenter-->
     <string name="block_send_comment_text">Заблокированно до %s</string>
     <string name="block_operation_on_post">Заблокированно до %s</string>
+    <string name="add_to_blacklist">Добавить в Черный список</string>
 
 </resources>

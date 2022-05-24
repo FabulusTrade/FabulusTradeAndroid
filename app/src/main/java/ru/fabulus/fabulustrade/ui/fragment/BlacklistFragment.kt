@@ -16,7 +16,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.view.BlacklistView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.ui.adapter.ObservationRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.BlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.showLongToast
 import javax.inject.Inject
 
@@ -40,8 +40,8 @@ class BlacklistFragment : MvpAppCompatFragment(), BlacklistView {
     @Inject
     lateinit var router: Router
 
-    private val observationRVAdapter: ObservationRVAdapter? by lazy {
-        ObservationRVAdapter(presenter.listPresenter).apply {
+    private val blacklistRVAdapter: BlacklistRVAdapter? by lazy {
+        BlacklistRVAdapter(presenter.listPresenter).apply {
             App.instance.appComponent.inject(this)
         }
     }
@@ -63,7 +63,7 @@ class BlacklistFragment : MvpAppCompatFragment(), BlacklistView {
 
     private fun initRecyclerView() {
         binding.rvSubObs.run {
-            adapter = observationRVAdapter
+            adapter = blacklistRVAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
@@ -77,7 +77,7 @@ class BlacklistFragment : MvpAppCompatFragment(), BlacklistView {
     }
 
     override fun updateAdapter() {
-        observationRVAdapter?.notifyDataSetChanged()
+        blacklistRVAdapter?.notifyDataSetChanged()
     }
 
     override fun withoutSubscribeAnyTrader() {

@@ -316,6 +316,10 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
+        override fun addToBlacklist(traderId: String) {
+            TODO("Not yet implemented")
+        }
+
         override fun incRepostCount() {
             if (sharedView != null) {
                 val post = postList[sharedView!!.pos]

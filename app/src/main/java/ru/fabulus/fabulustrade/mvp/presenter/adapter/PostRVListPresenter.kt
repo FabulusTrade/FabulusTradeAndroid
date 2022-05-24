@@ -15,7 +15,7 @@ interface PostRVListPresenter {
     fun complainOnPost(post: Post, complaintId: Int)
     fun setPublicationTextMaxLines(view: PostItemView)
     fun showCommentDetails(view: PostItemView)
-
+    fun addToBlacklist(traderId: String)
     fun share(view: PostItemView, imageViewIdList: List<ImageView>)
     fun incRepostCount()
 }

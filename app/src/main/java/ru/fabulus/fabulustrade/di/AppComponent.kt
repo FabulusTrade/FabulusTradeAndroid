@@ -146,4 +146,5 @@ interface AppComponent {
     fun inject(commentRVAdapter: CommentRVAdapter)
     fun inject(blacklistFragment: BlacklistFragment)
     fun inject(blacklistPresenter: BlacklistPresenter)
+    fun inject(blacklistRVAdapter: BlacklistRVAdapter)
 }

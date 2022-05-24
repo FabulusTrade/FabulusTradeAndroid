@@ -314,6 +314,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 }
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
+
+        override fun addToBlacklist(traderId: String) {
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+        }
     }
 
     override fun onFirstViewAttach() {

@@ -131,7 +131,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
                 val popupMenu = PopupMenu(itemView.context, btn)
                 popupMenu.inflate(R.menu.menu_someone_comment)
 
-                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
                 complaintList.forEach { complaint ->
                     complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
                         .setOnMenuItemClickListener {
@@ -142,7 +142,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
 
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.mi_copy_comment_text -> {
+                        R.id.mi_copy_post_text -> {
                             presenter.copyComment(comment)
                             return@setOnMenuItemClickListener true
                         }

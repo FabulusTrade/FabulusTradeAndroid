@@ -101,6 +101,9 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
             layoutHasNoSubs.tvChooseSubscribe.setOnClickListener {
                 router.navigateTo(Screens.tradersAllScreen(TradersAllPresenter.DEFAULT_FILTER))
             }
+            ibOpenBlacklist.setOnClickListener {
+                router.navigateTo(Screens.blacklistScreen())
+            }
         }
     }
 

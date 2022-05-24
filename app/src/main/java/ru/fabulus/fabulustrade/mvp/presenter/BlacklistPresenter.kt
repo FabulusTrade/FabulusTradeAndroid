@@ -10,9 +10,10 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Subscription
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.IObservationListPresenter
-import ru.fabulus.fabulustrade.mvp.view.item.ObservationItemView
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IBlacklistListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BlacklistView
+import ru.fabulus.fabulustrade.mvp.view.item.BlacklistItemView
+import ru.fabulus.fabulustrade.mvp.view.item.ObservationItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.stringColorToIntWithDef
@@ -34,11 +35,11 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
     var listPresenter = BlacklistListPresenter()
     var subscriptionClickPos = -1
 
-    inner class BlacklistListPresenter : IObservationListPresenter {
+    inner class BlacklistListPresenter : IBlacklistListPresenter {
         var traders = mutableListOf<Subscription>()
         override fun getCount(): Int = traders.size
 
-        override fun bind(view: ObservationItemView) {
+        override fun bind(view: BlacklistItemView) {
             val traderList = traders[view.pos]
             val trader = traderList.trader
             trader.username?.let { username -> view.setTraderName(username) }

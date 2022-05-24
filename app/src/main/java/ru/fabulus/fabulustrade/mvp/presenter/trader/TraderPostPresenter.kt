@@ -321,6 +321,10 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                 }
             router.navigateTo(Screens.postDetailFragment(posts[view.pos]))
         }
+
+        override fun addToBlacklist(traderId: String) {
+            TODO("Not yet implemented")
+        }
     }
 
     override fun onFirstViewAttach() {

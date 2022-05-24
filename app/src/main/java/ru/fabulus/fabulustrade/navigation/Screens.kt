@@ -118,4 +118,7 @@ object Screens {
         FragmentScreen { PostDetailFragment.newInstance(post) }
 
     fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
+
+    fun blacklistScreen() =
+        FragmentScreen { BlacklistFragment.newInstance() }
 }

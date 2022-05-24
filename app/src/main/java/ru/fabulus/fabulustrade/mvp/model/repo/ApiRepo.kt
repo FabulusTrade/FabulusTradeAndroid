@@ -587,7 +587,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     imagesOnServerToDelete.forEach { urlFilename ->
                         val fileName = urlFilename.substringAfterLast('/')
                         api.deleteImageInPost(token, postId, fileName)
-                            .blockingSubscribe({},{
+                            .blockingSubscribe({}, {
                                 it.printStackTrace()
                             })
                     }
@@ -1000,4 +1000,17 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Single.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
+
+    fun addToBlacklist(token: String, traderId:  String): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    api.addToBlacklist(token, traderId)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
 }
