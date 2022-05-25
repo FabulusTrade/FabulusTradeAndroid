@@ -394,10 +394,9 @@ interface WinTradeApi {
         @Field("user_in_blacklist_id") traderID: String
     ): Completable
 
-    // добавление в чёрный список
-    @POST("api/v1/trader/blacklist/")
+    // получение черного списка
+    @GET("api/v1/trader/blacklist/")
     fun getBlacklist(
         @Header("Authorization") token: String,
-        @Field("user_in_blacklist_id") traderID: String
-    ): Completable
+    ): Single<List<ResponseBlacklistItem>>
 }

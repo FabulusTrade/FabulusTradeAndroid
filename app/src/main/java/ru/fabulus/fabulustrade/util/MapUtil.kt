@@ -103,6 +103,12 @@ fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
     subscription.id_status
 )
 
+fun mapToBlacklistItem(subscription: ResponseBlacklistItem) = BlacklistItem(
+    mapToTrader(subscription.id_trader),
+    subscription.end_date,
+    subscription.id_status
+)
+
 fun mapToTrade(trade: ResponseTrade): Trade {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val date = dateFormat.parse(trade.date)

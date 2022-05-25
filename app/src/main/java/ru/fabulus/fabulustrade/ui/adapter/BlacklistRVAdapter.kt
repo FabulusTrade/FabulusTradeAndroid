@@ -35,16 +35,6 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
         holder.itemView.layout_traders_signed_item.setOnClickListener {
             presenter.onItemClick(holder.bindingAdapterPosition)
         }
-
-        holder.itemView.cb_subscriber_observation.setOnClickListener {
-            presenter.deleteObservation(holder.bindingAdapterPosition)
-            val context = holder.itemView.context
-            context.showLongToast(context.resources.getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
-        }
-
-        holder.itemView.tv_subscriber_observation_is_subscribe.setOnClickListener {
-            presenter.deleteSubscription(holder.bindingAdapterPosition)
-        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()

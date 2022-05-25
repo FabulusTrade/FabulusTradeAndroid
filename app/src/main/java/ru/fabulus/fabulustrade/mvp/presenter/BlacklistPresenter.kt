@@ -6,14 +6,13 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.BlacklistItem
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
-import ru.fabulus.fabulustrade.mvp.model.entity.Subscription
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IBlacklistListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BlacklistView
 import ru.fabulus.fabulustrade.mvp.view.item.BlacklistItemView
-import ru.fabulus.fabulustrade.mvp.view.item.ObservationItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.stringColorToIntWithDef
@@ -36,7 +35,7 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
     var subscriptionClickPos = -1
 
     inner class BlacklistListPresenter : IBlacklistListPresenter {
-        var traders = mutableListOf<Subscription>()
+        var traders = mutableListOf<BlacklistItem>()
         override fun getCount(): Int = traders.size
 
         override fun bind(view: BlacklistItemView) {
@@ -65,49 +64,10 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
                 router.navigateTo(Screens.traderMainScreen(trader.trader))
         }
 
-        override fun deleteObservation(pos: Int) {
-            if (profile.user == null) {
-                router.navigateTo(Screens.signInScreen(false))
-            } else {
-                apiRepo
-                    .deleteObservation(profile.token!!, traders[pos].trader.id)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({}, {})
-
-                reLoadSubscriptions()
-            }
-        }
-
-        override fun deleteSubscription(pos: Int) {
-            if (profile.user == null) {
-                router.navigateTo(Screens.signInScreen(false))
-            } else {
-                if (needDeleteSubscription(pos)) {
-                    apiRepo
-                        .deleteObservation(profile.token!!, traders[pos].trader.id)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({}, {})
-                    reLoadSubscriptions()
-                } else {
-                    viewState.showToast(resourceProvider.getStringResource(R.string.unsubscribe_from_trader_alarm_message))
-                }
-            }
-        }
-
-        private fun needDeleteSubscription(pos: Int): Boolean {
-            return if (subscriptionClickPos == pos) {
-                clearSubscriptionClickPos()
-                true
-            } else {
-                subscriptionClickPos = pos
-                false
-            }
-        }
-
         private fun reLoadSubscriptions(delayMills: Long = 200) {
             Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    loadSubscriptions()
+                    loadBlacklist()
                 }, delayMills
             )
         }
@@ -115,7 +75,7 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
 
     override fun attachView(view: BlacklistView?) {
         super.attachView(view)
-        loadSubscriptions()
+        loadBlacklist()
         clearSubscriptionClickPos()
     }
 
@@ -128,9 +88,9 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
         viewState.init()
     }
 
-    private fun loadSubscriptions() {
+    private fun loadBlacklist() {
         apiRepo
-            .mySubscriptions(profile.token!!)
+            .getBlacklist(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ subscriptions ->
                 val traders = subscriptions.sortedBy { it.status }.reversed()
