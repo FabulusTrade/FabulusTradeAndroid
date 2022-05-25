@@ -392,7 +392,7 @@ interface WinTradeApi {
     fun addToBlacklist(
         @Header("Authorization") token: String,
         @Field("user_in_blacklist_id") traderID: String
-    ): Completable
+    ): Single<ResponseAddToBlacklist>
 
     // получение черного списка
     @GET("api/v1/trader/blacklist/")
