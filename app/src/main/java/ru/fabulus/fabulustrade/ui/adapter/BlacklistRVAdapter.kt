@@ -32,9 +32,6 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
     override fun onBindViewHolder(holder: BlacklistItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.layout_traders_signed_item.setOnClickListener {
-            presenter.onItemClick(holder.bindingAdapterPosition)
-        }
     }
 
     override fun getItemCount(): Int = presenter.getCount()

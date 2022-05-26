@@ -103,10 +103,8 @@ fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
     subscription.id_status
 )
 
-fun mapToBlacklistItem(subscription: ResponseBlacklistItem) = BlacklistItem(
-    mapToTrader(subscription.id_trader),
-    subscription.end_date,
-    subscription.id_status
+fun mapToBlacklistItem(responseBlacklistItem: ResponseBlacklistItem) = BlacklistItem(
+    responseBlacklistItem.user_in_blacklist_id
 )
 
 fun mapToTrade(trade: ResponseTrade): Trade {

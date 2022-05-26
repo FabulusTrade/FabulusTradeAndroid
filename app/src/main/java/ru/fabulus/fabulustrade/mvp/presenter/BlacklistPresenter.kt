@@ -32,55 +32,29 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
     lateinit var resourceProvider: ResourceProvider
 
     var listPresenter = BlacklistListPresenter()
-    var subscriptionClickPos = -1
+    var blacklistClickPos = -1
+
+    private var isLoading = false
+    private var nextPage: Int? = 1
 
     inner class BlacklistListPresenter : IBlacklistListPresenter {
-        var traders = mutableListOf<BlacklistItem>()
-        override fun getCount(): Int = traders.size
+        var users = mutableListOf<BlacklistItem>()
+        override fun getCount(): Int = users.size
 
         override fun bind(view: BlacklistItemView) {
-            val traderList = traders[view.pos]
-            val trader = traderList.trader
-            trader.username?.let { username -> view.setTraderName(username) }
-            trader.avatar?.let { avatar -> view.setTraderAvatar(avatar) }
-            view.setTraderProfit(
-                resourceProvider.formatDigitWithDef(
-                    R.string.tv_subscriber_observation_profit_text,
-                    trader.colorIncrDecrDepo365?.value
-                ),
-                resourceProvider.stringColorToIntWithDef(trader.colorIncrDecrDepo365?.color)
-            )
-
-            traderList.status?.let { status ->
-                view.subscribeStatus(status.toInt() != 1)
-            }
-        }
-
-        override fun onItemClick(pos: Int) {
-            val trader = traders[pos]
-            if (trader.trader.id == profile.user!!.id)
-                router.navigateTo(Screens.traderMeMainScreen())
-            else
-                router.navigateTo(Screens.traderMainScreen(trader.trader))
-        }
-
-        private fun reLoadSubscriptions(delayMills: Long = 200) {
-            Handler(Looper.getMainLooper()).postDelayed(
-                {
-                    loadBlacklist()
-                }, delayMills
-            )
+            val blacklistItem = users[view.pos]
+            blacklistItem.userInBlacklistId.let { username -> view.setTraderName(username) }
         }
     }
 
     override fun attachView(view: BlacklistView?) {
         super.attachView(view)
         loadBlacklist()
-        clearSubscriptionClickPos()
+        clearBlacklistClickPos()
     }
 
-    private fun clearSubscriptionClickPos() {
-        subscriptionClickPos = - 1
+    private fun clearBlacklistClickPos() {
+        blacklistClickPos = -1
     }
 
     override fun onFirstViewAttach() {
@@ -92,17 +66,32 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
         apiRepo
             .getBlacklist(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ subscriptions ->
-                val traders = subscriptions.sortedBy { it.status }.reversed()
-                listPresenter.traders.clear()
-                listPresenter.traders.addAll(traders)
-                if (traders.isEmpty()) {
-                    viewState.withoutSubscribeAnyTrader()
-                    return@subscribe
-                }
+            .subscribe({ pag ->
+                listPresenter.users.addAll(pag.results)
                 viewState.updateAdapter()
+                nextPage = pag.next
             }, {
-                it.printStackTrace()
+                // Ошибка не обрабатывается
             })
+    }
+
+    fun onScrollLimit() {
+        if (nextPage != null && !isLoading) {
+            isLoading = true
+            profile.token?.let { token ->
+                apiRepo
+                    .getBlacklist(token, nextPage!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ pag ->
+                        listPresenter.users.addAll(pag.results)
+                        viewState.updateAdapter()
+                        nextPage = pag.next
+                        isLoading = false
+                    }, { t ->
+                        t.printStackTrace()
+                        isLoading = false
+                    })
+            }
+        }
     }
 }

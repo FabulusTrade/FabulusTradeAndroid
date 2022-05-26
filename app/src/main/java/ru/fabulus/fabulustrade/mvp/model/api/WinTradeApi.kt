@@ -388,6 +388,7 @@ interface WinTradeApi {
     ): Single<ResponseUnblockCommentUser>
 
     // добавление в чёрный список
+    @FormUrlEncoded
     @POST("api/v1/trader/blacklist/update/")
     fun addToBlacklist(
         @Header("Authorization") token: String,
@@ -398,5 +399,5 @@ interface WinTradeApi {
     @GET("api/v1/trader/blacklist/")
     fun getBlacklist(
         @Header("Authorization") token: String,
-    ): Single<List<ResponseBlacklistItem>>
+    ): Single<ResponsePagination<ResponseBlacklistItem>>
 }
