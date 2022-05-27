@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_subscriber_observation_ava"
+                android:id="@+id/iv_blacklist_ava"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="16dp"
@@ -31,51 +31,51 @@
                 android:foreground="@drawable/bg_avatar"
                 android:scaleType="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv_subscriber_observation_name"
+                app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/tv_subscriber_observation_name"
+                android:id="@+id/tv_blacklist_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_subscriber_observation_ava"
-                app:layout_constraintEnd_toStartOf="@+id/tv_subscriber_observation_profit"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
+                app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_profit"
                 app:layout_constraintHorizontal_weight="0.4"
-                app:layout_constraintStart_toEndOf="@+id/iv_subscriber_observation_ava"
-                app:layout_constraintTop_toTopOf="@+id/iv_subscriber_observation_ava"
+                app:layout_constraintStart_toEndOf="@+id/iv_blacklist_ava"
+                app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
                 app:layout_constraintVertical_weight="0.1" />
 
             <TextView
-                android:id="@+id/tv_subscriber_observation_profit"
+                android:id="@+id/tv_blacklist_profit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_subscriber_observation_name"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_blacklist_name"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
                 app:layout_constraintHorizontal_weight="0.2"
-                app:layout_constraintStart_toEndOf="@+id/tv_subscriber_observation_name"
-                app:layout_constraintTop_toTopOf="@+id/tv_subscriber_observation_name" />
+                app:layout_constraintStart_toEndOf="@+id/tv_blacklist_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_blacklist_name" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_subscriber_observation_profit"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_blacklist_profit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="0.15"
-                app:layout_constraintStart_toEndOf="@+id/tv_subscriber_observation_profit"
-                app:layout_constraintTop_toTopOf="@+id/tv_subscriber_observation_profit">
+                app:layout_constraintStart_toEndOf="@+id/tv_blacklist_profit"
+                app:layout_constraintTop_toTopOf="@+id/tv_blacklist_profit">
 
                 <CheckBox
 
-                    android:id="@+id/cb_subscriber_observation"
+                    android:id="@+id/cb_blacklist"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:button="@drawable/ic_observe_selector"

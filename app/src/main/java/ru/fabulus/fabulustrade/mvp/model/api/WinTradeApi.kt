@@ -395,9 +395,18 @@ interface WinTradeApi {
         @Field("user_in_blacklist_id") traderID: String
     ): Single<ResponseAddToBlacklist>
 
+    // удаление из чёрного списка
+    @FormUrlEncoded
+    @DELETE("api/v1/trader/blacklist/delete/")
+    fun deleteFromBlacklist(
+        @Header("Authorization") token: String,
+        @Field("user_in_blacklist_id") traderID: String
+    ): Single<ResponseAddToBlacklist>
+
     // получение черного списка
     @GET("api/v1/trader/blacklist/")
     fun getBlacklist(
         @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseBlacklistItem>>
 }

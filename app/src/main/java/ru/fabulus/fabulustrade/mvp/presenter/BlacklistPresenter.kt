@@ -1,11 +1,8 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.os.Handler
-import android.os.Looper
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.BlacklistItem
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
@@ -13,9 +10,6 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IBlacklistListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BlacklistView
 import ru.fabulus.fabulustrade.mvp.view.item.BlacklistItemView
-import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.formatDigitWithDef
-import ru.fabulus.fabulustrade.util.stringColorToIntWithDef
 import javax.inject.Inject
 
 class BlacklistPresenter : MvpPresenter<BlacklistView>() {
@@ -44,6 +38,16 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
         override fun bind(view: BlacklistItemView) {
             val blacklistItem = users[view.pos]
             blacklistItem.userInBlacklistId.let { username -> view.setTraderName(username) }
+        }
+
+        override fun deleteFromBlacklist(traderId: String) {
+            apiRepo.deleteFromBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    viewState.updateAdapter()
+                }, {
+                    it.printStackTrace()
+                })
         }
     }
 

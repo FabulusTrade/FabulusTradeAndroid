@@ -1013,6 +1013,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun deleteFromBlacklist(token: String, traderId: String): Single<ResponseAddToBlacklist> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.deleteFromBlacklist(token, traderId)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun getBlacklist(
         token: String,
         page: Int = 1
@@ -1022,7 +1034,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMap { isOnline ->
                 if (isOnline) {
                     api
-                        .getBlacklist(token)
+                        .getBlacklist(token, page)
                         .flatMap { respPag ->
                             val blacklist = respPag.results.map { blacklistItem ->
                                 mapToBlacklistItem(blacklistItem)
