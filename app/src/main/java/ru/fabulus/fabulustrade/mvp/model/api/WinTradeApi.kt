@@ -397,7 +397,7 @@ interface WinTradeApi {
 
     // удаление из чёрного списка
     @FormUrlEncoded
-    @DELETE("api/v1/trader/blacklist/delete/")
+    @HTTP(method = "DELETE", path = "api/v1/trader/blacklist/update/", hasBody = true)
     fun deleteFromBlacklist(
         @Header("Authorization") token: String,
         @Field("user_in_blacklist_id") traderID: String
