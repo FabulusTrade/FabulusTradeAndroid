@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.graphics.Color
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -37,14 +38,33 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
 
         override fun bind(view: BlacklistItemView) {
             val blacklistItem = users[view.pos]
-            blacklistItem.userInBlacklistId.let { username -> view.setTraderName(username) }
+            blacklistItem.userId.let { id -> view.setTraderId(id) }
+            blacklistItem.username.let { username -> view.setTraderName(username) }
+            blacklistItem.followersCount.let { followersCount ->
+                view.setFollowersCount(
+                    followersCount
+                )
+            }
+            blacklistItem.avatarUrl.let { avatarUrl -> view.setTraderAvatar(avatarUrl) }
+
+            blacklistItem.yearProfit.let { yearProfit ->
+                val textColor =
+                    if (yearProfit >= 0) Color.rgb(0x00, 0x81, 0x34)
+                    else Color.rgb(0xB5, 0x2C, 0x2C)
+                view.setTraderProfit(String.format("%.2f", yearProfit), textColor)
+            }
+
+            blacklistItem.blacklistedAt.let { blacklistedAt ->
+                view.setBlacklistedAt(blacklistedAt)
+            }
         }
 
         override fun deleteFromBlacklist(traderId: String) {
             apiRepo.deleteFromBlacklist(profile.token!!, traderId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ responseAddToBlackList ->
-                    viewState.updateAdapter()
+                    loadBlacklist()
+                    viewState.showMessageDeletedFromBlacklist()
                 }, {
                     it.printStackTrace()
                 })
@@ -71,6 +91,7 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
             .getBlacklist(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ pag ->
+                listPresenter.users.clear()
                 listPresenter.users.addAll(pag.results)
                 viewState.updateAdapter()
                 nextPage = pag.next

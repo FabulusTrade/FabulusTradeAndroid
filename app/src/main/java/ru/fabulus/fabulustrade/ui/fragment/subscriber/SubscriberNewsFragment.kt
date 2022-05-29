@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.subscriber
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentSubscriberNewsBinding
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberNewsPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -35,10 +36,10 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     @InjectPresenter
-    lateinit var presenter: SubscriberPostPresenter
+    lateinit var presenter: SubscriberNewsPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SubscriberPostPresenter().apply {
+    fun providePresenter() = SubscriberNewsPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -121,6 +122,28 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     override fun showToast(msg: String) {
         requireContext().showToast(msg)
+    }
+
+    override fun showMessageSureToAddToBlacklist(traderId: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(getString(R.string.are_you_sure_to_add_to_blacklist))
+                .setPositiveButton(getString(R.string.yes_exclamation)) { dialog, _ ->
+                    dialog.dismiss()
+                    presenter.listPresenter.addToBlacklist(traderId)
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostAddedToBlacklist() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(getString(R.string.added_to_blacklist))
+                .create()
+                .show()
+        }
     }
 
     override fun showComplainSnackBar() {

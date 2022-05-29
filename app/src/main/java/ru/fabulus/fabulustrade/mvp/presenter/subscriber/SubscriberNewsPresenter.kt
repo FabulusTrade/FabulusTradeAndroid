@@ -21,7 +21,7 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
+class SubscriberNewsPresenter : MvpPresenter<SubscriberNewsView>() {
     @Inject
     lateinit var router: Router
 
@@ -42,7 +42,7 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     val listPresenter = TraderRVListPresenter()
 
     companion object {
-        private const val TAG = "SubscriberPostPresenter"
+        private const val TAG = "SubscriberNewsPresenter"
     }
 
     inner class TraderRVListPresenter : PostRVListPresenter {
@@ -314,11 +314,16 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
 
+        override fun askToAddToBlacklist(traderId: String) {
+            viewState.showMessageSureToAddToBlacklist(traderId)
+        }
+
         override fun addToBlacklist(traderId: String) {
             apiRepo.addToBlacklist(profile.token!!, traderId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ responseAddToBlackList ->
-                    viewState.updateAdapter()
+                    reloadPosts()
+                    viewState.showMessagePostAddedToBlacklist()
                 }, {
                     it.printStackTrace()
                 })
@@ -341,6 +346,13 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     }
 
     fun onScrollLimit() {
+        loadPosts()
+    }
+
+    private fun reloadPosts() {
+        nextPage = 1
+        isLoading = false
+        listPresenter.postList.clear()
         loadPosts()
     }
 

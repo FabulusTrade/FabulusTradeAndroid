@@ -30,7 +30,7 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
 
     fun initListeners(binding: ItemBlacklistBinding) {
         binding.tvBlacklistDeleteButton.setOnClickListener() {
-            presenter.deleteFromBlacklist(binding.tvBlacklistName.text.toString())
+            presenter.deleteFromBlacklist(binding.tvTraderId.text.toString())
         }
     }
 
@@ -46,12 +46,24 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
         BlacklistItemView {
         override var pos = -1
 
+        override fun setTraderId(id: String) {
+            binding.tvTraderId.text = id
+        }
+
         override fun setTraderName(name: String) {
             binding.tvBlacklistName.text = name
         }
 
+        override fun setFollowersCount(count: Int) {
+            binding.tvFollowerCounter.text = count.toString()
+        }
+
         override fun setTraderProfit(profit: String, textColor: Int) {
             binding.tvBlacklistProfit.setTextAndColor(profit, textColor)
+        }
+
+        override fun setBlacklistedAt(blacklistedAt: String) {
+            binding.tvBlacklistedAt.text = blacklistedAt
         }
 
         override fun setTraderAvatar(avatar: String?) {

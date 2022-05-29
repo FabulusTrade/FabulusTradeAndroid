@@ -10,6 +10,10 @@ interface BlacklistView : MvpView {
     fun init()
     fun updateAdapter()
     fun withoutSubscribeAnyTrader()
+
     @StateStrategyType(SkipStrategy::class)
     fun showToast(msg: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showMessageDeletedFromBlacklist()
 }

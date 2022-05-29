@@ -19,6 +19,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.snackbar.Snackbar
@@ -142,7 +143,7 @@ fun ResourceProvider.stringColorToIntWithDef(
     colorString?.let { Color.parseColor(colorString) } ?: getColor(defaultColorResourceId)
 
 
-fun TextView.setTextAndColor(textValue: String, color: Int) {
+fun TextView.setTextAndColor(textValue: String, @ColorInt color: Int) {
     text = textValue
     setTextColor(color)
 }

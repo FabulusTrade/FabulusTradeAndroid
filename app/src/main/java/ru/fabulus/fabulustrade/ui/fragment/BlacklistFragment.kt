@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import ru.fabulus.fabulustrade.mvp.view.BlacklistView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.BlacklistRVAdapter
+import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.showLongToast
 import javax.inject.Inject
 
@@ -86,6 +88,15 @@ class BlacklistFragment : MvpAppCompatFragment(), BlacklistView {
 
     override fun showToast(msg: String) {
         requireContext().showLongToast(msg)
+    }
+
+    override fun showMessageDeletedFromBlacklist() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(getString(R.string.deleted_from_blacklist))
+                .create()
+                .show()
+        }
     }
 
     override fun onDestroyView() {

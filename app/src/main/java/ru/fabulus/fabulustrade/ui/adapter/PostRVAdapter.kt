@@ -210,7 +210,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
                             return@setOnMenuItemClickListener true
                         }
                         R.id.mi_add_to_blacklist -> {
-                            presenter.addToBlacklist(post.traderId)
+                            presenter.askToAddToBlacklist(post.traderId)
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false

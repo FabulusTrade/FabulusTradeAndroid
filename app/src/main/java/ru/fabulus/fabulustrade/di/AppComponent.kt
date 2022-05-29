@@ -15,7 +15,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderThir
 import ru.fabulus.fabulustrade.mvp.presenter.service.MessagingPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberMainPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberNewsPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.fabulus.fabulustrade.mvp.presenter.trader.*
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.*
@@ -23,7 +23,6 @@ import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersFilterPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersMainPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
-import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.activity.MainActivity
 import ru.fabulus.fabulustrade.ui.activity.SplashActivity
@@ -101,7 +100,7 @@ interface AppComponent {
     fun inject(subscriberTradeFragment: SubscriberTradeFragment)
     fun inject(subscriberTradePresenter: SubscriberTradePresenter)
     fun inject(subscriberNewsFragment: SubscriberNewsFragment)
-    fun inject(subscriberPostPresenter: SubscriberPostPresenter)
+    fun inject(subscriberNewsPresenter: SubscriberNewsPresenter)
     fun inject(tradeDetailFragment: TradeDetailFragment)
     fun inject(tradeDetailPresenter: TradeDetailPresenter)
     fun inject(companyTradingOperationsFragment: CompanyTradingOperationsFragment)

@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.util
 
+import com.google.gson.annotations.Expose
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -104,7 +105,12 @@ fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
 )
 
 fun mapToBlacklistItem(responseBlacklistItem: ResponseBlacklistItem) = BlacklistItem(
-    responseBlacklistItem.user_in_blacklist_id
+    responseBlacklistItem.user_id,
+    responseBlacklistItem.username,
+    responseBlacklistItem.avatar_url,
+    responseBlacklistItem.blacklisted_at,
+    responseBlacklistItem.year_profit,
+    responseBlacklistItem.followers_count
 )
 
 fun mapToTrade(trade: ResponseTrade): Trade {
@@ -290,6 +296,10 @@ fun mapToResultBlockUserComment(responseBlockCommentUser: ResponseBlockCommentUs
 
 fun mapToResultUnblockUserComment(responseUnblockCommentUser: ResponseUnblockCommentUser): ResultUnblockUserComment {
     return ResultUnblockUserComment(responseUnblockCommentUser.result)
+}
+
+fun mapToResultAddToBlacklist(responseAddToBlacklist: ResponseAddToBlacklist): ResultAddToBlacklist {
+    return ResultAddToBlacklist(responseAddToBlacklist.result)
 }
 
 fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {

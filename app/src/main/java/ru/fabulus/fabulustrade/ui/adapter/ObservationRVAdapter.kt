@@ -36,7 +36,7 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
             presenter.onItemClick(holder.bindingAdapterPosition)
         }
 
-        holder.itemView.cb_blacklist.setOnClickListener {
+        holder.itemView.cb_subscriber_observation.setOnClickListener {
             presenter.deleteObservation(holder.bindingAdapterPosition)
             val context = holder.itemView.context
             context.showLongToast(context.resources.getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
@@ -54,23 +54,23 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         override var pos = -1
 
         override fun setTraderName(name: String) {
-            itemView.tv_blacklist_name.text = name
+            itemView.tv_subscriber_observation_name.text = name
         }
 
         override fun setTraderProfit(profit: String, textColor: Int) {
-            itemView.tv_blacklist_profit.setTextAndColor(profit, textColor)
+            itemView.tv_subscriber_observation_profit.setTextAndColor(profit, textColor)
         }
 
         override fun setTraderAvatar(avatar: String?) {
-            avatar?.let { loadImage(it, itemView.iv_blacklist_ava) }
+            avatar?.let { loadImage(it, itemView.iv_subcsriber_observation_ava) }
         }
 
         override fun subscribeStatus(isSubscribe: Boolean) {
             if (isSubscribe) {
-                itemView.cb_blacklist.visibility = View.GONE
+                itemView.cb_subscriber_observation.visibility = View.GONE
                 itemView.tv_subscriber_observation_is_subscribe.visibility = View.VISIBLE
             } else {
-                with(itemView.cb_blacklist) {
+                with(itemView.cb_subscriber_observation) {
                     visibility = View.VISIBLE
                     isChecked = true
                 }

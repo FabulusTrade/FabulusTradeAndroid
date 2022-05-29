@@ -322,8 +322,18 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             router.navigateTo(Screens.postDetailFragment(posts[view.pos]))
         }
 
+        override fun askToAddToBlacklist(traderId: String) {
+            viewState.showMessageSureToAddToBlacklist(traderId)
+        }
+
         override fun addToBlacklist(traderId: String) {
-            TODO("Not yet implemented")
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    viewState.showMessagePostAddedToBlacklist()
+                }, {
+                    it.printStackTrace()
+                })
         }
     }
 
