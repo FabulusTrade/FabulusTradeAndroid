@@ -14,8 +14,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderSeco
 import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.service.MessagingPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberMainPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberNewsPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.fabulus.fabulustrade.mvp.presenter.trader.*
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.*

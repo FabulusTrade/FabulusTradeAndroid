@@ -1,9 +1,9 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
-import com.github.terrakok.cicerone.Router
 import ru.fabulus.fabulustrade.mvp.model.firebase.FirebaseAuth
 import ru.fabulus.fabulustrade.mvp.view.SmsConfirmView
 import javax.inject.Inject

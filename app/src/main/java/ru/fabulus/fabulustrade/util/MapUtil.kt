@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.util
 
-import com.google.gson.annotations.Expose
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody

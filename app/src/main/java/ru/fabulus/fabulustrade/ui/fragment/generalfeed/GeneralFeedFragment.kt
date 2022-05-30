@@ -22,6 +22,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.*
 
 
@@ -47,7 +48,7 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
             presenter.listPresenter.incRepostCount()
         }
 
-    private var postRVAdapter: PostRVAdapter? = null
+    private var postRVAdapter: PostWithBlacklistRVAdapter? = null
 
     override fun init() {
         initView()
@@ -132,7 +133,7 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
 
     private fun initRecyclerView() {
         binding.rvGeneralFeed.run {
-            postRVAdapter = PostRVAdapter(presenter.listPresenter)
+            postRVAdapter = PostWithBlacklistRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(

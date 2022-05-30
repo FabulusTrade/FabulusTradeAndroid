@@ -15,7 +15,7 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostWithBlacklistRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -39,7 +39,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    val listPresenter = TraderRVListPresenter()
+    val listPresenter = TraderRVListPresenterI()
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
@@ -47,7 +47,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         private const val TAG = "TraderPostPresenter"
     }
 
-    inner class TraderRVListPresenter : PostRVListPresenter {
+    inner class TraderRVListPresenterI : IPostWithBlacklistRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
         private var sharedView: PostItemView? = null

@@ -12,8 +12,8 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.ItemTraderNewsBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
@@ -25,13 +25,15 @@ import ru.fabulus.fabulustrade.util.visibilityByCondition
 import java.util.*
 import javax.inject.Inject
 
-class PostRVAdapter(private val presenter: PostRVListPresenter) :
+open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
 
     companion object {
         const val MAX_LINES = 5000
         const val MIN_LINES = 3
     }
+
+    lateinit var binding: ItemTraderNewsBinding
 
     @Inject
     lateinit var router: Router
@@ -41,7 +43,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding =
+        binding =
             ItemTraderNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = PostViewHolder(binding)
         initListeners(binding, holder)
@@ -77,7 +79,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
             btnItemTraderNewsShowComments.setOnClickListener {
                 presenter.showCommentDetails(holder)
             }
-            if (presenter is TraderMePostRVListPresenter) {
+            if (presenter is ITraderMePostRVListPresenter) {
                 incItemPostHeader.ivFlash.setOnClickListener {
                     presenter.toFlash(holder)
                 }
@@ -209,10 +211,6 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
                             presenter.copyPost(post)
                             return@setOnMenuItemClickListener true
                         }
-                        R.id.mi_add_to_blacklist -> {
-                            presenter.askToAddToBlacklist(post.traderId)
-                            return@setOnMenuItemClickListener true
-                        }
                         else -> return@setOnMenuItemClickListener false
                     }
                 }
@@ -283,4 +281,6 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
             imageLoader.clear()
         }
     }
+
+    open fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>) {}
 }

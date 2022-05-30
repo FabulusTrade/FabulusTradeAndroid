@@ -18,7 +18,6 @@ import ru.fabulus.fabulustrade.mvp.view.BlacklistView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.BlacklistRVAdapter
-import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.showLongToast
 import javax.inject.Inject
 

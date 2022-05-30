@@ -4,7 +4,7 @@ import android.widget.ImageView
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 
-interface PostRVListPresenter {
+interface IPostRVListPresenter {
     fun getCount(): Int
     fun bind(view: PostItemView)
     fun postLiked(view: PostItemView)
@@ -15,8 +15,6 @@ interface PostRVListPresenter {
     fun complainOnPost(post: Post, complaintId: Int)
     fun setPublicationTextMaxLines(view: PostItemView)
     fun showCommentDetails(view: PostItemView)
-    fun askToAddToBlacklist(traderId: String)
-    fun addToBlacklist(traderId: String)
     fun share(view: PostItemView, imageViewIdList: List<ImageView>)
     fun incRepostCount()
 }
