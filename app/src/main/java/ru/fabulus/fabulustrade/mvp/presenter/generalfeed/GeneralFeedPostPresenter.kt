@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter.generalfeed
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
@@ -23,13 +24,19 @@ class GeneralFeedPostPresenter : TraderMePostPresenter() {
 
     inner class GeneralFeedRVListPresenter: TraderMePostPresenter.TraderMeRVListPresenter(), IPostWithBlacklistRVListPresenter {
         override fun askToAddToBlacklist(traderId: String) {
-            TODO("Not yet implemented")
+            viewState.showMessageSureToAddToBlacklist(traderId)
         }
 
         override fun addToBlacklist(traderId: String) {
-            TODO("Not yet implemented")
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    reloadPosts()
+                    viewState.showMessagePostAddedToBlacklist()
+                }, {
+                    it.printStackTrace()
+                })
         }
-
     }
 
     override val listPresenter = GeneralFeedRVListPresenter()

@@ -354,6 +354,25 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
+        override fun askToAddToBlacklist(traderId: String) {
+            viewState.showMessageSureToAddToBlacklist(traderId)
+        }
+
+        override fun addToBlacklist(traderId: String) {
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    reloadPosts()
+                    viewState.showMessagePostAddedToBlacklist()
+                }, {
+                    it.printStackTrace()
+                })
+        }
+
+        fun reloadPosts() {
+            loadPosts(true)
+        }
+
         private fun completeFlashing(
             post: Post,
             view: PostItemView

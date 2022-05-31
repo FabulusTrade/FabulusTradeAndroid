@@ -16,12 +16,12 @@ import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostWithBlacklistRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
+import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class SubscriberNewsPresenter : MvpPresenter<SubscriberNewsView>() {
+class SubscriberPostPresenter : MvpPresenter<SubscriberPostView>() {
     @Inject
     lateinit var router: Router
 

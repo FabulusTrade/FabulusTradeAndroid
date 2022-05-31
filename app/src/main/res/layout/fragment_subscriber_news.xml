@@ -5,24 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/cl_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:background="@color/colorWhite"
         android:elevation="@dimen/cl_buttons_elevation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/iv_flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_flash_grey"
+            app:tint="@color/colorGreen_27"
+            tools:visibility="visible" />
+
         <ImageButton
             android:id="@+id/ib_open_blacklist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/ic_blacklist" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

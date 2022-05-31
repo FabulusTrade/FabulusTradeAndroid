@@ -88,6 +88,18 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
 
     override fun getItemCount(): Int = presenter.getCount()
 
+    open fun setPopupMenuForSomeone(post: Post, popupMenu: PopupMenu) {
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.mi_copy_post_text -> {
+                    presenter.copyPost(post)
+                    return@setOnMenuItemClickListener true
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
+        }
+    }
+
     inner class PostViewHolder(private val binding: ItemTraderNewsBinding) :
         RecyclerView.ViewHolder(binding.root),
         PostItemView {
@@ -204,16 +216,7 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
                         }
                 }
 
-
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.mi_copy_post_text -> {
-                            presenter.copyPost(post)
-                            return@setOnMenuItemClickListener true
-                        }
-                        else -> return@setOnMenuItemClickListener false
-                    }
-                }
+                setPopupMenuForSomeone(post, popupMenu)
 
                 popupMenu.show()
             }
@@ -281,6 +284,4 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
             imageLoader.clear()
         }
     }
-
-    open fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>) {}
 }

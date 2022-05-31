@@ -21,6 +21,7 @@ import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
@@ -134,12 +135,7 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
     }
 
     override fun showMessagePostAddedToBlacklist() {
-        context?.let {
-            AlertDialog.Builder(it)
-                .setMessage(getString(R.string.added_to_blacklist))
-                .create()
-                .show()
-        }
+        requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
     }
 
     override fun share(shareIntent: Intent) {

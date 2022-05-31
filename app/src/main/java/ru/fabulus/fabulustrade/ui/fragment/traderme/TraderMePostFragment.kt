@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
@@ -19,11 +20,14 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTraderMePostsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
+import javax.inject.Inject
 
 class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButtonListener {
     private var _binding: FragmentTraderMePostsBinding? = null
@@ -42,7 +46,10 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         App.instance.appComponent.inject(this)
     }
 
-    private var postRVAdapter: PostRVAdapter? = null
+    @Inject
+    lateinit var router: Router
+
+    private var postRVAdapter: PostWithBlacklistRVAdapter? = null
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -55,6 +62,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTraderMePostsBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
         return _binding?.root
     }
 
@@ -77,12 +85,15 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
             ivFlash.setOnClickListener {
                 presenter.flashedPostsBtnClicked()
             }
+            ibOpenBlacklist.setOnClickListener {
+                router.navigateTo(Screens.blacklistScreen())
+            }
         }
     }
 
     private fun initRecyclerView() {
         binding.rvTraderMePost.run {
-            postRVAdapter = PostRVAdapter(presenter.listPresenter)
+            postRVAdapter = PostWithBlacklistRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(
@@ -100,6 +111,28 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
                     }
                 }
             )
+        }
+    }
+
+    override fun showMessageSureToAddToBlacklist(traderId: String) {
+        context?.let {
+            android.app.AlertDialog.Builder(it)
+                .setMessage(getString(R.string.are_you_sure_to_add_to_blacklist))
+                .setPositiveButton(getString(R.string.yes_exclamation)) { dialog, _ ->
+                    dialog.dismiss()
+                    presenter.listPresenter.addToBlacklist(traderId)
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostAddedToBlacklist() {
+        context?.let {
+            android.app.AlertDialog.Builder(it)
+                .setMessage(getString(R.string.added_to_blacklist))
+                .create()
+                .show()
         }
     }
 

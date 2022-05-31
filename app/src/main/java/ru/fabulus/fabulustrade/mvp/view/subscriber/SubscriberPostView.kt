@@ -7,7 +7,7 @@ import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndStrategy::class)
-interface SubscriberNewsView : MvpView {
+interface SubscriberPostView : MvpView {
     fun init()
     fun updateAdapter()
     fun withoutSubscribeAnyTrader()

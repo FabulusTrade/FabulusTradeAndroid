@@ -22,23 +22,11 @@
             android:layout_height="36dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:backgroundTint="@color/colorLightGreen"
             android:text="@string/publication"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
-
-        <ImageView
-            android:id="@+id/iv_flash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:visibility="visible"
-            android:layout_weight="1"
-            android:layout_marginTop="6dp"
-            app:srcCompat="@drawable/ic_flash_grey"
-            app:tint="@color/colorGreen_27"
-            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_trader_news_subscription"
@@ -47,12 +35,32 @@
             android:layout_height="36dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:text="@string/subscription"
             android:textColor="@color/colorGray"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
+        <ImageView
+            android:id="@+id/iv_flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_flash_grey"
+            app:tint="@color/colorGreen_27"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/ib_open_blacklist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_blacklist" />
     </LinearLayout>
 
     <LinearLayout

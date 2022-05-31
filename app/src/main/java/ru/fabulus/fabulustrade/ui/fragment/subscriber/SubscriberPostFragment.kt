@@ -16,37 +16,38 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentSubscriberNewsBinding
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberNewsPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
+import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
-class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
+class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
     private var _binding: FragmentSubscriberNewsBinding? = null
     private val binding: FragmentSubscriberNewsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SubscriberNewsFragment()
+        fun newInstance() = SubscriberPostFragment()
     }
 
     @InjectPresenter
-    lateinit var presenter: SubscriberNewsPresenter
+    lateinit var presenter: SubscriberPostPresenter
 
     @ProvidePresenter
-    fun providePresenter() = SubscriberNewsPresenter().apply {
+    fun providePresenter() = SubscriberPostPresenter().apply {
         App.instance.appComponent.inject(this)
     }
 
     @Inject
     lateinit var router: Router
 
-    private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
+    private val postRVAdapter: PostWithBlacklistRVAdapter by lazy { PostWithBlacklistRVAdapter(presenter.listPresenter) }
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -93,7 +94,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
                     }
                 }
             )
-
         }
     }
 
@@ -138,12 +138,7 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     }
 
     override fun showMessagePostAddedToBlacklist() {
-        context?.let {
-            AlertDialog.Builder(it)
-                .setMessage(getString(R.string.added_to_blacklist))
-                .create()
-                .show()
-        }
+        requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
     }
 
     override fun showComplainSnackBar() {

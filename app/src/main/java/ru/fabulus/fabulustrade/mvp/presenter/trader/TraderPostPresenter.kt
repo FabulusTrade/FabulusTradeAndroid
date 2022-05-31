@@ -39,7 +39,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    val listPresenter = TraderRVListPresenterI()
+    val listPresenter = TraderRVListPresenter()
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
 
@@ -47,7 +47,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         private const val TAG = "TraderPostPresenter"
     }
 
-    inner class TraderRVListPresenterI : IPostWithBlacklistRVListPresenter {
+    inner class TraderRVListPresenter : IPostWithBlacklistRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
         private var sharedView: PostItemView? = null

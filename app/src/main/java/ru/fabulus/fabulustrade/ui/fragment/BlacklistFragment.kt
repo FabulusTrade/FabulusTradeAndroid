@@ -90,12 +90,7 @@ class BlacklistFragment : MvpAppCompatFragment(), BlacklistView {
     }
 
     override fun showMessageDeletedFromBlacklist() {
-        context?.let {
-            AlertDialog.Builder(it)
-                .setMessage(getString(R.string.deleted_from_blacklist))
-                .create()
-                .show()
-        }
+        requireContext().showLongToast(resources.getString(R.string.deleted_from_blacklist))
     }
 
     override fun onDestroyView() {

@@ -28,4 +28,10 @@ interface TraderMePostView : MvpView {
     fun showQuestionToFlashDialog(onClickYes: () -> Unit)
     @StateStrategyType(SkipStrategy::class)
     fun showMessagePostIsFlashed()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showMessageSureToAddToBlacklist(traderId: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showMessagePostAddedToBlacklist()
 }
