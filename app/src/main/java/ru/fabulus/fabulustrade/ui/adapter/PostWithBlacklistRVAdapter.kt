@@ -22,4 +22,8 @@ class PostWithBlacklistRVAdapter(private val presenter: IPostWithBlacklistRVList
             }
         }
     }
+
+    override fun inflateMenu(popupMenu: PopupMenu) {
+        popupMenu.inflate(R.menu.menu_someone_post_with_blacklist)
+    }
 }

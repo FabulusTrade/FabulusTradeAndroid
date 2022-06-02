@@ -15,7 +15,7 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostWithBlacklistRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -47,7 +47,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         private const val TAG = "TraderPostPresenter"
     }
 
-    inner class TraderRVListPresenter : IPostWithBlacklistRVListPresenter {
+    inner class TraderRVListPresenter : IPostRVListPresenter {
         val posts = mutableListOf<Post>()
         private val tag = "TraderPostPresenter"
         private var sharedView: PostItemView? = null
@@ -320,20 +320,6 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                     removePostAt(view.pos)
                 }
             router.navigateTo(Screens.postDetailFragment(posts[view.pos]))
-        }
-
-        override fun askToAddToBlacklist(traderId: String) {
-            viewState.showMessageSureToAddToBlacklist(traderId)
-        }
-
-        override fun addToBlacklist(traderId: String) {
-            apiRepo.addToBlacklist(profile.token!!, traderId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ responseAddToBlackList ->
-                    viewState.showMessagePostAddedToBlacklist()
-                }, {
-                    it.printStackTrace()
-                })
         }
     }
 

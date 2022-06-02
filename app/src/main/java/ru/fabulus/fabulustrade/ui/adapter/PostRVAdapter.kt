@@ -88,6 +88,10 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
 
     override fun getItemCount(): Int = presenter.getCount()
 
+    open fun inflateMenu(popupMenu: PopupMenu) {
+        popupMenu.inflate(R.menu.menu_someone_post)
+    }
+
     open fun setPopupMenuForSomeone(post: Post, popupMenu: PopupMenu) {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -205,8 +209,7 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
         override fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>) {
             binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
                 val popupMenu = PopupMenu(itemView.context, btn)
-                popupMenu.inflate(R.menu.menu_someone_post)
-
+                inflateMenu(popupMenu)
                 val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
                 complaintList.forEach { complaint ->
                     complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)

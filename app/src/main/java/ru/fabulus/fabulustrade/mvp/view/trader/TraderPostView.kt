@@ -13,12 +13,6 @@ interface TraderPostView : MvpView {
     fun isAuthorized(isAuth: Boolean)
 
     @StateStrategyType(SkipStrategy::class)
-    fun showMessageSureToAddToBlacklist(traderId: String)
-
-    @StateStrategyType(SkipStrategy::class)
-    fun showMessagePostAddedToBlacklist()
-
-    @StateStrategyType(SkipStrategy::class)
     fun share(shareIntent: Intent)
 
     @StateStrategyType(SkipStrategy::class)

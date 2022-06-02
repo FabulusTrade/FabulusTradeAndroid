@@ -26,6 +26,7 @@ import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
 import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
@@ -130,9 +131,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
     override fun showMessagePostAddedToBlacklist() {
         context?.let {
             android.app.AlertDialog.Builder(it)
-                .setMessage(getString(R.string.added_to_blacklist))
-                .create()
-                .show()
+            requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
         }
     }
 

@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.ui.fragment.trader
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +20,6 @@ import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
-import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
@@ -119,23 +117,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
                 layoutPostsNotAuth.layoutTraderPostNotAuth.visibility = View.GONE
             }
         }
-    }
-
-    override fun showMessageSureToAddToBlacklist(traderId: String) {
-        context?.let {
-            AlertDialog.Builder(it)
-                .setMessage(getString(R.string.are_you_sure_to_add_to_blacklist))
-                .setPositiveButton(getString(R.string.yes_exclamation)) { dialog, _ ->
-                    dialog.dismiss()
-                    presenter.listPresenter.addToBlacklist(traderId)
-                }
-                .create()
-                .show()
-        }
-    }
-
-    override fun showMessagePostAddedToBlacklist() {
-        requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
     }
 
     override fun share(shareIntent: Intent) {
