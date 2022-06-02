@@ -52,6 +52,10 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
                     if (yearProfit >= 0) Color.rgb(0x00, 0x81, 0x34)
                     else Color.rgb(0xB5, 0x2C, 0x2C)
                 view.setTraderProfit(String.format("%.2f%%", yearProfit), textColor)
+                if (yearProfit >= 0)
+                    view.setProfitPositiveArrow()
+                else
+                    view.setProfitNegativeArrow()
             }
 
             blacklistItem.blacklistedAt.let { blacklistedAt ->

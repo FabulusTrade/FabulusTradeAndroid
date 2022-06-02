@@ -78,9 +78,21 @@
         app:layout_constraintStart_toEndOf="@+id/tv_blacklist_name"
         app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava" />
 
+    <ImageView
+        android:id="@+id/iv_profit_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/iv_profit_arrow_margin_end"
+        android:contentDescription="@string/iv_profit_arrow_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
+        app:layout_constraintStart_toEndOf="@+id/tv_blacklist_profit"
+        app:layout_constraintEnd_toStartOf="@+id/tv_follower_counter"
+        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
+        tools:srcCompat="@drawable/ic_profit_arrow_down" />
+
     <TextView
         android:id="@+id/tv_follower_counter"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -93,15 +105,26 @@
 
     <ImageView
         android:id="@+id/iv_followers"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tv_blacklist_delete_button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
+        app:layout_constraintEnd_toStartOf="@+id/tv_space_no_text"
         app:layout_constraintHorizontal_weight="0.2"
         app:layout_constraintStart_toEndOf="@+id/tv_follower_counter"
         app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
-        app:srcCompat="@drawable/ic_person_add"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_person_add" />
+
+    <TextView
+        android:id="@+id/tv_space_no_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toEndOf="@+id/iv_followers"
+        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
+        app:srcCompat="@drawable/ic_person_add" />
 
     <TextView
         android:id="@+id/tv_blacklist_delete_button"
@@ -109,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Удалить из черного списка"
+        android:text="@string/delete_from_blacklist"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
