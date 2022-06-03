@@ -38,7 +38,6 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
 
         override fun bind(view: BlacklistItemView) {
             val blacklistItem = users[view.pos]
-            blacklistItem.userId.let { id -> view.setTraderId(id) }
             blacklistItem.username.let { username -> view.setTraderName(username) }
             blacklistItem.followersCount.let { followersCount ->
                 view.setFollowersCount(
@@ -63,8 +62,8 @@ class BlacklistPresenter : MvpPresenter<BlacklistView>() {
             }
         }
 
-        override fun deleteFromBlacklist(traderId: String) {
-            apiRepo.deleteFromBlacklist(profile.token!!, traderId)
+        override fun deleteFromBlacklist(pos: Int) {
+            apiRepo.deleteFromBlacklist(profile.token!!, users[pos].userId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ responseAddToBlackList ->
                     loadBlacklist()

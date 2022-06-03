@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.ui.adapter
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.ItemBlacklistBinding
@@ -29,14 +30,7 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
         val binding =
             ItemBlacklistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = BlacklistItemViewHolder(binding)
-        initListeners(binding)
         return holder
-    }
-
-    fun initListeners(binding: ItemBlacklistBinding) {
-        binding.tvBlacklistDeleteButton.setOnClickListener() {
-            presenter.deleteFromBlacklist(binding.tvTraderId.text.toString())
-        }
     }
 
     override fun onBindViewHolder(holder: BlacklistItemViewHolder, position: Int) {
@@ -51,8 +45,12 @@ class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :
         BlacklistItemView {
         override var pos = -1
 
-        override fun setTraderId(id: String) {
-            binding.tvTraderId.text = id
+        val tvBlacklistDeleteButton: TextView = itemView.findViewById(R.id.tv_blacklist_delete_button)
+
+        init {
+            tvBlacklistDeleteButton.setOnClickListener {
+                presenter.deleteFromBlacklist(bindingAdapterPosition)
+            }
         }
 
         override fun setTraderName(name: String) {

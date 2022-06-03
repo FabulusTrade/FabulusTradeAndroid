@@ -5,78 +5,54 @@
     android:id="@+id/layout_traders_signed_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <ImageView
         android:id="@+id/iv_blacklist_ava"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="@dimen/iv_author_avatar_layout_width"
+        android:layout_height="@dimen/iv_author_avatar_layout_height"
+        android:layout_marginTop="@dimen/iv_author_avatar_margin_top"
+        android:contentDescription="@string/iv_author_avatar_content_description"
         android:foreground="@drawable/bg_avatar"
         android:scaleType="center"
-        app:layout_constraintBottom_toTopOf="@+id/tv_blacklist_delete_button"
-        app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tv_blacklist_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
+        android:layout_marginStart="@dimen/tv_author_name_margin_start"
+        android:layout_marginTop="@dimen/tv_author_name_margin_top"
         android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@+id/tv_blacklisted_at"
-        app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_profit"
-        app:layout_constraintHorizontal_weight="0.4"
+        android:textSize="@dimen/tv_author_name_text_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iv_blacklist_ava"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
-        app:layout_constraintVertical_weight="0.1" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Author Avatar" />
 
     <TextView
         android:id="@+id/tv_blacklisted_at"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_profit"
-        app:layout_constraintHorizontal_weight="0.4"
+        android:layout_marginStart="@dimen/tv_date_margin_start"
+        android:layout_marginTop="@dimen/tv_date_margin_top"
+        android:textSize="@dimen/tv_date_text_size"
         app:layout_constraintStart_toEndOf="@+id/iv_blacklist_ava"
         app:layout_constraintTop_toBottomOf="@+id/tv_blacklist_name"
-        app:layout_constraintVertical_weight="0.1" />
-
-    <TextView
-        android:id="@+id/tv_trader_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintEnd_toStartOf="@+id/tv_blacklist_profit"
-        app:layout_constraintHorizontal_weight="0.4"
-        app:layout_constraintStart_toEndOf="@+id/iv_blacklist_ava"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
-        app:layout_constraintVertical_weight="0.1" />
+        tools:text="19.03.2021 11:10" />
 
     <TextView
         android:id="@+id/tv_blacklist_profit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
+        android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
+        android:textColor="#FF7878"
+        android:textSize="@dimen/iv_profit_percent_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintEnd_toStartOf="@+id/tv_follower_counter"
-        app:layout_constraintHorizontal_weight="0.2"
-        app:layout_constraintStart_toEndOf="@+id/tv_blacklist_name"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_profit_arrow"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="-63%" />
 
     <ImageView
         android:id="@+id/iv_profit_arrow"
@@ -85,45 +61,32 @@
         android:layout_marginEnd="@dimen/iv_profit_arrow_margin_end"
         android:contentDescription="@string/iv_profit_arrow_content_description"
         app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintStart_toEndOf="@+id/tv_blacklist_profit"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_follower_counter"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_profit_arrow_down" />
 
     <TextView
         android:id="@+id/tv_follower_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintEnd_toStartOf="@+id/iv_followers"
-        app:layout_constraintHorizontal_weight="0.2"
-        app:layout_constraintStart_toEndOf="@+id/tv_blacklist_profit"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava" />
-
-    <ImageView
-        android:id="@+id/iv_followers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="TODO"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
-        app:layout_constraintEnd_toStartOf="@+id/tv_space_no_text"
-        app:layout_constraintHorizontal_weight="0.2"
-        app:layout_constraintStart_toEndOf="@+id/tv_follower_counter"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
-        app:srcCompat="@drawable/ic_person_add" />
-
-    <TextView
-        android:id="@+id/tv_space_no_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/tv_author_follower_count_margin_end"
+        android:textSize="@dimen/tv_author_name_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="0.2"
-        app:layout_constraintStart_toEndOf="@+id/iv_followers"
-        app:layout_constraintTop_toTopOf="@+id/iv_blacklist_ava"
+        app:layout_constraintEnd_toStartOf="@+id/iv_person_add"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="47" />
+
+    <ImageView
+        android:id="@+id/iv_person_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/iv_person_add_margin_end"
+        android:contentDescription="@string/iv_person_add_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_blacklist_ava"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_person_add" />
 
     <TextView
