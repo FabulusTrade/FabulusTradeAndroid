@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -20,9 +21,12 @@ import ru.fabulus.fabulustrade.databinding.FragmentGeneralFeedBinding
 import ru.fabulus.fabulustrade.mvp.presenter.generalfeed.GeneralFeedPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.*
+import javax.inject.Inject
 
 
 class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
@@ -42,12 +46,15 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
         App.instance.appComponent.inject(this)
     }
 
+    @Inject
+    lateinit var router: Router
+
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             presenter.listPresenter.incRepostCount()
         }
 
-    private var postRVAdapter: PostRVAdapter? = null
+    private var postRVAdapter: PostWithBlacklistRVAdapter? = null
 
     override fun init() {
         initView()
@@ -71,6 +78,10 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
                 presenter.openSignUpScreen()
             }
         }
+        binding.ibOpenBlacklist.setOnClickListener {
+            router.navigateTo(Screens.blacklistScreen())
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -130,9 +141,26 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
         }
     }
 
+    override fun showMessageSureToAddToBlacklist(traderId: String) {
+        context?.let {
+            android.app.AlertDialog.Builder(it)
+                .setMessage(getString(R.string.are_you_sure_to_add_to_blacklist))
+                .setPositiveButton(getString(R.string.yes_exclamation)) { dialog, _ ->
+                    dialog.dismiss()
+                    presenter.listPresenter.addToBlacklist(traderId)
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostAddedToBlacklist() {
+        requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
+    }
+
     private fun initRecyclerView() {
         binding.rvGeneralFeed.run {
-            postRVAdapter = PostRVAdapter(presenter.listPresenter)
+            postRVAdapter = PostWithBlacklistRVAdapter(presenter.listPresenter)
             adapter = postRVAdapter
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(
@@ -158,6 +186,7 @@ class GeneralFeedFragment : MvpAppCompatFragment(), TraderMePostView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentGeneralFeedBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
         return _binding?.root
     }
 

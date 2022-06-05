@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment.subscriber
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,21 +18,22 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentSubscriberNewsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
+import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.ui.adapter.PostRVAdapter
+import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
 import ru.fabulus.fabulustrade.util.showCustomSnackbar
+import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
-class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
+class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
     private var _binding: FragmentSubscriberNewsBinding? = null
     private val binding: FragmentSubscriberNewsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     companion object {
-        fun newInstance() = SubscriberNewsFragment()
+        fun newInstance() = SubscriberPostFragment()
     }
 
     @InjectPresenter
@@ -45,7 +47,7 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
     @Inject
     lateinit var router: Router
 
-    private val postRVAdapter: PostRVAdapter by lazy { PostRVAdapter(presenter.listPresenter) }
+    private val postRVAdapter: PostWithBlacklistRVAdapter by lazy { PostWithBlacklistRVAdapter(presenter.listPresenter) }
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -92,7 +94,6 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
                     }
                 }
             )
-
         }
     }
 
@@ -100,6 +101,9 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
         with(binding) {
             layoutHasNoSubs.tvChooseSubscribe.setOnClickListener {
                 router.navigateTo(Screens.tradersAllScreen(TradersAllPresenter.DEFAULT_FILTER))
+            }
+            ibOpenBlacklist.setOnClickListener {
+                router.navigateTo(Screens.blacklistScreen())
             }
         }
     }
@@ -118,6 +122,23 @@ class SubscriberNewsFragment : MvpAppCompatFragment(), SubscriberNewsView {
 
     override fun showToast(msg: String) {
         requireContext().showToast(msg)
+    }
+
+    override fun showMessageSureToAddToBlacklist(traderId: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage(getString(R.string.are_you_sure_to_add_to_blacklist))
+                .setPositiveButton(getString(R.string.yes_exclamation)) { dialog, _ ->
+                    dialog.dismiss()
+                    presenter.listPresenter.addToBlacklist(traderId)
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun showMessagePostAddedToBlacklist() {
+        requireContext().showLongToast(resources.getString(R.string.added_to_blacklist))
     }
 
     override fun showComplainSnackBar() {

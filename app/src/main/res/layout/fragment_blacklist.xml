@@ -1,55 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_buttons"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:elevation="@dimen/cl_buttons_elevation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_flash"
+            android:id="@+id/iv_blacklist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_flash_grey"
-            app:tint="@color/colorGreen_27"
-            tools:visibility="visible" />
-
-        <ImageButton
-            android:id="@+id/ib_open_blacklist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/padding_very_low"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_blacklist" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sub_obs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_buttons"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="1dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_subscriber_news"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/cl_buttons" />
 
     <include
         android:id="@+id/layout_hasNoSubs"

@@ -1,7 +1,7 @@
 package ru.fabulus.fabulustrade.mvp.presenter.trader
 
-import moxy.MvpPresenter
 import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPopularInstrumentsView
 import ru.fabulus.fabulustrade.navigation.Screens

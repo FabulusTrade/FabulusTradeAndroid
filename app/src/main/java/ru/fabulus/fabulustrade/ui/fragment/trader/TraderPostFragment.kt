@@ -119,8 +119,6 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         }
     }
 
-
-
     override fun share(shareIntent: Intent) {
         resultLauncher.launch(shareIntent)
     }

@@ -21,10 +21,17 @@
     <dimen name="text_size_low">16sp</dimen>
     <dimen name="text_size_medium">22sp</dimen>
 
+    <dimen name="padding_very_low">8dp</dimen>
+
     <dimen name="margin_top_very_low">8dp</dimen>
     <dimen name="margin_top_low">15dp</dimen>
     <dimen name="margin_top_medium">25dp</dimen>
     <dimen name="margin_top_extra">56dp</dimen>
+
+    <dimen name="margin_bottom_very_low">8dp</dimen>
+    <dimen name="margin_bottom_low">15dp</dimen>
+    <dimen name="margin_bottom_medium">25dp</dimen>
+    <dimen name="margin_bottom_extra">56dp</dimen>
 
     <dimen name="margin_start_low">8dp</dimen>
     <dimen name="margin_start_medium">15dp</dimen>
@@ -168,4 +175,5 @@
     <dimen name="view_item_comp_trading_ops_journal_list_divider_layout_height">2dp</dimen>
     <dimen name="view_item_comp_trading_ops_journal_list_divider_margin_top">10dp</dimen>
     <dimen name="view_item_comp_trading_ops_journal_operation_type_width">80dp</dimen>
+    <dimen name="cl_buttons_elevation">4dp</dimen>
 </resources>

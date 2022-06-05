@@ -14,15 +14,14 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.PostDetailPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostWithBlacklistRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberNewsView
+import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
+class SubscriberPostPresenter : MvpPresenter<SubscriberPostView>() {
     @Inject
     lateinit var router: Router
 
@@ -43,10 +42,10 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     val listPresenter = TraderRVListPresenter()
 
     companion object {
-        private const val TAG = "SubscriberPostPresenter"
+        private const val TAG = "SubscriberNewsPresenter"
     }
 
-    inner class TraderRVListPresenter : PostRVListPresenter {
+    inner class TraderRVListPresenter : IPostWithBlacklistRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderRVListPresenter"
         private var sharedView: PostItemView? = null
@@ -314,6 +313,21 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
                 }
             router.navigateTo(Screens.postDetailFragment(postList[view.pos]))
         }
+
+        override fun askToAddToBlacklist(traderId: String) {
+            viewState.showMessageSureToAddToBlacklist(traderId)
+        }
+
+        override fun addToBlacklist(traderId: String) {
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    reloadPosts()
+                    viewState.showMessagePostAddedToBlacklist()
+                }, {
+                    it.printStackTrace()
+                })
+        }
     }
 
     override fun onFirstViewAttach() {
@@ -332,6 +346,13 @@ class SubscriberPostPresenter : MvpPresenter<SubscriberNewsView>() {
     }
 
     fun onScrollLimit() {
+        loadPosts()
+    }
+
+    private fun reloadPosts() {
+        nextPage = 1
+        isLoading = false
+        listPresenter.postList.clear()
         loadPosts()
     }
 

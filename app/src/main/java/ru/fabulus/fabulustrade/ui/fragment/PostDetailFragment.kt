@@ -97,7 +97,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
             val popupMenu = PopupMenu(context, btn)
             popupMenu.inflate(R.menu.menu_someone_comment)
-            val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+            val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
             complaintList.forEach { complaint ->
                 complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
                     .setOnMenuItemClickListener {
@@ -108,7 +108,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.mi_copy_comment_text -> {
+                    R.id.mi_copy_post_text -> {
                         postDetailPresenter.copyPost()
                         return@setOnMenuItemClickListener true
                     }

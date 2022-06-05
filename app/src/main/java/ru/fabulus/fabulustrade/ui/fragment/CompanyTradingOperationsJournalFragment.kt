@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -50,9 +51,29 @@ class CompanyTradingOperationsJournalFragment(private val traderId: String, priv
             CompanyTradingOperationsJournalRVAdapter(presenter.listPresenter).apply {
                 App.instance.appComponent.inject(this)
             }
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
         binding.rvCompTradingOpsJournal.run {
             adapter = companyTradingOperationsJournalRVAdapter
             layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) {
+                            val linearLayoutManager = layoutManager as LinearLayoutManager
+                            val visibleItemCount = linearLayoutManager.childCount
+                            val totalItemCount = linearLayoutManager.itemCount
+                            val pastVisiblesItems =
+                                linearLayoutManager.findFirstVisibleItemPosition()
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                presenter.onScrollLimit()
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 

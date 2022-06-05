@@ -1,7 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router

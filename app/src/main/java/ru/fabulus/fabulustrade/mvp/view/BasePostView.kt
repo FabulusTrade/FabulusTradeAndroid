@@ -5,7 +5,6 @@ import android.text.Spanned
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface BasePostView : MvpView {

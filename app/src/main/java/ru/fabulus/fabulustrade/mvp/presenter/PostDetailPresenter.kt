@@ -7,7 +7,8 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.isNegativeDigit
 
 class PostDetailPresenter(override var post: Post) : BasePostPresenter<PostDetailView>(post) {
 

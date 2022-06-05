@@ -7,8 +7,7 @@
     <item
         android:id="@+id/mi_complain_on_post"
         android:title="@string/complain_on_comment_text">
-        <menu
-            tools:text="Текст меню заполняется динамически в коде">
+        <menu tools:text="Текст меню заполняется динамически в коде">
 
         </menu>
     </item>
@@ -22,6 +21,4 @@
         android:title="@string/unlock_user_comment"
         android:visible="false"
         tools:visible="true" />
-
-
 </menu>

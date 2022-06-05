@@ -587,7 +587,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     imagesOnServerToDelete.forEach { urlFilename ->
                         val fileName = urlFilename.substringAfterLast('/')
                         api.deleteImageInPost(token, postId, fileName)
-                            .blockingSubscribe({},{
+                            .blockingSubscribe({}, {
                                 it.printStackTrace()
                             })
                     }
@@ -998,6 +998,55 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         }
                 else
                     Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun addToBlacklist(token: String, traderId: String): Single<ResultAddToBlacklist> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.addToBlacklist(token, traderId)
+                        .flatMap { resultAddToBlacklist ->
+                            Single.just(mapToResultAddToBlacklist(resultAddToBlacklist))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun deleteFromBlacklist(token: String, traderId: String): Single<ResponseAddToBlacklist> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.deleteFromBlacklist(token, traderId)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun getBlacklist(
+        token: String,
+        page: Int = 1
+    ): Single<Pagination<BlacklistItem>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getBlacklist(token, page)
+                        .flatMap { respPag ->
+                            val blacklist = respPag.results.map { blacklistItem ->
+                                mapToBlacklistItem(blacklistItem)
+                            }
+                            Single.just(mapToPagination(respPag, blacklist))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
             }
             .subscribeOn(Schedulers.io())
 }
