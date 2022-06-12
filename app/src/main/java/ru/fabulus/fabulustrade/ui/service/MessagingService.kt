@@ -28,8 +28,9 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         presenter.messageReceived(message.data)
     }
 
-    override fun onNewToken(p0: String) {
-
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+        presenter.updateToken(token)
     }
 
     override fun showNotification(title: Spanned, operationResultTitle: Spanned, body: String, id: Int) {
@@ -37,7 +38,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
 
         val pendingIntent = PendingIntent.getActivity(
                 this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         val channelId = getString(R.string.default_notification_channel_id)
