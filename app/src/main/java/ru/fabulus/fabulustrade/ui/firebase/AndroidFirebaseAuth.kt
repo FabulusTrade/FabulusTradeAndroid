@@ -13,7 +13,7 @@ class AndroidFirebaseAuth(val holder: ActivityHolder) :
     private var verificationId: String? = null
     private val auth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance().apply {
-            this.languageCode = "ru"
+            this.setLanguageCode("ru")
         }
     }
     override val codeSuccessSubject = ReplaySubject.create<Boolean>()

@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.mvp.presenter.service
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.ui.service.MessagingService
@@ -28,6 +29,9 @@ class MessagingPresenter(private val service: MessagingService) {
 
     @Inject
     lateinit var apiRepo: ApiRepo
+
+    @Inject
+    lateinit var profile: Profile
 
     @Inject
     lateinit var resourceProvider: ResourceProvider
@@ -105,5 +109,11 @@ class MessagingPresenter(private val service: MessagingService) {
 
         service.showNotification(title, operationResultTitle, body, getNotificationId())
         apiRepo.newTradeSubject.onNext(true)
+    }
+
+    fun updateToken(token: String) {
+        if (profile.token != null) {
+            apiRepo.postDeviceToken(profile.token!!, token)
+        }
     }
 }
