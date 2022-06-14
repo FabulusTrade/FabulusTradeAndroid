@@ -10,7 +10,6 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
 import kotlinx.android.synthetic.main.item_comment.view.*
-import kotlinx.android.synthetic.main.item_trader_news.view.*
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Comment
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
@@ -122,12 +121,17 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
             }
         }
 
-        override fun setBtnCommentMenuSomeone(comment: Comment, complaintList: List<Complaint>) {
+        override fun setBtnCommentMenuSomeone(
+            comment: Comment,
+            complaintList: List<Complaint>,
+            showLockUserMenuItem: Boolean,
+            showUnlockUserMenuItem: Boolean
+        ) {
             itemView.btn_comment_menu.setOnClickListener { btn ->
                 val popupMenu = PopupMenu(itemView.context, btn)
                 popupMenu.inflate(R.menu.menu_someone_comment)
 
-                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
                 complaintList.forEach { complaint ->
                     complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
                         .setOnMenuItemClickListener {
@@ -138,13 +142,24 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
 
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.mi_copy_comment_text -> {
+                        R.id.mi_copy_post_text -> {
                             presenter.copyComment(comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.mi_lock_user_comment -> {
+                            presenter.lockUserComment(this, comment)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.mi_unlock_user_comment -> {
+                            presenter.unlockUserComment(this, comment)
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false
                     }
                 }
+                popupMenu.menu.findItem(R.id.mi_lock_user_comment).isVisible = showLockUserMenuItem
+                popupMenu.menu.findItem(R.id.mi_unlock_user_comment).isVisible = showUnlockUserMenuItem
+
                 popupMenu.show()
             }
         }

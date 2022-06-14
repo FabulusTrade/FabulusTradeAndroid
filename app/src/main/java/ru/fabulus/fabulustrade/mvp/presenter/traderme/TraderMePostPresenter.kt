@@ -22,7 +22,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.DELET
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.NEW_POST_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_IN_FRAGMENT_RESULT
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter.Companion.UPDATE_POST_RESULT
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
@@ -69,13 +69,13 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             viewState.setBtnsState(buttonsState)
         }
 
-    val listPresenter = TraderRVListPresenter()
+    open val listPresenter = TraderMeRVListPresenter()
 
     companion object {
         private const val TAG = "TraderMePostPresenter"
     }
 
-    inner class TraderRVListPresenter : TraderMePostRVListPresenter {
+    open inner class TraderMeRVListPresenter : ITraderMePostRVListPresenter {
         val postList = mutableListOf<Post>()
         private val tag = "TraderMePostPresenter"
         private var sharedView: PostItemView? = null
@@ -352,6 +352,25 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             } else {
                 viewState.showMessagePostIsFlashed()
             }
+        }
+
+        override fun askToAddToBlacklist(traderId: String) {
+            viewState.showMessageSureToAddToBlacklist(traderId)
+        }
+
+        override fun addToBlacklist(traderId: String) {
+            apiRepo.addToBlacklist(profile.token!!, traderId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ responseAddToBlackList ->
+                    reloadPosts()
+                    viewState.showMessagePostAddedToBlacklist()
+                }, {
+                    it.printStackTrace()
+                })
+        }
+
+        fun reloadPosts() {
+            loadPosts(true)
         }
 
         private fun completeFlashing(

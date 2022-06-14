@@ -12,8 +12,8 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.ItemTraderNewsBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.PostRVListPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.adapter.TraderMePostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostRVListPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITraderMePostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
@@ -25,13 +25,15 @@ import ru.fabulus.fabulustrade.util.visibilityByCondition
 import java.util.*
 import javax.inject.Inject
 
-class PostRVAdapter(private val presenter: PostRVListPresenter) :
+open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
     RecyclerView.Adapter<PostRVAdapter.PostViewHolder>() {
 
     companion object {
         const val MAX_LINES = 5000
         const val MIN_LINES = 3
     }
+
+    lateinit var binding: ItemTraderNewsBinding
 
     @Inject
     lateinit var router: Router
@@ -41,7 +43,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding =
+        binding =
             ItemTraderNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = PostViewHolder(binding)
         initListeners(binding, holder)
@@ -77,7 +79,7 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
             btnItemTraderNewsShowComments.setOnClickListener {
                 presenter.showCommentDetails(holder)
             }
-            if (presenter is TraderMePostRVListPresenter) {
+            if (presenter is ITraderMePostRVListPresenter) {
                 incItemPostHeader.ivFlash.setOnClickListener {
                     presenter.toFlash(holder)
                 }
@@ -85,6 +87,22 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
         }
 
     override fun getItemCount(): Int = presenter.getCount()
+
+    open fun inflateMenu(popupMenu: PopupMenu) {
+        popupMenu.inflate(R.menu.menu_someone_post)
+    }
+
+    open fun setPopupMenuForSomeone(post: Post, popupMenu: PopupMenu) {
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.mi_copy_post_text -> {
+                    presenter.copyPost(post)
+                    return@setOnMenuItemClickListener true
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
+        }
+    }
 
     inner class PostViewHolder(private val binding: ItemTraderNewsBinding) :
         RecyclerView.ViewHolder(binding.root),
@@ -191,9 +209,8 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
         override fun setIvAttachedKebabMenuSomeone(post: Post, complaintList: List<Complaint>) {
             binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
                 val popupMenu = PopupMenu(itemView.context, btn)
-                popupMenu.inflate(R.menu.menu_someone_comment)
-
-                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_comment)
+                inflateMenu(popupMenu)
+                val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
                 complaintList.forEach { complaint ->
                     complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
                         .setOnMenuItemClickListener {
@@ -202,16 +219,8 @@ class PostRVAdapter(private val presenter: PostRVListPresenter) :
                         }
                 }
 
+                setPopupMenuForSomeone(post, popupMenu)
 
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.mi_copy_comment_text -> {
-                            presenter.copyPost(post)
-                            return@setOnMenuItemClickListener true
-                        }
-                        else -> return@setOnMenuItemClickListener false
-                    }
-                }
                 popupMenu.show()
             }
         }

@@ -62,7 +62,7 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
         }
 
         override fun setTraderAvatar(avatar: String?) {
-            avatar?.let { loadImage(it, itemView.iv_subscriber_observation_ava) }
+            avatar?.let { loadImage(it, itemView.iv_subcsriber_observation_ava) }
         }
 
         override fun subscribeStatus(isSubscribe: Boolean) {

@@ -103,6 +103,15 @@ fun mapToSubscription(subscription: ResponseSubscription) = Subscription(
     subscription.id_status
 )
 
+fun mapToBlacklistItem(responseBlacklistItem: ResponseBlacklistItem) = BlacklistItem(
+    responseBlacklistItem.user_id,
+    responseBlacklistItem.username,
+    responseBlacklistItem.avatar_url,
+    responseBlacklistItem.blacklisted_at,
+    responseBlacklistItem.year_profit,
+    responseBlacklistItem.followers_count
+)
+
 fun mapToTrade(trade: ResponseTrade): Trade {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val date = dateFormat.parse(trade.date)
@@ -270,6 +279,27 @@ fun mapToBlockUserInfo(responseBlockUserInfo: ResponseBlockUserInfo): BlockUserI
         responseBlockUserInfo.commentsBlockTime,
         responseBlockUserInfo.postsBlockTime
     )
+}
+
+fun mapToCommentBlockUserInfo(responseCommentBlockedUsers: ResponseBlockUserComments): List<CommentBlockedUser> {
+    return responseCommentBlockedUsers.usersList.map { user ->
+        CommentBlockedUser(
+            user.authorID,
+            user.blockedUserID
+        )
+    }.toList()
+}
+
+fun mapToResultBlockUserComment(responseBlockCommentUser: ResponseBlockCommentUser): ResultBlockUserComment {
+    return ResultBlockUserComment(responseBlockCommentUser.result)
+}
+
+fun mapToResultUnblockUserComment(responseUnblockCommentUser: ResponseUnblockCommentUser): ResultUnblockUserComment {
+    return ResultUnblockUserComment(responseUnblockCommentUser.result)
+}
+
+fun mapToResultAddToBlacklist(responseAddToBlacklist: ResponseAddToBlacklist): ResultAddToBlacklist {
+    return ResultAddToBlacklist(responseAddToBlacklist.result)
 }
 
 fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {

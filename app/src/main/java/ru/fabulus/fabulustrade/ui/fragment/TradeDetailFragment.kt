@@ -146,7 +146,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     private fun setTraderNoArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+        binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE

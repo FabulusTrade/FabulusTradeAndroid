@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/mi_copy_post_text"
+        android:title="@string/copy_comment_text" />
+    <item
+        android:id="@+id/mi_complain_on_post"
+        android:title="@string/complain_on_comment_text">
+        <menu tools:text="Текст меню заполняется динамически в коде">
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/mi_add_to_blacklist"
+        android:title="@string/add_to_blacklist" />
+    <item
+        android:id="@+id/mi_lock_user_comment"
+        android:title="@string/lock_user_comment"
+        android:visible="false"
+        tools:visible="true" />
+    <item
+        android:id="@+id/mi_unlock_user_comment"
+        android:title="@string/unlock_user_comment"
+        android:visible="false"
+        tools:visible="true" />
+</menu>

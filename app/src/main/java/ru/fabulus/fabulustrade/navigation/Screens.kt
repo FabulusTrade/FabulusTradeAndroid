@@ -6,7 +6,7 @@ import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
 import ru.fabulus.fabulustrade.ui.fragment.generalfeed.GeneralFeedFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
-import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberNewsFragment
+import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberPostFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberObservationFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.trader.TraderMainFragment
@@ -64,7 +64,7 @@ object Screens {
 
     fun subscriberDealScreen() = FragmentScreen { SubscriberTradeFragment.newInstance() }
 
-    fun subscriberNewsScreen() = FragmentScreen { SubscriberNewsFragment.newInstance() }
+    fun subscriberNewsScreen() = FragmentScreen { SubscriberPostFragment.newInstance() }
 
     fun tradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
 
@@ -118,4 +118,7 @@ object Screens {
         FragmentScreen { PostDetailFragment.newInstance(post) }
 
     fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
+
+    fun blacklistScreen() =
+        FragmentScreen { BlacklistFragment.newInstance() }
 }

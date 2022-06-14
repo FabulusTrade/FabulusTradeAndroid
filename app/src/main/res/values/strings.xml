@@ -528,6 +528,13 @@
     <string name="reply_on_comment_pattern">\@%s\ </string>
     <string name="edit_comment_text">Редактировать</string>
     <string name="copy_comment_text">Скопировать текст</string>
+    <string name="lock_user_comment">Заблокировать пользователя</string>
+    <string name="unlock_user_comment">Разблокировать пользователя</string>
+    <string name="user_comment_locked">Пользователь заблокирован</string>
+    <string name="user_comment_lock_error">Ошибка блокировки пользователя, попробуйте позже</string>
+    <string name="user_comment_unlocked">Пользователь разблокирован</string>
+    <string name="user_comment_unlock_error">Ошибка разблокировки пользователя, попробуйте позже</string>
+    <string name="author_lock_current_user_text">Заблокировано автором поста</string>
     <string name="delete_comment_text">Удалить</string>
     <string name="complain_on_comment_text">Пожаловаться</string>
     <string name="text_copied">Текст скопирован</string>
@@ -582,5 +589,12 @@
     <!--BasePostPresenter-->
     <string name="block_send_comment_text">Заблокированно до %s</string>
     <string name="block_operation_on_post">Заблокированно до %s</string>
+    <string name="add_to_blacklist">Добавить в Черный список</string>
+    <string name="are_you_sure_to_add_to_blacklist">Вы действительно хотите добавить этого автора в Черный список?</string>
+    <string name="are_you_sure_to_delete_from_blacklist">Вы действительно хотите убрать этого автора из Черного списка?</string>
+    <string name="added_to_blacklist">Автор добавлен в черный список</string>
+    <string name="yes_exclamation">ДА!</string>
+    <string name="deleted_from_blacklist">Автор удален из черного списка</string>
+    <string name="delete_from_blacklist">Убрать из черного списка</string>
 
 </resources>

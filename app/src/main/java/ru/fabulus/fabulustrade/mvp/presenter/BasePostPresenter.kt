@@ -65,6 +65,32 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
     }
 
     private fun initSendCommentPanel() {
+        viewState.showSendComment(maxCommentLength)
+        viewState.setSendEditCommentPanel("", true)
+
+        apiRepo
+            .getCommentBlockedUsers(profile.token!!, post.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ commentBlockedUsers ->
+                if (commentBlockedUsers.isLocked(profile.user!!.id)) {
+                    viewState.setSendEditCommentPanel(
+                        resourceProvider.getStringResource(R.string.author_lock_current_user_text),
+                        false
+                    )
+                } else {
+                    checkComplains()
+                }
+
+            }, { error ->
+                // приходит ошибка 401 если пользователь никогда не блокировался
+                checkComplains()
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
+    }
+
+    private fun checkComplains() {
         apiRepo
             .getBlockUserInfo(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
@@ -94,8 +120,19 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
     }
 
     private fun setCommentList() {
-        listPresenter.setCommentList(post.comments)
-        viewState.updateCommentsAdapter()
+
+        apiRepo
+            .getCommentBlockedUsers(profile.token!!, post.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ commentBlockedUsers ->
+                listPresenter.setCommentList(post.comments, commentBlockedUsers)
+                viewState.updateCommentsAdapter()
+            }, { error ->
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
+
     }
 
     private fun setDislikeImage(isDisliked: Boolean) {

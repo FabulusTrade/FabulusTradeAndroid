@@ -998,4 +998,99 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                     Single.error(NoInternetException())
             }
             .subscribeOn(Schedulers.io())
+
+    fun getCommentBlockedUsers(token: String, postId: Int): Single<List<CommentBlockedUser>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .getCommentBlockedUsers(token, postId)
+                        .flatMap { responseCommentBlockedUsers ->
+                            Single.just(mapToCommentBlockUserInfo(responseCommentBlockedUsers))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun blockUserComments(token: String, userId: String): Single<ResultBlockUserComment> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .blockUserComments(token, RequestBlockUserComments(userId))
+                        .flatMap { responseBlockCommentUser ->
+                            Single.just(mapToResultBlockUserComment(responseBlockCommentUser))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+
+    fun unblockUserComments(token: String, userId: String): Single<ResultUnblockUserComment> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline)
+                    api
+                        .unblockUserComments(token, userId)
+                        .flatMap { resultUnblockUserComment ->
+                            Single.just(mapToResultUnblockUserComment(resultUnblockUserComment))
+                        }
+                else
+                    Single.error(NoInternetException())
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun addToBlacklist(token: String, traderId: String): Single<ResultAddToBlacklist> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.addToBlacklist(token, traderId)
+                        .flatMap { resultAddToBlacklist ->
+                            Single.just(mapToResultAddToBlacklist(resultAddToBlacklist))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun deleteFromBlacklist(token: String, traderId: String): Single<ResponseAddToBlacklist> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.deleteFromBlacklist(token, traderId)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun getBlacklist(
+        token: String,
+        page: Int = 1
+    ): Single<Pagination<BlacklistItem>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getBlacklist(token, page)
+                        .flatMap { respPag ->
+                            val blacklist = respPag.results.map { blacklistItem ->
+                                mapToBlacklistItem(blacklistItem)
+                            }
+                            Single.just(mapToPagination(respPag, blacklist))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
 }

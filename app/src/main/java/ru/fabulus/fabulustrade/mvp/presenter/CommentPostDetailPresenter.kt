@@ -6,9 +6,7 @@ import androidx.core.text.toSpannable
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
-import ru.fabulus.fabulustrade.mvp.model.entity.Comment
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.model.entity.Profile
+import ru.fabulus.fabulustrade.mvp.model.entity.*
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
@@ -45,6 +43,8 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     private var updatedCommentView: CommentItemView? = null
 
     private val commentList = mutableListOf<Comment>()
+    private val commentBlockedUserList = mutableListOf<CommentBlockedUser>()
+    private val complaintList = mutableListOf<Complaint>()
     override fun getCount(): Int = commentList.size
 
     private var parentCommentId: Long? = null
@@ -65,17 +65,35 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
         }
     }
 
-    private fun fillComplaints(view: CommentItemView, comment: Comment) {
-        apiRepo
-            .getComplaints(profile.token!!)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ complaintList ->
-                view.setBtnCommentMenuSomeone(comment, complaintList)
-            }, { error ->
-                Log.d(TAG, "Error: ${error.message.toString()}")
-                Log.d(TAG, error.printStackTrace().toString())
-            }
+    private fun initBtnCommentMenuSomeone(view: CommentItemView, comment: Comment) {
+        if (complaintList.count() > 0) {
+            val selfPost = isSelfPost()
+            val userIsLocked = commentBlockedUserList.isLocked(comment.authorUuid!!)
+            val showUnLockUserMenu = selfPost && userIsLocked
+            val showLockUserMenu = selfPost && !userIsLocked
+            view.setBtnCommentMenuSomeone(
+                comment,
+                complaintList,
+                showLockUserMenu,
+                showUnLockUserMenu
             )
+        }
+    }
+
+    private fun fillComplaints(view: CommentItemView, comment: Comment) {
+        if (complaintList.count() == 0) {
+            apiRepo
+                .getComplaints(profile.token!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ tmpComplaintList ->
+                    complaintList.addAll(tmpComplaintList)
+                    initBtnCommentMenuSomeone(view, comment)
+                }, { error ->
+                    Log.d(TAG, "Error: ${error.message.toString()}")
+                    Log.d(TAG, error.printStackTrace().toString())
+                }
+                )
+        }
     }
 
     override fun commentByPos(position: Int): Comment = commentList[position]
@@ -144,6 +162,9 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     private fun isSelfComment(comment: Comment): Boolean =
         (comment.authorUuid == profile.user?.id)
 
+    private fun isSelfPost(): Boolean =
+        (post.traderId == profile.user?.id)
+
     fun addPostComment(text: String, parentCommentId: Long? = null) {
         apiRepo
             .addPostComment(profile.token!!, post.id, text, parentCommentId)
@@ -178,15 +199,28 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     }
 
     private fun setCommentList() {
-        setCommentList(post.comments)
-        viewState.updateCommentsAdapter()
+        apiRepo
+            .getCommentBlockedUsers(profile.token!!, post.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ commentBlockedUsers ->
+                setCommentList(post.comments, commentBlockedUsers)
+                viewState.updateCommentsAdapter()
+            }, { error ->
+                Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+            }
+            )
     }
 
-    override fun setCommentList(commentList: MutableList<Comment>) {
+    override fun setCommentList(commentList: MutableList<Comment>, commentBlockedUserList: List<CommentBlockedUser>) {
         if (this.commentList.count() > 0) {
             this.commentList.clear()
         }
+        if (this.commentBlockedUserList.count() > 0){
+            this.commentBlockedUserList.clear()
+        }
         this.commentList.addAll(commentList)
+        this.commentBlockedUserList.addAll(commentBlockedUserList)
     }
 
     override fun replyOnComment(view: CommentItemView) {
@@ -392,5 +426,48 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
     override fun updateCommentItem(position: Int, comment: Comment) {
         this.commentList[position] = comment
         viewState.notifyItemChanged(position)
+    }
+
+    override fun lockUserComment(view: CommentItemView, comment: Comment) {
+        apiRepo
+            .blockUserComments(profile.token!!, comment.authorUuid!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resultBlockUserComment ->
+                viewState.showToast(resourceProvider.getStringResource(R.string.user_comment_locked))
+                commentBlockedUserList.add(
+                    CommentBlockedUser(
+                        profile.user!!.id,
+                        comment.authorUuid!!
+                    )
+                )
+                initBtnCommentMenuSomeone(view, comment)
+            }, { error ->
+                viewState.showToast(resourceProvider.getStringResource(R.string.user_comment_lock_error))
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
+
+    }
+
+    override fun unlockUserComment(view: CommentItemView, comment: Comment) {
+        apiRepo
+            .unblockUserComments(profile.token!!, comment.authorUuid!!)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ resultunblockUserComment ->
+                viewState.showToast(resourceProvider.getStringResource(R.string.user_comment_unlocked))
+                commentBlockedUserList.remove(
+                    CommentBlockedUser(
+                        profile.user!!.id,
+                        comment.authorUuid!!
+                    )
+                )
+                initBtnCommentMenuSomeone(view, comment)
+            }, { error ->
+                viewState.showToast(resourceProvider.getStringResource(R.string.user_comment_unlock_error))
+                Log.d(TAG, "Error: ${error.message.toString()}")
+                Log.d(TAG, error.printStackTrace().toString())
+            }
+            )
     }
 }

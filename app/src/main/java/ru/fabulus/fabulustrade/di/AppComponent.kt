@@ -14,8 +14,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderSeco
 import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.service.MessagingPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberMainPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.fabulus.fabulustrade.mvp.presenter.trader.*
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.*
@@ -23,7 +23,6 @@ import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersFilterPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersMainPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
-import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.activity.MainActivity
 import ru.fabulus.fabulustrade.ui.activity.SplashActivity
@@ -32,7 +31,7 @@ import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
 import ru.fabulus.fabulustrade.ui.fragment.generalfeed.GeneralFeedFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
-import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberNewsFragment
+import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberPostFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberObservationFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.trader.*
@@ -100,7 +99,7 @@ interface AppComponent {
     fun inject(subscriberObservationPresenter: SubscriberObservationPresenter)
     fun inject(subscriberTradeFragment: SubscriberTradeFragment)
     fun inject(subscriberTradePresenter: SubscriberTradePresenter)
-    fun inject(subscriberNewsFragment: SubscriberNewsFragment)
+    fun inject(subscriberPostFragment: SubscriberPostFragment)
     fun inject(subscriberPostPresenter: SubscriberPostPresenter)
     fun inject(tradeDetailFragment: TradeDetailFragment)
     fun inject(tradeDetailPresenter: TradeDetailPresenter)
@@ -144,4 +143,7 @@ interface AppComponent {
     fun inject(basePostPresenter: BasePostPresenter<BasePostView>)
     fun inject(commentPostDetailPresenter: CommentPostDetailPresenter)
     fun inject(commentRVAdapter: CommentRVAdapter)
+    fun inject(blacklistFragment: BlacklistFragment)
+    fun inject(blacklistPresenter: BlacklistPresenter)
+    fun inject(blacklistRVAdapter: BlacklistRVAdapter)
 }
