@@ -73,5 +73,10 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
         override fun setTradePrice(price: String) {
             itemView.tv_item_comp_trading_ops_price.text = price
         }
+
+        override fun setClipVisibility(visibility: Boolean) {
+            itemView.iv_item_comp_trading_ops_attached_post_clip.visibility =
+                if (visibility) View.VISIBLE else View.INVISIBLE
+        }
     }
 }

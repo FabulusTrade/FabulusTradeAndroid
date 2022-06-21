@@ -9,4 +9,5 @@ interface CompanyTradingOperationsJournalItemView {
     fun setTradePrice(price: String)
     fun setEndCount(endCount: Int)
     fun setVisible(visible: Boolean)
+    fun setClipVisibility(visibility: Boolean)
 }

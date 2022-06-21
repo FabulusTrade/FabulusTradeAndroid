@@ -51,6 +51,7 @@ class CompanyTradingOperationsJournalPresenter(
             view.setTradePrice(deals.price.toString() + deals.currency)
             view.setEndCount(deals.endCount)
             view.setVisible(deals.visible)
+            view.setClipVisibility(deals.posts != null)
             if (deals.profitCount == null || !deals.visible) {
                 view.setProfitCount(null)
             } else {

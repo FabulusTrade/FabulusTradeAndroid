@@ -218,7 +218,8 @@ fun mapToTradeJournalByCompany(companyTrade: ResponseCompanyTradingOperationsJou
         companyTrade.price,
         companyTrade.currency,
         companyTrade.endCount,
-        companyTrade.visible
+        companyTrade.visible,
+        companyTrade.posts
     )
 }
 

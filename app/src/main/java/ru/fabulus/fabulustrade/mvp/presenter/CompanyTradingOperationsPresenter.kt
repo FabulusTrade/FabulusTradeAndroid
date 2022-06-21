@@ -48,6 +48,7 @@ class CompanyTradingOperationsPresenter(
             view.setOperationDate("Дата ${deals.date.toStringFormat()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
+            view.setClipVisibility(deals.posts != null)
             if (deals.profitCount == null) {
                 view.setProfitCount(null)
             } else {

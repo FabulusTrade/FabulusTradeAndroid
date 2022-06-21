@@ -20,5 +20,5 @@ data class ResponseCompanyTradingOperations(
     @Expose
     val currency: String,
     @Expose
-    val posts: String
+    val posts: Int?
 )

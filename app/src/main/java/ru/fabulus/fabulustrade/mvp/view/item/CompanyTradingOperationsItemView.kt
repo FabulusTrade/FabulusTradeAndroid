@@ -7,4 +7,5 @@ interface CompanyTradingOperationsItemView {
     fun setOperationDate(date: String)
     fun setProfitCount(profit: String?)
     fun setTradePrice(price: String)
+    fun setClipVisibility(visibility: Boolean)
 }
