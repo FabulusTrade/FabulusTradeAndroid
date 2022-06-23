@@ -19,5 +19,6 @@ data class Trade(
     val currency: String,
     val date: Date,
     val profitCount: String?,
-    val subtype: String
+    val subtype: String,
+    val posts: Int?
 ) : Parcelable

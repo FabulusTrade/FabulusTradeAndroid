@@ -322,7 +322,7 @@
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_takeProfit"
+                android:id="@+id/et_take_profit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -331,7 +331,7 @@
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_takeProfitResult"
+                android:id="@+id/tv_take_profit_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -359,7 +359,7 @@
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_stopLoss"
+                android:id="@+id/et_stop_loss"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -368,7 +368,7 @@
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_stopLossResult"
+                android:id="@+id/tv_stop_loss_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -405,7 +405,7 @@
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_howManyDay"
+                android:id="@+id/et_how_many_days"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_span="2"
@@ -434,6 +434,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_argument_table">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_create_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"

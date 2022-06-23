@@ -63,7 +63,11 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
             if (trade.traderId != user.id) {
                 viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_NO_ARGUMENT)
             } else {
-                viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
+                if (trade.posts == null) {
+                    viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
+                } else {
+                    viewState.setMode(TradeDetailFragment.Mode.TRADER_HAS_ARGUMENT)
+                }
             }
         }
 

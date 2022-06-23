@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -109,7 +110,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             val text = binding.etCreatePost.text.toString()
             val stopLoss = binding.etStopLoss.text.toString().toFloatOrNull()
             val takeProfit = binding.etTakeProfit.text.toString().toFloatOrNull()
-            val dealTerm = binding.etHowManyDay.text.toString().toIntOrNull()
+            val dealTerm = binding.etHowManyDays.text.toString().toIntOrNull()
             presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
         }
     }
@@ -150,6 +151,11 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
+        binding.linearShareHead.visibility = View.VISIBLE
+        binding.ivTradeDetailClose.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+        }
     }
 
     private fun setTraderFillingArgumentMode() {
@@ -165,10 +171,31 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     private fun setTraderHasArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
-        binding.layoutArgumentTable.visibility = View.GONE
-        binding.layoutPostText.visibility = View.GONE
+        binding.linearShareArgumentsBegin.visibility = View.GONE
+        binding.layoutArgumentTable.visibility = View.VISIBLE
+        binding.etTakeProfit.apply {
+            isEnabled = false
+            background = null
+        }
+        binding.etStopLoss.apply {
+            isEnabled = false
+            background = null
+        }
+        binding.etHowManyDays.apply {
+            isEnabled = false
+            background = null
+        }
+        binding.ilCreatePost.apply {
+            isEnabled = false
+            boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_NONE
+        }
+        binding.layoutPostText.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.GONE
+        binding.linearShareHead.visibility = View.VISIBLE
+        binding.ivTradeDetailClose.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+        }
     }
 
     private fun setNotTraderNoArgumentMode() {
