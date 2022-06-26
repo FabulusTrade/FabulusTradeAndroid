@@ -84,9 +84,11 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
         text: String,
         stopLoss: Float?,
         takeProfit: Float?,
-        dealTerm: Int?
+        dealTerm: Int?,
     ) {
-        if (text.isEmpty())
+        if (text.length < 2 && stopLoss == null && takeProfit == null && dealTerm == null
+            && (imagesToAdd.size < 1 || imagesToAdd.size > 4)
+        )
             return
         createArgument(text, stopLoss, takeProfit, dealTerm)
     }
