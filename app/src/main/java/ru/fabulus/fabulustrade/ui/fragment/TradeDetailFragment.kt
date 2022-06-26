@@ -151,7 +151,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
-        binding.linearShareHead.visibility = View.VISIBLE
+        binding.tvShareHead.visibility = View.VISIBLE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -171,6 +171,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     private fun setTraderHasArgumentMode() {
+        binding.tvShareHead.visibility = View.VISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.VISIBLE
         binding.etTakeProfit.apply {
@@ -187,11 +188,11 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
         binding.ilCreatePost.apply {
             isEnabled = false
+            isCounterEnabled = false
             boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_NONE
         }
         binding.layoutPostText.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.GONE
-        binding.linearShareHead.visibility = View.VISIBLE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -199,6 +200,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     private fun setNotTraderNoArgumentMode() {
+        binding.tvShareHead.visibility = View.INVISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
