@@ -176,6 +176,40 @@ fun mapToPost(post: ResponsePost?): Post? {
     }
 }
 
+fun mapToArgument(argument: ResponseArgument?): Argument? {
+    return argument?.let {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val dateCreate = dateFormat.parse(argument.date_create)
+        val dateUpd = dateFormat.parse(argument.date_update)
+        val images = argument.images.map { it.image }
+        val comments = mapToComments(argument.comments)
+        Argument(
+            id = argument.id,
+            userName = argument.username,
+            avatarUrl = argument.avatar,
+            followersCount = argument.followersCount,
+            traderId = argument.trader_id,
+            text = argument.text,
+            postStatus = argument.post_status,
+            dateCreate = dateCreate,
+            dateUpdate = dateUpd,
+            pinned = argument.pinned,
+            images = images,
+            likeCount = argument.like_count,
+            dislikeCount = argument.dislike_count,
+            isLiked = argument.is_liked,
+            isDisliked = argument.is_disliked,
+            comments = comments,
+            colorIncrDecrDepo365 = argument.colorIncrDecrDepo365,
+            repostCount = argument.repostCount,
+            isFlashed = argument.isFlashed,
+            stopLoss = argument.stop_loss,
+            takeProfit = argument.take_profit,
+            dealTerm = argument.deal_term
+        )
+    }
+}
+
 fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompanyAggregated? {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val lastTradeDate = dateFormat.parse(trade?.date_last)

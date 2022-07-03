@@ -402,6 +402,28 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun getArgumentByTrade(
+        token: String,
+        tradeId: String,
+    ): Single<Pagination<Argument>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getArgumentByTrade(token, tradeId)
+                        .flatMap { respPag ->
+                            val arguments = respPag.results.map {
+                                mapToArgument(it)!!
+                            }
+                            Single.just(mapToPagination(respPag, arguments))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun getTraderTradesJournalByCompany(
         token: String,
         companyId: Int,

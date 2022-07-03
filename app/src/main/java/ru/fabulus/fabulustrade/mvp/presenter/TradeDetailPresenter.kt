@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.util.Log
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -12,6 +13,7 @@ import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.isLocked
 import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
@@ -67,6 +69,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                     viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
                 } else {
                     viewState.setMode(TradeDetailFragment.Mode.TRADER_HAS_ARGUMENT)
+                    initArgument()
                 }
             }
         }
@@ -78,6 +81,22 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                 viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
             }
         }
+    }
+
+    private fun initArgument() {
+        apiRepo
+            .getArgumentByTrade(profile.token!!, trade.id.toString())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ arguments ->
+                val argument = arguments.results[0]
+                argument.takeProfit?.let{viewState.setTakeProfit(it)}
+                argument.stopLoss?.let{viewState.setStopLoss(it)}
+                argument.dealTerm?.let{viewState.setDealTerm(it)}
+
+            }, { error ->
+                Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+            })
     }
 
     fun onPublishClicked(

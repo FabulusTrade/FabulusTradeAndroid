@@ -18,4 +18,7 @@ interface TradeDetailView: MvpView {
     fun setSubtype(type: String)
     fun setMode(mode: TradeDetailFragment.Mode)
     fun setTradeType(type: TradeDetailFragment.TradeType)
+    fun setTakeProfit(takeProfit: Float)
+    fun setStopLoss(stopLoss: Float)
+    fun setDealTerm(dealTerm: Int)
 }

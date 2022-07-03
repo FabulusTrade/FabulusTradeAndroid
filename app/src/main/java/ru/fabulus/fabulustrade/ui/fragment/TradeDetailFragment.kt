@@ -6,18 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputLayout
-import com.jakewharton.rxbinding4.view.clicks
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
-import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
-import javax.inject.Inject
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
@@ -245,6 +242,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     override fun setSubtype(type: String) {
         binding.tvTradeDetailType.text = type
+    }
+
+    override fun setTakeProfit(takeProfit: Float) {
+        binding.etTakeProfit.setText(takeProfit.toString())
+    }
+
+    override fun setStopLoss(stopLoss: Float) {
+        binding.etStopLoss.setText(stopLoss.toString())
+    }
+
+    override fun setDealTerm(dealTerm: Int) {
+        binding.etHowManyDays.setText(dealTerm.toString())
     }
 
     override fun onDestroyView() {
