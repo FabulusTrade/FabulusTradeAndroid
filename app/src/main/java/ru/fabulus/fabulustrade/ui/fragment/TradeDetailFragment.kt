@@ -90,8 +90,8 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
         return try {
-            val number = numberText.trim().toDouble()
-            val price = priceText.trim().toDouble()
+            val number = "${numberText.replace(",", ".")}".trim().toDouble()
+            val price = "${priceText.replace(",", ".")}".trim().toDouble()
             val returnValue = (((number / price) - 1) * 100)
             "%.2f".format(returnValue)
         } catch (e: NumberFormatException) {
