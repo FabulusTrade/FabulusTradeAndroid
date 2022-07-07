@@ -21,4 +21,6 @@ interface TradeDetailView: MvpView {
     fun setTakeProfit(takeProfit: Float)
     fun setStopLoss(stopLoss: Float)
     fun setDealTerm(dealTerm: Int)
+    fun setProfit(profit: String)
+    fun setLoss(loss: String)
 }

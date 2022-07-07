@@ -248,8 +248,16 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.etTakeProfit.setText(takeProfit.toString())
     }
 
+    override fun setProfit(profit: String) {
+        binding.tvTakeProfitResult.setText(profit)
+    }
+
     override fun setStopLoss(stopLoss: Float) {
         binding.etStopLoss.setText(stopLoss.toString())
+    }
+
+    override fun setLoss(loss: String) {
+        binding.tvStopLossResult.setText(loss)
     }
 
     override fun setDealTerm(dealTerm: Int) {

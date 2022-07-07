@@ -328,6 +328,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:maxLength="13"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -365,6 +366,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:maxLength="13"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -412,6 +414,7 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="3"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/tv_text_size_publish_trader_details"
                 tools:text="3 дн" />
         </TableRow>

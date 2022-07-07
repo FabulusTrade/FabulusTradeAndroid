@@ -37,6 +37,8 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
     private var imagesToAdd = mutableListOf<ByteArray>()
 
+    private var isOpeningTrade: Boolean = true
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -61,6 +63,16 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
         viewState.setSubtype(trade.subtype)
 
+        if (trade.subtype?.length > 0) {
+            if (trade.subtype.subSequence(0, 8) == "Открытие") {
+                isOpeningTrade = true
+                viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
+            } else {
+                isOpeningTrade = false
+                viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
+            }
+        }
+
         profile.user?.let { user ->
             if (trade.traderId != user.id) {
                 viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_NO_ARGUMENT)
@@ -73,14 +85,6 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                 }
             }
         }
-
-        if (trade.subtype?.length > 0) {
-            if (trade.subtype.subSequence(0, 8) == "Открытие") {
-                viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
-            } else {
-                viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
-            }
-        }
     }
 
     private fun initArgument() {
@@ -89,9 +93,19 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ arguments ->
                 val argument = arguments.results[0]
-                argument.takeProfit?.let{viewState.setTakeProfit(it)}
-                argument.stopLoss?.let{viewState.setStopLoss(it)}
-                argument.dealTerm?.let{viewState.setDealTerm(it)}
+                if (isOpeningTrade) {
+                    argument.takeProfit?.let { viewState.setTakeProfit(it) }
+                    argument.stopLoss?.let { viewState.setStopLoss(it) }
+                    argument.dealTerm?.let { viewState.setDealTerm(it) }
+                } else {
+                    trade.profitCount?.let {profit ->
+                        if (profit.subSequence(0, 1) == "-") {
+                            viewState.setLoss(profit)
+                        } else {
+                            viewState.setProfit(profit)
+                        }
+                    }
+                }
 
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
