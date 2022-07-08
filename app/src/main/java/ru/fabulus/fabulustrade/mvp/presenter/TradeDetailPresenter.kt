@@ -99,10 +99,10 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                     argument.dealTerm?.let { viewState.setDealTerm(it) }
                 } else {
                     trade.profitCount?.let {profit ->
-                        if (profit.subSequence(0, 1) == "-") {
-                            viewState.setLoss(profit)
+                        if (profit < 0.0) {
+                            viewState.setLoss(profit, 2)
                         } else {
-                            viewState.setProfit(profit)
+                            viewState.setProfit(profit, 2)
                         }
                     }
                 }

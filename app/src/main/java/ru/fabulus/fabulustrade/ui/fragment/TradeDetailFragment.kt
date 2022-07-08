@@ -248,16 +248,21 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.etTakeProfit.setText(takeProfit.toString())
     }
 
-    override fun setProfit(profit: String) {
-        binding.tvTakeProfitResult.setText(profit)
+    override fun setProfit(profit: Float, precision: Int) {
+        binding.tvTakeProfitResult.setText(formPercentString(profit, precision))
     }
 
     override fun setStopLoss(stopLoss: Float) {
         binding.etStopLoss.setText(stopLoss.toString())
     }
 
-    override fun setLoss(loss: String) {
-        binding.tvStopLossResult.setText(loss)
+    override fun setLoss(loss: Float, precision: Int) {
+        binding.tvStopLossResult.setText(formPercentString(loss, precision))
+    }
+
+    fun formPercentString(num: Float, precision: Int): String {
+        val percent = num * 100
+        return "%.4f".format(percent)
     }
 
     override fun setDealTerm(dealTerm: Int) {

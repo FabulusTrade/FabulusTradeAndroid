@@ -30,7 +30,7 @@ data class ResponseTrade(
     @Expose
     val subtype: String,
     @Expose
-    val profit_count: String,
+    val profit_count: Float?,
     @Expose
     val value: Double,
     @Expose
