@@ -98,7 +98,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                     argument.stopLoss?.let { viewState.setStopLoss(it) }
                     argument.dealTerm?.let { viewState.setDealTerm(it) }
                 } else {
-                    trade.profitCount?.let {profit ->
+                    trade.profitCount?.let { profit ->
                         if (profit < 0.0) {
                             viewState.setLoss(profit, 2)
                         } else {
@@ -132,6 +132,22 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
         takeProfit: Float?,
         dealTerm: Int?
     ) {
+        if (trade.subtype.contains("LONG")) {
+            if (takeProfit != null && takeProfit <= trade.price
+                || stopLoss != null && stopLoss >= trade.price
+            ) {
+                viewState.showErrorMessage("ОШИБКА. Для длинных сделок тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!")
+                return
+            }
+        } else if (trade.subtype.contains("SHORT")) {
+            if (takeProfit != null && takeProfit >= trade.price
+                || stopLoss != null && stopLoss <= trade.price
+            ) {
+                viewState.showErrorMessage("ОШИБКА. Для коротких сделок тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!")
+                return
+            }
+        } else return
+
         apiRepo
             .createArgument(
                 profile.token!!, profile.user!!.id,

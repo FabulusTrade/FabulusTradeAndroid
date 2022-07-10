@@ -1,9 +1,11 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputLayout
 import moxy.MvpAppCompatFragment
@@ -93,7 +95,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             val number = "${numberText.replace(",", ".")}".trim().toDouble()
             val price = "${priceText.replace(",", ".")}".trim().toDouble()
             val returnValue = (((number / price) - 1) * 100)
-            "%.2f".format(returnValue)
+            "%.2f %%".format(returnValue)
         } catch (e: NumberFormatException) {
             ""
         }
@@ -249,7 +251,16 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     override fun setProfit(profit: Float, precision: Int) {
-        binding.tvTakeProfitResult.setText(formPercentString(profit, precision))
+        binding.etTakeProfit.setText(formPercentString(profit, precision))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.etTakeProfit.setTextColor(
+                resources.getColor(
+                    R.color.colorGreenPercentProfit, requireContext().theme
+                )
+            )
+        } else {
+            binding.etTakeProfit.setTextColor(resources.getColor(R.color.colorGreenPercentProfit))
+        }
     }
 
     override fun setStopLoss(stopLoss: Float) {
@@ -262,7 +273,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     fun formPercentString(num: Float, precision: Int): String {
         val percent = num * 100
-        return "%.4f".format(percent)
+        return "%.${precision}f %%".format(percent)
     }
 
     override fun setDealTerm(dealTerm: Int) {
@@ -272,5 +283,16 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun showErrorMessage(message: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("ОШИБКА")
+                .setMessage(message)
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
     }
 }
