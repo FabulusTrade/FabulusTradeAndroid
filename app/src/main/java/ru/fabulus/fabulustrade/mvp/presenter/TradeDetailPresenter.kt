@@ -13,7 +13,6 @@ import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
-import ru.fabulus.fabulustrade.util.isLocked
 import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
@@ -106,7 +105,9 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                         }
                     }
                 }
-
+                viewState.setArgumentText(argument.text)
+                viewState.setLikesCount(argument.likeCount)
+                viewState.setDislikesCount(argument.dislikeCount)
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
                 Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
@@ -136,14 +137,14 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
             if (takeProfit != null && takeProfit <= trade.price
                 || stopLoss != null && stopLoss >= trade.price
             ) {
-                viewState.showErrorMessage("ОШИБКА. Для длинных сделок тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!")
+                viewState.showErrorMessage("Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!")
                 return
             }
         } else if (trade.subtype.contains("SHORT")) {
             if (takeProfit != null && takeProfit >= trade.price
                 || stopLoss != null && stopLoss <= trade.price
             ) {
-                viewState.showErrorMessage("ОШИБКА. Для коротких сделок тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!")
+                viewState.showErrorMessage("Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!")
                 return
             }
         } else return

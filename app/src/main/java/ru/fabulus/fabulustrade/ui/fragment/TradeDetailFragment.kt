@@ -190,7 +190,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             isCounterEnabled = false
             boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_NONE
         }
-        binding.layoutPostText.visibility = View.VISIBLE
+        binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
@@ -278,6 +278,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     override fun setDealTerm(dealTerm: Int) {
         binding.etHowManyDays.setText(dealTerm.toString())
+    }
+
+    override fun setArgumentText(text: String) {
+        binding.tvArgumentText.text = text
+    }
+
+    override fun setLikesCount(count: Int) {
+        binding.incArgumentFooter.tvLikeCount.text = count.toString()
+    }
+
+    override fun setDislikesCount(count: Int) {
+        binding.incArgumentFooter.tvDislikeCount.text = count.toString()
     }
 
     override fun onDestroyView() {
