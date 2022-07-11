@@ -151,6 +151,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
         binding.tvShareHead.visibility = View.VISIBLE
+        binding.llArgument.visibility = View.GONE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -163,6 +164,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutPostText.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.VISIBLE
         binding.linearShareHead.visibility = View.VISIBLE
+        binding.llArgument.visibility = View.GONE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -173,6 +175,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.tvShareHead.visibility = View.VISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.VISIBLE
+        binding.llArgument.visibility = View.VISIBLE
         binding.etTakeProfit.apply {
             isEnabled = false
             background = null
@@ -208,8 +211,9 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     private fun setNotTraderHasArgumentMode() {
         binding.linearShareArgumentsBegin.visibility = View.GONE
-        binding.layoutArgumentTable.visibility = View.GONE
+        binding.layoutArgumentTable.visibility = View.VISIBLE
         binding.layoutPostText.visibility = View.GONE
+        binding.llArgument.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.GONE
     }
 
@@ -276,8 +280,8 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         return "%.${precision}f %%".format(percent)
     }
 
-    override fun setDealTerm(dealTerm: Int) {
-        binding.etHowManyDays.setText(dealTerm.toString())
+    override fun setDealTerm(term: Float, precision: Int) {
+        binding.etHowManyDays.setText("%.${precision}f".format(term))
     }
 
     override fun setArgumentText(text: String) {

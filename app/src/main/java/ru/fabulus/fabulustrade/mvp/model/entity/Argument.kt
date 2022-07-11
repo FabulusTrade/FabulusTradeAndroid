@@ -28,7 +28,7 @@ data class Argument(
     var isFlashed: Boolean,
     var stopLoss: Float?,
     var takeProfit: Float?,
-    var dealTerm: Int?
+    var dealTerm: Float?
 ) : Parcelable {
     fun like() {
         if (isLiked)

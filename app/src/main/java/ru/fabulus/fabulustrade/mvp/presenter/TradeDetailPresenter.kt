@@ -74,7 +74,12 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
         profile.user?.let { user ->
             if (trade.traderId != user.id) {
-                viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_NO_ARGUMENT)
+                if (trade.posts == null) {
+                    viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_NO_ARGUMENT)
+                } else {
+                    viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_HAS_ARGUMENT)
+                    initArgument()
+                }
             } else {
                 if (trade.posts == null) {
                     viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
@@ -95,7 +100,6 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                 if (isOpeningTrade) {
                     argument.takeProfit?.let { viewState.setTakeProfit(it) }
                     argument.stopLoss?.let { viewState.setStopLoss(it) }
-                    argument.dealTerm?.let { viewState.setDealTerm(it) }
                 } else {
                     trade.profitCount?.let { profit ->
                         if (profit < 0.0) {
@@ -105,6 +109,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                         }
                     }
                 }
+                argument.dealTerm?.let { viewState.setDealTerm(it, 2) }
                 viewState.setArgumentText(argument.text)
                 viewState.setLikesCount(argument.likeCount)
                 viewState.setDislikesCount(argument.dislikeCount)
@@ -137,14 +142,14 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
             if (takeProfit != null && takeProfit <= trade.price
                 || stopLoss != null && stopLoss >= trade.price
             ) {
-                viewState.showErrorMessage("Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!")
+                viewState.showErrorMessage(resourceProvider.getStringResource(R.string.long_position_forecast_error))
                 return
             }
         } else if (trade.subtype.contains("SHORT")) {
             if (takeProfit != null && takeProfit >= trade.price
                 || stopLoss != null && stopLoss <= trade.price
             ) {
-                viewState.showErrorMessage("Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!")
+                viewState.showErrorMessage(resourceProvider.getStringResource(R.string.short_position_forecast_error))
                 return
             }
         } else return

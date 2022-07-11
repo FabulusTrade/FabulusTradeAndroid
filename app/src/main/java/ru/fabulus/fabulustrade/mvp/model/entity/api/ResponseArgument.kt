@@ -55,5 +55,5 @@ data class ResponseArgument(
     @Expose
     val take_profit: Float?,
     @Expose
-    val deal_term: Int?
+    val deal_term: Float?
 )

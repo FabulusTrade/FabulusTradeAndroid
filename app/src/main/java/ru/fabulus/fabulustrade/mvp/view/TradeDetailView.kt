@@ -20,11 +20,11 @@ interface TradeDetailView: MvpView {
     fun setTradeType(type: TradeDetailFragment.TradeType)
     fun setTakeProfit(takeProfit: Float)
     fun setStopLoss(stopLoss: Float)
-    fun setDealTerm(dealTerm: Int)
     fun setProfit(profit: Float, precision: Int)
     fun setLoss(loss: Float, precision: Int)
     fun showErrorMessage(message: String)
     fun setArgumentText(text: String)
     fun setLikesCount(count: Int)
     fun setDislikesCount(count: Int)
+    fun setDealTerm(term: Float, precision: Int)
 }

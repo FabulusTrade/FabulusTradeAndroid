@@ -596,5 +596,7 @@
     <string name="yes_exclamation">ДА!</string>
     <string name="deleted_from_blacklist">Автор удален из черного списка</string>
     <string name="delete_from_blacklist">Убрать из черного списка</string>
+    <string name="long_position_forecast_error">Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!</string>
+    <string name="short_position_forecast_error">Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!</string>
 
 </resources>
