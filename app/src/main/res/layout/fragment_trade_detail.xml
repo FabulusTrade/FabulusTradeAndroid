@@ -447,6 +447,7 @@
                 android:id="@+id/et_create_post"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="top"
                 android:background="@color/colorWhite"
                 android:lines="9" />
 

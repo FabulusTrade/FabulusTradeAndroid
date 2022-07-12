@@ -109,7 +109,13 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                         }
                     }
                 }
-                argument.dealTerm?.let { viewState.setDealTerm(it, 2) }
+                argument.dealTerm?.let {
+                    if (isOpeningTrade) {
+                        viewState.setDealTerm(it, 0)
+                    } else {
+                        viewState.setDealTerm(it, 2)
+                    }
+                }
                 viewState.setArgumentText(argument.text)
                 viewState.setLikesCount(argument.likeCount)
                 viewState.setDislikesCount(argument.dislikeCount)

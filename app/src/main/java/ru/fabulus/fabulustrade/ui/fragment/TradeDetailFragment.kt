@@ -2,6 +2,7 @@ package ru.fabulus.fabulustrade.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -132,8 +133,13 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
                     resources.getString(R.string.share_with_arguments_on_your_idea)
                 binding.tvShareArgument.text =
                     resources.getString(R.string.share_with_arguments_on_your_idea)
-                binding.tvFirstLineLabel.text = resources.getString(R.string.take_profit_price)
-                binding.tvSecondLineLabel.text = resources.getString(R.string.stop_loss_price)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price), Html.FROM_HTML_MODE_LEGACY)
+                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price), Html.FROM_HTML_MODE_LEGACY)
+                } else {
+                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price))
+                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price))
+                }
             }
             TradeType.CLOSING_TRADE -> {
                 binding.tvShareHead.text = resources.getString(R.string.arguments_head_idea)
