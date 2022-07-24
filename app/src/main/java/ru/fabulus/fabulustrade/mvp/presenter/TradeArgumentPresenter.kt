@@ -1,16 +1,18 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.graphics.Color
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
+import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
-import ru.fabulus.fabulustrade.util.isNegativeDigit
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.toStringFormat
 
-class TradeArgumentPresenter(override var post: Post) : BasePostPresenter<TradeArgumentView>(post) {
+class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePostPresenter<TradeArgumentView>(argument) {
 
     companion object {
         private const val TAG = "PostDetailPresenter"
@@ -22,51 +24,41 @@ class TradeArgumentPresenter(override var post: Post) : BasePostPresenter<TradeA
 
         initMenu()
 
-        setHeadersIcons()
-
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 
-        viewState.setRepostCount(post.repostCount.toString())
-    }
+        viewState.setRepostCount(argument.repostCount.toString())
 
-    private fun setHeadersIcons() {
-        viewState.setFlashVisibility(isSelfPost(post))
-        viewState.setProfitAndFollowersVisibility(!isSelfPost(post))
-
-        if (!isSelfPost(post)) {
-            setProfit()
-            setFollowersCount()
-        }
-    }
-
-    private fun setProfit() {
-        viewState.setProfit(
+        viewState.setType(trade.operationType)
+        viewState.setCompany(trade.company)
+        viewState.setTicker(trade.ticker)
+        viewState.setPrice(
             resourceProvider.formatDigitWithDef(
-                R.string.tv_profit_percent_text,
-                post.colorIncrDecrDepo365.value
-            ),
-            Color.parseColor(post.colorIncrDecrDepo365.color)
-        )
-
-        if (post.colorIncrDecrDepo365.value?.isNegativeDigit() == true) {
-            viewState.setProfitNegativeArrow()
-        } else {
-            viewState.setProfitPositiveArrow()
-        }
-    }
-
-    private fun setFollowersCount() {
-        viewState.setAuthorFollowerCount(
-            resourceProvider.formatDigitWithDef(
-                R.string.tv_author_follower_count,
-                post.followersCount
+                R.string.tv_trade_detail_price_text,
+                trade.price
             )
         )
+        viewState.setPriceTitle(
+            resourceProvider.formatString(
+                R.string.tv_trade_detail_price_title_text,
+                trade.currency
+            )
+        )
+        viewState.setDate(trade.date.toStringFormat("dd.MM.yyyy / HH:mm"))
+
+        viewState.setSubtype(trade.subtype)
+
+        if (trade.subtype?.length > 0) {
+            if (trade.subtype.subSequence(0, 8) == "Открытие") {
+                viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
+            } else {
+                viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
+            }
+        }
     }
 
     private fun initMenu() {
-        if (isSelfPost(post)) {
-            viewState.setPostMenuSelf(post)
+        if (isSelfArgument(argument)) {
+            viewState.setPostMenuSelf(argument)
         } else {
             fillComplaints()
         }
@@ -77,7 +69,7 @@ class TradeArgumentPresenter(override var post: Post) : BasePostPresenter<TradeA
             .getComplaints(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ complaintList ->
-                viewState.setPostMenuSomeone(post, complaintList)
+                viewState.setPostMenuSomeone(argument, complaintList)
             }, { error ->
                 Log.d(TAG, "Error: ${error.message.toString()}")
                 Log.d(TAG, error.printStackTrace().toString())
@@ -85,7 +77,7 @@ class TradeArgumentPresenter(override var post: Post) : BasePostPresenter<TradeA
             )
     }
 
-    private fun isSelfPost(post: Post): Boolean {
-        return post.traderId == profile.user?.id
+    private fun isSelfArgument(argument: Argument): Boolean {
+        return argument.traderId == profile.user?.id
     }
 }

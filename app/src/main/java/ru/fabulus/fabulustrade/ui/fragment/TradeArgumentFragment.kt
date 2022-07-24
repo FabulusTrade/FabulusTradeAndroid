@@ -1,18 +1,22 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.FragmentTradeArgumentBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
+import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.presenter.TradeArgumentPresenter
-import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
@@ -20,38 +24,44 @@ import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
 class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     companion object {
-        const val POST_KEY = "post"
-        fun newInstance(post: Post) = TradeArgumentFragment().apply {
+        const val ARGUMENT_KEY = "argument"
+        const val TRADE_KEY = "trade"
+        fun newInstance(trade: Trade, argument: Argument) = TradeArgumentFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(POST_KEY, post)
+                putParcelable(ARGUMENT_KEY, argument)
+                putParcelable(TRADE_KEY, trade)
             }
         }
     }
+
+    private var _binding: FragmentTradeArgumentBinding? = null
+
+    private val binding: FragmentTradeArgumentBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
     @InjectPresenter
     lateinit var tradeArgumentPresenter: TradeArgumentPresenter
 
-    override lateinit var presenter: BasePostPresenter<BasePostView>
-
     @ProvidePresenter
     fun provideTradeArgumentPresenter() =
-        TradeArgumentPresenter(requireArguments()[POST_KEY] as Post).apply {
+        TradeArgumentPresenter(requireArguments()[TradeDetailFragment.TRADE_KEY] as Trade, requireArguments()[ARGUMENT_KEY] as Argument).apply {
             App.instance.appComponent.inject(this)
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = tradeArgumentPresenter as BasePostPresenter<BasePostView>
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        _binding = FragmentTradeArgumentBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
+        return _binding?.root
     }
 
-    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader) {
-            if (isVisible) {
-                ivFlash.visibility = View.VISIBLE
-            } else {
-                ivFlash.visibility = View.GONE
-            }
-        }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun initRecyclerView() {
@@ -62,12 +72,64 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         }
     }
 
+    override fun setType(type: String) {
+        binding.tvTradeDetailOperation.text = type
+    }
+
+    override fun setCompany(company: String) {
+        binding.tvTradeDetailCompany.text = company
+    }
+
+    override fun setTicker(ticker: String) {
+        binding.tvTradeDetailTicker.text = ticker
+    }
+
+    override fun setPrice(price: String) {
+        binding.tvTradeDetailPrice.text = price
+    }
+
+    override fun setPriceTitle(priceTitle: String) {
+        binding.tvTradeDetailPriceTitle.text = priceTitle
+    }
+
+    override fun setDate(date: String) {
+        binding.tvTradeDetailDate.text = date
+    }
+
+    override fun setSubtype(type: String) {
+        binding.tvTradeDetailType.text = type
+    }
+
     override fun setRepostCount(text: String) {
         postBinding.incItemPostFooter.tvRepostCount.text = text
     }
 
-    override fun setPostMenuSelf(post: Post) {
-        binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
+    override fun setTradeType(type: TradeDetailFragment.TradeType) {
+        when (type) {
+            TradeDetailFragment.TradeType.OPENING_TRADE -> {
+                binding.tvShareHead.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvShareArgument.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price), Html.FROM_HTML_MODE_LEGACY)
+                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price), Html.FROM_HTML_MODE_LEGACY)
+                } else {
+                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price))
+                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price))
+                }
+            }
+            TradeDetailFragment.TradeType.CLOSING_TRADE -> {
+                binding.tvShareHead.text = resources.getString(R.string.arguments_head_idea)
+                binding.tvShareArgument.text = resources.getString(R.string.comment_to_result)
+                binding.tvFirstLineLabel.text = resources.getString(R.string.income)
+                binding.tvSecondLineLabel.text = resources.getString(R.string.loss)
+            }
+        }
+    }
+
+    override fun setPostMenuSelf(argument: Argument) {
+        binding.ivAttachedKebab.setOnClickListener { btn ->
             val menu = PopupMenu(context, btn)
             menu.inflate(R.menu.menu_self_comment)
 
@@ -93,8 +155,8 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         }
     }
 
-    override fun setPostMenuSomeone(post: Post, complaintList: List<Complaint>) {
-        binding.incItemPostHeader.ivAttachedKebab.setOnClickListener { btn ->
+    override fun setPostMenuSomeone(argument: Argument, complaintList: List<Complaint>) {
+        binding.ivAttachedKebab.setOnClickListener { btn ->
             val popupMenu = PopupMenu(context, btn)
             popupMenu.inflate(R.menu.menu_someone_comment)
             val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
@@ -116,24 +178,6 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
                 }
             }
             popupMenu.show()
-        }
-    }
-
-    override fun setProfitAndFollowersVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader) {
-            if (isVisible) {
-                ivProfitArrow.visibility = View.VISIBLE
-                tvProfitPercent.visibility = View.VISIBLE
-
-                ivPersonAdd.visibility = View.VISIBLE
-                tvAuthorFollowerCount.visibility = View.VISIBLE
-            } else {
-                ivProfitArrow.visibility = View.GONE
-                tvProfitPercent.visibility = View.GONE
-
-                ivPersonAdd.visibility = View.GONE
-                tvAuthorFollowerCount.visibility = View.GONE
-            }
         }
     }
 }

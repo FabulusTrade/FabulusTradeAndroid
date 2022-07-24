@@ -6,7 +6,9 @@ import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
+import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
@@ -14,10 +16,19 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.fragment.TradeArgumentFragment
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
-open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresenter<T>() {
+open class BasePostPresenter<T : BasePostView>() : MvpPresenter<T>() {
+
+    constructor(_post: Post) : this() {
+        post = _post
+    }
+
+    constructor(argument: Argument) : this(mapArgumentToTrade(argument))
+
+    lateinit var post: Post
 
     companion object {
         const val TAG = "BasePostPresenter"
@@ -45,9 +56,6 @@ open class BasePostPresenter<T : BasePostView>(open var post: Post) : MvpPresent
         super.onFirstViewAttach()
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()
-        viewState.setPostAuthorAvatar(post.avatarUrl)
-        viewState.setPostAuthorName(post.userName)
-        viewState.setPostDateCreated(post.dateCreate.toStringFormat())
         viewState.setPostText(post.text)
 
         initSendCommentPanel()

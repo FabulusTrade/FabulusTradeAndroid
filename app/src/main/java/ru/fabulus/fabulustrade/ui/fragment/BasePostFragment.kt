@@ -20,6 +20,7 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentPostDetailBinding
 import ru.fabulus.fabulustrade.databinding.LayoutPostWithCommentsBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
@@ -34,12 +35,7 @@ import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
 open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
-    private var _binding: FragmentPostDetailBinding? = null
-    protected val binding: FragmentPostDetailBinding
-        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
-
-    protected val postBinding: LayoutPostWithCommentsBinding
-        get() = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
+    protected lateinit var postBinding: LayoutPostWithCommentsBinding
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -50,25 +46,30 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     open lateinit var presenter: BasePostPresenter<BasePostView>
 
     @ProvidePresenter
-    fun providePresenter() =
-        BasePostPresenter<BasePostView>(requireArguments()[PostDetailFragment.POST_KEY] as Post).apply {
-            App.instance.appComponent.inject(this)
+    fun providePresenter(): BasePostPresenter<BasePostView> {
+        val postArgument = requireArguments()[PostDetailFragment.POST_KEY]
+        if (postArgument != null) {
+            return BasePostPresenter<BasePostView>(postArgument as Post).apply {
+                App.instance.appComponent.inject(this)
+            }
+        } else {
+            val argumentArgument = requireArguments()[TradeArgumentFragment.ARGUMENT_KEY]
+            if (argumentArgument != null) {
+                return BasePostPresenter<BasePostView>(argumentArgument as Argument).apply {
+                    App.instance.appComponent.inject(this)
+                }
+            } else {
+                return BasePostPresenter<BasePostView>().apply {
+                    App.instance.appComponent.inject(this)
+                }
+            }
         }
+    }
 
     @Inject
     lateinit var router: Router
 
     protected var commentRVAdapter: CommentRVAdapter? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
-        App.instance.appComponent.inject(this)
-        return _binding?.root
-    }
 
     override fun init() {
         initListeners()
@@ -87,7 +88,8 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         with(postBinding) {
             with(incItemSendComment) {
                 tilNewCommentText.counterMaxLength = maxLength
-                etNewCommentText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
+                etNewCommentText.filters =
+                    arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
             }
         }
     }
@@ -129,7 +131,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                         s: CharSequence?,
                         start: Int,
                         count: Int,
-                        after: Int
+                        after: Int,
                     ) {
 
                     }
@@ -138,7 +140,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                         s: CharSequence?,
                         start: Int,
                         before: Int,
-                        count: Int
+                        count: Int,
                     ) {
                         presenter.changeSendCommentButton(s.toString())
                     }
@@ -165,7 +167,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                         s: CharSequence?,
                         start: Int,
                         count: Int,
-                        after: Int
+                        after: Int,
                     ) {
 
                     }
@@ -174,7 +176,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                         s: CharSequence?,
                         start: Int,
                         before: Int,
-                        count: Int
+                        count: Int,
                     ) {
                         presenter.changeUpdateCommentButton(s.toString())
                     }
@@ -185,34 +187,6 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                 })
             }
         }
-    }
-
-    override fun setPostAuthorAvatar(avatarUrl: String) {
-        loadImage(avatarUrl, binding.incItemPostHeader.ivAuthorAvatar)
-    }
-
-    override fun setPostAuthorName(authorName: String) {
-        binding.incItemPostHeader.tvAuthorName.text = authorName
-    }
-
-    override fun setPostDateCreated(dateCreatedString: String) {
-        binding.incItemPostHeader.tvDate.text = dateCreatedString
-    }
-
-    override fun setPostText(text: String) {
-        postBinding.tvPost.text = text
-    }
-
-    override fun setProfit(profit: String, textColor: Int) {
-        binding.incItemPostHeader.tvProfitPercent.setTextAndColor(profit, textColor)
-    }
-
-    override fun setProfitNegativeArrow() {
-        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
-    }
-
-    override fun setProfitPositiveArrow() {
-        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
     }
 
     override fun setPostImages(images: List<String>?) {
@@ -354,10 +328,6 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         postBinding.nsvCommentView.post { postBinding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
-    override fun setAuthorFollowerCount(text: String) {
-        binding.incItemPostHeader.tvAuthorFollowerCount.text = text
-    }
-
     override fun showSendComment(maxCommentLength: Int) {
         setMaxSendCommentLength(maxCommentLength)
         setIncItemUpdateCommentVisibility(View.GONE)
@@ -380,8 +350,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
         }
     }
 
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
+    override fun setPostText(text: String) {
+        postBinding.tvPost.text = text
     }
 }

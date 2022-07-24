@@ -5,11 +5,13 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
@@ -119,6 +121,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                 viewState.setArgumentText(argument.text)
                 viewState.setLikesCount(argument.likeCount)
                 viewState.setDislikesCount(argument.dislikeCount)
+                viewState.setCommentsButtonListener(argument)
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
                 Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
@@ -181,5 +184,9 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
     fun closeClicked() {
         router.exit()
+    }
+
+    fun navigateToTradeArgument(trade: Trade, argument: Argument) {
+        router.navigateTo(Screens.tradeArgumentScreen(trade, argument))
     }
 }

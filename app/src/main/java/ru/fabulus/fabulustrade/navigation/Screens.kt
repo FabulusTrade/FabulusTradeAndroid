@@ -121,4 +121,7 @@ object Screens {
 
     fun blacklistScreen() =
         FragmentScreen { BlacklistFragment.newInstance() }
+
+    fun tradeArgumentScreen(trade: Trade, argument: Argument) =
+        FragmentScreen { TradeArgumentFragment.newInstance(trade, argument) }
 }

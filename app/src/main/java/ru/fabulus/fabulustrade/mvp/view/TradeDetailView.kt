@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.mvp.view
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 
 @StateStrategyType(AddToEndSingleStrategy::class)
@@ -27,4 +28,5 @@ interface TradeDetailView: MvpView {
     fun setLikesCount(count: Int)
     fun setDislikesCount(count: Int)
     fun setDealTerm(term: Float, precision: Int)
+    fun setCommentsButtonListener(argument: Argument)
 }

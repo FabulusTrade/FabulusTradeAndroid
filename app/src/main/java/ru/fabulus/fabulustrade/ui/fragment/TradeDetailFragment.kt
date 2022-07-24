@@ -14,9 +14,11 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
+import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
@@ -42,9 +44,12 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     private val binding: FragmentTradeDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
+    lateinit var currentTrade: Trade
+
     companion object {
         const val TRADE_KEY = "trade"
         fun newInstance(trade: Trade) = TradeDetailFragment().apply {
+            currentTrade = trade
             arguments = Bundle().apply {
                 putParcelable(TRADE_KEY, trade)
             }
@@ -204,6 +209,12 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
+        }
+    }
+
+    override fun setCommentsButtonListener(argument: Argument) {
+        binding.btnArgumentShowComments.setOnClickListener {
+            presenter.navigateToTradeArgument(currentTrade, argument)
         }
     }
 

@@ -345,3 +345,29 @@ fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
         this.toRequestBody("image/*".toMediaTypeOrNull(), 0, this.size)
     )
 }
+
+    fun mapArgumentToTrade(argument: Argument): Post {
+    argument.apply {
+        return Post(
+            id,
+            userName,
+            avatarUrl,
+            followersCount,
+            traderId,
+            text,
+            postStatus,
+            dateCreate,
+            dateUpdate,
+            pinned,
+            images,
+            likeCount,
+            dislikeCount,
+            isLiked,
+            isDisliked,
+            comments,
+            colorIncrDecrDepo365,
+            repostCount,
+            isFlashed
+        )
+    }
+}
