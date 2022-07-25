@@ -18,6 +18,9 @@ class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePos
         private const val TAG = "PostDetailPresenter"
     }
 
+
+    private var isOpeningTrade: Boolean = true
+
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
@@ -54,6 +57,49 @@ class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePos
                 viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
             }
         }
+
+        if (trade.subtype?.length > 0) {
+            if (trade.subtype.subSequence(0, 8) == "Открытие") {
+                isOpeningTrade = true
+                viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
+            } else {
+                isOpeningTrade = false
+                viewState.setTradeType(TradeDetailFragment.TradeType.CLOSING_TRADE)
+            }
+        }
+
+        initArgument()
+    }
+
+    private fun initArgument() {
+        apiRepo
+            .getArgumentByTrade(profile.token!!, trade.id.toString())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ arguments ->
+                val argument = arguments.results[0]
+                if (isOpeningTrade) {
+                    argument.takeProfit?.let { viewState.setTakeProfit(it) }
+                    argument.stopLoss?.let { viewState.setStopLoss(it) }
+                } else {
+                    trade.profitCount?.let { profit ->
+                        if (profit < 0.0) {
+                            viewState.setLoss(profit, 2)
+                        } else {
+                            viewState.setProfit(profit, 2)
+                        }
+                    }
+                }
+                argument.dealTerm?.let {
+                    if (isOpeningTrade) {
+                        viewState.setDealTerm(it, 0)
+                    } else {
+                        viewState.setDealTerm(it, 2)
+                    }
+                }
+            }, { error ->
+                Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
+                Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
+            })
     }
 
     private fun initMenu() {

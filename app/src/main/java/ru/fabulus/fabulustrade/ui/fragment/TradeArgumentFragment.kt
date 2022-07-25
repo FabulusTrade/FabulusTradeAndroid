@@ -107,10 +107,6 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
     override fun setTradeType(type: TradeDetailFragment.TradeType) {
         when (type) {
             TradeDetailFragment.TradeType.OPENING_TRADE -> {
-                binding.tvShareHead.text =
-                    resources.getString(R.string.share_with_arguments_on_your_idea)
-                binding.tvShareArgument.text =
-                    resources.getString(R.string.share_with_arguments_on_your_idea)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price), Html.FROM_HTML_MODE_LEGACY)
                     binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price), Html.FROM_HTML_MODE_LEGACY)
@@ -121,11 +117,44 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             }
             TradeDetailFragment.TradeType.CLOSING_TRADE -> {
                 binding.tvShareHead.text = resources.getString(R.string.arguments_head_idea)
-                binding.tvShareArgument.text = resources.getString(R.string.comment_to_result)
                 binding.tvFirstLineLabel.text = resources.getString(R.string.income)
                 binding.tvSecondLineLabel.text = resources.getString(R.string.loss)
             }
         }
+    }
+
+    override fun setTakeProfit(takeProfit: Float) {
+        binding.etTakeProfit.setText(takeProfit.toString())
+    }
+
+    override fun setProfit(profit: Float, precision: Int) {
+        binding.etTakeProfit.setText(formPercentString(profit, precision))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.etTakeProfit.setTextColor(
+                resources.getColor(
+                    R.color.colorGreenPercentProfit, requireContext().theme
+                )
+            )
+        } else {
+            binding.etTakeProfit.setTextColor(resources.getColor(R.color.colorGreenPercentProfit))
+        }
+    }
+
+    override fun setStopLoss(stopLoss: Float) {
+        binding.etStopLoss.setText(stopLoss.toString())
+    }
+
+    override fun setLoss(loss: Float, precision: Int) {
+        binding.tvStopLossResult.setText(formPercentString(loss, precision))
+    }
+
+    override fun setDealTerm(term: Float, precision: Int) {
+        binding.etHowManyDays.setText("%.${precision}f".format(term))
+    }
+
+    fun formPercentString(num: Float, precision: Int): String {
+        val percent = num * 100
+        return "%.${precision}f %%".format(percent)
     }
 
     override fun setPostMenuSelf(argument: Argument) {

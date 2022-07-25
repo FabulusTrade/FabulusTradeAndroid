@@ -40,7 +40,7 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutDetail"
+        android:id="@+id/linear_layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium_publish_trader_details_size"
@@ -284,7 +284,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetail">
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_detail">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_share_argument"

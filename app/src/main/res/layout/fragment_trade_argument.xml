@@ -40,7 +40,7 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutDetail"
+        android:id="@+id/linear_layout_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium_publish_trader_details_size"
@@ -272,39 +272,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_publish_trader_details_size"
             android:background="@color/colorGrayLight" />
-
-        <ImageView
-            android:id="@+id/iv_attached_kebab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
-            android:contentDescription="@string/iv_attached_kebab_content_description"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_author_avatar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_kebab" />
     </LinearLayout>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linear_share_arguments_begin"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/panel_share_arguments_publish_trader_details_size"
-        android:layout_marginTop="@dimen/margin_medium_publish_trader_details_size"
-        android:background="@color/colorBlueGray"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutDetail">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_share_argument"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_with_arguments_on_your_idea"
-            android:textColor="#453E92"
-            android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TableLayout
         android:id="@+id/layout_argument_table"
@@ -315,7 +283,7 @@
         android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
         android:stretchColumns="1,2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_share_arguments_begin">
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_detail">
 
         <TableRow
             android:background="@color/colorBlueGray"
@@ -325,7 +293,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_first_line_label"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:text="@string/take_profit_price"
                 android:textColor="@color/colorBlack"
@@ -363,7 +331,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_second_line_label"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:text="@string/stop_loss_price"
                 android:textColor="@color/colorBlack"
@@ -410,7 +378,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:text="@string/realization_day"
                 android:textColor="@color/colorBlack"
@@ -435,7 +403,17 @@
             android:background="@color/colorGrayLight" />
     </TableLayout>
 
-     <include
+    <ImageView
+        android:id="@+id/iv_attached_kebab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
+        android:contentDescription="@string/iv_attached_kebab_content_description"
+        app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_kebab" />
+
+    <include
         android:id="@+id/inc_post_layout"
         layout="@layout/layout_post_with_comments"
         android:layout_width="match_parent"
@@ -443,5 +421,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_argument_table" />
+        app:layout_constraintTop_toBottomOf="@id/iv_attached_kebab" />
 </androidx.constraintlayout.widget.ConstraintLayout>

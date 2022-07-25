@@ -21,5 +21,10 @@ interface TradeArgumentView  : BasePostView, MvpView {
     fun setDate(date: String)
     fun setSubtype(type: String)
     fun setTradeType(type: TradeDetailFragment.TradeType)
+    fun setTakeProfit(takeProfit: Float)
+    fun setStopLoss(stopLoss: Float)
+    fun setProfit(profit: Float, precision: Int)
+    fun setLoss(loss: Float, precision: Int)
+    fun setDealTerm(term: Float, precision: Int)
 
 }
