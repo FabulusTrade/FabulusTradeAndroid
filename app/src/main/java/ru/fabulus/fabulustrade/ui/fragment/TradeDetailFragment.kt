@@ -162,7 +162,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
         binding.tvShareHead.visibility = View.VISIBLE
-        binding.llArgument.visibility = View.GONE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -175,7 +174,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.layoutPostText.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.VISIBLE
         binding.linearShareHead.visibility = View.VISIBLE
-        binding.llArgument.visibility = View.GONE
         binding.ivTradeDetailClose.apply {
             visibility = View.INVISIBLE
             isClickable = false
@@ -186,7 +184,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.tvShareHead.visibility = View.VISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.VISIBLE
-        binding.llArgument.visibility = View.VISIBLE
         binding.etTakeProfit.apply {
             isEnabled = false
             background = null
@@ -212,12 +209,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
-    override fun setCommentsButtonListener(argument: Argument) {
-        binding.btnArgumentShowComments.setOnClickListener {
-            presenter.navigateToTradeArgument(currentTrade, argument)
-        }
-    }
-
     private fun setNotTraderNoArgumentMode() {
         binding.tvShareHead.visibility = View.INVISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
@@ -230,7 +221,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.VISIBLE
         binding.layoutPostText.visibility = View.GONE
-        binding.llArgument.visibility = View.VISIBLE
         binding.layoutSharingPanel.visibility = View.GONE
     }
 
@@ -299,18 +289,6 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     override fun setDealTerm(term: Float, precision: Int) {
         binding.etHowManyDays.setText("%.${precision}f".format(term))
-    }
-
-    override fun setArgumentText(text: String) {
-        binding.tvArgumentText.text = text
-    }
-
-    override fun setLikesCount(count: Int) {
-        binding.incArgumentFooter.tvLikeCount.text = count.toString()
-    }
-
-    override fun setDislikesCount(count: Int) {
-        binding.incArgumentFooter.tvDislikeCount.text = count.toString()
     }
 
     override fun onDestroyView() {

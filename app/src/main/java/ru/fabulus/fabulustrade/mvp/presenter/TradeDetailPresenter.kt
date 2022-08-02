@@ -118,10 +118,6 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                         viewState.setDealTerm(it, 2)
                     }
                 }
-                viewState.setArgumentText(argument.text)
-                viewState.setLikesCount(argument.likeCount)
-                viewState.setDislikesCount(argument.dislikeCount)
-                viewState.setCommentsButtonListener(argument)
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
                 Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
