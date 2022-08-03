@@ -79,6 +79,9 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
             btnItemTraderNewsShowComments.setOnClickListener {
                 presenter.showCommentDetails(holder)
             }
+            incItemPostHeader.root.setOnClickListener {
+                presenter.navigateToTraderScreen(holder.pos)
+            }
             if (presenter is ITraderMePostRVListPresenter) {
                 incItemPostHeader.ivFlash.setOnClickListener {
                     presenter.toFlash(holder)
