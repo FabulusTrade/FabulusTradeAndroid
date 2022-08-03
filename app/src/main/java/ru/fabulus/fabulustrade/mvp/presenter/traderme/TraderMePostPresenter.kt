@@ -343,6 +343,22 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
             }
         }
 
+        override fun navigateToTraderScreen(position: Int) {
+            val traderId = listPresenter.postList[position].traderId
+            apiRepo.getTraderById(
+                token = profile.token!!,
+                traderId = traderId,
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { trader ->
+                        router.navigateTo(Screens.traderMainScreen(trader))
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        }
+
         override fun toFlash(view: PostItemView) {
             val post = postList[view.pos]
             if (!post.isFlashed) {

@@ -17,4 +17,5 @@ interface IPostRVListPresenter {
     fun showCommentDetails(view: PostItemView)
     fun share(view: PostItemView, imageViewIdList: List<ImageView>)
     fun incRepostCount()
+    fun navigateToTraderScreen(position: Int)
 }

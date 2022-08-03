@@ -113,6 +113,22 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
             }
         }
 
+        override fun navigateToTraderScreen(position: Int) {
+            val traderId = listPresenter.posts[position].traderId
+            apiRepo.getTraderById(
+                token = profile.token!!,
+                traderId = traderId,
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { trader ->
+                        router.navigateTo(Screens.traderMainScreen(trader))
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        }
+
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {
             sharedView = view
             viewState.share(
