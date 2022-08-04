@@ -344,19 +344,21 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
         }
 
         override fun navigateToTraderScreen(position: Int) {
-            val traderId = listPresenter.postList[position].traderId
-            apiRepo.getTraderById(
-                token = profile.token!!,
-                traderId = traderId,
-            ).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { trader ->
-                        router.navigateTo(Screens.traderMainScreen(trader))
-                    },
-                    {
-                        it.printStackTrace()
-                    }
-                )
+            val clickedTraderId = listPresenter.postList[position].traderId
+            if (profile.user?.id != clickedTraderId){
+                apiRepo.getTraderById(
+                    token = profile.token!!,
+                    traderId = clickedTraderId,
+                ).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { trader ->
+                            router.navigateTo(Screens.traderMainScreen(trader))
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            }
         }
 
         override fun toFlash(view: PostItemView) {
