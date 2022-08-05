@@ -79,26 +79,27 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
                 if (trade.posts == null) {
                     viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_NO_ARGUMENT)
                 } else {
-                    viewState.setMode(TradeDetailFragment.Mode.NOT_TRADER_HAS_ARGUMENT)
-                    initArgument()
+                    initArgument(true)
                 }
             } else {
                 if (trade.posts == null) {
                     viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
                 } else {
-                    viewState.setMode(TradeDetailFragment.Mode.TRADER_HAS_ARGUMENT)
-                    initArgument()
+                    initArgument(true)
                 }
             }
         }
     }
 
-    private fun initArgument() {
+    private fun initArgument(navigateToArgumentScreen: Boolean){
         apiRepo
             .getArgumentByTrade(profile.token!!, trade.id.toString())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ arguments ->
                 val argument = arguments.results[0]
+                if (navigateToArgumentScreen) {
+                    navigateToTradeArgument(trade, argument)
+                }
                 if (isOpeningTrade) {
                     argument.takeProfit?.let { viewState.setTakeProfit(it) }
                     argument.stopLoss?.let { viewState.setStopLoss(it) }
