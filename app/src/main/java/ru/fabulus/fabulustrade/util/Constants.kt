@@ -13,6 +13,8 @@ const val DELETE_COMMENT_PERIOD = 1 * 60 * 60 * 1000
 // 1час * 60 минут * 60 секунд * 1000 миллисекунд
 const val EDIT_POST_PERIOD = 1 * 60 * 60 * 1000
 const val DELETE_POST_PERIOD = 1 * 60 * 60 * 1000
+// ID часового пояса сервера
+const val SERVER_TIME_ZONE_ID = "Europe/Moscow"
 // 48 часов * 60 минут * 60 секунд * 1000 миллисекунд
 const val FLASH_POST_PERIOD = 48 * 60 * 60 * 1000
 // Макисмальная длина текста в при шаринге поста
