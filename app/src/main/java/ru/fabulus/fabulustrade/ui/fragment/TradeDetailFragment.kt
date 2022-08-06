@@ -26,9 +26,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     enum class Mode {
         TRADER_NO_ARGUMENT,
         TRADER_FILLING_ARGUMENT,
-        TRADER_HAS_ARGUMENT,
-        NOT_TRADER_NO_ARGUMENT,
-        NOT_TRADER_HAS_ARGUMENT
+        NOT_TRADER_NO_ARGUMENT
     }
 
     enum class TradeType {
@@ -124,9 +122,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         when (mode) {
             Mode.TRADER_NO_ARGUMENT -> setTraderNoArgumentMode()
             Mode.TRADER_FILLING_ARGUMENT -> setTraderFillingArgumentMode()
-            Mode.TRADER_HAS_ARGUMENT -> setTraderHasArgumentMode()
             Mode.NOT_TRADER_NO_ARGUMENT -> setNotTraderNoArgumentMode()
-            Mode.NOT_TRADER_HAS_ARGUMENT -> setNotTraderHasArgumentMode()
         }
         currentMode = mode
     }
@@ -180,46 +176,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
-    private fun setTraderHasArgumentMode() {
-        binding.tvShareHead.visibility = View.VISIBLE
-        binding.linearShareArgumentsBegin.visibility = View.GONE
-        binding.layoutArgumentTable.visibility = View.VISIBLE
-        binding.etTakeProfit.apply {
-            isEnabled = false
-            background = null
-        }
-        binding.etStopLoss.apply {
-            isEnabled = false
-            background = null
-        }
-        binding.etHowManyDays.apply {
-            isEnabled = false
-            background = null
-        }
-        binding.ilCreatePost.apply {
-            isEnabled = false
-            isCounterEnabled = false
-            boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_NONE
-        }
-        binding.layoutPostText.visibility = View.GONE
-        binding.layoutSharingPanel.visibility = View.GONE
-        binding.ivTradeDetailClose.apply {
-            visibility = View.INVISIBLE
-            isClickable = false
-        }
-    }
-
     private fun setNotTraderNoArgumentMode() {
         binding.tvShareHead.visibility = View.INVISIBLE
         binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.GONE
-        binding.layoutPostText.visibility = View.GONE
-        binding.layoutSharingPanel.visibility = View.GONE
-    }
-
-    private fun setNotTraderHasArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.GONE
-        binding.layoutArgumentTable.visibility = View.VISIBLE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
     }

@@ -28,6 +28,10 @@ open class BasePostPresenter<T : BasePostView>() : MvpPresenter<T>() {
 
     constructor(argument: Argument) : this(mapArgumentToTrade(argument))
 
+    protected fun initArgument(argument: Argument) {
+        post = mapArgumentToTrade(argument)
+    }
+
     lateinit var post: Post
 
     companion object {

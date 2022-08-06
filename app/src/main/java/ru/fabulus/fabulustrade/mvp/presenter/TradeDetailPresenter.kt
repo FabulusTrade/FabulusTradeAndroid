@@ -64,7 +64,7 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
         viewState.setSubtype(trade.subtype)
 
-        if (trade.subtype?.length > 0) {
+        if (trade.subtype.length > 0) {
             if (trade.subtype.subSequence(0, 8) == "Открытие") {
                 isOpeningTrade = true
                 viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)

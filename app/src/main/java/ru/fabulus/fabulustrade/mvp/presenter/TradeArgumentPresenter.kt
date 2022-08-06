@@ -12,7 +12,14 @@ import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
 import ru.fabulus.fabulustrade.util.toStringFormat
 
-class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePostPresenter<TradeArgumentView>(argument) {
+class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgumentView>() {
+
+    var argument: Argument? = null
+
+    constructor(trade: Trade, _argument: Argument) : this(trade) {
+        argument = _argument
+        initArgument(_argument)
+    }
 
     companion object {
         private const val TAG = "PostDetailPresenter"
@@ -29,7 +36,7 @@ class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePos
 
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 
-        viewState.setRepostCount(argument.repostCount.toString())
+        viewState.setRepostCount(argument?.repostCount.toString())
 
         viewState.setType(trade.operationType)
         viewState.setCompany(trade.company)
@@ -103,10 +110,12 @@ class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePos
     }
 
     private fun initMenu() {
-        if (isSelfArgument(argument)) {
-            viewState.setPostMenuSelf(argument)
-        } else {
-            fillComplaints()
+        argument?.let {
+            if (isSelfArgument(argument!!)) {
+                viewState.setPostMenuSelf(argument!!)
+            } else {
+                fillComplaints()
+            }
         }
     }
 
@@ -115,7 +124,7 @@ class TradeArgumentPresenter(val trade: Trade, var argument: Argument) : BasePos
             .getComplaints(profile.token!!)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ complaintList ->
-                viewState.setPostMenuSomeone(argument, complaintList)
+                argument?.let { viewState.setPostMenuSomeone(it, complaintList) }
             }, { error ->
                 Log.d(TAG, "Error: ${error.message.toString()}")
                 Log.d(TAG, error.printStackTrace().toString())
