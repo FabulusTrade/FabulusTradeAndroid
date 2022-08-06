@@ -91,18 +91,39 @@ private fun containsDigit(line: String): Boolean {
 }
 
 fun isCanEditComment(dateCreated: Date): Boolean {
-    return ((currentTimeInMillis() - dateCreated.time) < EDIT_COMMENT_PERIOD)
+    val diffBetweenTimeZones = getDiffBetweenTimeZones()
+    return if (diffBetweenTimeZones >= 0) {
+        ((currentTimeInMillis() - dateCreated.time - diffBetweenTimeZones) < EDIT_COMMENT_PERIOD)
+    } else {
+        ((currentTimeInMillis() - dateCreated.time + diffBetweenTimeZones) < EDIT_COMMENT_PERIOD)
+    }
 }
 
 fun isCanDeleteComment(dateCreated: Date): Boolean {
-    return ((currentTimeInMillis() - dateCreated.time) < DELETE_COMMENT_PERIOD)
+    val diffBetweenTimeZones = getDiffBetweenTimeZones()
+    return if (diffBetweenTimeZones >= 0) {
+        ((currentTimeInMillis() - dateCreated.time - diffBetweenTimeZones) < DELETE_COMMENT_PERIOD)
+    } else {
+        ((currentTimeInMillis() - dateCreated.time + diffBetweenTimeZones) < DELETE_COMMENT_PERIOD)
+    }
 }
+
 fun isCanEditPost(dateCreated: Date): Boolean {
-    return ((currentTimeInMillis() - dateCreated.time) < EDIT_POST_PERIOD)
+    val diffBetweenTimeZones = getDiffBetweenTimeZones()
+    return if (diffBetweenTimeZones >= 0) {
+        ((currentTimeInMillis() - dateCreated.time - diffBetweenTimeZones) < EDIT_POST_PERIOD)
+    } else {
+        ((currentTimeInMillis() - dateCreated.time + diffBetweenTimeZones) < EDIT_POST_PERIOD)
+    }
 }
 
 fun isCanDeletePost(dateCreated: Date): Boolean {
-    return ((currentTimeInMillis() - dateCreated.time) < DELETE_POST_PERIOD)
+    val diffBetweenTimeZones = getDiffBetweenTimeZones()
+    return if (diffBetweenTimeZones >= 0) {
+        ((currentTimeInMillis() - dateCreated.time - diffBetweenTimeZones) < DELETE_POST_PERIOD)
+    } else {
+        ((currentTimeInMillis() - dateCreated.time + diffBetweenTimeZones) < DELETE_POST_PERIOD)
+    }
 }
 
 fun isCanFlashPostByCreateDate(dateCreated: Date): Boolean {
@@ -110,6 +131,9 @@ fun isCanFlashPostByCreateDate(dateCreated: Date): Boolean {
 }
 
 fun currentTimeInMillis(): Long = Calendar.getInstance().timeInMillis
+
+fun getDiffBetweenTimeZones(): Int =
+    TimeZone.getTimeZone(SERVER_TIME_ZONE_ID).rawOffset - TimeZone.getDefault().rawOffset
 
 fun List<CommentBlockedUser>.isLocked(userId: String): Boolean {
     var result = false
