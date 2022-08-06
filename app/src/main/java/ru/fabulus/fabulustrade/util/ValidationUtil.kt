@@ -97,8 +97,17 @@ fun isCanEditComment(dateCreated: Date): Boolean {
 fun isCanDeleteComment(dateCreated: Date): Boolean {
     return ((currentTimeInMillis() - dateCreated.time) < DELETE_COMMENT_PERIOD)
 }
+
 fun isCanEditPost(dateCreated: Date): Boolean {
-    return ((currentTimeInMillis() - dateCreated.time) < EDIT_POST_PERIOD)
+    val deviceDate = Date()
+    val serverTimeZone = TimeZone.getTimeZone(SERVER_TIME_ZONE_ID).rawOffset
+    val deviceTimeZone = TimeZone.getDefault().rawOffset
+    val diffBetweenTimeZones = serverTimeZone - deviceTimeZone
+    return if (diffBetweenTimeZones >= 0){
+        ((deviceDate.time - dateCreated.time - diffBetweenTimeZones) < EDIT_POST_PERIOD)
+    }else {
+        ((deviceDate.time - dateCreated.time + diffBetweenTimeZones) < EDIT_POST_PERIOD)
+    }
 }
 
 fun isCanDeletePost(dateCreated: Date): Boolean {
