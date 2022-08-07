@@ -20,6 +20,7 @@ class PostDetailPresenter(post: Post) : BasePostPresenter<PostDetailView>(post) 
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
+        super.initPost()
 
         initMenu()
 

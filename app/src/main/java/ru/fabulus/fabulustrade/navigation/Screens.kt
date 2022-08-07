@@ -124,4 +124,7 @@ object Screens {
 
     fun tradeArgumentScreen(trade: Trade, argument: Argument) =
         FragmentScreen { TradeArgumentFragment.newInstance(trade, argument) }
+
+    fun tradeArgumentScreen(trade: Trade) =
+        FragmentScreen { TradeArgumentFragment.newInstance(trade) }
 }

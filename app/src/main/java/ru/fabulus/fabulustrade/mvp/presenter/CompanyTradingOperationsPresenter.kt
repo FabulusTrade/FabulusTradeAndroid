@@ -67,7 +67,11 @@ class CompanyTradingOperationsPresenter(
                     .getTradeById(token, dealsList[view.pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ trade ->
-                        router.navigateTo(Screens.tradeDetailScreen(trade))
+                        if (trade.posts == null) {
+                            router.navigateTo(Screens.tradeDetailScreen(trade))
+                        } else {
+                            router.navigateTo(Screens.tradeArgumentScreen(trade))
+                        }
                     }, {
                         // Ошибка не обрабатывается
                     })

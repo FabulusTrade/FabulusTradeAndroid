@@ -32,6 +32,12 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
                 putParcelable(TRADE_KEY, trade)
             }
         }
+
+        fun newInstance(trade: Trade) = TradeArgumentFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(TRADE_KEY, trade)
+            }
+        }
     }
 
     private var _binding: FragmentTradeArgumentBinding? = null
@@ -44,7 +50,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     @ProvidePresenter
     fun provideTradeArgumentPresenter() =
-        TradeArgumentPresenter(requireArguments()[TradeDetailFragment.TRADE_KEY] as Trade, requireArguments()[ARGUMENT_KEY] as Argument).apply {
+        TradeArgumentPresenter(requireArguments()[TradeDetailFragment.TRADE_KEY] as Trade).apply {
             App.instance.appComponent.inject(this)
         }
 

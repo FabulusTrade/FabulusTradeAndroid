@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.os.Handler
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
@@ -16,15 +17,9 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
 
     var argument: Argument? = null
 
-    constructor(trade: Trade, _argument: Argument) : this(trade) {
-        argument = _argument
-        initArgument(_argument)
-    }
-
     companion object {
         private const val TAG = "PostDetailPresenter"
     }
-
 
     private var isOpeningTrade: Boolean = true
 
@@ -83,10 +78,12 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
             .getArgumentByTrade(profile.token!!, trade.id.toString())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ arguments ->
-                val argument = arguments.results[0]
+                argument = arguments.results[0]
+                super.assignArgument(argument!!)
+                super.initPost()
                 if (isOpeningTrade) {
-                    argument.takeProfit?.let { viewState.setTakeProfit(it) }
-                    argument.stopLoss?.let { viewState.setStopLoss(it) }
+                    argument!!.takeProfit?.let { viewState.setTakeProfit(it) }
+                    argument!!.stopLoss?.let { viewState.setStopLoss(it) }
                 } else {
                     trade.profitCount?.let { profit ->
                         if (profit < 0.0) {
@@ -96,7 +93,7 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                         }
                     }
                 }
-                argument.dealTerm?.let {
+                argument!!.dealTerm?.let {
                     if (isOpeningTrade) {
                         viewState.setDealTerm(it, 0)
                     } else {

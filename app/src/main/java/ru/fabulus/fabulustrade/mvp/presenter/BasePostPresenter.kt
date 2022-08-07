@@ -6,7 +6,6 @@ import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
-import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
@@ -16,7 +15,6 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.ui.fragment.TradeArgumentFragment
 import ru.fabulus.fabulustrade.util.*
 import javax.inject.Inject
 
@@ -28,7 +26,7 @@ open class BasePostPresenter<T : BasePostView>() : MvpPresenter<T>() {
 
     constructor(argument: Argument) : this(mapArgumentToTrade(argument))
 
-    protected fun initArgument(argument: Argument) {
+    protected fun assignArgument(argument: Argument) {
         post = mapArgumentToTrade(argument)
     }
 
@@ -58,6 +56,9 @@ open class BasePostPresenter<T : BasePostView>() : MvpPresenter<T>() {
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this as BasePostPresenter<BasePostView>)
         super.onFirstViewAttach()
+    }
+
+    fun initPost() {
         listPresenter = CommentPostDetailPresenter(viewState, post)
         viewState.init()
         viewState.setPostText(post.text)
