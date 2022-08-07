@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
-import android.os.Handler
 import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
@@ -26,8 +25,6 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
-
-        initMenu()
 
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 
@@ -100,6 +97,7 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                         viewState.setDealTerm(it, 2)
                     }
                 }
+                initMenu()
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
                 Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
