@@ -1,24 +1,31 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IImageListPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
 import ru.fabulus.fabulustrade.util.toStringFormat
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
-class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
+class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) : MvpPresenter<TradeDetailView>(),
+    IImageListPresenter {
 
     companion object {
         const val NEW_ARGUMENT_RESULT = "NEW_ARGUMENT_RESULT"
@@ -37,6 +44,8 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
     lateinit var profile: Profile
 
     private var imagesToAdd = mutableListOf<ByteArray>()
+
+    private val imagesOnServerToDelete = mutableSetOf<String>()
 
     private var isOpeningTrade: Boolean = true
 
@@ -138,6 +147,42 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
         createArgument(text, stopLoss, takeProfit, dealTerm)
     }
 
+    fun addImages(newImages: List<Bitmap>) {
+        if (newImages.isEmpty()) return
+        val remain =
+            max(
+                CreatePostPresenter.MAX_ATTACHED_IMAGE_COUNT - (post?.images?.size
+                    ?: 0) + imagesToAdd.size + imagesOnServerToDelete.size,
+                0
+            )
+        val imageCountToAdd = min(newImages.size, remain)
+        repeat(imageCountToAdd) { addImage(newImages[it]) }
+        viewState.showImagesAddedMessage(imageCountToAdd)
+    }
+
+    private fun updateListOfImage(deletedImage: CreatePostPresenter.ImageOfPost? = null) {
+        (post?.let { post ->
+            post.images.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
+        }
+            ?.let { imageList ->
+                imageList - imagesOnServerToDelete.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
+            }
+            ?: listOf<CreatePostPresenter.ImageOfPost>())
+            .let { imageList ->
+                imageList + imagesToAdd.map {
+                    CreatePostPresenter.ImageOfPost.ImageOnDevice(it)
+                }
+            }
+            .let { viewState.updateListOfImages(it, deletedImage) }
+    }
+
+    private fun addImage(imageBitmap: Bitmap) {
+        val stream = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+        imagesToAdd.add(stream.toByteArray())
+        updateListOfImage()
+    }
+
     private fun createArgument(
         text: String,
         stopLoss: Float?,
@@ -185,5 +230,14 @@ class TradeDetailPresenter(val trade: Trade) : MvpPresenter<TradeDetailView>() {
 
     fun navigateToTradeArgument(trade: Trade, argument: Argument) {
         router.navigateTo(Screens.tradeArgumentScreen(trade, argument))
+    }
+
+    override fun markToDeleteImageOnServer(imageOfPost: CreatePostPresenter.ImageOfPost) {
+        if (imageOfPost is CreatePostPresenter.ImageOfPost.ImageOnBack) {
+            imagesOnServerToDelete.add(imageOfPost.image)
+        } else if (imageOfPost is CreatePostPresenter.ImageOfPost.ImageOnDevice) {
+            imagesToAdd.remove(imageOfPost.image)
+        }
+        updateListOfImage(imageOfPost)
     }
 }

@@ -16,10 +16,13 @@ import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.ImageListOfPostAdapter
+import ru.fabulus.fabulustrade.util.showLongToast
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
@@ -41,6 +44,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     private var _binding: FragmentTradeDetailBinding? = null
     private val binding: FragmentTradeDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
+    private val imageListOfPostAdapter by lazy {
+        ImageListOfPostAdapter(presenter)
+    }
 
     lateinit var currentTrade: Trade
 
@@ -254,6 +261,17 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun showImagesAddedMessage(count: Int) {
+        requireContext().showLongToast(getString(R.string.images_added, count))
+    }
+
+    override fun updateListOfImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    ) {
+        imageListOfPostAdapter.updateImages(images, deletedImage)
     }
 
     override fun showErrorMessage(message: String) {

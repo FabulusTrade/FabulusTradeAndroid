@@ -4,6 +4,7 @@ import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 
 @StateStrategyType(AddToEndSingleStrategy::class)
@@ -25,4 +26,10 @@ interface TradeDetailView: MvpView {
     fun setLoss(loss: Float, precision: Int)
     fun showErrorMessage(message: String)
     fun setDealTerm(term: Float, precision: Int)
+    fun updateListOfImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    )
+
+    fun showImagesAddedMessage(count: Int)
 }
