@@ -1,25 +1,25 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
-import com.google.android.material.textfield.TextInputLayout
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
-import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
-import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.ImageListOfPostAdapter
 import ru.fabulus.fabulustrade.util.showLongToast
@@ -112,6 +112,14 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            presenter.addImages(uris.map { it.toBitmap() })
+        }
+
+    private fun Uri.toBitmap() =
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
+
     private fun initClickListeners() {
         binding.linearShareArgumentsBegin.setOnClickListener {
             setMode(Mode.TRADER_FILLING_ARGUMENT)
@@ -122,6 +130,9 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             val takeProfit = binding.etTakeProfit.text.toString().toFloatOrNull()
             val dealTerm = binding.etHowManyDays.text.toString().toIntOrNull()
             presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
+        }
+        binding.ivAttachImages.setOnClickListener {
+            getContent.launch(getString(R.string.gallery_mask))
         }
     }
 

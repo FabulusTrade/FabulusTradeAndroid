@@ -467,7 +467,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView"
+            android:id="@+id/iv_attach_images"
             android:layout_width="@dimen/icon_publish_trader_details_size"
             android:layout_height="@dimen/icon_publish_trader_details_size"
             app:layout_constraintBottom_toBottomOf="parent"
