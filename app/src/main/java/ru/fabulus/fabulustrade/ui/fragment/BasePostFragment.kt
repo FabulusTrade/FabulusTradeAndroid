@@ -42,8 +42,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
             presenter.incRepostCount()
         }
 
-    @InjectPresenter
-    open lateinit var presenter: BasePostPresenter<BasePostView>
+    protected lateinit var presenter: BasePostPresenter<BasePostView>
 
     @ProvidePresenter
     fun providePresenter(): BasePostPresenter<BasePostView> {

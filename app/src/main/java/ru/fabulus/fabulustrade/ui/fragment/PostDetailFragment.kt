@@ -41,8 +41,6 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
     @InjectPresenter
     lateinit var postDetailPresenter: PostDetailPresenter
 
-    override lateinit var presenter: BasePostPresenter<BasePostView>
-
     @ProvidePresenter
     fun providePostDetailPresenter() =
         PostDetailPresenter(requireArguments()[POST_KEY] as Post).apply {

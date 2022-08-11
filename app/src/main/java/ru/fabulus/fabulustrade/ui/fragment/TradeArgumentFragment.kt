@@ -16,7 +16,9 @@ import ru.fabulus.fabulustrade.databinding.FragmentTradeArgumentBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
+import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.TradeArgumentPresenter
+import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
@@ -61,6 +63,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
     ): View? {
         _binding = FragmentTradeArgumentBinding.inflate(inflater, container, false)
         App.instance.appComponent.inject(this)
+        presenter = tradeArgumentPresenter as BasePostPresenter<BasePostView>
         postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
         return _binding?.root
     }
