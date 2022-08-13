@@ -409,8 +409,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
         android:contentDescription="@string/iv_attached_kebab_content_description"
-        app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
         app:srcCompat="@drawable/ic_kebab" />
 
     <include
@@ -418,8 +418,8 @@
         layout="@layout/layout_post_with_comments"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
+        android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_attached_kebab" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,5 +26,5 @@ interface TradeArgumentView  : BasePostView, MvpView {
     fun setProfit(profit: Float, precision: Int)
     fun setLoss(loss: Float, precision: Int)
     fun setDealTerm(term: Float, precision: Int)
-
+    fun setDealTerm(term: Int)
 }

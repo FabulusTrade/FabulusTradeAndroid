@@ -205,7 +205,8 @@ fun mapToArgument(argument: ResponseArgument?): Argument? {
             isFlashed = argument.isFlashed,
             stopLoss = argument.stop_loss,
             takeProfit = argument.take_profit,
-            dealTerm = argument.deal_term
+            dealTerm = argument.deal_term,
+            closedDealTerm = argument.closed_deal_term
         )
     }
 }

@@ -11,6 +11,7 @@ import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
 import ru.fabulus.fabulustrade.util.toStringFormat
+import kotlin.math.roundToInt
 
 class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgumentView>() {
 
@@ -90,11 +91,13 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                         }
                     }
                 }
-                argument!!.dealTerm?.let {
-                    if (isOpeningTrade) {
-                        viewState.setDealTerm(it, 0)
-                    } else {
-                        viewState.setDealTerm(it, 2)
+                if (isOpeningTrade) {
+                    argument!!.dealTerm?.let {
+                        viewState.setDealTerm(it.roundToInt())
+                    }
+                } else {
+                    argument!!.closedDealTerm?.let {
+                        viewState.setDealTerm(it / 3600 / 24, 2)
                     }
                 }
                 initMenu()

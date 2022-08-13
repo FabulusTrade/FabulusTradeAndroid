@@ -161,6 +161,10 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         binding.etHowManyDays.setText("%.${precision}f".format(term))
     }
 
+    override fun setDealTerm(term:  Int) {
+        binding.etHowManyDays.setText(term.toString())
+    }
+
     fun formPercentString(num: Float, precision: Int): String {
         val percent = num * 100
         return "%.${precision}f %%".format(percent)
