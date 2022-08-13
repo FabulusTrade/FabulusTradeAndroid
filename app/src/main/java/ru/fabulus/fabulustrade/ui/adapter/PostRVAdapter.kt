@@ -30,7 +30,7 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
 
     companion object {
         const val MAX_LINES = 5000
-        const val MIN_LINES = 3
+        const val MIN_LINES = 5
     }
 
     lateinit var binding: ItemTraderNewsBinding
