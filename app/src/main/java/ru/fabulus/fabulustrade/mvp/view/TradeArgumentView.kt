@@ -5,7 +5,6 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 
 @StateStrategyType(AddToEndSingleStrategy::class)
@@ -25,6 +24,7 @@ interface TradeArgumentView  : BasePostView, MvpView {
     fun setStopLoss(stopLoss: Float)
     fun setProfit(profit: Float, precision: Int)
     fun setLoss(loss: Float, precision: Int)
-    fun setDealTerm(term: Float, precision: Int)
+    fun setDealTerm(term: Double, precision: Int)
     fun setDealTerm(term: Int)
+    fun relocateKebabForOpeningTrade()
 }

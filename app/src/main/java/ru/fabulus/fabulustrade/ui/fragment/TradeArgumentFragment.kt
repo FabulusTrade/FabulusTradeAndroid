@@ -8,6 +8,8 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -22,6 +24,7 @@ import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
+
 
 class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
@@ -157,7 +160,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         binding.tvStopLossResult.setText(formPercentString(loss, precision))
     }
 
-    override fun setDealTerm(term: Float, precision: Int) {
+    override fun setDealTerm(term: Double, precision: Int) {
         binding.etHowManyDays.setText("%.${precision}f".format(term))
     }
 
@@ -221,5 +224,27 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             }
             popupMenu.show()
         }
+    }
+
+    override fun relocateKebabForOpeningTrade() {
+        val constraintLayout: ConstraintLayout = binding.clTradeArgument
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        constraintSet.connect(R.id.iv_attached_kebab,
+            ConstraintSet.TOP,
+            R.id.linear_layout_detail,
+            ConstraintSet.BOTTOM,
+            0)
+        constraintSet.connect(R.id.layout_argument_table,
+            ConstraintSet.TOP,
+            R.id.iv_attached_kebab,
+            ConstraintSet.BOTTOM,
+            0)
+        constraintSet.connect(R.id.inc_post_layout,
+            ConstraintSet.TOP,
+            R.id.layout_argument_table,
+            ConstraintSet.BOTTOM,
+            0)
+        constraintSet.applyTo(constraintLayout)
     }
 }

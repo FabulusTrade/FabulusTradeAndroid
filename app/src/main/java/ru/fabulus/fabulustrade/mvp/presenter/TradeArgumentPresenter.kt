@@ -95,9 +95,10 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                     argument!!.dealTerm?.let {
                         viewState.setDealTerm(it.roundToInt())
                     }
+                    viewState.relocateKebabForOpeningTrade()
                 } else {
                     argument!!.closedDealTerm?.let {
-                        viewState.setDealTerm(it / 3600 / 24, 2)
+                        viewState.setDealTerm(it / 3600.0 / 24.0, 2)
                     }
                 }
                 initMenu()
