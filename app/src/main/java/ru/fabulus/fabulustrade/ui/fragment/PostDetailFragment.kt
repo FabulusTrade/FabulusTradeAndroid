@@ -71,6 +71,10 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         super.onDestroyView()
     }
 
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
+    }
+
     override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
         with(incItemPostHeader) {
             if (isVisible) {
@@ -91,10 +95,6 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun setRepostCount(text: String) {
         postBinding.incItemPostFooter.tvRepostCount.text = text
-    }
-
-    override fun scrollNsvCommentViewToBottom() {
-        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setPostMenuSelf(post: Post) {

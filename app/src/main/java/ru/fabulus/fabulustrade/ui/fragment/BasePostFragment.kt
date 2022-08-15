@@ -30,7 +30,7 @@ import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
-open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
+abstract class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     protected lateinit var postBinding: ItemPostBinding
 
     protected lateinit var sendCommentBinding: ItemSendCommentBinding

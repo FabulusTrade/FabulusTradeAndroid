@@ -89,6 +89,10 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         }
     }
 
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
+    }
+
     override fun setType(type: String) {
         binding.tvTradeDetailOperation.text = type
     }

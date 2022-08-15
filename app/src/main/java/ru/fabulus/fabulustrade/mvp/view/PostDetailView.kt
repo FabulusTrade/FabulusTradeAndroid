@@ -20,6 +20,4 @@ interface PostDetailView  : BasePostView, MvpView {
     fun setProfitNegativeArrow()
     fun setProfitPositiveArrow()
     fun setAuthorFollowerCount(text: String)
-
-    fun scrollNsvCommentViewToBottom()
 }

@@ -39,4 +39,5 @@ interface BasePostView : MvpView {
     fun notifyItemChanged(position: Int)
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)
+    fun scrollNsvCommentViewToBottom()
 }
