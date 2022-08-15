@@ -105,7 +105,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         return try {
             val number = "${numberText.replace(",", ".")}".trim().toDouble()
             val price = "${priceText.replace(",", ".")}".trim().toDouble()
-            val returnValue = (((number / price) - 1) * 100)
+            val returnValue = ((number / price) - 1) * 100
             "%.2f %%".format(returnValue)
         } catch (e: NumberFormatException) {
             ""

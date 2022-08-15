@@ -137,6 +137,9 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     override fun setTakeProfit(takeProfit: Float) {
         binding.etTakeProfit.setText(takeProfit.toString())
+        val priceText = binding.tvTradeDetailPrice.text.trim().toString()
+        val price = "${priceText.replace(",", ".")}".trim().toDouble()
+        binding.tvTakeProfitResult.text = "%.2f %%".format(((takeProfit / price) - 1) * 100)
     }
 
     override fun setProfit(profit: Float, precision: Int) {
@@ -154,6 +157,9 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     override fun setStopLoss(stopLoss: Float) {
         binding.etStopLoss.setText(stopLoss.toString())
+        val priceText = binding.tvTradeDetailPrice.text.trim().toString()
+        val price = "${priceText.replace(",", ".")}".trim().toDouble()
+        binding.tvStopLossResult.text = "%.2f %%".format(((stopLoss / price) - 1) * 100)
     }
 
     override fun setLoss(loss: Float, precision: Int) {
@@ -230,21 +236,18 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         val constraintLayout: ConstraintLayout = binding.clTradeArgument
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
-        constraintSet.connect(R.id.iv_attached_kebab,
+        constraintSet.connect(R.id.fl_kebab_bar,
             ConstraintSet.TOP,
             R.id.linear_layout_detail,
-            ConstraintSet.BOTTOM,
-            0)
+            ConstraintSet.BOTTOM)
         constraintSet.connect(R.id.layout_argument_table,
             ConstraintSet.TOP,
-            R.id.iv_attached_kebab,
-            ConstraintSet.BOTTOM,
-            0)
+            R.id.fl_kebab_bar,
+            ConstraintSet.BOTTOM)
         constraintSet.connect(R.id.inc_post_layout,
             ConstraintSet.TOP,
             R.id.layout_argument_table,
-            ConstraintSet.BOTTOM,
-            0)
+            ConstraintSet.BOTTOM)
         constraintSet.applyTo(constraintLayout)
     }
 }
