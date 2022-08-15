@@ -17,13 +17,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/inc_post_layout"
-        layout="@layout/layout_post_with_comments"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inc_item_post_header" />
+        app:layout_constraintTop_toBottomOf="@id/inc_item_post_header">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_comment_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="@dimen/nsv_comment_view_margin_bottom"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment">
+
+            <include
+                android:id="@+id/inc_item_post"
+                layout="@layout/item_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_work_with_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <include
+                android:id="@+id/inc_item_send_comment"
+                layout="@layout/item_send_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+            <include
+                android:id="@+id/inc_item_update_comment"
+                layout="@layout/item_update_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

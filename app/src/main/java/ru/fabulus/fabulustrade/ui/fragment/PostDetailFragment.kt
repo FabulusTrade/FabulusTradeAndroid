@@ -59,13 +59,20 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
     ): View? {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         App.instance.appComponent.inject(this)
-        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost
+        sendCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
+        updateCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
+
         return _binding?.root
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setFlashVisibility(isVisible: Boolean) = with(binding) {

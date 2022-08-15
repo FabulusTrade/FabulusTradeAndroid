@@ -67,7 +67,12 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         _binding = FragmentTradeArgumentBinding.inflate(inflater, container, false)
         App.instance.appComponent.inject(this)
         presenter = tradeArgumentPresenter as BasePostPresenter<BasePostView>
-        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost
+        sendCommentBinding =
+            checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
+        updateCommentBinding =
+            checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
+
         return _binding?.root
     }
 
@@ -82,6 +87,10 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setType(type: String) {
@@ -120,11 +129,19 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         when (type) {
             TradeDetailFragment.TradeType.OPENING_TRADE -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price), Html.FROM_HTML_MODE_LEGACY)
-                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price), Html.FROM_HTML_MODE_LEGACY)
+                    binding.tvFirstLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.take_profit_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+                    binding.tvSecondLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.stop_loss_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
                 } else {
-                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price))
-                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price))
+                    binding.tvFirstLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.take_profit_price))
+                    binding.tvSecondLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.stop_loss_price))
                 }
             }
             TradeDetailFragment.TradeType.CLOSING_TRADE -> {
@@ -170,7 +187,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         binding.etHowManyDays.setText("%.${precision}f".format(term))
     }
 
-    override fun setDealTerm(term:  Int) {
+    override fun setDealTerm(term: Int) {
         binding.etHowManyDays.setText(term.toString())
     }
 
@@ -236,15 +253,18 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         val constraintLayout: ConstraintLayout = binding.clTradeArgument
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
-        constraintSet.connect(R.id.fl_kebab_bar,
+        constraintSet.connect(
+            R.id.iv_attached_kebab,
             ConstraintSet.TOP,
             R.id.linear_layout_detail,
             ConstraintSet.BOTTOM)
-        constraintSet.connect(R.id.layout_argument_table,
+        constraintSet.connect(
+            R.id.layout_argument_table,
             ConstraintSet.TOP,
-            R.id.fl_kebab_bar,
+            R.id.iv_attached_kebab,
             ConstraintSet.BOTTOM)
-        constraintSet.connect(R.id.inc_post_layout,
+        constraintSet.connect(
+            R.id.ll_post,
             ConstraintSet.TOP,
             R.id.layout_argument_table,
             ConstraintSet.BOTTOM)
