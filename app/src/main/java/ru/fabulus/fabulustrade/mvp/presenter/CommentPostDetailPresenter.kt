@@ -179,7 +179,7 @@ class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) :
                 setCommentCount()
                 setCommentList()
                 viewState.setRvPosition(post.commentCount() - 1)
-                viewState.scrollNsvCommentViewToBottom()
+                //TODO: перенести в подходящее место viewState.scrollNsvCommentViewToBottom()
                 viewState.clearNewCommentText()
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")

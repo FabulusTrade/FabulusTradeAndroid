@@ -59,7 +59,10 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
     ): View? {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         App.instance.appComponent.inject(this)
-        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incPostLayout
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost
+        sendCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
+        updateCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
+
         return _binding?.root
     }
 
@@ -80,14 +83,18 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun initRecyclerView() {
         commentRVAdapter = CommentRVAdapter(postDetailPresenter.listPresenter)
-        postBinding.incItemPost.rvPostComments.run {
+        postBinding.rvPostComments.run {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     override fun setRepostCount(text: String) {
-        postBinding.incItemPost.incItemPostFooter.tvRepostCount.text = text
+        postBinding.incItemPostFooter.tvRepostCount.text = text
+    }
+
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setPostMenuSelf(post: Post) {

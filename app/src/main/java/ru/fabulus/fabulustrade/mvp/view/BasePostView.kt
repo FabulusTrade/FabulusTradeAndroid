@@ -29,7 +29,6 @@ interface BasePostView : MvpView {
     fun prepareUpdateComment(text: Spanned, maxCommentLength: Int)
     fun showToast(text: String)
     fun showComplainSnackBar()
-    fun scrollNsvCommentViewToBottom()
     fun setClickableUpdateCommentBtn()
     fun setUnclickableUpdateCommentBtn()
     fun setIncItemSendCommentVisibility(visibility: Int)
