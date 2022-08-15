@@ -78,7 +78,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     override fun initRecyclerView() {
         commentRVAdapter = CommentRVAdapter(tradeArgumentPresenter.listPresenter)
-        postBinding.rvPostComments.run {
+        postBinding.incItemPost.rvPostComments.run {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
@@ -113,7 +113,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
     }
 
     override fun setRepostCount(text: String) {
-        postBinding.incItemPostFooter.tvRepostCount.text = text
+        postBinding.incItemPost.incItemPostFooter.tvRepostCount.text = text
     }
 
     override fun setTradeType(type: TradeDetailFragment.TradeType) {

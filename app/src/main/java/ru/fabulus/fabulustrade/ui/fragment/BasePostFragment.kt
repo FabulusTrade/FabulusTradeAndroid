@@ -77,7 +77,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
 
     protected open fun initRecyclerView() {
         commentRVAdapter = CommentRVAdapter(presenter.listPresenter)
-        postBinding.rvPostComments.run {
+        postBinding.incItemPost.rvPostComments.run {
             adapter = commentRVAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
@@ -106,7 +106,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     private fun initListeners() {
         with(postBinding) {
 
-            with(incItemPostFooter) {
+            with(incItemPost.incItemPostFooter) {
                 btnLike.setOnClickListener {
                     presenter.likePost()
                 }
@@ -114,7 +114,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
                     presenter.dislikePost()
                 }
                 btnShare.setOnClickListener {
-                    presenter.share(postBinding.imageGroup.getImageViews())
+                    presenter.share(postBinding.incItemPost.imageGroup.getImageViews())
                 }
             }
 
@@ -189,7 +189,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     }
 
     override fun setPostImages(images: List<String>?) {
-        with(postBinding.imageGroup) {
+        with(postBinding.incItemPost.imageGroup) {
             if (images.isNullOrEmpty()) {
                 visibility = View.GONE
             } else {
@@ -204,27 +204,27 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     }
 
     override fun setLikeActiveImage() {
-        postBinding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like)
+        postBinding.incItemPost.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like)
     }
 
     override fun setLikeInactiveImage() {
-        postBinding.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like_inactive)
+        postBinding.incItemPost.incItemPostFooter.btnLike.setImageResource(R.drawable.ic_like_inactive)
     }
 
     override fun setDislikeActiveImage() {
-        postBinding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike)
+        postBinding.incItemPost.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike)
     }
 
     override fun setDislikeInactiveImage() {
-        postBinding.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike_inactive)
+        postBinding.incItemPost.incItemPostFooter.btnDislike.setImageResource(R.drawable.ic_dislike_inactive)
     }
 
     override fun setPostLikeCount(likeCount: String) {
-        postBinding.incItemPostFooter.tvLikeCount.text = likeCount
+        postBinding.incItemPost.incItemPostFooter.tvLikeCount.text = likeCount
     }
 
     override fun setPostDislikeCount(dislikeCount: String) {
-        postBinding.incItemPostFooter.tvDislikeCount.text = dislikeCount
+        postBinding.incItemPost.incItemPostFooter.tvDislikeCount.text = dislikeCount
     }
 
     override fun share(repostIntent: Intent) {
@@ -232,7 +232,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     }
 
     override fun setCommentCount(text: String) {
-        postBinding.tvCommentCount.text = text
+        postBinding.incItemPost.tvCommentCount.text = text
     }
 
     override fun updateCommentsAdapter() {
@@ -244,7 +244,7 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     }
 
     override fun setRvPosition(position: Int) {
-        postBinding.rvPostComments.scrollToPosition(position)
+        postBinding.incItemPost.rvPostComments.scrollToPosition(position)
     }
 
     override fun setCurrentUserAvatar(avatarUrl: String) {
@@ -350,6 +350,6 @@ open class BasePostFragment : MvpAppCompatFragment(), BasePostView {
     }
 
     override fun setPostText(text: String) {
-        postBinding.tvPost.text = text
+        postBinding.incItemPost.tvPost.text = text
     }
 }
