@@ -1,464 +1,474 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nsv_comment_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_trade_argument"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_comment_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linear_share_head"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trade_argument"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/panel_share_arguments_publish_trader_details_size"
-            android:background="@color/colorBlueGray"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_share_head"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linear_share_head"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/panel_share_arguments_publish_trader_details_size"
+                android:background="@color/colorBlueGray"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_share_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/arguments_head_idea"
+                    android:textColor="#453E92"
+                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:id="@+id/iv_trade_detail_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/arguments_head_idea"
-                android:textColor="#453E92"
-                android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <ImageView
-            android:id="@+id/iv_trade_detail_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium_publish_trader_details_size"
-            android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
-            android:layout_marginBottom="@dimen/margin_medium_publish_trader_details_size"
-            android:src="@drawable/close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/colorGray"
-            tools:ignore="ContentDescription" />
-
-        <LinearLayout
-            android:id="@+id/linear_layout_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium_publish_trader_details_size"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_trade_detail_close">
+                android:layout_marginTop="@dimen/margin_medium_publish_trader_details_size"
+                android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
+                android:layout_marginBottom="@dimen/margin_medium_publish_trader_details_size"
+                android:src="@drawable/close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorGray"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
+                android:id="@+id/linear_layout_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/margin_medium_publish_trader_details_size"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_trade_detail_close">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="@string/trader"
-                    android:textColor="@color/colorWhite" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_trader_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorWhite" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBlueGray"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/operation"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_operation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/type_of_transaction"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBlueGray"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/name_tradeFragment"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_company"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/ticker"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_ticker"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBlueGray"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_price_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/price"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:text="@string/date_time"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/tv_trade_detail_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
-                    android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorBlack" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-        </LinearLayout>
-
-        <TableLayout
-            android:id="@+id/layout_argument_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium_publish_trader_details_size"
-            android:layout_marginTop="@dimen/margin_top_very_low"
-            android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
-            android:stretchColumns="1,2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_layout_detail">
-
-            <TableRow
-                android:background="@color/colorBlueGray"
-                android:divider="@color/colorBlack"
-                android:showDividers="middle">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_first_line_label"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/take_profit_price"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/et_take_profit"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:maxLength="13"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
+                    android:background="@color/colorPrimary"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_take_profit_result"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="@string/trader"
+                        android:textColor="@color/colorWhite" />
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_trader_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/colorGreenPercentProfit"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details"
-                    tools:text="33%" />
-            </TableRow>
+                    android:background="@color/colorBlueGray"
+                    android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/operation"
+                        android:textColor="@color/colorBlack" />
 
-            <TableRow
-                android:divider="@color/colorBlack"
-                android:showDividers="middle">
+                    <TextView
+                        android:id="@+id/tv_trade_detail_operation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_second_line_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/stop_loss_price"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/et_stop_loss"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:maxLength="13"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_stop_loss_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textColor="@color/colorRedPercentLoss"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details"
-                    tools:text="33%" />
-            </TableRow>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-
-            <TableRow>
+                </LinearLayout>
 
                 <View
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/divider_publish_trader_details_size"
-                    android:layout_column="1"
-                    android:layout_span="2"
-                    android:background="#FF909090" />
-            </TableRow>
+                    android:background="@color/colorGrayLight" />
 
-            <TableRow
-                android:background="@color/colorBlueGray"
-                android:divider="@color/colorBlack"
-                android:showDividers="middle">
-
-                <androidx.appcompat.widget.AppCompatTextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/realization_day"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/et_how_many_days"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/type_of_transaction"
+                        android:textColor="@color/colorBlack" />
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_type"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
+
+                </LinearLayout>
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_span="2"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details"
-                    tools:text="3 дн" />
-            </TableRow>
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_publish_trader_details_size"
-                android:background="@color/colorGrayLight" />
-        </TableLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBlueGray"
+                    android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_attached_kebab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
-            android:contentDescription="@string/iv_attached_kebab_content_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
-            app:srcCompat="@drawable/ic_kebab" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/name_tradeFragment"
+                        android:textColor="@color/colorBlack" />
 
-        <LinearLayout
-            android:id="@+id/ll_post"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
-            android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_attached_kebab">
+                    <TextView
+                        android:id="@+id/tv_trade_detail_company"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
 
-            <include
-                android:id="@+id/inc_item_post"
-                layout="@layout/item_post"
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/ticker"
+                        android:textColor="@color/colorBlack" />
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_ticker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBlueGray"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_price_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/price"
+                        android:textColor="@color/colorBlack" />
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:text="@string/date_time"
+                        android:textColor="@color/colorBlack" />
+
+                    <TextView
+                        android:id="@+id/tv_trade_detail_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_bigger_than_low_publish_trader_details_size"
+                        android:layout_marginTop="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_marginBottom="@dimen/margin_low_publish_trader_details_size"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/layout_argument_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="parent" />
+                android:layout_marginStart="@dimen/margin_medium_publish_trader_details_size"
+                android:layout_marginTop="@dimen/margin_top_very_low"
+                android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
+                android:stretchColumns="1,2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_detail">
+
+                <TableRow
+                    android:background="@color/colorBlueGray"
+                    android:divider="@color/colorBlack"
+                    android:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_first_line_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/take_profit_price"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/et_take_profit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="13"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_take_profit_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/colorGreenPercentProfit"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details"
+                        tools:text="33%" />
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+
+                <TableRow
+                    android:divider="@color/colorBlack"
+                    android:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_second_line_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/stop_loss_price"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/et_stop_loss"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="13"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_stop_loss_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/colorRedPercentLoss"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details"
+                        tools:text="33%" />
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+
+                <TableRow>
+
+                    <View
+                        android:layout_height="@dimen/divider_publish_trader_details_size"
+                        android:layout_column="1"
+                        android:layout_span="2"
+                        android:background="#FF909090" />
+                </TableRow>
+
+                <TableRow
+                    android:background="@color/colorBlueGray"
+                    android:divider="@color/colorBlack"
+                    android:showDividers="middle">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/realization_day"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/et_how_many_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_span="2"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_text_size_publish_trader_details"
+                        tools:text="3 дн" />
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_publish_trader_details_size"
+                    android:background="@color/colorGrayLight" />
+            </TableLayout>
+
+            <ImageView
+                android:id="@+id/iv_attached_kebab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
+                android:contentDescription="@string/iv_attached_kebab_content_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
+                app:srcCompat="@drawable/ic_kebab" />
 
             <LinearLayout
-                android:id="@+id/ll_work_with_comment"
+                android:id="@+id/ll_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
+                android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
+                android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_attached_kebab">
 
                 <include
-                    android:id="@+id/inc_item_send_comment"
-                    layout="@layout/item_send_comment"
+                    android:id="@+id/inc_item_post"
+                    layout="@layout/item_post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="parent" />
 
-                <include
-                    android:id="@+id/inc_item_update_comment"
-                    layout="@layout/item_update_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="parent" />
             </LinearLayout>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/ll_work_with_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <include
+            android:id="@+id/inc_item_send_comment"
+            layout="@layout/item_send_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <include
+            android:id="@+id/inc_item_update_comment"
+            layout="@layout/item_update_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
