@@ -232,8 +232,16 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
             binding.incItemPostHeader.ivFlash.visibilityByCondition { isVisible }
         }
 
+        override fun initFlashFooterVisibility(isVisible: Boolean) {
+            binding.incItemPostFooter.ivFlash.visibilityByCondition { isVisible }
+        }
+
         override fun setFlashColor(color: Int) {
             binding.incItemPostHeader.ivFlash.setColorFilter(color)
+        }
+
+        override fun initFlashFooterColor(color: Int) {
+            binding.incItemPostFooter.ivFlash.setColorFilter(color)
         }
 
         override fun setProfitAndFollowersVisibility(isVisible: Boolean): Unit =
