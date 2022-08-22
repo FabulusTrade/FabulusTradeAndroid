@@ -23,6 +23,7 @@ import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
+
     private var _binding: FragmentTraderPostBinding? = null
     private val binding: FragmentTraderPostBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }

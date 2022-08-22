@@ -169,8 +169,9 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         private fun setHeaderIcon(view: PostItemView, post: Post) {
             with(view) {
                 setFlashVisibility(yoursPublication(post))
+                initFlashFooterVisibility(post.isFlashed)
+                setFlashColor(post, this)
                 setProfitAndFollowersVisibility(!yoursPublication(post))
-
                 if (!yoursPublication(post)) {
                     setProfit(
                         resourceProvider.formatDigitWithDef(
@@ -193,6 +194,20 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
                         )
                     )
                 }
+            }
+        }
+
+        private fun setFlashColor(
+            post: Post,
+            view: PostItemView
+        ) {
+            if (post.isFlashed) {
+                resourceProvider.getColor(R.color.colorGreen)
+            } else {
+                resourceProvider.getColor(R.color.colorBlue)
+            }.let {
+                view.setFlashColor(it)
+                view.initFlashFooterColor(it)
             }
         }
 
