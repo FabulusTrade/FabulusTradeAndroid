@@ -43,6 +43,10 @@ class GeneralFeedPostPresenter : TraderMePostPresenter() {
                     it.printStackTrace()
                 })
         }
+
+        override fun showCommentDetails(view: PostItemView) {
+            router.navigateTo(Screens.postDetailFragment(postList[view.pos], true))
+        }
     }
 
 
