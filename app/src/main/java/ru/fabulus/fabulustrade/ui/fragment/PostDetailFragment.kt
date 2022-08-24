@@ -44,7 +44,6 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(context, this::class.java.simpleName, Toast.LENGTH_SHORT).show()
         presenter = postDetailPresenter as BasePostPresenter<BasePostView>
     }
 
