@@ -6,11 +6,13 @@ import android.widget.ImageView
 import com.github.terrakok.cicerone.ResultListenerHandler
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trader
+import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
@@ -39,6 +41,8 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
+    private var flashFilterIs: Boolean = false
+    private var loadingPostDisposable: Disposable? = null
     val listPresenter = TraderRVListPresenter()
     private var updatePostResultListener: ResultListenerHandler? = null
     private var deletePostResultListener: ResultListenerHandler? = null
@@ -115,7 +119,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
         override fun navigateToTraderScreen(position: Int) {
             val clickedTraderId = listPresenter.posts[position].traderId
-            if (trader.id != clickedTraderId){
+            if (trader.id != clickedTraderId) {
                 apiRepo.getTraderById(
                     token = profile.token!!,
                     traderId = clickedTraderId,
@@ -199,7 +203,7 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
 
         private fun setFlashColor(
             post: Post,
-            view: PostItemView
+            view: PostItemView,
         ) {
             if (post.isFlashed) {
                 resourceProvider.getColor(R.color.colorGreen)
@@ -359,16 +363,16 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        loadingPostDisposable?.dispose()
         if (profile.user == null) {
             viewState.isAuthorized(false)
         } else {
             viewState.isAuthorized(true)
-
-            apiRepo
+            loadingPostDisposable = apiRepo
                 .getTraderPosts(profile.token!!, trader.id, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
-                    listPresenter.posts.addAll(pag.results)
+                    listPresenter.posts.addAll(checkFlashed(pag))
                     viewState.updateAdapter()
                     nextPage = pag.next
                 }, {
@@ -377,15 +381,25 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         }
     }
 
+    private fun checkFlashed(pag: Pagination<Post>): List<Post> {
+        return if (flashFilterIs) {
+            pag.results.filter { post ->
+                post.isFlashed
+            }
+        } else {
+            pag.results
+        }
+    }
+
     fun onScrollLimit() {
+        loadingPostDisposable?.dispose()
         if (nextPage != null && !isLoading) {
             isLoading = true
-
             apiRepo
                 .getTraderPosts(profile.token!!, trader.id, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
-                    listPresenter.posts.addAll(pag.results)
+                    listPresenter.posts.addAll(checkFlashed(pag))
                     viewState.updateAdapter()
                     nextPage = pag.next
                     isLoading = false
@@ -404,8 +418,27 @@ class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {
         router.navigateTo(Screens.signUpScreen(false))
     }
 
+    fun flashIconClicked() {
+        loadingPostDisposable?.dispose()
+        flashFilterIs = !flashFilterIs
+        loadingPostDisposable = apiRepo
+            .getTraderPosts(profile.token!!, trader.id, 1)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ pag ->
+                listPresenter.posts.clear()
+                listPresenter.posts.addAll(checkFlashed(pag))
+                viewState.updateAdapter()
+                nextPage = pag.next
+            }, {
+                it.printStackTrace()
+            })
+        viewState.setFlashIcon(flashFilterIs)
+        viewState.updateAdapter()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        loadingPostDisposable?.dispose()
         updatePostResultListener?.dispose()
         deletePostResultListener?.dispose()
     }

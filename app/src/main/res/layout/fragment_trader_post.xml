@@ -10,7 +10,7 @@
         android:id="@+id/layoutTraderPostIsAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tv_publish, rv_trader_post, iv_flash, ib_open_blacklist, view_share_count_divider" />
+        app:constraint_referenced_ids="tv_publish, rv_trader_post, iv_flash, view_share_count_divider" />
 
     <TextView
         android:id="@+id/tv_publish"
@@ -38,17 +38,6 @@
         app:srcCompat="@drawable/ic_flash_grey"
         app:tint="@color/colorGreen_27"
         tools:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/ib_open_blacklist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="@id/tv_publish"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_publish"
-        app:srcCompat="@drawable/ic_blacklist" />
 
     <View
         android:id="@+id/view_share_count_divider"
