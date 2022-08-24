@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -41,13 +42,35 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Toast.makeText(context, this::class.java.simpleName, Toast.LENGTH_SHORT).show()
         presenter = postDetailPresenter as BasePostPresenter<BasePostView>
     }
 
-    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader) {
+    override fun setHeaderFlashVisibility(isVisible: Boolean) {
+        with(binding.incItemPostHeader) {
             if (isVisible) {
                 ivFlash.visibility = View.VISIBLE
+            } else {
+                ivFlash.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setHeaderFlashColor(isFlashed: Boolean) {
+        with(binding.incItemPostHeader) {
+            if (isVisible) {
+                ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen_27))
+            } else {
+                ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen))
+            }
+        }
+    }
+
+    override fun initFooterFlash(visible: Boolean) {
+        with(binding.incPostLayout.incItemPostFooter) {
+            if (visible) {
+                ivFlash.visibility = View.VISIBLE
+                ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen))
             } else {
                 ivFlash.visibility = View.GONE
             }

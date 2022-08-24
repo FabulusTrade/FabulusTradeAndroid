@@ -11,6 +11,8 @@ interface PostDetailView  : BasePostView, MvpView {
     fun setRepostCount(text: String)
     fun setPostMenuSelf(post: Post)
     fun setPostMenuSomeone(post: Post, complaintList: List<Complaint>)
-    fun setFlashVisibility(isVisible:Boolean)
+    fun setHeaderFlashVisibility(isVisible:Boolean)
+    fun setHeaderFlashColor(isFlashed:Boolean)
+    fun initFooterFlash(visible: Boolean)
     fun setProfitAndFollowersVisibility(isVisible:Boolean)
 }
