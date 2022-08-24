@@ -5,61 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/cl_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="@color/colorWhite"
-        android:elevation="@dimen/cl_buttons_elevation"
+    <TextView
+        android:id="@+id/tv_publish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/publication_traderPost"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/iv_flash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_flash_grey"
-            app:tint="@color/colorGreen_27"
-            tools:visibility="visible" />
+    <ImageView
+        android:id="@+id/iv_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_publish"
+        app:layout_constraintTop_toTopOf="@id/tv_publish"
+        app:layout_constraintBottom_toBottomOf="@id/tv_publish"
+        app:srcCompat="@drawable/ic_flash_grey"
+        app:tint="@color/colorGreen_27"
+        tools:visibility="visible" />
 
-        <ImageButton
-            android:id="@+id/ib_open_blacklist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_blacklist" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ib_open_blacklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_publish"
+        app:layout_constraintBottom_toBottomOf="@id/tv_publish"
+        app:srcCompat="@drawable/ic_blacklist" />
 
-    <LinearLayout
+    <View
+        android:id="@+id/view_share_count_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+        android:layout_marginTop="32dp"
+        android:background="@color/view_author_horizontal_divider_background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_publish" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_subscriber_news"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_buttons"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_share_count_divider"
         tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="1dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_subscriber_news"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        tools:layout_editor_absoluteY="1dp"/>
 
     <include
         android:id="@+id/layout_hasNoSubs"
         layout="@layout/layout_has_no_subs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_buttons" />
+        app:layout_constraintTop_toBottomOf="@id/view_share_count_divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

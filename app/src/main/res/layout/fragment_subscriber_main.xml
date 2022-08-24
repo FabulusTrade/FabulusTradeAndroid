@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-        android:elevation="6dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -94,6 +93,15 @@
         </com.google.android.material.tabs.TabLayout>
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/view_share_count_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+        android:background="@color/view_author_horizontal_divider_background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_subscriber_main" />
 
     <LinearLayout
         android:layout_width="match_parent"
