@@ -7,6 +7,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostWithBlacklistRVListPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
+import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.navigation.Screens
 
 class GeneralFeedPostPresenter : TraderMePostPresenter() {
@@ -27,6 +28,11 @@ class GeneralFeedPostPresenter : TraderMePostPresenter() {
             viewState.showMessageSureToAddToBlacklist(traderId)
         }
 
+        override fun bind(view: PostItemView) {
+            super.bind(view)
+            view.initFlashFooterVisibility(false)
+        }
+
         override fun addToBlacklist(traderId: String) {
             apiRepo.addToBlacklist(profile.token!!, traderId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,7 +43,12 @@ class GeneralFeedPostPresenter : TraderMePostPresenter() {
                     it.printStackTrace()
                 })
         }
+
+        override fun showCommentDetails(view: PostItemView) {
+            router.navigateTo(Screens.postDetailFragment(postList[view.pos], true))
+        }
     }
+
 
     override val listPresenter = GeneralFeedRVListPresenter()
 

@@ -8,6 +8,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.isCanFlashPostByCreateDate
 import ru.fabulus.fabulustrade.util.isNegativeDigit
 import ru.fabulus.fabulustrade.util.toStringFormat
 
@@ -36,7 +37,9 @@ class PostDetailPresenter(post: Post) : BasePostPresenter<PostDetailView>(post) 
     }
 
     private fun setHeadersIcons() {
-        viewState.setFlashVisibility(isSelfPost(post))
+        viewState.initFooterFlash(post.isFlashed)
+        viewState.setHeaderFlashVisibility(isVisible = isSelfPost(post) && isCanFlashPostByCreateDate(post.dateCreate))
+        viewState.setHeaderFlashColor(isFlashed = post.isFlashed)
         viewState.setProfitAndFollowersVisibility(!isSelfPost(post))
 
         if (!isSelfPost(post)) {

@@ -176,6 +176,7 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                                 isCanFlashPostByCreateDate(post.dateCreate) &&
                                 limitOfNewFlashPosts > 0)
             )
+            initFlashFooterVisibility(post.isFlashed)
             setFlashColor(post, this)
         }
 
@@ -455,7 +456,10 @@ open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {
                 resourceProvider.getColor(R.color.colorGreen)
             } else {
                 resourceProvider.getColor(R.color.colorBlue)
-            }.let { view.setFlashColor(it) }
+            }.let {
+                view.setFlashColor(it)
+                view.initFlashFooterColor(it)
+            }
         }
 
         override fun share(view: PostItemView, imageViewIdList: List<ImageView>) {

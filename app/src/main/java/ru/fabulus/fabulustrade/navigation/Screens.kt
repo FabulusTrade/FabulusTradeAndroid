@@ -114,8 +114,8 @@ object Screens {
     fun imageBrowsingFragment(urls: List<String>, position: Int = 0) =
         FragmentScreen { ImageBrowsingFragment.newInstance(urls, position) }
 
-    fun postDetailFragment(post: Post) =
-        FragmentScreen { PostDetailFragment.newInstance(post) }
+    fun postDetailFragment(post: Post, navigateFromGeneralFeed: Boolean = false) =
+        FragmentScreen { PostDetailFragment.newInstance(post, navigateFromGeneralFeed) }
 
     fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
 
