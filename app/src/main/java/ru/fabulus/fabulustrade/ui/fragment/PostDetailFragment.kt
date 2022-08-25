@@ -55,6 +55,29 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         presenter = postDetailPresenter as BasePostPresenter<BasePostView>
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost
+        sendCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
+        updateCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
+
+        return _binding?.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
+    }
+
     override fun setHeaderFlashVisibility(isVisible: Boolean) {
         with(binding.incItemPostHeader) {
             if (isVisible) {
@@ -77,7 +100,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun initFooterFlash(visible: Boolean) {
         val navigateFromGeneralFeed: Boolean = arguments?.getBoolean(NAVIGATE_KEY) ?: false
-        with(binding.incPostLayout.incItemPostFooter) {
+        with(binding.incItemPost.incItemPostFooter) {
             when(navigateFromGeneralFeed){
                 true -> {
                     ivFlash.visibility = View.GONE
