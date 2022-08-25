@@ -24,7 +24,8 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
-class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) : MvpPresenter<TradeDetailView>(),
+class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) :
+    MvpPresenter<TradeDetailView>(),
     IImageListPresenter {
 
     companion object {
@@ -98,9 +99,19 @@ class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) : M
                 }
             }
         }
+
+        if (!isOpeningTrade) {
+            trade.profitCount?.let { profit ->
+                if (profit < 0.0) {
+                    viewState.setLoss(profit, 2)
+                } else {
+                    viewState.setProfit(profit, 2)
+                }
+            }
+        }
     }
 
-    private fun initArgument(navigateToArgumentScreen: Boolean){
+    private fun initArgument(navigateToArgumentScreen: Boolean) {
         apiRepo
             .getArgumentByTrade(profile.token!!, trade.id.toString())
             .observeOn(AndroidSchedulers.mainThread())
@@ -165,7 +176,9 @@ class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) : M
             post.images.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
         }
             ?.let { imageList ->
-                imageList - imagesOnServerToDelete.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
+                imageList - imagesOnServerToDelete.map {
+                    CreatePostPresenter.ImageOfPost.ImageOnBack(it)
+                }
             }
             ?: listOf<CreatePostPresenter.ImageOfPost>())
             .let { imageList ->
@@ -187,7 +200,7 @@ class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) : M
         text: String,
         stopLoss: Float?,
         takeProfit: Float?,
-        dealTerm: Int?
+        dealTerm: Int?,
     ) {
         if (trade.subtype.contains("LONG")) {
             if (takeProfit != null && takeProfit <= trade.price

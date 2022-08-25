@@ -165,6 +165,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
                 binding.tvShareArgument.text = resources.getString(R.string.comment_to_result)
                 binding.tvFirstLineLabel.text = resources.getString(R.string.income)
                 binding.tvSecondLineLabel.text = resources.getString(R.string.loss)
+                binding.etTakeProfit.apply {
+                    isEnabled = false
+                    background = null
+                }
+                binding.etStopLoss.apply {
+                    isEnabled = false
+                    background = null
+                }
+                binding.etHowManyDays.apply {
+                    isEnabled = false
+                    background = null
+                }
             }
         }
         tradeType = type
