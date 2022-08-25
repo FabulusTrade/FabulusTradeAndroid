@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -21,9 +22,11 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     companion object {
         const val POST_KEY = "post"
-        fun newInstance(post: Post) = PostDetailFragment().apply {
+        const val NAVIGATE_KEY = "navigate"
+        fun newInstance(post: Post, navigateFromGeneralFeed: Boolean) = PostDetailFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(POST_KEY, post)
+                putBoolean(NAVIGATE_KEY, navigateFromGeneralFeed)
             }
         }
     }
@@ -44,12 +47,41 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         presenter = postDetailPresenter as BasePostPresenter<BasePostView>
     }
 
-    override fun setFlashVisibility(isVisible: Boolean) = with(binding) {
-        with(incItemPostHeader) {
+    override fun setHeaderFlashVisibility(isVisible: Boolean) {
+        with(binding.incItemPostHeader) {
             if (isVisible) {
                 ivFlash.visibility = View.VISIBLE
             } else {
                 ivFlash.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setHeaderFlashColor(isFlashed: Boolean) {
+        with(binding.incItemPostHeader) {
+            if (isVisible) {
+                ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen_27))
+            } else {
+                ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen))
+            }
+        }
+    }
+
+    override fun initFooterFlash(visible: Boolean) {
+        val navigateFromGeneralFeed: Boolean = arguments?.getBoolean(NAVIGATE_KEY) ?: false
+        with(binding.incPostLayout.incItemPostFooter) {
+            when(navigateFromGeneralFeed){
+                true -> {
+                    ivFlash.visibility = View.GONE
+                }
+                false -> {
+                    if (visible) {
+                        ivFlash.visibility = View.VISIBLE
+                        ivFlash.setColorFilter(requireContext().resources.getColor(R.color.colorGreen))
+                    } else {
+                        ivFlash.visibility = View.GONE
+                    }
+                }
             }
         }
     }

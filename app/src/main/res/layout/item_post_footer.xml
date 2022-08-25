@@ -56,16 +56,30 @@
         app:layout_constraintTop_toTopOf="@+id/btn_dislike"
         tools:text="3" />
 
+    <ImageView
+        android:id="@+id/iv_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/margin_start_low"
+        app:layout_constraintBottom_toBottomOf="@id/btn_dislike"
+        app:layout_constraintStart_toEndOf="@id/tv_dislike_count"
+        app:layout_constraintTop_toTopOf="@id/btn_dislike"
+        app:srcCompat="@drawable/ic_flash_grey"
+        app:tint="@color/colorBlue"
+        tools:visibility="visible" />
+
     <ImageButton
         android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/btn_share_margin_start"
+        android:layout_marginStart="@dimen/margin_start_low"
         android:layout_marginEnd="@dimen/margin_end_low"
         android:background="@color/colorWhite"
         android:contentDescription="@string/dislike_news"
         android:src="@drawable/ic_share"
-        app:layout_constraintStart_toEndOf="@+id/tv_dislike_count"
+        app:layout_constraintStart_toEndOf="@id/iv_flash"
         app:layout_constraintTop_toTopOf="@+id/btn_like" />
 
     <TextView

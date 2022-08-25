@@ -17,8 +17,10 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentSubscriberNewsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
+import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.PostWithBlacklistRVAdapter
@@ -27,7 +29,7 @@ import ru.fabulus.fabulustrade.util.showLongToast
 import ru.fabulus.fabulustrade.util.showToast
 import javax.inject.Inject
 
-class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
+class SubscriberPostFragment : MvpAppCompatFragment(), TraderMePostView {
     private var _binding: FragmentSubscriberNewsBinding? = null
     private val binding: FragmentSubscriberNewsBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -64,14 +66,19 @@ class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
         return _binding?.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.onViewResumed()
-    }
-
     override fun init() {
         initRecyclerView()
         initListeners()
+    }
+
+    override fun setBtnsState(state: TraderMePostPresenter.ButtonsState) {
+        if (state.flashedPostsOnlyFilter) {
+            R.color.colorGreen
+        } else {
+            R.color.colorGreen_27
+        }.let {
+            binding.ivFlash.setColorFilter(requireContext().resources.getColor(it))
+        }
     }
 
     private fun initRecyclerView() {
@@ -105,6 +112,10 @@ class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
             ibOpenBlacklist.setOnClickListener {
                 router.navigateTo(Screens.blacklistScreen())
             }
+            ivFlash.setOnClickListener {
+                presenter.flashFilter = !presenter.flashFilter
+                presenter.flashedPostsBtnClicked()
+            }
         }
     }
 
@@ -112,8 +123,14 @@ class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
         postRVAdapter.notifyDataSetChanged()
     }
 
-    override fun withoutSubscribeAnyTrader() {
-        binding.layoutHasNoSubs.root.visibility = View.VISIBLE
+    override fun isAuthorized(isAuth: Boolean) {}
+
+    override fun detachAdapter() {
+        binding.rvSubscriberNews.adapter = null
+    }
+
+    override fun attachAdapter() {
+        binding.rvSubscriberNews.adapter = postRVAdapter
     }
 
     override fun share(shareIntent: Intent) {
@@ -149,6 +166,14 @@ class SubscriberPostFragment : MvpAppCompatFragment(), SubscriberPostView {
             "",
             Snackbar.LENGTH_LONG
         )
+    }
+
+    override fun showQuestionToFlashDialog(onClickYes: () -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showMessagePostIsFlashed() {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroyView() {

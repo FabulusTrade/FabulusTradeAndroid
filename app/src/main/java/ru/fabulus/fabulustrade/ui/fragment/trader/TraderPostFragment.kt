@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import ru.fabulus.fabulustrade.util.showCustomSnackbar
 import ru.fabulus.fabulustrade.util.showToast
 
 class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
+
     private var _binding: FragmentTraderPostBinding? = null
     private val binding: FragmentTraderPostBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
@@ -107,12 +109,25 @@ class TraderPostFragment : MvpAppCompatFragment(), TraderPostView {
         postRVAdapter?.notifyDataSetChanged()
     }
 
+    override fun setFlashIcon(filterIsOn: Boolean) {
+        if (filterIsOn) {
+            R.color.colorGreen
+        } else {
+            R.color.colorGreen_27
+        }.let {
+            binding.ivFlash.setColorFilter(requireContext().resources.getColor(it))
+        }
+    }
+
     override fun isAuthorized(isAuth: Boolean) {
         binding.run {
             if (!isAuth) {
                 layoutTraderPostIsAuth.visibility = View.GONE
                 layoutPostsNotAuth.layoutTraderPostNotAuth.visibility = View.VISIBLE
             } else {
+                ivFlash.setOnClickListener {
+                    presenter.flashIconClicked()
+                }
                 layoutTraderPostIsAuth.visibility = View.VISIBLE
                 layoutPostsNotAuth.layoutTraderPostNotAuth.visibility = View.GONE
             }

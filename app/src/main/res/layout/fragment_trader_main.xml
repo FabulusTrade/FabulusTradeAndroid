@@ -85,7 +85,6 @@
             android:id="@+id/tab_layout_trader_stat"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:elevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +111,15 @@
                 android:icon="@drawable/ic_trader_deal" />
 
         </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:id="@+id/view_share_count_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_author_horizontal_divider_layout_height"
+            android:background="@color/view_author_horizontal_divider_background_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_subscriber_main" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_trader_stat"

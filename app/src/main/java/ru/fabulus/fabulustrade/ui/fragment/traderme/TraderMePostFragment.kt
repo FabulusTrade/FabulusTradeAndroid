@@ -85,6 +85,7 @@ class TraderMePostFragment : MvpAppCompatFragment(), TraderMePostView, BackButto
             }
             ivFlash.setOnClickListener {
                 presenter.flashedPostsBtnClicked()
+
             }
             ibOpenBlacklist.setOnClickListener {
                 router.navigateTo(Screens.blacklistScreen())
