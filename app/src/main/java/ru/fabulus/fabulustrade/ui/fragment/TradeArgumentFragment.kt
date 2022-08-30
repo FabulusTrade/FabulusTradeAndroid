@@ -213,7 +213,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
                         return@setOnMenuItemClickListener true
                     }
                     R.id.delete_comment -> {
-                        tradeArgumentPresenter.deletePost()
+                        tradeArgumentPresenter.deleteArgument()
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false

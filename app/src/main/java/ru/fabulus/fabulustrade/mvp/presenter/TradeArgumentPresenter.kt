@@ -10,6 +10,7 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.isCanDeletePost
 import ru.fabulus.fabulustrade.util.toStringFormat
 import kotlin.math.roundToInt
 
@@ -133,5 +134,19 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
 
     private fun isSelfArgument(argument: Argument): Boolean {
         return argument.traderId == profile.user?.id
+    }
+
+    fun deleteArgument() {
+        if (argument == null) return
+        if (isCanDeletePost(argument!!.dateCreate)) {
+            apiRepo.deletePost(profile.token!!, argument!!.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    router.sendResult(CreatePostPresenter.DELETE_POST_RESULT, "")
+                    router.exit()
+                }, {})
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
+        }
     }
 }
