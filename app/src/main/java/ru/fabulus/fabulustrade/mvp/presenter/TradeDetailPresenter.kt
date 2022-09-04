@@ -108,6 +108,9 @@ class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) :
                     viewState.setProfit(profit, 2)
                 }
             }
+            trade.termOfTransaction?.let { term ->
+                viewState.setDealTerm(term / 3600f / 24f, 2)
+            }
         }
     }
 

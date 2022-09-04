@@ -205,7 +205,7 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
                 when (menuItem.itemId) {
 
                     R.id.edit_comment -> {
-                        tradeArgumentPresenter.editPost()
+                        tradeArgumentPresenter.editArgument()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.copy_comment_text -> {

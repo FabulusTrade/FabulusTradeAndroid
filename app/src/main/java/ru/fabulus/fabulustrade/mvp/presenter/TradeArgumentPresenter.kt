@@ -1,17 +1,17 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
 import android.util.Log
+import com.github.terrakok.cicerone.ResultListenerHandler
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
+import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
-import ru.fabulus.fabulustrade.util.formatDigitWithDef
-import ru.fabulus.fabulustrade.util.formatString
-import ru.fabulus.fabulustrade.util.isCanDeletePost
-import ru.fabulus.fabulustrade.util.toStringFormat
+import ru.fabulus.fabulustrade.util.*
 import kotlin.math.roundToInt
 
 class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgumentView>() {
@@ -23,6 +23,8 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
     }
 
     private var isOpeningTrade: Boolean = true
+
+    private var updateArgumentResultListener: ResultListenerHandler? = null
 
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this)
@@ -136,6 +138,35 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
         return argument.traderId == profile.user?.id
     }
 
+    fun editArgument() {
+        if (isCanEditPost(post.dateCreate)) {
+            prepareEditArgument()
+        } else {
+            viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_edited))
+        }
+    }
+
+    private fun prepareEditArgument() {
+        updateArgumentResultListener =
+            router.setResultListener(CreatePostPresenter.UPDATE_POST_RESULT) { updatedArgument ->
+                (updatedArgument as? Post)?.let {
+                    post = updatedArgument
+                    viewState.setPostText(post.text)
+                    viewState.setPostImages(post.images)
+                    router.sendResult(
+                        CreatePostPresenter.UPDATE_POST_IN_FRAGMENT_RESULT,
+                        updatedArgument
+                    )
+                }
+            }
+
+        router.navigateTo(
+            Screens.tradeDetailScreen(
+                trade
+            )
+        )
+    }
+
     fun deleteArgument() {
         if (argument == null) return
         if (isCanDeletePost(argument!!.dateCreate)) {
@@ -148,5 +179,10 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
         } else {
             viewState.showToast(resourceProvider.getStringResource(R.string.post_can_not_be_deleted))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        updateArgumentResultListener?.dispose()
     }
 }

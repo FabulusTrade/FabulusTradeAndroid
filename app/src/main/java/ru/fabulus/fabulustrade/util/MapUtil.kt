@@ -130,7 +130,8 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         date,
         trade.profit_count,
         trade.subtype,
-        trade.posts
+        trade.posts,
+        trade.term_of_transation
     )
 }
 
