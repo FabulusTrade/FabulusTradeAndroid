@@ -162,7 +162,8 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
 
         router.navigateTo(
             Screens.tradeDetailScreen(
-                trade
+                trade,
+                true
             )
         )
     }

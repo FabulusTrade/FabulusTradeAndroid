@@ -36,5 +36,5 @@ data class ResponseTrade(
     @Expose
     val posts: Int?,
     @Expose
-    val term_of_transation: Int?
+    val term_of_transation: Float?
 )

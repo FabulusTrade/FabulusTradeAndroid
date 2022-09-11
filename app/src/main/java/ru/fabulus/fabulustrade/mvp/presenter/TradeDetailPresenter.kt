@@ -24,7 +24,7 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
-class TradeDetailPresenter(val trade: Trade, private val post: Post? = null) :
+class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, private val post: Post? = null) :
     MvpPresenter<TradeDetailView>(),
     IImageListPresenter {
 

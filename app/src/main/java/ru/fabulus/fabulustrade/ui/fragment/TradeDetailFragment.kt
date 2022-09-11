@@ -53,10 +53,12 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     companion object {
         const val TRADE_KEY = "trade"
-        fun newInstance(trade: Trade) = TradeDetailFragment().apply {
+        const val EDIT_MODE_KEY = "edit_mode"
+        fun newInstance(trade: Trade, editMode: Boolean) = TradeDetailFragment().apply {
             currentTrade = trade
             arguments = Bundle().apply {
                 putParcelable(TRADE_KEY, trade)
+                putBoolean(EDIT_MODE_KEY, editMode)
             }
         }
     }
@@ -65,7 +67,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     lateinit var presenter: TradeDetailPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradeDetailPresenter(requireArguments()[TRADE_KEY] as Trade).apply {
+    fun providePresenter() = TradeDetailPresenter(requireArguments()[TRADE_KEY] as Trade, requireArguments()[EDIT_MODE_KEY] as Boolean).apply {
         App.instance.appComponent.inject(this)
     }
 

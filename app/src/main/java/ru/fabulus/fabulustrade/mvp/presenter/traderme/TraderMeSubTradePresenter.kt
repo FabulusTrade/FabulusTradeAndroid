@@ -92,7 +92,7 @@ class TraderMeSubTradePresenter(val position: Int) : MvpPresenter<TraderMeSubTra
 
         override fun clicked(pos: Int) {
             val trade = trades[pos]
-            router.navigateTo(Screens.tradeDetailScreen(trade))
+            router.navigateTo(Screens.tradeDetailScreen(trade, false))
         }
     }
 

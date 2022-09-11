@@ -71,7 +71,7 @@ class CompanyTradingOperationsJournalPresenter(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ trade ->
                         if (trade.posts == null) {
-                            router.navigateTo(Screens.tradeDetailScreen(trade))
+                            router.navigateTo(Screens.tradeDetailScreen(trade, false))
                         } else {
                             router.navigateTo(Screens.tradeArgumentScreen(trade))
                         }

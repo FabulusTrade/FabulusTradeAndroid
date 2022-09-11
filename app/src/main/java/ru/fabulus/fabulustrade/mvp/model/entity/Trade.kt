@@ -21,5 +21,5 @@ data class Trade(
     val profitCount: Float?,
     val subtype: String,
     val posts: Int?,
-    val termOfTransaction: Int?
+    val termOfTransaction: Float?
 ) : Parcelable
