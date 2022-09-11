@@ -95,7 +95,7 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
                 if (trade.posts == null) {
                     viewState.setMode(TradeDetailFragment.Mode.TRADER_NO_ARGUMENT)
                 } else {
-                    initArgument(true)
+                    initArgument(false)
                 }
             }
         }
