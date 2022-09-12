@@ -158,7 +158,11 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
             && (imagesToAdd.size < 1 || imagesToAdd.size > 4)
         )
             return
-        createArgument(text, stopLoss, takeProfit, dealTerm)
+        if (!editMode) {
+            createArgument(text, stopLoss, takeProfit, dealTerm)
+        } else {
+            updateArgument(text, stopLoss, takeProfit, dealTerm)
+        }
     }
 
     fun addImages(newImages: List<Bitmap>) {
@@ -226,6 +230,49 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
                 profile.token!!, profile.user!!.id,
                 text,
                 trade.id.toString(),
+                imagesToAdd,
+                stopLoss,
+                takeProfit,
+                dealTerm
+            )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ post ->
+                router.sendResult(NEW_ARGUMENT_RESULT, post)
+                router.exit()
+            }, {
+                it.printStackTrace()
+            })
+    }
+
+    private fun updateArgument(
+        text: String,
+        stopLoss: Float?,
+        takeProfit: Float?,
+        dealTerm: Int?,
+    ) {
+        if (trade.subtype.contains("LONG")) {
+            if (takeProfit != null && takeProfit <= trade.price
+                || stopLoss != null && stopLoss >= trade.price
+            ) {
+                viewState.showErrorMessage(resourceProvider.getStringResource(R.string.long_position_forecast_error))
+                return
+            }
+        } else if (trade.subtype.contains("SHORT")) {
+            if (takeProfit != null && takeProfit >= trade.price
+                || stopLoss != null && stopLoss <= trade.price
+            ) {
+                viewState.showErrorMessage(resourceProvider.getStringResource(R.string.short_position_forecast_error))
+                return
+            }
+        } else return
+
+        apiRepo
+            .updateArgument(
+                profile.token!!,
+                trade.posts.toString(),
+                profile.user!!.id,
+                text,
+                null,
                 imagesToAdd,
                 stopLoss,
                 takeProfit,

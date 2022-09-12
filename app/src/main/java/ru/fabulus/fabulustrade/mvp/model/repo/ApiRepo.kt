@@ -671,6 +671,39 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun updateArgument(
+        token: String,
+        postId: String,
+        traderId: String,
+        text: String,
+        imagesOnServerToDelete: MutableSet<String>,
+        imagesToAdd: MutableList<ByteArray>
+    ): Single<Post> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    imagesOnServerToDelete.forEach { urlFilename ->
+                        val fileName = urlFilename.substringAfterLast('/')
+                        api.deleteImageInPost(token, postId, fileName)
+                            .blockingSubscribe({}, {
+                                it.printStackTrace()
+                            })
+                    }
+                    api.updatePublication(
+                        token, postId,
+                        MultipartBody.Part.createFormData("trader_id", traderId),
+                        MultipartBody.Part.createFormData("text", text),
+                        imagesToAdd.mapIndexed { index, bytes -> bytes.mapToMultipartBodyPart(index) }
+                    ).flatMap { response ->
+                        Single.just(mapToPost(response)!!)
+                    }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun deletePinnedPost(token: String): Single<Post> =
         networkStatus
             .isOnlineSingle()
