@@ -211,6 +211,19 @@ interface WinTradeApi {
         @Part imagesToAdd: List<MultipartBody.Part>
     ): Single<ResponsePost>
 
+    @PATCH("api/v1/trader/post/{id}/")
+    @Multipart
+    fun updateArgument(
+        @Header("Authorization") token: String,
+        @Path("id") postId: String,
+        @Part id: MultipartBody.Part,
+        @Part text: MultipartBody.Part,
+        @Part imagesToAdd: List<MultipartBody.Part>,
+        @Part stopLoss: MultipartBody.Part?,
+        @Part takeProfit: MultipartBody.Part?,
+        @Part dealTerm: MultipartBody.Part?,
+    ): Single<ResponseArgument>
+
     @POST("auth/avatar/")
     @Multipart
     fun changeAvatar(

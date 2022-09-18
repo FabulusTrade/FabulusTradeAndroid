@@ -54,7 +54,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .subscribeOn(Schedulers.io())
 
     fun getTraderStatistic(
-        traderId: String
+        traderId: String,
     ): Single<TraderStatistic> =
         networkStatus
             .isOnlineSingle()
@@ -318,7 +318,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun getTraderPosts(
         token: String,
         traderId: String,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
@@ -341,7 +341,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun getTraderTradesAggregate(
         token: String,
         traderId: String,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<TradesByCompanyAggregated>> =
         networkStatus
             .isOnlineSingle()
@@ -382,7 +382,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         traderId: String,
         companyId: Int,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<TradesSortedByCompany>> =
         networkStatus
             .isOnlineSingle()
@@ -427,7 +427,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun getTraderTradesJournalByCompany(
         token: String,
         companyId: Int,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<JournalTradesSortedByCompany>> =
         networkStatus
             .isOnlineSingle()
@@ -451,7 +451,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         username: String,
         password: String,
         email: String,
-        phone: String
+        phone: String,
     ): Single<ResponseSignUp> =
         networkStatus
             .isOnlineSingle()
@@ -475,7 +475,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         lastName: String,
         patronymic: String,
         date_of_birth: String,
-        gender: String
+        gender: String,
     ): Completable =
         networkStatus
             .isOnlineSingle()
@@ -504,7 +504,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         id: String,
         text: String,
-        images: MutableList<ByteArray>
+        images: MutableList<ByteArray>,
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
@@ -538,7 +538,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         images: MutableList<ByteArray>,
         stopLoss: Float?,
         takeProfit: Float?,
-        dealTerm: Int?
+        dealTerm: Int?,
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
@@ -644,7 +644,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         traderId: String,
         text: String,
         imagesOnServerToDelete: MutableSet<String>,
-        imagesToAdd: MutableList<ByteArray>
+        imagesToAdd: MutableList<ByteArray>,
     ): Single<Post> =
         networkStatus
             .isOnlineSingle()
@@ -677,8 +677,11 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         traderId: String,
         text: String,
         imagesOnServerToDelete: MutableSet<String>,
-        imagesToAdd: MutableList<ByteArray>
-    ): Single<Post> =
+        imagesToAdd: MutableList<ByteArray>,
+        stopLoss: Float?,
+        takeProfit: Float?,
+        dealTerm: Int?,
+    ): Single<Argument> =
         networkStatus
             .isOnlineSingle()
             .flatMap { isOnline ->
@@ -690,13 +693,16 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                                 it.printStackTrace()
                             })
                     }
-                    api.updatePublication(
+                    api.updateArgument(
                         token, postId,
                         MultipartBody.Part.createFormData("trader_id", traderId),
                         MultipartBody.Part.createFormData("text", text),
-                        imagesToAdd.mapIndexed { index, bytes -> bytes.mapToMultipartBodyPart(index) }
+                        imagesToAdd.mapIndexed { index, bytes -> bytes.mapToMultipartBodyPart(index) },
+                        if (stopLoss != null) MultipartBody.Part.createFormData("stop_loss", stopLoss.toString()) else null,
+                        if (takeProfit != null) MultipartBody.Part.createFormData("take_profit", takeProfit.toString()) else null,
+                        if (dealTerm!= null) MultipartBody.Part.createFormData("deal_term", dealTerm.toString()) else null
                     ).flatMap { response ->
-                        Single.just(mapToPost(response)!!)
+                        Single.just(mapToArgument(response)!!)
                     }
                 } else {
                     Single.error(NoInternetException())
@@ -782,7 +788,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun getMyPosts(
         token: String,
         page: Int = 1,
-        flashedPostsOnly: Boolean = false
+        flashedPostsOnly: Boolean = false,
     ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
@@ -828,7 +834,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun updateTraderRegistrationInfo(
         token: String,
         traderId: String,
-        requestTraderInfo: RequestTraderRegistrationInfo
+        requestTraderInfo: RequestTraderRegistrationInfo,
     ): Completable =
         networkStatus
             .isOnlineSingle()
@@ -843,7 +849,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     fun checkUsername(
         username: String,
-        email: String
+        email: String,
     ): Completable =
         networkStatus
             .isOnlineSingle()
@@ -859,7 +865,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     fun getPostsForGeneralNews(
         token: String?,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
@@ -883,7 +889,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun getPostsFollowerAndObserving(
         token: String,
         page: Int = 1,
-        flashedPostsOnly: Boolean = false
+        flashedPostsOnly: Boolean = false,
     ): Single<Pagination<Post>> =
         networkStatus
             .isOnlineSingle()
@@ -907,7 +913,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
         token: String,
         postId: Int,
         text: String,
-        parentCommentId: Long?
+        parentCommentId: Long?,
     ): Single<Comment> =
         networkStatus
             .isOnlineSingle()
@@ -926,7 +932,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
     fun updateComment(
         token: String,
         commentId: Long,
-        text: String
+        text: String,
     ): Single<Comment> =
         networkStatus
             .isOnlineSingle()
@@ -1129,7 +1135,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
 
     fun getBlacklist(
         token: String,
-        page: Int = 1
+        page: Int = 1,
     ): Single<Pagination<BlacklistItem>> =
         networkStatus
             .isOnlineSingle()

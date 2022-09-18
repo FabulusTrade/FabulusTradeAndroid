@@ -272,7 +272,7 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
                 trade.posts.toString(),
                 profile.user!!.id,
                 text,
-                null,
+                imagesOnServerToDelete,
                 imagesToAdd,
                 stopLoss,
                 takeProfit,
