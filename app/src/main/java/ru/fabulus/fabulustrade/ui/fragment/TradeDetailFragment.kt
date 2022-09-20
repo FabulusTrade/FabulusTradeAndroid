@@ -274,6 +274,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.tvStopLossResult.setText(formPercentString(loss, precision))
     }
 
+    override fun setArgumentText(text: String) {
+        binding.etCreatePost.setText(text)
+    }
+
     fun formPercentString(num: Float, precision: Int): String {
         val percent = num * 100
         return "%.${precision}f %%".format(percent)

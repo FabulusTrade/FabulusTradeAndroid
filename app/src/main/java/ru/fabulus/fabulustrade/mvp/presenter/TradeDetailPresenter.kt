@@ -123,6 +123,9 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
                 if (navigateToArgumentScreen) {
                     navigateToTradeArgument(trade, argument)
                 }
+                if (editMode) {
+                    viewState.setArgumentText(argument.text)
+                }
                 if (isOpeningTrade) {
                     argument.takeProfit?.let { viewState.setTakeProfit(it) }
                     argument.stopLoss?.let { viewState.setStopLoss(it) }
@@ -281,7 +284,11 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ post ->
                 router.sendResult(NEW_ARGUMENT_RESULT, post)
-                router.exit()
+                router.navigateTo(
+                    Screens.tradeArgumentScreen(
+                        trade
+                    )
+                )
             }, {
                 it.printStackTrace()
             })
