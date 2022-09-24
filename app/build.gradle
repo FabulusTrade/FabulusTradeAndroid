@@ -37,6 +37,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'ru.fabulus.fabulustrade'
 }
 repositories {
     maven { url "https://jitpack.io" }
