@@ -88,9 +88,9 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                 } else {
                     trade.profitCount?.let { profit ->
                         if (profit < 0.0) {
-                            viewState.setLoss(profit, 2)
+                            viewState.setLoss(profit / 100.0f, 2)
                         } else {
-                            viewState.setProfit(profit, 2)
+                            viewState.setProfit(profit / 100.0f, 2)
                         }
                     }
                 }
