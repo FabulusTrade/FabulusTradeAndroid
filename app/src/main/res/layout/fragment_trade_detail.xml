@@ -431,7 +431,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_end_medium"
         android:layout_marginEnd="@dimen/margin_end_medium"
-        app:layout_constraintBottom_toTopOf="@+id/layout_sharing_panel"
+        app:layout_constraintBottom_toTopOf="@+id/list_of_images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_argument_table">
@@ -455,6 +455,15 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_of_images"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/layout_sharing_panel"
+        tools:listitem="@layout/item_image_of_post" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_sharing_panel"
         android:layout_width="match_parent"
@@ -466,22 +475,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_attach_images"
-            android:layout_width="@dimen/icon_publish_trader_details_size"
-            android:layout_height="@dimen/icon_publish_trader_details_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_attach" />
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_attach_images"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/upload_file"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_attach_images"
-            app:layout_constraintStart_toEndOf="@+id/iv_attach_images"
-            app:layout_constraintTop_toTopOf="@+id/iv_attach_images" />
+            android:layout_weight="0.9"
+            android:paddingEnd="30dp"
+            android:text="@string/load_file"
+            android:textColor="@color/colorGray"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_attach"
+            app:iconTint="@color/colorGray"
+            tools:ignore="RtlSymmetry,SmallSp" />
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/appCompatPublish"

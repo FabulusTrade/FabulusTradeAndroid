@@ -85,6 +85,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             presenter.closeClicked()
         }
         initClickListeners()
+        binding.listOfImages.adapter = imageListOfPostAdapter
     }
 
     private fun initTextChangeListeners() {
@@ -133,7 +134,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             val dealTerm = binding.etHowManyDays.text.toString().toIntOrNull()
             presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
         }
-        binding.ivAttachImages.setOnClickListener {
+        binding.btnAttachImages.setOnClickListener {
             getContent.launch(getString(R.string.gallery_mask))
         }
     }
