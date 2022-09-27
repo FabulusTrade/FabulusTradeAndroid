@@ -72,7 +72,8 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
         updateCommentBinding =
             checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
-
+        checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost.incItemPostFooter.ivFlash.visibility =
+            View.GONE
         return _binding?.root
     }
 
@@ -257,17 +258,20 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             R.id.iv_attached_kebab,
             ConstraintSet.TOP,
             R.id.linear_layout_detail,
-            ConstraintSet.BOTTOM)
+            ConstraintSet.BOTTOM
+        )
         constraintSet.connect(
             R.id.layout_argument_table,
             ConstraintSet.TOP,
             R.id.iv_attached_kebab,
-            ConstraintSet.BOTTOM)
+            ConstraintSet.BOTTOM
+        )
         constraintSet.connect(
             R.id.ll_post,
             ConstraintSet.TOP,
             R.id.layout_argument_table,
-            ConstraintSet.BOTTOM)
+            ConstraintSet.BOTTOM
+        )
         constraintSet.applyTo(constraintLayout)
     }
 }
