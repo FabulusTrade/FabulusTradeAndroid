@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.presenter.service
 
+import android.util.Log
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import ru.fabulus.fabulustrade.R
@@ -25,6 +26,15 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val OPERATION_SUBTYPE_KEY = "operation_subtype"
         private const val OPERATION_SUBTYPE_OPENING_VALUE = "opening"
         private const val OPERATION_SUBTYPE_CLOSING_VALUE = "closing"
+
+        private const val AUTHOR_KEY = "author"
+        private const val POST_TEXT_KEY = "post_text"
+        private const val ID_POST_KEY = "id_post"
+        private const val COMMENT_TEXT_KEY = "comment_text"
+        private const val ID_COMMENT_KEY = "id_comment"
+        private const val AUTHOR_COMMENT_KEY = "author_comment"
+        private const val AUTHOR_ANSWER_KEY = "author_answer"
+        private const val ANSWER_TEXT_KEY = "answer_text"
     }
 
     @Inject
@@ -39,25 +49,94 @@ class MessagingPresenter(private val service: MessagingService) {
     private var operationSubTypeResult = ""
 
     fun messageReceived(data: Map<String, String>) {
+        Log.d("TEST_NOTIFICATION", "messageReceived")
         val trader = data.getOrElse(TRADER_KEY) { "" }
         val operationType = data.getOrElse(OPERATION_TYPE_KEY) { "" }
         val company = data.getOrElse(COMPANY_KEY) { "" }
-        var price = data.getOrElse(PRICE_KEY) { "" }
+        val price = data.getOrElse(PRICE_KEY) { "" }
         val currency = data.getOrElse(TRADE_CURRENCY_KEY) { "" }
-        var dateData = data.getOrElse(OPERATION_DATE_KEY) { "" }
+        val dateData = data.getOrElse(OPERATION_DATE_KEY) { "" }
         val isDelayedTrade = data.getOrElse(DELAYED_TRADE_KEY) { "" }.uppercase() == "TRUE"
         val operationSubType = data.getOrElse(OPERATION_SUBTYPE_KEY) { "" }
 
-        var isSale: Boolean? = null
+        val author = data.getOrElse(AUTHOR_KEY) { "" }
+        val postText = data.getOrElse(POST_TEXT_KEY) { "" }
+        val idPost = data.getOrElse(ID_POST_KEY) { "" }
+        val commentText = data.getOrElse(COMMENT_TEXT_KEY) { "" }
+        val idComment = data.getOrElse(ID_COMMENT_KEY) { "" }
+        val authorComment = data.getOrElse(AUTHOR_COMMENT_KEY) { "" }
+        val authorAnswer = data.getOrElse(AUTHOR_ANSWER_KEY) { "" }
+        val answerText = data.getOrElse(ANSWER_TEXT_KEY) { "" }
 
-        if (operationType.uppercase()
-                .equals(resourceProvider.getStringResource(R.string.uppercased_sale_string))
-        )
+        when {
+            trader.isNotEmpty() && operationType.isNotEmpty() && company.isNotEmpty() && price.isNotEmpty()
+                    && currency.isNotEmpty() -> {
+                Log.d("TEST_NOTIFICATION", "when -> 1")
+                financialOperationsPush(
+                    trader,
+                    operationType,
+                    company,
+                    price,
+                    currency,
+                    dateData,
+                    isDelayedTrade,
+                    operationSubType
+                )
+            }
+            authorComment.isNotEmpty() && authorAnswer.isNotEmpty() && answerText.isNotEmpty()
+                    && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
+                Log.d("TEST_NOTIFICATION", "when -> 2")
+                service.showNotificationNewComment(
+                    title = "",
+                    message = "$authorComment: @$authorAnswer $answerText",
+                    idPost = idPost.toInt(),
+                    idComment = idComment.toInt(),
+                    getNotificationId()
+                )
+            }
+            author.isNotEmpty() && commentText.isNotEmpty() && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
+                service.showNotificationNewComment(
+                    title = "",
+                    message = "$author: $postText",
+                    idPost = idPost.toInt(),
+                    idComment = idComment.toInt(),
+                    getNotificationId()
+                )
+            }
+            author.isNotEmpty() && postText.isNotEmpty() && idPost.isNotEmpty() -> {
+                Log.d("TEST_NOTIFICATION", "when -> 3")
+                service.showNotificationNewPost(
+                    title = "",
+                    message = "$author: $postText",
+                    idPost = idPost.toInt(),
+                    getNotificationId()
+                )
+            }
+        }
+    }
+
+    private fun financialOperationsPush(
+        trader: String,
+        operationType: String,
+        company: String,
+        price: String,
+        currency: String,
+        date: String,
+        isDelayedTrade: Boolean,
+        operationSubType: String
+    ) {
+        var isSale: Boolean? = null
+        var priceData = price
+        var dateData = date
+
+        if (operationType.uppercase() == resourceProvider.getStringResource(R.string.uppercased_sale_string)
+        ) {
             isSale = true
-        if (operationType.uppercase()
-                .equals(resourceProvider.getStringResource(R.string.uppercased_buy_string))
-        )
+        }
+        if (operationType.uppercase() == resourceProvider.getStringResource(R.string.uppercased_buy_string)
+        ) {
             isSale = false
+        }
 
         operationSubTypeResult = when (operationSubType) {
             OPERATION_SUBTYPE_OPENING_VALUE ->
@@ -86,9 +165,11 @@ class MessagingPresenter(private val service: MessagingService) {
             ""
         }
 
-        if (price.isNotEmpty()) {
-            price =
-                resourceProvider.formatDigitWithDef(R.string.push_price_pattern, price.toFloat())
+        if (priceData.isNotEmpty()) {
+            priceData = resourceProvider.formatDigitWithDef(
+                R.string.push_price_pattern,
+                priceData.toFloat()
+            )
         }
 
         val title = HtmlCompat.fromHtml(
@@ -103,11 +184,16 @@ class MessagingPresenter(private val service: MessagingService) {
         val body = resourceProvider.formatString(
             R.string.push_body_pattern,
             company,
-            price,
+            priceData,
             currency
         )
 
-        service.showNotification(title, operationResultTitle, body, getNotificationId())
+        service.showNotificationFinancialOperation(
+            title,
+            operationResultTitle,
+            body,
+            getNotificationId()
+        )
         apiRepo.newTradeSubject.onNext(true)
     }
 
