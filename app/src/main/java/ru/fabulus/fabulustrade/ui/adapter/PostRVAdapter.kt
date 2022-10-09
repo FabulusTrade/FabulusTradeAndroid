@@ -76,6 +76,7 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
             btnItemTraderNewsShowText.setOnClickListener {
                 presenter.setPublicationTextMaxLines(holder)
             }
+
             btnItemTraderNewsShowComments.setOnClickListener {
                 presenter.showCommentDetails(holder)
             }

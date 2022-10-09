@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.Spanned
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -92,11 +93,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(0x00BCC1)
             .setContentTitle(title)
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .addLine(title)
-                    .addLine(message)
-            )
+            .setContentText(message)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -133,11 +130,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(0x00BCC1)
             .setContentTitle(title)
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .addLine(title)
-                    .addLine(message)
-            )
+            .setContentText(message)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -174,11 +167,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(0x00BCC1)
             .setContentTitle(title)
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .addLine(title)
-                    .addLine(message)
-            )
+            .setContentText(message)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 

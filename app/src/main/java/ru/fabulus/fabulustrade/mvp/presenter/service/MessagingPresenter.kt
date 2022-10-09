@@ -28,6 +28,7 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val OPERATION_SUBTYPE_CLOSING_VALUE = "closing"
 
         private const val AUTHOR_KEY = "author"
+        private const val ID_AUTHOR_POST = "id_author_post"
         private const val POST_TEXT_KEY = "post_text"
         private const val ID_POST_KEY = "id_post"
         private const val COMMENT_TEXT_KEY = "comment_text"
@@ -60,6 +61,7 @@ class MessagingPresenter(private val service: MessagingService) {
         val operationSubType = data.getOrElse(OPERATION_SUBTYPE_KEY) { "" }
 
         val author = data.getOrElse(AUTHOR_KEY) { "" }
+        val idAuthorPost = data.getOrElse(ID_AUTHOR_POST) { "" }
         val postText = data.getOrElse(POST_TEXT_KEY) { "" }
         val idPost = data.getOrElse(ID_POST_KEY) { "" }
         val commentText = data.getOrElse(COMMENT_TEXT_KEY) { "" }
@@ -68,10 +70,18 @@ class MessagingPresenter(private val service: MessagingService) {
         val authorAnswer = data.getOrElse(AUTHOR_ANSWER_KEY) { "" }
         val answerText = data.getOrElse(ANSWER_TEXT_KEY) { "" }
 
+        Log.d("TEST_NOTIFICATION", "author -> $author\n" +
+                "postText -> $postText\n" +
+                "idPost -> $idPost\n" +
+                "commentText -> $commentText\n" +
+                "idComment -> $idComment\n" +
+                "authorComment -> $authorComment\n" +
+                "authorAnswer -> $authorAnswer\n" +
+                "answerText ->  $answerText")
+
         when {
             trader.isNotEmpty() && operationType.isNotEmpty() && company.isNotEmpty() && price.isNotEmpty()
                     && currency.isNotEmpty() -> {
-                Log.d("TEST_NOTIFICATION", "when -> 1")
                 financialOperationsPush(
                     trader,
                     operationType,
@@ -85,28 +95,37 @@ class MessagingPresenter(private val service: MessagingService) {
             }
             authorComment.isNotEmpty() && authorAnswer.isNotEmpty() && answerText.isNotEmpty()
                     && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
-                Log.d("TEST_NOTIFICATION", "when -> 2")
-                service.showNotificationNewComment(
-                    title = "",
-                    message = "$authorComment: @$authorAnswer $answerText",
-                    idPost = idPost.toInt(),
-                    idComment = idComment.toInt(),
-                    getNotificationId()
-                )
+                if (idAuthorPost == profile.user?.id){
+                    service.showNotificationNewComment(
+                        title = "Новый комментарий",
+                        message = "$authorAnswer: @$authorComment $answerText",
+                        idPost = idPost.toInt(),
+                        idComment = idComment.toInt(),
+                        getNotificationId()
+                    )
+                }else{
+                    service.showNotificationNewComment(
+                        title = "Вас упомянули",
+                        message = "$authorAnswer: @$authorComment $answerText",
+                        idPost = idPost.toInt(),
+                        idComment = idComment.toInt(),
+                        getNotificationId()
+                    )
+                }
+
             }
             author.isNotEmpty() && commentText.isNotEmpty() && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
                 service.showNotificationNewComment(
-                    title = "",
-                    message = "$author: $postText",
+                    title = "Новый комментарий",
+                    message = "$author: $commentText",
                     idPost = idPost.toInt(),
                     idComment = idComment.toInt(),
                     getNotificationId()
                 )
             }
             author.isNotEmpty() && postText.isNotEmpty() && idPost.isNotEmpty() -> {
-                Log.d("TEST_NOTIFICATION", "when -> 3")
                 service.showNotificationNewPost(
-                    title = "",
+                    title = "Новый публикация",
                     message = "$author: $postText",
                     idPost = idPost.toInt(),
                     getNotificationId()
