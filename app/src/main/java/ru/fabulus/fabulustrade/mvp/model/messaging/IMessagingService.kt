@@ -10,7 +10,12 @@ interface IMessagingService {
         id: Int
     )
 
-    fun showNotificationNewPost(title: String, message: String, idPost: Int, idNotification: Int)
+    fun showNotificationNewPost(
+        title: String,
+        message: String,
+        idPost: Int,
+        idNotification: Int
+    )
     fun showNotificationNewComment(
         title: String,
         message: String,
