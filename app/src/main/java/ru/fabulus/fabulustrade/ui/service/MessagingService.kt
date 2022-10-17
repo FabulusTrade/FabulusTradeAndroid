@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.Spanned
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -39,13 +38,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         body: String,
         id: Int
     ) {
-        val intent = Intent(this, MainActivity::class.java)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
+        val pendingIntent = getPendingIntent()
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -60,18 +53,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Fabulus Trade",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-        notificationManager.notify(id, notificationBuilder.build())
+        notifyMessage(channelId, notificationBuilder, id)
     }
 
     override fun showNotificationNewPost(
@@ -80,13 +62,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         idPost: Int,
         idNotification: Int
     ) {
-        val intent = Intent(this, MainActivity::class.java)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
+        val pendingIntent = getPendingIntent()
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -97,33 +73,17 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Fabulus Trade",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-        notificationManager.notify(idNotification, notificationBuilder.build())
+        notifyMessage(channelId, notificationBuilder, idNotification)
     }
 
     override fun showNotificationNewComment(
         title: String,
         message: String,
         idPost: Int,
-        idComment: Int, idNotification: Int
+        idComment: Int,
+        idNotification: Int
     ) {
-        val intent = Intent(this, MainActivity::class.java)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
+        val pendingIntent = getPendingIntent()
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -134,6 +94,35 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
+        notifyMessage(channelId, notificationBuilder, idNotification)
+    }
+
+    override fun showNotificationNewAnswer(
+        title: String,
+        message: String,
+        idPost: Int,
+        idComment: Int,
+        idNotification: Int
+    ) {
+        val pendingIntent = getPendingIntent()
+        val channelId = getString(R.string.default_notification_channel_id)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
+            .setColor(0x00BCC1)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        notifyMessage(channelId, notificationBuilder, idNotification)
+    }
+
+    private fun notifyMessage(
+        channelId: String,
+        notificationBuilder: NotificationCompat.Builder,
+        idNotification: Int
+    ) {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -148,40 +137,10 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         notificationManager.notify(idNotification, notificationBuilder.build())
     }
 
-    override fun showNotificationNewAnswer(
-        title: String,
-        message: String,
-        idPost: Int,
-        idComment: Int, idNotification: Int
-    ) {
-        val intent = Intent(this, MainActivity::class.java)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+    private fun getPendingIntent(): PendingIntent {
+        return PendingIntent.getActivity(
+            this, 0, Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE
         )
-
-        val channelId = getString(R.string.default_notification_channel_id)
-
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
-            .setColor(0x00BCC1)
-            .setContentTitle(title)
-            .setContentText(message)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Fabulus Trade",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-        notificationManager.notify(idNotification, notificationBuilder.build())
     }
 }
