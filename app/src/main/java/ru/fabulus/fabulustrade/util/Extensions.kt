@@ -154,6 +154,9 @@ fun TextView.setTextAndColor(textValue: String, @ColorInt color: Int) {
 fun Date.toStringFormat(patternDate: String = "dd.MM.yyyy HH:mm"): String =
     SimpleDateFormat(patternDate, Locale.getDefault()).format(this)
 
+fun Date.dateToStringFormat(patternDate: String = "dd.MM.yyyy в HH:mm"): String =
+    SimpleDateFormat(patternDate, Locale.getDefault()).format(this)
+
 /** возвращает:
  * true -  для отрицательных чисел
  * false - для положительных

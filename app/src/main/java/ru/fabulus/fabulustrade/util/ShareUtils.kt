@@ -8,6 +8,7 @@ import android.widget.ImageView
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
+import java.util.GregorianCalendar
 
 fun ResourceProvider.getSharePostIntent(post: Post, imageViewIdList: List<ImageView>): Intent {
     var bmpUri: Uri? = null
@@ -32,7 +33,7 @@ fun ResourceProvider.getSharePostIntent(post: Post, imageViewIdList: List<ImageV
 
         var title = formatString(
             R.string.share_message_pattern,
-            post.userName,
+            "${post.userName}\n Дата: ${post.dateCreate.dateToStringFormat()}",
             textPost
         )
 
