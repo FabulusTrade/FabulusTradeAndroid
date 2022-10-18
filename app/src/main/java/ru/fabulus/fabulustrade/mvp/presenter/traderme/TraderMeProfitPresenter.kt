@@ -89,18 +89,18 @@ class TraderMeProfitPresenter(
             traderStatistic.colorIncrDecrDepo365,
         )
         initStatisticTable(
-            traderStatistic.ratio365Long,
-            traderStatistic.ratio365Short,
-            traderStatistic.termOfTransaction365Long,
-            traderStatistic.termOfTransaction365Short,
-            traderStatistic.profitOfPercent365Long,
-            traderStatistic.profitOfPercent365Short,
-            traderStatistic.percentProfitOfPercent365Long,
-            traderStatistic.percentProfitOfPercent365Short,
-            traderStatistic.losingOfPercent365Long,
-            traderStatistic.losingOfPercent365Short,
-            traderStatistic.percentLosingOfPercent365Long,
-            traderStatistic.percentLosingOfPercent365Short,
+            ratioLong = traderStatistic.ratio365Long,
+            ratioShort = traderStatistic.ratio365Short,
+            termOfTransactionLong = traderStatistic.termOfTransaction365Long,
+            termOfTransactionShort = traderStatistic.termOfTransaction365Short,
+            profitOfPercentLong = traderStatistic.profitOfPercent365Long,
+            profitOfPercentShort = traderStatistic.profitOfPercent365Short,
+            percentProfitOfPercentLong = traderStatistic.percentProfitOfPercent365Long,
+            percentProfitOfPercentShort = traderStatistic.percentProfitOfPercent365Short,
+            losingOfPercentLong = traderStatistic.losingOfPercent365Long,
+            losingOfPercentShort = traderStatistic.losingOfPercent365Short,
+            percentLosingOfPercentLong = traderStatistic.percentLosingOfPercent365Long,
+            percentLosingOfPercentShort = traderStatistic.percentLosingOfPercent365Short,
         )
     }
 
@@ -115,18 +115,18 @@ class TraderMeProfitPresenter(
             traderStatistic.colorIncrDecrDepoNDeals,
         )
         initStatisticTable(
-            traderStatistic.ratioNDealsLong,
-            traderStatistic.ratioNDealsShort,
-            traderStatistic.termOfTransactionNDealsLong,
-            traderStatistic.termOfTransactionNDealsShort,
-            traderStatistic.profitOfPercentNDealsLong,
-            traderStatistic.profitOfPercentNDealsShort,
-            traderStatistic.percentProfitOfPercentNDealsLong,
-            traderStatistic.percentProfitOfPercentNDealsShort,
-            traderStatistic.losingOfPercentNDealsLong,
-            traderStatistic.losingOfPercentNDealsShort,
-            traderStatistic.percentLosingOfPercentNDealsLong,
-            traderStatistic.percentLosingOfPercentNDealsShort,
+            ratioLong = traderStatistic.ratioNDealsLong,
+            ratioShort = traderStatistic.ratioNDealsShort,
+            termOfTransactionLong = traderStatistic.termOfTransactionNDealsLong,
+            termOfTransactionShort = traderStatistic.termOfTransactionNDealsShort,
+            profitOfPercentLong = traderStatistic.profitOfPercentNDealsLong,
+            profitOfPercentShort = traderStatistic.profitOfPercentNDealsShort,
+            percentProfitOfPercentLong = traderStatistic.percentProfitOfPercentNDealsLong,
+            percentProfitOfPercentShort = traderStatistic.percentProfitOfPercentNDealsShort,
+            losingOfPercentLong = traderStatistic.losingOfPercentNDealsLong,
+            losingOfPercentShort = traderStatistic.losingOfPercentNDealsShort,
+            percentLosingOfPercentLong = traderStatistic.percentLosingOfPercentNDealsLong,
+            percentLosingOfPercentShort = traderStatistic.percentLosingOfPercentNDealsShort,
         )
     }
 
@@ -165,6 +165,7 @@ class TraderMeProfitPresenter(
                 averageProfitTrades
             )
         )
+
 
         viewState.setAverageLoseForDeal(
             resourceProvider.formatDigitWithDef(
