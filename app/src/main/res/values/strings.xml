@@ -498,6 +498,9 @@
     <string name="push_body_opening_subtype">&lt;b>Открытие позиции</string>
     <string name="push_body_closing_subtype">&lt;b>Закрытие позиции</string>
     <string name="empty_string" />
+    <string name="push_new_comment_title">Новый комментарий</string>
+    <string name="push_new_post_title">Новая публикация</string>
+    <string name="push_new_mention_title">Вас упомянули</string>
 
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>

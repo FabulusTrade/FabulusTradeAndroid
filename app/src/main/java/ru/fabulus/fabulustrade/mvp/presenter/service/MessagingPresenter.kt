@@ -50,7 +50,6 @@ class MessagingPresenter(private val service: MessagingService) {
     private var operationSubTypeResult = ""
 
     fun messageReceived(data: Map<String, String>) {
-        Log.d("TEST_NOTIFICATION", "messageReceived")
         val trader = data.getOrElse(TRADER_KEY) { "" }
         val operationType = data.getOrElse(OPERATION_TYPE_KEY) { "" }
         val company = data.getOrElse(COMPANY_KEY) { "" }
@@ -70,15 +69,6 @@ class MessagingPresenter(private val service: MessagingService) {
         val authorAnswer = data.getOrElse(AUTHOR_ANSWER_KEY) { "" }
         val answerText = data.getOrElse(ANSWER_TEXT_KEY) { "" }
 
-        Log.d("TEST_NOTIFICATION", "author -> $author\n" +
-                "postText -> $postText\n" +
-                "idPost -> $idPost\n" +
-                "commentText -> $commentText\n" +
-                "idComment -> $idComment\n" +
-                "authorComment -> $authorComment\n" +
-                "authorAnswer -> $authorAnswer\n" +
-                "answerText ->  $answerText")
-
         when {
             trader.isNotEmpty() && operationType.isNotEmpty() && company.isNotEmpty() && price.isNotEmpty()
                     && currency.isNotEmpty() -> {
@@ -97,7 +87,7 @@ class MessagingPresenter(private val service: MessagingService) {
                     && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
                 if (idAuthorPost == profile.user?.id){
                     service.showNotificationNewComment(
-                        title = "Новый комментарий",
+                        title = resourceProvider.getStringResource(R.string.push_new_comment_title),
                         message = "$authorAnswer: @$authorComment $answerText",
                         idPost = idPost.toInt(),
                         idComment = idComment.toInt(),
@@ -105,7 +95,7 @@ class MessagingPresenter(private val service: MessagingService) {
                     )
                 }else{
                     service.showNotificationNewComment(
-                        title = "Вас упомянули",
+                        title = resourceProvider.getStringResource(R.string.push_new_mention_title),
                         message = "$authorAnswer: @$authorComment $answerText",
                         idPost = idPost.toInt(),
                         idComment = idComment.toInt(),
@@ -116,7 +106,7 @@ class MessagingPresenter(private val service: MessagingService) {
             }
             author.isNotEmpty() && commentText.isNotEmpty() && idPost.isNotEmpty() && idComment.isNotEmpty() -> {
                 service.showNotificationNewComment(
-                    title = "Новый комментарий",
+                    title = resourceProvider.getStringResource(R.string.push_new_comment_title),
                     message = "$author: $commentText",
                     idPost = idPost.toInt(),
                     idComment = idComment.toInt(),
@@ -125,7 +115,7 @@ class MessagingPresenter(private val service: MessagingService) {
             }
             author.isNotEmpty() && postText.isNotEmpty() && idPost.isNotEmpty() -> {
                 service.showNotificationNewPost(
-                    title = "Новый публикация",
+                    title = resourceProvider.getStringResource(R.string.push_new_post_title),
                     message = "$author: $postText",
                     idPost = idPost.toInt(),
                     getNotificationId()
