@@ -31,8 +31,9 @@ fun ResourceProvider.getSharePostIntent(post: Post, imageViewIdList: List<ImageV
         }
 
         var title = formatString(
-            R.string.share_message_pattern,
+            R.string.another_share_message_pattern,
             post.userName,
+            post.dateCreate.toStringFormat("dd.MM.yyyy ${formatString(R.string.`in`)} HH:mm"),
             textPost
         )
 

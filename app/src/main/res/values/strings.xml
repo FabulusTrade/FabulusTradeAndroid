@@ -498,6 +498,9 @@
     <string name="push_body_opening_subtype">&lt;b>Открытие позиции</string>
     <string name="push_body_closing_subtype">&lt;b>Закрытие позиции</string>
     <string name="empty_string" />
+    <string name="push_new_comment_title">Новый комментарий</string>
+    <string name="push_new_post_title">Новая публикация</string>
+    <string name="push_new_mention_title">Вас упомянули</string>
 
     <!--SignUpPresenter-->
     <string name="privacy_url">https://fabulustrade.com/legal_notes_mobile/</string>
@@ -518,6 +521,16 @@
                 \n
                 %s
     </string>
+    <string name="another_share_message_pattern">Fabulus Trade - независимая социальная сеть для трейдеров и инвесторов
+                \n
+                https://play.google.com/store/apps/details?id=ru.fabulus.fabulustrade
+                \n\n
+                Автор: %s\n
+                Дата: %s\n
+                \n
+                %s
+    </string>
+    <string name="in">в</string>
     <string name="et_update_comment_text_hint">Измененный комментарий</string>
     <string name="share_message_pattern_big_text">%s...</string>
     <string name="file_provider_name">ru.fabulus.fabulustrade.FileProvider</string>

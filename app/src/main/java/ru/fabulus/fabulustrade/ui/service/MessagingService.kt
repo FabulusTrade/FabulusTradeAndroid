@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.text.Spanned
 import androidx.core.app.NotificationCompat
@@ -33,19 +32,13 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         presenter.updateToken(token)
     }
 
-    override fun showNotification(
+    override fun showNotificationFinancialOperation(
         title: Spanned,
         operationResultTitle: Spanned,
         body: String,
         id: Int
     ) {
-        val intent = Intent(this, MainActivity::class.java)
-
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
+        val pendingIntent = getPendingIntent()
         val channelId = getString(R.string.default_notification_channel_id)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -60,6 +53,76 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
+        notifyMessage(channelId, notificationBuilder, id)
+    }
+
+    override fun showNotificationNewPost(
+        title: String,
+        message: String,
+        idPost: Int,
+        idNotification: Int
+    ) {
+        val pendingIntent = getPendingIntent()
+        val channelId = getString(R.string.default_notification_channel_id)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
+            .setColor(0x00BCC1)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        notifyMessage(channelId, notificationBuilder, idNotification)
+    }
+
+    override fun showNotificationNewComment(
+        title: String,
+        message: String,
+        idPost: Int,
+        idComment: Int,
+        idNotification: Int
+    ) {
+        val pendingIntent = getPendingIntent()
+        val channelId = getString(R.string.default_notification_channel_id)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
+            .setColor(0x00BCC1)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        notifyMessage(channelId, notificationBuilder, idNotification)
+    }
+
+    override fun showNotificationNewAnswer(
+        title: String,
+        message: String,
+        idPost: Int,
+        idComment: Int,
+        idNotification: Int
+    ) {
+        val pendingIntent = getPendingIntent()
+        val channelId = getString(R.string.default_notification_channel_id)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_app_launcher_foreground)
+            .setColor(0x00BCC1)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        notifyMessage(channelId, notificationBuilder, idNotification)
+    }
+
+    private fun notifyMessage(
+        channelId: String,
+        notificationBuilder: NotificationCompat.Builder,
+        idNotification: Int
+    ) {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -71,6 +134,13 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             )
             notificationManager.createNotificationChannel(channel)
         }
-        notificationManager.notify(id, notificationBuilder.build())
+        notificationManager.notify(idNotification, notificationBuilder.build())
+    }
+
+    private fun getPendingIntent(): PendingIntent {
+        return PendingIntent.getActivity(
+            this, 0, Intent(this, MainActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE
+        )
     }
 }
