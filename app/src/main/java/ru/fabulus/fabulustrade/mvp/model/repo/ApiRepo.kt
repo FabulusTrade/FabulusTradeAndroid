@@ -433,6 +433,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .isOnlineSingle()
             .flatMap { isOnline ->
                 if (isOnline) {
+                    //todo(profit_count приходит не верный)
                     api
                         .getDealsJournalByCompany(token, companyId, page)
                         .flatMap { respPag ->
