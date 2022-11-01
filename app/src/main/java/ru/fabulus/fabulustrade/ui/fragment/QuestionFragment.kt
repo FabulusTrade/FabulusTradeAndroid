@@ -74,6 +74,7 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     }
     override fun clearField() {
         binding.etQuestionBody.text?.clear()
+        binding.etQuestionBody.clearFocus()
     }
 
     override fun updateListOfImages(images: List<ByteArray>) {
