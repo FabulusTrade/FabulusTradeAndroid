@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp">
@@ -19,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:enabled="false"
-            android:hint="@string/e_mail_quastion" />
+            android:enabled="true"
+            android:hint="@string/e_mail_question" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -44,6 +45,42 @@
             android:gravity="top|start" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_question_list_of_images"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/barrier_question_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout2"
+        tools:listitem="@layout/item_image_of_post" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_question_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="btn_question_load_file, btn_question_send" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_question_load_file"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.9"
+        android:paddingEnd="30dp"
+        android:text="@string/load_file"
+        android:textColor="@color/colorGray"
+        android:textSize="10sp"
+        app:icon="@drawable/ic_attach"
+        app:iconTint="@color/colorGray"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_question_bottom"
+        app:layout_constraintEnd_toStartOf="@id/btn_question_send"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="RtlSymmetry,SmallSp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_question_send"
         android:layout_width="wrap_content"
@@ -51,7 +88,15 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/colorBlue"
         android:text="@string/send"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_question_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintStart_toEndOf="@id/btn_question_load_file" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_question_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="15dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

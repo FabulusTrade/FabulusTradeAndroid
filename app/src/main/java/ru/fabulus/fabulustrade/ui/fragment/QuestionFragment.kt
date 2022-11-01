@@ -1,9 +1,12 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -13,6 +16,7 @@ import ru.fabulus.fabulustrade.databinding.FragmentQuestionBinding
 import ru.fabulus.fabulustrade.mvp.presenter.QuestionPresenter
 import ru.fabulus.fabulustrade.mvp.view.QuestionView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.ImageListOfQuestionAdapter
 import ru.fabulus.fabulustrade.util.setDrawerLockMode
 import ru.fabulus.fabulustrade.util.setToolbarVisible
 import ru.fabulus.fabulustrade.util.showLongToast
@@ -34,6 +38,15 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     fun providePresenter() = QuestionPresenter().apply {
         App.instance.appComponent.inject(this)
     }
+
+    private val imageAdapter by lazy {
+        ImageListOfQuestionAdapter(presenter)
+    }
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            presenter.addImages(uris.map { it.toBitmap() })
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +74,14 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         binding.etQuestionBody.text?.clear()
     }
 
+    override fun updateListOfImages(images: List<ByteArray>) {
+        imageAdapter.updateImages(images)
+    }
+
+    override fun showImagesAddedMessage(count: Int) {
+        requireContext().showLongToast(getString(R.string.images_added, count))
+    }
+
     fun initListeners() {
         binding.btnQuestionSend.setOnClickListener {
             when {
@@ -77,9 +98,16 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
                 else -> presenter.sendMessage(binding.etQuestionBody.text.toString())
             }
         }
+        binding.btnQuestionLoadFile.setOnClickListener {
+            getContent.launch(getString(R.string.gallery_mask))
+        }
     }
 
+    private fun Uri.toBitmap() =
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
+
     private fun initView() {
+        binding.recyclerQuestionListOfImages.adapter = imageAdapter
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         setToolbarVisible(true)
     }

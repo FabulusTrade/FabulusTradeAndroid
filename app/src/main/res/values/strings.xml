@@ -21,7 +21,7 @@
     <string name="observation">Наблюдение</string>
     <string name="added_to_observation">Добавлен в лист наблюдения</string>
     <string name="removed_from_observation">Удалён из листа наблюдения</string>
-    <string name="e_mail_quastion">E-mail для связи</string>
+    <string name="e_mail_question">мой E-mail для обратной связи</string>
     <string name="question_success">Ваш вопрос отправлен в службу поддержки, ответ будет отправлен на указанный Вами e-mail</string>
     <string name="question_too_long">Вопрос слишком длинный</string>
     <string name="question_too_short">Вы забыли написать вопрос</string>

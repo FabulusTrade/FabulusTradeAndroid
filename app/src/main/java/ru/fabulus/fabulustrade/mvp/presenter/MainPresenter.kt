@@ -73,10 +73,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun questionMenuClicked() {
-        if (profile.user != null)
-            router.replaceScreen(Screens.questionScreen())
-        else
-            router.navigateTo(Screens.signInScreen(false))
+        router.replaceScreen(Screens.questionScreen())
     }
 
     fun settingsMenuClicked() {
