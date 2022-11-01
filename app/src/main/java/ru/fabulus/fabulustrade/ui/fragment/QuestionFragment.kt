@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -68,7 +69,7 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     }
 
     override fun showToast() {
-        requireContext().showLongToast(resources.getString(R.string.question_success))
+        Snackbar.make(binding.fragmentQuestion, resources.getString(R.string.question_success), Snackbar.LENGTH_LONG).show()
         this.hideKeyboard()
         presenter.deleteAllImage()
     }
