@@ -25,6 +25,7 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         profile.user?.email?.let { viewState.setEmail(it) }
     }
 
+    //todo нужен новый эндпоинт для отправки изображений и другого email
     fun sendMessage(msg: String) {
         apiRepo
             .sendQuestion(profile.token!!, msg)
