@@ -27,11 +27,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:layout_marginTop="32dp"
         app:counterEnabled="true"
         app:counterMaxLength="500"
         app:hintEnabled="false"
+        app:layout_constraintBottom_toTopOf="@id/recycler_question_list_of_images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">

@@ -17,6 +17,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.QuestionPresenter
 import ru.fabulus.fabulustrade.mvp.view.QuestionView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.ImageListOfQuestionAdapter
+import ru.fabulus.fabulustrade.util.hideKeyboard
 import ru.fabulus.fabulustrade.util.setDrawerLockMode
 import ru.fabulus.fabulustrade.util.setToolbarVisible
 import ru.fabulus.fabulustrade.util.showLongToast
@@ -68,8 +69,9 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
 
     override fun showToast() {
         requireContext().showLongToast(resources.getString(R.string.question_success))
+        this.hideKeyboard()
+        presenter.deleteAllImage()
     }
-
     override fun clearField() {
         binding.etQuestionBody.text?.clear()
     }

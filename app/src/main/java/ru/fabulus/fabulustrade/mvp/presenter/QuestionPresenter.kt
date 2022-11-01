@@ -43,6 +43,11 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         viewState.updateListOfImages(images.toList())
     }
 
+    fun deleteAllImage(){
+        images.clear()
+        viewState.updateListOfImages(images.toList())
+    }
+
     fun addImages(newImages: List<Bitmap>) {
         if (newImages.isEmpty()) return
         val remain = MAX_ATTACHED_IMAGE_COUNT
