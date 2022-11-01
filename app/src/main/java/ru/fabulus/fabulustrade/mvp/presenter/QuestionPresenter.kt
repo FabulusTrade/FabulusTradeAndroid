@@ -27,15 +27,20 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
 
     //todo нужен новый эндпоинт для отправки изображений и другого email
     fun sendMessage(msg: String) {
-        apiRepo
-            .sendQuestion(profile.token!!, msg)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.showToast()
-                viewState.clearField()
-            }, {
-                // Ошибка не обрабатывается
-            })
+        if (profile.token != null) {
+            apiRepo
+                .sendQuestion(profile.token!!, msg)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showToast()
+                    viewState.clearField()
+                }, {
+                    // Ошибка не обрабатывается
+                })
+        }else{
+            viewState.showToast()
+            viewState.clearField()
+        }
     }
 
     fun deleteImage(image: ByteArray) {
