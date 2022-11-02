@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:enabled="true"
+            android:inputType="textEmailAddress"
             android:hint="@string/e_mail_question" />
     </com.google.android.material.textfield.TextInputLayout>
 

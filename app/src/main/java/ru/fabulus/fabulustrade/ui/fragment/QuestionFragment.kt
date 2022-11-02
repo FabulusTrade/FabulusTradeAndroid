@@ -3,6 +3,7 @@ package ru.fabulus.fabulustrade.ui.fragment
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,10 +70,15 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     }
 
     override fun showToast() {
-        Snackbar.make(binding.fragmentQuestion, resources.getString(R.string.question_success), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(
+            binding.fragmentQuestion,
+            resources.getString(R.string.question_success),
+            Snackbar.LENGTH_LONG
+        ).show()
         this.hideKeyboard()
         presenter.deleteAllImage()
     }
+
     override fun clearField() {
         binding.etQuestionBody.text?.clear()
         binding.etQuestionBody.clearFocus()
@@ -99,6 +105,12 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
                         R.string.question_too_short
                     )
                 )
+                binding.etQuestionMail.text.toString().isEmpty() -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_empty))
+                }
+                !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString()).matches()) -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
+                }
                 else -> presenter.sendMessage(binding.etQuestionBody.text.toString())
             }
         }
