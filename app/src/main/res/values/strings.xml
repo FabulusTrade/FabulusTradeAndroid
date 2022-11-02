@@ -68,6 +68,8 @@
     <!-- Общее Util -->
     <string name="binding_error">Ошибка инициализации биндинга</string>
     <string name="coming_soon">В разработке</string>
+    <string name="email_is_empty">Введите ваш E-mail адрес</string>
+    <string name="email_is_not_correct">Ваш E-mail адрес не корректен</string>
 
     <!-- MainActivity -->
     <string name="open">Open</string>
