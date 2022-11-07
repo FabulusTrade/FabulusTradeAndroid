@@ -479,6 +479,7 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+
     fun createPost(
         token: String,
         id: String,
@@ -714,13 +715,67 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
-    fun sendQuestion(token: String, question: String): Completable =
+
+    fun sendQuestionAuthorizedUser(
+        token: String,
+        message_body: String,
+        email: String,
+        theme: String,
+        images: MutableList<ByteArray>
+    ): Completable =
         networkStatus
             .isOnlineSingle()
             .flatMapCompletable { isOnline ->
                 if (isOnline) {
-                    val requestQuestion = RequestQuestion(question)
-                    api.sendQuestion(token, requestQuestion)
+                    val body = if (email.isEmpty()) {
+                        MultipartBody.Builder().apply {
+                            setType(MultipartBody.FORM)
+                            addFormDataPart("message_body", message_body)
+                            addFormDataPart("theme", theme)
+                            images.forEachIndexed { index, byteArray ->
+                                addPart(byteArray.mapToMultipartBodyPart(index))
+                            }
+                        }
+                    } else {
+                        MultipartBody.Builder().apply {
+                            setType(MultipartBody.FORM)
+                            addFormDataPart("message_body", message_body)
+                            addFormDataPart("email", email)
+                            addFormDataPart("theme", theme)
+                            images.forEachIndexed { index, byteArray ->
+                                addPart(byteArray.mapToMultipartBodyPart(index))
+                            }
+                        }
+                    }
+                    TODO()
+//                    api.sendQuestionAuthorizedUser(token, body)
+                } else {
+                    Completable.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun sendQuestionNotAuthorizedUser(
+        message_body: String,
+        email: String,
+        theme: String,
+        images: MutableList<ByteArray>
+    ): Completable =
+        networkStatus
+            .isOnlineSingle()
+            .flatMapCompletable { isOnline ->
+                if (isOnline) {
+                    val body = MultipartBody.Builder().apply {
+                        setType(MultipartBody.FORM)
+                        addFormDataPart("message_body", message_body)
+                        addFormDataPart("email", email)
+                        addFormDataPart("theme", theme)
+                        images.forEachIndexed { index, byteArray ->
+                            addPart(byteArray.mapToMultipartBodyPart(index))
+                        }
+                    }.build()
+                    TODO()
+//                    api.sendQuestionNotAuthorizedUser(body)
                 } else {
                     Completable.error(NoInternetException())
                 }

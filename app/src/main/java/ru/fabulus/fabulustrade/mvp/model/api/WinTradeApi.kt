@@ -174,6 +174,7 @@ interface WinTradeApi {
         @Body email: RequestResetPass
     ): Completable
 
+
     @POST("api/v1/trader/post/create/")
     fun createPost(
         @Header("Authorization") token: String,
@@ -258,10 +259,16 @@ interface WinTradeApi {
         @Query("flashed_posts_only") flashedPostsOnly: Boolean = false
     ): Single<ResponsePagination<ResponsePost>>
 
+
     @POST("api/v1/feedback/send/")
-    fun sendQuestion(
+    fun sendQuestionAuthorizedUser(
         @Header("Authorization") token: String,
-        @Body message: RequestQuestion
+        @Body message: RequestBody
+    ): Completable
+
+    @POST("api/v1/feedback/send/")
+    fun sendQuestionNotAuthorizedUser(
+        @Body message: RequestBody
     ): Completable
 
     @GET("api/v1/trader/statistics/{trader_id}/")

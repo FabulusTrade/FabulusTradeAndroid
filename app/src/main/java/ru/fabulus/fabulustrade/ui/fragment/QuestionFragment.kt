@@ -107,7 +107,11 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
                 !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString()).matches()) -> {
                     requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
                 }
-                else -> presenter.sendMessage(binding.etQuestionBody.text.toString())
+                else -> presenter.sendMessage(
+                    msg = binding.etQuestionBody.text.toString(),
+                    email = binding.etQuestionMail.text.toString(),
+                    theme = "theme"
+                )
             }
         }
         binding.btnQuestionLoadFile.setOnClickListener {

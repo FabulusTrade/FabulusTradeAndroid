@@ -1,6 +1,7 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
 import android.graphics.Bitmap
+import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
@@ -17,7 +18,7 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
     @Inject
     lateinit var apiRepo: ApiRepo
 
-    private val images = mutableSetOf<ByteArray>()
+    private val images = mutableListOf<ByteArray>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -25,20 +26,42 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         profile.user?.email?.let { viewState.setEmail(it) }
     }
 
-    fun sendMessage(msg: String) {
+    fun sendMessage(
+        msg: String,
+        email: String,
+        theme: String,
+    ) {
         if (profile.token != null) {
             apiRepo
-                .sendQuestion(profile.token!!, msg)
+                .sendQuestionAuthorizedUser(
+                    token = profile.token.toString(),
+                    message_body = msg,
+                    email = email,
+                    theme = theme,
+                    images = images
+                )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.showToast()
                     viewState.clearField()
                 }, {
-                    // Ошибка не обрабатывается
+                    Log.d("TEST_TAG", "sendMessage throwable", it)
                 })
         }else{
-            viewState.showToast()
-            viewState.clearField()
+            apiRepo
+                .sendQuestionNotAuthorizedUser(
+                    message_body = msg,
+                    email = email,
+                    theme = theme,
+                    images = images
+                )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewState.showToast()
+                    viewState.clearField()
+                }, {
+                    Log.d("TEST_TAG", "sendMessage throwable", it)
+                })
         }
     }
 
@@ -47,7 +70,7 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         viewState.updateListOfImages(images.toList())
     }
 
-    fun deleteAllImage(){
+    fun deleteAllImage() {
         images.clear()
         viewState.updateListOfImages(images.toList())
     }
@@ -67,7 +90,7 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         images.add(stream.toByteArray())
     }
 
-    companion object{
+    companion object {
         private const val MAX_ATTACHED_IMAGE_COUNT = 4
     }
 }
