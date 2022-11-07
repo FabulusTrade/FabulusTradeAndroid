@@ -1,10 +1,16 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.snackbar.Snackbar
+import ru.fabulus.fabulustrade.util.hideKeyboard
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -13,6 +19,7 @@ import ru.fabulus.fabulustrade.databinding.FragmentQuestionBinding
 import ru.fabulus.fabulustrade.mvp.presenter.QuestionPresenter
 import ru.fabulus.fabulustrade.mvp.view.QuestionView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.ImageListOfQuestionAdapter
 import ru.fabulus.fabulustrade.util.setDrawerLockMode
 import ru.fabulus.fabulustrade.util.setToolbarVisible
 import ru.fabulus.fabulustrade.util.showLongToast
@@ -35,6 +42,15 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         App.instance.appComponent.inject(this)
     }
 
+    private val imageAdapter by lazy {
+        ImageListOfQuestionAdapter(presenter)
+    }
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            presenter.addImages(uris.map { it.toBitmap() })
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,11 +70,22 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     }
 
     override fun showToast() {
-        requireContext().showLongToast(resources.getString(R.string.question_success))
+        Snackbar.make(binding.fragmentQuestion, resources.getString(R.string.question_success), Snackbar.LENGTH_LONG).show()
+        this.hideKeyboard()
+        presenter.deleteAllImage()
     }
 
     override fun clearField() {
         binding.etQuestionBody.text?.clear()
+        binding.etQuestionBody.clearFocus()
+    }
+
+    override fun updateListOfImages(images: List<ByteArray>) {
+        imageAdapter.updateImages(images)
+    }
+
+    override fun showImagesAddedMessage(count: Int) {
+        requireContext().showLongToast(getString(R.string.images_added, count))
     }
 
     fun initListeners() {
@@ -74,12 +101,25 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
                         R.string.question_too_short
                     )
                 )
+                binding.etQuestionMail.text.toString().isEmpty() -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_empty))
+                }
+                !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString()).matches()) -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
+                }
                 else -> presenter.sendMessage(binding.etQuestionBody.text.toString())
             }
         }
+        binding.btnQuestionLoadFile.setOnClickListener {
+            getContent.launch(getString(R.string.gallery_mask))
+        }
     }
 
+    private fun Uri.toBitmap() =
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
+
     private fun initView() {
+        binding.recyclerQuestionListOfImages.adapter = imageAdapter
         setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         setToolbarVisible(true)
     }

@@ -10,4 +10,6 @@ interface QuestionView : MvpView {
     fun setEmail(email: String)
     fun showToast()
     fun clearField()
+    fun updateListOfImages(images: List<ByteArray>)
+    fun showImagesAddedMessage(count: Int)
 }
