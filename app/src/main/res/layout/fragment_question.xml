@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentQuestion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragmentQuestion"
     android:paddingHorizontal="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -22,29 +22,29 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:enabled="true"
-            android:inputType="textEmailAddress"
-            android:hint="@string/e_mail_question" />
+            android:hint="@string/e_mail_question"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/text_view_question_theme"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/spinner_question_theme"
-        android:textColor="@color/colorBlack"
-        android:text="@string/choose_question_theme"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/choose_question_theme"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
 
     <Spinner
         android:id="@+id/spinner_question_theme"
-        app:layout_constraintStart_toEndOf="@id/text_view_question_theme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_view_question_theme"
-        app:layout_constraintBottom_toBottomOf="@id/text_view_question_theme"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_question_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_view_question_theme"
+        app:layout_constraintTop_toTopOf="@id/text_view_question_theme" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
