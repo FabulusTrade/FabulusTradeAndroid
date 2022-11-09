@@ -70,6 +70,14 @@
     <string name="coming_soon">В разработке</string>
     <string name="email_is_empty">Введите ваш E-mail адрес</string>
     <string name="email_is_not_correct">Ваш E-mail адрес не корректен</string>
+    <string-array name="question_theme">
+        <item>1. Не могу зарегистрироваться обычным Пользователем</item>
+        <item>2. Не могу зарегистрироваться Трейдером</item>
+        <item>3. Не скачивается FabulusTrade Client</item>
+        <item>4. Не могу разместить новость, комментарий</item>
+        <item>5. Другое</item>
+    </string-array>
+    <string name="choose_question_theme">Выберите тему: </string>
 
     <!-- MainActivity -->
     <string name="open">Open</string>

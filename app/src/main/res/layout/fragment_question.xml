@@ -26,6 +26,26 @@
             android:hint="@string/e_mail_question" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/text_view_question_theme"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/spinner_question_theme"
+        android:textColor="@color/colorBlack"
+        android:text="@string/choose_question_theme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        android:id="@+id/spinner_question_theme"
+        app:layout_constraintStart_toEndOf="@id/text_view_question_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_question_theme"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_question_theme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
@@ -36,7 +56,7 @@
         app:layout_constraintBottom_toTopOf="@id/recycler_question_list_of_images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/spinner_question_theme">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_question_body"

@@ -7,6 +7,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.snackbar.Snackbar
@@ -63,6 +64,19 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     override fun init() {
         initView()
         initListeners()
+        initSpinner()
+    }
+
+    private fun initSpinner() {
+        val spinner = binding.spinnerQuestionTheme
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.question_theme,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
     }
 
     override fun setEmail(email: String) {
@@ -107,11 +121,15 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
                 !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString()).matches()) -> {
                     requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
                 }
-                else -> presenter.sendMessage(
-                    msg = binding.etQuestionBody.text.toString(),
-                    email = binding.etQuestionMail.text.toString(),
-                    theme = "theme"
-                )
+                else -> {
+                    val position: Int = binding.spinnerQuestionTheme.selectedItemPosition
+                    val array = requireContext().resources.getStringArray(R.array.question_theme)
+                    presenter.sendMessage(
+                        msg = binding.etQuestionBody.text.toString(),
+                        email = binding.etQuestionMail.text.toString(),
+                        theme = array[position]
+                    )
+                }
             }
         }
         binding.btnQuestionLoadFile.setOnClickListener {
