@@ -8,5 +8,4 @@ import ru.fabulus.fabulustrade.mvp.view.base.BaseTraderView
 interface SubscriberMainView : BaseTraderView {
     fun init()
     fun setName(username: String)
-    fun setSubscriptionCount(count: Int)
 }
