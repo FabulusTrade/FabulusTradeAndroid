@@ -26,25 +26,24 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/text_view_question_theme"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/spinner_question_theme_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/choose_question_theme"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
-
-    <Spinner
-        android:id="@+id/spinner_question_theme"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/text_view_question_theme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/text_view_question_theme"
-        app:layout_constraintTop_toTopOf="@id/text_view_question_theme" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinner_question_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorWhite"
+            android:hint="@string/choose_question_theme"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -56,7 +55,7 @@
         app:layout_constraintBottom_toTopOf="@id/recycler_question_list_of_images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_question_theme">
+        app:layout_constraintTop_toBottomOf="@id/spinner_question_theme_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_question_body"

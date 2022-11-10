@@ -31,7 +31,6 @@ class QuestionPresenter : MvpPresenter<QuestionView>() {
         email: String,
         theme: String,
     ) {
-
         if (profile.token != null) {
             apiRepo
                 .sendQuestionAuthorizedUser(

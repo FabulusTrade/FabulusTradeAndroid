@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.snackbar.Snackbar
-import ru.fabulus.fabulustrade.util.hideKeyboard
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -21,6 +21,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.QuestionPresenter
 import ru.fabulus.fabulustrade.mvp.view.QuestionView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.ImageListOfQuestionAdapter
+import ru.fabulus.fabulustrade.util.hideKeyboard
 import ru.fabulus.fabulustrade.util.setDrawerLockMode
 import ru.fabulus.fabulustrade.util.setToolbarVisible
 import ru.fabulus.fabulustrade.util.showLongToast
@@ -67,24 +68,16 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         initSpinner()
     }
 
-    private fun initSpinner() {
-        val spinner = binding.spinnerQuestionTheme
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.question_theme,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-        }
-    }
-
     override fun setEmail(email: String) {
         binding.etQuestionMail.text?.insert(binding.etQuestionMail.selectionStart, email)
     }
 
     override fun showToast() {
-        Snackbar.make(binding.fragmentQuestion, resources.getString(R.string.question_success), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(
+            binding.fragmentQuestion,
+            resources.getString(R.string.question_success),
+            Snackbar.LENGTH_LONG
+        ).show()
         this.hideKeyboard()
         presenter.deleteAllImage()
     }
@@ -105,29 +98,31 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     fun initListeners() {
         binding.btnQuestionSend.setOnClickListener {
             when {
-                binding.etQuestionBody.text?.length!! > MAX_QUESTION_LENGTH -> requireContext().showLongToast(
-                    resources.getString(
-                        R.string.question_too_long
-                    )
-                )
+                binding.etQuestionMail.text.toString().isEmpty() -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_empty))
+                }
+                !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString())
+                    .matches()) -> {
+                    requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
+                }
+                binding.spinnerQuestionTheme.text.toString().isEmpty() -> {
+                    requireContext().showLongToast(resources.getString(R.string.question_theme_is_not_enabled))
+                }
                 binding.etQuestionBody.text.isNullOrEmpty() -> requireContext().showLongToast(
                     resources.getString(
                         R.string.question_too_short
                     )
                 )
-                binding.etQuestionMail.text.toString().isEmpty() -> {
-                    requireContext().showLongToast(resources.getString(R.string.email_is_empty))
-                }
-                !(Patterns.EMAIL_ADDRESS.matcher(binding.etQuestionMail.text.toString()).matches()) -> {
-                    requireContext().showLongToast(resources.getString(R.string.email_is_not_correct))
-                }
+                binding.etQuestionBody.text?.length!! > MAX_QUESTION_LENGTH -> requireContext().showLongToast(
+                    resources.getString(
+                        R.string.question_too_long
+                    )
+                )
                 else -> {
-                    val position: Int = binding.spinnerQuestionTheme.selectedItemPosition
-                    val array = requireContext().resources.getStringArray(R.array.question_theme)
                     presenter.sendMessage(
                         msg = binding.etQuestionBody.text.toString(),
                         email = binding.etQuestionMail.text.toString(),
-                        theme = array[position]
+                        theme = binding.spinnerQuestionTheme.text.toString()
                     )
                 }
             }
@@ -135,6 +130,12 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
         binding.btnQuestionLoadFile.setOnClickListener {
             getContent.launch(getString(R.string.gallery_mask))
         }
+    }
+
+    private fun initSpinner() {
+        val items = requireContext().resources.getStringArray(R.array.question_theme)
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, items)
+        (binding.spinnerQuestionTheme as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun Uri.toBitmap() =
