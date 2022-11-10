@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -8,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.snackbar.Snackbar
 import moxy.MvpAppCompatFragment
@@ -25,6 +28,7 @@ import ru.fabulus.fabulustrade.util.hideKeyboard
 import ru.fabulus.fabulustrade.util.setDrawerLockMode
 import ru.fabulus.fabulustrade.util.setToolbarVisible
 import ru.fabulus.fabulustrade.util.showLongToast
+
 
 class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     private var _binding: FragmentQuestionBinding? = null
@@ -134,8 +138,13 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
 
     private fun initSpinner() {
         val items = requireContext().resources.getStringArray(R.array.question_theme)
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, items)
-        (binding.spinnerQuestionTheme as? AutoCompleteTextView)?.setAdapter(adapter)
+        val adapter = CustomArrayAdapter(
+            requireContext(),
+            R.layout.item_spinner,
+            R.id.spinner_text_view
+        )
+        items.forEach { adapter.add(it) }
+        binding.spinnerQuestionTheme.setAdapter(adapter)
     }
 
     private fun Uri.toBitmap() =
@@ -150,5 +159,40 @@ class QuestionFragment : MvpAppCompatFragment(), QuestionView {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+}
+
+private class CustomArrayAdapter(
+    context: Context,
+    @LayoutRes private val layoutResource: Int,
+    @IdRes private val textViewResourceId: Int
+) : ArrayAdapter<String>(context, layoutResource) {
+
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = createViewFromResource(convertView, parent, layoutResource)
+        view.post { view.setHorizontallyScrolling(false) }
+        return bindData(getItem(position)!!, view)
+    }
+
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = createViewFromResource(convertView, parent, R.layout.item_spinner)
+        return bindData(getItem(position)!!, view)
+    }
+
+    private fun createViewFromResource(
+        convertView: View?,
+        parent: ViewGroup,
+        layoutResource: Int
+    ): TextView {
+        val context = parent.context
+        val view = convertView ?: LayoutInflater.from(context)
+            .inflate(layoutResource, parent, false)
+        return view.findViewById(textViewResourceId)
+    }
+
+    private fun bindData(value: String, view: TextView): TextView {
+        view.text = value
+        return view
     }
 }
