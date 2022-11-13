@@ -24,7 +24,7 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
-class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, private val post: Post? = null) :
+class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean) :
     MvpPresenter<TradeDetailView>(),
     IImageListPresenter {
 
@@ -114,21 +114,22 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
         }
     }
 
+    var argument: Argument? = null
     private fun initArgument(navigateToArgumentScreen: Boolean) {
         apiRepo
             .getArgumentByTrade(profile.token!!, trade.id.toString())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ arguments ->
-                val argument = arguments.results[0]
+                argument = arguments.results[0]
                 if (navigateToArgumentScreen) {
-                    navigateToTradeArgument(trade, argument)
+                    navigateToTradeArgument(trade, argument!!)
                 }
                 if (editMode) {
-                    viewState.setArgumentText(argument.text)
+                    viewState.setArgumentText(argument!!.text)
                 }
                 if (isOpeningTrade) {
-                    argument.takeProfit?.let { viewState.setTakeProfit(it) }
-                    argument.stopLoss?.let { viewState.setStopLoss(it) }
+                    argument!!.takeProfit?.let { viewState.setTakeProfit(it) }
+                    argument!!.stopLoss?.let { viewState.setStopLoss(it) }
                 } else {
                     trade.profitCount?.let { profit ->
                         if (profit < 0.0) {
@@ -138,13 +139,14 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
                         }
                     }
                 }
-                argument.dealTerm?.let {
+                argument!!.dealTerm?.let {
                     if (isOpeningTrade) {
                         viewState.setDealTerm(it, 0)
                     } else {
                         viewState.setDealTerm(it, 2)
                     }
                 }
+                updateListOfImage()
             }, { error ->
                 Log.d(BasePostPresenter.TAG, "Error: ${error.message.toString()}")
                 Log.d(BasePostPresenter.TAG, error.printStackTrace().toString())
@@ -172,7 +174,7 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
         if (newImages.isEmpty()) return
         val remain =
             max(
-                CreatePostPresenter.MAX_ATTACHED_IMAGE_COUNT - (post?.images?.size
+                CreatePostPresenter.MAX_ATTACHED_IMAGE_COUNT - (argument?.images?.size
                     ?: 0) + imagesToAdd.size + imagesOnServerToDelete.size,
                 0
             )
@@ -182,8 +184,8 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean, priv
     }
 
     private fun updateListOfImage(deletedImage: CreatePostPresenter.ImageOfPost? = null) {
-        (post?.let { post ->
-            post.images.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
+        (argument?.let { argument ->
+            argument.images.map { CreatePostPresenter.ImageOfPost.ImageOnBack(it) }
         }
             ?.let { imageList ->
                 imageList - imagesOnServerToDelete.map {

@@ -67,7 +67,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     lateinit var presenter: TradeDetailPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradeDetailPresenter(requireArguments()[TRADE_KEY] as Trade, requireArguments()[EDIT_MODE_KEY] as Boolean).apply {
+    fun providePresenter() = TradeDetailPresenter(
+        requireArguments()[TRADE_KEY] as Trade,
+        requireArguments()[EDIT_MODE_KEY] as Boolean
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -135,6 +138,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
         }
         binding.btnAttachImages.setOnClickListener {
+            binding.listOfImages.layoutParams.height = (100 * resources.displayMetrics.density).toInt()
             getContent.launch(getString(R.string.gallery_mask))
         }
     }
@@ -156,11 +160,19 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
                 binding.tvShareArgument.text =
                     resources.getString(R.string.share_with_arguments_on_your_idea)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price), Html.FROM_HTML_MODE_LEGACY)
-                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price), Html.FROM_HTML_MODE_LEGACY)
+                    binding.tvFirstLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.take_profit_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+                    binding.tvSecondLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.stop_loss_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
                 } else {
-                    binding.tvFirstLineLabel.text = Html.fromHtml(resources.getString(R.string.take_profit_price))
-                    binding.tvSecondLineLabel.text = Html.fromHtml(resources.getString(R.string.stop_loss_price))
+                    binding.tvFirstLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.take_profit_price))
+                    binding.tvSecondLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.stop_loss_price))
                 }
             }
             TradeType.CLOSING_TRADE -> {
