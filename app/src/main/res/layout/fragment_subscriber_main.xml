@@ -47,14 +47,6 @@
                     android:textSize="18sp"
                     tools:text="Пётр" />
 
-                <TextView
-                    android:id="@+id/tv_subscriber_main_subscription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/colorBlack"
-                    tools:text="Подписчики: 0" />
-
             </LinearLayout>
 
             <ImageView
