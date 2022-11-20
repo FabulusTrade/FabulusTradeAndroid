@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -80,6 +81,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTradeDetailBinding.inflate(inflater, container, false)
+        _binding?.etCreatePost?.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (v?.getId() == R.id.et_create_post) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true)
+                    when(event?.action?.or(MotionEvent.ACTION_MASK)) {
+                        MotionEvent.ACTION_UP ->
+                            v.getParent().requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                return false
+            }
+        })
         return _binding?.root
     }
 
@@ -118,13 +131,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
-    private val getContent =
+    private
+    val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
             presenter.addImages(uris.map { it.toBitmap() })
         }
 
     private fun Uri.toBitmap() =
-        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(this))
+        BitmapFactory.decodeStream(
+            requireContext().contentResolver.openInputStream(
+                this
+            )
+        )
 
     private fun initClickListeners() {
         binding.linearShareArgumentsBegin.setOnClickListener {
@@ -133,12 +151,14 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.appCompatPublish.setOnClickListener {
             val text = binding.etCreatePost.text.toString()
             val stopLoss = binding.etStopLoss.text.toString().toFloatOrNull()
-            val takeProfit = binding.etTakeProfit.text.toString().toFloatOrNull()
+            val takeProfit =
+                binding.etTakeProfit.text.toString().toFloatOrNull()
             val dealTerm = binding.etHowManyDays.text.toString().toIntOrNull()
             presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
         }
         binding.btnAttachImages.setOnClickListener {
-            binding.listOfImages.layoutParams.height = (100 * resources.displayMetrics.density).toInt()
+            binding.listOfImages.layoutParams.height =
+                (100 * resources.displayMetrics.density).toInt()
             getContent.launch(getString(R.string.gallery_mask))
         }
     }
@@ -176,10 +196,14 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
                 }
             }
             TradeType.CLOSING_TRADE -> {
-                binding.tvShareHead.text = resources.getString(R.string.arguments_head_idea)
-                binding.tvShareArgument.text = resources.getString(R.string.comment_to_result)
-                binding.tvFirstLineLabel.text = resources.getString(R.string.income)
-                binding.tvSecondLineLabel.text = resources.getString(R.string.loss)
+                binding.tvShareHead.text =
+                    resources.getString(R.string.arguments_head_idea)
+                binding.tvShareArgument.text =
+                    resources.getString(R.string.comment_to_result)
+                binding.tvFirstLineLabel.text =
+                    resources.getString(R.string.income)
+                binding.tvSecondLineLabel.text =
+                    resources.getString(R.string.loss)
                 binding.etTakeProfit.apply {
                     isEnabled = false
                     background = null
