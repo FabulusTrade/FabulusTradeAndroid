@@ -85,6 +85,7 @@ class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
         startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
     }
 
+    @Deprecated(message="deprecation inhereted")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {

@@ -20,6 +20,7 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.TraderMeMainAdapter
 import ru.fabulus.fabulustrade.util.*
+import kotlin.Deprecated as Deprecated
 
 class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
     private var _binding: FragmentTraderMeMainBinding? = null
@@ -88,6 +89,7 @@ class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButto
         startActivityForResult(intentChooser, IntentConstants.PICK_IMAGE)
     }
 
+    @Deprecated(message="deprecation inhereted")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IntentConstants.PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
