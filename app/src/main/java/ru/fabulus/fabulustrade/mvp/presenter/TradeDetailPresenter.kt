@@ -286,11 +286,7 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean) :
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ post ->
                 router.sendResult(NEW_ARGUMENT_RESULT, post)
-                router.navigateTo(
-                    Screens.tradeArgumentScreen(
-                        trade
-                    )
-                )
+                router.exit()
             }, {
                 it.printStackTrace()
             })
