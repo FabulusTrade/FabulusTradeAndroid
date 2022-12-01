@@ -230,8 +230,8 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
             popupMenu.inflate(R.menu.menu_someone_comment)
             val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
             complaintList.forEach { complaint ->
-                complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
-                    .setOnMenuItemClickListener {
+                complaintItem.subMenu?.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
+                    ?.setOnMenuItemClickListener {
                         tradeArgumentPresenter.complainOnPost(complaint.id)
                         return@setOnMenuItemClickListener true
                     }

@@ -53,7 +53,7 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
 
         viewState.setSubtype(trade.subtype)
 
-        if (trade.subtype?.length > 0) {
+        if (trade.subtype.isNotEmpty()) {
             if (trade.subtype.subSequence(0, 8) == "Открытие") {
                 viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
             } else {
@@ -61,7 +61,7 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
             }
         }
 
-        if (trade.subtype?.length > 0) {
+        if (trade.subtype.isNotEmpty()) {
             if (trade.subtype.subSequence(0, 8) == "Открытие") {
                 isOpeningTrade = true
                 viewState.setTradeType(TradeDetailFragment.TradeType.OPENING_TRADE)
@@ -160,7 +160,7 @@ class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgument
                 }
             }
 
-        router.navigateTo(
+        router.replaceScreen(
             Screens.tradeDetailScreen(
                 trade,
                 true
