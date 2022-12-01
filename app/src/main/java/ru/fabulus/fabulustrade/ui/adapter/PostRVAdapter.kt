@@ -216,8 +216,8 @@ open class PostRVAdapter(private val presenter: IPostRVListPresenter) :
                 inflateMenu(popupMenu)
                 val complaintItem = popupMenu.menu.findItem(R.id.mi_complain_on_post)
                 complaintList.forEach { complaint ->
-                    complaintItem.subMenu.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
-                        .setOnMenuItemClickListener {
+                    complaintItem.subMenu?.add(Menu.NONE, complaint.id, Menu.NONE, complaint.text)
+                        ?.setOnMenuItemClickListener {
                             presenter.complainOnPost(post, complaint.id)
                             return@setOnMenuItemClickListener true
                         }
