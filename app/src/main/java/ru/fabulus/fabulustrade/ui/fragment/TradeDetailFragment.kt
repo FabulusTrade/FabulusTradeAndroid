@@ -24,6 +24,7 @@ import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.ImageListOfPostAdapter
 import ru.fabulus.fabulustrade.util.showLongToast
+import java.text.DecimalFormat
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
@@ -85,7 +86,7 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 if (v?.getId() == R.id.et_create_post) {
                     v.getParent().requestDisallowInterceptTouchEvent(true)
-                    when(event?.action?.or(MotionEvent.ACTION_MASK)) {
+                    when (event?.action?.or(MotionEvent.ACTION_MASK)) {
                         MotionEvent.ACTION_UP ->
                             v.getParent().requestDisallowInterceptTouchEvent(false)
                     }
@@ -122,8 +123,8 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
         return try {
-            val number = "${numberText.replace(",", ".")}".trim().toDouble()
-            val price = "${priceText.replace(",", ".")}".trim().toDouble()
+            val number = numberText.replace(",", ".").trim().toDouble()
+            val price = priceText.replace(",", ".").trim().toDouble()
             val returnValue = ((number / price) - 1) * 100
             "%.2f %%".format(returnValue)
         } catch (e: NumberFormatException) {
@@ -287,24 +288,22 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     }
 
     override fun setTakeProfit(takeProfit: Float) {
-        binding.etTakeProfit.setText(takeProfit.toString())
+        val dec = DecimalFormat("#.00")
+        binding.etTakeProfit.setText(dec.format(takeProfit))
     }
 
     override fun setProfit(profit: Float, precision: Int) {
         binding.etTakeProfit.setText(formPercentString(profit, precision))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.etTakeProfit.setTextColor(
-                resources.getColor(
-                    R.color.colorGreenPercentProfit, requireContext().theme
-                )
+        binding.etTakeProfit.setTextColor(
+            resources.getColor(
+                R.color.colorGreenPercentProfit, requireContext().theme
             )
-        } else {
-            binding.etTakeProfit.setTextColor(resources.getColor(R.color.colorGreenPercentProfit))
-        }
+        )
     }
 
     override fun setStopLoss(stopLoss: Float) {
-        binding.etStopLoss.setText(stopLoss.toString())
+        val dec = DecimalFormat("#.00")
+        binding.etStopLoss.setText(dec.format(stopLoss))
     }
 
     override fun setLoss(loss: Float, precision: Int) {

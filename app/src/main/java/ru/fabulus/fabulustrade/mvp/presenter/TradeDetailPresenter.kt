@@ -7,7 +7,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.entity.Argument
-import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
@@ -103,9 +102,9 @@ class TradeDetailPresenter(val trade: Trade, private val editMode: Boolean) :
         if (!isOpeningTrade) {
             trade.profitCount?.let { profit ->
                 if (profit < 0.0) {
-                    viewState.setLoss(profit, 2)
+                    viewState.setLoss(profit / 100.0F, 2)
                 } else {
-                    viewState.setProfit(profit, 2)
+                    viewState.setProfit(profit / 100.0F, 2)
                 }
             }
             trade.termOfTransaction?.let { term ->

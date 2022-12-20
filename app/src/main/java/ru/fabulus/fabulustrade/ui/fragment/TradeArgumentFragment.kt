@@ -1,5 +1,6 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -24,6 +25,7 @@ import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
+import java.text.DecimalFormat
 
 
 class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
@@ -153,10 +155,12 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setTakeProfit(takeProfit: Float) {
-        binding.etTakeProfit.setText(takeProfit.toString())
+        val dec = DecimalFormat("#.00")
+        binding.etTakeProfit.setText(dec.format(takeProfit))
         val priceText = binding.tvTradeDetailPrice.text.trim().toString()
-        val price = "${priceText.replace(",", ".")}".trim().toDouble()
+        val price = priceText.replace(",", ".").trim().toDouble()
         binding.tvTakeProfitResult.text = "%.2f %%".format(((takeProfit / price) - 1) * 100)
     }
 
@@ -173,10 +177,12 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setStopLoss(stopLoss: Float) {
-        binding.etStopLoss.setText(stopLoss.toString())
+        val dec = DecimalFormat("#.00")
+        binding.etStopLoss.setText(dec.format(stopLoss))
         val priceText = binding.tvTradeDetailPrice.text.trim().toString()
-        val price = "${priceText.replace(",", ".")}".trim().toDouble()
+        val price = priceText.replace(",", ".").trim().toDouble()
         binding.tvStopLossResult.text = "%.2f %%".format(((stopLoss / price) - 1) * 100)
     }
 
