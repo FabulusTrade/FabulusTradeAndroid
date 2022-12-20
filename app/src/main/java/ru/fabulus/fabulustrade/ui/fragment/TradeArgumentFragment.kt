@@ -166,15 +166,11 @@ class TradeArgumentFragment : BasePostFragment(), TradeArgumentView {
 
     override fun setProfit(profit: Float, precision: Int) {
         binding.etTakeProfit.setText(formPercentString(profit, precision))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.etTakeProfit.setTextColor(
-                resources.getColor(
-                    R.color.colorGreenPercentProfit, requireContext().theme
-                )
+        binding.etTakeProfit.setTextColor(
+            resources.getColor(
+                R.color.colorGreenPercentProfit, requireContext().theme
             )
-        } else {
-            binding.etTakeProfit.setTextColor(resources.getColor(R.color.colorGreenPercentProfit))
-        }
+        )
     }
 
     @SuppressLint("SetTextI18n")
