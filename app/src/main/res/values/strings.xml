@@ -230,7 +230,7 @@
     <string name="comment_to_result">Комментарий к полученному результату</string>
     <string name="publish">Опубликовать</string>
     <string name="upload_file">Загрузить файл</string>
-    <string name="realization_day">Срок реализации, дн</string>
+    <string name="realization_day">Срок реализации, дн.</string>
     <string name="stop_loss_price"><![CDATA[Стоп-лосс <font color="#B12B2B">(цена / -%)</font>]]></string>
     <string name="take_profit_price"><![CDATA[Тейк профит <font color="#008134">(цена / %)</font>]]></string>
     <string name="income">Прибыль</string>

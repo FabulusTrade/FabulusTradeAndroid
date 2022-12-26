@@ -176,4 +176,5 @@
     <dimen name="view_item_comp_trading_ops_journal_list_divider_margin_top">10dp</dimen>
     <dimen name="view_item_comp_trading_ops_journal_operation_type_width">80dp</dimen>
     <dimen name="cl_buttons_elevation">4dp</dimen>
+    <dimen name="trade_detail_text_margin">4dp</dimen>
 </resources>

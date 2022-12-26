@@ -106,7 +106,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_update_comment_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorWhite"
                 android:hint="@string/et_update_comment_text_hint"

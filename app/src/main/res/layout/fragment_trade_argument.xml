@@ -307,6 +307,7 @@
                         android:id="@+id/tv_first_line_label"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/take_profit_price"
                         android:textColor="@color/colorBlack"
@@ -345,6 +346,7 @@
                         android:id="@+id/tv_second_line_label"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/stop_loss_price"
                         android:textColor="@color/colorBlack"
@@ -392,6 +394,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/realization_day"
                         android:textColor="@color/colorBlack"
