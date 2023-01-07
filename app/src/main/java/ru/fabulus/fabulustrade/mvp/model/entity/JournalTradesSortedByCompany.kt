@@ -12,5 +12,6 @@ data class JournalTradesSortedByCompany(
     val price: Float,
     val currency: String,
     val endCount: Int,
-    val visible: Boolean
+    val visible: Boolean,
+    val posts: Int?
 )

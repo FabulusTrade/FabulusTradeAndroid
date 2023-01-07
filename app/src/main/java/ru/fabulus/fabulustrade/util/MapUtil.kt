@@ -129,7 +129,9 @@ fun mapToTrade(trade: ResponseTrade): Trade {
         trade.currency,
         date,
         trade.profit_count,
-        trade.subtype
+        trade.subtype,
+        trade.posts,
+        trade.term_of_transation
     )
 }
 
@@ -175,6 +177,41 @@ fun mapToPost(post: ResponsePost?): Post? {
     }
 }
 
+fun mapToArgument(argument: ResponseArgument?): Argument? {
+    return argument?.let {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val dateCreate = dateFormat.parse(argument.date_create)
+        val dateUpd = dateFormat.parse(argument.date_update)
+        val images = argument.images.map { it.image }
+        val comments = mapToComments(argument.comments)
+        Argument(
+            id = argument.id,
+            userName = argument.username,
+            avatarUrl = argument.avatar,
+            followersCount = argument.followersCount,
+            traderId = argument.trader_id,
+            text = argument.text,
+            postStatus = argument.post_status,
+            dateCreate = dateCreate,
+            dateUpdate = dateUpd,
+            pinned = argument.pinned,
+            images = images,
+            likeCount = argument.like_count,
+            dislikeCount = argument.dislike_count,
+            isLiked = argument.is_liked,
+            isDisliked = argument.is_disliked,
+            comments = comments,
+            colorIncrDecrDepo365 = argument.colorIncrDecrDepo365,
+            repostCount = argument.repostCount,
+            isFlashed = argument.isFlashed,
+            stopLoss = argument.stop_loss,
+            takeProfit = argument.take_profit,
+            dealTerm = argument.deal_term,
+            closedDealTerm = argument.closed_deal_term
+        )
+    }
+}
+
 fun mapToAggregatedTrade(trade: ResponseAggregatedTrade?): TradesByCompanyAggregated? {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val lastTradeDate = dateFormat.parse(trade?.date_last)
@@ -200,7 +237,8 @@ fun mapToTradeByCompany(companyTrade: ResponseCompanyTradingOperations): TradesS
         tradeDate,
         companyTrade.profit_count,
         companyTrade.price,
-        companyTrade.currency
+        companyTrade.currency,
+        companyTrade.posts
     )
 }
 
@@ -217,7 +255,8 @@ fun mapToTradeJournalByCompany(companyTrade: ResponseCompanyTradingOperationsJou
         companyTrade.price,
         companyTrade.currency,
         companyTrade.endCount,
-        companyTrade.visible
+        companyTrade.visible,
+        companyTrade.posts
     )
 }
 
@@ -307,4 +346,30 @@ fun ByteArray.mapToMultipartBodyPart(index: Int): MultipartBody.Part {
         "image[$index]", "photo${dateFormat.format(Date())}",
         this.toRequestBody("image/*".toMediaTypeOrNull(), 0, this.size)
     )
+}
+
+    fun mapArgumentToTrade(argument: Argument): Post {
+    argument.apply {
+        return Post(
+            id,
+            userName,
+            avatarUrl,
+            followersCount,
+            traderId,
+            text,
+            postStatus,
+            dateCreate,
+            dateUpdate,
+            pinned,
+            images,
+            likeCount,
+            dislikeCount,
+            isLiked,
+            isDisliked,
+            comments,
+            colorIncrDecrDepo365,
+            repostCount,
+            isFlashed
+        )
+    }
 }

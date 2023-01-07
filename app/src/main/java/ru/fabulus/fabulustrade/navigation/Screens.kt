@@ -66,7 +66,7 @@ object Screens {
 
     fun subscriberNewsScreen() = FragmentScreen { SubscriberPostFragment.newInstance() }
 
-    fun tradeDetailScreen(trade: Trade) = FragmentScreen { TradeDetailFragment.newInstance(trade) }
+    fun tradeDetailScreen(trade: Trade, editMode: Boolean) = FragmentScreen { TradeDetailFragment.newInstance(trade, editMode) }
 
     fun companyTradingOperationsScreen(traderId: String, companyId: Int, isMyOperations: Boolean = false) =
         FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId, isMyOperations) }
@@ -122,4 +122,10 @@ object Screens {
 
     fun blacklistScreen() =
         FragmentScreen { BlacklistFragment.newInstance() }
+
+    fun tradeArgumentScreen(trade: Trade, argument: Argument) =
+        FragmentScreen { TradeArgumentFragment.newInstance(trade, argument) }
+
+    fun tradeArgumentScreen(trade: Trade) =
+        FragmentScreen { TradeArgumentFragment.newInstance(trade) }
 }

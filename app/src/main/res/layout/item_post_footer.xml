@@ -58,11 +58,11 @@
 
     <ImageView
         android:id="@+id/iv_flash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="14dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="@dimen/margin_start_low"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="visible"
-        android:layout_marginStart="@dimen/margin_start_low"
         app:layout_constraintBottom_toBottomOf="@id/btn_dislike"
         app:layout_constraintStart_toEndOf="@id/tv_dislike_count"
         app:layout_constraintTop_toTopOf="@id/btn_dislike"

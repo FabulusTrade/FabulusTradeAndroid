@@ -18,5 +18,7 @@ data class ResponseCompanyTradingOperations(
     @Expose
     val price: Float,
     @Expose
-    val currency: String
+    val currency: String,
+    @Expose
+    val posts: Int?
 )

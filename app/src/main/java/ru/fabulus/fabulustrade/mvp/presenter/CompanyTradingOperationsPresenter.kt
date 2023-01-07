@@ -34,7 +34,7 @@ class CompanyTradingOperationsPresenter(
     lateinit var profile: Profile
 
     private var isLoading = false
-    private var nextPage: Int? = 1
+    private var nextPage: Int? = null
 
     val listPresenter = CompanyTradingOperationsRvListPresenter()
 
@@ -48,6 +48,7 @@ class CompanyTradingOperationsPresenter(
             view.setOperationDate("Дата ${deals.date.toStringFormat()}")
             view.setOperationType(deals.operationType)
             view.setTradePrice(deals.price.toString() + deals.currency)
+            view.setClipVisibility(deals.posts != null)
             if (deals.profitCount == null) {
                 view.setProfitCount(null)
             } else {
@@ -66,7 +67,11 @@ class CompanyTradingOperationsPresenter(
                     .getTradeById(token, dealsList[view.pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ trade ->
-                        router.navigateTo(Screens.tradeDetailScreen(trade))
+                        if (trade.posts == null) {
+                            router.navigateTo(Screens.tradeDetailScreen(trade, false))
+                        } else {
+                            router.navigateTo(Screens.tradeArgumentScreen(trade))
+                        }
                     }, {
                         // Ошибка не обрабатывается
                     })
@@ -77,10 +82,21 @@ class CompanyTradingOperationsPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+    }
+
+    override fun attachView(view: CompanyTradingOperationsView) {
+        super.attachView(view)
         loadCompanyDeals()
+        viewState.updateRecyclerView()
     }
 
     private fun loadCompanyDeals() {
+        if (nextPage == null) {
+            nextPage = 1
+        } else {
+            nextPage = nextPage!! - 1
+        }
+        listPresenter.dealsList.clear()
         profile.token?.let {
             apiRepo
                 .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)

@@ -9,13 +9,7 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface BasePostView : MvpView {
     fun init()
-    fun setPostAuthorAvatar(avatarUrl: String)
-    fun setPostAuthorName(authorName: String)
-    fun setPostDateCreated(dateCreatedString: String)
     fun setPostText(text: String)
-    fun setProfit(profit: String, textColor: Int)
-    fun setProfitNegativeArrow()
-    fun setProfitPositiveArrow()
     fun setPostImages(images: List<String>?)
     fun setPostLikeCount(likeCount: String)
     fun setPostDislikeCount(dislikeCount: String)
@@ -35,8 +29,6 @@ interface BasePostView : MvpView {
     fun prepareUpdateComment(text: Spanned, maxCommentLength: Int)
     fun showToast(text: String)
     fun showComplainSnackBar()
-    fun scrollNsvCommentViewToBottom()
-    fun setAuthorFollowerCount(text: String)
     fun setClickableUpdateCommentBtn()
     fun setUnclickableUpdateCommentBtn()
     fun setIncItemSendCommentVisibility(visibility: Int)
@@ -47,4 +39,5 @@ interface BasePostView : MvpView {
     fun notifyItemChanged(position: Int)
     fun setMaxSendCommentLength(maxLength: Int)
     fun setMaxUpdateCommentLength(maxLength: Int)
+    fun scrollNsvCommentViewToBottom()
 }

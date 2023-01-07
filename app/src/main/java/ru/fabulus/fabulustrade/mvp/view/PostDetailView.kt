@@ -15,4 +15,11 @@ interface PostDetailView  : BasePostView, MvpView {
     fun setHeaderFlashColor(isFlashed:Boolean)
     fun initFooterFlash(visible: Boolean)
     fun setProfitAndFollowersVisibility(isVisible:Boolean)
+    fun setPostAuthorAvatar(avatarUrl: String)
+    fun setPostAuthorName(authorName: String)
+    fun setPostDateCreated(dateCreatedString: String)
+    fun setProfit(profit: String, textColor: Int)
+    fun setProfitNegativeArrow()
+    fun setProfitPositiveArrow()
+    fun setAuthorFollowerCount(text: String)
 }

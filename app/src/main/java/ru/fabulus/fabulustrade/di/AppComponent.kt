@@ -14,8 +14,8 @@ import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderSeco
 import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderThirdPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.service.MessagingPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberMainPresenter
-import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberObservationPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberTradePresenter
 import ru.fabulus.fabulustrade.mvp.presenter.trader.*
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.*
@@ -31,8 +31,8 @@ import ru.fabulus.fabulustrade.ui.fragment.*
 import ru.fabulus.fabulustrade.ui.fragment.entrance.*
 import ru.fabulus.fabulustrade.ui.fragment.generalfeed.GeneralFeedFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberMainFragment
-import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberPostFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberObservationFragment
+import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberPostFragment
 import ru.fabulus.fabulustrade.ui.fragment.subscriber.SubscriberTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.trader.*
 import ru.fabulus.fabulustrade.ui.fragment.traderme.*
@@ -146,4 +146,6 @@ interface AppComponent {
     fun inject(blacklistFragment: BlacklistFragment)
     fun inject(blacklistPresenter: BlacklistPresenter)
     fun inject(blacklistRVAdapter: BlacklistRVAdapter)
+    fun inject(tradeArgumentFragment: TradeArgumentFragment)
+    fun inject(tradeArgumentPresenter: TradeArgumentPresenter)
 }

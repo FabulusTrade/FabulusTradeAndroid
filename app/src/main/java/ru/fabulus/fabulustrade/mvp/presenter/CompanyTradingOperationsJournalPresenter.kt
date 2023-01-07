@@ -51,6 +51,7 @@ class CompanyTradingOperationsJournalPresenter(
             view.setTradePrice(deals.price.toString() + deals.currency)
             view.setEndCount(deals.endCount)
             view.setVisible(deals.visible)
+            view.setClipVisibility(deals.posts != null)
             if (deals.profitCount == null || !deals.visible) {
                 view.setProfitCount(null)
             } else {
@@ -69,7 +70,11 @@ class CompanyTradingOperationsJournalPresenter(
                     .getTradeById(token, dealsList[view.pos].id)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ trade ->
-                        router.navigateTo(Screens.tradeDetailScreen(trade))
+                        if (trade.posts == null) {
+                            router.navigateTo(Screens.tradeDetailScreen(trade, false))
+                        } else {
+                            router.navigateTo(Screens.tradeArgumentScreen(trade))
+                        }
                     }, {
                         // Ошибка не обрабатывается
                     })

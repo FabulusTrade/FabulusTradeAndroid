@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.fabulus.fabulustrade.databinding.ItemImageOfPostBinding
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IImageListPresenter
 
-class ImageListOfPostAdapter(private val presenter: CreatePostPresenter) :
+class ImageListOfPostAdapter(private val presenter: IImageListPresenter) :
     RecyclerView.Adapter<ImageListOfPostAdapter.ImageViewHolder>() {
 
     private var imagesList: List<CreatePostPresenter.ImageOfPost> = listOf()

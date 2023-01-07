@@ -22,5 +22,7 @@ data class ResponseCompanyTradingOperationsJournal(
     @Expose
     val endCount: Int,
     @Expose
-    val visible: Boolean
+    val visible: Boolean,
+    @Expose
+    val posts: Int?
 )

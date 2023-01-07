@@ -9,12 +9,12 @@
         android:id="@+id/nsv_comment_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/list_of_images"
-
+        app:layout_constraintBottom_toTopOf="@+id/ll_work_with_comment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trade_argument"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -285,29 +285,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divider_publish_trader_details_size"
                     android:background="@color/colorGrayLight" />
-
             </LinearLayout>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linear_share_arguments_begin"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/panel_share_arguments_publish_trader_details_size"
-                android:layout_marginTop="@dimen/margin_medium_publish_trader_details_size"
-                android:background="@color/colorBlueGray"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_detail">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_share_argument"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/share_with_arguments_on_your_idea"
-                    android:textColor="#453E92"
-                    android:textSize="@dimen/tv_text_size_publish_trader_details" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TableLayout
                 android:id="@+id/layout_argument_table"
@@ -318,7 +296,7 @@
                 android:layout_marginEnd="@dimen/margin_medium_publish_trader_details_size"
                 android:stretchColumns="1,2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear_share_arguments_begin">
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_detail">
 
                 <TableRow
                     android:background="@color/colorBlueGray"
@@ -328,14 +306,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_first_line_label"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/take_profit_price"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/et_take_profit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -367,14 +345,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_second_line_label"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/stop_loss_price"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/et_stop_loss"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -415,14 +393,14 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_margin="@dimen/trade_detail_text_margin"
                         android:gravity="center_vertical"
                         android:text="@string/realization_day"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/tv_text_size_publish_trader_details" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/et_how_many_days"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -441,84 +419,58 @@
                     android:background="@color/colorGrayLight" />
             </TableLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/layout_post_text"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginStart="@dimen/margin_end_medium"
-                android:layout_marginEnd="@dimen/margin_end_medium"
+            <ImageView
+                android:id="@+id/iv_attached_kebab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/iv_attached_kebab_margin_end"
+                android:contentDescription="@string/iv_attached_kebab_content_description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_argument_table">
+                app:layout_constraintTop_toBottomOf="@+id/layout_argument_table"
+                app:srcCompat="@drawable/ic_kebab" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/il_create_post"
+            <LinearLayout
+                android:id="@+id/ll_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/cl_post_detail_layout_margin_start"
+                android:layout_marginEnd="@dimen/cl_post_detail_layout_margin_end"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_attached_kebab">
+
+                <include
+                    android:id="@+id/inc_item_post"
+                    layout="@layout/item_post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="2000">
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_create_post"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/colorWhite"
-                        android:gravity="top"
-                        android:lines="9" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_of_images"
+    <LinearLayout
+        android:id="@+id/ll_work_with_comment"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/layout_sharing_panel"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:listitem="@layout/item_image_of_post" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_sharing_panel"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/panel_publish_trader_details_height"
-        android:layout_marginStart="@dimen/margin_end_medium"
-        android:layout_marginEnd="@dimen/margin_end_medium"
-        android:layout_marginBottom="@dimen/margin_end_medium"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/nsv_comment_view">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_attach_images"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/inc_item_send_comment"
+            layout="@layout/item_send_comment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:paddingEnd="30dp"
-            android:text="@string/load_file"
-            android:textColor="@color/colorGray"
-            android:textSize="10sp"
-            app:icon="@drawable/ic_attach"
-            app:iconTint="@color/colorGray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:ignore="RtlSymmetry,SmallSp" />
+            app:layout_constraintTop_toBottomOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/appCompatPublish"
-            android:layout_width="@dimen/btn_publish_trader_details_width"
-            android:layout_height="@dimen/btn_publish_trader_details_height"
-            android:layout_gravity="end"
-            android:background="@color/colorButtonTradeDetail"
-            android:text="@string/publish"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/inc_item_update_comment"
+            layout="@layout/item_update_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

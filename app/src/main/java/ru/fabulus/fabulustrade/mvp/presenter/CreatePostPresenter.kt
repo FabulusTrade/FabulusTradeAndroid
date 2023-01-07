@@ -7,6 +7,7 @@ import moxy.MvpPresenter
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
+import ru.fabulus.fabulustrade.mvp.presenter.adapter.IImageListPresenter
 import ru.fabulus.fabulustrade.mvp.view.CreatePostView
 import ru.fabulus.fabulustrade.util.ImageHelper
 import java.io.ByteArrayOutputStream
@@ -18,14 +19,14 @@ class CreatePostPresenter(
     private val post: Post?,
     private val isPublication: Boolean,
     private val isPinnedEdit: Boolean?
-) : MvpPresenter<CreatePostView>() {
+) : MvpPresenter<CreatePostView>(), IImageListPresenter {
 
     companion object {
         const val NEW_POST_RESULT = "NEW_POST_RESULT"
         const val UPDATE_POST_RESULT = "UPDATE_POST_RESULT"
         const val UPDATE_POST_IN_FRAGMENT_RESULT = "UPDATE_POST_IN_FRAGMENT_RESULT"
         const val DELETE_POST_RESULT = "DELETE_POST_RESULT"
-        private const val MAX_ATTACHED_IMAGE_COUNT = 4
+        const val MAX_ATTACHED_IMAGE_COUNT = 4
     }
 
     @Inject
@@ -172,7 +173,7 @@ class CreatePostPresenter(
             })
     }
 
-    fun markToDeleteImageOnServer(imageOfPost: ImageOfPost) {
+    override fun markToDeleteImageOnServer(imageOfPost: ImageOfPost) {
         if (imageOfPost is ImageOfPost.ImageOnBack) {
             imagesOnServerToDelete.add(imageOfPost.image)
         } else if (imageOfPost is ImageOfPost.ImageOnDevice) {

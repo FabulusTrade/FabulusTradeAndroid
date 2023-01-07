@@ -10,8 +10,9 @@ import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.isCanFlashPostByCreateDate
 import ru.fabulus.fabulustrade.util.isNegativeDigit
+import ru.fabulus.fabulustrade.util.toStringFormat
 
-class PostDetailPresenter(override var post: Post) : BasePostPresenter<PostDetailView>(post) {
+class PostDetailPresenter(post: Post) : BasePostPresenter<PostDetailView>(post) {
 
     companion object {
         private const val TAG = "PostDetailPresenter"
@@ -20,10 +21,15 @@ class PostDetailPresenter(override var post: Post) : BasePostPresenter<PostDetai
     override fun onFirstViewAttach() {
         App.instance.appComponent.inject(this)
         super.onFirstViewAttach()
+        super.initPost()
 
         initMenu()
 
         setHeadersIcons()
+
+        viewState.setPostAuthorAvatar(post.avatarUrl)
+        viewState.setPostAuthorName(post.userName)
+        viewState.setPostDateCreated(post.dateCreate.toStringFormat())
 
         viewState.setCurrentUserAvatar(profile.user!!.avatar!!)
 

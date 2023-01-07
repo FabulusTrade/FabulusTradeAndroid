@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_comp_trading_ops.view.*
 import kotlinx.android.synthetic.main.item_comp_trading_ops_journal.view.*
+import kotlinx.android.synthetic.main.item_comp_trading_ops_journal.view.layout_comp_trading_ops
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ICompanyTradingOperationsJournalListPresenter
@@ -81,6 +83,11 @@ class CompanyTradingOperationsJournalRVAdapter(val presenter: ICompanyTradingOpe
 
         override fun setVisible(visible: Boolean) {
             itemView.tv_item_comp_trading_ops_journal_observation.isChecked = visible
+        }
+
+        override fun setClipVisibility(visibility: Boolean) {
+            itemView.iv_item_comp_trading_ops_journal_attached_post_clip.visibility =
+                if (visibility) View.VISIBLE else View.INVISIBLE
         }
     }
 }

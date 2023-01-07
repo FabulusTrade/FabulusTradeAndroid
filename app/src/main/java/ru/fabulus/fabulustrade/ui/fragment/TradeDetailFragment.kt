@@ -1,9 +1,16 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -11,29 +18,49 @@ import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.FragmentTradeDetailBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Trade
+import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.TradeDetailPresenter
 import ru.fabulus.fabulustrade.mvp.view.TradeDetailView
 import ru.fabulus.fabulustrade.ui.App
+import ru.fabulus.fabulustrade.ui.adapter.ImageListOfPostAdapter
+import ru.fabulus.fabulustrade.util.showLongToast
+import java.text.DecimalFormat
 
 class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     enum class Mode {
         TRADER_NO_ARGUMENT,
         TRADER_FILLING_ARGUMENT,
-        TRADER_HAS_ARGUMENT
+        NOT_TRADER_NO_ARGUMENT
     }
 
-    private var currentMode: Mode = Mode.TRADER_NO_ARGUMENT
+    enum class TradeType {
+        OPENING_TRADE,
+        CLOSING_TRADE
+    }
+
+    private var currentMode: Mode = Mode.NOT_TRADER_NO_ARGUMENT
+
+    private var tradeType: TradeType = TradeType.OPENING_TRADE
 
     private var _binding: FragmentTradeDetailBinding? = null
     private val binding: FragmentTradeDetailBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
+    private val imageListOfPostAdapter by lazy {
+        ImageListOfPostAdapter(presenter)
+    }
+
+    lateinit var currentTrade: Trade
+
     companion object {
         const val TRADE_KEY = "trade"
-        fun newInstance(trade: Trade) = TradeDetailFragment().apply {
+        const val EDIT_MODE_KEY = "edit_mode"
+        fun newInstance(trade: Trade, editMode: Boolean) = TradeDetailFragment().apply {
+            currentTrade = trade
             arguments = Bundle().apply {
                 putParcelable(TRADE_KEY, trade)
+                putBoolean(EDIT_MODE_KEY, editMode)
             }
         }
     }
@@ -42,7 +69,10 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
     lateinit var presenter: TradeDetailPresenter
 
     @ProvidePresenter
-    fun providePresenter() = TradeDetailPresenter(requireArguments()[TRADE_KEY] as Trade).apply {
+    fun providePresenter() = TradeDetailPresenter(
+        requireArguments()[TRADE_KEY] as Trade,
+        requireArguments()[EDIT_MODE_KEY] as Boolean
+    ).apply {
         App.instance.appComponent.inject(this)
     }
 
@@ -52,6 +82,18 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTradeDetailBinding.inflate(inflater, container, false)
+        _binding?.etCreatePost?.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (v?.getId() == R.id.et_create_post) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true)
+                    when (event?.action?.or(MotionEvent.ACTION_MASK)) {
+                        MotionEvent.ACTION_UP ->
+                            v.getParent().requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                return false
+            }
+        })
         return _binding?.root
     }
 
@@ -59,8 +101,8 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.ivTradeDetailClose.setOnClickListener {
             presenter.closeClicked()
         }
-        setMode(Mode.TRADER_NO_ARGUMENT)
         initClickListeners()
+        binding.listOfImages.adapter = imageListOfPostAdapter
     }
 
     private fun initTextChangeListeners() {
@@ -81,35 +123,115 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
 
     private fun formatOnFormulaToTable(numberText: String, priceText: String): String {
         return try {
-            val number = numberText.trim().toDouble()
-            val price = priceText.trim().toDouble()
-            val returnValue = (((number / price) - 1) * 100)
-            "%.2f".format(returnValue)
+            val number = numberText.replace(",", ".").trim().toDouble()
+            val price = priceText.replace(",", ".").trim().toDouble()
+            val returnValue = ((number / price) - 1) * 100
+            "%.2f %%".format(returnValue)
         } catch (e: NumberFormatException) {
             ""
         }
     }
 
+    private
+    val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            presenter.addImages(uris.map { it.toBitmap() })
+        }
+
+    private fun Uri.toBitmap() =
+        BitmapFactory.decodeStream(
+            requireContext().contentResolver.openInputStream(
+                this
+            )
+        )
+
     private fun initClickListeners() {
         binding.linearShareArgumentsBegin.setOnClickListener {
             setMode(Mode.TRADER_FILLING_ARGUMENT)
         }
+        binding.appCompatPublish.setOnClickListener {
+            val text = binding.etCreatePost.text.toString()
+            val stopLoss = binding.etStopLoss.text.toString().toFloatOrNull()
+            val takeProfit =
+                binding.etTakeProfit.text.toString().toFloatOrNull()
+            val dealTerm = binding.etHowManyDays.text.toString().toIntOrNull()
+            presenter.onPublishClicked(text, stopLoss, takeProfit, dealTerm)
+        }
+        binding.btnAttachImages.setOnClickListener {
+            binding.listOfImages.layoutParams.height =
+                (100 * resources.displayMetrics.density).toInt()
+            getContent.launch(getString(R.string.gallery_mask))
+        }
     }
 
-    private fun setMode(mode: Mode) {
+    override fun setMode(mode: Mode) {
         when (mode) {
             Mode.TRADER_NO_ARGUMENT -> setTraderNoArgumentMode()
             Mode.TRADER_FILLING_ARGUMENT -> setTraderFillingArgumentMode()
-            Mode.TRADER_HAS_ARGUMENT -> setTraderHasArgumentMode()
+            Mode.NOT_TRADER_NO_ARGUMENT -> setNotTraderNoArgumentMode()
         }
         currentMode = mode
     }
 
+    override fun setTradeType(type: TradeType) {
+        when (type) {
+            TradeType.OPENING_TRADE -> {
+                binding.tvShareHead.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
+                binding.tvShareArgument.text =
+                    resources.getString(R.string.share_with_arguments_on_your_idea)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.tvFirstLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.take_profit_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+                    binding.tvSecondLineLabel.text = Html.fromHtml(
+                        resources.getString(R.string.stop_loss_price),
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+                } else {
+                    binding.tvFirstLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.take_profit_price))
+                    binding.tvSecondLineLabel.text =
+                        Html.fromHtml(resources.getString(R.string.stop_loss_price))
+                }
+            }
+            TradeType.CLOSING_TRADE -> {
+                binding.tvShareHead.text =
+                    resources.getString(R.string.arguments_head_idea)
+                binding.tvShareArgument.text =
+                    resources.getString(R.string.comment_to_result)
+                binding.tvFirstLineLabel.text =
+                    resources.getString(R.string.income)
+                binding.tvSecondLineLabel.text =
+                    resources.getString(R.string.loss)
+                binding.etTakeProfit.apply {
+                    isEnabled = false
+                    background = null
+                }
+                binding.etStopLoss.apply {
+                    isEnabled = false
+                    background = null
+                }
+                binding.etHowManyDays.apply {
+                    isEnabled = false
+                    background = null
+                }
+            }
+        }
+        tradeType = type
+    }
+
     private fun setTraderNoArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.GONE
+        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
+        binding.tvShareHead.visibility = View.VISIBLE
+        binding.ivTradeDetailClose.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+        }
     }
 
     private fun setTraderFillingArgumentMode() {
@@ -124,8 +246,9 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         }
     }
 
-    private fun setTraderHasArgumentMode() {
-        binding.linearShareArgumentsBegin.visibility = View.VISIBLE
+    private fun setNotTraderNoArgumentMode() {
+        binding.tvShareHead.visibility = View.INVISIBLE
+        binding.linearShareArgumentsBegin.visibility = View.GONE
         binding.layoutArgumentTable.visibility = View.GONE
         binding.layoutPostText.visibility = View.GONE
         binding.layoutSharingPanel.visibility = View.GONE
@@ -164,8 +287,66 @@ class TradeDetailFragment : MvpAppCompatFragment(), TradeDetailView {
         binding.tvTradeDetailType.text = type
     }
 
+    override fun setTakeProfit(takeProfit: Float) {
+        val dec = DecimalFormat("#.00")
+        binding.etTakeProfit.setText(dec.format(takeProfit))
+    }
+
+    override fun setProfit(profit: Float, precision: Int) {
+        binding.etTakeProfit.setText(formPercentString(profit, precision))
+        binding.etTakeProfit.setTextColor(
+            resources.getColor(
+                R.color.colorGreenPercentProfit, requireContext().theme
+            )
+        )
+    }
+
+    override fun setStopLoss(stopLoss: Float) {
+        val dec = DecimalFormat("#.00")
+        binding.etStopLoss.setText(dec.format(stopLoss))
+    }
+
+    override fun setLoss(loss: Float, precision: Int) {
+        binding.tvStopLossResult.setText(formPercentString(loss, precision))
+    }
+
+    override fun setArgumentText(text: String) {
+        binding.etCreatePost.setText(text)
+    }
+
+    fun formPercentString(num: Float, precision: Int): String {
+        val percent = num * 100
+        return "%.${precision}f %%".format(percent)
+    }
+
+    override fun setDealTerm(term: Float, precision: Int) {
+        binding.etHowManyDays.setText("%.${precision}f".format(term))
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun showImagesAddedMessage(count: Int) {
+        requireContext().showLongToast(getString(R.string.images_added, count))
+    }
+
+    override fun updateListOfImages(
+        images: List<CreatePostPresenter.ImageOfPost>,
+        deletedImage: CreatePostPresenter.ImageOfPost?
+    ) {
+        imageListOfPostAdapter.updateImages(images, deletedImage)
+    }
+
+    override fun showErrorMessage(message: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("ОШИБКА")
+                .setMessage(message)
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
     }
 }

@@ -227,11 +227,14 @@
     <string name="date_time">Дата/время</string>
     <string name="share_with_arguments_on_your_idea">Поделись аргументами к своей идее</string>
     <string name="arguments_head_idea">Комментарий к полученному результату</string>
+    <string name="comment_to_result">Комментарий к полученному результату</string>
     <string name="publish">Опубликовать</string>
     <string name="upload_file">Загрузить файл</string>
-    <string name="realization_day">Срок реализации, дн</string>
-    <string name="stop_loss_price">Стоп-лосс (цена / -%)</string>
-    <string name="take_profit_price">Тейк профит (цена / %)</string>
+    <string name="realization_day">Срок реализации, дн.</string>
+    <string name="stop_loss_price"><![CDATA[Стоп-лосс <font color="#B12B2B">(цена / -%)</font>]]></string>
+    <string name="take_profit_price"><![CDATA[Тейк профит <font color="#008134">(цена / %)</font>]]></string>
+    <string name="income">Прибыль</string>
+    <string name="loss">Убыток</string>
 
     <!-- TraderMainFragment -->
     <string name="join">Присоединиться</string>
@@ -606,5 +609,7 @@
     <string name="yes_exclamation">ДА!</string>
     <string name="deleted_from_blacklist">Автор удален из черного списка</string>
     <string name="delete_from_blacklist">Убрать из черного списка</string>
+    <string name="long_position_forecast_error">Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!</string>
+    <string name="short_position_forecast_error">Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!</string>
 
 </resources>

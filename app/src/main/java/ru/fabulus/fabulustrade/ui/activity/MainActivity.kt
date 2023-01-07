@@ -176,6 +176,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         return true
     }
 
+    @Deprecated(message="deprecation inhereted")
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
             if (it is BackButtonListener && it.backClicked())

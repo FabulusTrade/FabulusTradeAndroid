@@ -1,14 +1,17 @@
 package ru.fabulus.fabulustrade.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.FragmentPostDetailBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
@@ -17,6 +20,8 @@ import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.PostDetailView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.CommentRVAdapter
+import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setTextAndColor
 
 class PostDetailFragment : BasePostFragment(), PostDetailView {
 
@@ -31,10 +36,13 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
         }
     }
 
+    private var _binding: FragmentPostDetailBinding? = null
+
+    private val binding: FragmentPostDetailBinding
+        get() = checkNotNull(_binding) { getString(R.string.binding_error) }
+
     @InjectPresenter
     lateinit var postDetailPresenter: PostDetailPresenter
-
-    override lateinit var presenter: BasePostPresenter<BasePostView>
 
     @ProvidePresenter
     fun providePostDetailPresenter() =
@@ -45,6 +53,29 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = postDetailPresenter as BasePostPresenter<BasePostView>
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        App.instance.appComponent.inject(this)
+        postBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemPost
+        sendCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemSendComment
+        updateCommentBinding = checkNotNull(_binding) { getString(R.string.binding_error) }.incItemUpdateComment
+
+        return _binding?.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    override fun scrollNsvCommentViewToBottom() {
+        binding.nsvCommentView.post { binding.nsvCommentView.fullScroll(View.FOCUS_DOWN) }
     }
 
     override fun setHeaderFlashVisibility(isVisible: Boolean) {
@@ -69,7 +100,7 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
 
     override fun initFooterFlash(visible: Boolean) {
         val navigateFromGeneralFeed: Boolean = arguments?.getBoolean(NAVIGATE_KEY) ?: false
-        with(binding.incPostLayout.incItemPostFooter) {
+        with(binding.incItemPost.incItemPostFooter) {
             when(navigateFromGeneralFeed){
                 true -> {
                     ivFlash.visibility = View.GONE
@@ -167,5 +198,33 @@ class PostDetailFragment : BasePostFragment(), PostDetailView {
                 tvAuthorFollowerCount.visibility = View.GONE
             }
         }
+    }
+
+    override fun setPostAuthorAvatar(avatarUrl: String) {
+        loadImage(avatarUrl, binding.incItemPostHeader.ivAuthorAvatar)
+    }
+
+    override fun setPostAuthorName(authorName: String) {
+        binding.incItemPostHeader.tvAuthorName.text = authorName
+    }
+
+    override fun setPostDateCreated(dateCreatedString: String) {
+        binding.incItemPostHeader.tvDate.text = dateCreatedString
+    }
+
+    override fun setProfit(profit: String, textColor: Int) {
+        binding.incItemPostHeader.tvProfitPercent.setTextAndColor(profit, textColor)
+    }
+
+    override fun setProfitNegativeArrow() {
+        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_down)
+    }
+
+    override fun setProfitPositiveArrow() {
+        binding.incItemPostHeader.ivProfitArrow.setImageResource(R.drawable.ic_profit_arrow_up)
+    }
+
+    override fun setAuthorFollowerCount(text: String) {
+        binding.incItemPostHeader.tvAuthorFollowerCount.text = text
     }
 }
