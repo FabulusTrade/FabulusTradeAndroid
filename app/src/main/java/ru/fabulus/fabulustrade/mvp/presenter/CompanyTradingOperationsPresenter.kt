@@ -34,7 +34,7 @@ class CompanyTradingOperationsPresenter(
     lateinit var profile: Profile
 
     private var isLoading = false
-    private var nextPage: Int? = null
+    private var nextPage: Int? = 1
 
     val listPresenter = CompanyTradingOperationsRvListPresenter()
 
@@ -82,21 +82,10 @@ class CompanyTradingOperationsPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-    }
-
-    override fun attachView(view: CompanyTradingOperationsView) {
-        super.attachView(view)
         loadCompanyDeals()
-        viewState.updateRecyclerView()
     }
 
     private fun loadCompanyDeals() {
-        if (nextPage == null) {
-            nextPage = 1
-        } else {
-            nextPage = nextPage!! - 1
-        }
-        listPresenter.dealsList.clear()
         profile.token?.let {
             apiRepo
                 .getTraderTradesByCompany(it, traderId, companyId, nextPage!!)
