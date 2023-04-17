@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,7 +19,6 @@ import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.header_main_menu.view.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -140,7 +140,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             userNoRegContent.visibility = View.GONE
             avatar?.let { loadImage(it, headerView.findViewById(R.id.iv_header_main_avatar)) }
             headerView.findViewById<TextView>(R.id.tv_header_main_nickname).text = username
-            binding.navView.btn_header_main_profile.setOnClickListener {
+            headerView.findViewById<Button>(R.id.btn_header_main_profile).setOnClickListener {
                 drawerLayout.closeDrawer(GravityCompat.START)
                 presenter.openSignUpTraderScreen()
             }
