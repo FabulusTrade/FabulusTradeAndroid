@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_trades_by_company.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemTradesByCompanyBinding
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITraderTradesRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.TraderTradeItemView
 import ru.fabulus.fabulustrade.util.loadImage
@@ -21,7 +21,7 @@ class TraderTradesRVAdapter(val presenter: ITraderTradesRVListPresenter) :
     override fun onBindViewHolder(holder: TradesViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.cv_item_trades_by_company.setOnClickListener {
+        holder.binding.cvItemTradesByCompany.setOnClickListener {
             presenter.clicked(holder.pos)
         }
     }
@@ -29,22 +29,25 @@ class TraderTradesRVAdapter(val presenter: ITraderTradesRVListPresenter) :
     override fun getItemCount() = presenter.getCount()
 
     inner class TradesViewHolder(view: View) : RecyclerView.ViewHolder(view), TraderTradeItemView {
+
+        val binding = ItemTradesByCompanyBinding.bind(itemView)
+
         override var pos = -1
 
         override fun setCompanyName(name: String) {
-            itemView.tv_item_trades_by_company_name.text = name
+            binding.tvItemTradesByCompanyName.text = name
         }
 
         override fun setCompanyLogo(url: String) {
-            loadImage(url, itemView.iv_item_trades_by_company_logo)
+            loadImage(url, binding.ivItemTradesByCompanyLogo)
         }
 
         override fun setCompanyTradeCount(count: String) {
-            itemView.tv_item_trades_by_company_counter.text = count
+            binding.tvItemTradesByCompanyCounter.text = count
         }
 
         override fun setCompanyLastTradeDate(date: String) {
-            itemView.tv_item_trades_by_company_date.text = date
+            binding.tvItemTradesByCompanyDate.text = date
         }
     }
 }

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_trades_by_company.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemTradesByCompanyBinding
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITradesByCompanyListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.TradesByCompanyItemView
 import ru.fabulus.fabulustrade.util.loadImage
@@ -22,7 +22,7 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.cv_item_trades_by_company.setOnClickListener {
+        holder.binding.cvItemTradesByCompany.setOnClickListener {
             presenter.onItemClick(holder)
         }
     }
@@ -30,22 +30,25 @@ class TradesByCompanyRVAdapter(val presenter: ITradesByCompanyListPresenter) :
     override fun getItemCount() = presenter.getCount()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), TradesByCompanyItemView {
+
+        val binding = ItemTradesByCompanyBinding.bind(itemView)
+
         override var pos = -1
 
         override fun setCompanyLogo(image: String) = with(itemView) {
-            loadImage(image, iv_item_trades_by_company_logo)
+            loadImage(image, binding.ivItemTradesByCompanyLogo)
         }
 
         override fun setTradesCount(count: String) = with(itemView) {
-            tv_item_trades_by_company_counter.text = count
+            binding.tvItemTradesByCompanyCounter.text = count
         }
 
         override fun setCompanyName(name: String) = with(itemView) {
-            tv_item_trades_by_company_name.text = name
+            binding.tvItemTradesByCompanyName.text = name
         }
 
         override fun setLastTradeTime(time: String) = with(itemView) {
-            tv_item_trades_by_company_date.text = time
+            binding.tvItemTradesByCompanyDate.text = time
         }
     }
 }

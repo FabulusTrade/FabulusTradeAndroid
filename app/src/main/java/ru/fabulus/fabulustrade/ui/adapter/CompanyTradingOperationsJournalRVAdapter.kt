@@ -5,10 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_comp_trading_ops.view.*
-import kotlinx.android.synthetic.main.item_comp_trading_ops_journal.view.*
-import kotlinx.android.synthetic.main.item_comp_trading_ops_journal.view.layout_comp_trading_ops
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemCompTradingOpsJournalBinding
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ICompanyTradingOperationsJournalListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.CompanyTradingOperationsJournalItemView
@@ -30,21 +28,21 @@ class CompanyTradingOperationsJournalRVAdapter(val presenter: ICompanyTradingOpe
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.layout_comp_trading_ops.setOnClickListener {
+        holder.binding.layoutCompTradingOpsJournal.setOnClickListener {
             presenter.itemClicked(holder)
         }
         when {
-            holder.itemView.tv_item_comp_trading_ops_journal_profit.text.isNullOrEmpty() -> {
-                holder.itemView.tv_item_comp_trading_ops_journal_profit.background =
+            holder.binding.tvItemCompTradingOpsJournalProfit.text.isNullOrEmpty() -> {
+                holder.binding.tvItemCompTradingOpsJournalProfit.background =
                     ContextCompat.getDrawable(holder.itemView.context, R.color.colorWhite)
             }
-            holder.itemView.tv_item_comp_trading_ops_journal_profit.text.substring(0, 1) == "-" -> {
-                holder.itemView.tv_item_comp_trading_ops_journal_profit.setTextColor(
+            holder.binding.tvItemCompTradingOpsJournalProfit.text.substring(0, 1) == "-" -> {
+                holder.binding.tvItemCompTradingOpsJournalProfit.setTextColor(
                     resourceProvider.getColor(R.color.colorRedPercent)
                 )
             }
             else -> {
-                holder.itemView.tv_item_comp_trading_ops_journal_profit.setTextColor(
+                holder.binding.tvItemCompTradingOpsJournalProfit.setTextColor(
                     resourceProvider.getColor(R.color.colorGreenPercent)
                 )
             }
@@ -55,38 +53,41 @@ class CompanyTradingOperationsJournalRVAdapter(val presenter: ICompanyTradingOpe
 
     inner class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view),
         CompanyTradingOperationsJournalItemView {
+
+        val binding = ItemCompTradingOpsJournalBinding.bind(itemView)
+
         override var pos = -1
         override fun setOperationType(type: String) {
-            itemView.tv_item_comp_trading_ops_journal_operation.text = type
+            binding.tvItemCompTradingOpsJournalOperation.text = type
         }
 
         override fun setCompanyLogo(url: String) {
-            loadImage(url, itemView.iv_item_comp_trading_ops_journal_logo)
+            loadImage(url, binding.ivItemCompTradingOpsJournalLogo)
         }
 
         override fun setOperationDate(date: String) {
-            itemView.tv_item_comp_trading_ops_journal_date.text = date
+            binding.tvItemCompTradingOpsJournalDate.text = date
         }
 
         override fun setProfitCount(profit: String?) {
-            itemView.tv_item_comp_trading_ops_journal_profit.text = profit
+            binding.tvItemCompTradingOpsJournalProfit.text = profit
         }
 
         override fun setTradePrice(price: String) {
-            itemView.tv_item_comp_trading_ops_journal_price.text = price
+            binding.tvItemCompTradingOpsJournalPrice.text = price
         }
 
         override fun setEndCount(endCount: Int) {
-            itemView.tv_item_comp_trading_ops_journal_quantity.text = endCount.toString() + resourceProvider.getStringResource(
+            binding.tvItemCompTradingOpsJournalQuantity.text = endCount.toString() + resourceProvider.getStringResource(
                             R.string.pcs_string)
         }
 
         override fun setVisible(visible: Boolean) {
-            itemView.tv_item_comp_trading_ops_journal_observation.isChecked = visible
+            binding.tvItemCompTradingOpsJournalObservation.isChecked = visible
         }
 
         override fun setClipVisibility(visibility: Boolean) {
-            itemView.iv_item_comp_trading_ops_journal_attached_post_clip.visibility =
+            binding.ivItemCompTradingOpsJournalAttachedPostClip.visibility =
                 if (visibility) View.VISIBLE else View.INVISIBLE
         }
     }

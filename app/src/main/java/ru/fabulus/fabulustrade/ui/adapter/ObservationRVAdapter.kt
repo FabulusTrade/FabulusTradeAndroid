@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_subscriber_observation.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemSubscriberObservationBinding
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IObservationListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.ObservationItemView
@@ -32,17 +32,17 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
     override fun onBindViewHolder(holder: ObservationItemViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.layout_traders_signed_item.setOnClickListener {
+        holder.binding.layoutTradersSignedItem.setOnClickListener {
             presenter.onItemClick(holder.bindingAdapterPosition)
         }
 
-        holder.itemView.cb_subscriber_observation.setOnClickListener {
+        holder.binding.cbSubscriberObservation.setOnClickListener {
             presenter.deleteObservation(holder.bindingAdapterPosition)
             val context = holder.itemView.context
             context.showLongToast(context.resources.getString(R.string.removed_from_observation), Toast.LENGTH_SHORT)
         }
 
-        holder.itemView.tv_subscriber_observation_is_subscribe.setOnClickListener {
+        holder.binding.tvSubscriberObservationIsSubscribe.setOnClickListener {
             presenter.deleteSubscription(holder.bindingAdapterPosition)
         }
     }
@@ -51,30 +51,33 @@ class ObservationRVAdapter(val presenter: IObservationListPresenter) :
 
     inner class ObservationItemViewHolder(view: View) : RecyclerView.ViewHolder(view),
         ObservationItemView {
+
+        val binding = ItemSubscriberObservationBinding.bind(itemView)
+
         override var pos = -1
 
         override fun setTraderName(name: String) {
-            itemView.tv_subscriber_observation_name.text = name
+            binding.tvSubscriberObservationName.text = name
         }
 
         override fun setTraderProfit(profit: String, textColor: Int) {
-            itemView.tv_subscriber_observation_profit.setTextAndColor(profit, textColor)
+            binding.tvSubscriberObservationProfit.setTextAndColor(profit, textColor)
         }
 
         override fun setTraderAvatar(avatar: String?) {
-            avatar?.let { loadImage(it, itemView.iv_subcsriber_observation_ava) }
+            avatar?.let { loadImage(it, binding.ivSubcsriberObservationAva) }
         }
 
         override fun subscribeStatus(isSubscribe: Boolean) {
             if (isSubscribe) {
-                itemView.cb_subscriber_observation.visibility = View.GONE
-                itemView.tv_subscriber_observation_is_subscribe.visibility = View.VISIBLE
+                binding.cbSubscriberObservation.visibility = View.GONE
+                binding.tvSubscriberObservationIsSubscribe.visibility = View.VISIBLE
             } else {
-                with(itemView.cb_subscriber_observation) {
+                with(binding.cbSubscriberObservation) {
                     visibility = View.VISIBLE
                     isChecked = true
                 }
-                itemView.tv_subscriber_observation_is_subscribe.visibility = View.GONE
+                binding.tvSubscriberObservationIsSubscribe.visibility = View.GONE
             }
         }
     }

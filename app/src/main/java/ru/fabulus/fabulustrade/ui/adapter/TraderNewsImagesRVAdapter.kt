@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.item_trader_news_item_image.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemTraderNewsItemImageBinding
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.loadImage
@@ -43,14 +43,16 @@ class TraderNewsImagesRVAdapter :
     }
 
     inner class TraderNewsImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val binding = ItemTraderNewsItemImageBinding.bind(itemView)
         fun setImage(pos: Int) {
-            loadImage(images[pos], itemView.iv_item_trader_news_item_image)
+            loadImage(images[pos], binding.ivItemTraderNewsItemImage)
             setClickListener(pos)
         }
 
         // Открываем активити для рассмотра картинки, передаем туда веб адрес самой картинки
         private fun setClickListener(pos: Int) {
-            itemView.iv_item_trader_news_item_image.setOnClickListener {
+            binding.ivItemTraderNewsItemImage.setOnClickListener {
                 router.navigateTo(Screens.imageBrowsingFragment(listOf(images[pos])))
             }
         }

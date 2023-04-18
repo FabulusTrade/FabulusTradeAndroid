@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_on_board.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemOnBoardBinding
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.IOnBoardListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.OnBoardItemView
 
@@ -25,7 +25,7 @@ class OnBoardVPAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         presenter.bindView(holder)
-        holder.containerView.btn_on_board_item.setOnClickListener { presenter.onNextBtnClick(holder.pos) }
+        holder.binding.btnOnBoardItem.setOnClickListener { presenter.onNextBtnClick(holder.pos) }
     }
 
     override fun getItemCount() = presenter.getCount()
@@ -33,6 +33,8 @@ class OnBoardVPAdapter(
     inner class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer, OnBoardItemView {
+
+        val binding = ItemOnBoardBinding.bind(itemView)
 
         override var pos = -1
 
