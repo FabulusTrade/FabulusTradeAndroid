@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_comp_trading_ops.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemCompTradingOpsBinding
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ICompanyTradingOperationsListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.CompanyTradingOperationsItemView
@@ -28,21 +28,21 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         holder.pos = position
         presenter.bind(holder)
-        holder.itemView.layout_comp_trading_ops.setOnClickListener {
+        holder.binding.layoutCompTradingOps.setOnClickListener {
             presenter.itemClicked(holder)
         }
         when {
-            holder.itemView.tv_item_comp_trading_ops_profit.text.isNullOrEmpty() -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.background =
+            holder.binding.tvItemCompTradingOpsProfit.text.isNullOrEmpty() -> {
+                holder.binding.tvItemCompTradingOpsProfit.background =
                     ContextCompat.getDrawable(holder.itemView.context, R.color.colorWhite)
             }
-            holder.itemView.tv_item_comp_trading_ops_profit.text.substring(0, 1) == "-" -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(
+            holder.binding.tvItemCompTradingOpsProfit.text.substring(0, 1) == "-" -> {
+                holder.binding.tvItemCompTradingOpsProfit.setTextColor(
                     resourceProvider.getColor(R.color.colorRedPercent)
                 )
             }
             else -> {
-                holder.itemView.tv_item_comp_trading_ops_profit.setTextColor(
+                holder.binding.tvItemCompTradingOpsProfit.setTextColor(
                     resourceProvider.getColor(R.color.colorGreenPercent)
                 )
             }
@@ -53,29 +53,32 @@ class CompanyTradingOperationsRVAdapter(val presenter: ICompanyTradingOperations
 
     inner class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view),
         CompanyTradingOperationsItemView {
+
+        val binding = ItemCompTradingOpsBinding.bind(itemView)
+
         override var pos = -1
         override fun setOperationType(type: String) {
-            itemView.tv_item_comp_trading_ops_operation.text = type
+            binding.tvItemCompTradingOpsOperation.text = type
         }
 
         override fun setCompanyLogo(url: String) {
-            loadImage(url, itemView.iv_item_comp_trading_ops_logo)
+            loadImage(url, binding.ivItemCompTradingOpsLogo)
         }
 
         override fun setOperationDate(date: String) {
-            itemView.tv_item_comp_trading_ops_date.text = date
+            binding.tvItemCompTradingOpsDate.text = date
         }
 
         override fun setProfitCount(profit: String?) {
-            itemView.tv_item_comp_trading_ops_profit.text = profit
+            binding.tvItemCompTradingOpsProfit.text = profit
         }
 
         override fun setTradePrice(price: String) {
-            itemView.tv_item_comp_trading_ops_price.text = price
+            binding.tvItemCompTradingOpsPrice.text = price
         }
 
         override fun setClipVisibility(visibility: Boolean) {
-            itemView.iv_item_comp_trading_ops_attached_post_clip.visibility =
+            binding.ivItemCompTradingOpsAttachedPostClip.visibility =
                 if (visibility) View.VISIBLE else View.INVISIBLE
         }
     }

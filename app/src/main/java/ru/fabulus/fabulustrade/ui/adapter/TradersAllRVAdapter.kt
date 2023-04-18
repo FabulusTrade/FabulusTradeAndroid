@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_traders_all.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemTradersAllBinding
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITradersAllListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.TradersAllItemView
@@ -36,12 +36,12 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
     }
 
     fun initListeners(holder: TradersAllViewHolder) {
-        holder.itemView.layout_all_traders_item.setOnClickListener {
+        holder.binding.layoutAllTradersItem.setOnClickListener {
             presenter.openTraderStat(holder.bindingAdapterPosition)
         }
-        holder.itemView.cb_traders_all_item_observe.setOnClickListener { view ->
+        holder.binding.cbTradersAllItemObserve.setOnClickListener { view ->
             val context = holder.itemView.context
-            if (holder.itemView.cb_traders_all_item_observe.isChecked) {
+            if (holder.binding.cbTradersAllItemObserve.isChecked) {
                 if (presenter.checkIfTraderIsMe(holder.bindingAdapterPosition)) {
                     (view as CheckBox).isChecked = false
                 } else {
@@ -66,30 +66,33 @@ class TradersAllRVAdapter(val presenter: ITradersAllListPresenter) :
 
     inner class TradersAllViewHolder(view: View) : RecyclerView.ViewHolder(view),
         TradersAllItemView {
+
+        val binding = ItemTradersAllBinding.bind(itemView)
+
         override var pos = -1
         override fun setTraderName(name: String) {
-            itemView.tv_traders_all_item_name.text = name
+            binding.tvTradersAllItemName.text = name
         }
 
         override fun setTraderProfit(profit: String, textColor: Int) {
-            itemView.tv_traders_all_item_year_profit.setTextAndColor(profit, textColor)
+            binding.tvTradersAllItemYearProfit.setTextAndColor(profit, textColor)
         }
 
         override fun setTraderAvatar(avatar: String) {
-            loadImage(avatar, itemView.iv_traders_all_item_ava)
+            loadImage(avatar, binding.ivTradersAllItemAva)
         }
 
         override fun setTraderObserveBtn(isObserve: Boolean?) {
             isObserve?.let {
-                itemView.tv_traders_all_item_subscription.visibility = View.GONE
-                itemView.cb_traders_all_item_observe.visibility = View.VISIBLE
-                itemView.cb_traders_all_item_observe.isChecked = isObserve
+                binding.tvTradersAllItemSubscription.visibility = View.GONE
+                binding.cbTradersAllItemObserve.visibility = View.VISIBLE
+                binding.cbTradersAllItemObserve.isChecked = isObserve
             } ?: setVisibleSubscription()
         }
 
         private fun setVisibleSubscription() {
-            itemView.tv_traders_all_item_subscription.visibility = View.VISIBLE
-            itemView.cb_traders_all_item_observe.visibility = View.GONE
+            binding.tvTradersAllItemSubscription.visibility = View.VISIBLE
+            binding.cbTradersAllItemObserve.visibility = View.GONE
         }
     }
 }

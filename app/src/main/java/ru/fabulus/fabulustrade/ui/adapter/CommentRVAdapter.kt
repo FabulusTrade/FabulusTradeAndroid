@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.github.terrakok.cicerone.Router
-import kotlinx.android.synthetic.main.item_comment.view.*
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.databinding.ItemCommentBinding
 import ru.fabulus.fabulustrade.mvp.model.entity.Comment
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
@@ -46,11 +46,11 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
     }
 
     private fun initListeners(holder: CommentViewHolder) {
-        holder.itemView.btn_like_comment.setOnClickListener {
+        holder.binding.btnLikeComment.setOnClickListener {
             presenter.likeComment(holder)
         }
 
-        holder.itemView.tv_answer_to_comment.setOnClickListener {
+        holder.binding.tvAnswerToComment.setOnClickListener {
             presenter.replyOnComment(holder)
         }
     }
@@ -60,42 +60,44 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
     inner class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view),
         CommentItemView {
 
+        val binding = ItemCommentBinding.bind(itemView)
+
         override var pos: Int = -1
 
         override fun setCommentText(text: Spannable) {
-            itemView.tv_comment_post.text = text
+            binding.tvCommentPost.text = text
         }
 
         override fun setCommentAuthorAvatar(avatarUrl: String) {
-            loadImage(avatarUrl, itemView.iv_comment_author_avatar)
+            loadImage(avatarUrl, binding.ivCommentAuthorAvatar)
         }
 
         override fun setCommentAuthorUserName(userName: String) {
-            itemView.tv_comment_author_name.text = userName
+            binding.tvCommentAuthorName.text = userName
         }
 
         override fun setCommentDateText(text: String) {
-            itemView.tv_comment_date.text = text
+            binding.tvCommentDate.text = text
         }
 
         override fun setLikeCountText(text: String) {
-            itemView.tv_comment_like_count.text = text
+            binding.tvCommentLikeCount.text = text
         }
 
         override fun setLikeImageActive() {
-            itemView.btn_like_comment.setImageResource(R.drawable.ic_like)
+            binding.btnLikeComment.setImageResource(R.drawable.ic_like)
         }
 
         override fun setLikeImageInactive() {
-            itemView.btn_like_comment.setImageResource(R.drawable.ic_like_inactive)
+            binding.btnLikeComment.setImageResource(R.drawable.ic_like_inactive)
         }
 
         override fun setReplyPostColor(backgroundColor: Int) {
-            itemView.cv_comment_header.setCardBackgroundColor(backgroundColor)
+            binding.cvCommentHeader.setCardBackgroundColor(backgroundColor)
         }
 
         override fun setBtnCommentMenuSelf(comment: Comment) {
-            itemView.btn_comment_menu.setOnClickListener { btn ->
+            binding.btnCommentMenu.setOnClickListener { btn ->
                 val menu = PopupMenu(itemView.context, btn)
                 menu.inflate(R.menu.menu_self_comment)
 
@@ -127,7 +129,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
             showLockUserMenuItem: Boolean,
             showUnlockUserMenuItem: Boolean
         ) {
-            itemView.btn_comment_menu.setOnClickListener { btn ->
+            binding.btnCommentMenu.setOnClickListener { btn ->
                 val popupMenu = PopupMenu(itemView.context, btn)
                 popupMenu.inflate(R.menu.menu_someone_comment)
 
@@ -165,7 +167,7 @@ class CommentRVAdapter(val presenter: CommentRVListPresenter) :
         }
 
         override fun hideReplyBtn() {
-            itemView.tv_answer_to_comment.visibility = View.INVISIBLE
+            binding.tvAnswerToComment.visibility = View.INVISIBLE
         }
     }
 
