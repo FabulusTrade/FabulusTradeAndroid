@@ -2,7 +2,7 @@ package ru.fabulus.fabulustrade.mvp.model.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-kotlinx.parcelize.RawValue
+import kotlinx.parcelize.RawValue
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 
 @Parcelize
