@@ -2,7 +2,7 @@ package ru.fabulus.fabulustrade.mvp.model.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize

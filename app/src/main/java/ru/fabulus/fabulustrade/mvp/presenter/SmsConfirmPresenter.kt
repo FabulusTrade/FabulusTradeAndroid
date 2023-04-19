@@ -37,7 +37,7 @@ class SmsConfirmPresenter(val phone: String): MvpPresenter<SmsConfirmView>() {
     }
 
     private fun getCodeSuccessObserver() = object : Observer<Boolean> {
-        override fun onSubscribe(d: Disposable?) {}
+        override fun onSubscribe(d: Disposable) {}
 
         override fun onNext(t: Boolean) {
             if (t)
@@ -46,7 +46,7 @@ class SmsConfirmPresenter(val phone: String): MvpPresenter<SmsConfirmView>() {
                 viewState.showToast("Ошибка")
         }
 
-        override fun onError(e: Throwable?) {}
+        override fun onError(e: Throwable) {}
 
         override fun onComplete() {}
 
