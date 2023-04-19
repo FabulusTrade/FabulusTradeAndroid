@@ -19,7 +19,6 @@ import ru.fabulus.fabulustrade.databinding.FragmentSubscriberNewsBinding
 import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberPostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.traders.TradersAllPresenter
-import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberPostView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App

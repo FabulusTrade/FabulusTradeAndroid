@@ -18,7 +18,8 @@ import ru.fabulus.fabulustrade.mvp.view.base.BaseTraderView
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 abstract class BaseTraderMvpPresenter<View : BaseTraderView> : MvpPresenter<View>() {

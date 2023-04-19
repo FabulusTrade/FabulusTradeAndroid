@@ -11,7 +11,11 @@ import ru.fabulus.fabulustrade.mvp.view.TradeArgumentView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.toStringFormat
 import kotlin.math.roundToInt
 
 class TradeArgumentPresenter(val trade: Trade) : BasePostPresenter<TradeArgumentView>() {

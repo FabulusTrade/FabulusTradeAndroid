@@ -2,7 +2,7 @@ package ru.fabulus.fabulustrade.mvp.view.item
 
 import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
 import ru.fabulus.fabulustrade.mvp.model.entity.Post
-import java.util.*
+import java.util.Date
 
 interface PostItemView {
     var pos: Int

@@ -16,7 +16,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.traderme.TraderMeProfitPresenter
 import ru.fabulus.fabulustrade.mvp.view.traderme.TraderMeProfitView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.setTextAndColor
-import java.util.*
+import java.util.Calendar
 
 
 class TraderMeProfitFragment : MvpAppCompatFragment(),

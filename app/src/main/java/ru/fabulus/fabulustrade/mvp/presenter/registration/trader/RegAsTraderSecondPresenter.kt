@@ -12,7 +12,9 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.util.DateValidation
 import ru.fabulus.fabulustrade.util.isValidBirthday
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 const val DATE_UI_FORMAT_STRING = "%02d.%02d.%04d"

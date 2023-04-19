@@ -19,8 +19,12 @@ import ru.fabulus.fabulustrade.mvp.view.traderme.TraderMeMainView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.BackButtonListener
 import ru.fabulus.fabulustrade.ui.adapter.TraderMeMainAdapter
-import ru.fabulus.fabulustrade.util.*
-import kotlin.Deprecated as Deprecated
+import ru.fabulus.fabulustrade.util.IntentConstants
+import ru.fabulus.fabulustrade.util.createBitmapFromResult
+import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setDrawerLockMode
+import ru.fabulus.fabulustrade.util.setTextAndColor
+import ru.fabulus.fabulustrade.util.setToolbarVisible
 
 class TraderMeMainFragment : MvpAppCompatFragment(), TraderMeMainView, BackButtonListener {
     private var _binding: FragmentTraderMeMainBinding? = null

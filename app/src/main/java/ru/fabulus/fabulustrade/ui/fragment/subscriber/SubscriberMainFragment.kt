@@ -17,7 +17,11 @@ import ru.fabulus.fabulustrade.mvp.presenter.subscriber.SubscriberMainPresenter
 import ru.fabulus.fabulustrade.mvp.view.subscriber.SubscriberMainView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.ui.adapter.SubscriberMainVPAdapter
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.IntentConstants
+import ru.fabulus.fabulustrade.util.createBitmapFromResult
+import ru.fabulus.fabulustrade.util.loadImage
+import ru.fabulus.fabulustrade.util.setDrawerLockMode
+import ru.fabulus.fabulustrade.util.setToolbarVisible
 
 class SubscriberMainFragment : MvpAppCompatFragment(), SubscriberMainView {
     private var _binding: FragmentSubscriberMainBinding? = null

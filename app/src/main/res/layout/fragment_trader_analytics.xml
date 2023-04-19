@@ -482,12 +482,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            tools:text="2020"
             android:textColor="@color/colorGray"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/btn_previous_year"
             app:layout_constraintStart_toStartOf="@+id/bar_chart"
-            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title"
+            tools:text="2020" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_previous_year"
@@ -495,12 +495,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            tools:text="2021"
             android:textColor="@color/colorGray"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/btn_current_year"
             app:layout_constraintStart_toEndOf="@+id/btn_two_years_ago"
-            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_profitability_title"
+            tools:text="2021" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_current_year"
@@ -508,13 +508,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorLightGreen"
-            tools:text="2022"
             android:textColor="@color/colorBlack"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_previous_year"
             app:layout_constraintEnd_toEndOf="@+id/bar_chart"
             app:layout_constraintStart_toEndOf="@+id/btn_previous_year"
-            app:layout_constraintTop_toTopOf="@+id/btn_previous_year" />
+            app:layout_constraintTop_toTopOf="@+id/btn_previous_year"
+            tools:text="2022" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"
@@ -543,11 +543,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="24dp"
-            tools:text="2022"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_divider" />
+            app:layout_constraintTop_toBottomOf="@+id/date_divider"
+            tools:text="2022" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/table_profit_for_year"
@@ -644,7 +644,6 @@
                 android:text="@string/zero_percent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_feb_label"
                 app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
-                app:layout_constraintStart_toStartOf="@+id/tv_jan_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_feb_label" />
 
             <TextView
@@ -684,6 +683,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/march"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/tv_feb_label"
@@ -695,7 +695,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/zero_percent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_mar_label"
-                app:layout_constraintEnd_toEndOf="@+id/tv_feb_value"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_mar_label" />
 
             <TextView
@@ -774,7 +774,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/zero_percent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_apr_label"
-                app:layout_constraintEnd_toEndOf="@+id/tv_mar_value"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_apr_label" />
 
             <TextView
@@ -811,7 +811,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/zero_percent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_may_label"
-                app:layout_constraintEnd_toEndOf="@+id/tv_apr_value"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_may_label" />
 
             <TextView
@@ -849,7 +849,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/zero_percent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_jun_label"
-                app:layout_constraintEnd_toEndOf="@+id/tv_may_value"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jan_value"
                 app:layout_constraintTop_toTopOf="@+id/tv_jun_label" />
 
             <TextView

@@ -22,7 +22,7 @@ import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
 import ru.fabulus.fabulustrade.util.toStringFormat
 import ru.fabulus.fabulustrade.util.visibilityByCondition
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 open class PostRVAdapter(private val presenter: IPostRVListPresenter) :

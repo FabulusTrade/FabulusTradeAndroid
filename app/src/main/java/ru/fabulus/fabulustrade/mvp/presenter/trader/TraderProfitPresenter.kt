@@ -16,7 +16,7 @@ import ru.fabulus.fabulustrade.mvp.view.trader.TraderProfitView
 import ru.fabulus.fabulustrade.util.formatDigitWithDef
 import ru.fabulus.fabulustrade.util.formatString
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class TraderProfitPresenter(

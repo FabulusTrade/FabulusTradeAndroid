@@ -14,7 +14,7 @@ import ru.fabulus.fabulustrade.util.loadImage
 import ru.fabulus.fabulustrade.util.setTextAndColor
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class BlacklistRVAdapter(val presenter: IBlacklistListPresenter) :

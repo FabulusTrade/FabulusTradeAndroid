@@ -26,7 +26,16 @@ import ru.fabulus.fabulustrade.mvp.presenter.adapter.ITraderMePostRVListPresente
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderMePostView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.extractResponse
+import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.formatQuantityString
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.getSharePostIntent
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.isCanFlashPostByCreateDate
+import ru.fabulus.fabulustrade.util.isNegativeDigit
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 open class TraderMePostPresenter : MvpPresenter<TraderMePostView>() {

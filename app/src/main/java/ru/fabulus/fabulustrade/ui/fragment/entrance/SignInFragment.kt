@@ -16,7 +16,11 @@ import ru.fabulus.fabulustrade.databinding.FragmentSignInBinding
 import ru.fabulus.fabulustrade.mvp.presenter.entrance.SignInPresenter
 import ru.fabulus.fabulustrade.mvp.view.entrance.SignInView
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.PREFERENCE_NAME
+import ru.fabulus.fabulustrade.util.setDrawerLockMode
+import ru.fabulus.fabulustrade.util.setToolbarMenuVisible
+import ru.fabulus.fabulustrade.util.setToolbarVisible
+import ru.fabulus.fabulustrade.util.showLongToast
 
 class SignInFragment : MvpAppCompatFragment(), SignInView {
     private var _binding: FragmentSignInBinding? = null

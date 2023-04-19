@@ -2,7 +2,9 @@ package ru.fabulus.fabulustrade.util
 
 import android.util.Patterns
 import ru.fabulus.fabulustrade.mvp.model.entity.CommentBlockedUser
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
 
 private const val passwordMinLength = 8
 private const val nicknameMinLength = 3
