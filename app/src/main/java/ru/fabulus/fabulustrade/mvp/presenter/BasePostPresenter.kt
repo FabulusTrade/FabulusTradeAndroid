@@ -15,7 +15,13 @@ import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.navigation.Screens
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.getSharePostIntent
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.isLocked
+import ru.fabulus.fabulustrade.util.mapArgumentToTrade
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 open class BasePostPresenter<T : BasePostView>() : MvpPresenter<T>() {

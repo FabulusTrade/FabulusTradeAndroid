@@ -2,7 +2,11 @@ package ru.fabulus.fabulustrade.ui.firebase
 
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import io.reactivex.rxjava3.subjects.ReplaySubject
 import ru.fabulus.fabulustrade.ui.activity.ActivityHolder
 import java.util.concurrent.TimeUnit

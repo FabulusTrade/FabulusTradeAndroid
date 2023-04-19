@@ -6,14 +6,24 @@ import androidx.core.text.toSpannable
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import ru.fabulus.fabulustrade.R
-import ru.fabulus.fabulustrade.mvp.model.entity.*
+import ru.fabulus.fabulustrade.mvp.model.entity.Comment
+import ru.fabulus.fabulustrade.mvp.model.entity.CommentBlockedUser
+import ru.fabulus.fabulustrade.mvp.model.entity.Complaint
+import ru.fabulus.fabulustrade.mvp.model.entity.Post
+import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.presenter.adapter.CommentRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.BasePostView
 import ru.fabulus.fabulustrade.mvp.view.item.CommentItemView
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.formatQuantityString
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.isCanDeleteComment
+import ru.fabulus.fabulustrade.util.isCanEditComment
+import ru.fabulus.fabulustrade.util.isLocked
+import ru.fabulus.fabulustrade.util.toSpannableText
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 class CommentPostDetailPresenter (val viewState: BasePostView, val post: Post) : CommentRVListPresenter {

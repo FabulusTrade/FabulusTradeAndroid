@@ -21,7 +21,11 @@ import ru.fabulus.fabulustrade.mvp.model.entity.TraderRegistrationInfo
 import ru.fabulus.fabulustrade.mvp.presenter.registration.trader.RegAsTraderSecondPresenter
 import ru.fabulus.fabulustrade.mvp.view.registration.trader.RegAsTraderSecondView
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.REGISTRATION_DATA
+import ru.fabulus.fabulustrade.util.TRADER_REG_INFO_TAG
+import ru.fabulus.fabulustrade.util.showLongToast
+import ru.fabulus.fabulustrade.util.toApiDate
+import ru.fabulus.fabulustrade.util.toUiDate
 
 
 class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSecondView {

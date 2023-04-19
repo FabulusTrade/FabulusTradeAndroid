@@ -18,7 +18,12 @@ import ru.fabulus.fabulustrade.databinding.FragmentSignUpBinding
 import ru.fabulus.fabulustrade.mvp.presenter.registration.subscriber.SignUpPresenter
 import ru.fabulus.fabulustrade.mvp.view.registration.subscriber.SignUpView
 import ru.fabulus.fabulustrade.ui.App
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.EmailValidation
+import ru.fabulus.fabulustrade.util.NicknameValidation
+import ru.fabulus.fabulustrade.util.PasswordValidation
+import ru.fabulus.fabulustrade.util.PhoneValidation
+import ru.fabulus.fabulustrade.util.setDrawerLockMode
+import ru.fabulus.fabulustrade.util.setToolbarVisible
 
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView {

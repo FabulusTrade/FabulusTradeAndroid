@@ -17,7 +17,7 @@ import ru.fabulus.fabulustrade.mvp.presenter.trader.TraderProfitPresenter
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderProfitView
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.util.setTextAndColor
-import java.util.*
+import java.util.Calendar
 
 
 class TraderProfitFragment : MvpAppCompatFragment(), TraderProfitView {

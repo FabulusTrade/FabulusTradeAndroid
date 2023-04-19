@@ -1,6 +1,5 @@
 package ru.fabulus.fabulustrade.mvp.presenter.service
 
-import android.util.Log
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import ru.fabulus.fabulustrade.R

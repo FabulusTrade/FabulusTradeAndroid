@@ -1,6 +1,6 @@
 package ru.fabulus.fabulustrade.mvp.model.entity
 
-import java.util.*
+import java.util.Date
 
 data class AggregatedTrade(
     val idCompany: Int,

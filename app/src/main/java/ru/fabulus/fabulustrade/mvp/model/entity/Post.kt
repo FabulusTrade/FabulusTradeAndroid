@@ -2,7 +2,7 @@ package ru.fabulus.fabulustrade.mvp.model.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.*
+import java.util.Date
 
 @Parcelize
 data class Post(
