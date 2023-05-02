@@ -21,7 +21,14 @@ import ru.fabulus.fabulustrade.mvp.presenter.adapter.IPostRVListPresenter
 import ru.fabulus.fabulustrade.mvp.view.item.PostItemView
 import ru.fabulus.fabulustrade.mvp.view.trader.TraderPostView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.formatDigitWithDef
+import ru.fabulus.fabulustrade.util.formatQuantityString
+import ru.fabulus.fabulustrade.util.formatString
+import ru.fabulus.fabulustrade.util.getSharePostIntent
+import ru.fabulus.fabulustrade.util.isCanDeletePost
+import ru.fabulus.fabulustrade.util.isCanEditPost
+import ru.fabulus.fabulustrade.util.isNegativeDigit
+import ru.fabulus.fabulustrade.util.toStringFormat
 import javax.inject.Inject
 
 class TraderPostPresenter(val trader: Trader) : MvpPresenter<TraderPostView>() {

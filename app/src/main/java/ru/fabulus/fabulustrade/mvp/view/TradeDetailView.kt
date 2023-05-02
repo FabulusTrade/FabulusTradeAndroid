@@ -3,7 +3,6 @@ package ru.fabulus.fabulustrade.mvp.view
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.fabulus.fabulustrade.mvp.model.entity.Argument
 import ru.fabulus.fabulustrade.mvp.presenter.CreatePostPresenter
 import ru.fabulus.fabulustrade.ui.fragment.TradeDetailFragment
 

@@ -13,7 +13,13 @@ import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import ru.fabulus.fabulustrade.mvp.model.resource.ResourceProvider
 import ru.fabulus.fabulustrade.mvp.view.registration.subscriber.SignUpView
 import ru.fabulus.fabulustrade.navigation.Screens
-import ru.fabulus.fabulustrade.util.*
+import ru.fabulus.fabulustrade.util.EmailValidation
+import ru.fabulus.fabulustrade.util.NicknameValidation
+import ru.fabulus.fabulustrade.util.PasswordValidation
+import ru.fabulus.fabulustrade.util.PhoneValidation
+import ru.fabulus.fabulustrade.util.isValidEmail
+import ru.fabulus.fabulustrade.util.isValidNickname
+import ru.fabulus.fabulustrade.util.isValidPassword
 import javax.inject.Inject
 
 class SignUpPresenter(private val asTraderRegistration: Boolean) : MvpPresenter<SignUpView>() {
