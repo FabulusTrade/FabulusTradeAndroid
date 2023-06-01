@@ -30,7 +30,7 @@ android {
             buildConfigField "String", "baseUrl", "\"https://fabulustrade.com/\""
         }
         debug {
-            buildConfigField "String", "baseUrl", "\"https://fabulustrade.com/\""
+            buildConfigField "String", "baseUrl", "\"http://dev.fabulustrade.com/\""
         }
     }
 
