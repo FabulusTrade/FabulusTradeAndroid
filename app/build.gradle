@@ -28,9 +28,20 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "baseUrl", "\"https://fabulustrade.com/\""
+            signingConfig signingConfigs.debug
+        }
+        debug_on_prod {
+            buildConfigField "String", "baseUrl", "\"https://fabulustrade.com/\""
+            debuggable true
+            signingConfig signingConfigs.debug
         }
         debug {
-            buildConfigField "String", "baseUrl", "\"http://dev.fabulustrade.com/\""
+            buildConfigField "String", "baseUrl", "\"http://dev.fabulustrade.ru/\""
+        }
+        local {
+            buildConfigField "String", "baseUrl", "\"http://0.0.0.0:8000/\""
+            debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -39,6 +50,7 @@ android {
     }
     namespace 'ru.fabulus.fabulustrade'
 }
+
 repositories {
     maven { url "https://jitpack.io" }
 }
