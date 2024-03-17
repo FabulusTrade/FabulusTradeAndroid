@@ -14,9 +14,17 @@
             android:icon="@drawable/ic_flash_drawer"
             android:title="@string/general_news_feed_menu_title" />
         <item
+            android:id="@+id/divider_1"
+            android:title=""
+            android:icon="@android:color/transparent" />
+        <item
             android:id="@+id/observation_list_menu_id"
             android:icon="@drawable/visibility"
             android:title="@string/my_profile_title" />
+        <item
+            android:id="@+id/divider_2"
+            android:title=""
+            android:icon="@android:color/transparent" />
         <item
             android:id="@+id/invite_a_friend_menu_id"
             android:icon="@drawable/person_add"
@@ -25,17 +33,24 @@
         <item
             android:id="@+id/about_menu_id"
             android:icon="@drawable/ft"
-            android:title="@string/about_service_menu_title"
-            android:visible="false" />
+            android:title="@string/about_service_menu_title"/>
         <item
             android:id="@+id/ask_menu_id"
             android:icon="@drawable/live_help"
-            android:title="@string/ask_a_question_menu_title" />
+            android:title="@string/faq_menu_title" />
+        <item
+            android:id="@+id/support_menu_id"
+            android:icon="@drawable/telegram"
+            android:title="@string/support_menu_title" />
         <item
             android:id="@+id/community_menu_id"
             android:icon="@drawable/ic_community"
             android:title="@string/community"
             android:visible="false" />
+        <item
+            android:id="@+id/divider_3"
+            android:title=""
+            android:icon="@android:color/transparent" />
         <item
             android:id="@+id/exit_menu_id"
             android:icon="@drawable/close"

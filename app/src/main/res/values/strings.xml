@@ -2,10 +2,10 @@
     <string name="app_name">Fabulus Trade</string>
     <string name="on_boarding_button_text_title">Продолжить</string>
     <string name="traders_title_menu_title">Трейдеры</string>
-    <string name="my_profile_title">Мой профиль</string>
+    <string name="my_profile_title">Моя страница</string>
     <string name="invite_a_friend_menu_title">Пригласить друга</string>
-    <string name="about_service_menu_title">О сервисе</string>
-    <string name="ask_a_question_menu_title">Задать вопрос</string>
+    <string name="about_service_menu_title">О компании</string>
+    <string name="faq_menu_title">Вопросы и ответы</string>
     <string name="settings_menu_title">Настройки</string>
     <string name="exit_menu_title">Выход</string>
     <string name="enter_with_google_button_title">Войти с Google</string>
@@ -611,5 +611,6 @@
     <string name="delete_from_blacklist">Убрать из черного списка</string>
     <string name="long_position_forecast_error">Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!</string>
     <string name="short_position_forecast_error">Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!</string>
+    <string name="support_menu_title">Поддержка</string>
 
 </resources>
