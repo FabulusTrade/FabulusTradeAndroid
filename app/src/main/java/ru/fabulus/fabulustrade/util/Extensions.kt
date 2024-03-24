@@ -60,7 +60,7 @@ fun showCustomSnackbar(
     val layout = snackbar.view as SnackbarLayout
 
     // Hide the text
-    val textView = layout.findViewById<View>(R.id.snackbar_text) as TextView
+    val textView = layout.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
     textView.visibility = View.INVISIBLE
 
     // Inflate our custom view
