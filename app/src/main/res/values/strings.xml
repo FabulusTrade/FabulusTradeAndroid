@@ -613,4 +613,9 @@
     <string name="short_position_forecast_error">Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!</string>
     <string name="support_menu_title">Поддержка</string>
 
+    <!--Profile editing screens-->
+    <string name="save_button">СОХРАНИТЬ</string>
+    <string name="set_username_title">Введите новый \"Никнейм\"</string>
+    <string name="edit_nickname_prompt">Никнейм</string>
+
 </resources>
