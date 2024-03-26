@@ -18,9 +18,8 @@ import androidx.compose.ui.unit.dp
 import ru.fabulus.fabulustrade.R
 
 @Composable
-fun NicknameScreen() {
+fun SetUsernameScreen() {
     var nickname by remember { mutableStateOf(TextFieldValue("")) }
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -79,5 +78,5 @@ fun NicknameScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    NicknameScreen()
+    SetUsernameScreen()
 }
