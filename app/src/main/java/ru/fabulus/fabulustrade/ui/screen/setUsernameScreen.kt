@@ -16,10 +16,26 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.viewmodel.SetUsernameViewModel
 
 @Composable
-fun SetUsernameScreen() {
-    var nickname by remember { mutableStateOf(TextFieldValue("")) }
+fun SetUsernameScreen(viewModel: SetUsernameViewModel) {
+    val nickname by viewModel.nickname
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.snackbarFlow.collect { message ->
+            val result = snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = "Ок",
+                duration = SnackbarDuration.Short
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                // обработайте нажатие на действие, если необходимо
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -46,7 +62,7 @@ fun SetUsernameScreen() {
 
         OutlinedTextField(
             value = nickname,
-            onValueChange = { nickname = it },
+            onValueChange = { viewModel.updateNickname(it) },
             label = { Text(stringResource(R.string.edit_nickname_prompt)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
@@ -56,8 +72,7 @@ fun SetUsernameScreen() {
 
         Button(
             onClick = {
-                // Сохраните значение nickname здесь
-                // Snackbar.make(context, "Никнейм сохранён: ${nickname.text}", Snackbar.LENGTH_SHORT).show()
+                viewModel.saveNickname()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -78,5 +93,5 @@ fun SetUsernameScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    SetUsernameScreen()
+    SetUsernameScreen(SetUsernameViewModel())
 }

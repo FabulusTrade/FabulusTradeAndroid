@@ -429,4 +429,11 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseBlacklistItem>>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/set_username/")
+    fun setUsername(
+        @Header("Authorization") token: String,
+        @Field("user_in_blacklist_id") traderID: String
+    ): Single<ResponseSetUsername>
 }

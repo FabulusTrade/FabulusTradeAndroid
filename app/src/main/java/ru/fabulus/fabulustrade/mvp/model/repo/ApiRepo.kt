@@ -37,6 +37,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSubscription
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseAddToBlacklist
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFlashedPost
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetUsername
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSignUp
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseUserProfile
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
@@ -1179,6 +1180,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMap { isOnline ->
                 if (isOnline) {
                     api.deleteFromBlacklist(token, traderId)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setUsername(token: String, username: String): Single<ResponseSetUsername> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setUsername(token, username)
                 } else {
                     Single.error(NoInternetException())
                 }
