@@ -39,7 +39,7 @@ android {
             signingConfig signingConfigs.debug
         }
         debug {
-            buildConfigField "String", "baseUrl", "\"http://dev.fabulustrade.ru/\""
+            buildConfigField "String", "baseUrl", "\"https://dev.fabulustrade.ru/\""
         }
         local {
             buildConfigField "String", "baseUrl", "\"http://192.168.0.51:8000/\""
