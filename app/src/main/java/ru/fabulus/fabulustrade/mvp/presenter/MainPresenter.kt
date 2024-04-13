@@ -108,7 +108,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         profile.token?.let { token ->
             apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
-                    viewState.setupHeader(it.avatar, it.username)
+                    viewState.setupHeader(it.is_trader, it.avatar, it.username, it.first_name, it.last_name, it.email, it.phone)
                 }, {}
             )
         }
