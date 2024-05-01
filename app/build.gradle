@@ -96,6 +96,8 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation 'androidx.compose.runtime:runtime-rxjava2'
 
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+
 
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0' //deprecated
     implementation 'com.jakewharton.rxbinding4:rxbinding-material:4.0.0' //deprecated
@@ -120,8 +122,14 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.6.1'
     ksp 'androidx.room:room-compiler:2.6.1'
 
-    implementation 'com.google.dagger:dagger:2.50'
-    kapt 'com.google.dagger:dagger-compiler:2.50'
+    implementation "com.google.dagger:dagger:2.50"
+    kapt "com.google.dagger:dagger-compiler:2.50"
+
+    implementation "com.google.dagger:dagger-android-support:2.50"
+    kapt "com.google.dagger:dagger-android-processor:2.50"
+
+    kaptTest "com.google.dagger:dagger-compiler:2.50"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:2.50"
 
     implementation 'com.github.terrakok:cicerone:7.1' //deprecated
 
