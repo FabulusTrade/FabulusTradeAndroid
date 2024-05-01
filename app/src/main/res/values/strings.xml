@@ -78,6 +78,7 @@
     <string name="great_treader_fullname">Иванов Александр</string>
     <string name="great_treader_email">Bistro2020@mail.ru</string>
     <string name="great_treader_phone">+79169887788</string>
+    <string name="edit_profile_button">редактировать</string>
 
 
     <!-- AboutWinTradeFragment -->

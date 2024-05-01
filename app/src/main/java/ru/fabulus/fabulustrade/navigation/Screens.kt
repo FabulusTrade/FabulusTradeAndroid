@@ -45,6 +45,7 @@ import ru.fabulus.fabulustrade.ui.fragment.traderme.TraderMeSubTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersAllFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersFilterFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
+import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 
 object Screens {
     fun onBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
@@ -157,4 +158,7 @@ object Screens {
 
     fun tradeArgumentScreen(trade: Trade) =
         FragmentScreen { TradeArgumentFragment.newInstance(trade) }
+
+    fun setUsernameScreen() =
+        FragmentScreen { SetUsernameFragment.newInstance() }
 }

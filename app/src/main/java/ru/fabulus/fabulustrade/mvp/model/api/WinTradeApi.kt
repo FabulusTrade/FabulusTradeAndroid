@@ -434,6 +434,6 @@ interface WinTradeApi {
     @POST("/api/v1/profile/set_username/")
     fun setUsername(
         @Header("Authorization") token: String,
-        @Field("user_in_blacklist_id") traderID: String
+        @Field("new_username") traderID: String
     ): Single<ResponseSetUsername>
 }

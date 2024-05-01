@@ -142,6 +142,10 @@ class MainPresenter : MvpPresenter<MainView>() {
         router.navigateTo(Screens.registrationAsTraderFirstScreen(signUpData = SignUpData(is_trader = true)))
     }
 
+    fun openSetUsernameScreen() {
+        router.navigateTo(Screens.setUsernameScreen())
+    }
+
     fun backClicked() {
         router.exit()
     }

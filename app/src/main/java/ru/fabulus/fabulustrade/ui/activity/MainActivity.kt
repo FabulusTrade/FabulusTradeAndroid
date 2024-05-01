@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
@@ -161,6 +162,10 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         } else {
             if (!isTrader) {
                 setViewsVisibility(false)
+                headerBinding.btnHeaderFillProfile.setOnClickListener {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    presenter.openSignUpTraderScreen()
+                }
             } else {
                 setViewsVisibility(true)
                 headerBinding.headerUserRegContent.visibility = View.VISIBLE
@@ -170,9 +175,9 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 headerBinding.tvHeaderFullname.text = firstName + " " + lastName
                 headerBinding.tvHeaderEmail.text = email
                 headerBinding.tvHeaderPhone.text = phone
-                headerBinding.btnHeaderFillProfile.setOnClickListener {
+                headerBinding.btnHeaderEditProfile.setOnClickListener {
                     drawerLayout.closeDrawer(GravityCompat.START)
-                    presenter.openSignUpTraderScreen()
+                    presenter.openSetUsernameScreen()
                 }
             }
         }
