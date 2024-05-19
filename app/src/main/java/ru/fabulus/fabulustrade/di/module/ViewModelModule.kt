@@ -5,6 +5,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.fabulus.fabulustrade.di.ViewModelKey
+import ru.fabulus.fabulustrade.viewmodel.ProfileEditingViewModel
 import ru.fabulus.fabulustrade.viewmodel.SetUsernameViewModel
 
 @Module
@@ -13,5 +14,10 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SetUsernameViewModel::class)
-    abstract fun bindViewModel(viewmodel: SetUsernameViewModel): ViewModel
+    abstract fun bindSetUsernameViewModel(viewmodel: SetUsernameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileEditingViewModel::class)
+    abstract fun bindProfileEditingViewModel(viewmodel: ProfileEditingViewModel): ViewModel
 }

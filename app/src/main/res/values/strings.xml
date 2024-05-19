@@ -622,5 +622,11 @@
     <string name="save_button">СОХРАНИТЬ</string>
     <string name="set_username_title">Введите новый \"Никнейм\"</string>
     <string name="edit_nickname_prompt">Никнейм</string>
+    <string name="profile_editing_title">Редактирование профиля трейдера</string>
+    <string name="profile_editing_edit_username">Изменить никнейм</string>
+    <string name="profile_editing_edit_fullname">Изменить имя и фамилию</string>
+    <string name="profile_editing_edit_email">Изменить адрес электронной почты</string>
+    <string name="profile_editing_edit_phone">Изменить номер телефона</string>
+    <string name="profile_editing_edit_password">Изменить пароль</string>
 
 </resources>

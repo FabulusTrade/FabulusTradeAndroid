@@ -172,7 +172,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                 headerBinding.tvHeaderPhone.text = phone
                 headerBinding.btnHeaderEditProfile.setOnClickListener {
                     drawerLayout.closeDrawer(GravityCompat.START)
-                    presenter.openSetUsernameScreen()
+                    presenter.openProfileEditingScreen()
                 }
             }
         }
