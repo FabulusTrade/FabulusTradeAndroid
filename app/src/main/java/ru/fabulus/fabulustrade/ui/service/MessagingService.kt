@@ -69,6 +69,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(0x00BCC1)
             .setContentTitle(title)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setContentText(message)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
