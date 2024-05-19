@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.json.JSONObject
+import retrofit2.HttpException
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
 import javax.inject.Inject
@@ -40,8 +42,30 @@ class SetUsernameViewModel @Inject constructor() : ViewModel() {
                 } else {
                     _errorMessage.value = responseSetUsername.message
                 }
-            }, {
-                it.printStackTrace()
+            }, {throwable ->
+                val errorMsg = parseErrorMessage(throwable)
+                _errorMessage.value = errorMsg
             })
+    }
+
+    fun setErrorMessage(message: String?) {
+        _errorMessage.value = message
+    }
+
+    private fun parseErrorMessage(throwable: Throwable): String {
+        return if (throwable is HttpException) {
+            val responseBody = throwable.response()?.errorBody()
+            responseBody?.let {
+                return try {
+                    val jsonObject = JSONObject(it.string())
+                    jsonObject.getString("message")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    "Неизвестная ошибка"
+                }
+            } ?: "An unknown error occurred"
+        } else {
+            throwable.message ?: "Неизвестная ошибка"
+        }
     }
 }

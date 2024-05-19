@@ -24,6 +24,9 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -90,11 +93,20 @@ fun SetUsernameScreen(viewModel: SetUsernameViewModel, router: Router) {
         )
     }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     errorMessage?.let {
+        showDialog = true
+    }
+
+    if (showDialog && errorMessage != null) {
         AlertDialog(
-            onDismissRequest = {},
+            onDismissRequest = {
+                showDialog = false
+                viewModel.setErrorMessage(null)
+            },
             dialogTitle = "Результат операции",
-            dialogText = it
+            dialogText = errorMessage ?: ""
         )
     }
 
