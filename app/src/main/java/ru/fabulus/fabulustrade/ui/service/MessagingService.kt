@@ -41,15 +41,17 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         val pendingIntent = getPendingIntent()
         val channelId = getString(R.string.default_notification_channel_id)
 
+        val inboxStyle = NotificationCompat.InboxStyle()
+            .addLine(operationResultTitle)
+        for (line in body.split("\n")) {
+            inboxStyle.addLine(body)
+        }
+
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)
             .setColor(0x00BCC1)
             .setContentTitle(title)
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .addLine(operationResultTitle)
-                    .addLine(body)
-            )
+            .setStyle(inboxStyle)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
