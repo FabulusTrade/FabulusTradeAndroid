@@ -434,6 +434,14 @@ interface WinTradeApi {
     @POST("/api/v1/profile/set_username/")
     fun setUsername(
         @Header("Authorization") token: String,
-        @Field("new_username") traderID: String
+        @Field("new_username") newUsername: String
     ): Single<ResponseSetUsername>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/update_name/")
+    fun setFirstAndLastNames(
+        @Header("Authorization") token: String,
+        @Field("new_first_name") newFirstName: String,
+        @Field("new_last_name") newLastName: String
+    ): Single<ResponseSetFirstAndLastNames>
 }

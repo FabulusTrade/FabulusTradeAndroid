@@ -36,6 +36,7 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSignUpAsTrader
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSubscription
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseAddToBlacklist
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFirstAndLastNames
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFlashedPost
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetUsername
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSignUp
@@ -1198,6 +1199,17 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun setFirstAndLastNames(token: String, firstName: String, lastName: String): Single<ResponseSetFirstAndLastNames> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setFirstAndLastNames(token, firstName, lastName)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
     fun getBlacklist(
         token: String,
         page: Int = 1,

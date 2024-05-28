@@ -620,8 +620,11 @@
 
     <!--Profile editing screens-->
     <string name="save_button">СОХРАНИТЬ</string>
-    <string name="set_username_title">Введите новый \"Никнейм\"</string>
+    <string name="set_username_title">Введите новый Никнейм</string>
     <string name="edit_nickname_prompt">Никнейм</string>
+    <string name="set_first_and_list_names_title">Введите новые имя и фамилию"</string>
+    <string name="edit_firstname_prompt">Имя</string>
+    <string name="edit_lastname_prompt">Фамилия</string>
     <string name="profile_editing_title">Редактирование профиля трейдера</string>
     <string name="profile_editing_edit_username">Изменить никнейм</string>
     <string name="profile_editing_edit_fullname">Изменить имя и фамилию</string>
