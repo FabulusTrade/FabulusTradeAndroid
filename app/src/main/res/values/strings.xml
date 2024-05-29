@@ -625,6 +625,8 @@
     <string name="set_first_and_list_names_title">Введите новые имя и фамилию"</string>
     <string name="edit_firstname_prompt">Имя</string>
     <string name="edit_lastname_prompt">Фамилия</string>
+    <string name="set_email_title">Введите новый адрес электронной почты</string>
+    <string name="edit_email_prompt">Адрес электронной почты</string>
     <string name="profile_editing_title">Редактирование профиля трейдера</string>
     <string name="profile_editing_edit_username">Изменить никнейм</string>
     <string name="profile_editing_edit_fullname">Изменить имя и фамилию</string>

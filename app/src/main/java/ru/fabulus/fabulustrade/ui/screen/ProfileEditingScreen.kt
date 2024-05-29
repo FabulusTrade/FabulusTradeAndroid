@@ -116,8 +116,8 @@ fun ProfileEditingScreen(viewModel: ProfileEditingViewModel) {
 
             Button(
                 onClick = {
+                    viewModel.openEmailEditor()
                 },
-                enabled = false,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .fillMaxWidth()

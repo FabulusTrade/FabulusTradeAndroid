@@ -46,6 +46,7 @@ import ru.fabulus.fabulustrade.ui.fragment.traders.TradersAllFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersFilterFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
 import ru.fabulus.fabulustrade.ui.screen.ProfileEditingFragment
+import ru.fabulus.fabulustrade.ui.screen.SetEmailFragment
 import ru.fabulus.fabulustrade.ui.screen.SetFirstAndLastNamesFragment
 import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 
@@ -98,10 +99,21 @@ object Screens {
 
     fun subscriberNewsScreen() = FragmentScreen { SubscriberPostFragment.newInstance() }
 
-    fun tradeDetailScreen(trade: Trade, editMode: Boolean) = FragmentScreen { TradeDetailFragment.newInstance(trade, editMode) }
+    fun tradeDetailScreen(trade: Trade, editMode: Boolean) =
+        FragmentScreen { TradeDetailFragment.newInstance(trade, editMode) }
 
-    fun companyTradingOperationsScreen(traderId: String, companyId: Int, isMyOperations: Boolean = false) =
-        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId, isMyOperations) }
+    fun companyTradingOperationsScreen(
+        traderId: String,
+        companyId: Int,
+        isMyOperations: Boolean = false
+    ) =
+        FragmentScreen {
+            CompanyTradingOperationsFragment.newInstance(
+                traderId,
+                companyId,
+                isMyOperations
+            )
+        }
 
     fun companyTradingOperationsJournalScreen(traderId: String, companyId: Int) =
         FragmentScreen { CompanyTradingOperationsJournalFragment.newInstance(traderId, companyId) }
@@ -150,7 +162,7 @@ object Screens {
     fun postDetailFragment(post: Post, navigateFromGeneralFeed: Boolean = false) =
         FragmentScreen { PostDetailFragment.newInstance(post, navigateFromGeneralFeed) }
 
-    fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
+    fun generalFeedFragment() = FragmentScreen { GeneralFeedFragment.newInstance() }
 
     fun blacklistScreen() =
         FragmentScreen { BlacklistFragment.newInstance() }
@@ -169,4 +181,7 @@ object Screens {
 
     fun setFirstAndLastNamesScreen() =
         FragmentScreen { SetFirstAndLastNamesFragment.newInstance() }
+
+    fun setEmailScreen() =
+        FragmentScreen { SetEmailFragment.newInstance() }
 }

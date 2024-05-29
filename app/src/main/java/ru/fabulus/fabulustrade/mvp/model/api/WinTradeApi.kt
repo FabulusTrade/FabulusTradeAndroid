@@ -444,4 +444,11 @@ interface WinTradeApi {
         @Field("new_first_name") newFirstName: String,
         @Field("new_last_name") newLastName: String
     ): Single<ResponseSetFirstAndLastNames>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/update_email/")
+    fun setEmail(
+        @Header("Authorization") token: String,
+        @Field("new_email") newFirstName: String,
+    ): Single<ResponseSetEmail>
 }

@@ -6,7 +6,7 @@ import ru.fabulus.fabulustrade.navigation.Screens
 import javax.inject.Inject
 
 
-class ProfileEditingViewModel @Inject constructor(): ViewModel() {
+class ProfileEditingViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var router: Router
@@ -19,4 +19,7 @@ class ProfileEditingViewModel @Inject constructor(): ViewModel() {
         router.navigateTo(Screens.setFirstAndLastNamesScreen())
     }
 
+    fun openEmailEditor() {
+        router.navigateTo(Screens.setEmailScreen())
+    }
 }

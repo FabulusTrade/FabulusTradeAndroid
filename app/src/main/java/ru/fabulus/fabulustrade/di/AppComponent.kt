@@ -105,6 +105,7 @@ import ru.fabulus.fabulustrade.ui.fragment.traders.TradersAllFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersFilterFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
 import ru.fabulus.fabulustrade.ui.screen.ProfileEditingFragment
+import ru.fabulus.fabulustrade.ui.screen.SetEmailFragment
 import ru.fabulus.fabulustrade.ui.screen.SetFirstAndLastNamesFragment
 import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 import javax.inject.Singleton
@@ -220,5 +221,6 @@ interface AppComponent {
     fun inject(tradeArgumentPresenter: TradeArgumentPresenter)
     fun inject(setUsernameScreen: SetUsernameFragment)
     fun inject(setFirstAndLastNamesScreen: SetFirstAndLastNamesFragment)
+    fun inject(setEmailScreen: SetEmailFragment)
     fun inject(profileEditingScreen: ProfileEditingFragment)
 }
