@@ -7,16 +7,21 @@ import javax.inject.Inject
 
 class SetEmailViewModel @Inject constructor() : BaseProfileEditingViewModel() {
 
-    private val successMessageTextInApiResponse = "Адрес электронной почты изменен. Письмо подтверждения отправлено."
-    var nickname = mutableStateOf("")
+    private val successMessageTextInApiResponse =
+        "Адрес электронной почты изменен. Письмо подтверждения отправлено."
+    var email = mutableStateOf("")
         private set
 
-    fun updateNickname(newNickname: String) {
-        nickname.value = newNickname
+    val previousEmail by lazy {
+        mutableStateOf(profile.user?.email ?: "")
     }
 
-    fun saveNickname() {
-        apiRepo.setEmail(profile.token!!, nickname.value)
+    fun updateEmail(newEmail: String) {
+        email.value = newEmail
+    }
+
+    fun saveEmail() {
+        apiRepo.setEmail(profile.token!!, email.value)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ responseSetEmail ->
                 if (responseSetEmail.message.equals(successMessageTextInApiResponse)) {

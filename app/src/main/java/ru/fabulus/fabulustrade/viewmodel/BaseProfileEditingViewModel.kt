@@ -17,7 +17,7 @@ open class BaseProfileEditingViewModel : ViewModel() {
     val errorMessage = _errorMessage.asStateFlow()
 
     @Inject
-    protected lateinit var profile: Profile
+    lateinit var profile: Profile
 
     @Inject
     protected lateinit var apiRepo: ApiRepo

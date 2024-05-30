@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import ru.fabulus.fabulustrade.R
+import ru.fabulus.fabulustrade.mvp.model.entity.Profile
+import ru.fabulus.fabulustrade.mvp.model.entity.UserProfile
 import ru.fabulus.fabulustrade.ui.App
 import ru.fabulus.fabulustrade.viewmodel.SetEmailViewModel
 import javax.inject.Inject
@@ -67,7 +70,9 @@ class SetEmailFragment : MvpAppCompatFragment() {
 
 @Composable
 fun SetEmailScreen(viewModel: SetEmailViewModel, router: Router) {
-    val nickname by viewModel.nickname
+    val email by viewModel.email
+
+    val previousEmail by viewModel.previousEmail
 
     val successMessage by viewModel.successMessage.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
@@ -85,13 +90,22 @@ fun SetEmailScreen(viewModel: SetEmailViewModel, router: Router) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        Text(
+            previousEmail,
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier
+                .padding(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         GreyTitle(title = stringResource(R.string.set_email_title))
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = nickname,
-            onValueChange = { viewModel.updateNickname(it) },
+            value = email,
+            onValueChange = { viewModel.updateEmail(it) },
             label = { Text(stringResource(R.string.edit_email_prompt)) },
             singleLine = true,
             modifier = Modifier
@@ -101,7 +115,7 @@ fun SetEmailScreen(viewModel: SetEmailViewModel, router: Router) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SaveButton { viewModel.saveNickname() }
+        SaveButton { viewModel.saveEmail() }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -112,5 +126,38 @@ fun SetEmailScreen(viewModel: SetEmailViewModel, router: Router) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultSetEmailScreenPreview() {
-    SetEmailScreen(SetEmailViewModel(), Router())
+    // Создаем фиктивный профайл
+    val fakeUserProfile = UserProfile(
+        "fakeId",
+        "fakeUsername",
+        "fake@email.com",
+        null,
+        false,
+        true,
+        "fakeFirstName",
+        "fakeLastName",
+        "fakePatronmic",
+        "01.01.2000",
+        null,
+        0,
+        0
+    )
+
+    val fakeProfile = Profile(
+        fakeUserProfile,
+        null,
+        null,
+        true
+    )
+
+    // Создаем фиктивные Router и ApiRepo
+    val fakeRouter = Router()
+
+    // Инициализируем ViewModel c заданным профилем и репо
+    val viewModel = SetEmailViewModel().apply {
+        profile = fakeProfile
+    }
+
+    // Вызовем SetEmailScreen
+    SetEmailScreen(viewModel, fakeRouter)
 }
