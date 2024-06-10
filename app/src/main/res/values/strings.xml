@@ -627,6 +627,8 @@
     <string name="edit_lastname_prompt">Фамилия</string>
     <string name="set_email_title">Введите новый адрес электронной почты</string>
     <string name="edit_email_prompt">Адрес электронной почты</string>
+    <string name="set_phone_number_title">Введите новый номер телефона</string>
+    <string name="edit_phone_number_prompt">Номер телефона с кодом страны</string>
     <string name="profile_editing_title">Редактирование профиля трейдера</string>
     <string name="profile_editing_edit_username">Изменить никнейм</string>
     <string name="profile_editing_edit_fullname">Изменить имя и фамилию</string>

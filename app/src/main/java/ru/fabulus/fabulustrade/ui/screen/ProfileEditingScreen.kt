@@ -127,8 +127,8 @@ fun ProfileEditingScreen(viewModel: ProfileEditingViewModel) {
 
             Button(
                 onClick = {
+                    viewModel.openPhoneNumberEditor()
                 },
-                enabled = false,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .fillMaxWidth()

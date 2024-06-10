@@ -48,6 +48,7 @@ import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
 import ru.fabulus.fabulustrade.ui.screen.ProfileEditingFragment
 import ru.fabulus.fabulustrade.ui.screen.SetEmailFragment
 import ru.fabulus.fabulustrade.ui.screen.SetFirstAndLastNamesFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPhoneNumberFragment
 import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 
 object Screens {
@@ -184,4 +185,7 @@ object Screens {
 
     fun setEmailScreen() =
         FragmentScreen { SetEmailFragment.newInstance() }
+
+    fun setPhoneNumberScreen() =
+        FragmentScreen { SetPhoneNumberFragment.newInstance() }
 }

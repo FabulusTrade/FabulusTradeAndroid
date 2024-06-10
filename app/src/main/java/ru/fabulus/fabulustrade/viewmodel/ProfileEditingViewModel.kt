@@ -22,4 +22,8 @@ class ProfileEditingViewModel @Inject constructor() : ViewModel() {
     fun openEmailEditor() {
         router.navigateTo(Screens.setEmailScreen())
     }
+
+    fun openPhoneNumberEditor() {
+        router.navigateTo(Screens.setPhoneNumberScreen())
+    }
 }

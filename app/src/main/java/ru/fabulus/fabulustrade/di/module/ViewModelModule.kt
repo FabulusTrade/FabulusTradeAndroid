@@ -8,6 +8,7 @@ import ru.fabulus.fabulustrade.di.ViewModelKey
 import ru.fabulus.fabulustrade.viewmodel.ProfileEditingViewModel
 import ru.fabulus.fabulustrade.viewmodel.SetEmailViewModel
 import ru.fabulus.fabulustrade.viewmodel.SetFirstAndLastNamesViewModel
+import ru.fabulus.fabulustrade.viewmodel.SetPhoneNumberViewModel
 import ru.fabulus.fabulustrade.viewmodel.SetUsernameViewModel
 
 @Module
@@ -27,6 +28,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SetEmailViewModel::class)
     abstract fun bindSetEmailViewModel(viewmodel: SetEmailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SetPhoneNumberViewModel::class)
+    abstract fun bindSetPhoneNumberViewModel(viewmodel: SetPhoneNumberViewModel): ViewModel
 
     @Binds
     @IntoMap

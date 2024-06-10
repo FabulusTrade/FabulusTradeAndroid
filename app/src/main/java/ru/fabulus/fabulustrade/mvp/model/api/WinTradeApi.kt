@@ -451,4 +451,11 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Field("new_email") newFirstName: String,
     ): Single<ResponseSetEmail>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/change_phone/")
+    fun setPhoneNumber(
+        @Header("Authorization") token: String,
+        @Field("new_phone_number") newFirstName: String,
+    ): Single<ResponseSetPhoneNumber>
 }
