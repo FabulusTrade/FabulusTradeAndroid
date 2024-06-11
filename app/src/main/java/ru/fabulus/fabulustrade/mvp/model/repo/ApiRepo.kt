@@ -36,6 +36,8 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSignUpAsTrader
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSubscription
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseAddToBlacklist
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseChangePasswordByCode
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSendPasswordChangeEmail
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetEmail
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFirstAndLastNames
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFlashedPost
@@ -1244,6 +1246,30 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMap { isOnline ->
                 if (isOnline) {
                     api.setFirstAndLastNames(token, firstName, lastName)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun sendPasswordChangeEmail(token: String, email: String): Single<ResponseSendPasswordChangeEmail> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.sendPasswordChangeEmail(token, email)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun сhangePasswordByCode(token: String, code: String, newPassword: String): Single<ResponseChangePasswordByCode> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.changePasswordByCode(token, code, newPassword, newPassword)
                 } else {
                     Single.error(NoInternetException())
                 }

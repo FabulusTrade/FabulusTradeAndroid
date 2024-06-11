@@ -26,4 +26,8 @@ class ProfileEditingViewModel @Inject constructor() : ViewModel() {
     fun openPhoneNumberEditor() {
         router.navigateTo(Screens.setPhoneNumberScreen())
     }
+
+    fun openPasswordEditor() {
+        router.navigateTo(Screens.setPasswordFirstScreen())
+    }
 }

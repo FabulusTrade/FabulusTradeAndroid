@@ -22,6 +22,10 @@ open class BaseProfileEditingViewModel : ViewModel() {
     @Inject
     protected lateinit var apiRepo: ApiRepo
 
+    fun setSuccessMessage(message: String?) {
+        _successMessage.value = message
+    }
+
     fun setErrorMessage(message: String?) {
         _errorMessage.value = message
     }

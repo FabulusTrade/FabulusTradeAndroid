@@ -620,6 +620,7 @@
 
     <!--Profile editing screens-->
     <string name="save_button">СОХРАНИТЬ</string>
+    <string name="next_button">Далее</string>
     <string name="set_username_title">Введите новый Никнейм</string>
     <string name="edit_nickname_prompt">Никнейм</string>
     <string name="set_first_and_list_names_title">Введите новые имя и фамилию"</string>
@@ -627,6 +628,12 @@
     <string name="edit_lastname_prompt">Фамилия</string>
     <string name="set_email_title">Введите новый адрес электронной почты</string>
     <string name="edit_email_prompt">Адрес электронной почты</string>
+    <string name="edit_email_second_code_prompt">Код</string>
+    <string name="edit_email_second_password_prompt">Новый пароль</string>
+    <string name="edit_email_second_password_repeat_prompt">Подтвердите новый пароль</string>
+    <string name="set_password_title">Изменение пароля</string>
+    <string name="set_password_subtitle">Введите адрес электронной почты, которая привязана к аккаунту. Мы вышлем вам код</string>
+    <string name="set_password_subtitle_second">Введите код из письма и придумайте новый пароль</string>
     <string name="set_phone_number_title">Введите новый номер телефона</string>
     <string name="edit_phone_number_prompt">Номер телефона с кодом страны</string>
     <string name="profile_editing_title">Редактирование профиля трейдера</string>

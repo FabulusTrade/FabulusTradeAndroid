@@ -453,6 +453,22 @@ interface WinTradeApi {
     ): Single<ResponseSetEmail>
 
     @FormUrlEncoded
+    @POST("/api/v1/profile/reset_password_email_code/")
+    fun sendPasswordChangeEmail(
+        @Header("Authorization") token: String,
+        @Field("email") email: String,
+    ): Single<ResponseSendPasswordChangeEmail>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/reset_password/")
+    fun changePasswordByCode(
+        @Header("Authorization") token: String,
+        @Field("code") code: String,
+        @Field("new_password") newPassword: String,
+        @Field("confirm_password") confirmPassword: String,
+    ): Single<ResponseChangePasswordByCode>
+
+    @FormUrlEncoded
     @POST("/api/v1/profile/change_phone/")
     fun setPhoneNumber(
         @Header("Authorization") token: String,
