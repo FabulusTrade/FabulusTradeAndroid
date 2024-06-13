@@ -30,7 +30,7 @@ class CompanyTradingOperationsFragment(private val traderId: String, private val
     lateinit var presenter: CompanyTradingOperationsPresenter
 
     @ProvidePresenter
-    fun providePresenter() = CompanyTradingOperationsPresenter(traderId, companyId).apply {
+    fun providePresenter() = CompanyTradingOperationsPresenter(traderId, companyId, isMyOperations).apply {
         App.instance.appComponent.inject(this)
     }
 

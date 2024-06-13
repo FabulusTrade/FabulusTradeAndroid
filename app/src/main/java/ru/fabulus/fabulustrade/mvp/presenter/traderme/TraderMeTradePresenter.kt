@@ -110,7 +110,7 @@ class TraderMeTradePresenter : MvpPresenter<TraderMeTradeView>() {
     private fun loadTrades() {
         profile.token?.let {
             apiRepo
-                .getTraderTradesAggregate(it, profile.user!!.id, nextPage!!)
+                .getMyTradesAggregate(it, nextPage!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ pag ->
                     listPresenter.trades.addAll(pag.results)

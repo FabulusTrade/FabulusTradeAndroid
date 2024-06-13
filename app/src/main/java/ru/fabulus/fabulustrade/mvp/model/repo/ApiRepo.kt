@@ -412,6 +412,28 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             }
             .subscribeOn(Schedulers.io())
 
+    fun getMyTradesAggregate(
+        token: String,
+        page: Int = 1,
+    ): Single<Pagination<TradesByCompanyAggregated>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getMyAggregatedTrades(token, page)
+                        .flatMap { respPag ->
+                            val trades = respPag.results.map {
+                                mapToAggregatedTrade(it)!!
+                            }
+                            Single.just(mapToPagination(respPag, trades))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
     fun getTraderOperationsCount(
         uuidTrader: String,
     ): Single<Int> = networkStatus
@@ -441,6 +463,29 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                 if (isOnline) {
                     api
                         .getDealsByCompany(token, traderId, companyId, page)
+                        .flatMap { respPag ->
+                            val trades = respPag.results.map {
+                                mapToTradeByCompany(it)
+                            }
+                            Single.just(mapToPagination(respPag, trades))
+                        }
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun getMyTradesByCompany(
+        token: String,
+        companyId: Int,
+        page: Int = 1,
+    ): Single<Pagination<TradesSortedByCompany>> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api
+                        .getMyDealsByCompany(token, companyId, page)
                         .flatMap { respPag ->
                             val trades = respPag.results.map {
                                 mapToTradeByCompany(it)

@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 class CompanyTradingOperationsPresenter(
     val traderId: String,
-    val companyId: Int
+    val companyId: Int,
+    val isMyOperations: Boolean
 ) : MvpPresenter<CompanyTradingOperationsView>() {
 
     companion object {
@@ -82,7 +83,12 @@ class CompanyTradingOperationsPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadCompanyDeals()
+
+        if (isMyOperations) {
+            loadMyCompanyDeals()
+        } else {
+            loadCompanyDeals()
+        }
     }
 
     private fun loadCompanyDeals() {
@@ -101,6 +107,21 @@ class CompanyTradingOperationsPresenter(
         }
     }
 
+    private fun loadMyCompanyDeals() {
+        profile.token?.let {
+            apiRepo
+                .getMyTradesByCompany(it, companyId, nextPage!!)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ pag ->
+                    listPresenter.dealsList.addAll(pag.results)
+                    viewState.updateRecyclerView()
+                    viewState.setCompanyName(pag.results[0].company)
+                    nextPage = pag.next
+                }, {
+                    // Ошибка не обрабатывается
+                })
+        }
+    }
     fun openJournal() {
         router.navigateTo(Screens.companyTradingOperationsJournalScreen(traderId, companyId))
     }
