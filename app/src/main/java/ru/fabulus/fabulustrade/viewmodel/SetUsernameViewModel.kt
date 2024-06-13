@@ -21,6 +21,7 @@ class SetUsernameViewModel @Inject constructor() : BaseProfileEditingViewModel()
             .subscribe({ responseSetUsername ->
                 if (responseSetUsername.message.equals(successMessageTextInApiResponse)) {
                     _successMessage.value = responseSetUsername.message
+                    reloadProfile()
                 } else {
                     _errorMessage.value = responseSetUsername.message
                 }

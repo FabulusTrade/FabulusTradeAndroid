@@ -26,6 +26,7 @@ class SetPhoneNumberViewModel @Inject constructor() : BaseProfileEditingViewMode
             .subscribe({ responseSetPhoneNumber ->
                 if (responseSetPhoneNumber.message.equals(successMessageTextInApiResponse)) {
                     _successMessage.value = responseSetPhoneNumber.message
+                    reloadProfile()
                 } else {
                     _errorMessage.value = responseSetPhoneNumber.message
                 }

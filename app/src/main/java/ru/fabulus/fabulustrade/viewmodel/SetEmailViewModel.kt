@@ -26,6 +26,7 @@ class SetEmailViewModel @Inject constructor() : BaseProfileEditingViewModel() {
             .subscribe({ responseSetEmail ->
                 if (responseSetEmail.message.equals(successMessageTextInApiResponse)) {
                     _successMessage.value = responseSetEmail.message
+                    reloadProfile()
                 } else {
                     _errorMessage.value = responseSetEmail.message
                 }

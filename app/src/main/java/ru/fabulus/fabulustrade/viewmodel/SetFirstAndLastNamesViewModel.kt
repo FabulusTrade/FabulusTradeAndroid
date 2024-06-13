@@ -27,6 +27,7 @@ class SetFirstAndLastNamesViewModel @Inject constructor() : BaseProfileEditingVi
             .subscribe({ responseSetFirstAndLastName ->
                 if (responseSetFirstAndLastName.message.equals(successMessageTextInApiResponse)) {
                     _successMessage.value = responseSetFirstAndLastName.message
+                    reloadProfile()
                 } else {
                     _errorMessage.value = responseSetFirstAndLastName.message
                 }

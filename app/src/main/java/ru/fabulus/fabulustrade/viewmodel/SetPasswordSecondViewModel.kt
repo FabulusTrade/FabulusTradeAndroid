@@ -36,6 +36,7 @@ class SetPasswordSecondViewModel @Inject constructor() : BaseProfileEditingViewM
             .subscribe({ responseSendPasswordChangeEmail ->
                 if (responseSendPasswordChangeEmail.message.equals(successMessageTextInApiResponse)) {
                     _successMessage.value = responseSendPasswordChangeEmail.message
+                    reloadProfile()
                 } else {
                     _errorMessage.value = responseSendPasswordChangeEmail.message
                 }

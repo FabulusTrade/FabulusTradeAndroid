@@ -105,11 +105,15 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun onDrawerOpened() {
-        profile.token?.let { token ->
-            apiRepo.getProfile(token).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                {
-                    viewState.setupHeader(it.is_trader, it.avatar, it.username, it.first_name, it.last_name, it.email, it.phone)
-                }, {}
+        profile.user?.let {
+            viewState.setupHeader(
+                it.isTrader,
+                it.avatar,
+                it.username,
+                it.firstName,
+                it.lastName,
+                it.email,
+                it.phone
             )
         }
     }

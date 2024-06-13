@@ -1,12 +1,14 @@
 package ru.fabulus.fabulustrade.viewmodel
 
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONObject
 import retrofit2.HttpException
 import ru.fabulus.fabulustrade.mvp.model.entity.Profile
 import ru.fabulus.fabulustrade.mvp.model.repo.ApiRepo
+import ru.fabulus.fabulustrade.mvp.model.repo.ProfileRepo
 import javax.inject.Inject
 
 open class BaseProfileEditingViewModel : ViewModel() {
@@ -15,6 +17,9 @@ open class BaseProfileEditingViewModel : ViewModel() {
 
     protected val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
+
+    @Inject
+    lateinit var profileRepo: ProfileRepo
 
     @Inject
     lateinit var profile: Profile
@@ -45,5 +50,15 @@ open class BaseProfileEditingViewModel : ViewModel() {
         } else {
             throwable.message ?: "Неизвестная ошибка"
         }
+    }
+
+    protected fun reloadProfile() {
+        profileRepo.get()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                profile.user = it.user
+            }, {
+                //ошибки не обрабатываются
+            })
     }
 }
