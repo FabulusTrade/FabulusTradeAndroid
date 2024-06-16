@@ -631,6 +631,7 @@
     <string name="edit_email_second_code_prompt">Код</string>
     <string name="edit_email_second_password_prompt">Новый пароль</string>
     <string name="edit_email_second_password_repeat_prompt">Подтвердите новый пароль</string>
+    <string name="edit_email_second_passwords_dont_match_snackbar_text">Пароли не совпадают!</string>
     <string name="set_password_title">Изменение пароля</string>
     <string name="set_password_subtitle">Введите адрес электронной почты, которая привязана к аккаунту. Мы вышлем вам код</string>
     <string name="set_password_subtitle_second">Введите код из письма и придумайте новый пароль</string>
