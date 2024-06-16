@@ -144,6 +144,12 @@ interface WinTradeApi {
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseAggregatedTrade>>
 
+    @GET("api/v1/trader/my_trade/aggregated/")
+    fun getMyAggregatedTrades(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseAggregatedTrade>>
+
     @GET("api/v1/trader/post/by_trade/{trade_id}/")
     fun getArgumentByTrade(
         @Header("Authorization") token: String,
@@ -155,6 +161,13 @@ interface WinTradeApi {
     fun getDealsByCompany(
         @Header("Authorization") token: String,
         @Path("trader_id") id: String,
+        @Path("company_id") companyId: Int,
+        @Query("page") page: Int = 1
+    ): Single<ResponsePagination<ResponseCompanyTradingOperations>>
+
+    @GET("api/v1/trader/my_trade/by_company/{company_id}/")
+    fun getMyDealsByCompany(
+        @Header("Authorization") token: String,
         @Path("company_id") companyId: Int,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseCompanyTradingOperations>>

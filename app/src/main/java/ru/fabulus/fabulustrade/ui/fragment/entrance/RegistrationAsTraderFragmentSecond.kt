@@ -100,7 +100,7 @@ class RegistrationAsTraderFragmentSecond : MvpAppCompatFragment(), RegAsTraderSe
         val genderAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.genders,
-            R.layout.support_simple_spinner_dropdown_item
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
         )
         arguments?.getParcelable<TraderRegistrationInfo>(TRADER_REG_INFO_TAG)?.let { traderInfo ->
             with(binding) {

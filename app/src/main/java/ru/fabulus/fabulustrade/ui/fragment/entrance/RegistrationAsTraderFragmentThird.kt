@@ -52,7 +52,7 @@ class RegistrationAsTraderFragmentThird : MvpAppCompatFragment(), RegAsTraderThi
         terminalAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.terminals,
-            R.layout.support_simple_spinner_dropdown_item
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
         )
         binding.tiTradeTerminal.run {
             setText(terminalAdapter.getItem(0))
