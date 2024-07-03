@@ -7,6 +7,7 @@ interface IMessagingService {
         title: Spanned,
         operationResultTitle: Spanned,
         body: String,
+        note: String,
         id: Int
     )
 

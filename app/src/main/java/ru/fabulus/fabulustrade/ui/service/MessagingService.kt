@@ -36,6 +36,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         title: Spanned,
         operationResultTitle: Spanned,
         body: String,
+        note: String,
         id: Int
     ) {
         val pendingIntent = getPendingIntent()
@@ -46,6 +47,7 @@ class MessagingService : FirebaseMessagingService(), IMessagingService {
         for (line in body.split("\n")) {
             inboxStyle.addLine(body)
         }
+        inboxStyle.addLine(note)
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_app_launcher_foreground)

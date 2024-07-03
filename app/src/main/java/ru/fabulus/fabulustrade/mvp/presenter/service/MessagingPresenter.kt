@@ -23,6 +23,7 @@ class MessagingPresenter(private val service: MessagingService) {
         private const val OPERATION_TYPE_KEY = "operation_type"
         private const val DELAYED_TRADE_KEY = "delayed_trade"
         private const val OPERATION_SUBTYPE_KEY = "operation_subtype"
+        private const val NOTE_KEY = "note"
         private const val OPERATION_SUBTYPE_OPENING_VALUE = "opening"
         private const val OPERATION_SUBTYPE_CLOSING_VALUE = "closing"
 
@@ -57,6 +58,7 @@ class MessagingPresenter(private val service: MessagingService) {
         val dateData = data.getOrElse(OPERATION_DATE_KEY) { "" }
         val isDelayedTrade = data.getOrElse(DELAYED_TRADE_KEY) { "" }.uppercase() == "TRUE"
         val operationSubType = data.getOrElse(OPERATION_SUBTYPE_KEY) { "" }
+        val note = data.getOrElse(NOTE_KEY) { "" }
 
         val author = data.getOrElse(AUTHOR_KEY) { "" }
         val idAuthorPost = data.getOrElse(ID_AUTHOR_POST) { "" }
@@ -79,7 +81,8 @@ class MessagingPresenter(private val service: MessagingService) {
                     currency,
                     dateData,
                     isDelayedTrade,
-                    operationSubType
+                    operationSubType,
+                    note
                 )
             }
             authorComment.isNotEmpty() && authorAnswer.isNotEmpty() && answerText.isNotEmpty()
@@ -131,7 +134,8 @@ class MessagingPresenter(private val service: MessagingService) {
         currency: String,
         date: String,
         isDelayedTrade: Boolean,
-        operationSubType: String
+        operationSubType: String,
+        note: String
     ) {
         var isSale: Boolean? = null
         var priceData = price
@@ -200,6 +204,7 @@ class MessagingPresenter(private val service: MessagingService) {
             title,
             operationResultTitle,
             body,
+            note,
             getNotificationId()
         )
         apiRepo.newTradeSubject.onNext(true)
