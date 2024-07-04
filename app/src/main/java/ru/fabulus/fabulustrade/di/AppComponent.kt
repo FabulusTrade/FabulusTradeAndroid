@@ -7,6 +7,7 @@ import ru.fabulus.fabulustrade.di.module.CiceroneModule
 import ru.fabulus.fabulustrade.di.module.HelperModule
 import ru.fabulus.fabulustrade.di.module.ProfileModule
 import ru.fabulus.fabulustrade.di.module.RepoModule
+import ru.fabulus.fabulustrade.di.module.ViewModelModule
 import ru.fabulus.fabulustrade.mvp.presenter.AboutWinTradePresenter
 import ru.fabulus.fabulustrade.mvp.presenter.BasePostPresenter
 import ru.fabulus.fabulustrade.mvp.presenter.BlacklistPresenter
@@ -103,6 +104,13 @@ import ru.fabulus.fabulustrade.ui.fragment.traderme.TraderMeTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersAllFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersFilterFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
+import ru.fabulus.fabulustrade.ui.screen.ProfileEditingFragment
+import ru.fabulus.fabulustrade.ui.screen.SetEmailFragment
+import ru.fabulus.fabulustrade.ui.screen.SetFirstAndLastNamesFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPasswordFirstFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPasswordSecondFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPhoneNumberFragment
+import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -113,7 +121,9 @@ import javax.inject.Singleton
         CiceroneModule::class,
         RepoModule::class,
         ProfileModule::class,
-        HelperModule::class
+        HelperModule::class,
+        ViewModelBuilderModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent {
@@ -212,4 +222,11 @@ interface AppComponent {
     fun inject(blacklistRVAdapter: BlacklistRVAdapter)
     fun inject(tradeArgumentFragment: TradeArgumentFragment)
     fun inject(tradeArgumentPresenter: TradeArgumentPresenter)
+    fun inject(setUsernameScreen: SetUsernameFragment)
+    fun inject(setFirstAndLastNamesScreen: SetFirstAndLastNamesFragment)
+    fun inject(setEmailScreen: SetEmailFragment)
+    fun inject(setPasswordFirstScreen: SetPasswordFirstFragment)
+    fun inject(setPasswordSecondScreen: SetPasswordSecondFragment)
+    fun inject(setPhoneNumberScreen: SetPhoneNumberFragment)
+    fun inject(profileEditingScreen: ProfileEditingFragment)
 }

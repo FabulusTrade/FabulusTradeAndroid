@@ -39,7 +39,7 @@ android {
             signingConfig signingConfigs.debug
         }
         debug {
-            buildConfigField "String", "baseUrl", "\"http://dev.fabulustrade.ru/\""
+            buildConfigField "String", "baseUrl", "\"https://dev.fabulustrade.ru/\""
         }
         local {
             buildConfigField "String", "baseUrl", "\"http://192.168.0.51:8000/\""
@@ -51,7 +51,13 @@ android {
     buildFeatures {
         viewBinding true
         buildConfig true
+        compose true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
+
     namespace 'ru.fabulus.fabulustrade'
 }
 
@@ -72,6 +78,28 @@ dependencies {
 
     implementation 'io.reactivex.rxjava3:rxjava:3.0.3'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    def composeBom = platform('androidx.compose:compose-bom:2024.03.00')
+    implementation composeBom
+    androidTestImplementation composeBom
+
+    implementation 'androidx.compose.material:material'
+    implementation "androidx.compose.material:material-icons-extended"
+
+
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
+    implementation 'androidx.compose.runtime:runtime-livedata'
+    implementation 'androidx.compose.runtime:runtime-rxjava2'
+
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+
 
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0' //deprecated
     implementation 'com.jakewharton.rxbinding4:rxbinding-material:4.0.0' //deprecated
@@ -96,8 +124,14 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.6.1'
     ksp 'androidx.room:room-compiler:2.6.1'
 
-    implementation 'com.google.dagger:dagger:2.50'
-    kapt 'com.google.dagger:dagger-compiler:2.50'
+    implementation "com.google.dagger:dagger:2.50"
+    kapt "com.google.dagger:dagger-compiler:2.50"
+
+    implementation "com.google.dagger:dagger-android-support:2.50"
+    kapt "com.google.dagger:dagger-android-processor:2.50"
+
+    kaptTest "com.google.dagger:dagger-compiler:2.50"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:2.50"
 
     implementation 'com.github.terrakok:cicerone:7.1' //deprecated
 

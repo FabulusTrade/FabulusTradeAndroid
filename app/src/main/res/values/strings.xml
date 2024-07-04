@@ -75,6 +75,11 @@
     <!-- drawer_layout -->
     <string name="edit_profile">Заполнить\n профиль</string>
     <string name="great_treader">Великий Трейдер</string>
+    <string name="great_treader_fullname">Иванов Александр</string>
+    <string name="great_treader_email">Bistro2020@mail.ru</string>
+    <string name="great_treader_phone">+79169887788</string>
+    <string name="edit_profile_button">редактировать</string>
+
 
     <!-- AboutWinTradeFragment -->
     <string name="name">Наименование</string>
@@ -612,5 +617,31 @@
     <string name="long_position_forecast_error">Для длинной позиции тейк-профит должен быть больше цены покупки, а стоп-лосс - меньше!</string>
     <string name="short_position_forecast_error">Для короткой позиции тейк-профит должен быть меньше цены продажи, а стоп-лосс - больше!</string>
     <string name="support_menu_title">Поддержка</string>
+
+    <!--Profile editing screens-->
+    <string name="save_button">СОХРАНИТЬ</string>
+    <string name="next_button">Далее</string>
+    <string name="set_username_title">Введите новый Никнейм</string>
+    <string name="edit_nickname_prompt">Никнейм</string>
+    <string name="set_first_and_list_names_title">Введите новые имя и фамилию"</string>
+    <string name="edit_firstname_prompt">Имя</string>
+    <string name="edit_lastname_prompt">Фамилия</string>
+    <string name="set_email_title">Введите новый адрес электронной почты</string>
+    <string name="edit_email_prompt">Адрес электронной почты</string>
+    <string name="edit_email_second_code_prompt">Код</string>
+    <string name="edit_email_second_password_prompt">Новый пароль</string>
+    <string name="edit_email_second_password_repeat_prompt">Подтвердите новый пароль</string>
+    <string name="edit_email_second_passwords_dont_match_snackbar_text">Пароли не совпадают!</string>
+    <string name="set_password_title">Изменение пароля</string>
+    <string name="set_password_subtitle">Введите адрес электронной почты, которая привязана к аккаунту. Мы вышлем вам код</string>
+    <string name="set_password_subtitle_second">Введите код из письма и придумайте новый пароль</string>
+    <string name="set_phone_number_title">Введите новый номер телефона</string>
+    <string name="edit_phone_number_prompt">Номер телефона с кодом страны</string>
+    <string name="profile_editing_title">Редактирование профиля трейдера</string>
+    <string name="profile_editing_edit_username">Изменить никнейм</string>
+    <string name="profile_editing_edit_fullname">Изменить имя и фамилию</string>
+    <string name="profile_editing_edit_email">Изменить адрес электронной почты</string>
+    <string name="profile_editing_edit_phone">Изменить номер телефона</string>
+    <string name="profile_editing_edit_password">Изменить пароль</string>
 
 </resources>

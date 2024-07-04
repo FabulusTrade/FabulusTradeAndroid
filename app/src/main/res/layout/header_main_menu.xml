@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/header_main_height"
     android:background="@color/colorPrimary">
@@ -11,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp">
-
 
         <ImageView
             android:layout_width="wrap_content"
@@ -42,17 +42,18 @@
             app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
         <Button
-            android:id="@+id/btn_header_main_profile"
+            android:id="@+id/btn_header_fill_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:backgroundTint="@color/colorAccent"
             android:text="@string/fill_profile"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_header_main_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/iv_header_main_avatar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/tv_header_main_nickname" />
+            app:layout_constraintStart_toEndOf="@id/iv_header_main_avatar"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_main_nickname" />
+
 
         <TextView
             android:id="@+id/tv_header_main_nickname"
@@ -60,17 +61,90 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/great_treader"
             android:textColor="@color/colorWhite"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_header_main_profile"
+            app:layout_constraintBottom_toTopOf="@id/tv_header_fullname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_header_main_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@string/great_treader" />
+
+        <TextView
+            android:id="@+id/tv_header_fullname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_header_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_header_main_avatar"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_main_nickname"
+            tools:text="@string/great_treader_fullname" />
+
+        <TextView
+            android:id="@+id/tv_header_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_header_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_header_main_avatar"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_fullname"
+            tools:text="@string/great_treader_email" />
+
+        <TextView
+            android:id="@+id/tv_header_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_header_edit_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
-            app:layout_constraintTop_toTopOf="@+id/iv_header_main_avatar" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_header_email"
+            tools:text="@string/great_treader_phone" />
+
+        <Button
+            android:id="@+id/btn_header_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/edit_profile_button"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_header_main_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_header_phone" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -5,12 +5,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -24,6 +21,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.fabulus.fabulustrade.R
 import ru.fabulus.fabulustrade.databinding.ActivityMainBinding
+import ru.fabulus.fabulustrade.databinding.HeaderMainMenuBinding
 import ru.fabulus.fabulustrade.mvp.presenter.MainPresenter
 import ru.fabulus.fabulustrade.mvp.view.MainView
 import ru.fabulus.fabulustrade.mvp.view.NavElementsControl
@@ -88,7 +86,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             setNavigationItemSelectedListener(this@MainActivity)
             bringToFront()
         }
-        setupHeader(null, null)
+        setupHeader(false, null, null, null, null, null, null)
         setSupportActionBar(toolbar)
         supportActionBar?.run {
             setDisplayShowTitleEnabled(false)
@@ -115,12 +113,15 @@ class MainActivity : MvpAppCompatActivity(), MainView,
                     }
                 }
             }
+
             R.id.menu_search -> {
                 presenter.openSearchScreen()
             }
+
             R.id.menu_share -> {
                 presenter.openShareScreen()
             }
+
             R.id.menu_win -> {
                 presenter.openWinScreen()
             }
@@ -128,21 +129,51 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         return true
     }
 
-    override fun setupHeader(avatar: String?, username: String?) {
+    override fun setupHeader(
+        isTrader: Boolean,
+        avatar: String?,
+        username: String?,
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        phone: String?
+    ) {
         val headerView = binding.navView.getHeaderView(0)
-        val userRegContent = headerView.findViewById<ConstraintLayout>(R.id.header_user_reg_content)
-        val userNoRegContent = headerView.findViewById<ConstraintLayout>(R.id.header_no_reg_content)
+
+        val headerBinding = HeaderMainMenuBinding.bind(headerView)
+
+        fun setViewsVisibility(isTrader: Boolean) {
+            headerBinding.btnHeaderFillProfile.visibility =
+                if (isTrader) View.GONE else View.VISIBLE
+            headerBinding.tvHeaderEmail.visibility = if (isTrader) View.VISIBLE else View.GONE
+            headerBinding.tvHeaderFullname.visibility = if (isTrader) View.VISIBLE else View.GONE
+            headerBinding.tvHeaderEmail.visibility = if (isTrader) View.VISIBLE else View.GONE
+            headerBinding.tvHeaderPhone.visibility = if (isTrader) View.VISIBLE else View.GONE
+        }
+
         if (username.isNullOrBlank()) {
-            userRegContent.visibility = View.GONE
-            userNoRegContent.visibility = View.VISIBLE
+            headerBinding.headerUserRegContent.visibility = View.GONE
+            headerBinding.headerNoRegContent.visibility = View.VISIBLE
         } else {
-            userRegContent.visibility = View.VISIBLE
-            userNoRegContent.visibility = View.GONE
-            avatar?.let { loadImage(it, headerView.findViewById(R.id.iv_header_main_avatar)) }
-            headerView.findViewById<TextView>(R.id.tv_header_main_nickname).text = username
-            headerView.findViewById<Button>(R.id.btn_header_main_profile).setOnClickListener {
-                drawerLayout.closeDrawer(GravityCompat.START)
-                presenter.openSignUpTraderScreen()
+            if (!isTrader) {
+                setViewsVisibility(false)
+                headerBinding.btnHeaderFillProfile.setOnClickListener {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    presenter.openSignUpTraderScreen()
+                }
+            } else {
+                setViewsVisibility(true)
+                headerBinding.headerUserRegContent.visibility = View.VISIBLE
+                headerBinding.headerNoRegContent.visibility = View.GONE
+                avatar?.let { loadImage(it, headerView.findViewById(R.id.iv_header_main_avatar)) }
+                headerBinding.tvHeaderMainNickname.text = username
+                headerBinding.tvHeaderFullname.text = firstName + " " + lastName
+                headerBinding.tvHeaderEmail.text = email
+                headerBinding.tvHeaderPhone.text = phone
+                headerBinding.btnHeaderEditProfile.setOnClickListener {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    presenter.openProfileEditingScreen()
+                }
             }
         }
     }
@@ -176,7 +207,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
         return true
     }
 
-    @Deprecated(message="deprecation inhereted")
+    @Deprecated(message = "deprecation inhereted")
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
             if (it is BackButtonListener && it.backClicked())

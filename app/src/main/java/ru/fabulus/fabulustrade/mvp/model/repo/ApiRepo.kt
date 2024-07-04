@@ -36,7 +36,13 @@ import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSignUpAsTrader
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestSubscription
 import ru.fabulus.fabulustrade.mvp.model.entity.api.RequestTraderRegistrationInfo
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseAddToBlacklist
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseChangePasswordByCode
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSendPasswordChangeEmail
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetEmail
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFirstAndLastNames
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetFlashedPost
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetPhoneNumber
+import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSetUsername
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseSignUp
 import ru.fabulus.fabulustrade.mvp.model.entity.api.ResponseUserProfile
 import ru.fabulus.fabulustrade.mvp.model.entity.common.Pagination
@@ -795,9 +801,18 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
                         MultipartBody.Part.createFormData("trader_id", traderId),
                         MultipartBody.Part.createFormData("text", text),
                         imagesToAdd.mapIndexed { index, bytes -> bytes.mapToMultipartBodyPart(index) },
-                        if (stopLoss != null) MultipartBody.Part.createFormData("stop_loss", stopLoss.toString()) else null,
-                        if (takeProfit != null) MultipartBody.Part.createFormData("take_profit", takeProfit.toString()) else null,
-                        if (dealTerm!= null) MultipartBody.Part.createFormData("deal_term", dealTerm.toString()) else null
+                        if (stopLoss != null) MultipartBody.Part.createFormData(
+                            "stop_loss",
+                            stopLoss.toString()
+                        ) else null,
+                        if (takeProfit != null) MultipartBody.Part.createFormData(
+                            "take_profit",
+                            takeProfit.toString()
+                        ) else null,
+                        if (dealTerm != null) MultipartBody.Part.createFormData(
+                            "deal_term",
+                            dealTerm.toString()
+                        ) else null
                     ).flatMap { response ->
                         Single.just(mapToArgument(response)!!)
                     }
@@ -1224,6 +1239,82 @@ class ApiRepo(val api: WinTradeApi, val networkStatus: NetworkStatus) {
             .flatMap { isOnline ->
                 if (isOnline) {
                     api.deleteFromBlacklist(token, traderId)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setUsername(token: String, username: String): Single<ResponseSetUsername> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setUsername(token, username)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setEmail(token: String, email: String): Single<ResponseSetEmail> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setEmail(token, email)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setPhoneNumber(token: String, phoneNumber: String): Single<ResponseSetPhoneNumber> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setPhoneNumber(token, phoneNumber)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun setFirstAndLastNames(
+        token: String,
+        firstName: String,
+        lastName: String
+    ): Single<ResponseSetFirstAndLastNames> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.setFirstAndLastNames(token, firstName, lastName)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun sendPasswordChangeEmail(token: String, email: String): Single<ResponseSendPasswordChangeEmail> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.sendPasswordChangeEmail(token, email)
+                } else {
+                    Single.error(NoInternetException())
+                }
+            }
+            .subscribeOn(Schedulers.io())
+
+    fun сhangePasswordByCode(token: String, code: String, newPassword: String): Single<ResponseChangePasswordByCode> =
+        networkStatus
+            .isOnlineSingle()
+            .flatMap { isOnline ->
+                if (isOnline) {
+                    api.changePasswordByCode(token, code, newPassword, newPassword)
                 } else {
                     Single.error(NoInternetException())
                 }

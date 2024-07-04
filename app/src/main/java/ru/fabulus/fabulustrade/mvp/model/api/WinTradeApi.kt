@@ -442,4 +442,49 @@ interface WinTradeApi {
         @Header("Authorization") token: String,
         @Query("page") page: Int = 1
     ): Single<ResponsePagination<ResponseBlacklistItem>>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/set_username/")
+    fun setUsername(
+        @Header("Authorization") token: String,
+        @Field("new_username") newUsername: String
+    ): Single<ResponseSetUsername>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/update_name/")
+    fun setFirstAndLastNames(
+        @Header("Authorization") token: String,
+        @Field("new_first_name") newFirstName: String,
+        @Field("new_last_name") newLastName: String
+    ): Single<ResponseSetFirstAndLastNames>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/update_email/")
+    fun setEmail(
+        @Header("Authorization") token: String,
+        @Field("new_email") newFirstName: String,
+    ): Single<ResponseSetEmail>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/reset_password_email_code/")
+    fun sendPasswordChangeEmail(
+        @Header("Authorization") token: String,
+        @Field("email") email: String,
+    ): Single<ResponseSendPasswordChangeEmail>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/reset_password/")
+    fun changePasswordByCode(
+        @Header("Authorization") token: String,
+        @Field("code") code: String,
+        @Field("new_password") newPassword: String,
+        @Field("confirm_password") confirmPassword: String,
+    ): Single<ResponseChangePasswordByCode>
+
+    @FormUrlEncoded
+    @POST("/api/v1/profile/change_phone/")
+    fun setPhoneNumber(
+        @Header("Authorization") token: String,
+        @Field("new_phone_number") newFirstName: String,
+    ): Single<ResponseSetPhoneNumber>
 }

@@ -45,6 +45,13 @@ import ru.fabulus.fabulustrade.ui.fragment.traderme.TraderMeSubTradeFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersAllFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersFilterFragment
 import ru.fabulus.fabulustrade.ui.fragment.traders.TradersMainFragment
+import ru.fabulus.fabulustrade.ui.screen.ProfileEditingFragment
+import ru.fabulus.fabulustrade.ui.screen.SetEmailFragment
+import ru.fabulus.fabulustrade.ui.screen.SetFirstAndLastNamesFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPasswordFirstFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPasswordSecondFragment
+import ru.fabulus.fabulustrade.ui.screen.SetPhoneNumberFragment
+import ru.fabulus.fabulustrade.ui.screen.SetUsernameFragment
 
 object Screens {
     fun onBoardScreen() = FragmentScreen { OnBoardFragment.newInstance() }
@@ -95,10 +102,21 @@ object Screens {
 
     fun subscriberNewsScreen() = FragmentScreen { SubscriberPostFragment.newInstance() }
 
-    fun tradeDetailScreen(trade: Trade, editMode: Boolean) = FragmentScreen { TradeDetailFragment.newInstance(trade, editMode) }
+    fun tradeDetailScreen(trade: Trade, editMode: Boolean) =
+        FragmentScreen { TradeDetailFragment.newInstance(trade, editMode) }
 
-    fun companyTradingOperationsScreen(traderId: String, companyId: Int, isMyOperations: Boolean = false) =
-        FragmentScreen { CompanyTradingOperationsFragment.newInstance(traderId, companyId, isMyOperations) }
+    fun companyTradingOperationsScreen(
+        traderId: String,
+        companyId: Int,
+        isMyOperations: Boolean = false
+    ) =
+        FragmentScreen {
+            CompanyTradingOperationsFragment.newInstance(
+                traderId,
+                companyId,
+                isMyOperations
+            )
+        }
 
     fun companyTradingOperationsJournalScreen(traderId: String, companyId: Int) =
         FragmentScreen { CompanyTradingOperationsJournalFragment.newInstance(traderId, companyId) }
@@ -147,7 +165,7 @@ object Screens {
     fun postDetailFragment(post: Post, navigateFromGeneralFeed: Boolean = false) =
         FragmentScreen { PostDetailFragment.newInstance(post, navigateFromGeneralFeed) }
 
-    fun generalFeedFragment() = FragmentScreen{ GeneralFeedFragment.newInstance() }
+    fun generalFeedFragment() = FragmentScreen { GeneralFeedFragment.newInstance() }
 
     fun blacklistScreen() =
         FragmentScreen { BlacklistFragment.newInstance() }
@@ -157,4 +175,25 @@ object Screens {
 
     fun tradeArgumentScreen(trade: Trade) =
         FragmentScreen { TradeArgumentFragment.newInstance(trade) }
+
+    fun profileEditingScreen() =
+        FragmentScreen { ProfileEditingFragment.newInstance() }
+
+    fun setUsernameScreen() =
+        FragmentScreen { SetUsernameFragment.newInstance() }
+
+    fun setFirstAndLastNamesScreen() =
+        FragmentScreen { SetFirstAndLastNamesFragment.newInstance() }
+
+    fun setEmailScreen() =
+        FragmentScreen { SetEmailFragment.newInstance() }
+
+    fun setPhoneNumberScreen() =
+        FragmentScreen { SetPhoneNumberFragment.newInstance() }
+
+    fun setPasswordFirstScreen() =
+        FragmentScreen { SetPasswordFirstFragment.newInstance() }
+
+    fun setPasswordSecondScreen() =
+        FragmentScreen { SetPasswordSecondFragment.newInstance() }
 }
