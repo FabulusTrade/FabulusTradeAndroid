@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SetEmailViewModel @Inject constructor() : BaseProfileEditingViewModel() {
 
     private val successMessageTextInApiResponse =
-        "Адрес электронной почты изменен. Письмо подтверждения отправлено."
+        "Письмо подтверждения отправлено на новый адрес электронной почты."
     var email = mutableStateOf("")
         private set
 
