@@ -1,6 +1,10 @@
 package ru.fabulus.fabulustrade.mvp.presenter
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Looper
+import androidx.core.content.ContextCompat.startActivity
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
@@ -13,6 +17,8 @@ import ru.fabulus.fabulustrade.mvp.model.repo.RoomRepo
 import ru.fabulus.fabulustrade.mvp.view.MainView
 import ru.fabulus.fabulustrade.navigation.Screens
 import javax.inject.Inject
+
+const val SUPPORT_TELEGRAM_USERNAME = "Trader100_Pro"
 
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>() {
@@ -152,5 +158,19 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun backClicked() {
         router.exit()
+    }
+
+    fun openSupportInTelegram(context: Context) {
+        val telegramIntent = Intent(Intent.ACTION_VIEW)
+        telegramIntent.data = Uri.parse("tg://resolve?domain=$SUPPORT_TELEGRAM_USERNAME")
+
+        if (telegramIntent.resolveActivity(context.packageManager) != null) {
+            startActivity(context, telegramIntent, null)
+        } else {
+            val playStoreIntent = Intent(Intent.ACTION_VIEW)
+            playStoreIntent.data =
+                Uri.parse("https://play.google.com/store/apps/details?id=org.telegram.messenger")
+            startActivity(context, playStoreIntent, null)
+        }
     }
 }

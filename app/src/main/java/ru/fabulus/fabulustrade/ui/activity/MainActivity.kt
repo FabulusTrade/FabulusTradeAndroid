@@ -201,6 +201,7 @@ class MainActivity : MvpAppCompatActivity(), MainView,
             R.id.about_menu_id -> presenter.aboutWTMenuClicked()
             R.id.ask_menu_id -> presenter.questionMenuClicked()
             R.id.community_menu_id -> presenter.settingsMenuClicked()
+            R.id.support_menu_id -> presenter.openSupportInTelegram(this@MainActivity)
             R.id.exit_menu_id -> presenter.exitClicked()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
